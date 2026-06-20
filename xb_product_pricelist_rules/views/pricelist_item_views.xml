@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Informative list for pricelist rules of any compute type.
+         The standard "from product" list forces a required "Fixed Price"
+         column that is meaningless for formula/percentage rules. -->
+    <record id="product_pricelist_item_tree_view_all" model="ir.ui.view">
+        <field name="name">product.pricelist.item.list.all</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="priority">200</field>
+        <field name="arch" type="xml">
+            <list string="Pricelist Rules" create="0">
+                <field name="pricelist_id" options="{'no_create_edit': 1, 'no_open': 1}"/>
+                <field name="product_tmpl_id" optional="show" options="{'no_create_edit': 1}"/>
+                <field name="applied_on" string="Applied On"/>
+                <field name="compute_price" string="Computation"/>
+                <field name="base" string="Based On" optional="show"/>
+                <field name="price_markup" string="Markup %" optional="show"/>
+                <field name="price_discount" string="Discount %" optional="hide"/>
+                <field name="fixed_price" string="Fixed Price" optional="hide"/>
+                <field name="price" string="Resulting Price"/>
+                <field name="min_quantity" string="Min. Qty" optional="show"/>
+                <field name="date_start" optional="hide"/>
+                <field name="date_end" optional="hide"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Menu to reach the full, searchable list of pricelist rules
+         (filter / group by product, pricelist, etc.). -->
+    <menuitem id="menu_product_pricelist_item_search"
+        name="Price Rules (search)"
+        parent="sale.product_menu_catalog"
+        action="product.product_pricelist_item_action"
+        groups="product.group_product_pricelist"
+        sequence="35"/>
+
+</odoo>
