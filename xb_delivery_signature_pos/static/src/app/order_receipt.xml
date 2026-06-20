@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
     <!-- Show the captured delivery signature on the POS receipt, gated on the
-         per-POS toggle. Only renders when a signature was captured for this
-         order (order.uiState.xbDeliverySignature), so normal receipts are
-         untouched. -->
+         per-POS toggle. Prefers the freshly captured signature held in memory
+         (order.uiState.xbDeliverySignature, set at sale time); falls back to the
+         signature PERSISTED on the order (xb_delivery_signature /
+         xb_delivery_signed_by) so that REPRINTS of past orders — whose uiState
+         is gone after the session reloaded — still show the hand-over. -->
     <t t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
         <xpath expr="//div[hasclass('after-footer')]" position="after">
-            <t t-if="order.config.xb_delivery_signature_on_receipt and order.uiState.xbDeliverySignature">
+            <t t-if="order.config.xb_delivery_signature_on_receipt and (order.uiState.xbDeliverySignature or order.xb_delivery_signature)">
+                <t t-set="xbSigSrc" t-value="order.uiState.xbDeliverySignature ? order.uiState.xbDeliverySignature.image : ('data:image/png;base64,' + order.xb_delivery_signature)"/>
+                <t t-set="xbSigName" t-value="order.uiState.xbDeliverySignature ? order.uiState.xbDeliverySignature.name : order.xb_delivery_signed_by"/>
                 <div class="xb-delivery-signature text-center" style="margin-top:8px;border-top:1px dashed #000;padding-top:6px;">
                     <div style="font-size:11px;opacity:.8;">Received by:</div>
-                    <img t-att-src="order.uiState.xbDeliverySignature.image"
+                    <img t-att-src="xbSigSrc"
                          style="max-height:120px;max-width:100%;"
                          alt="Delivery signature"/>
-                    <div t-if="order.uiState.xbDeliverySignature.name" style="font-size:12px;">
-                        <t t-esc="order.uiState.xbDeliverySignature.name"/>
+                    <div t-if="xbSigName" style="font-size:12px;">
+                        <t t-esc="xbSigName"/>
                     </div>
                 </div>
             </t>
