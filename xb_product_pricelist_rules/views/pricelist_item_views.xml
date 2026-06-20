@@ -3,32 +3,60 @@
 
     <!-- Informative list for pricelist rules of any compute type.
          The standard "from product" list forces a required "Fixed Price"
-         column that is meaningless for formula/percentage rules. -->
+         column that is meaningless for formula/percentage rules.
+         Odoo 17 uses the <tree> tag. -->
     <record id="product_pricelist_item_tree_view_all" model="ir.ui.view">
-        <field name="name">product.pricelist.item.list.all</field>
+        <field name="name">product.pricelist.item.tree.all</field>
         <field name="model">product.pricelist.item</field>
         <field name="priority">200</field>
         <field name="arch" type="xml">
-            <list string="Pricelist Rules" create="0">
+            <tree string="Pricelist Rules" create="0">
                 <field name="pricelist_id" options="{'no_create_edit': 1, 'no_open': 1}"/>
                 <field name="product_tmpl_id" optional="show" options="{'no_create_edit': 1}"/>
                 <field name="applied_on" string="Applied On"/>
                 <field name="compute_price" string="Computation"/>
                 <field name="base" string="Based On" optional="show"/>
-                <field name="price_markup" string="Markup %" optional="show"/>
-                <field name="price_discount" string="Discount %" optional="hide"/>
+                <field name="price_discount" string="Discount %" optional="show"/>
                 <field name="fixed_price" string="Fixed Price" optional="hide"/>
                 <field name="price" string="Resulting Price"/>
                 <field name="min_quantity" string="Min. Qty" optional="show"/>
                 <field name="date_start" optional="hide"/>
                 <field name="date_end" optional="hide"/>
                 <field name="currency_id" column_invisible="True"/>
-            </list>
+            </tree>
         </field>
     </record>
 
-    <!-- Menu to reach the full, searchable list of pricelist rules
-         (filter / group by product, pricelist, etc.). -->
+    <!-- Odoo 17 has no search view for product.pricelist.item, so the
+         standalone Price Rules list could not be filtered/grouped. Provide one. -->
+    <record id="product_pricelist_item_view_search" model="ir.ui.view">
+        <field name="name">product.pricelist.item.search.all</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="arch" type="xml">
+            <search string="Pricelist Rules">
+                <field name="product_tmpl_id" string="Product"/>
+                <field name="pricelist_id"/>
+                <field name="compute_price"/>
+                <filter name="product_rule" string="Product Rule"
+                    domain="[('applied_on', '=', '1_product')]"/>
+                <filter name="category_rule" string="Category Rule"
+                    domain="[('applied_on', '=', '2_product_category')]"/>
+                <separator/>
+                <filter name="active_pricelist" string="Active Pricelists"
+                    domain="[('pricelist_id.active', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="groupby_product" string="Product"
+                        context="{'group_by': 'product_tmpl_id'}"/>
+                    <filter name="groupby_pricelist" string="Pricelist"
+                        context="{'group_by': 'pricelist_id'}"/>
+                    <filter name="groupby_compute" string="Computation"
+                        context="{'group_by': 'compute_price'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Menu to reach the full, searchable list of pricelist rules. -->
     <menuitem id="menu_product_pricelist_item_search"
         name="Price Rules (search)"
         parent="sale.product_menu_catalog"

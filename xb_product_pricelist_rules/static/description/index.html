@@ -16,13 +16,12 @@
     </p>
 
     <div style="background:#f6f2fa;border-left:5px solid #5B3F73;padding:16px 20px;border-radius:6px;margin-bottom:28px;">
-      <h3 style="margin:0 0 8px;color:#5B3F73;">The problem in Odoo 18</h3>
+      <h3 style="margin:0 0 8px;color:#5B3F73;">Made for Odoo 17</h3>
       <p style="margin:0;font-size:15px;line-height:1.5;">
-        The <b>Pricelist Rules</b> smart button on the product form only counts
-        and opens rules computed as <i>Fixed Price</i>. Rules based on a
-        <b>formula</b> or a <b>percentage discount</b> are hidden: the button
-        shows <b>0</b> and opens an empty list, even when the product is used by
-        many pricelist rules.
+        The standard <b>Pricelist Rules</b> list opened from a product forces a
+        required <i>Fixed Price</i> column that makes no sense for
+        <b>formula</b> or <b>percentage</b> rules, and Odoo 17 ships no search
+        view to browse rules across products. This module fixes both.
       </p>
     </div>
 
@@ -33,9 +32,9 @@
         <td style="padding:10px 14px;"><b>Description</b></td>
       </tr>
       <tr style="border-bottom:1px solid #eee;">
-        <td style="padding:10px 14px;"><b>Complete count</b></td>
-        <td style="padding:10px 14px;">The smart button counts every rule applicable
-          to the product or its variants (Fixed, Percentage, Formula).</td>
+        <td style="padding:10px 14px;"><b>Search view</b></td>
+        <td style="padding:10px 14px;">Adds the pricelist-rules search view that
+          Odoo 17 is missing, so rules can be filtered and grouped.</td>
       </tr>
       <tr style="border-bottom:1px solid #eee;background:#faf8fc;">
         <td style="padding:10px 14px;"><b>Informative list</b></td>
@@ -58,9 +57,9 @@
 
     <h2 style="color:#5B3F73;font-size:22px;">Compatibility</h2>
     <ul style="font-size:15px;line-height:1.7;">
-      <li>Odoo <b>18.0</b> Community &amp; Enterprise.</li>
-      <li>Odoo 17.0 and 19.0 are not affected by this smart-button limitation;
-          on those series the smart button already lists formula rules.</li>
+      <li>Odoo <b>17.0</b> Community &amp; Enterprise.</li>
+      <li>The Odoo 18 build additionally fixes the smart-button count, which
+          Odoo 18 wrongly restricts to fixed-price rules.</li>
     </ul>
 
     <div style="margin-top:30px;padding:18px;background:#5B3F73;border-radius:8px;color:#fff;text-align:center;">
