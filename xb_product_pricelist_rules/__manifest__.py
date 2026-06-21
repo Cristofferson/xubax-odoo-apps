@@ -25,8 +25,13 @@ Key features
   resulting price — instead of a list that forces a meaningless "Fixed Price"
   column on formula rules.
 * A new menu **Sales ▸ Products ▸ Price Rules (search)** opens the full list
-  of pricelist rules with the standard search view, so you can finally
-  filter and group thousands of rules by product, pricelist, etc.
+  of pricelist rules with a search view that finally includes a **Product**
+  field, so you can search (not just group) thousands of rules by product,
+  pricelist, etc.
+* Each pricelist form gets a **Search products / rules** button that opens
+  that pricelist's rules in a real searchable list, because the embedded
+  *Price Rules* tab is a plain one2many with no search box — unusable on
+  pricelists holding thousands of rules.
 * No data migration, no configuration: install and the smart button is fixed.
 
 Compatibility
@@ -40,7 +45,7 @@ Compatibility
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",
     "category": "Sales/Sales",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.2.0",
     "license": "LGPL-3",
     "depends": [
         "product",

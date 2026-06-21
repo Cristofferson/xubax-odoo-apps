@@ -27,12 +27,71 @@
         </field>
     </record>
 
+    <!-- Search view that adds a Product search field. The standard pricelist
+         rules search view only lets you group by product, never type a product
+         name, so rules cannot be found by product. We add a Product field that
+         matches both template rules and variant rules. -->
+    <record id="product_pricelist_item_view_search_all" model="ir.ui.view">
+        <field name="name">product.pricelist.item.search.all</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="inherit_id" ref="product.product_pricelist_item_view_search"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <field name="pricelist_id" position="before">
+                <field name="product_tmpl_id" string="Product"
+                    filter_domain="['|', ('product_tmpl_id.name', 'ilike', self), ('product_id.name', 'ilike', self)]"/>
+                <field name="product_id" string="Variant"
+                    groups="product.group_product_variant"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Action for the global menu: every pricelist rule, all compute types,
+         the informative list + the search view with a Product field. -->
+    <record id="product_pricelist_item_action_all" model="ir.actions.act_window">
+        <field name="name">Price Rules</field>
+        <field name="res_model">product.pricelist.item</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="product_pricelist_item_tree_view_all"/>
+        <field name="search_view_id" ref="product_pricelist_item_view_search_all"/>
+    </record>
+
+    <!-- Action launched from a pricelist form: the same searchable list, but
+         scoped to the current pricelist via active_id. Kept as pure data (no
+         python method) so it loads on a hot module upgrade without restart. -->
+    <record id="product_pricelist_item_action_from_pricelist" model="ir.actions.act_window">
+        <field name="name">Price Rules</field>
+        <field name="res_model">product.pricelist.item</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="product_pricelist_item_tree_view_all"/>
+        <field name="search_view_id" ref="product_pricelist_item_view_search_all"/>
+        <field name="domain">[('pricelist_id', '=', active_id)]</field>
+        <field name="context">{'default_pricelist_id': active_id, 'default_applied_on': '1_product'}</field>
+    </record>
+
+    <!-- Button on each pricelist form: open this pricelist's rules in a
+         searchable list (the embedded Price Rules tab has no search box, which
+         is unusable on pricelists with thousands of rules). -->
+    <record id="product_pricelist_view_search_button" model="ir.ui.view">
+        <field name="name">product.pricelist.form.search.button</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='pricelist_rules']/field[@name='item_ids']" position="before">
+                <button name="%(product_pricelist_item_action_from_pricelist)d" type="action"
+                    class="btn-secondary mb-2" icon="fa-search"
+                    string="Search products / rules"
+                    groups="product.group_product_pricelist"/>
+            </xpath>
+        </field>
+    </record>
+
     <!-- Menu to reach the full, searchable list of pricelist rules
          (filter / group by product, pricelist, etc.). -->
     <menuitem id="menu_product_pricelist_item_search"
         name="Price Rules (search)"
         parent="sale.product_menu_catalog"
-        action="product.product_pricelist_item_action"
+        action="product_pricelist_item_action_all"
         groups="product.group_product_pricelist"
         sequence="35"/>
 
