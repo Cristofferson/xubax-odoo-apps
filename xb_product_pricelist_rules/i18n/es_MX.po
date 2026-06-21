@@ -1,28 +1,21 @@
-# Spanish translation for xb_product_pricelist_rules.
-# This file contains the strings extracted from the module.
+# Translation of Odoo Server.
+# Spanish (es_MX) translation for xb_product_pricelist_rules.
+# This file contains the translation of the following modules:
+# 	* xb_product_pricelist_rules
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-21 17:13+0000\n"
+"PO-Revision-Date: 2026-06-21 17:13+0000\n"
 "Last-Translator: \n"
-"Language: es\n"
+"Language: es_MX\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: xb_product_pricelist_rules
-#: model:ir.ui.menu,name:xb_product_pricelist_rules.menu_product_pricelist_item_search
-msgid "Price Rules (search)"
-msgstr "Reglas de precio (buscar)"
-
-#. module: xb_product_pricelist_rules
-#: model_terms:ir.ui.view,arch_db:xb_product_pricelist_rules.product_pricelist_item_tree_view_all
-#: code:addons/xb_product_pricelist_rules/models/product_template.py:0
-msgid "Pricelist Rules"
-msgstr "Reglas de lista de precio"
 
 #. module: xb_product_pricelist_rules
 #: model_terms:ir.ui.view,arch_db:xb_product_pricelist_rules.product_pricelist_item_tree_view_all
@@ -31,13 +24,33 @@ msgstr "Aplicado en"
 
 #. module: xb_product_pricelist_rules
 #: model_terms:ir.ui.view,arch_db:xb_product_pricelist_rules.product_pricelist_item_tree_view_all
+msgid "Based On"
+msgstr "Basado en"
+
+#. module: xb_product_pricelist_rules
+#: model_terms:ir.ui.view,arch_db:xb_product_pricelist_rules.product_pricelist_item_tree_view_all
 msgid "Computation"
 msgstr "Cálculo"
 
 #. module: xb_product_pricelist_rules
 #: model_terms:ir.ui.view,arch_db:xb_product_pricelist_rules.product_pricelist_item_tree_view_all
-msgid "Based On"
-msgstr "Basado en"
+msgid "Discount %"
+msgstr "Descuento %"
+
+#. module: xb_product_pricelist_rules
+#: model:ir.model.fields,field_description:xb_product_pricelist_rules.field_product_template__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: xb_product_pricelist_rules
+#: model_terms:ir.ui.view,arch_db:xb_product_pricelist_rules.product_pricelist_item_tree_view_all
+msgid "Fixed Price"
+msgstr "Precio fijo"
+
+#. module: xb_product_pricelist_rules
+#: model:ir.model.fields,field_description:xb_product_pricelist_rules.field_product_template__id
+msgid "ID"
+msgstr "ID"
 
 #. module: xb_product_pricelist_rules
 #: model_terms:ir.ui.view,arch_db:xb_product_pricelist_rules.product_pricelist_item_tree_view_all
@@ -46,13 +59,32 @@ msgstr "Margen %"
 
 #. module: xb_product_pricelist_rules
 #: model_terms:ir.ui.view,arch_db:xb_product_pricelist_rules.product_pricelist_item_tree_view_all
-msgid "Discount %"
-msgstr "Descuento %"
+msgid "Min. Qty"
+msgstr "Cant. mín."
 
 #. module: xb_product_pricelist_rules
+#: model:ir.actions.act_window,name:xb_product_pricelist_rules.product_pricelist_item_action_all
+#: model:ir.actions.act_window,name:xb_product_pricelist_rules.product_pricelist_item_action_from_pricelist
+msgid "Price Rules"
+msgstr "Reglas de precio"
+
+#. module: xb_product_pricelist_rules
+#: model:ir.ui.menu,name:xb_product_pricelist_rules.menu_product_pricelist_item_search
+msgid "Price Rules (search)"
+msgstr "Reglas de precio (buscar)"
+
+#. module: xb_product_pricelist_rules
+#. odoo-python
+#: code:addons/xb_product_pricelist_rules/models/product_template.py:0
 #: model_terms:ir.ui.view,arch_db:xb_product_pricelist_rules.product_pricelist_item_tree_view_all
-msgid "Fixed Price"
-msgstr "Precio fijo"
+msgid "Pricelist Rules"
+msgstr "Reglas de lista de precio"
+
+#. module: xb_product_pricelist_rules
+#: model:ir.model,name:xb_product_pricelist_rules.model_product_template
+#: model_terms:ir.ui.view,arch_db:xb_product_pricelist_rules.product_pricelist_item_view_search_all
+msgid "Product"
+msgstr "Producto"
 
 #. module: xb_product_pricelist_rules
 #: model_terms:ir.ui.view,arch_db:xb_product_pricelist_rules.product_pricelist_item_tree_view_all
@@ -60,6 +92,11 @@ msgid "Resulting Price"
 msgstr "Precio resultante"
 
 #. module: xb_product_pricelist_rules
-#: model_terms:ir.ui.view,arch_db:xb_product_pricelist_rules.product_pricelist_item_tree_view_all
-msgid "Min. Qty"
-msgstr "Cant. mín."
+#: model_terms:ir.ui.view,arch_db:xb_product_pricelist_rules.product_pricelist_view_search_button
+msgid "Search products / rules"
+msgstr "Buscar productos / reglas"
+
+#. module: xb_product_pricelist_rules
+#: model_terms:ir.ui.view,arch_db:xb_product_pricelist_rules.product_pricelist_item_view_search_all
+msgid "Variant"
+msgstr "Variante"
