@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 # XUBAX - Delivery Receipt Signature - POS Bridge
-from odoo import fields, models
+import logging
+
+from odoo import _, fields, models
+
+_logger = logging.getLogger(__name__)
 
 
 class PosOrder(models.Model):
@@ -42,7 +46,38 @@ class PosOrder(models.Model):
         # directly (no sale.order in between). Mirror onto the picking's native
         # signature field so the delivery slip / picking form show the hand-over.
         self._xb_mirror_signature_to_pickings(signature, signed_by, signed_on)
+        self._xb_log_stij_delivered(signed_by)
         return True
+
+    def _xb_log_stij_delivered(self, signed_by):
+        """Registra la entrega firmada del ticket POS en el ledger STIJ (si esta
+        instalado), una linea por pieza. Enganche suave: sin dependencia dura,
+        todo en try/except para no romper el cierre de la venta POS."""
+        self.ensure_one()
+        if "stij.lot.event" not in self.env:
+            return
+        try:
+            lots = self.picking_ids.move_line_ids.lot_id
+            if not lots:
+                return
+            Event = self.env["stij.lot.event"].sudo()
+            who = signed_by or (self.partner_id.name if self.partner_id else "")
+            note = _("Entrega firmada en POS por %(who)s (%(ref)s)") % {
+                "who": who or _("cliente"),
+                "ref": self.name or self.pos_reference or "",
+            }
+            for lot in lots:
+                Event._record(
+                    lot,
+                    "delivered",
+                    source="backend",
+                    partner_id=self.partner_id.id if self.partner_id else False,
+                    note=note,
+                )
+        except Exception:  # pragma: no cover - la trazabilidad nunca debe romper
+            _logger.exception(
+                "STIJ: no se pudo registrar la entrega del ticket POS %s", self.id
+            )
 
     def _xb_mirror_signature_to_pickings(self, signature, signed_by, signed_on):
         """Copy the hand-over signature onto the POS order's own pickings."""

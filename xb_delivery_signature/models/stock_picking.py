@@ -3,8 +3,12 @@
 # Original, clean-room implementation. Native-only logic: the signature is
 # captured through Odoo's own signature widget / portal.signature_form, stored
 # on the picking, and mirrored to the native sale.order signature fields.
+import logging
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+
+_logger = logging.getLogger(__name__)
 
 
 class StockPicking(models.Model):
@@ -67,7 +71,42 @@ class StockPicking(models.Model):
                 "signed_by": signed_by or self.partner_id.name or "",
                 "signed_on": signed_on,
             })
+        self._xb_log_stij_delivered(signed_by, signed_on)
         return True
+
+    def _xb_log_stij_delivered(self, signed_by, signed_on):
+        """Si el modulo de trazabilidad STIJ esta instalado, deja constancia de
+        la entrega firmada en su ledger por cada pieza (stock.lot) del albaran.
+
+        Enganche SUAVE a proposito: STIJ vive en un repo de un tercero, asi que
+        no se declara dependencia dura. Se comprueba el modelo en runtime y todo
+        va en try/except para que registrar trazabilidad jamas rompa la entrega.
+        """
+        self.ensure_one()
+        if "stij.lot.event" not in self.env:
+            return
+        try:
+            lots = self.move_line_ids.lot_id
+            if not lots:
+                return
+            Event = self.env["stij.lot.event"].sudo()
+            who = signed_by or (self.partner_id.name if self.partner_id else "")
+            note = _("Entrega firmada por %(who)s (%(ref)s)") % {
+                "who": who or _("cliente"),
+                "ref": self.name,
+            }
+            for lot in lots:
+                Event._record(
+                    lot,
+                    "delivered",
+                    source="backend",
+                    partner_id=self.partner_id.id if self.partner_id else False,
+                    note=note,
+                )
+        except Exception:  # pragma: no cover - la trazabilidad nunca debe romper
+            _logger.exception(
+                "STIJ: no se pudo registrar la entrega del albaran %s", self.id
+            )
 
     def _xb_open_signature_wizard(self, validate_after=False):
         """Return the action that opens the signature pad for this picking.

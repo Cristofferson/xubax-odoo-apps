@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Delivery Receipt Signature",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.3.0",
     "category": "Inventory/Inventory",
     "summary": "Capture the customer's signature when a delivery is handed over "
                "(on a tablet at validation, or self-signed from the portal) and "
