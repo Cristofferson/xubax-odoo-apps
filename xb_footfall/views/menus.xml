@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_footfall_root" name="Footfall"
+              web_icon="xb_footfall,static/description/icon.png"
+              sequence="95"/>
+
+    <menuitem id="menu_footfall_dashboard" name="Dashboard"
+              parent="menu_footfall_root"
+              action="action_footfall_hourly" sequence="10"/>
+
+    <menuitem id="menu_footfall_events" name="Crossing Events"
+              parent="menu_footfall_root"
+              action="action_footfall_event" sequence="20"/>
+
+    <menuitem id="menu_footfall_config" name="Configuration"
+              parent="menu_footfall_root" sequence="90"/>
+
+    <menuitem id="menu_footfall_devices" name="Devices"
+              parent="menu_footfall_config"
+              action="action_footfall_device" sequence="10"/>
+
+</odoo>

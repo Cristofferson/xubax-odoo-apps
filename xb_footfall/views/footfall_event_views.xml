@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_footfall_event_list" model="ir.ui.view">
+        <field name="name">xb.footfall.event.list</field>
+        <field name="model">xb.footfall.event</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="event_time"/>
+                <field name="device_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="direction"/>
+                <field name="count"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_footfall_event_graph" model="ir.ui.view">
+        <field name="name">xb.footfall.event.graph</field>
+        <field name="model">xb.footfall.event</field>
+        <field name="arch" type="xml">
+            <graph string="Crossings" type="bar">
+                <field name="event_time" interval="hour"/>
+                <field name="direction"/>
+                <field name="count" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_footfall_event_pivot" model="ir.ui.view">
+        <field name="name">xb.footfall.event.pivot</field>
+        <field name="model">xb.footfall.event</field>
+        <field name="arch" type="xml">
+            <pivot string="Crossings">
+                <field name="device_id" type="row"/>
+                <field name="event_time" interval="day" type="col"/>
+                <field name="count" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_footfall_event_search" model="ir.ui.view">
+        <field name="name">xb.footfall.event.search</field>
+        <field name="model">xb.footfall.event</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="device_id"/>
+                <field name="company_id"/>
+                <filter name="entrances" string="Entrances" domain="[('direction','=','in')]"/>
+                <filter name="exits" string="Exits" domain="[('direction','=','out')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="g_device" string="Device" context="{'group_by':'device_id'}"/>
+                    <filter name="g_company" string="Store" context="{'group_by':'company_id'}"/>
+                    <filter name="g_direction" string="Direction" context="{'group_by':'direction'}"/>
+                    <filter name="g_hour" string="Hour" context="{'group_by':'event_time:hour'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_footfall_event" model="ir.actions.act_window">
+        <field name="name">Crossing Events</field>
+        <field name="res_model">xb.footfall.event</field>
+        <field name="view_mode">list,graph,pivot</field>
+    </record>
+
+</odoo>

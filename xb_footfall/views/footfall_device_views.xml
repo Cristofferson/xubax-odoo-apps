@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_footfall_device_list" model="ir.ui.view">
+        <field name="name">xb.footfall.device.list</field>
+        <field name="model">xb.footfall.device</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="device_uid"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="kind"/>
+                <field name="last_seen"/>
+                <field name="event_count"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_footfall_device_form" model="ir.ui.view">
+        <field name="name">xb.footfall.device.form</field>
+        <field name="model">xb.footfall.device</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_regenerate_token" type="object"
+                            string="Regenerate Token"
+                            confirm="This invalidates the current token. The device will stop reporting until reconfigured. Continue?"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_events" type="object"
+                                class="oe_stat_button" icon="fa-line-chart">
+                            <field name="event_count" widget="statinfo" string="Events"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="e.g. Anello Morelia — Front door"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="device_uid"/>
+                            <field name="kind"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                            <field name="last_seen"/>
+                        </group>
+                    </group>
+                    <group string="Notes">
+                        <field name="note" nolabel="1" placeholder="Mounting, IP/RTSP, ISAPI path, calibration notes..."/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_footfall_device" model="ir.actions.act_window">
+        <field name="name">Devices</field>
+        <field name="res_model">xb.footfall.device</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>
