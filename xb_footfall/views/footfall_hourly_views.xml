@@ -50,10 +50,10 @@
         <field name="arch" type="xml">
             <search>
                 <field name="company_id"/>
-                <group expand="0" string="Group By">
-                    <filter name="g_company" string="Store" context="{'group_by':'company_id'}"/>
-                    <filter name="g_hour" string="Hour" context="{'group_by':'hour:hour'}"/>
-                    <filter name="g_day" string="Day" context="{'group_by':'hour:day'}"/>
+                <group>
+                    <filter name="g_company" string="Store" domain="[]" context="{'group_by': 'company_id'}"/>
+                    <filter name="g_hour" string="Hour" domain="[]" context="{'group_by': 'hour:hour'}"/>
+                    <filter name="g_day" string="Day" domain="[]" context="{'group_by': 'hour:day'}"/>
                 </group>
             </search>
         </field>

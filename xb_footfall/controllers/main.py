@@ -1,11 +1,27 @@
 # -*- coding: utf-8 -*-
 import json
 import logging
+from datetime import datetime, timezone
 
 from odoo import fields, http
 from odoo.http import request
 
 _logger = logging.getLogger(__name__)
+
+
+def _parse_ts(value):
+    """Parse an edge timestamp (ISO 8601, optionally with timezone) into a
+    naive UTC datetime as Odoo stores it. Falls back to now() on anything
+    unparseable so a single bad value never drops the event."""
+    if not value:
+        return fields.Datetime.now()
+    try:
+        dt = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+        if dt.tzinfo is not None:
+            dt = dt.astimezone(timezone.utc).replace(tzinfo=None)
+        return dt
+    except (ValueError, TypeError):
+        return fields.Datetime.now()
 
 
 class FootfallController(http.Controller):
@@ -62,22 +78,24 @@ class FootfallController(http.Controller):
 
         Event = request.env["xb.footfall.event"].sudo()
         created = 0
+        skipped = 0
         for ev in events:
-            if not isinstance(ev, dict):
+            if not isinstance(ev, dict) or ev.get("direction", "in") not in ("in", "out"):
+                skipped += 1
                 continue
-            direction = ev.get("direction", "in")
-            if direction not in ("in", "out"):
-                continue
-            vals = {
-                "device_id": device.id,
-                "direction": direction,
-                "count": int(ev.get("count") or 1),
-                "event_time": ev.get("ts") or fields.Datetime.now(),
-            }
-            if ev.get("seq") is not None:
-                vals["seq"] = int(ev["seq"])
-            Event.create(vals)
-            created += 1
+            try:
+                vals = {
+                    "device_id": device.id,
+                    "direction": ev.get("direction", "in"),
+                    "count": int(ev.get("count") or 1),
+                    "event_time": _parse_ts(ev.get("ts")),
+                }
+                if ev.get("seq") is not None:
+                    vals["seq"] = int(ev["seq"])
+                Event.create(vals)
+                created += 1
+            except (ValueError, TypeError):
+                skipped += 1
 
         device.sudo().last_seen = fields.Datetime.now()
-        return self._json({"ok": True, "stored": created})
+        return self._json({"ok": True, "stored": created, "skipped": skipped})
