@@ -20,6 +20,12 @@ class FootfallDevice(models.Model):
         default=lambda self: self.env.company,
         help="Company that represents the physical store. POS orders of this "
              "company are cross-referenced to compute conversion.")
+    pos_config_id = fields.Many2one(
+        "pos.config", string="POS Register / Store",
+        help="Specific POS register this door belongs to. Set this when several "
+             "stores share one company (e.g. multiple shops under the same "
+             "legal entity): conversion is then crossed against THIS register's "
+             "orders only. Leave empty if the company has a single store.")
     kind = fields.Selection(
         selection=[
             ("cctv_hik", "CCTV — Hikvision (ISAPI People Counting)"),
