@@ -1,4 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_footfall_store_user,xb.footfall.store.user,model_xb_footfall_store,point_of_sale.group_pos_user,1,0,0,0
+access_footfall_store_manager,xb.footfall.store.manager,model_xb_footfall_store,point_of_sale.group_pos_manager,1,1,1,1
 access_footfall_device_user,xb.footfall.device.user,model_xb_footfall_device,point_of_sale.group_pos_user,1,0,0,0
 access_footfall_device_manager,xb.footfall.device.manager,model_xb_footfall_device,point_of_sale.group_pos_manager,1,1,1,1
 access_footfall_event_user,xb.footfall.event.user,model_xb_footfall_event,point_of_sale.group_pos_user,1,0,0,0

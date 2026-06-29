@@ -13,8 +13,8 @@ class FootfallHourly(models.Model):
     _auto = False
     _order = "hour desc"
 
-    company_id = fields.Many2one("res.company", string="Store / Company", readonly=True)
-    pos_config_id = fields.Many2one("pos.config", string="POS Register / Store", readonly=True)
+    store_id = fields.Many2one("xb.footfall.store", string="Store", readonly=True)
+    company_id = fields.Many2one("res.company", string="Company", readonly=True)
     hour = fields.Datetime(string="Hour", readonly=True)
     visitors_in = fields.Integer(string="Visitors In", readonly=True)
     visitors_out = fields.Integer(string="Visitors Out", readonly=True)
@@ -28,105 +28,64 @@ class FootfallHourly(models.Model):
 
     def init(self):
         tools.drop_view_if_exists(self.env.cr, self._table)
-        # Two scopes, unioned:
-        #  * register-scoped: a device tied to a specific pos.config — conversion
-        #    is crossed against THAT register's orders only (needed when several
-        #    stores share one company, e.g. LAMUR Américas/Centro/Camelinas).
-        #  * company-scoped: a device with no pos.config — crossed against the
-        #    whole company (single-store company, e.g. Anello).
-        # A register that has its own counter device is excluded from the
-        # company scope so its sales are never double-counted.
+        # The unit of analysis is the STORE. Visitors are summed across all the
+        # store's entrance devices; sales are matched either by the store's POS
+        # registers ('registers' mode — several registers in one shop) or by the
+        # whole company ('company' mode — single-store company). Both are summed
+        # per store and crossed by the hour.
         self.env.cr.execute("""
             CREATE VIEW %s AS (
-                WITH cfg_devices AS (
-                    SELECT DISTINCT pos_config_id
-                    FROM xb_footfall_device
-                    WHERE pos_config_id IS NOT NULL
-                ),
-                co_devices AS (
-                    SELECT DISTINCT company_id
-                    FROM xb_footfall_device
-                    WHERE pos_config_id IS NULL
-                ),
-                cfg_visits AS (
-                    SELECT d.pos_config_id AS pos_config_id,
+                WITH store_visits AS (
+                    SELECT d.store_id AS store_id,
                            date_trunc('hour', e.event_time) AS hour,
                            SUM(CASE WHEN e.direction = 'in'  THEN e.count ELSE 0 END) AS visitors_in,
                            SUM(CASE WHEN e.direction = 'out' THEN e.count ELSE 0 END) AS visitors_out
                     FROM xb_footfall_event e
                     JOIN xb_footfall_device d ON d.id = e.device_id
-                    WHERE d.pos_config_id IS NOT NULL
-                    GROUP BY d.pos_config_id, date_trunc('hour', e.event_time)
+                    WHERE d.store_id IS NOT NULL
+                    GROUP BY d.store_id, date_trunc('hour', e.event_time)
                 ),
-                cfg_sales AS (
-                    SELECT o.config_id AS pos_config_id,
+                store_sales AS (
+                    -- stores matched by their specific registers
+                    SELECT s.id AS store_id,
                            date_trunc('hour', o.date_order) AS hour,
                            COUNT(*) AS tickets,
                            SUM(o.amount_total) AS revenue
-                    FROM pos_order o
-                    WHERE o.state IN ('paid', 'done', 'invoiced')
-                      AND o.config_id IN (SELECT pos_config_id FROM cfg_devices)
-                    GROUP BY o.config_id, date_trunc('hour', o.date_order)
-                ),
-                co_visits AS (
-                    SELECT d.company_id AS company_id,
-                           date_trunc('hour', e.event_time) AS hour,
-                           SUM(CASE WHEN e.direction = 'in'  THEN e.count ELSE 0 END) AS visitors_in,
-                           SUM(CASE WHEN e.direction = 'out' THEN e.count ELSE 0 END) AS visitors_out
-                    FROM xb_footfall_event e
-                    JOIN xb_footfall_device d ON d.id = e.device_id
-                    WHERE d.pos_config_id IS NULL
-                    GROUP BY d.company_id, date_trunc('hour', e.event_time)
-                ),
-                co_sales AS (
-                    SELECT o.company_id AS company_id,
-                           date_trunc('hour', o.date_order) AS hour,
-                           COUNT(*) AS tickets,
-                           SUM(o.amount_total) AS revenue
-                    FROM pos_order o
-                    WHERE o.state IN ('paid', 'done', 'invoiced')
-                      AND o.company_id IN (SELECT company_id FROM co_devices)
-                      AND o.config_id NOT IN (SELECT pos_config_id FROM cfg_devices)
-                    GROUP BY o.company_id, date_trunc('hour', o.date_order)
-                ),
-                unified AS (
-                    SELECT COALESCE(v.pos_config_id, s.pos_config_id) AS pos_config_id,
-                           NULL::integer AS company_id,
-                           COALESCE(v.hour, s.hour) AS hour,
-                           COALESCE(v.visitors_in, 0) AS visitors_in,
-                           COALESCE(v.visitors_out, 0) AS visitors_out,
-                           COALESCE(s.tickets, 0) AS tickets,
-                           COALESCE(s.revenue, 0.0) AS revenue
-                    FROM cfg_visits v
-                    FULL OUTER JOIN cfg_sales s
-                         ON v.pos_config_id = s.pos_config_id AND v.hour = s.hour
+                    FROM xb_footfall_store s
+                    JOIN xbf_store_register_rel rel ON rel.store_id = s.id
+                    JOIN pos_order o ON o.config_id = rel.config_id
+                    WHERE s.match_mode = 'registers'
+                      AND o.state IN ('paid', 'done', 'invoiced')
+                    GROUP BY s.id, date_trunc('hour', o.date_order)
                     UNION ALL
-                    SELECT NULL::integer AS pos_config_id,
-                           COALESCE(v.company_id, s.company_id) AS company_id,
-                           COALESCE(v.hour, s.hour) AS hour,
-                           COALESCE(v.visitors_in, 0) AS visitors_in,
-                           COALESCE(v.visitors_out, 0) AS visitors_out,
-                           COALESCE(s.tickets, 0) AS tickets,
-                           COALESCE(s.revenue, 0.0) AS revenue
-                    FROM co_visits v
-                    FULL OUTER JOIN co_sales s
-                         ON v.company_id = s.company_id AND v.hour = s.hour
+                    -- stores matched by the whole company
+                    SELECT s.id AS store_id,
+                           date_trunc('hour', o.date_order) AS hour,
+                           COUNT(*) AS tickets,
+                           SUM(o.amount_total) AS revenue
+                    FROM xb_footfall_store s
+                    JOIN pos_order o ON o.company_id = s.company_id
+                    WHERE s.match_mode = 'company'
+                      AND o.state IN ('paid', 'done', 'invoiced')
+                    GROUP BY s.id, date_trunc('hour', o.date_order)
                 )
                 SELECT row_number() OVER () AS id,
-                       u.pos_config_id,
-                       COALESCE(u.company_id, pc.company_id) AS company_id,
-                       u.hour,
-                       u.visitors_in,
-                       u.visitors_out,
-                       u.tickets,
-                       u.revenue,
+                       COALESCE(v.store_id, s.store_id) AS store_id,
+                       st.company_id AS company_id,
+                       COALESCE(v.hour, s.hour) AS hour,
+                       COALESCE(v.visitors_in, 0) AS visitors_in,
+                       COALESCE(v.visitors_out, 0) AS visitors_out,
+                       COALESCE(s.tickets, 0) AS tickets,
+                       COALESCE(s.revenue, 0.0) AS revenue,
                        comp.currency_id AS currency_id,
-                       CASE WHEN u.visitors_in > 0
-                            THEN ROUND(100.0 * u.tickets / u.visitors_in, 2)
+                       CASE WHEN COALESCE(v.visitors_in, 0) > 0
+                            THEN ROUND(100.0 * COALESCE(s.tickets, 0) / v.visitors_in, 2)
                             ELSE 0.0 END AS conversion_rate
-                FROM unified u
-                LEFT JOIN pos_config pc ON pc.id = u.pos_config_id
-                LEFT JOIN res_company comp
-                     ON comp.id = COALESCE(u.company_id, pc.company_id)
+                FROM store_visits v
+                FULL OUTER JOIN store_sales s
+                     ON v.store_id = s.store_id AND v.hour = s.hour
+                LEFT JOIN xb_footfall_store st
+                     ON st.id = COALESCE(v.store_id, s.store_id)
+                LEFT JOIN res_company comp ON comp.id = st.company_id
             )
         """ % (self._table,))

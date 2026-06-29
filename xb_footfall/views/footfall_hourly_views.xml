@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <list>
                 <field name="hour"/>
-                <field name="pos_config_id"/>
+                <field name="store_id"/>
                 <field name="company_id" groups="base.group_multi_company"/>
                 <field name="visitors_in"/>
                 <field name="visitors_out"/>
@@ -36,7 +36,7 @@
         <field name="model">xb.footfall.hourly</field>
         <field name="arch" type="xml">
             <pivot string="Footfall &amp; Conversion">
-                <field name="pos_config_id" type="row"/>
+                <field name="store_id" type="row"/>
                 <field name="hour" interval="day" type="col"/>
                 <field name="visitors_in" type="measure"/>
                 <field name="tickets" type="measure"/>
@@ -50,10 +50,10 @@
         <field name="model">xb.footfall.hourly</field>
         <field name="arch" type="xml">
             <search>
-                <field name="pos_config_id"/>
+                <field name="store_id"/>
                 <field name="company_id"/>
                 <group>
-                    <filter name="g_register" string="Register / Store" domain="[]" context="{'group_by': 'pos_config_id'}"/>
+                    <filter name="g_store" string="Store" domain="[]" context="{'group_by': 'store_id'}"/>
                     <filter name="g_company" string="Company" domain="[]" context="{'group_by': 'company_id'}"/>
                     <filter name="g_hour" string="Hour" domain="[]" context="{'group_by': 'hour:hour'}"/>
                     <filter name="g_day" string="Day" domain="[]" context="{'group_by': 'hour:day'}"/>

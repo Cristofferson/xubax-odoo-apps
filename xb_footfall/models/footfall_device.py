@@ -15,17 +15,15 @@ class FootfallDevice(models.Model):
         string="Device UID", required=True, copy=False, index=True,
         help="Stable identifier sent by the sensor/edge in every payload "
              "(e.g. 'anello-morelia-puerta1').")
+    store_id = fields.Many2one(
+        "xb.footfall.store", string="Store", required=True, ondelete="restrict",
+        index=True,
+        help="Physical store this entrance belongs to. Visitors of all the "
+             "store's entrances are summed and crossed against the store's POS "
+             "sales to compute conversion.")
     company_id = fields.Many2one(
-        "res.company", string="Store / Company", required=True,
-        default=lambda self: self.env.company,
-        help="Company that represents the physical store. POS orders of this "
-             "company are cross-referenced to compute conversion.")
-    pos_config_id = fields.Many2one(
-        "pos.config", string="POS Register / Store",
-        help="Specific POS register this door belongs to. Set this when several "
-             "stores share one company (e.g. multiple shops under the same "
-             "legal entity): conversion is then crossed against THIS register's "
-             "orders only. Leave empty if the company has a single store.")
+        "res.company", string="Company", related="store_id.company_id",
+        store=True, index=True, readonly=True)
     kind = fields.Selection(
         selection=[
             ("cctv_hik", "CCTV — Hikvision (ISAPI People Counting)"),

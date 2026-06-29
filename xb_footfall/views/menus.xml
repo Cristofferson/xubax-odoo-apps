@@ -16,7 +16,11 @@
     <menuitem id="menu_footfall_config" name="Configuration"
               parent="menu_footfall_root" sequence="90"/>
 
-    <menuitem id="menu_footfall_devices" name="Devices"
+    <menuitem id="menu_footfall_stores" name="Stores"
+              parent="menu_footfall_config"
+              action="action_footfall_store" sequence="5"/>
+
+    <menuitem id="menu_footfall_devices" name="Devices / Entrances"
               parent="menu_footfall_config"
               action="action_footfall_device" sequence="10"/>
 
