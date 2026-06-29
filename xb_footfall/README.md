@@ -18,10 +18,23 @@ Every source — Hikvision/Dahua native People Counting, a DIY edge mini-PC
 Odoo never receives an image, only the count (privacy by design / LFPDPPP).
 
 ## Models
-- `xb.footfall.device` — one per sensor; holds the Bearer token (`Configuration ▸ Devices`).
+- `xb.footfall.store` — **the unit of analysis** (`Configuration ▸ Stores`). A
+  store groups one or more **entrances** (devices — visitors summed) and the POS
+  sales to compare against, matched either by specific **registers** (`pos.config`,
+  for several registers in one shop) or by the **whole company** (single-store
+  company). A register belongs to only one store.
+- `xb.footfall.device` — one per entrance/sensor; belongs to a store; holds the
+  Bearer token (`Configuration ▸ Devices`).
 - `xb.footfall.event` — raw crossing events (in/out, count).
-- `xb.footfall.hourly` — read-only PostgreSQL view: visitors LEFT-JOIN POS per
-  company per hour → `conversion_rate`. Always live, no cron.
+- `xb.footfall.hourly` — read-only PostgreSQL view: per **store** per hour,
+  visitors (summed across entrances) vs POS tickets (summed across registers) →
+  `conversion_rate`. Always live, no cron.
+
+### Setup order
+1. `Configuration ▸ Stores` → create a store, pick **Match sales by** and its
+   registers (or company).
+2. `Configuration ▸ Devices` → one device per door, assign it to the store,
+   **Regenerate Token**, and point the edge agent at `/xb_footfall/ingest`.
 
 ## Ingest API
 ```

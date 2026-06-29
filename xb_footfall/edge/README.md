@@ -14,10 +14,13 @@ crossing event each time a tracked person passes a **virtual line**.
 ever leaves the device — only `{direction, count}`. The single exception is
 `calibrate.py`, run by hand at setup, which writes one local JPG you delete after.
 
-## 1. Provision the device in Odoo
-Footfall → Devices → create one, copy its **token** (Regenerate Token shows it
-once). Set the device's company to the one that owns the POS orders (otherwise the
-conversion KPI reads 0).
+## 1. Provision in Odoo
+First create the **Store** (Footfall → Configuration → Stores): pick *Match sales
+by* (specific POS registers, or the whole company) so the conversion KPI crosses
+the right tickets. Then Footfall → Configuration → Devices → create one **device
+per door**, assign it to that store, and copy its **token** (Regenerate Token
+shows it once). Several doors of the same shop = several devices on the same store
+(their visitors are summed).
 
 ## 2. Get the door RTSP URL from the DVR
 - Hikvision: `rtsp://user:pass@DVR_IP:554/Streaming/Channels/101` (ch1 main,
