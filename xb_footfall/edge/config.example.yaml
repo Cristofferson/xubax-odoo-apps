@@ -1,0 +1,34 @@
+# xb_footfall edge agent — copy to config.yaml and fill in.
+# Any key can also be set via env var XBF_<UPPERCASE_KEY> (e.g. XBF_TOKEN).
+
+# --- Source (the door channel) -------------------------------------------
+# DVR re-emitting an analog channel as RTSP:
+#   Hikvision: rtsp://user:pass@DVR_IP:554/Streaming/Channels/101   (ch1 main, 102=sub)
+#   Dahua:     rtsp://user:pass@DVR_IP:554/cam/realmonitor?channel=1&subtype=0
+# Or "0" for a USB/CSI camera plugged into the mini-PC.
+rtsp_url: "rtsp://admin:CHANGEME@192.168.1.50:554/Streaming/Channels/102"
+
+# --- Destination (Odoo ingest) -------------------------------------------
+odoo_url: "https://anello.diamane.mx/xb_footfall/ingest"
+device_uid: "anello-morelia-puerta1"
+token: "PASTE-DEVICE-TOKEN-FROM-ODOO"     # ficha del dispositivo → Regenerate Token
+
+# --- Virtual counting line (normalized 0..1 of the frame) ----------------
+# Run calibrate.py to see a grid over the real frame, then set endpoints.
+# Place it across the doorway, perpendicular to the walking path.
+line: [0.5, 0.1, 0.5, 0.9]
+swap_direction: false        # set true if "in"/"out" come out reversed
+
+# --- CV model ------------------------------------------------------------
+model: "yolo11n.pt"          # nano = fastest on CPU; yolo11s.pt for more accuracy
+imgsz: 640
+conf: 0.35
+tracker: "bytetrack.yaml"
+classes: [0]                 # 0 = person (COCO)
+device: "cpu"               # "cpu", or "0" for a CUDA GPU (Jetson)
+
+# --- Runtime -------------------------------------------------------------
+target_fps: 6                # process at most N frames/sec (lower = lighter CPU)
+flush_seconds: 30            # how often to POST queued events
+reconnect_seconds: 5
+log_level: "INFO"

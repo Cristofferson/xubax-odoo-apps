@@ -1,0 +1,21 @@
+# Bare-metal (no Docker) deploy on a RPi5 / mini-PC.
+#   sudo cp xb-footfall-edge.service /etc/systemd/system/
+#   sudo systemctl daemon-reload && sudo systemctl enable --now xb-footfall-edge
+# Assumes the repo edge/ dir at /opt/xbf-edge with a venv that has requirements.txt.
+[Unit]
+Description=xb_footfall edge CV counter
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/xbf-edge
+ExecStart=/opt/xbf-edge/venv/bin/python3 /opt/xbf-edge/counter.py --config /opt/xbf-edge/config.yaml
+Restart=always
+RestartSec=5
+# hardening: it only needs the network + its own dir
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

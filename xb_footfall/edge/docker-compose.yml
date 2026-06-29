@@ -1,0 +1,23 @@
+# Deploy on the in-store mini-PC (same footprint as the Direct Print agent).
+#   1. cp config.example.yaml config.yaml  &&  edit it
+#   2. docker compose up -d --build
+#   3. docker compose logs -f        # watch crossings + flushes
+services:
+  xbf-edge:
+    build: .
+    image: xubax/xb-footfall-edge:latest
+    container_name: xbf-edge
+    restart: unless-stopped
+    # The DVR lives on the LAN; bridge networking can reach it. Use host mode
+    # only if the DVR is reachable solely on the host's L2 segment.
+    volumes:
+      - ./config.yaml:/edge/config.yaml:ro
+    # YOLOv11n on CPU is light, but cap it so the box stays responsive.
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2g
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}

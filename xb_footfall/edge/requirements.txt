@@ -1,0 +1,5 @@
+# xb_footfall edge agent — Python deps (only needed for a bare-metal install;
+# the Docker image already bundles ultralytics + opencv + torch CPU).
+ultralytics>=8.3.0
+opencv-python-headless>=4.9.0
+PyYAML>=6.0
