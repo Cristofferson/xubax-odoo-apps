@@ -156,7 +156,10 @@ class Poster:
         req = urllib.request.Request(
             self.url, data=body, method="POST",
             headers={"Authorization": "Bearer " + self.token,
-                     "Content-Type": "application/json"})
+                     "Content-Type": "application/json",
+                     # Identify with a real UA: the default "Python-urllib/x"
+                     # is blocked by Cloudflare-fronted Odoo sites (403).
+                     "User-Agent": "xb-footfall-edge/1.0"})
         try:
             with urllib.request.urlopen(req, timeout=15) as resp:
                 json.load(resp)
