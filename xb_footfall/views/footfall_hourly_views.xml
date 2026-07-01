@@ -69,6 +69,8 @@
                     <filter name="g_company" string="Company" domain="[]" context="{'group_by': 'company_id'}"/>
                     <filter name="g_hour" string="Hour" domain="[]" context="{'group_by': 'hour:hour'}"/>
                     <filter name="g_day" string="Day" domain="[]" context="{'group_by': 'hour:day'}"/>
+                    <filter name="g_weekday" string="Weekday" domain="[]" context="{'group_by': 'hour:day_of_week'}"/>
+                    <filter name="g_hod" string="Hour of Day" domain="[]" context="{'group_by': 'hour:hour_number'}"/>
                 </group>
             </search>
         </field>
@@ -78,6 +80,30 @@
         <field name="name">Footfall &amp; Conversion</field>
         <field name="res_model">xb.footfall.hourly</field>
         <field name="view_mode">graph,pivot,list</field>
+    </record>
+
+    <!-- Peak hours heatmap: weekday x hour-of-day, in the user's timezone.
+         Reuses the hourly view; the granularities do the tz conversion. -->
+    <record id="view_footfall_peak_pivot" model="ir.ui.view">
+        <field name="name">xb.footfall.peak.pivot</field>
+        <field name="model">xb.footfall.hourly</field>
+        <field name="arch" type="xml">
+            <pivot string="Peak Hours">
+                <field name="visitors_in" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_footfall_peak" model="ir.actions.act_window">
+        <field name="name">Peak Hours</field>
+        <field name="res_model">xb.footfall.hourly</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="view_id" ref="view_footfall_peak_pivot"/>
+        <field name="context">{
+            'pivot_row_groupby': ['hour:day_of_week'],
+            'pivot_column_groupby': ['hour:hour_number'],
+            'pivot_measures': ['visitors_in'],
+        }</field>
     </record>
 
 </odoo>

@@ -5,9 +5,17 @@
               web_icon="xb_footfall,static/description/icon.png"
               sequence="95"/>
 
+    <menuitem id="menu_footfall_live" name="Live Occupancy"
+              parent="menu_footfall_root"
+              action="action_footfall_live" sequence="5"/>
+
     <menuitem id="menu_footfall_dashboard" name="Dashboard"
               parent="menu_footfall_root"
               action="action_footfall_hourly" sequence="10"/>
+
+    <menuitem id="menu_footfall_peak" name="Peak Hours"
+              parent="menu_footfall_root"
+              action="action_footfall_peak" sequence="15"/>
 
     <menuitem id="menu_footfall_config" name="Configuration"
               parent="menu_footfall_root" sequence="90"/>

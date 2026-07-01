@@ -23,8 +23,14 @@
             <form>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" icon="fa-users" disabled="1">
+                            <field name="live_occupancy" widget="statinfo" string="Inside now"/>
+                        </button>
+                        <button class="oe_stat_button" icon="fa-sign-in" disabled="1">
+                            <field name="visitors_today" widget="statinfo" string="Visitors today"/>
+                        </button>
                         <button name="action_view_devices" type="object"
-                                class="oe_stat_button" icon="fa-sign-in">
+                                class="oe_stat_button" icon="fa-door-open">
                             <field name="device_count" widget="statinfo" string="Entrances"/>
                         </button>
                     </div>
@@ -71,6 +77,62 @@
         <field name="name">Stores</field>
         <field name="res_model">xb.footfall.store</field>
         <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Live occupancy dashboard: one card per store, big current headcount -->
+    <record id="view_footfall_store_kanban" model="ir.ui.view">
+        <field name="name">xb.footfall.store.kanban</field>
+        <field name="model">xb.footfall.store</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_dashboard" create="false">
+                <field name="live_occupancy"/>
+                <field name="visitors_today"/>
+                <field name="exits_today"/>
+                <field name="last_event_time"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="row">
+                            <div class="col-8">
+                                <strong class="fs-5"><field name="name"/></strong>
+                            </div>
+                            <div class="col-4 text-end">
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </div>
+                        </div>
+                        <div class="row mt-2 text-center">
+                            <div class="col-4">
+                                <div class="display-6"><field name="live_occupancy"/></div>
+                                <small class="text-muted">Inside now</small>
+                            </div>
+                            <div class="col-4">
+                                <div class="display-6 text-success"><field name="visitors_today"/></div>
+                                <small class="text-muted">In today</small>
+                            </div>
+                            <div class="col-4">
+                                <div class="display-6 text-muted"><field name="exits_today"/></div>
+                                <small class="text-muted">Out today</small>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12 text-muted">
+                                <small>Last event: <field name="last_event_time"/></small>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_footfall_live" model="ir.actions.act_window">
+        <field name="name">Live Occupancy</field>
+        <field name="res_model">xb.footfall.store</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No stores yet</p>
+            <p>Create a store and add its entrance devices to see the live
+               headcount here.</p>
+        </field>
     </record>
 
 </odoo>

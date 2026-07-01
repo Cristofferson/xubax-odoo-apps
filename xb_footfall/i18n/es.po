@@ -17,6 +17,21 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_kanban
+msgid "<small class=\"text-muted\">In today</small>"
+msgstr "<small class=\"text-muted\">Entradas hoy</small>"
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_kanban
+msgid "<small class=\"text-muted\">Inside now</small>"
+msgstr "<small class=\"text-muted\">Adentro ahora</small>"
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_kanban
+msgid "<small class=\"text-muted\">Out today</small>"
+msgstr "<small class=\"text-muted\">Salidas hoy</small>"
+
+#. module: xb_footfall
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__access_token
 msgid "Access Token"
 msgstr "Token de acceso"
@@ -84,6 +99,15 @@ msgstr "Configuración"
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__conversion_rate
 msgid "Conversion %"
 msgstr "Conversión %"
+
+#. module: xb_footfall
+#: model_terms:ir.actions.act_window,help:xb_footfall.action_footfall_live
+msgid ""
+"Create a store and add its entrance devices to see the live\n"
+"               headcount here."
+msgstr ""
+"Crea una tienda y agrega sus dispositivos de entrada para ver aquí el\n"
+"               conteo en vivo."
 
 #. module: xb_footfall
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__create_uid
@@ -210,6 +234,11 @@ msgid "Exits"
 msgstr "Salidas"
 
 #. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__exits_today
+msgid "Exits Today"
+msgstr "Salidas hoy"
+
+#. module: xb_footfall
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__message_follower_ids
 msgid "Followers"
 msgstr "Seguidores"
@@ -268,6 +297,11 @@ msgid "Hour"
 msgstr "Hora"
 
 #. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_hourly_search
+msgid "Hour of Day"
+msgstr "Hora del día"
+
+#. module: xb_footfall
 #: model:ir.model.fields,help:xb_footfall.field_xb_footfall_store__match_mode
 msgid ""
 "How POS sales are attributed to this store for conversion:\n"
@@ -303,9 +337,19 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Si está marcado, algunos mensajes tienen un error de entrega."
 
 #. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_form
+msgid "Inside now"
+msgstr "Adentro ahora"
+
+#. module: xb_footfall
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__message_is_follower
 msgid "Is Follower"
 msgstr "Es seguidor"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__last_event_time
+msgid "Last Event"
+msgstr "Último evento"
 
 #. module: xb_footfall
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__last_seen
@@ -325,6 +369,18 @@ msgstr "Última actualización por"
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__write_date
 msgid "Last Updated on"
 msgstr "Última actualización el"
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_kanban
+msgid "Last event:"
+msgstr "Último evento:"
+
+#. module: xb_footfall
+#: model:ir.actions.act_window,name:xb_footfall.action_footfall_live
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__live_occupancy
+#: model:ir.ui.menu,name:xb_footfall.menu_footfall_live
+msgid "Live Occupancy"
+msgstr "Aforo en vivo"
 
 #. module: xb_footfall
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__match_mode
@@ -357,6 +413,11 @@ msgstr "Nombre"
 #: code:addons/xb_footfall/models/footfall_device.py:0
 msgid "New access token (shown once)"
 msgstr "Nuevo token de acceso (mostrado una vez)"
+
+#. module: xb_footfall
+#: model_terms:ir.actions.act_window,help:xb_footfall.action_footfall_live
+msgid "No stores yet"
+msgstr "Aún no hay tiendas"
 
 #. module: xb_footfall
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__note
@@ -412,9 +473,31 @@ msgid "POS tickets divided by visitors entering, as a percentage."
 msgstr "Tickets POS divididos entre los visitantes que entran, en porcentaje."
 
 #. module: xb_footfall
+#: model:ir.actions.act_window,name:xb_footfall.action_footfall_peak
+#: model:ir.ui.menu,name:xb_footfall.menu_footfall_peak
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_peak_pivot
+msgid "Peak Hours"
+msgstr "Horas pico"
+
+#. module: xb_footfall
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_event__count
 msgid "People"
 msgstr "Personas"
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_store__live_occupancy
+msgid ""
+"People currently inside: entrances minus exits so far today (never "
+"negative). A live estimate, reset every midnight."
+msgstr ""
+"Personas actualmente dentro: entradas menos salidas en lo que va del día "
+"(nunca negativo). Estimación en vivo, se reinicia cada medianoche."
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_store__visitors_today
+msgid "People who have entered the store since midnight (your timezone)."
+msgstr ""
+"Personas que han entrado a la tienda desde la medianoche (tu zona horaria)."
 
 #. module: xb_footfall
 #: model:ir.model.fields,help:xb_footfall.field_xb_footfall_event__seq
@@ -587,6 +670,11 @@ msgid "Time"
 msgstr "Hora"
 
 #. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_store__last_event_time
+msgid "Time of the most recent crossing across all this store's entrances."
+msgstr "Hora del cruce más reciente entre todas las entradas de esta tienda."
+
+#. module: xb_footfall
 #: model:ir.model.fields,help:xb_footfall.field_xb_footfall_store__area_sqm
 msgid ""
 "Total floor area of the store in square meters. Enables the sales-density "
@@ -648,6 +736,11 @@ msgid "Visitors Out"
 msgstr "Visitantes (salen)"
 
 #. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__visitors_today
+msgid "Visitors Today"
+msgstr "Visitantes hoy"
+
+#. module: xb_footfall
 #: model:ir.model.fields,help:xb_footfall.field_xb_footfall_hourly__visitors_per_sqm
 msgid "Visitors entering divided by the store's total m²: traffic density."
 msgstr ""
@@ -671,6 +764,11 @@ msgstr ""
 "por artículo vendido."
 
 #. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_form
+msgid "Visitors today"
+msgstr "Visitantes hoy"
+
+#. module: xb_footfall
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__website_message_ids
 msgid "Website Messages"
 msgstr "Mensajes del sitio web"
@@ -679,6 +777,11 @@ msgstr "Mensajes del sitio web"
 #: model:ir.model.fields,help:xb_footfall.field_xb_footfall_device__website_message_ids
 msgid "Website communication history"
 msgstr "Historial de comunicación del sitio web"
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_hourly_search
+msgid "Weekday"
+msgstr "Día de la semana"
 
 #. module: xb_footfall
 #: model:ir.model.fields.selection,name:xb_footfall.selection__xb_footfall_store__match_mode__company
