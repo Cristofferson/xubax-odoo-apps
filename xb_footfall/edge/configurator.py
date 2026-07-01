@@ -41,7 +41,7 @@ except ImportError:                       # pragma: no cover
 HERE = os.path.dirname(os.path.abspath(__file__))
 COUNTER = os.path.join(HERE, "counter.py")
 DEFAULT_CONFIG = os.path.join(HERE, "config.yaml")
-DISP_MAX_W = 760                          # frame preview width in the window
+DISP_MAX_W = 620                          # frame preview width in the window
 
 # Keys we do NOT touch when saving are carried over from the existing file so a
 # hand-tuned config.yaml keeps its advanced values.
@@ -119,8 +119,23 @@ def odoo_ingest_url(host):
 # ---------------------------------------------------------------------------
 class App(ttk.Frame):
     def __init__(self, master, config_path):
-        super().__init__(master, padding=10)
-        self.grid(sticky="nsew")
+        # The form is taller than some store screens, so host it in a scrollable
+        # canvas: the Save/Start buttons are always reachable by scrolling.
+        master.geometry("820x680")
+        master.minsize(600, 400)
+        container = ttk.Frame(master)
+        container.pack(fill="both", expand=True)
+        self._vcanvas = tk.Canvas(container, highlightthickness=0)
+        vsb = ttk.Scrollbar(container, orient="vertical", command=self._vcanvas.yview)
+        self._vcanvas.configure(yscrollcommand=vsb.set)
+        vsb.pack(side="right", fill="y")
+        self._vcanvas.pack(side="left", fill="both", expand=True)
+        super().__init__(self._vcanvas, padding=10)
+        self._vcanvas.create_window((0, 0), window=self, anchor="nw")
+        self.bind("<Configure>", lambda e: self._vcanvas.configure(
+            scrollregion=self._vcanvas.bbox("all")))
+        self._vcanvas.bind_all("<MouseWheel>", lambda e: self._vcanvas.yview_scroll(
+            int(-e.delta / 120), "units"))
         self.config_path = config_path
         self.cfg = self._load()
         self.proc = None                   # running counter subprocess
@@ -302,7 +317,7 @@ class App(ttk.Frame):
                    ).grid(row=0, column=2, padx=3)
 
         # --- Log ---
-        self.log = tk.Text(self, height=8, width=96, bg="#111", fg="#7fd", wrap="none")
+        self.log = tk.Text(self, height=6, width=88, bg="#111", fg="#7fd", wrap="none")
         self.log.grid(row=6, column=0, sticky="nsew", **pad)
 
     def _on_brand(self):
