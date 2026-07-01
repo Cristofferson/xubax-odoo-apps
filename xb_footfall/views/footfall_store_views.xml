@@ -9,6 +9,7 @@
                 <field name="name"/>
                 <field name="company_id" groups="base.group_multi_company"/>
                 <field name="match_mode"/>
+                <field name="area_sqm" optional="show"/>
                 <field name="register_count"/>
                 <field name="device_count"/>
             </list>
@@ -35,7 +36,9 @@
                             <field name="company_id" groups="base.group_multi_company"/>
                             <field name="match_mode" widget="radio"/>
                         </group>
-                        <group>
+                        <group string="Surface (for density KPIs)">
+                            <field name="area_sqm"/>
+                            <field name="sales_area_sqm"/>
                             <field name="active" invisible="1"/>
                         </group>
                     </group>

@@ -12,8 +12,16 @@
                 <field name="visitors_in"/>
                 <field name="visitors_out"/>
                 <field name="tickets"/>
+                <field name="units" optional="show"/>
                 <field name="revenue"/>
                 <field name="conversion_rate" widget="percentage" optional="show"/>
+                <field name="atv" optional="show"/>
+                <field name="upt" optional="hide"/>
+                <field name="revenue_per_visitor" optional="show"/>
+                <field name="visitors_per_ticket" optional="hide"/>
+                <field name="visitors_per_unit" optional="hide"/>
+                <field name="revenue_per_sqm" optional="hide"/>
+                <field name="visitors_per_sqm" optional="hide"/>
                 <field name="currency_id" column_invisible="1"/>
             </list>
         </field>
@@ -40,7 +48,11 @@
                 <field name="hour" interval="day" type="col"/>
                 <field name="visitors_in" type="measure"/>
                 <field name="tickets" type="measure"/>
+                <field name="units" type="measure"/>
+                <field name="revenue" type="measure"/>
                 <field name="conversion_rate" type="measure"/>
+                <field name="revenue_per_visitor" type="measure"/>
+                <field name="revenue_per_sqm" type="measure"/>
             </pivot>
         </field>
     </record>

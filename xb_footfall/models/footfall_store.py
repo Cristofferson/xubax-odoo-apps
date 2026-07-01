@@ -45,6 +45,15 @@ class FootfallStore(models.Model):
         "xb.footfall.device", "store_id", string="Entrances / Devices")
     device_count = fields.Integer(compute="_compute_counts")
     register_count = fields.Integer(compute="_compute_counts")
+    area_sqm = fields.Float(
+        string="Total m²",
+        help="Total floor area of the store in square meters. Enables the "
+             "sales-density KPIs (revenue and visitors per m²).")
+    sales_area_sqm = fields.Float(
+        string="Sales-floor m²",
+        help="Selling area in square meters (excludes storage/offices). "
+             "Optional; use it when you want density over the sellable floor "
+             "only rather than the whole premises.")
     note = fields.Text(string="Notes")
 
     @api.depends("device_ids", "register_ids")
