@@ -206,6 +206,7 @@ def run(cfg):
         counter = None
         frame_idx = 0
         last_proc = 0.0
+        last_dbg = 0.0
         while not stop["flag"]:
             ok, frame = cap.read()
             if not ok:
@@ -234,6 +235,14 @@ def run(cfg):
                 xyxy = res.boxes.xyxy.tolist()
                 for tid, (x1, y1, x2, y2) in zip(ids, xyxy):
                     tracks.append((tid, (x1 + x2) / 2.0, (y1 + y2) / 2.0))
+
+            # Detection heartbeat: only logs when someone is in frame, so a walk
+            # that produces no "crossing" can be told apart from no detection.
+            ndet = len(res.boxes) if res.boxes is not None else 0
+            if ndet and now - last_dbg >= 3.0:
+                _log.info("detectando %d persona(s) en cuadro (con seguimiento=%d)",
+                          ndet, len(tracks))
+                last_dbg = now
 
             for direction in counter.update(tracks, frame_idx):
                 poster.add(direction)
