@@ -14,6 +14,29 @@ crossing event each time a tracked person passes a **virtual line**.
 ever leaves the device — only `{direction, count}`. The single exception is
 `calibrate.py`, run by hand at setup, which writes one local JPG you delete after.
 
+## Fast setup (Windows, no config file by hand)
+On the store PC, inside this `edge` folder:
+
+1. Double-click **`install-windows.bat`** — it installs Python (if missing),
+   creates the virtual environment, installs the dependencies, and opens the
+   **desktop configurator**.
+2. In the window (**XB Aforo → Configurar**):
+   - pick the **DVR brand**, type **IP / user / password / channel** → the RTSP
+     URL is assembled for you;
+   - **Probar cámara** shows a live frame; **click two points** on it to draw the
+     counting line (tick *Invertir Entrada/Salida* if in/out come out reversed);
+   - type the Odoo **site** (e.g. `www.lamur.mx`) and paste the device **token**;
+     **Probar Odoo** confirms the token reaches Odoo (creates no events);
+   - **Guardar**, then **Arrancar** to run with a live log;
+   - **Instalar arranque 24/7** registers a Windows Scheduled Task so it comes
+     back after a reboot.
+3. To re-open the window later: **`configure-windows.bat`**.
+
+The configurator just writes `config.yaml` and drives `counter.py` — the manual
+steps below (§1–§6) remain valid for headless / Docker / Linux installs. The same
+`python configurator.py` window works on macOS too (the *Instalar arranque 24/7*
+button writes a LaunchAgent there).
+
 ## 1. Provision in Odoo
 First create the **Store** (Footfall → Configuration → Stores): pick *Match sales
 by* (specific POS registers, or the whole company) so the conversion KPI crosses

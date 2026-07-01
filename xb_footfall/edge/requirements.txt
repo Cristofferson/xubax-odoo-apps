@@ -3,3 +3,6 @@
 ultralytics>=8.3.0
 opencv-python-headless>=4.9.0
 PyYAML>=6.0
+# Pillow: show the camera frame in the desktop configurator (configurator.py).
+# It also ships as an ultralytics dependency; pinned here for a bare install.
+Pillow>=10.0
