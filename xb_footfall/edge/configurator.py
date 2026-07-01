@@ -218,7 +218,7 @@ class App(ttk.Frame):
 
     # -- layout -------------------------------------------------------------
     def _build(self):
-        self.master.title("XB Aforo - Configurar contador")
+        self.winfo_toplevel().title("XB Aforo - Configurar contador")
         pad = {"padx": 4, "pady": 3}
         self.v_brand = tk.StringVar(value="dahua")
         self.v_ip = tk.StringVar()
