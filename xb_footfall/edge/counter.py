@@ -174,6 +174,11 @@ class Poster:
 # Main loop
 # ---------------------------------------------------------------------------
 def run(cfg):
+    # Prefer RTSP over TCP: many DVRs drop frames on the default UDP transport,
+    # which shows up as repeated "stream read failed, reconnecting". Set before
+    # the first VideoCapture so FFmpeg picks it up. A user env override wins.
+    os.environ.setdefault("OPENCV_FFMPEG_CAPTURE_OPTIONS", "rtsp_transport;tcp")
+
     # Heavy imports deferred so --help and config errors are instant.
     import cv2
     from ultralytics import YOLO
