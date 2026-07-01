@@ -9,10 +9,6 @@
               parent="menu_footfall_root"
               action="action_footfall_hourly" sequence="10"/>
 
-    <menuitem id="menu_footfall_events" name="Crossing Events"
-              parent="menu_footfall_root"
-              action="action_footfall_event" sequence="20"/>
-
     <menuitem id="menu_footfall_config" name="Configuration"
               parent="menu_footfall_root" sequence="90"/>
 
@@ -20,8 +16,12 @@
               parent="menu_footfall_config"
               action="action_footfall_store" sequence="5"/>
 
-    <menuitem id="menu_footfall_devices" name="Devices / Entrances"
+    <menuitem id="menu_footfall_devices" name="Entrances"
               parent="menu_footfall_config"
               action="action_footfall_device" sequence="10"/>
+
+    <menuitem id="menu_footfall_events" name="Crossing Events"
+              parent="menu_footfall_config"
+              action="action_footfall_event" sequence="20"/>
 
 </odoo>

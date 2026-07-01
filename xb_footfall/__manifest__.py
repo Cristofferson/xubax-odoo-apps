@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Footfall Analytics (People Counting)",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.4.0",
     "category": "Point of Sale",
     "summary": "Count store visitors from any sensor (CCTV people-counting or "
                "edge CV) and cross them with POS sales to get the conversion KPI.",

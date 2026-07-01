@@ -1,0 +1,708 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_footfall
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-01 04:54+0000\n"
+"PO-Revision-Date: 2026-07-01 04:54+0000\n"
+"Last-Translator: \n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__access_token
+msgid "Access Token"
+msgstr "Token de acceso"
+
+#. module: xb_footfall
+#. odoo-python
+#: code:addons/xb_footfall/models/footfall_device.py:0
+msgid "Access token regenerated."
+msgstr "Token de acceso regenerado."
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__message_needaction
+msgid "Action Needed"
+msgstr "Acción requerida"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__active
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__message_attachment_count
+msgid "Attachment Count"
+msgstr "Nº de adjuntos"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__atv
+msgid "Avg Ticket (ATV)"
+msgstr "Ticket promedio (ATV)"
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_device__access_token
+msgid ""
+"Bearer token the device uses to authenticate against the ingest endpoint. "
+"Keep it secret; regenerate if leaked."
+msgstr ""
+"Token Bearer que el dispositivo usa para autenticarse contra el endpoint de "
+"ingesta. Manténgalo en secreto; regenérelo si se filtra."
+
+#. module: xb_footfall
+#: model:ir.model.fields.selection,name:xb_footfall.selection__xb_footfall_device__kind__cctv_dahua
+msgid "CCTV — Dahua"
+msgstr "CCTV — Dahua"
+
+#. module: xb_footfall
+#: model:ir.model.fields.selection,name:xb_footfall.selection__xb_footfall_device__kind__cctv_hik
+msgid "CCTV — Hikvision (ISAPI People Counting)"
+msgstr "CCTV — Hikvision (conteo de personas ISAPI)"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__company_id
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__company_id
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__company_id
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_hourly_search
+msgid "Company"
+msgstr "Compañía"
+
+#. module: xb_footfall
+#: model:ir.ui.menu,name:xb_footfall.menu_footfall_config
+msgid "Configuration"
+msgstr "Configuración"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__conversion_rate
+msgid "Conversion %"
+msgstr "Conversión %"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__create_uid
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_event__create_uid
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__create_date
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_event__create_date
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: xb_footfall
+#. odoo-python
+#: code:addons/xb_footfall/models/footfall_device.py:0
+#: model:ir.actions.act_window,name:xb_footfall.action_footfall_event
+#: model:ir.ui.menu,name:xb_footfall.menu_footfall_events
+msgid "Crossing Events"
+msgstr "Eventos de cruce"
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_event_graph
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_event_pivot
+msgid "Crossings"
+msgstr "Cruces"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: xb_footfall
+#: model:ir.model.fields.selection,name:xb_footfall.selection__xb_footfall_device__kind__diy_cv
+msgid "DIY edge (YOLO + ByteTrack)"
+msgstr "Edge DIY (YOLO + ByteTrack)"
+
+#. module: xb_footfall
+#: model:ir.ui.menu,name:xb_footfall.menu_footfall_dashboard
+msgid "Dashboard"
+msgstr "Tablero"
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_hourly_search
+msgid "Day"
+msgstr "Día"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_event__device_id
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_event_search
+msgid "Device"
+msgstr "Dispositivo"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__device_count
+msgid "Device Count"
+msgstr "Nº de dispositivos"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_event__seq
+msgid "Device Sequence"
+msgstr "Secuencia del dispositivo"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__device_uid
+msgid "Device UID"
+msgstr "UID del dispositivo"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_event__direction
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_event_search
+msgid "Direction"
+msgstr "Sentido"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__display_name
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_event__display_name
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__display_name
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: xb_footfall
+#: model:ir.model.fields.selection,name:xb_footfall.selection__xb_footfall_event__direction__in
+msgid "Entrance"
+msgstr "Entrada"
+
+#. module: xb_footfall
+#. odoo-python
+#: code:addons/xb_footfall/models/footfall_store.py:0
+#: model:ir.actions.act_window,name:xb_footfall.action_footfall_device
+#: model:ir.ui.menu,name:xb_footfall.menu_footfall_devices
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_event_search
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_form
+msgid "Entrances"
+msgstr "Entradas"
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_form
+msgid "Entrances (visitors)"
+msgstr "Entradas (visitantes)"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__device_ids
+msgid "Entrances / Devices"
+msgstr "Entradas / Dispositivos"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__event_count
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_device_form
+msgid "Events"
+msgstr "Eventos"
+
+#. module: xb_footfall
+#: model:ir.model.fields.selection,name:xb_footfall.selection__xb_footfall_event__direction__out
+msgid "Exit"
+msgstr "Salida"
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_event_search
+msgid "Exits"
+msgstr "Salidas"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Contactos)"
+
+#. module: xb_footfall
+#: model:ir.ui.menu,name:xb_footfall.menu_footfall_root
+msgid "Footfall"
+msgstr "Aforo"
+
+#. module: xb_footfall
+#: model:ir.actions.act_window,name:xb_footfall.action_footfall_hourly
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_hourly_pivot
+msgid "Footfall & Conversion"
+msgstr "Aforo y Conversión"
+
+#. module: xb_footfall
+#: model:ir.model,name:xb_footfall.model_xb_footfall_device
+msgid "Footfall Counting Device"
+msgstr "Dispositivo de conteo de aforo"
+
+#. module: xb_footfall
+#: model:ir.model,name:xb_footfall.model_xb_footfall_event
+msgid "Footfall Crossing Event"
+msgstr "Evento de cruce de aforo"
+
+#. module: xb_footfall
+#: model:ir.model,name:xb_footfall.model_xb_footfall_store
+msgid "Footfall Store"
+msgstr "Tienda de aforo"
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_hourly_graph
+msgid "Footfall vs Conversion"
+msgstr "Aforo vs Conversión"
+
+#. module: xb_footfall
+#: model:ir.model,name:xb_footfall.model_xb_footfall_hourly
+msgid "Footfall — Hourly Conversion"
+msgstr "Aforo — Conversión por hora"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__has_message
+msgid "Has Message"
+msgstr "Tiene mensaje"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__hour
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_event_search
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_hourly_search
+msgid "Hour"
+msgstr "Hora"
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_store__match_mode
+msgid ""
+"How POS sales are attributed to this store for conversion:\n"
+"• Specific POS registers: only orders from the registers below (use when several stores share one company).\n"
+"• Whole company: all POS orders of the company (use when the company has a single store)."
+msgstr ""
+"Cómo se atribuyen las ventas POS a esta tienda para la conversión:\n"
+"• Cajas POS específicas: solo los pedidos de las cajas de abajo (úselo cuando varias tiendas comparten una compañía).\n"
+"• Toda la compañía: todos los pedidos POS de la compañía (úselo cuando la compañía tiene una sola tienda)."
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__id
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_event__id
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__id
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__id
+msgid "ID"
+msgstr "ID"
+
+#. module: xb_footfall
+#: model:ir.model.fields.selection,name:xb_footfall.selection__xb_footfall_device__kind__ir_beam
+msgid "IR beam counter"
+msgstr "Barrera infrarroja"
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_device__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcado, los nuevos mensajes requieren su atención."
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_device__message_has_error
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_device__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si está marcado, algunos mensajes tienen un error de entrega."
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__message_is_follower
+msgid "Is Follower"
+msgstr "Es seguidor"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__last_seen
+msgid "Last Seen"
+msgstr "Última señal"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__write_uid
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_event__write_uid
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__write_date
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_event__write_date
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__match_mode
+msgid "Match sales by"
+msgstr "Cruzar ventas por"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__message_has_error
+msgid "Message Delivery error"
+msgstr "Error de entrega del mensaje"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_device_form
+msgid "Mounting, IP/RTSP, ISAPI path, calibration notes..."
+msgstr "Montaje, IP/RTSP, ruta ISAPI, notas de calibración..."
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__name
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: xb_footfall
+#. odoo-python
+#: code:addons/xb_footfall/models/footfall_device.py:0
+msgid "New access token (shown once)"
+msgstr "Nuevo token de acceso (mostrado una vez)"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__note
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__note
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_device_form
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_form
+msgid "Notes"
+msgstr "Notas"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Nº de acciones"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__message_has_error_counter
+msgid "Number of errors"
+msgstr "Nº de errores"
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_device__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Número de mensajes que requieren una acción"
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_device__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensajes con un error de entrega"
+
+#. module: xb_footfall
+#: model:ir.model.fields.selection,name:xb_footfall.selection__xb_footfall_device__kind__other
+msgid "Other"
+msgstr "Otro"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__register_ids
+msgid "POS Registers"
+msgstr "Cajas POS"
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_form
+msgid "POS Registers (tickets)"
+msgstr "Cajas POS (tickets)"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__tickets
+msgid "POS Tickets"
+msgstr "Tickets POS"
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_hourly__conversion_rate
+msgid "POS tickets divided by visitors entering, as a percentage."
+msgstr "Tickets POS divididos entre los visitantes que entran, en porcentaje."
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_event__count
+msgid "People"
+msgstr "Personas"
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_event__seq
+msgid ""
+"Per-device monotonic sequence sent by the edge, used to drop duplicates on "
+"retries."
+msgstr ""
+"Secuencia monótona por dispositivo enviada por el edge, usada para descartar"
+" duplicados en reintentos."
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_device__store_id
+msgid ""
+"Physical store this entrance belongs to. Visitors of all the store's "
+"entrances are summed and crossed against the store's POS sales to compute "
+"conversion."
+msgstr ""
+"Tienda física a la que pertenece esta entrada. Los visitantes de todas las "
+"entradas de la tienda se suman y se cruzan con las ventas POS de la tienda "
+"para calcular la conversión."
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__rating_ids
+msgid "Ratings"
+msgstr "Valoraciones"
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_device_form
+msgid "Regenerate Token"
+msgstr "Regenerar token"
+
+#. module: xb_footfall
+#. odoo-python
+#: code:addons/xb_footfall/models/footfall_store.py:0
+msgid ""
+"Register '%(reg)s' is already assigned to store '%(store)s'. A register can "
+"belong to only one store."
+msgstr ""
+"La caja '%(reg)s' ya está asignada a la tienda '%(store)s'. Una caja solo "
+"puede pertenecer a una tienda."
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__register_count
+msgid "Register Count"
+msgstr "Nº de cajas"
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_store__register_ids
+msgid ""
+"Registers whose tickets count toward this store's conversion. Only used when"
+" 'Match sales by' is 'Specific POS registers'."
+msgstr ""
+"Cajas cuyos tickets cuentan para la conversión de esta tienda. Solo se usan "
+"cuando 'Cruzar ventas por' es 'Cajas POS específicas'."
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__revenue
+msgid "Revenue"
+msgstr "Ingresos"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__revenue_per_visitor
+msgid "Revenue / Visitor"
+msgstr "Ingreso / Visitante"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__revenue_per_sqm
+msgid "Revenue / m²"
+msgstr "Ingreso / m²"
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_hourly__revenue_per_sqm
+msgid "Revenue divided by the store's total m²: sales density."
+msgstr ""
+"Ingresos divididos entre los m² totales de la tienda: densidad de ventas."
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_hourly__atv
+msgid "Revenue divided by tickets: average value of a sale."
+msgstr "Ingresos divididos entre tickets: valor promedio de una venta."
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_hourly__revenue_per_visitor
+msgid "Revenue divided by visitors entering: the money each walk-in yields."
+msgstr ""
+"Ingresos divididos entre los visitantes que entran: el dinero que produce "
+"cada visita."
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Error de entrega de SMS"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__sales_area_sqm
+msgid "Sales-floor m²"
+msgstr "m² de piso de venta"
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_store__sales_area_sqm
+msgid ""
+"Selling area in square meters (excludes storage/offices). Optional; use it "
+"when you want density over the sellable floor only rather than the whole "
+"premises."
+msgstr ""
+"Superficie de venta en metros cuadrados (excluye almacén/oficinas). "
+"Opcional; úsela cuando quiera densidad solo sobre el piso vendible en lugar "
+"de todo el local."
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__kind
+msgid "Sensor Type"
+msgstr "Tipo de sensor"
+
+#. module: xb_footfall
+#: model:ir.model.fields.selection,name:xb_footfall.selection__xb_footfall_store__match_mode__registers
+msgid "Specific POS registers"
+msgstr "Cajas POS específicas"
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_device__device_uid
+msgid ""
+"Stable identifier sent by the sensor/edge in every payload (e.g. 'anello-"
+"morelia-puerta1')."
+msgstr ""
+"Identificador estable que el sensor/edge envía en cada carga (p. ej. "
+"'anello-morelia-puerta1')."
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__store_id
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__store_id
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_event_search
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_hourly_search
+msgid "Store"
+msgstr "Tienda"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_event__company_id
+msgid "Store / Company"
+msgstr "Tienda / Compañía"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__area_sqm
+msgid "Store m²"
+msgstr "m² de la tienda"
+
+#. module: xb_footfall
+#: model:ir.actions.act_window,name:xb_footfall.action_footfall_store
+#: model:ir.ui.menu,name:xb_footfall.menu_footfall_stores
+msgid "Stores"
+msgstr "Tiendas"
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_form
+msgid "Surface (for density KPIs)"
+msgstr "Superficie (para KPIs de densidad)"
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_device_form
+msgid ""
+"This invalidates the current token. The device will stop reporting until "
+"reconfigured. Continue?"
+msgstr ""
+"Esto invalida el token actual. El dispositivo dejará de reportar hasta "
+"reconfigurarse. ¿Continuar?"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_event__event_time
+msgid "Time"
+msgstr "Hora"
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_store__area_sqm
+msgid ""
+"Total floor area of the store in square meters. Enables the sales-density "
+"KPIs (revenue and visitors per m²)."
+msgstr ""
+"Superficie total de la tienda en metros cuadrados. Habilita los KPIs de "
+"densidad de ventas (ingresos y visitantes por m²)."
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__area_sqm
+msgid "Total m²"
+msgstr "m² totales"
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_hourly__units
+msgid "Total quantity of items sold (sum of POS order line quantities)."
+msgstr ""
+"Cantidad total de artículos vendidos (suma de las cantidades de las líneas "
+"de pedido POS)."
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__upt
+msgid "Units / Ticket (UPT)"
+msgstr "Unidades / Ticket (UPT)"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__units
+msgid "Units Sold"
+msgstr "Unidades vendidas"
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_hourly__upt
+msgid "Units sold divided by tickets: basket size."
+msgstr "Unidades vendidas divididas entre tickets: tamaño de la canasta."
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__visitors_per_ticket
+msgid "Visitors / Ticket"
+msgstr "Visitantes / Ticket"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__visitors_per_unit
+msgid "Visitors / Unit"
+msgstr "Visitantes / Unidad"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__visitors_per_sqm
+msgid "Visitors / m²"
+msgstr "Visitantes / m²"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__visitors_in
+msgid "Visitors In"
+msgstr "Visitantes (entran)"
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__visitors_out
+msgid "Visitors Out"
+msgstr "Visitantes (salen)"
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_hourly__visitors_per_sqm
+msgid "Visitors entering divided by the store's total m²: traffic density."
+msgstr ""
+"Visitantes que entran divididos entre los m² totales de la tienda: densidad "
+"de tráfico."
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_hourly__visitors_per_ticket
+msgid ""
+"Visitors entering divided by tickets: how many people walk in per sale."
+msgstr ""
+"Visitantes que entran divididos entre tickets: cuántas personas entran por "
+"venta."
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_hourly__visitors_per_unit
+msgid ""
+"Visitors entering divided by units sold: how many people per item sold."
+msgstr ""
+"Visitantes que entran divididos entre unidades vendidas: cuántas personas "
+"por artículo vendido."
+
+#. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes del sitio web"
+
+#. module: xb_footfall
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_device__website_message_ids
+msgid "Website communication history"
+msgstr "Historial de comunicación del sitio web"
+
+#. module: xb_footfall
+#: model:ir.model.fields.selection,name:xb_footfall.selection__xb_footfall_store__match_mode__company
+msgid "Whole company"
+msgstr "Toda la compañía"
+
+#. module: xb_footfall
+#. odoo-python
+#: code:addons/xb_footfall/models/footfall_device.py:0
+msgid "device_id"
+msgstr "device_id"
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_device_form
+msgid "e.g. Anello Morelia — Front door"
+msgstr "p. ej. Anello Morelia — Puerta principal"
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_form
+msgid "e.g. LAMUR Américas"
+msgstr "p. ej. LAMUR Américas"
+
+#. module: xb_footfall
+#. odoo-python
+#: code:addons/xb_footfall/models/footfall_store.py:0
+msgid "store_id"
+msgstr "store_id"
