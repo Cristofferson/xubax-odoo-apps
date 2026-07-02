@@ -84,8 +84,10 @@ msgstr "CCTV — Hikvision (conteo de personas ISAPI)"
 
 #. module: xb_footfall
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__company_id
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_event__company_id
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__company_id
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__company_id
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_event_search
 #: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_hourly_search
 msgid "Company"
 msgstr "Compañía"
@@ -510,6 +512,7 @@ msgstr ""
 
 #. module: xb_footfall
 #: model:ir.model.fields,help:xb_footfall.field_xb_footfall_device__store_id
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_event__store_id
 msgid ""
 "Physical store this entrance belongs to. Visitors of all the store's "
 "entrances are summed and crossed against the store's POS sales to compute "
@@ -628,16 +631,12 @@ msgstr ""
 
 #. module: xb_footfall
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__store_id
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_event__store_id
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__store_id
 #: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_event_search
 #: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_hourly_search
 msgid "Store"
 msgstr "Tienda"
-
-#. module: xb_footfall
-#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_event__company_id
-msgid "Store / Company"
-msgstr "Tienda / Compañía"
 
 #. module: xb_footfall
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__area_sqm

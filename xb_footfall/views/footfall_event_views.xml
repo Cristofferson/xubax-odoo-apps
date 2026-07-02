@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <list>
                 <field name="event_time"/>
+                <field name="store_id"/>
                 <field name="device_id"/>
                 <field name="company_id" groups="base.group_multi_company"/>
                 <field name="direction"/>
@@ -32,7 +33,7 @@
         <field name="model">xb.footfall.event</field>
         <field name="arch" type="xml">
             <pivot string="Crossings">
-                <field name="device_id" type="row"/>
+                <field name="store_id" type="row"/>
                 <field name="event_time" interval="day" type="col"/>
                 <field name="count" type="measure"/>
             </pivot>
@@ -44,13 +45,15 @@
         <field name="model">xb.footfall.event</field>
         <field name="arch" type="xml">
             <search>
+                <field name="store_id"/>
                 <field name="device_id"/>
                 <field name="company_id"/>
                 <filter name="entrances" string="Entrances" domain="[('direction','=','in')]"/>
                 <filter name="exits" string="Exits" domain="[('direction','=','out')]"/>
                 <group>
+                    <filter name="g_store" string="Store" domain="[]" context="{'group_by': 'store_id'}"/>
                     <filter name="g_device" string="Device" domain="[]" context="{'group_by': 'device_id'}"/>
-                    <filter name="g_company" string="Store" domain="[]" context="{'group_by': 'company_id'}"/>
+                    <filter name="g_company" string="Company" domain="[]" context="{'group_by': 'company_id'}"/>
                     <filter name="g_direction" string="Direction" domain="[]" context="{'group_by': 'direction'}"/>
                     <filter name="g_hour" string="Hour" domain="[]" context="{'group_by': 'event_time:hour'}"/>
                 </group>

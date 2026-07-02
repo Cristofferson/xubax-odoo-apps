@@ -11,8 +11,11 @@ class FootfallEvent(models.Model):
     device_id = fields.Many2one(
         "xb.footfall.device", string="Device", required=True,
         ondelete="cascade", index=True)
+    store_id = fields.Many2one(
+        related="device_id.store_id", string="Store",
+        store=True, index=True)
     company_id = fields.Many2one(
-        related="device_id.company_id", string="Store / Company",
+        related="device_id.company_id", string="Company",
         store=True, index=True)
     event_time = fields.Datetime(
         string="Time", required=True, index=True,
