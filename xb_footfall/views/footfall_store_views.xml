@@ -84,10 +84,6 @@
         <field name="model">xb.footfall.store</field>
         <field name="arch" type="xml">
             <kanban class="o_kanban_dashboard" create="false">
-                <field name="live_occupancy"/>
-                <field name="visitors_in"/>
-                <field name="visitors_out"/>
-                <field name="last_event_time"/>
                 <templates>
                     <t t-name="card">
                         <div class="row">
