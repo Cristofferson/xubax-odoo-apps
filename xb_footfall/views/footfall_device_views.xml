@@ -60,7 +60,7 @@
     </record>
 
     <record id="action_footfall_device" model="ir.actions.act_window">
-        <field name="name">Entrances</field>
+        <field name="name">Devices</field>
         <field name="res_model">xb.footfall.device</field>
         <field name="view_mode">list,form</field>
     </record>

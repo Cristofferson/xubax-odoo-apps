@@ -18,18 +18,18 @@ msgstr ""
 
 #. module: xb_footfall
 #: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_kanban
-msgid "<small class=\"text-muted\">In today</small>"
-msgstr "<small class=\"text-muted\">Entradas hoy</small>"
+msgid "<small class=\"text-muted\">In</small>"
+msgstr "<small class=\"text-muted\">Entradas</small>"
 
 #. module: xb_footfall
 #: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_kanban
-msgid "<small class=\"text-muted\">Inside now</small>"
-msgstr "<small class=\"text-muted\">Adentro ahora</small>"
+msgid "<small class=\"text-muted\">Occupancy</small>"
+msgstr "<small class=\"text-muted\">Aforo</small>"
 
 #. module: xb_footfall
 #: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_kanban
-msgid "<small class=\"text-muted\">Out today</small>"
-msgstr "<small class=\"text-muted\">Salidas hoy</small>"
+msgid "<small class=\"text-muted\">Out</small>"
+msgstr "<small class=\"text-muted\">Salidas</small>"
 
 #. module: xb_footfall
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__access_token
@@ -89,6 +89,7 @@ msgstr "CCTV — Hikvision (conteo de personas ISAPI)"
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__company_id
 #: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_event_search
 #: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_hourly_search
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_live_search
 msgid "Company"
 msgstr "Compañía"
 
@@ -181,6 +182,21 @@ msgid "Device UID"
 msgstr "UID del dispositivo"
 
 #. module: xb_footfall
+#. odoo-python
+#: code:addons/xb_footfall/models/footfall_store.py:0
+#: model:ir.actions.act_window,name:xb_footfall.action_footfall_device
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__device_ids
+#: model:ir.ui.menu,name:xb_footfall.menu_footfall_devices
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_form
+msgid "Devices"
+msgstr "Dispositivos"
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_form
+msgid "Devices (counting sensors at each entrance)"
+msgstr "Dispositivos (sensores de conteo en cada entrada)"
+
+#. module: xb_footfall
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_event__direction
 #: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_event_search
 msgid "Direction"
@@ -200,24 +216,20 @@ msgid "Entrance"
 msgstr "Entrada"
 
 #. module: xb_footfall
-#. odoo-python
-#: code:addons/xb_footfall/models/footfall_store.py:0
-#: model:ir.actions.act_window,name:xb_footfall.action_footfall_device
-#: model:ir.ui.menu,name:xb_footfall.menu_footfall_devices
 #: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_event_search
-#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_form
 msgid "Entrances"
 msgstr "Entradas"
 
 #. module: xb_footfall
-#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_form
-msgid "Entrances (visitors)"
-msgstr "Entradas (visitantes)"
-
-#. module: xb_footfall
-#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__device_ids
-msgid "Entrances / Devices"
-msgstr "Entradas / Dispositivos"
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_store__live_occupancy
+msgid ""
+"Entrances minus exits over the selected period (never negative). For the "
+"default 'today' period this is a live estimate of the people currently "
+"inside, reset every midnight."
+msgstr ""
+"Entradas menos salidas durante el periodo seleccionado (nunca negativo). En "
+"el periodo predeterminado 'hoy' es una estimación en vivo de las personas "
+"dentro en este momento, que se reinicia cada medianoche."
 
 #. module: xb_footfall
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__event_count
@@ -234,11 +246,6 @@ msgstr "Salida"
 #: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_event_search
 msgid "Exits"
 msgstr "Salidas"
-
-#. module: xb_footfall
-#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__exits_today
-msgid "Exits Today"
-msgstr "Salidas hoy"
 
 #. module: xb_footfall
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_device__message_follower_ids
@@ -379,7 +386,6 @@ msgstr "Último evento:"
 
 #. module: xb_footfall
 #: model:ir.actions.act_window,name:xb_footfall.action_footfall_live
-#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__live_occupancy
 #: model:ir.ui.menu,name:xb_footfall.menu_footfall_live
 msgid "Live Occupancy"
 msgstr "Aforo en vivo"
@@ -450,6 +456,11 @@ msgid "Number of messages with delivery error"
 msgstr "Número de mensajes con un error de entrega"
 
 #. module: xb_footfall
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__live_occupancy
+msgid "Occupancy"
+msgstr "Aforo"
+
+#. module: xb_footfall
 #: model:ir.model.fields.selection,name:xb_footfall.selection__xb_footfall_device__kind__other
 msgid "Other"
 msgstr "Otro"
@@ -487,19 +498,18 @@ msgid "People"
 msgstr "Personas"
 
 #. module: xb_footfall
-#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_store__live_occupancy
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_store__visitors_in
 msgid ""
-"People currently inside: entrances minus exits so far today (never "
-"negative). A live estimate, reset every midnight."
+"People who entered the store during the selected period (default: today, in "
+"your timezone)."
 msgstr ""
-"Personas actualmente dentro: entradas menos salidas en lo que va del día "
-"(nunca negativo). Estimación en vivo, se reinicia cada medianoche."
+"Personas que entraron a la tienda durante el periodo seleccionado "
+"(predeterminado: hoy, en tu zona horaria)."
 
 #. module: xb_footfall
-#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_store__visitors_today
-msgid "People who have entered the store since midnight (your timezone)."
-msgstr ""
-"Personas que han entrado a la tienda desde la medianoche (tu zona horaria)."
+#: model:ir.model.fields,help:xb_footfall.field_xb_footfall_store__visitors_out
+msgid "People who left the store during the selected period."
+msgstr "Personas que salieron de la tienda durante el periodo seleccionado."
 
 #. module: xb_footfall
 #: model:ir.model.fields,help:xb_footfall.field_xb_footfall_event__seq
@@ -600,6 +610,11 @@ msgid "Sales-floor m²"
 msgstr "m² de piso de venta"
 
 #. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_store_form
+msgid "Select the POS register(s) of this store…"
+msgstr "Selecciona la(s) caja(s) POS de esta tienda…"
+
+#. module: xb_footfall
 #: model:ir.model.fields,help:xb_footfall.field_xb_footfall_store__sales_area_sqm
 msgid ""
 "Selling area in square meters (excludes storage/offices). Optional; use it "
@@ -655,6 +670,16 @@ msgid "Surface (for density KPIs)"
 msgstr "Superficie (para KPIs de densidad)"
 
 #. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_live_search
+msgid "This Month"
+msgstr "Este mes"
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_live_search
+msgid "This Week"
+msgstr "Esta semana"
+
+#. module: xb_footfall
 #: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_device_form
 msgid ""
 "This invalidates the current token. The device will stop reporting until "
@@ -672,6 +697,11 @@ msgstr "Hora"
 #: model:ir.model.fields,help:xb_footfall.field_xb_footfall_store__last_event_time
 msgid "Time of the most recent crossing across all this store's entrances."
 msgstr "Hora del cruce más reciente entre todas las entradas de esta tienda."
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_live_search
+msgid "Today"
+msgstr "Hoy"
 
 #. module: xb_footfall
 #: model:ir.model.fields,help:xb_footfall.field_xb_footfall_store__area_sqm
@@ -726,18 +756,15 @@ msgstr "Visitantes / m²"
 
 #. module: xb_footfall
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__visitors_in
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__visitors_in
 msgid "Visitors In"
-msgstr "Visitantes (entran)"
+msgstr "Entradas"
 
 #. module: xb_footfall
 #: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_hourly__visitors_out
+#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__visitors_out
 msgid "Visitors Out"
-msgstr "Visitantes (salen)"
-
-#. module: xb_footfall
-#: model:ir.model.fields,field_description:xb_footfall.field_xb_footfall_store__visitors_today
-msgid "Visitors Today"
-msgstr "Visitantes hoy"
+msgstr "Salidas"
 
 #. module: xb_footfall
 #: model:ir.model.fields,help:xb_footfall.field_xb_footfall_hourly__visitors_per_sqm
@@ -786,6 +813,11 @@ msgstr "Día de la semana"
 #: model:ir.model.fields.selection,name:xb_footfall.selection__xb_footfall_store__match_mode__company
 msgid "Whole company"
 msgstr "Toda la compañía"
+
+#. module: xb_footfall
+#: model_terms:ir.ui.view,arch_db:xb_footfall.view_footfall_live_search
+msgid "Yesterday"
+msgstr "Ayer"
 
 #. module: xb_footfall
 #. odoo-python

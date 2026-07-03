@@ -27,11 +27,11 @@
                             <field name="live_occupancy" widget="statinfo" string="Inside now"/>
                         </button>
                         <button class="oe_stat_button" icon="fa-sign-in" disabled="1">
-                            <field name="visitors_today" widget="statinfo" string="Visitors today"/>
+                            <field name="visitors_in" widget="statinfo" string="Visitors today"/>
                         </button>
                         <button name="action_view_devices" type="object"
                                 class="oe_stat_button" icon="fa-door-open">
-                            <field name="device_count" widget="statinfo" string="Entrances"/>
+                            <field name="device_count" widget="statinfo" string="Devices"/>
                         </button>
                     </div>
                     <div class="oe_title">
@@ -48,26 +48,25 @@
                             <field name="active" invisible="1"/>
                         </group>
                     </group>
-                    <group string="POS Registers (tickets)"
-                           invisible="match_mode != 'registers'">
-                        <field name="register_ids" nolabel="1"
-                               widget="many2many_tags"
-                               options="{'no_create': True}"
-                               domain="[('company_id', '=', company_id)]"/>
-                    </group>
-                    <group string="Entrances (visitors)">
-                        <field name="device_ids" nolabel="1" context="{'default_store_id': id}">
-                            <list editable="bottom">
-                                <field name="name"/>
-                                <field name="device_uid"/>
-                                <field name="kind"/>
-                                <field name="last_seen"/>
-                            </list>
-                        </field>
-                    </group>
-                    <group string="Notes">
-                        <field name="note" nolabel="1"/>
-                    </group>
+                    <separator string="POS Registers (tickets)"
+                               invisible="match_mode != 'registers'"/>
+                    <field name="register_ids"
+                           invisible="match_mode != 'registers'"
+                           widget="many2many_tags"
+                           options="{'no_create': True}"
+                           placeholder="Select the POS register(s) of this store…"
+                           domain="[('company_id', '=', company_id), ('id', 'not in', register_ids)]"/>
+                    <separator string="Devices (counting sensors at each entrance)"/>
+                    <field name="device_ids" context="{'default_store_id': id}">
+                        <list editable="bottom">
+                            <field name="name"/>
+                            <field name="device_uid"/>
+                            <field name="kind"/>
+                            <field name="last_seen"/>
+                        </list>
+                    </field>
+                    <separator string="Notes"/>
+                    <field name="note" nolabel="1"/>
                 </sheet>
             </form>
         </field>
@@ -86,31 +85,28 @@
         <field name="arch" type="xml">
             <kanban class="o_kanban_dashboard" create="false">
                 <field name="live_occupancy"/>
-                <field name="visitors_today"/>
-                <field name="exits_today"/>
+                <field name="visitors_in"/>
+                <field name="visitors_out"/>
                 <field name="last_event_time"/>
                 <templates>
                     <t t-name="card">
                         <div class="row">
-                            <div class="col-8">
+                            <div class="col-12">
                                 <strong class="fs-5"><field name="name"/></strong>
-                            </div>
-                            <div class="col-4 text-end">
-                                <field name="company_id" groups="base.group_multi_company"/>
                             </div>
                         </div>
                         <div class="row mt-2 text-center">
                             <div class="col-4">
                                 <div class="display-6"><field name="live_occupancy"/></div>
-                                <small class="text-muted">Inside now</small>
+                                <small class="text-muted">Occupancy</small>
                             </div>
                             <div class="col-4">
-                                <div class="display-6 text-success"><field name="visitors_today"/></div>
-                                <small class="text-muted">In today</small>
+                                <div class="display-6 text-success"><field name="visitors_in"/></div>
+                                <small class="text-muted">In</small>
                             </div>
                             <div class="col-4">
-                                <div class="display-6 text-muted"><field name="exits_today"/></div>
-                                <small class="text-muted">Out today</small>
+                                <div class="display-6 text-muted"><field name="visitors_out"/></div>
+                                <small class="text-muted">Out</small>
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -124,10 +120,38 @@
         </field>
     </record>
 
+    <!-- Period filters for the live view: default 'today' (live), or pick a
+         past period with Odoo's native filters to see historical footfall. -->
+    <record id="view_footfall_live_search" model="ir.ui.view">
+        <field name="name">xb.footfall.store.live.search</field>
+        <field name="model">xb.footfall.store</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <filter name="period_today" string="Today"
+                        domain="[]" context="{'ff_period': 'today'}"/>
+                <filter name="period_yesterday" string="Yesterday"
+                        domain="[]" context="{'ff_period': 'yesterday'}"/>
+                <filter name="period_week" string="This Week"
+                        domain="[]" context="{'ff_period': 'week'}"/>
+                <filter name="period_month" string="This Month"
+                        domain="[]" context="{'ff_period': 'month'}"/>
+                <group>
+                    <filter name="g_company" string="Company"
+                            domain="[]" context="{'group_by': 'company_id'}"
+                            groups="base.group_multi_company"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
     <record id="action_footfall_live" model="ir.actions.act_window">
         <field name="name">Live Occupancy</field>
         <field name="res_model">xb.footfall.store</field>
         <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_footfall_live_search"/>
+        <field name="context">{'search_default_period_today': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">No stores yet</p>
             <p>Create a store and add its entrance devices to see the live

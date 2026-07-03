@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Footfall Analytics (People Counting)",
-    "version": "19.0.1.6.0",
+    "version": "19.0.1.7.1",
     "category": "Point of Sale",
     "summary": "Count store visitors from any sensor (CCTV people-counting or "
                "edge CV) and cross them with POS sales to get the conversion KPI.",
@@ -35,6 +35,7 @@ Sell it as a recurring "Footfall Analytics" subscription line per store.
     ],
     "data": [
         "security/ir.model.access.csv",
+        "security/footfall_security.xml",
         "views/footfall_store_views.xml",
         "views/footfall_device_views.xml",
         "views/footfall_event_views.xml",

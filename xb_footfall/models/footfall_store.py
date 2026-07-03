@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from datetime import timedelta
+
 import pytz
 
 from odoo import api, fields, models, _
@@ -44,7 +46,7 @@ class FootfallStore(models.Model):
         help="Registers whose tickets count toward this store's conversion. "
              "Only used when 'Match sales by' is 'Specific POS registers'.")
     device_ids = fields.One2many(
-        "xb.footfall.device", "store_id", string="Entrances / Devices")
+        "xb.footfall.device", "store_id", string="Devices")
     device_count = fields.Integer(compute="_compute_counts")
     register_count = fields.Integer(compute="_compute_counts")
     area_sqm = fields.Float(
@@ -57,16 +59,22 @@ class FootfallStore(models.Model):
              "Optional; use it when you want density over the sellable floor "
              "only rather than the whole premises.")
     note = fields.Text(string="Notes")
-    # --- Live occupancy (today, in the user's timezone) ---
-    visitors_today = fields.Integer(
-        string="Visitors Today", compute="_compute_live", compute_sudo=True,
-        help="People who have entered the store since midnight (your timezone).")
-    exits_today = fields.Integer(
-        string="Exits Today", compute="_compute_live", compute_sudo=True)
+    # --- Occupancy over the selected period (default: today, live) ---
+    # The window comes from the search context key 'ff_period' so the same
+    # cards can show the live count (default) or a chosen historical period
+    # (yesterday / this week / this month) via Odoo's native filters.
+    visitors_in = fields.Integer(
+        string="Visitors In", compute="_compute_live", compute_sudo=True,
+        help="People who entered the store during the selected period "
+             "(default: today, in your timezone).")
+    visitors_out = fields.Integer(
+        string="Visitors Out", compute="_compute_live", compute_sudo=True,
+        help="People who left the store during the selected period.")
     live_occupancy = fields.Integer(
-        string="Live Occupancy", compute="_compute_live", compute_sudo=True,
-        help="People currently inside: entrances minus exits so far today "
-             "(never negative). A live estimate, reset every midnight.")
+        string="Occupancy", compute="_compute_live", compute_sudo=True,
+        help="Entrances minus exits over the selected period (never negative). "
+             "For the default 'today' period this is a live estimate of the "
+             "people currently inside, reset every midnight.")
     last_event_time = fields.Datetime(
         string="Last Event", compute="_compute_live", compute_sudo=True,
         help="Time of the most recent crossing across all this store's entrances.")
@@ -77,32 +85,52 @@ class FootfallStore(models.Model):
             store.device_count = len(store.device_ids)
             store.register_count = len(store.register_ids)
 
-    def _today_start_utc(self):
-        """Midnight of the current local day, as a naive UTC datetime, so the
-        'today' window matches what the manager sees on the wall clock."""
+    def _period_window(self):
+        """Return (start_utc, end_utc, is_today) for the selected period as
+        naive UTC datetimes, computed on the user's timezone so 'today' /
+        'this week' match the wall calendar. The period is read from the
+        search context key 'ff_period' (today | yesterday | week | month);
+        'today' (the default) leaves end open at 'now' for a live count."""
+        period = self.env.context.get("ff_period", "today")
         tz = pytz.timezone(self.env.user.tz or "UTC")
         now_local = pytz.utc.localize(fields.Datetime.now()).astimezone(tz)
-        start_local = now_local.replace(hour=0, minute=0, second=0, microsecond=0)
-        return start_local.astimezone(pytz.utc).replace(tzinfo=None)
+        day_start = now_local.replace(hour=0, minute=0, second=0, microsecond=0)
+
+        def to_utc(dt):
+            return dt.astimezone(pytz.utc).replace(tzinfo=None)
+
+        if period == "yesterday":
+            start = day_start - timedelta(days=1)
+            return to_utc(start), to_utc(day_start), False
+        if period == "week":
+            start = day_start - timedelta(days=day_start.weekday())
+            return to_utc(start), None, False
+        if period == "month":
+            start = day_start.replace(day=1)
+            return to_utc(start), None, False
+        # today (default) — live, open-ended
+        return to_utc(day_start), None, True
 
     def _compute_live(self):
         Event = self.env["xb.footfall.event"]
+        start, end, _is_today = self._period_window()
         devices = self.mapped("device_ids")
         if not devices:
             for store in self:
-                store.visitors_today = store.exits_today = 0
+                store.visitors_in = store.visitors_out = 0
                 store.live_occupancy = 0
                 store.last_event_time = False
             return
-        start = self._today_start_utc()
         dev_store = {d.id: d.store_id.id for d in devices}
-        # visitors in/out today, per device+direction
-        today = Event._read_group(
-            [("device_id", "in", devices.ids), ("event_time", ">=", start)],
-            groupby=["device_id", "direction"], aggregates=["count:sum"])
+        # visitors in/out over the period, per device+direction
+        domain = [("device_id", "in", devices.ids), ("event_time", ">=", start)]
+        if end:
+            domain.append(("event_time", "<", end))
+        grouped = Event._read_group(
+            domain, groupby=["device_id", "direction"], aggregates=["count:sum"])
         ins = {}
         outs = {}
-        for device, direction, total in today:
+        for device, direction, total in grouped:
             sid = dev_store.get(device.id)
             if direction == "in":
                 ins[sid] = ins.get(sid, 0) + (total or 0)
@@ -120,8 +148,8 @@ class FootfallStore(models.Model):
         for store in self:
             vin = ins.get(store.id, 0)
             vout = outs.get(store.id, 0)
-            store.visitors_today = vin
-            store.exits_today = vout
+            store.visitors_in = vin
+            store.visitors_out = vout
             store.live_occupancy = max(vin - vout, 0)
             store.last_event_time = last.get(store.id, False)
 
@@ -145,7 +173,7 @@ class FootfallStore(models.Model):
         self.ensure_one()
         return {
             "type": "ir.actions.act_window",
-            "name": _("Entrances"),
+            "name": _("Devices"),
             "res_model": "xb.footfall.device",
             "view_mode": "list,form",
             "domain": [("store_id", "=", self.id)],

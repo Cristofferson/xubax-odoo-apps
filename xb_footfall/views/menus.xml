@@ -24,7 +24,7 @@
               parent="menu_footfall_config"
               action="action_footfall_store" sequence="5"/>
 
-    <menuitem id="menu_footfall_devices" name="Entrances"
+    <menuitem id="menu_footfall_devices" name="Devices"
               parent="menu_footfall_config"
               action="action_footfall_device" sequence="10"/>
 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Multi-company record rules: footfall data is scoped to the companies
+         the user has selected in the company switcher, so a user only sees the
+         stores / entrances / events / analytics of their active company. -->
+
+    <record id="rule_footfall_store_company" model="ir.rule">
+        <field name="name">Footfall Store: multi-company</field>
+        <field name="model_id" ref="model_xb_footfall_store"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_footfall_device_company" model="ir.rule">
+        <field name="name">Footfall Entrance: multi-company</field>
+        <field name="model_id" ref="model_xb_footfall_device"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_footfall_event_company" model="ir.rule">
+        <field name="name">Footfall Event: multi-company</field>
+        <field name="model_id" ref="model_xb_footfall_event"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_footfall_hourly_company" model="ir.rule">
+        <field name="name">Footfall Analytics: multi-company</field>
+        <field name="model_id" ref="model_xb_footfall_hourly"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+</odoo>
