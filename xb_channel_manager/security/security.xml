@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="privilege_cm" model="res.groups.privilege">
+        <field name="name">OTA Channel Manager</field>
+        <field name="sequence">60</field>
+    </record>
+
+    <record id="group_cm_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="privilege_id" ref="privilege_cm"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_cm_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="privilege_id" ref="privilege_cm"/>
+        <field name="implied_ids" eval="[(4, ref('group_cm_user'))]"/>
+        <field name="user_ids" eval="[(4, ref('base.user_root')),
+                                      (4, ref('base.user_admin'))]"/>
+    </record>
+
+    <record id="rule_cm_channel_company" model="ir.rule">
+        <field name="name">Channel: multi-company</field>
+        <field name="model_id" ref="model_xb_cm_channel"/>
+        <field name="domain_force">
+            ['|', ('company_id', '=', False),
+                  ('company_id', 'in', company_ids)]
+        </field>
+    </record>
+
+    <record id="rule_cm_reservation_company" model="ir.rule">
+        <field name="name">CM Reservation: multi-company</field>
+        <field name="model_id" ref="model_xb_cm_reservation"/>
+        <field name="domain_force">
+            ['|', ('company_id', '=', False),
+                  ('company_id', 'in', company_ids)]
+        </field>
+    </record>
+</odoo>

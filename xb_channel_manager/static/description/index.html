@@ -1,0 +1,111 @@
+<section style="max-width: 900px; margin: 0 auto; font-family: sans-serif; color: #333;">
+    <div style="background:#1c1c1c; border-radius:12px; padding:32px; text-align:center; margin-bottom:24px;">
+        <img src="banner.png" alt="Hotel OTA Channel Manager" style="max-width:100%; border-radius:8px;"/>
+    </div>
+
+    <h1 style="color:#b4301a; text-align:center;">Hotel OTA Channel Manager</h1>
+    <p style="text-align:center; font-size:18px; color:#666;">
+        Sell your rooms on <b>Airbnb, Booking.com, Expedia, Vrbo</b> and keep
+        Odoo as the single source of truth — availability, rates and
+        reservations, both ways.
+    </p>
+
+    <div style="display:flex; flex-wrap:wrap; gap:16px; margin:32px 0;">
+        <div style="flex:1 1 260px; background:#f7f5f2; border-radius:10px; padding:20px;">
+            <h3 style="color:#b4301a;">🔗 Universal iCal sync</h3>
+            <p>Two-way calendar sync with any platform that supports iCal
+            (Airbnb, Booking.com, Vrbo, Lodgify…). Publish a secure feed of
+            your occupancy per room type and import OTA reservations
+            automatically — no API certification needed, works out of the
+            box.</p>
+        </div>
+        <div style="flex:1 1 260px; background:#f7f5f2; border-radius:10px; padding:20px;">
+            <h3 style="color:#b4301a;">⚡ Channex API driver</h3>
+            <p>Connect through <a href="https://channex.io">Channex.io</a>
+            and get real-time availability &amp; rate push plus instant
+            reservation webhooks for <b>Booking.com, Expedia, Airbnb,
+            Agoda and 100+ channels</b> with a single connection (free
+            sandbox available).</p>
+        </div>
+    </div>
+
+    <div style="display:flex; flex-wrap:wrap; gap:16px; margin:24px 0;">
+        <div style="flex:1 1 260px; background:#f7f5f2; border-radius:10px; padding:20px;">
+            <h3 style="color:#b4301a;">🏨 Native Hotel integration</h3>
+            <p>Built for the Odoo 19 <b>Hotel industry / Rental</b> flow:
+            imported reservations become confirmed rental Sales Orders, a
+            free physical room is assigned automatically and the native
+            availability engine blocks the nights — your website booking
+            widget stays consistent with the OTAs.</p>
+        </div>
+        <div style="flex:1 1 260px; background:#f7f5f2; border-radius:10px; padding:20px;">
+            <h3 style="color:#b4301a;">🛡️ Overbooking guard</h3>
+            <p>Every import checks real availability first. Conflicts land
+            in the reservation inbox with an activity for the manager —
+            never a silent double booking. Cancellations on the OTA free
+            the room automatically (configurable).</p>
+        </div>
+    </div>
+
+    <h2 style="color:#b4301a;">How it works</h2>
+    <ol style="line-height:1.9;">
+        <li>Create a <b>Channel</b> per platform (e.g. "Airbnb — My Hotel").</li>
+        <li>Map each Odoo room type to its OTA listing
+            (<b>Room mappings</b>).</li>
+        <li><b>iCal</b>: paste the OTA calendar link and give the OTA your
+            secure export URL. <b>Channex</b>: paste API key, property,
+            room type &amp; rate plan IDs and register the webhook URL.</li>
+        <li>Reservations flow into the <b>inbox</b> and become (draft or
+            confirmed) rental Sales Orders with the guest as customer and
+            the OTA price honoured to the cent.</li>
+        <li>Follow everything in the <b>Sync log</b>.</li>
+    </ol>
+
+    <h2 style="color:#b4301a;">Screenshots</h2>
+    <div style="margin:16px 0;">
+        <img src="screenshot_inbox.png" alt="Reservation inbox"
+             style="max-width:100%; border:1px solid #ddd; border-radius:8px; margin-bottom:16px;"/>
+        <p style="text-align:center; color:#888; margin-top:-8px;">
+            Reservation inbox — a Booking.com reservation imported through
+            Channex ($2,560 honoured to the cent) and an Airbnb iCal
+            cancellation.</p>
+        <img src="screenshot_channels.png" alt="Channels"
+             style="max-width:100%; border:1px solid #ddd; border-radius:8px;"/>
+        <p style="text-align:center; color:#888;">
+            One channel per platform, each with its own policies and
+            sync state.</p>
+    </div>
+
+    <h2 style="color:#b4301a;">Feature list</h2>
+    <ul style="line-height:1.9;">
+        <li>Two-way iCal (RFC 5545) — export busy dates, import
+            reservations and "not available" blocks.</li>
+        <li>Channex driver: availability + nightly rate push, bookings
+            feed with acknowledge, signed webhook endpoint.</li>
+        <li>Reservation inbox: import / ignore / retry, conflict and
+            error states, links to the Sales Order, full chatter.</li>
+        <li>Policies per channel: auto-import, draft vs. confirmed
+            orders, manual or automatic cancellation.</li>
+        <li>Works with the Hotel industry (physical-room assignment +
+            native availability) <i>and</i> with plain Rental products
+            (capacity per listing).</li>
+        <li>Multi-company record rules, user/manager access groups,
+            scheduled sync every 10 minutes, log auto-vacuum.</li>
+        <li>No extra Python dependencies.</li>
+    </ul>
+
+    <h2 style="color:#b4301a;">Español</h2>
+    <p>Conecta el flujo de reservas de hotel de Odoo con las plataformas
+    de hospedaje: sincronización <b>iCal bidireccional</b> (Airbnb,
+    Booking.com, Vrbo) y <b>API Channex</b> (Booking.com, Expedia, Airbnb
+    y más de 100 canales). Las reservas OTA se convierten en órdenes de
+    venta confirmadas, con habitación física asignada y bloqueo nativo de
+    disponibilidad; con protección contra sobreventa y manejo de
+    cancelaciones. Bandeja de reservas, bitácora completa y políticas por
+    canal.</p>
+
+    <div style="background:#1c1c1c; color:#eee; border-radius:10px; padding:24px; text-align:center; margin:32px 0;">
+        <p style="margin:0; font-size:16px;">Questions or a channel you need supported?</p>
+        <p style="margin:8px 0 0;"><b>cristofferson28@gmail.com</b></p>
+    </div>
+</section>

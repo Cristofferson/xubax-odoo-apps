@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cm_channel_form" model="ir.ui.view">
+        <field name="name">xb.cm.channel.form</field>
+        <field name="model">xb.cm.channel</field>
+        <field name="arch" type="xml">
+            <form string="Channel">
+                <header>
+                    <button name="action_connect" type="object"
+                            string="Connect" class="btn-primary"
+                            invisible="state == 'connected'"/>
+                    <button name="action_sync_now" type="object"
+                            string="Sync now"
+                            invisible="state == 'draft'"/>
+                    <button name="action_pause" type="object"
+                            string="Pause"
+                            invisible="state != 'connected'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,connected"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_listings" type="object"
+                                class="oe_stat_button" icon="fa-bed">
+                            <field name="listing_count" widget="statinfo"
+                                   string="Rooms"/>
+                        </button>
+                        <button name="action_view_reservations" type="object"
+                                class="oe_stat_button" icon="fa-calendar">
+                            <field name="reservation_count" widget="statinfo"
+                                   string="Reservations"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived"
+                            bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <h1><field name="name"
+                                   placeholder="e.g. Airbnb — My Hotel"/></h1>
+                    </div>
+                    <group>
+                        <group string="Connection">
+                            <field name="active" invisible="1"/>
+                            <field name="channel_type" widget="radio"/>
+                            <field name="ota_name"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                            <field name="last_sync"/>
+                            <field name="last_error"
+                                   invisible="not last_error"/>
+                        </group>
+                        <group string="Policies">
+                            <field name="import_policy"/>
+                            <field name="auto_import"/>
+                            <field name="cancel_policy"/>
+                            <field name="sync_interval"/>
+                            <field name="export_horizon_days"/>
+                        </group>
+                    </group>
+                    <group string="Channex API"
+                           invisible="channel_type != 'channex'">
+                        <group>
+                            <field name="channex_base_url"/>
+                            <field name="channex_api_key" password="True"/>
+                            <field name="channex_property_id"/>
+                        </group>
+                        <group>
+                            <field name="webhook_url" readonly="1"/>
+                            <button name="action_regenerate_webhook_token"
+                                    type="object" string="Regenerate token"
+                                    class="btn-link" icon="fa-refresh"
+                                    confirm="Regenerate the webhook token? You must update it on Channex."/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Room mappings" name="listings">
+                            <field name="listing_ids">
+                                <list>
+                                    <field name="product_tmpl_id"/>
+                                    <field name="effective_capacity"/>
+                                    <field name="ical_export_url"
+                                           optional="show"/>
+                                    <field name="ical_import_url"
+                                           optional="show"/>
+                                    <field name="channex_room_type_id"
+                                           optional="hide"/>
+                                    <field name="channex_rate_plan_id"
+                                           optional="hide"/>
+                                    <field name="last_pull"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cm_channel_list" model="ir.ui.view">
+        <field name="name">xb.cm.channel.list</field>
+        <field name="model">xb.cm.channel</field>
+        <field name="arch" type="xml">
+            <list string="Channels">
+                <field name="name"/>
+                <field name="channel_type"/>
+                <field name="ota_name"/>
+                <field name="listing_count"/>
+                <field name="pending_count"/>
+                <field name="last_sync"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'connected'"
+                       decoration-danger="state == 'error'"
+                       decoration-muted="state in ('draft','paused')"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cm_channel_kanban" model="ir.ui.view">
+        <field name="name">xb.cm.channel.kanban</field>
+        <field name="model">xb.cm.channel</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between">
+                            <strong><field name="name"/></strong>
+                            <field name="state" widget="label_selection"
+                                   options="{'classes':
+                                   {'connected': 'success',
+                                    'error': 'danger',
+                                    'draft': 'default',
+                                    'paused': 'warning'}}"/>
+                        </div>
+                        <div class="text-muted">
+                            <field name="channel_type"/> ·
+                            <field name="listing_count"/> rooms ·
+                            <field name="pending_count"/> pending
+                        </div>
+                        <div class="text-muted">
+                            Last sync: <field name="last_sync"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_cm_channel" model="ir.actions.act_window">
+        <field name="name">Channels</field>
+        <field name="res_model">xb.cm.channel</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Connect your first OTA channel
+            </p>
+            <p>
+                Create one channel per platform (Airbnb, Booking.com,
+                Expedia…), map your room types and let the manager sync
+                availability and reservations both ways.
+            </p>
+        </field>
+    </record>
+</odoo>

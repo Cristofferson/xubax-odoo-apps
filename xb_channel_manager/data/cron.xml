@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="cron_cm_sync" model="ir.cron">
+        <field name="name">OTA Channel Manager: synchronize channels</field>
+        <field name="model_id" ref="model_xb_cm_channel"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_sync_all()</field>
+        <field name="interval_number">10</field>
+        <field name="interval_type">minutes</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_cm_log_vacuum" model="ir.cron">
+        <field name="name">OTA Channel Manager: vacuum old logs</field>
+        <field name="model_id" ref="model_xb_cm_log"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_vacuum()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

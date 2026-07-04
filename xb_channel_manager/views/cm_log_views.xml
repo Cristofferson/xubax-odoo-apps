@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cm_log_list" model="ir.ui.view">
+        <field name="name">xb.cm.log.list</field>
+        <field name="model">xb.cm.log</field>
+        <field name="arch" type="xml">
+            <list string="Sync log" create="false" edit="false"
+                  decoration-danger="level == 'error'"
+                  decoration-warning="level == 'warning'">
+                <field name="create_date"/>
+                <field name="channel_id"/>
+                <field name="listing_id"/>
+                <field name="kind"/>
+                <field name="level"/>
+                <field name="message"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cm_log_search" model="ir.ui.view">
+        <field name="name">xb.cm.log.search</field>
+        <field name="model">xb.cm.log</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="message"/>
+                <filter string="Errors" name="errors"
+                        domain="[('level', '=', 'error')]"/>
+                <group>
+                    <filter string="Channel" name="by_channel"
+                            context="{'group_by': 'channel_id'}"/>
+                    <filter string="Kind" name="by_kind"
+                            context="{'group_by': 'kind'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_cm_log" model="ir.actions.act_window">
+        <field name="name">Sync log</field>
+        <field name="res_model">xb.cm.log</field>
+        <field name="view_mode">list</field>
+    </record>
+</odoo>

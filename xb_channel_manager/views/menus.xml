@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_cm_root" name="Channel Manager"
+              web_icon="xb_channel_manager,static/description/icon.png"
+              groups="group_cm_user" sequence="46"/>
+
+    <menuitem id="menu_cm_channels" name="Channels"
+              parent="menu_cm_root" action="action_cm_channel"
+              sequence="10"/>
+    <menuitem id="menu_cm_reservations" name="Reservations"
+              parent="menu_cm_root" action="action_cm_reservation"
+              sequence="20"/>
+    <menuitem id="menu_cm_listings" name="Room mappings"
+              parent="menu_cm_root" action="action_cm_listing"
+              sequence="30" groups="group_cm_manager"/>
+    <menuitem id="menu_cm_logs" name="Sync log"
+              parent="menu_cm_root" action="action_cm_log"
+              sequence="40" groups="group_cm_manager"/>
+</odoo>

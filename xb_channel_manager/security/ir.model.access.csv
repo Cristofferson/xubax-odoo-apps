@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cm_channel_user,cm.channel user,model_xb_cm_channel,group_cm_user,1,0,0,0
+access_cm_channel_manager,cm.channel manager,model_xb_cm_channel,group_cm_manager,1,1,1,1
+access_cm_listing_user,cm.listing user,model_xb_cm_listing,group_cm_user,1,0,0,0
+access_cm_listing_manager,cm.listing manager,model_xb_cm_listing,group_cm_manager,1,1,1,1
+access_cm_reservation_user,cm.reservation user,model_xb_cm_reservation,group_cm_user,1,1,0,0
+access_cm_reservation_manager,cm.reservation manager,model_xb_cm_reservation,group_cm_manager,1,1,1,1
+access_cm_log_user,cm.log user,model_xb_cm_log,group_cm_user,1,0,0,0
+access_cm_log_manager,cm.log manager,model_xb_cm_log,group_cm_manager,1,1,1,1

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cm_listing_form" model="ir.ui.view">
+        <field name="name">xb.cm.listing.form</field>
+        <field name="model">xb.cm.listing</field>
+        <field name="arch" type="xml">
+            <form string="Room mapping">
+                <header>
+                    <button name="action_pull_now" type="object"
+                            string="Sync this room now" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_reservations" type="object"
+                                class="oe_stat_button" icon="fa-calendar">
+                            <field name="reservation_count" widget="statinfo"
+                                   string="Reservations"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Mapping">
+                            <field name="active" invisible="1"/>
+                            <field name="channel_id"/>
+                            <field name="channel_type" invisible="1"/>
+                            <field name="product_tmpl_id"/>
+                            <field name="effective_capacity"/>
+                            <field name="capacity"/>
+                        </group>
+                        <group string="Status">
+                            <field name="last_pull"/>
+                            <field name="last_push"/>
+                        </group>
+                    </group>
+                    <group string="iCal two-way sync"
+                           invisible="channel_type != 'ical'">
+                        <field name="ical_export_url" readonly="1"
+                               widget="CopyClipboardChar"/>
+                        <field name="ical_import_url"
+                               placeholder="https://www.airbnb.com/calendar/ical/…"/>
+                        <button name="action_regenerate_token" type="object"
+                                string="Regenerate export token"
+                                class="btn-link" icon="fa-refresh"
+                                confirm="Regenerate the export URL? You must update it on the OTA."/>
+                    </group>
+                    <group string="Channex mapping"
+                           invisible="channel_type != 'channex'">
+                        <field name="channex_room_type_id"/>
+                        <field name="channex_rate_plan_id"/>
+                        <field name="rate_push"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cm_listing_list" model="ir.ui.view">
+        <field name="name">xb.cm.listing.list</field>
+        <field name="model">xb.cm.listing</field>
+        <field name="arch" type="xml">
+            <list string="Room mappings">
+                <field name="channel_id"/>
+                <field name="product_tmpl_id"/>
+                <field name="effective_capacity"/>
+                <field name="last_pull"/>
+                <field name="last_push"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_cm_listing" model="ir.actions.act_window">
+        <field name="name">Room mappings</field>
+        <field name="res_model">xb.cm.listing</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
