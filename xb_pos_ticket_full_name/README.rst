@@ -39,7 +39,7 @@ What this module does
 Installation
 ------------
 
-1. Copy the ``pos_ticket_full_name`` folder into your Odoo addons path
+1. Copy the ``xb_pos_ticket_full_name`` folder into your Odoo addons path
    (e.g. ``/odoo/custom-addons``).
 2. Restart the Odoo server::
 

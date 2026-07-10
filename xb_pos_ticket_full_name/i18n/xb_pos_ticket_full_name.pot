@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* pos_ticket_full_name
+# 	* xb_pos_ticket_full_name
 #
 msgid ""
 msgstr ""
@@ -14,13 +14,13 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: pos_ticket_full_name
-#: model:ir.module.module,shortdesc:base.module_pos_ticket_full_name
+#. module: xb_pos_ticket_full_name
+#: model:ir.module.module,shortdesc:base.module_xb_pos_ticket_full_name
 msgid "POS Receipt – Full Product Name (no truncation)"
 msgstr ""
 
-#. module: pos_ticket_full_name
-#: model:ir.module.module,summary:base.module_pos_ticket_full_name
+#. module: xb_pos_ticket_full_name
+#: model:ir.module.module,summary:base.module_xb_pos_ticket_full_name
 msgid ""
 "Print the complete product name on POS receipts. Long names wrap onto "
 "several lines instead of being cut off with an ellipsis."

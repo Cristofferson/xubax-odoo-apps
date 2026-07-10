@@ -47,7 +47,7 @@ Compatibility
     "data": [],
     "assets": {
         "point_of_sale._assets_pos": [
-            "pos_ticket_full_name/static/src/scss/pos_ticket_full_name.scss",
+            "xb_pos_ticket_full_name/static/src/scss/xb_pos_ticket_full_name.scss",
         ],
     },
     "images": [
