@@ -1,0 +1,26 @@
+// Show the full product name on the POS receipt.
+//
+// Odoo applies Bootstrap's `.text-truncate` to the `.product-name` container of
+// each order line, which forces `white-space: nowrap; overflow: hidden;
+// text-overflow: ellipsis` and cuts long names to a single line ending in "…".
+//
+// Scoped to `.pos-receipt` so only the receipt (preview + printed ticket) is
+// affected; the on-screen cart keeps its compact truncated layout.
+.pos-receipt {
+    .product-name {
+        overflow: visible !important;
+        text-overflow: clip !important;
+        white-space: normal !important;
+        // Break very long words (SKUs, codes) so they never overflow the
+        // paper width.
+        overflow-wrap: anywhere;
+        word-break: break-word;
+
+        // The name itself lives in a child <span>; make sure it wraps too.
+        span.text-wrap {
+            white-space: normal !important;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
+    }
+}

@@ -1,0 +1,87 @@
+<section style="font-family:Arial,Helvetica,sans-serif;color:#2b2b2b;">
+
+  <div style="text-align:center;margin-bottom:24px;">
+    <img src="banner.png" style="max-width:100%;border-radius:12px;"/>
+  </div>
+
+  <div style="max-width:920px;margin:0 auto;">
+
+    <h1 style="color:#5B3F73;font-size:30px;margin:0 0 6px;">
+      POS Receipt &ndash; Full Product Name
+    </h1>
+    <p style="font-size:17px;color:#666;margin:0 0 28px;">
+      Print the <b>complete product name</b> on Point of Sale receipts. Long
+      names wrap onto several lines instead of being cut off with an ellipsis.
+      Free, LGPL-3.
+    </p>
+
+    <div style="background:#f6f2fa;border-left:5px solid #5B3F73;padding:16px 20px;border-radius:6px;margin-bottom:28px;">
+      <h3 style="margin:0 0 8px;color:#5B3F73;">The problem</h3>
+      <p style="margin:0;font-size:15px;line-height:1.5;">
+        Odoo applies the Bootstrap class <b>text-truncate</b>
+        (<i>overflow: hidden</i>) to the product name of each order line. On the
+        receipt this <b>cuts off</b> long product names &mdash; especially long
+        codes/SKUs or names with few spaces to wrap on &mdash; ending in
+        <b>&hellip;</b> or a chopped word, so neither the cashier nor the
+        customer can read the full name of what was sold.
+      </p>
+    </div>
+
+    <h2 style="color:#5B3F73;font-size:22px;">What you get</h2>
+    <table style="width:100%;border-collapse:collapse;font-size:15px;margin-bottom:28px;">
+      <tr style="background:#5B3F73;color:#fff;">
+        <td style="padding:10px 14px;width:34%;"><b>Feature</b></td>
+        <td style="padding:10px 14px;"><b>Description</b></td>
+      </tr>
+      <tr style="border-bottom:1px solid #eee;">
+        <td style="padding:10px 14px;"><b>Full name always printed</b></td>
+        <td style="padding:10px 14px;">The product name is printed complete,
+          wrapping onto as many lines as needed &mdash; no more names cut off or
+          ending in &ldquo;&hellip;&rdquo;.</td>
+      </tr>
+      <tr style="border-bottom:1px solid #eee;background:#faf8fc;">
+        <td style="padding:10px 14px;"><b>Receipt only</b></td>
+        <td style="padding:10px 14px;">Scoped to <i>.pos-receipt</i>, so the
+          on-screen cart keeps its compact single-line layout where space is
+          limited on purpose.</td>
+      </tr>
+      <tr style="border-bottom:1px solid #eee;">
+        <td style="padding:10px 14px;"><b>No overflow</b></td>
+        <td style="padding:10px 14px;">Very long words (SKUs, internal codes) are
+          broken so they never spill past the paper width.</td>
+      </tr>
+      <tr style="border-bottom:1px solid #eee;background:#faf8fc;">
+        <td style="padding:10px 14px;"><b>Preview &amp; print</b></td>
+        <td style="padding:10px 14px;">The receipt is rendered from HTML/CSS, so
+          the full name applies both to the on-screen preview and to the printed
+          ticket.</td>
+      </tr>
+      <tr style="border-bottom:1px solid #eee;">
+        <td style="padding:10px 14px;"><b>Zero config</b></td>
+        <td style="padding:10px 14px;">Pure CSS: no Python, no data, no settings.
+          Install, reopen the POS, done.</td>
+      </tr>
+    </table>
+
+    <h2 style="color:#5B3F73;font-size:22px;">Before &amp; after</h2>
+    <div style="margin-bottom:28px;">
+      <p style="font-size:14px;color:#888;margin:0 0 6px;">Before &mdash; the long product name is cut off with an ellipsis on the receipt.</p>
+      <img src="screenshots/01_before.png" style="max-width:100%;border:1px solid #e0e0e0;border-radius:8px;margin-bottom:18px;"/>
+      <p style="font-size:14px;color:#888;margin:0 0 6px;">After &mdash; the full product name is printed, wrapping onto several lines.</p>
+      <img src="screenshots/02_after.png" style="max-width:100%;border:1px solid #e0e0e0;border-radius:8px;"/>
+    </div>
+
+    <h2 style="color:#5B3F73;font-size:22px;">Compatibility</h2>
+    <ul style="font-size:15px;line-height:1.7;">
+      <li>Odoo <b>19.0</b> Community &amp; Enterprise.</li>
+      <li>Requires the <b>Point of Sale</b> app.</li>
+    </ul>
+
+    <div style="margin-top:30px;padding:18px;background:#5B3F73;border-radius:8px;color:#fff;text-align:center;">
+      <span style="font-size:16px;">Built by <b>XUBAX</b> &middot;
+      <a href="https://www.xubax.com" style="color:#FFC457;">www.xubax.com</a>
+      &middot; soporte@xubax.com</span>
+    </div>
+
+  </div>
+</section>
