@@ -20,10 +20,11 @@
       <p style="margin:0;font-size:15px;line-height:1.5;">
         Odoo applies the Bootstrap class <b>text-truncate</b>
         (<i>overflow: hidden</i>) to the product name of each order line. On the
-        receipt this <b>cuts off</b> long product names &mdash; especially long
-        codes/SKUs or names with few spaces to wrap on &mdash; ending in
-        <b>&hellip;</b> or a chopped word, so neither the cashier nor the
-        customer can read the full name of what was sold.
+        <b>printed receipt</b> this <b>cuts off</b> long product names to a single
+        line ending in <b>&hellip;</b>, so neither the cashier nor the customer
+        can read the full name of what was sold. Tickets printed through an
+        <b>Epson / IoT thermal printer</b> are the most affected, because the
+        receipt is rasterised and the name stays on one line.
       </p>
     </div>
 
@@ -76,6 +77,35 @@
       <li>Odoo <b>19.0</b> Community &amp; Enterprise.</li>
       <li>Requires the <b>Point of Sale</b> app.</li>
     </ul>
+
+    <div style="margin-top:34px;border-top:2px solid #eee;padding-top:24px;">
+      <h2 style="color:#5B3F73;font-size:22px;">Español</h2>
+      <div style="background:#f6f2fa;border-left:5px solid #5B3F73;padding:16px 20px;border-radius:6px;margin-bottom:20px;">
+        <h3 style="margin:0 0 8px;color:#5B3F73;">El problema</h3>
+        <p style="margin:0;font-size:15px;line-height:1.5;">
+          Odoo aplica la clase <b>text-truncate</b> (<i>overflow: hidden</i>) al
+          nombre del producto en cada línea. En el <b>ticket impreso</b> esto
+          <b>recorta</b> los nombres largos a una sola línea terminada en
+          <b>&hellip;</b>, y ni el cajero ni el cliente pueden leer el nombre
+          completo de lo que se vendió. Los tickets impresos en una impresora
+          térmica <b>Epson / IoT</b> son los más afectados, porque el recibo se
+          convierte en imagen y el nombre queda en un solo renglón.
+        </p>
+      </div>
+      <p style="font-size:15px;line-height:1.6;margin:0 0 8px;">Con este módulo:</p>
+      <ul style="font-size:15px;line-height:1.7;margin-top:0;">
+        <li>El nombre del producto se imprime <b>completo</b>, ajustándose en
+          varias líneas.</li>
+        <li>Arregla el <b>ticket impreso</b> (Epson / IoT) y también la vista
+          previa en pantalla.</li>
+        <li>Las palabras muy largas (códigos / SKU sin espacios) también se
+          parten para que nada se recorte.</li>
+        <li>Acotado al ticket (<i>.pos-receipt</i>): el carrito en pantalla no
+          cambia.</li>
+        <li>Solo CSS: sin Python, sin datos, <b>nada que configurar</b>. Instala,
+          reabre el PdV y listo.</li>
+      </ul>
+    </div>
 
     <div style="margin-top:30px;padding:18px;background:#5B3F73;border-radius:8px;color:#fff;text-align:center;">
       <span style="font-size:16px;">Built by <b>XUBAX</b> &middot;

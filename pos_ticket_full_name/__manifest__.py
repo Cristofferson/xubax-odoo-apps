@@ -7,26 +7,27 @@
 POS Receipt – Full Product Name
 ===============================
 
-Odoo applies the Bootstrap class ``text-truncate`` to the product name of each
-order line (``overflow: hidden``). On the **POS receipt** this cuts off long
-product names — especially long codes/SKUs or names with few spaces to wrap on —
-so the printed ticket ends in ``…`` or a chopped word and neither the cashier
-nor the customer can read the full name of what was sold.
+Odoo applies the Bootstrap class ``text-truncate`` (``overflow: hidden``) to the
+product name of each POS order line. On the **printed receipt** long product
+names are **cut off** — the ticket shows only the start of the name followed by
+``…`` — so neither the cashier nor the customer can read the full name of what
+was sold. Tickets printed as an image through an **Epson / IoT thermal printer**
+are the most affected, because the receipt is rasterised and the name stays on a
+single line.
 
-This module adds a small stylesheet to the Point of Sale receipt so that,
-**inside the receipt only**, the product name is **always printed in full**,
-wrapping onto as many lines as needed. Very long words (SKUs, codes) are broken
-so they never overflow the paper width and nothing is ever clipped.
+This module adds a small stylesheet to the Point of Sale receipt so that the
+product name is **always printed in full**, wrapping onto as many lines as
+needed. Over-long words (codes / SKUs) are also broken so nothing is ever
+clipped, on the printed ticket and in its on-screen preview alike.
 
 Key points
 ----------
-* The full product name is **always printed**, wrapping to several lines.
-* Long codes / names without spaces are broken instead of being cut off.
+* Long product names are **printed complete**, wrapping to several lines.
+* Fixes the printed ticket (Epson / IoT raster) as well as the on-screen preview.
+* Over-long words (codes / SKUs without spaces) are broken instead of cut.
 * Scoped to the receipt (``.pos-receipt``): the on-screen cart keeps its
   compact, truncated look.
 * Pure CSS — no Python, no data, **nothing to configure**. Install and print.
-* Works with any receipt printer (the change is in the receipt markup, so it
-  applies to the on-screen preview and to the printed ticket alike).
 
 Compatibility
 -------------
