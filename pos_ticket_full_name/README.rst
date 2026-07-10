@@ -12,24 +12,26 @@ The problem
 -----------
 
 Odoo applies the Bootstrap class ``text-truncate`` (``overflow: hidden``) to the
-product name of each order line. On the **POS receipt** that clips long product
-names — especially long codes/SKUs or names with few spaces to wrap on. The
-result is receipts that read like::
+product name of each order line. On the **printed receipt** that clips long
+product names to a single line, so the ticket reads like::
 
-    1  DESODORANTEANTITRANSPIRA…           $54.50
+    1  Shampoo Anticaspa con Keratin…      $120.00
 
-so neither the cashier nor the customer can read the full product name.
+and neither the cashier nor the customer can read the full product name. Tickets
+printed as an image through an **Epson / IoT thermal printer** are the most
+affected, because the receipt is rasterised and the name stays on one line.
 
 What this module does
 ---------------------
 
 * Prints the product name **in full**, wrapping onto as many lines as needed::
 
-      1  DESODORANTEANTITRANSPIRANTE      $54.50
-         AEROSOL150MLLAVANDA
+      1  Shampoo Anticaspa con           $120.00
+         Keratina y Biotina Frasco 750ml
 
-* Long codes / names without spaces are broken so they never overflow the paper
-  width and nothing is ever clipped.
+* Fixes the printed ticket (Epson / IoT raster) as well as the on-screen preview.
+* Over-long words (codes / SKUs without spaces) are also broken so nothing is
+  ever clipped.
 * The fix is **scoped to the receipt** (``.pos-receipt``): the on-screen cart
   keeps its compact, truncated look, where space is limited.
 * **Pure CSS** — no Python, no data, nothing to configure.
