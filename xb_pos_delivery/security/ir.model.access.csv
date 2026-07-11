@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_xb_delivery_account_manager,xb.delivery.account manager,model_xb_delivery_account,point_of_sale.group_pos_manager,1,1,1,1
+access_xb_delivery_account_user,xb.delivery.account user,model_xb_delivery_account,point_of_sale.group_pos_user,1,0,0,0
+access_xb_delivery_log_manager,xb.delivery.log manager,model_xb_delivery_log,point_of_sale.group_pos_manager,1,1,1,1
+access_xb_delivery_item_status_user,xb.delivery.item.status user,model_xb_delivery_item_status,point_of_sale.group_pos_user,1,1,1,0
+access_xb_delivery_item_status_manager,xb.delivery.item.status manager,model_xb_delivery_item_status,point_of_sale.group_pos_manager,1,1,1,1
+access_xb_delivery_test_order_manager,xb.delivery.test.order manager,model_xb_delivery_test_order,point_of_sale.group_pos_manager,1,1,1,1

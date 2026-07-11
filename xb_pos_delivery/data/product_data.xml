@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="product_delivery_fee" model="product.product">
+        <field name="name">Delivery Fee</field>
+        <field name="type">service</field>
+        <field name="list_price">0</field>
+        <field name="available_in_pos">1</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="taxes_id" eval="[(5,)]"/>
+    </record>
+    <record id="product_packaging_fee" model="product.product">
+        <field name="name">Packaging Fee</field>
+        <field name="type">service</field>
+        <field name="list_price">0</field>
+        <field name="available_in_pos">1</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="taxes_id" eval="[(5,)]"/>
+    </record>
+    <record id="product_platform_tip" model="product.product">
+        <field name="name">Courier Tip</field>
+        <field name="type">service</field>
+        <field name="list_price">0</field>
+        <field name="available_in_pos">1</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="taxes_id" eval="[(5,)]"/>
+    </record>
+    <record id="product_other_fee" model="product.product">
+        <field name="name">Other Platform Charges</field>
+        <field name="type">service</field>
+        <field name="list_price">0</field>
+        <field name="available_in_pos">1</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="taxes_id" eval="[(5,)]"/>
+    </record>
+</odoo>

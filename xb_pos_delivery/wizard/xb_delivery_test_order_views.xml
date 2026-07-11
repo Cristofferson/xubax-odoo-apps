@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="xb_delivery_test_order_view_form" model="ir.ui.view">
+        <field name="name">xb.delivery.test.order.form</field>
+        <field name="model">xb.delivery.test.order</field>
+        <field name="arch" type="xml">
+            <form string="Simulate a Delivery Order">
+                <group>
+                    <field name="account_id"/>
+                    <field name="order_type"/>
+                    <field name="product_ids" widget="many2many_tags"/>
+                    <field name="cash_order"/>
+                </group>
+                <footer>
+                    <button name="action_create_test_order" type="object"
+                            string="Create Test Order" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="xb_delivery_test_order_action" model="ir.actions.act_window">
+        <field name="name">Simulate a Delivery Order</field>
+        <field name="res_model">xb.delivery.test.order</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_xb_delivery_test_order" name="Simulate Order (demo)"
+              parent="menu_xb_delivery_root" sequence="50"
+              action="xb_delivery_test_order_action"
+              groups="point_of_sale.group_pos_manager"/>
+</odoo>

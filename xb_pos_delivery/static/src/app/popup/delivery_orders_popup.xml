@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="xb_pos_delivery.DeliveryOrdersDialog">
+        <Dialog title.translate="Delivery Orders" size="'lg'" contentClass="'xb-delivery-orders-dialog'">
+            <t t-if="!orders.length">
+                <div class="text-center text-muted p-4">
+                    No delivery orders in this session yet.
+                </div>
+            </t>
+            <div t-foreach="orders" t-as="order" t-key="order.id"
+                 t-attf-class="xb-order-card card mb-2 xb-status-{{ order.xb_delivery_status }}">
+                <div class="card-body py-2">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <span t-attf-class="xb-provider-chip {{ providerClass(order) }}">
+                                <t t-out="providerName(order)"/>
+                            </span>
+                            <strong t-out="'#' + (order.xb_delivery_display_id || '')"/>
+                            <span class="badge text-bg-light" t-out="statusLabel(order)"/>
+                            <span t-if="order.xb_delivery_type === 'pickup'"
+                                  class="badge text-bg-info">Pickup</span>
+                            <span t-if="order.xb_cash_due" class="badge text-bg-warning">
+                                Cash: <t t-out="this.env.utils.formatCurrency(order.xb_cash_due)"/>
+                            </span>
+                        </div>
+                        <div class="fw-bold" t-out="this.env.utils.formatCurrency(order.amount_total)"/>
+                    </div>
+                    <div class="small text-muted mt-1">
+                        <span t-if="order.partner_id" t-out="order.partner_id.name"/>
+                        <t t-set="courierInfo" t-value="courier(order)"/>
+                        <span t-if="courierInfo" class="ms-2">
+                            <i class="fa fa-motorcycle me-1"/>
+                            <t t-out="courierInfo.name"/>
+                            <t t-if="courierInfo.phone"> · <t t-out="courierInfo.phone"/></t>
+                        </span>
+                    </div>
+                    <div t-if="order.general_customer_note"
+                         class="small fst-italic mt-1" t-out="order.general_customer_note"/>
+                    <div class="d-flex gap-2 mt-2">
+                        <button t-if="order.xb_delivery_status === 'placed'"
+                                class="btn btn-success btn-sm"
+                                t-att-disabled="state.busyOrderId === order.id"
+                                t-on-click="() => this.accept(order)">
+                            <i class="fa fa-check me-1"/>Accept
+                        </button>
+                        <button t-if="order.xb_delivery_status === 'accepted'"
+                                class="btn btn-primary btn-sm"
+                                t-att-disabled="state.busyOrderId === order.id"
+                                t-on-click="() => this.ready(order)">
+                            <i class="fa fa-bell me-1"/>Food ready
+                        </button>
+                        <button t-if="['placed', 'accepted'].includes(order.xb_delivery_status)"
+                                class="btn btn-outline-danger btn-sm"
+                                t-att-disabled="state.busyOrderId === order.id"
+                                t-on-click="() => this.reject(order)">
+                            <i class="fa fa-times me-1"/>Reject
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm ms-auto"
+                                t-on-click="() => this.viewOrder(order)">
+                            View order
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <t t-set-slot="footer">
+                <button class="btn btn-secondary" t-on-click="props.close">Close</button>
+            </t>
+        </Dialog>
+    </t>
+</templates>

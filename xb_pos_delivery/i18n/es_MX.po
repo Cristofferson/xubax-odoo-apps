@@ -1,0 +1,1224 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_pos_delivery
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-11 00:51+0000\n"
+"PO-Revision-Date: 2026-07-11 00:51+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_MX\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid "%(provider)s promotion: %(title)s"
+msgstr "Promoción de %(provider)s: %(title)s"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid "%s is now %s."
+msgstr "%s ahora está %s."
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid "%s items published"
+msgstr "%s artículos publicados"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/drivers/uber_eats.py:0
+msgid "%s items published to Uber Eats."
+msgstr "%s artículos publicados en Uber Eats."
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/drivers/didi_food.py:0
+msgid ""
+"%s items sent to DiDi Food (asynchronous processing; the result arrives by "
+"webhook)."
+msgstr ""
+"%s artículos enviados a DiDi Food (procesamiento asíncrono; el resultado "
+"llega por webhook)."
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/popup/delivery_orders_popup.xml:0
+msgid "Accept"
+msgstr "Aceptar"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.pos_order_view_form_inherit_xb
+msgid "Accept (platform)"
+msgstr "Aceptar (plataforma)"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,help:xb_pos_delivery.field_xb_delivery_account__auto_accept
+msgid ""
+"Accept every incoming order automatically. When disabled, the cashier "
+"confirms each order in the POS."
+msgstr ""
+"Acepta automáticamente cada pedido entrante. Si está desactivado, el cajero "
+"confirma cada pedido en el POS."
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields.selection,name:xb_pos_delivery.selection__pos_order__xb_delivery_status__accepted
+msgid "Accepted"
+msgstr "Aceptado"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__access_token
+msgid "Access Token"
+msgstr "Token de acceso"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_item_status__account_id
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_log__account_id
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_test_order__account_id
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_log_view_search
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_account_view_form
+msgid "Archived"
+msgstr "Archivado"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__auto_accept
+msgid "Auto-accept Orders"
+msgstr "Aceptar pedidos automáticamente"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.product_template_form_inherit_xb
+msgid "Available (not sold out)"
+msgstr "Disponible (no agotado)"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_test_order_view_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/popup/delivery_orders_popup.js:0
+#: model:ir.model.fields.selection,name:xb_pos_delivery.selection__pos_order__xb_delivery_status__cancelled
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_test_order__cash_order
+msgid "Cash Order"
+msgstr "Pedido en efectivo"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,help:xb_pos_delivery.field_pos_order__xb_cash_due
+msgid "Cash the customer pays on a cash order (Mexico)."
+msgstr "Efectivo que el cliente paga en un pedido en efectivo (México)."
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_order__xb_cash_due
+msgid "Cash to Collect"
+msgstr "Efectivo por cobrar"
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/popup/delivery_orders_popup.xml:0
+msgid "Cash:"
+msgstr "Efectivo:"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__pos_categ_ids
+msgid "Categories to Publish"
+msgstr "Categorías a publicar"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__client_id
+msgid "Client ID / App ID"
+msgstr "Client ID / App ID"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__client_secret
+msgid "Client Secret / App Secret"
+msgstr "Client Secret / App Secret"
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/popup/delivery_orders_popup.xml:0
+msgid "Close"
+msgstr "Cerrar"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__company_id
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_log__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.actions.act_window,help:xb_pos_delivery.xb_delivery_account_action
+msgid "Connect a Point of Sale to Uber Eats or DiDi Food"
+msgstr "Conecta un Punto de Venta a Uber Eats o DiDi Food"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields.selection,name:xb_pos_delivery.selection__xb_delivery_account__state__connected
+msgid "Connected"
+msgstr "Conectado"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/drivers/didi_food.py:0
+msgid "Connected to DiDi Food (store %s authorized)."
+msgstr "Conectado a DiDi Food (tienda %s autorizada)."
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/drivers/uber_eats.py:0
+msgid "Connected to Uber Eats store \"%s\"."
+msgstr "Conectado a la tienda de Uber Eats \"%s\"."
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_account_view_form
+msgid "Connection"
+msgstr "Conexión"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__connection_msg
+msgid "Connection Msg"
+msgstr "Mensaje de conexión"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid "Connection OK"
+msgstr "Conexión correcta"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid "Connection Test"
+msgstr "Prueba de conexión"
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/services/pos_store_patch.js:0
+msgid "Could not load delivery orders."
+msgstr "No se pudieron cargar los pedidos de delivery."
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid ""
+"Could not update the store status:\n"
+"%s"
+msgstr ""
+"No se pudo actualizar el estado de la tienda:\n"
+"%s"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_order__xb_courier_json
+msgid "Courier Info"
+msgstr "Información del repartidor"
+
+#. module: xb_pos_delivery
+#: model:product.template,name:xb_pos_delivery.product_platform_tip_product_template
+msgid "Courier Tip"
+msgstr "Propina del repartidor"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/drivers/didi_food.py:0
+msgid "Courier tip"
+msgstr "Propina del repartidor"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_test_order_view_form
+msgid "Create Test Order"
+msgstr "Crear pedido de prueba"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.actions.act_window,help:xb_pos_delivery.xb_delivery_account_action
+msgid ""
+"Create one account per platform and per store. Then synchronize\n"
+"                the menu and start receiving delivery orders directly in the POS."
+msgstr ""
+"Crea una cuenta por plataforma y por tienda. Después sincroniza\n"
+"                el menú y comienza a recibir pedidos de delivery directamente en el POS."
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__create_uid
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_item_status__create_uid
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_log__create_uid
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_test_order__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__create_date
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_item_status__create_date
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_log__create_date
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_test_order__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_account_view_form
+msgid "Credentials"
+msgstr "Credenciales"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__default_prep_time
+msgid "Default Preparation Time (min)"
+msgstr "Tiempo de preparación predeterminado (min)"
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/popup/delivery_orders_popup.js:0
+#: model:ir.model.fields.selection,name:xb_pos_delivery.selection__pos_order__xb_delivery_status__delivered
+msgid "Delivered"
+msgstr "Entregado"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields.selection,name:xb_pos_delivery.selection__pos_order__xb_delivery_type__delivery
+#: model:ir.model.fields.selection,name:xb_pos_delivery.selection__xb_delivery_test_order__order_type__delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.pos_order_view_form_inherit_xb
+msgid "Delivery"
+msgstr "Delivery"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_order__xb_delivery_account_id
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_payment_method__xb_delivery_account_id
+msgid "Delivery Account"
+msgstr "Cuenta de delivery"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_product_product__xb_delivery_status_ids
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_product_template__xb_delivery_status_ids
+msgid "Delivery Availability"
+msgstr "Disponibilidad en delivery"
+
+#. module: xb_pos_delivery
+#: model:product.template,name:xb_pos_delivery.product_delivery_fee_product_template
+msgid "Delivery Fee"
+msgstr "Costo de envío"
+
+#. module: xb_pos_delivery
+#: model:ir.model,name:xb_pos_delivery.model_xb_delivery_item_status
+msgid "Delivery Item Availability"
+msgstr "Disponibilidad de artículos en delivery"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+#: model:ir.actions.act_window,name:xb_pos_delivery.xb_delivery_log_action
+msgid "Delivery Logs"
+msgstr "Registros de delivery"
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+#: code:addons/xb_pos_delivery/static/src/app/popup/delivery_orders_popup.xml:0
+#: model:ir.actions.act_window,name:xb_pos_delivery.pos_order_xb_delivery_action
+#: model:ir.ui.menu,name:xb_pos_delivery.menu_xb_delivery_orders
+msgid "Delivery Orders"
+msgstr "Pedidos de delivery"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_order__xb_delivery_provider
+msgid "Delivery Platform"
+msgstr "Plataforma de delivery"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_account_view_form
+msgid "Delivery Platform Account"
+msgstr "Cuenta de plataforma de delivery"
+
+#. module: xb_pos_delivery
+#: model:ir.actions.act_window,name:xb_pos_delivery.xb_delivery_account_action
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_config__xb_delivery_account_ids
+#: model:ir.ui.menu,name:xb_pos_delivery.menu_xb_delivery_accounts
+msgid "Delivery Platforms"
+msgstr "Plataformas de delivery"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_order__xb_delivery_status
+msgid "Delivery Status"
+msgstr "Estado del delivery"
+
+#. module: xb_pos_delivery
+#: model:ir.model,name:xb_pos_delivery.model_xb_delivery_test_order
+msgid "Delivery Test Order"
+msgstr "Pedido de prueba de delivery"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/drivers/didi_food.py:0
+msgid "Delivery fee"
+msgstr "Costo de envío"
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/services/pos_store_patch.js:0
+msgid "Delivery order %s was cancelled by the platform."
+msgstr "El pedido de delivery %s fue cancelado por la plataforma."
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/navbar/delivery_button.xml:0
+msgid "Delivery orders"
+msgstr "Pedidos de delivery"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/pos_order.py:0
+msgid ""
+"Delivery platform orders cannot be deleted. Reject or cancel them instead."
+msgstr ""
+"Los pedidos de plataformas de delivery no se pueden eliminar. En su lugar, "
+"recházalos o cancélalos."
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields.selection,name:xb_pos_delivery.selection__xb_delivery_account__provider__didi_food
+msgid "DiDi Food"
+msgstr "DiDi Food"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/drivers/didi_food.py:0
+msgid "DiDi Food did not return an auth_token."
+msgstr "DiDi Food no devolvió un auth_token."
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/drivers/didi_food.py:0
+msgid "DiDi promotion (store funded)"
+msgstr "Promoción DiDi (financiada por la tienda)"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_log__direction
+msgid "Direction"
+msgstr "Dirección"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields.selection,name:xb_pos_delivery.selection__pos_order__xb_delivery_status__dispatched
+msgid "Dispatched"
+msgstr "Despachado"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_config__display_name
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_order__display_name
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_payment_method__display_name
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_session__display_name
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_product_template__display_name
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__display_name
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_item_status__display_name
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_log__display_name
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_test_order__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields.selection,name:xb_pos_delivery.selection__xb_delivery_account__state__draft
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields.selection,name:xb_pos_delivery.selection__xb_delivery_account__state__error
+msgid "Error"
+msgstr "Error"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_log_view_search
+msgid "Errors"
+msgstr "Errores"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_log__event
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_log_view_search
+msgid "Event"
+msgstr "Evento"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__fiscal_position_id
+msgid "Fiscal Position"
+msgstr "Posición fiscal"
+
+#. module: xb_pos_delivery
+#: model:ir.ui.menu,name:xb_pos_delivery.menu_xb_delivery_root
+msgid "Food Delivery"
+msgstr "Delivery de Comida"
+
+#. module: xb_pos_delivery
+#: model:ir.model,name:xb_pos_delivery.model_xb_delivery_log
+msgid "Food Delivery Log"
+msgstr "Registro de delivery de comida"
+
+#. module: xb_pos_delivery
+#: model:ir.model,name:xb_pos_delivery.model_xb_delivery_account
+msgid "Food Delivery Platform Account"
+msgstr "Cuenta de plataforma de delivery de comida"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.product_template_form_inherit_xb
+msgid "Food Delivery Platforms"
+msgstr "Plataformas de delivery de comida"
+
+#. module: xb_pos_delivery
+#: model:ir.actions.server,name:xb_pos_delivery.cron_refresh_tokens_ir_actions_server
+msgid "Food Delivery: refresh platform tokens"
+msgstr "Delivery de Comida: renovar tokens de las plataformas"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.pos_order_view_form_inherit_xb
+msgid "Food Ready"
+msgstr "Comida lista"
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/popup/delivery_orders_popup.xml:0
+msgid "Food ready"
+msgstr "Comida lista"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_order__xb_delivery_type
+msgid "Fulfillment"
+msgstr "Tipo de entrega"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_account_view_form
+msgid "Go Offline"
+msgstr "Poner fuera de línea"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_account_view_form
+msgid "Go Online"
+msgstr "Poner en línea"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_config__id
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_order__id
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_payment_method__id
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_session__id
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_product_template__id
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__id
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_item_status__id
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_log__id
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_test_order__id
+msgid "ID"
+msgstr "ID"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__closed_session_policy
+msgid "If the POS is Closed"
+msgstr "Si el POS está cerrado"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields.selection,name:xb_pos_delivery.selection__xb_delivery_account__closed_session_policy__ignore
+msgid "Ignore (platform will time out)"
+msgstr "Ignorar (la plataforma agotará el tiempo de espera)"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields.selection,name:xb_pos_delivery.selection__xb_delivery_log__direction__in
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_log_view_search
+msgid "Incoming"
+msgstr "Entrante"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_item_status__is_available
+msgid "Is Available"
+msgstr "Disponible"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__write_uid
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_item_status__write_uid
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_log__write_uid
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_test_order__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__write_date
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_item_status__write_date
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_log__write_date
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_test_order__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,help:xb_pos_delivery.field_xb_delivery_account__connection_msg
+msgid "Last connection diagnostic message."
+msgstr "Último mensaje de diagnóstico de la conexión."
+
+#. module: xb_pos_delivery
+#: model:ir.ui.menu,name:xb_pos_delivery.menu_xb_delivery_logs
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_account_view_form
+msgid "Logs"
+msgstr "Registros"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/drivers/uber_eats.py:0
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_account_view_form
+msgid "Menu"
+msgstr "Menú"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__menu_last_result
+msgid "Menu Last Result"
+msgstr "Último resultado del menú"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__menu_last_sync
+msgid "Menu Last Sync"
+msgstr "Última sincronización del menú"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid "Menu Synchronization"
+msgstr "Sincronización del menú"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid ""
+"Menu synchronization failed:\n"
+"%s"
+msgstr ""
+"Falló la sincronización del menú:\n"
+"%s"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_log__message
+msgid "Message"
+msgstr "Mensaje"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/drivers/didi_food.py:0
+msgid "Minimum order top-up"
+msgstr "Complemento por pedido mínimo"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid "Missing credentials: %s"
+msgstr "Faltan credenciales: %s"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/popup/delivery_orders_popup.js:0
+#: model:ir.model.fields.selection,name:xb_pos_delivery.selection__pos_order__xb_delivery_status__placed
+msgid "New"
+msgstr "Nuevo"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.pos_order_view_form_inherit_xb
+msgid "New delivery order awaiting acceptance."
+msgstr "Nuevo pedido de delivery en espera de aceptación."
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/services/pos_store_patch.js:0
+msgid "New delivery order received."
+msgstr "Nuevo pedido de delivery recibido."
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/wizard/xb_delivery_test_order.py:0
+msgid "No POS products found to build the test order."
+msgstr "No se encontraron productos del POS para armar el pedido de prueba."
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/popup/delivery_orders_popup.xml:0
+msgid "No delivery orders in this session yet."
+msgstr "Aún no hay pedidos de delivery en esta sesión."
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid "No driver registered for provider %s."
+msgstr "No hay un controlador registrado para el proveedor %s."
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid "No open POS session for %s."
+msgstr "No hay una sesión de POS abierta para %s."
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/popup/delivery_orders_popup.js:0
+msgid "On the way"
+msgstr "En camino"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/wizard/xb_delivery_test_order.py:0
+msgid "Open a session on %s first, so the test order can reach the POS."
+msgstr ""
+"Primero abre una sesión en %s para que el pedido de prueba pueda llegar al "
+"POS."
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,help:xb_pos_delivery.field_xb_delivery_account__fiscal_position_id
+msgid "Optional fiscal position applied to incoming orders."
+msgstr "Posición fiscal opcional aplicada a los pedidos entrantes."
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,help:xb_pos_delivery.field_xb_delivery_account__pricelist_id
+msgid ""
+"Optional pricelist applied when building the platform menu, e.g. to "
+"compensate the platform commission. Prices are sent tax included."
+msgstr ""
+"Lista de precios opcional aplicada al construir el menú de la plataforma, "
+"p. ej., para compensar la comisión de la plataforma. Los precios se envían "
+"con impuestos incluidos."
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__order_count
+msgid "Order Count"
+msgstr "Número de pedidos"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_test_order__order_type
+msgid "Order Type"
+msgstr "Tipo de pedido"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_account_view_form
+msgid "Orders"
+msgstr "Pedidos"
+
+#. module: xb_pos_delivery
+#: model:product.template,name:xb_pos_delivery.product_other_fee_product_template
+msgid "Other Platform Charges"
+msgstr "Otros cargos de la plataforma"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields.selection,name:xb_pos_delivery.selection__xb_delivery_log__direction__out
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_log_view_search
+msgid "Outgoing"
+msgstr "Saliente"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,help:xb_pos_delivery.field_xb_delivery_account__config_id
+msgid "POS (store) connected to the delivery platform."
+msgstr "POS (tienda) conectado a la plataforma de delivery."
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,help:xb_pos_delivery.field_xb_delivery_account__pos_categ_ids
+msgid ""
+"POS categories exported to the platform menu. Leave empty to publish every "
+"product available in this POS."
+msgstr ""
+"Categorías del POS exportadas al menú de la plataforma. Déjalo vacío para "
+"publicar todos los productos disponibles en este POS."
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,help:xb_pos_delivery.field_xb_delivery_account__payment_method_id
+msgid ""
+"POS payment method used to register the money collected by the platform. "
+"Created automatically with its own journal."
+msgstr ""
+"Método de pago del POS usado para registrar el dinero cobrado por la "
+"plataforma. Se crea automáticamente con su propio diario."
+
+#. module: xb_pos_delivery
+#: model:product.template,name:xb_pos_delivery.product_packaging_fee_product_template
+msgid "Packaging Fee"
+msgstr "Cargo por empaque"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_log__payload
+msgid "Payload"
+msgstr "Payload"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__payment_method_id
+msgid "Payment Method"
+msgstr "Método de pago"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,help:xb_pos_delivery.field_pos_payment_method__xb_delivery_account_id
+msgid "Payment method dedicated to a food delivery platform."
+msgstr "Método de pago dedicado a una plataforma de delivery de comida."
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/popup/delivery_orders_popup.xml:0
+#: model:ir.model.fields.selection,name:xb_pos_delivery.selection__pos_order__xb_delivery_type__pickup
+#: model:ir.model.fields.selection,name:xb_pos_delivery.selection__xb_delivery_test_order__order_type__pickup
+msgid "Pickup"
+msgstr "Para recoger"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_order__xb_delivery_display_id
+msgid "Platform Display ID"
+msgstr "ID visible en la plataforma"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_order__xb_delivery_identifier
+msgid "Platform Order ID"
+msgstr "ID del pedido en la plataforma"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/pos_order.py:0
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_order__xb_delivery_json
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.pos_order_view_form_xb_payload
+msgid "Platform Payload"
+msgstr "Payload de la plataforma"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__pricelist_id
+msgid "Platform Pricelist"
+msgstr "Lista de precios de la plataforma"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__config_id
+msgid "Point of Sale"
+msgstr "Punto de Venta"
+
+#. module: xb_pos_delivery
+#: model:ir.model,name:xb_pos_delivery.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr "Configuración del Punto de Venta"
+
+#. module: xb_pos_delivery
+#: model:ir.model,name:xb_pos_delivery.model_pos_order
+msgid "Point of Sale Orders"
+msgstr "Pedidos del Punto de Venta"
+
+#. module: xb_pos_delivery
+#: model:ir.model,name:xb_pos_delivery.model_pos_payment_method
+msgid "Point of Sale Payment Methods"
+msgstr "Métodos de pago del Punto de Venta"
+
+#. module: xb_pos_delivery
+#: model:ir.model,name:xb_pos_delivery.model_pos_session
+msgid "Point of Sale Session"
+msgstr "Sesión del Punto de Venta"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_order__xb_prep_time
+msgid "Prep Time (min)"
+msgstr "Tiempo de preparación (min)"
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/popup/delivery_orders_popup.js:0
+msgid "Preparing"
+msgstr "En preparación"
+
+#. module: xb_pos_delivery
+#: model:ir.model,name:xb_pos_delivery.model_product_template
+msgid "Product"
+msgstr "Producto"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_item_status__product_tmpl_id
+msgid "Product Tmpl"
+msgstr "Plantilla de producto"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid ""
+"Product not found for delivery item %(name)s (ref %(ref)s). Re-synchronize "
+"the menu."
+msgstr ""
+"No se encontró el producto para el artículo de delivery %(name)s (ref "
+"%(ref)s). Vuelve a sincronizar el menú."
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_test_order__product_ids
+msgid "Products"
+msgstr "Productos"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__provider
+msgid "Provider"
+msgstr "Proveedor"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,help:xb_pos_delivery.field_xb_delivery_account__webhook_secret
+msgid "Random secret embedded in the webhook URL of this account."
+msgstr "Secreto aleatorio incrustado en la URL del webhook de esta cuenta."
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/popup/delivery_orders_popup.js:0
+#: model:ir.model.fields.selection,name:xb_pos_delivery.selection__pos_order__xb_delivery_status__ready
+msgid "Ready"
+msgstr "Listo"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_account_view_form
+msgid "Regenerate"
+msgstr "Regenerar"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_account_view_form
+msgid ""
+"Register this URL as the webhook / callback URL of your\n"
+"                                application on the platform's developer portal\n"
+"                                (Uber Eats: developer.uber.com dashboard;\n"
+"                                DiDi Food: developer.didi-food.com, Application Management)."
+msgstr ""
+"Registra esta URL como la URL de webhook / callback de tu\n"
+"                                aplicación en el portal de desarrolladores de la plataforma\n"
+"                                (Uber Eats: panel de developer.uber.com;\n"
+"                                DiDi Food: developer.didi-food.com, Application Management)."
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/popup/delivery_orders_popup.xml:0
+msgid "Reject"
+msgstr "Rechazar"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.pos_order_view_form_inherit_xb
+msgid "Reject (platform)"
+msgstr "Rechazar (plataforma)"
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/popup/delivery_orders_popup.js:0
+msgid "Reject order"
+msgstr "Rechazar pedido"
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/popup/delivery_orders_popup.js:0
+msgid "Reject order %s on %s? The customer will be notified by the platform."
+msgstr "¿Rechazar el pedido %s en %s? La plataforma notificará al cliente."
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields.selection,name:xb_pos_delivery.selection__xb_delivery_account__closed_session_policy__reject
+msgid "Reject the order on the platform"
+msgstr "Rechazar el pedido en la plataforma"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.pos_order_view_form_inherit_xb
+msgid "Reject/cancel this order on the delivery platform?"
+msgstr "¿Rechazar/cancelar este pedido en la plataforma de delivery?"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/pos_order.py:0
+msgid "Rejected by the restaurant"
+msgstr "Rechazado por el restaurante"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid "Restaurant promotion"
+msgstr "Promoción del restaurante"
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/services/pos_store_patch.js:0
+msgid "Review"
+msgstr "Revisar"
+
+#. module: xb_pos_delivery
+#: model:ir.ui.menu,name:xb_pos_delivery.menu_xb_delivery_test_order
+msgid "Simulate Order (demo)"
+msgstr "Simular pedido (demo)"
+
+#. module: xb_pos_delivery
+#: model:ir.actions.act_window,name:xb_pos_delivery.xb_delivery_test_order_action
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_test_order_view_form
+msgid "Simulate a Delivery Order"
+msgstr "Simular un pedido de delivery"
+
+#. module: xb_pos_delivery
+#: model:ir.actions.act_window,name:xb_pos_delivery.xb_delivery_item_status_action
+#: model:ir.ui.menu,name:xb_pos_delivery.menu_xb_delivery_item_status
+msgid "Sold-out Control"
+msgstr "Control de agotados"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__state
+msgid "State"
+msgstr "Estado"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__external_store_id
+msgid "Store ID on the Platform"
+msgstr "ID de la tienda en la plataforma"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid "Store ID on the platform"
+msgstr "ID de la tienda en la plataforma"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid "Store Status"
+msgstr "Estado de la tienda"
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/services/pos_store_patch.js:0
+msgid "Store is now offline on %s."
+msgstr "La tienda ahora está fuera de línea en %s."
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/services/pos_store_patch.js:0
+msgid "Store is now online on %s."
+msgstr "La tienda ahora está en línea en %s."
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_log__success
+msgid "Success"
+msgstr "Exitoso"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_account_view_form
+msgid "Synchronize Menu"
+msgstr "Sincronizar menú"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/wizard/xb_delivery_test_order.py:0
+msgid "TEST ORDER — do not prepare"
+msgstr "PEDIDO DE PRUEBA — no preparar"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__sandbox
+msgid "Test / Sandbox Mode"
+msgstr "Modo de prueba / sandbox"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_account_view_form
+msgid "Test Connection"
+msgstr "Probar conexión"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/wizard/xb_delivery_test_order.py:0
+msgid "Test Customer"
+msgstr "Cliente de prueba"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_account_view_form
+msgid ""
+"The current webhook URL will stop working and must be re-registered on the "
+"platform. Continue?"
+msgstr ""
+"La URL de webhook actual dejará de funcionar y deberá registrarse de nuevo "
+"en la plataforma. ¿Continuar?"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_account_view_form
+msgid ""
+"The menu on the platform will be fully replaced with the POS catalog. "
+"Continue?"
+msgstr ""
+"El menú en la plataforma se reemplazará por completo con el catálogo del "
+"POS. ¿Continuar?"
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/popup/delivery_orders_popup.js:0
+msgid "The platform call failed."
+msgstr "Falló la llamada a la plataforma."
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/pos_order.py:0
+msgid ""
+"The platform cancelled this order after it was paid. Review the session "
+"payments."
+msgstr ""
+"La plataforma canceló este pedido después de que fue pagado. Revisa los "
+"pagos de la sesión."
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/pos_order.py:0
+msgid ""
+"The platform rejected the acceptance:\n"
+"%s"
+msgstr ""
+"La plataforma rechazó la aceptación:\n"
+"%s"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/pos_order.py:0
+msgid ""
+"The platform rejected the cancellation:\n"
+"%s"
+msgstr ""
+"La plataforma rechazó la cancelación:\n"
+"%s"
+
+#. module: xb_pos_delivery
+#: model:ir.model.constraint,message:xb_pos_delivery.constraint_xb_delivery_item_status_account_product_uniq
+msgid "There is already an availability entry for this product and account."
+msgstr ""
+"Ya existe un registro de disponibilidad para este producto y esta cuenta."
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid ""
+"There is nothing to publish: no product is available in this POS for the "
+"selected categories."
+msgstr ""
+"No hay nada que publicar: ningún producto está disponible en este POS para "
+"las categorías seleccionadas."
+
+#. module: xb_pos_delivery
+#: model:ir.model.constraint,message:xb_pos_delivery.constraint_xb_delivery_account_config_provider_uniq
+msgid "This Point of Sale is already connected to that platform."
+msgstr "Este Punto de Venta ya está conectado a esa plataforma."
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/pos_order.py:0
+msgid "This is not a delivery platform order."
+msgstr "Este no es un pedido de plataforma de delivery."
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__token_expiry
+msgid "Token Expiry"
+msgstr "Vencimiento del token"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields.selection,name:xb_pos_delivery.selection__xb_delivery_account__provider__uber_eats
+msgid "Uber Eats"
+msgstr "Uber Eats"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,help:xb_pos_delivery.field_xb_delivery_account__external_store_id
+msgid ""
+"Uber Eats: Store UUID.\n"
+"DiDi Food: Shop ID."
+msgstr ""
+"Uber Eats: UUID de la tienda.\n"
+"DiDi Food: ID de la tienda (Shop ID)."
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,help:xb_pos_delivery.field_xb_delivery_account__client_id
+msgid ""
+"Uber Eats: application Client ID.\n"
+"DiDi Food: App ID."
+msgstr ""
+"Uber Eats: Client ID de la aplicación.\n"
+"DiDi Food: App ID."
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,help:xb_pos_delivery.field_xb_delivery_account__client_secret
+msgid ""
+"Uber Eats: application Client Secret (also used to verify webhook signatures).\n"
+"DiDi Food: App Secret (used to sign every request)."
+msgstr ""
+"Uber Eats: Client Secret de la aplicación (también se usa para verificar las firmas de los webhooks).\n"
+"DiDi Food: App Secret (se usa para firmar cada solicitud)."
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,help:xb_pos_delivery.field_xb_delivery_item_status__is_available
+msgid "Uncheck to mark the product as sold out on the platform."
+msgstr "Desmarca para marcar el producto como agotado en la plataforma."
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,help:xb_pos_delivery.field_xb_delivery_account__sandbox
+msgid "Use the sandbox endpoints of the platform (when available)."
+msgstr "Usa los endpoints de sandbox de la plataforma (cuando estén disponibles)."
+
+#. module: xb_pos_delivery
+#. odoo-javascript
+#: code:addons/xb_pos_delivery/static/src/app/popup/delivery_orders_popup.xml:0
+msgid "View order"
+msgstr "Ver pedido"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.pos_order_view_form_inherit_xb
+msgid "View platform payload"
+msgstr "Ver payload de la plataforma"
+
+#. module: xb_pos_delivery
+#: model_terms:ir.ui.view,arch_db:xb_pos_delivery.xb_delivery_account_view_form
+msgid "Webhook"
+msgstr "Webhook"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__webhook_secret
+msgid "Webhook Secret"
+msgstr "Secreto del webhook"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_xb_delivery_account__webhook_url
+msgid "Webhook Url"
+msgstr "URL del webhook"
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,help:xb_pos_delivery.field_xb_delivery_account__closed_session_policy
+msgid "What to do when an order arrives while no POS session is open."
+msgstr "Qué hacer cuando llega un pedido y no hay ninguna sesión de POS abierta."
+
+#. module: xb_pos_delivery
+#: model:ir.model.fields,field_description:xb_pos_delivery.field_pos_config__xb_delivery_active
+msgid "Xb Delivery Active"
+msgstr "Delivery activo"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid "account_id"
+msgstr "account_id"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid "offline"
+msgstr "fuera de línea"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid "online"
+msgstr "en línea"
+
+#. module: xb_pos_delivery
+#. odoo-python
+#: code:addons/xb_pos_delivery/models/xb_delivery_account.py:0
+msgid "xb_delivery_account_id"
+msgstr "xb_delivery_account_id"

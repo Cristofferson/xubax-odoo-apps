@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_xb_delivery_root" name="Food Delivery"
+              parent="point_of_sale.menu_point_root" sequence="35"/>
+    <menuitem id="menu_xb_delivery_accounts" name="Delivery Platforms"
+              parent="menu_xb_delivery_root" sequence="10"
+              action="xb_delivery_account_action"/>
+    <menuitem id="menu_xb_delivery_orders" name="Delivery Orders"
+              parent="menu_xb_delivery_root" sequence="20"
+              action="pos_order_xb_delivery_action"/>
+    <menuitem id="menu_xb_delivery_item_status" name="Sold-out Control"
+              parent="menu_xb_delivery_root" sequence="30"
+              action="xb_delivery_item_status_action"/>
+    <menuitem id="menu_xb_delivery_logs" name="Logs"
+              parent="menu_xb_delivery_root" sequence="40"
+              action="xb_delivery_log_action"
+              groups="point_of_sale.group_pos_manager"/>
+</odoo>

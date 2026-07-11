@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="xb_pos_delivery.DeliveryButton">
+        <button class="xb-delivery-button btn btn-secondary position-relative d-flex align-items-center"
+                t-on-click="onClick" title="Delivery orders">
+            <i class="oi oi-food-delivery fs-2"/>
+            <span t-if="newCount"
+                  class="xb-delivery-badge position-absolute badge rounded-pill text-bg-danger">
+                <t t-out="newCount"/>
+            </span>
+        </button>
+    </t>
+
+    <t t-name="xb_pos_delivery.Navbar" t-inherit="point_of_sale.Navbar" t-inherit-mode="extension">
+        <xpath expr="//Input[@t-if='pos.showSearchButton()']" position="after">
+            <XbDeliveryButton t-if="this.pos.xbDeliveryEnabled"/>
+        </xpath>
+    </t>
+</templates>

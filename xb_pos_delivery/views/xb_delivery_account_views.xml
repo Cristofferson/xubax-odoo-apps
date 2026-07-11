@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="xb_delivery_account_view_list" model="ir.ui.view">
+        <field name="name">xb.delivery.account.list</field>
+        <field name="model">xb.delivery.account</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="provider"/>
+                <field name="config_id"/>
+                <field name="external_store_id"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'connected'"
+                       decoration-danger="state == 'error'"/>
+                <field name="menu_last_sync"/>
+                <field name="order_count"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="xb_delivery_account_view_form" model="ir.ui.view">
+        <field name="name">xb.delivery.account.form</field>
+        <field name="model">xb.delivery.account</field>
+        <field name="arch" type="xml">
+            <form string="Delivery Platform Account">
+                <header>
+                    <button name="action_test_connection" type="object"
+                            string="Test Connection" class="btn-primary"/>
+                    <button name="action_sync_menu" type="object"
+                            string="Synchronize Menu"
+                            invisible="state != 'connected'"
+                            confirm="The menu on the platform will be fully replaced with the POS catalog. Continue?"/>
+                    <button name="action_set_store_online" type="object"
+                            string="Go Online" invisible="state != 'connected'"/>
+                    <button name="action_set_store_offline" type="object"
+                            string="Go Offline" invisible="state != 'connected'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_orders" type="object"
+                                class="oe_stat_button" icon="fa-shopping-bag">
+                            <field name="order_count" widget="statinfo" string="Orders"/>
+                        </button>
+                        <button name="action_view_logs" type="object"
+                                class="oe_stat_button" icon="fa-list-alt"
+                                string="Logs"/>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Connection">
+                            <field name="active" invisible="1"/>
+                            <field name="provider" readonly="state == 'connected'"/>
+                            <field name="config_id" readonly="state == 'connected'"
+                                   options="{'no_create': True}"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="sandbox"/>
+                            <field name="connection_msg" readonly="1"/>
+                        </group>
+                        <group string="Credentials" groups="point_of_sale.group_pos_manager">
+                            <field name="client_id" password="False"/>
+                            <field name="client_secret" password="True"/>
+                            <field name="external_store_id"/>
+                            <field name="token_expiry" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Menu" name="menu">
+                            <group>
+                                <group>
+                                    <field name="pos_categ_ids" widget="many2many_tags"/>
+                                    <field name="pricelist_id"/>
+                                </group>
+                                <group>
+                                    <field name="menu_last_sync" readonly="1"/>
+                                    <field name="menu_last_result" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Orders" name="orders">
+                            <group>
+                                <group>
+                                    <field name="auto_accept"/>
+                                    <field name="default_prep_time"/>
+                                    <field name="closed_session_policy"/>
+                                </group>
+                                <group>
+                                    <field name="fiscal_position_id"/>
+                                    <field name="payment_method_id" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Webhook" name="webhook"
+                              groups="point_of_sale.group_pos_manager">
+                            <group>
+                                <field name="webhook_url" readonly="1" widget="CopyClipboardChar"/>
+                                <label for="webhook_secret"/>
+                                <div>
+                                    <field name="webhook_secret" readonly="1" class="oe_inline"/>
+                                    <button name="action_regenerate_webhook_secret" type="object"
+                                            string="Regenerate" class="btn-link"
+                                            confirm="The current webhook URL will stop working and must be re-registered on the platform. Continue?"/>
+                                </div>
+                            </group>
+                            <div class="alert alert-info" role="alert">
+                                Register this URL as the webhook / callback URL of your
+                                application on the platform's developer portal
+                                (Uber Eats: developer.uber.com dashboard;
+                                DiDi Food: developer.didi-food.com, Application Management).
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="xb_delivery_account_action" model="ir.actions.act_window">
+        <field name="name">Delivery Platforms</field>
+        <field name="res_model">xb.delivery.account</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Connect a Point of Sale to Uber Eats or DiDi Food
+            </p>
+            <p>
+                Create one account per platform and per store. Then synchronize
+                the menu and start receiving delivery orders directly in the POS.
+            </p>
+        </field>
+    </record>
+</odoo>

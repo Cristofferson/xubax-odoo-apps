@@ -1,0 +1,98 @@
+<section style="max-width: 980px; margin: 0 auto; font-family: 'Inter', 'Segoe UI', Arial, sans-serif; color: #1f2937;">
+
+    <!-- HERO -->
+    <div style="background: linear-gradient(120deg, #04795d 0%, #06C167 55%, #FF7D41 100%); border-radius: 18px; padding: 48px 40px; color: #fff; text-align: center; margin: 24px 0;">
+        <h1 style="font-size: 34px; margin: 0 0 12px; font-weight: 800;">
+            POS Food Delivery — Uber Eats &amp; DiDi Food
+        </h1>
+        <p style="font-size: 19px; margin: 0 0 6px; opacity: .95;">
+            Conecta tu Punto de Venta Restaurante <b>directo</b> a las plataformas de delivery líderes en México.
+        </p>
+        <p style="font-size: 15px; margin: 0; opacity: .85;">
+            Direct integration with the Uber Eats Marketplace API and the DiDi Food Open Platform —
+            <b>no aggregator, no monthly middleman fees</b>.
+        </p>
+    </div>
+
+    <!-- VALUE ROW -->
+    <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 32px;">
+        <div style="flex: 1 1 220px; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 14px; padding: 22px;">
+            <div style="font-size: 28px;">🔔</div>
+            <h3 style="margin: 8px 0 6px; font-size: 17px;">Pedidos en vivo en el POS</h3>
+            <p style="margin: 0; font-size: 14px; color: #4b5563;">
+                Cada pedido suena en caja con alerta en loop, se acepta o rechaza con un clic
+                y viaja a cocina como cualquier orden del POS.
+            </p>
+        </div>
+        <div style="flex: 1 1 220px; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 14px; padding: 22px;">
+            <div style="font-size: 28px;">📋</div>
+            <h3 style="margin: 8px 0 6px; font-size: 17px;">Menú sincronizado</h3>
+            <p style="margin: 0; font-size: 14px; color: #4b5563;">
+                Publica categorías, productos, fotos y modificadores (atributos) con un botón.
+                Lista de precios propia por plataforma para compensar comisiones.
+            </p>
+        </div>
+        <div style="flex: 1 1 220px; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 14px; padding: 22px;">
+            <div style="font-size: 28px;">💰</div>
+            <h3 style="margin: 8px 0 6px; font-size: 17px;">Contabilidad limpia</h3>
+            <p style="margin: 0; font-size: 14px; color: #4b5563;">
+                Diario y método de pago por plataforma, pago registrado automáticamente,
+                soporte de pedidos en efectivo (México) y cierres de sesión sin descuadres.
+            </p>
+        </div>
+    </div>
+
+    <!-- FEATURES -->
+    <h2 style="font-size: 24px; border-left: 5px solid #06C167; padding-left: 12px;">Funciones principales / Key features</h2>
+    <table style="width: 100%; border-collapse: collapse; font-size: 14px; margin: 18px 0 32px;">
+        <tbody>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+                <td style="padding: 10px; width: 34%;"><b>Integración directa oficial</b></td>
+                <td style="padding: 10px; color:#4b5563;">Uber Eats Marketplace API (OAuth2, webhooks firmados HMAC-SHA256) y DiDi Food Open Platform (tokens por tienda, callbacks firmados MD5). Sin intermediarios tipo agregador.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+                <td style="padding: 10px;"><b>Ciclo de vida completo</b></td>
+                <td style="padding: 10px; color:#4b5563;">Nuevo → Aceptar (o auto-aceptar) → Listo → Repartidor en camino (nombre y teléfono en el POS) → Entregado. Cancelaciones en ambos sentidos, sin duplicados (webhooks idempotentes).</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+                <td style="padding: 10px;"><b>Agotados en segundos</b></td>
+                <td style="padding: 10px; color:#4b5563;">Apaga un platillo por plataforma desde la ficha del producto o el control de agotados; se suspende al instante en Uber Eats / DiDi Food.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+                <td style="padding: 10px;"><b>México primero</b></td>
+                <td style="padding: 10px; color:#4b5563;">Precios con IVA incluido (16%), pedidos en efectivo (cobro en tienda o por repartidor), textos en español.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+                <td style="padding: 10px;"><b>Modo demo</b></td>
+                <td style="padding: 10px; color:#4b5563;">Simula un pedido completo sin credenciales para capacitar al personal antes de salir en vivo.</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px;"><b>Seguridad y bitácora</b></td>
+                <td style="padding: 10px; color:#4b5563;">URLs de webhook con secreto por cuenta + verificación de firma de cada plataforma; bitácora de 30 días de todo lo que entra y sale.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- HOW IT WORKS -->
+    <h2 style="font-size: 24px; border-left: 5px solid #FF7D41; padding-left: 12px;">Puesta en marcha en 4 pasos</h2>
+    <ol style="font-size: 15px; color: #374151; line-height: 1.8; margin: 14px 0 32px;">
+        <li><b>Crea la cuenta</b> en Punto de Venta ▸ Food Delivery ▸ Plataformas (una por plataforma y sucursal) y captura tus credenciales.</li>
+        <li><b>Registra el webhook</b> (URL con secreto que te da el módulo) en el portal de desarrolladores de la plataforma.</li>
+        <li><b>Sincroniza el menú</b> y pon la tienda en línea.</li>
+        <li><b>Abre tu sesión de POS</b> y recibe pedidos con alerta sonora.</li>
+    </ol>
+
+    <div style="background: #fff7ed; border: 1px solid #fdba74; border-radius: 12px; padding: 16px 20px; font-size: 13px; color: #7c2d12; margin-bottom: 32px;">
+        <b>Nota / Note:</b> necesitas credenciales de las plataformas: una app aprobada de
+        <b>Uber Eats Marketplace API</b> (developer.uber.com — Uber exige NDA y certificación para producción) y una app de
+        <b>DiDi Food Open Platform</b> (developer.didi-food.com). El módulo funciona en Community y Enterprise, Odoo 19,
+        y requiere un servidor accesible por HTTPS. Uber Eats y DiDi Food son marcas de sus respectivos dueños;
+        este módulo es un conector independiente y no está patrocinado por ellas.
+    </div>
+
+    <!-- FOOTER -->
+    <div style="text-align: center; padding: 26px; background: #111827; color: #e5e7eb; border-radius: 14px; margin-bottom: 24px;">
+        <p style="margin: 0 0 6px; font-size: 16px;"><b>XUBAX</b> — Apps profesionales para Odoo</p>
+        <p style="margin: 0; font-size: 13px;">Soporte: cristofferson28@gmail.com · Licencia OPL-1 · Odoo 19</p>
+    </div>
+</section>

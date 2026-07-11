@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_order_view_form_inherit_xb" model="ir.ui.view">
+        <field name="name">pos.order.form.xb.delivery</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group" position="before">
+                <div class="alert alert-warning" role="alert"
+                     invisible="not xb_delivery_account_id or xb_delivery_status != 'placed'">
+                    New delivery order awaiting acceptance.
+                </div>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="action_xb_accept" type="object" string="Accept (platform)"
+                        class="btn-primary"
+                        invisible="not xb_delivery_account_id or xb_delivery_status != 'placed'"/>
+                <button name="action_xb_ready" type="object" string="Food Ready"
+                        invisible="not xb_delivery_account_id or xb_delivery_status != 'accepted'"/>
+                <button name="action_xb_reject" type="object" string="Reject (platform)"
+                        invisible="not xb_delivery_account_id or xb_delivery_status not in ('placed', 'accepted')"
+                        confirm="Reject/cancel this order on the delivery platform?"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Delivery" name="xb_delivery"
+                      invisible="not xb_delivery_account_id">
+                    <group>
+                        <group>
+                            <field name="xb_delivery_account_id" readonly="1"/>
+                            <field name="xb_delivery_provider" readonly="1"/>
+                            <field name="xb_delivery_identifier" readonly="1"/>
+                            <field name="xb_delivery_display_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="xb_delivery_status" readonly="1"/>
+                            <field name="xb_delivery_type" readonly="1"/>
+                            <field name="xb_prep_time"/>
+                            <field name="xb_cash_due" readonly="1"/>
+                        </group>
+                    </group>
+                    <button name="action_xb_open_platform_payload" type="object"
+                            string="View platform payload" class="btn-link"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="pos_order_view_form_xb_payload" model="ir.ui.view">
+        <field name="name">pos.order.form.xb.payload</field>
+        <field name="model">pos.order</field>
+        <field name="priority">1000</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false" string="Platform Payload">
+                <field name="xb_delivery_json" widget="code" options="{'mode': 'json'}"/>
+                <field name="xb_courier_json" widget="code" options="{'mode': 'json'}"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="pos_order_view_list_inherit_xb" model="ir.ui.view">
+        <field name="name">pos.order.list.xb.delivery</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="xb_delivery_provider" optional="hide"/>
+                <field name="xb_delivery_status" optional="hide" widget="badge"
+                       decoration-warning="xb_delivery_status == 'placed'"
+                       decoration-info="xb_delivery_status in ('accepted', 'ready')"
+                       decoration-success="xb_delivery_status in ('dispatched', 'delivered')"
+                       decoration-danger="xb_delivery_status == 'cancelled'"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="pos_order_xb_delivery_action" model="ir.actions.act_window">
+        <field name="name">Delivery Orders</field>
+        <field name="res_model">pos.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('xb_delivery_account_id', '!=', False)]</field>
+        <field name="context">{'search_default_group_provider': 1}</field>
+    </record>
+</odoo>

@@ -1,0 +1,39 @@
+.xb-delivery-button {
+    .xb-delivery-badge {
+        top: 0;
+        right: 0;
+        transform: translate(30%, -30%);
+        font-size: 0.7rem;
+    }
+}
+
+.xb-delivery-orders-dialog {
+    .xb-order-card {
+        border-left: 4px solid transparent;
+
+        &.xb-status-placed {
+            border-left-color: var(--red, #dc3545);
+            background: rgba(220, 53, 69, 0.06);
+        }
+        &.xb-status-accepted {
+            border-left-color: var(--orange, #fd7e14);
+        }
+        &.xb-status-ready,
+        &.xb-status-dispatched {
+            border-left-color: var(--success, #28a745);
+        }
+    }
+    .xb-provider-chip {
+        font-size: 0.75rem;
+        padding: 0.1rem 0.5rem;
+        border-radius: 1rem;
+        color: #fff;
+
+        &.xb-uber_eats {
+            background: #06c167;
+        }
+        &.xb-didi_food {
+            background: #ff7d41;
+        }
+    }
+}
