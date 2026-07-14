@@ -46,7 +46,11 @@ patch(OrderPaymentValidation.prototype, {
                     continue; // pure (partial) down payment, not a settle
                 }
                 const portion = lines.reduce((s, l) => s + (l.priceIncl || 0), 0);
-                if (Math.abs(portion - so.amount_unpaid) > 0.01) {
+                // Round with the currency before comparing: the float sum can land
+                // 5e-15 above the 1-cent tolerance (120.00 - 65.01 = 54.989999...)
+                // and block the exactly-1-cent case the tolerance exists for.
+                const delta = Math.abs(this.pos.currency.round(portion - so.amount_unpaid));
+                if (delta > 0.01) {
                     this.pos.dialog.add(AlertDialog, {
                         title: _t("Balance mismatch"),
                         body: _t(

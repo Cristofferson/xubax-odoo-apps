@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Sales, Quotations & Layaway from POS",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "category": "Point of Sale",
     "summary": "Create quotations, sale orders and layaways (apartados) directly "
                "from the Point of Sale, with detailed receipt and balance.",
