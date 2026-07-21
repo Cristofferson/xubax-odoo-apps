@@ -32,7 +32,7 @@
                                 <i class="fa fa-times"/>
                             </button>
                         </div>
-                        <iframe class="xb-discuss-frame" src="/odoo/discuss" title="Discuss"
+                        <iframe class="xb-discuss-frame" src="/odoo/discuss?xb_pos_frame=1" title="Discuss"
                                 t-on-load="onXbDiscussLoaded"/>
                     </div>
                 </div>

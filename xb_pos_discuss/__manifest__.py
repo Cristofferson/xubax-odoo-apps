@@ -27,16 +27,17 @@ What the cashier gets
 * A panel that opens over the POS and closes again: **the current order is
   never lost** and the session is not interrupted.
 
-An unread counter that tells the truth
---------------------------------------
-The badge is computed from Odoo's own read state
-(``discuss.channel.member.message_unread_counter``), the very counter the
-Discuss menu uses. That means:
+A badge that shows the same number as Odoo
+------------------------------------------
+The badge repeats the count of the Discuss systray in the back office, from
+Odoo's own read state. Odoo does **not** count unread messages: a conversation
+with forty pending messages counts **one**, like a conversation with one, and
+muted or closed conversations count nothing.
 
 * Messages read anywhere — Discuss on the web, on the phone, in the systray —
   **stop counting in the POS too**.
 * Messages read in the POS panel stop counting everywhere else.
-* Muted channels are skipped, exactly like the native messaging menu.
+* The badge empties while the panel is open, as the cashier reads.
 * **No new field is added to** ``mail.message``, no read flags are duplicated
   and no message is ever created outside the standard Discuss flow.
 
@@ -53,8 +54,8 @@ Technical notes
   Discuss, not the whole back office.
 * Cashiers need a normal internal user account (the standard requirement for
   operating a POS).
-* Only one small request every 15 seconds per terminal while the panel is
-  closed, to refresh the badge.
+* Only one small request every 15 seconds per terminal to refresh the badge;
+  the conversation itself is kept live by Discuss through the bus.
 
 Compatibility
 -------------
@@ -66,7 +67,7 @@ Compatibility
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",
     "category": "Point of Sale",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.3",
     "license": "OPL-1",
     "price": 49.00,
     "currency": "USD",

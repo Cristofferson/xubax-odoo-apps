@@ -36,8 +36,11 @@
     z-index: 1046;
     right: 1rem;
     bottom: 1rem;
-    width: min(920px, 96vw);
-    height: min(700px, 86vh);
+    // unquote() es obligatorio: Sass resuelve min()/max() como funciones suyas y
+    // aborta la compilacion al mezclar px con vw ("Incompatible units"), asi que
+    // hay que entregarle el min() de CSS ya escrito.
+    width: unquote("min(1100px, 96vw)");
+    height: unquote("min(700px, 86vh)");
     display: flex;
     flex-direction: column;
     overflow: hidden;

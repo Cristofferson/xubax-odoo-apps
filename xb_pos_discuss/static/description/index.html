@@ -26,6 +26,24 @@
       </p>
     </div>
 
+    <div style="margin:0 0 32px;">
+      <p style="font-size:15px;color:#666;margin:0 0 10px;">
+        The button sits between the barcode scanner and the cashier avatar, and
+        turns red only when something is waiting:
+      </p>
+      <img src="screenshots/01-boton-navbar.png"
+           style="max-width:100%;border:1px solid #e3dce9;border-radius:8px;"/>
+    </div>
+
+    <div style="margin:0 0 32px;">
+      <p style="font-size:15px;color:#666;margin:0 0 10px;">
+        One click and the real Discuss opens over the Point of Sale &mdash;
+        channels, threads, members and composer, exactly as in the back office:
+      </p>
+      <img src="screenshots/02-panel-discuss.png"
+           style="max-width:100%;border:1px solid #e3dce9;border-radius:8px;"/>
+    </div>
+
     <h3 style="color:#5B3F73;margin:0 0 10px;">What the cashier gets</h3>
     <ul style="font-size:15px;line-height:1.7;margin:0 0 28px;padding-left:20px;">
       <li><b>The same channels and the same messages</b> as Discuss outside the POS.</li>
@@ -42,16 +60,18 @@
     </ul>
 
     <div style="background:#f6f2fa;border-left:5px solid #5B3F73;padding:16px 20px;border-radius:6px;margin-bottom:28px;">
-      <h3 style="margin:0 0 8px;color:#5B3F73;">An unread counter that tells the truth</h3>
+      <h3 style="margin:0 0 8px;color:#5B3F73;">A badge that shows the same number as Odoo</h3>
       <p style="margin:0 0 10px;font-size:15px;line-height:1.5;">
-        The badge is computed from Odoo&rsquo;s own read state
-        (<b>discuss.channel.member.message_unread_counter</b>), the very counter
-        the Discuss menu uses. That means:
+        The badge repeats the count of the Discuss systray in the back office,
+        from Odoo&rsquo;s own read state. Odoo does <b>not</b> count unread
+        messages: a conversation with forty pending messages counts <b>one</b>,
+        like a conversation with one, and muted or closed conversations count
+        nothing.
       </p>
       <ul style="font-size:15px;line-height:1.7;margin:0;padding-left:20px;">
         <li>Messages read anywhere &mdash; Discuss on the web, on the phone, in the
             systray &mdash; <b>stop counting in the POS too</b>, and the other way round.</li>
-        <li>Muted channels are skipped, exactly like the native messaging menu.</li>
+        <li>The badge empties while the panel is open, as the cashier reads.</li>
         <li><b>No field is added to</b> <i>mail.message</i>, no read flags are
             duplicated and no message is ever created outside the standard
             Discuss flow.</li>
@@ -73,9 +93,8 @@
           cashiers get Discuss, not a door into the back office.</li>
       <li>Cashiers need a normal internal user account &mdash; the standard
           requirement for operating a Point of Sale.</li>
-      <li>While the panel is closed each terminal makes one small request every 15
-          seconds to refresh the badge; while it is open, Discuss keeps itself
-          live through the bus.</li>
+      <li>Each terminal makes one small request every 15 seconds to refresh the
+          badge; the conversation itself is kept live by Discuss through the bus.</li>
     </ul>
 
     <h3 style="color:#5B3F73;margin:0 0 10px;">Compatibility</h3>

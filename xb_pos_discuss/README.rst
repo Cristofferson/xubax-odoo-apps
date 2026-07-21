@@ -28,16 +28,17 @@ What this module does
 * The panel opens and closes over the POS, so **the order in progress is never
   lost** and the session is not interrupted.
 
-An unread counter that tells the truth
---------------------------------------
+A badge that shows the same number as Odoo
+------------------------------------------
 
-The badge is computed from Odoo's own read state
-(``discuss.channel.member.message_unread_counter``) — the very counter the
-Discuss menu uses:
+The badge repeats the count of the Discuss systray in the back office, using
+Odoo's own read state. Note that Odoo does **not** count unread messages: a
+conversation with forty pending messages counts **one**, the same as a
+conversation with one, and muted or closed conversations count nothing.
 
 * Messages read anywhere (Discuss on the web, on the phone, in the systray)
   **stop counting in the POS too**, and the other way round.
-* Muted channels are skipped, like the native messaging menu.
+* The badge empties while the panel is open, as the cashier reads.
 * **No field is added to** ``mail.message``, no read flags are duplicated, and
   no message is created outside the standard Discuss flow.
 
@@ -56,9 +57,8 @@ Technical notes
   get Discuss and not a door into the back office.
 * Cashiers need a normal internal user account — the standard requirement for
   operating a Point of Sale.
-* While the panel is closed the terminal makes one small request every 15
-  seconds to refresh the badge; while it is open, Discuss keeps itself live
-  through the bus.
+* Each terminal makes one small request every 15 seconds to refresh the badge;
+  the conversation itself is kept live by Discuss through the bus.
 
 Support
 -------

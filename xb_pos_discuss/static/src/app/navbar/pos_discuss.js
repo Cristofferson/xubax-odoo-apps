@@ -41,11 +41,8 @@ patch(Navbar.prototype, {
     },
 
     async xbFetchUnread() {
-        if (this.xbDiscuss.open) {
-            // Discuss is on screen and marking channels as read: polling now
-            // would only show counts that are about to drop to zero.
-            return;
-        }
+        // The poll also runs while the panel is open, so the badge empties as
+        // the cashier reads instead of waiting for the panel to be closed.
         try {
             const { count } = await rpc("/xb_pos_discuss/unread");
             this.xbDiscuss.unread = count || 0;
