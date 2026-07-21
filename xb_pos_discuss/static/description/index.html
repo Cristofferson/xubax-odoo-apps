@@ -1,0 +1,94 @@
+<section style="font-family:Arial,Helvetica,sans-serif;color:#2b2b2b;">
+
+  <div style="text-align:center;margin-bottom:24px;">
+    <img src="banner.png" style="max-width:100%;border-radius:12px;"/>
+  </div>
+
+  <div style="max-width:920px;margin:0 auto;">
+
+    <h1 style="color:#5B3F73;font-size:30px;margin:0 0 6px;">
+      POS Discuss &ndash; Odoo Chat inside the Point of Sale
+    </h1>
+    <p style="font-size:17px;color:#666;margin:0 0 28px;">
+      A Discuss button in the POS navbar, right next to the cashier avatar, with a
+      badge for unread messages. One click opens <b>the real Odoo Discuss</b> over
+      the Point of Sale.
+    </p>
+
+    <div style="background:#f6f2fa;border-left:5px solid #5B3F73;padding:16px 20px;border-radius:6px;margin-bottom:28px;">
+      <h3 style="margin:0 0 8px;color:#5B3F73;">The problem</h3>
+      <p style="margin:0;font-size:15px;line-height:1.5;">
+        Cashiers spend their whole shift on the Point of Sale screen, where Odoo
+        gives them no way to see the messages the rest of the company sends them.
+        To read a question from the office they have to leave the POS, open the
+        back office, go to Discuss and come back to the register &mdash; so in
+        practice the messages simply go unread.
+      </p>
+    </div>
+
+    <h3 style="color:#5B3F73;margin:0 0 10px;">What the cashier gets</h3>
+    <ul style="font-size:15px;line-height:1.7;margin:0 0 28px;padding-left:20px;">
+      <li><b>The same channels and the same messages</b> as Discuss outside the POS.</li>
+      <li><b>The native Discuss interface</b>: identical message styling, avatars,
+          threads, replies, reactions, emojis, attachments, mentions and search.
+          It is not a re-implementation, so it looks and behaves exactly like the
+          Discuss your users already know &mdash; and it keeps up with Odoo
+          automatically.</li>
+      <li>A panel that opens over the POS and closes again: <b>the order in
+          progress is never lost</b> and the session is not interrupted.</li>
+      <li>The button sits <b>immediately to the left of the cashier avatar</b>,
+          where the person using the register &mdash; and their messages &mdash;
+          already are.</li>
+    </ul>
+
+    <div style="background:#f6f2fa;border-left:5px solid #5B3F73;padding:16px 20px;border-radius:6px;margin-bottom:28px;">
+      <h3 style="margin:0 0 8px;color:#5B3F73;">An unread counter that tells the truth</h3>
+      <p style="margin:0 0 10px;font-size:15px;line-height:1.5;">
+        The badge is computed from Odoo&rsquo;s own read state
+        (<b>discuss.channel.member.message_unread_counter</b>), the very counter
+        the Discuss menu uses. That means:
+      </p>
+      <ul style="font-size:15px;line-height:1.7;margin:0;padding-left:20px;">
+        <li>Messages read anywhere &mdash; Discuss on the web, on the phone, in the
+            systray &mdash; <b>stop counting in the POS too</b>, and the other way round.</li>
+        <li>Muted channels are skipped, exactly like the native messaging menu.</li>
+        <li><b>No field is added to</b> <i>mail.message</i>, no read flags are
+            duplicated and no message is ever created outside the standard
+            Discuss flow.</li>
+      </ul>
+    </div>
+
+    <h3 style="color:#5B3F73;margin:0 0 10px;">Configuration</h3>
+    <p style="font-size:15px;line-height:1.6;margin:0 0 28px;">
+      <b>Settings &rsaquo; Point of Sale &rsaquo; XUBAX - Discuss &rsaquo; Discuss in
+      the POS</b> &mdash; one switch per Point of Sale, enabled by default.
+      Nothing else to set up.
+    </p>
+
+    <h3 style="color:#5B3F73;margin:0 0 10px;">Technical notes</h3>
+    <ul style="font-size:15px;line-height:1.7;margin:0 0 28px;padding-left:20px;">
+      <li>The panel embeds the standard Discuss action of the same Odoo session,
+          so every access right, channel membership and notification setting
+          applies unchanged. The back-office top bar is hidden inside the panel:
+          cashiers get Discuss, not a door into the back office.</li>
+      <li>Cashiers need a normal internal user account &mdash; the standard
+          requirement for operating a Point of Sale.</li>
+      <li>While the panel is closed each terminal makes one small request every 15
+          seconds to refresh the badge; while it is open, Discuss keeps itself
+          live through the bus.</li>
+    </ul>
+
+    <h3 style="color:#5B3F73;margin:0 0 10px;">Compatibility</h3>
+    <ul style="font-size:15px;line-height:1.7;margin:0 0 28px;padding-left:20px;">
+      <li>Odoo <b>19.0</b> Community and Enterprise.</li>
+      <li>Depends on <b>Point of Sale</b> (point_of_sale) and <b>Discuss</b> (mail).</li>
+    </ul>
+
+    <div style="border-top:1px solid #e3dce9;padding-top:16px;font-size:14px;color:#666;">
+      <b>XUBAX</b> &mdash; Cristofferson Reyes &middot;
+      <a href="https://www.xubax.com" style="color:#5B3F73;">www.xubax.com</a> &middot;
+      soporte@xubax.com
+    </div>
+
+  </div>
+</section>

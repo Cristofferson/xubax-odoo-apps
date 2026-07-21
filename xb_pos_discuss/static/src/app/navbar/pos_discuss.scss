@@ -1,0 +1,80 @@
+// Discuss button in the POS navbar + the panel that holds the real Discuss.
+// Colours are written literally on purpose: this stylesheet is compiled inside
+// the POS bundle, which does not carry the backend's mail/discuss variables.
+
+// Sits between the barcode button and the cashier avatar, so it borrows the
+// look of the navbar buttons around it and only adds the unread badge.
+.xb-discuss-button {
+    position: relative;
+}
+
+.xb-discuss-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 9px;
+    background-color: #d9534f;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 18px;
+    text-align: center;
+}
+
+.xb-discuss-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1045;
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+.xb-discuss-panel {
+    position: fixed;
+    z-index: 1046;
+    right: 1rem;
+    bottom: 1rem;
+    width: min(920px, 96vw);
+    height: min(700px, 86vh);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    box-shadow: 0 0.75rem 2.5rem rgba(0, 0, 0, 0.35);
+}
+
+.xb-discuss-panel-header {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.375rem 0.5rem 0.375rem 0.875rem;
+    background-color: #714b67; // Odoo brand purple
+    color: #fff;
+}
+
+.xb-discuss-panel-title {
+    font-weight: 500;
+}
+
+.xb-discuss-close {
+    padding: 0.25rem 0.5rem;
+    border: 0;
+    border-radius: 0.25rem;
+    background: transparent;
+    color: #fff;
+    line-height: 1;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+}
+
+.xb-discuss-frame {
+    flex: 1 1 auto;
+    width: 100%;
+    border: 0;
+}

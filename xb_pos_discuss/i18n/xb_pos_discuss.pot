@@ -1,0 +1,77 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_pos_discuss
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-21 18:45+0000\n"
+"PO-Revision-Date: 2026-07-21 18:45+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: xb_pos_discuss
+#. odoo-javascript
+#: code:addons/xb_pos_discuss/static/src/app/navbar/pos_discuss.xml:0
+msgid "Close"
+msgstr ""
+
+#. module: xb_pos_discuss
+#: model:ir.model,name:xb_pos_discuss.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: xb_pos_discuss
+#. odoo-javascript
+#: code:addons/xb_pos_discuss/static/src/app/navbar/pos_discuss.xml:0
+msgid "Discuss"
+msgstr ""
+
+#. module: xb_pos_discuss
+#: model:ir.model.fields,field_description:xb_pos_discuss.field_pos_config__xb_discuss_enabled
+#: model:ir.model.fields,field_description:xb_pos_discuss.field_res_config_settings__pos_xb_discuss_enabled
+#: model_terms:ir.ui.view,arch_db:xb_pos_discuss.res_config_settings_view_form_xb_pos_discuss
+msgid "Discuss in the POS"
+msgstr ""
+
+#. module: xb_pos_discuss
+#: model:ir.model.fields,field_description:xb_pos_discuss.field_pos_config__display_name
+#: model:ir.model.fields,field_description:xb_pos_discuss.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: xb_pos_discuss
+#: model:ir.model.fields,field_description:xb_pos_discuss.field_pos_config__id
+#: model:ir.model.fields,field_description:xb_pos_discuss.field_res_config_settings__id
+msgid "ID"
+msgstr ""
+
+#. module: xb_pos_discuss
+#: model:ir.model,name:xb_pos_discuss.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr ""
+
+#. module: xb_pos_discuss
+#: model_terms:ir.ui.view,arch_db:xb_pos_discuss.res_config_settings_view_form_xb_pos_discuss
+msgid ""
+"Show a Discuss button in the POS navbar, with a badge for unread messages, "
+"so cashiers can chat without leaving the Point of Sale."
+msgstr ""
+
+#. module: xb_pos_discuss
+#: model:ir.model.fields,help:xb_pos_discuss.field_pos_config__xb_discuss_enabled
+#: model:ir.model.fields,help:xb_pos_discuss.field_res_config_settings__pos_xb_discuss_enabled
+msgid ""
+"Show the Discuss button in the Point of Sale navbar, so cashiers can read "
+"and answer their messages without leaving the POS."
+msgstr ""
+
+#. module: xb_pos_discuss
+#: model_terms:ir.ui.view,arch_db:xb_pos_discuss.res_config_settings_view_form_xb_pos_discuss
+msgid "XUBAX - Discuss"
+msgstr ""

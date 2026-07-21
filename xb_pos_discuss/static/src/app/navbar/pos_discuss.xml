@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="xb_pos_discuss.Navbar" t-inherit="point_of_sale.Navbar" t-inherit-mode="extension">
+
+        <!-- Right next to the cashier avatar, on its left: the messages of the
+             person using the register belong beside who that person is. -->
+        <xpath expr="//CashierName" position="before">
+            <button t-if="xbDiscussEnabled"
+                    class="btn btn-light btn-lg lh-lg flex-shrink-0 h-100 xb-discuss-button"
+                    t-att-class="{ active: xbDiscuss.open }"
+                    t-on-click="xbToggleDiscuss" title="Discuss">
+                <i class="fa fa-fw fa-lg fa-comments" role="img" aria-label="Discuss"/>
+                <span t-if="xbDiscuss.unread" class="xb-discuss-badge"
+                      t-esc="xbDiscuss.unread > 99 ? '99+' : xbDiscuss.unread"/>
+            </button>
+        </xpath>
+
+        <!-- Rendered into the body so no POS layout can clip or stack over it. -->
+        <xpath expr="//div[hasclass('pos-topheader')]" position="inside">
+            <t t-if="xbDiscuss.mounted" t-portal="'body'">
+                <div class="xb-discuss-root">
+                    <div t-if="xbDiscuss.open" class="xb-discuss-backdrop"
+                         t-on-click="xbToggleDiscuss"/>
+                    <div class="xb-discuss-panel" t-att-class="{ 'd-none': !xbDiscuss.open }">
+                        <div class="xb-discuss-panel-header">
+                            <span class="xb-discuss-panel-title">
+                                <i class="fa fa-comments me-2"/>Discuss
+                            </span>
+                            <button class="xb-discuss-close" t-on-click="xbToggleDiscuss"
+                                    title="Close" aria-label="Close">
+                                <i class="fa fa-times"/>
+                            </button>
+                        </div>
+                        <iframe class="xb-discuss-frame" src="/odoo/discuss" title="Discuss"
+                                t-on-load="onXbDiscussLoaded"/>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+
+    </t>
+
+</templates>
