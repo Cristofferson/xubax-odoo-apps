@@ -62,7 +62,7 @@ msgstr "Configuración del punto de venta"
 msgid ""
 "Show a Discuss button in the POS navbar, with a badge for unread messages, "
 "so cashiers can chat without leaving the Point of Sale."
-msgstr ""
+msgstr "Muestra un botón de Conversaciones en la barra del TPV, con un globo de mensajes sin leer, para que los cajeros platiquen sin salir del punto de venta."
 
 #. module: xb_pos_discuss
 #: model:ir.model.fields,help:xb_pos_discuss.field_pos_config__xb_discuss_enabled
@@ -70,7 +70,7 @@ msgstr ""
 msgid ""
 "Show the Discuss button in the Point of Sale navbar, so cashiers can read "
 "and answer their messages without leaving the POS."
-msgstr ""
+msgstr "Muestra el botón de Conversaciones en la barra del punto de venta, para que los cajeros lean y contesten sus mensajes sin salir del TPV."
 
 #. module: xb_pos_discuss
 #: model_terms:ir.ui.view,arch_db:xb_pos_discuss.res_config_settings_view_form_xb_pos_discuss
