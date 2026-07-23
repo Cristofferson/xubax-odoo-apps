@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_xb_vbp" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.xb.vbp</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='account_vendor_bills']" position="after">
+                <block title="Products from Vendor Bills" id="xb_vbp_block">
+
+                    <setting id="xb_vbp_mode_setting"
+                             string="Unknown products"
+                             help="What to do when an imported vendor bill mentions a product you do not have yet. Whatever the mode, the vendor's own item code is always learned, so the next bill matches on its own.">
+                        <field name="xb_vbp_mode" widget="radio"/>
+                        <div class="content-group" invisible="xb_vbp_mode == 'off'">
+                            <div class="row mt16">
+                                <label for="xb_vbp_product_type" class="col-lg-5 o_light_label"/>
+                                <field name="xb_vbp_product_type"/>
+                            </div>
+                            <div class="row">
+                                <label for="xb_vbp_categ_id" class="col-lg-5 o_light_label"/>
+                                <field name="xb_vbp_categ_id"/>
+                            </div>
+                        </div>
+                    </setting>
+
+                    <setting id="xb_vbp_is_storable_setting"
+                             string="Track inventory on new products"
+                             help="Only applies to goods, and only when Inventory is installed. A product created without this flag never moves stock."
+                             invisible="xb_vbp_mode == 'off' or xb_vbp_product_type != 'consu'">
+                        <field name="xb_vbp_is_storable"/>
+                    </setting>
+
+                    <setting id="xb_vbp_set_barcode_setting"
+                             string="Standard item identifier as barcode"
+                             help="Electronic invoices may carry a GTIN/EAN for the item. When it is not used by another product, it is set as the barcode."
+                             invisible="xb_vbp_mode == 'off'">
+                        <field name="xb_vbp_set_barcode"/>
+                    </setting>
+
+                    <setting id="xb_vbp_set_default_code_setting"
+                             string="Vendor code as internal reference"
+                             help="Off by default: the vendor's code is their code, not yours, and two vendors may use the same one. It is always stored on the vendor pricelist regardless of this setting."
+                             invisible="xb_vbp_mode == 'off'">
+                        <field name="xb_vbp_set_default_code"/>
+                    </setting>
+
+                    <setting id="xb_vbp_cost_setting"
+                             string="Cost from the bill"
+                             help="How often the price on the bill is written back on the vendor pricelist and on the product cost.">
+                        <field name="xb_vbp_cost_policy" widget="radio"/>
+                        <div class="content-group" invisible="xb_vbp_cost_policy == 'never'">
+                            <div class="row mt16">
+                                <label for="xb_vbp_margin_percent" class="col-lg-5 o_light_label"/>
+                                <field name="xb_vbp_margin_percent"/>
+                            </div>
+                        </div>
+                    </setting>
+
+                    <setting id="xb_vbp_standard_price_setting"
+                             string="Also update the product cost"
+                             help="Besides the vendor pricelist, write the bill price on the product's Cost field. Only done when the product's costing method is Standard Price, so automated FIFO/AVCO valuations are never disturbed."
+                             invisible="xb_vbp_cost_policy == 'never'">
+                        <field name="xb_vbp_update_standard_price"/>
+                    </setting>
+
+                    <setting id="xb_vbp_image_setting"
+                             string="Product images"
+                             help="Look for a picture for products that have none. The search runs in a scheduled action, never while a bill is being imported. Check that you have the right to use any image before you publish it.">
+                        <field name="xb_vbp_image_mode" widget="radio"/>
+                        <div class="content-group" invisible="xb_vbp_image_mode == 'off'">
+                            <div class="row mt16">
+                                <label for="xb_vbp_image_provider" class="col-lg-5 o_light_label"/>
+                                <field name="xb_vbp_image_provider"/>
+                            </div>
+                            <div class="row" invisible="xb_vbp_image_provider != 'google_cse'">
+                                <label for="xb_vbp_image_google_key" class="col-lg-5 o_light_label"/>
+                                <field name="xb_vbp_image_google_key" password="True"/>
+                            </div>
+                            <div class="row" invisible="xb_vbp_image_provider != 'google_cse'">
+                                <label for="xb_vbp_image_google_cx" class="col-lg-5 o_light_label"/>
+                                <field name="xb_vbp_image_google_cx"/>
+                            </div>
+                            <div class="row">
+                                <label for="xb_vbp_image_candidates" class="col-lg-5 o_light_label"/>
+                                <field name="xb_vbp_image_candidates"/>
+                            </div>
+                            <div class="row">
+                                <label for="xb_vbp_image_min_px" class="col-lg-5 o_light_label"/>
+                                <field name="xb_vbp_image_min_px"/>
+                            </div>
+                            <div class="row">
+                                <label for="xb_vbp_image_query_suffix" class="col-lg-5 o_light_label"/>
+                                <field name="xb_vbp_image_query_suffix"/>
+                            </div>
+                        </div>
+                    </setting>
+
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

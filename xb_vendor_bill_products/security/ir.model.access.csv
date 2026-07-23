@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_xb_bill_product_proposal_user,xb.bill.product.proposal.user,model_xb_bill_product_proposal,account.group_account_invoice,1,1,1,0
+access_xb_bill_product_proposal_manager,xb.bill.product.proposal.manager,model_xb_bill_product_proposal,account.group_account_manager,1,1,1,1
+access_xb_bill_product_image_user,xb.bill.product.image.user,model_xb_bill_product_image,account.group_account_invoice,1,1,1,1
+access_xb_bill_product_image_manager,xb.bill.product.image.manager,model_xb_bill_product_image,account.group_account_manager,1,1,1,1

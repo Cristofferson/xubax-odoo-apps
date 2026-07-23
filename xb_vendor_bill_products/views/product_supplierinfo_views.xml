@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+      Everything this module learns is stored on the vendor pricelist. Odoo
+      only ships a screen for it inside Purchase, so without Purchase the
+      learned codes would be invisible. These views make them reachable
+      either way.
+    -->
+
+    <record id="xb_vbp_supplierinfo_view_search" model="ir.ui.view">
+        <field name="name">product.supplierinfo.search.xb.vbp</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="arch" type="xml">
+            <search string="Vendor codes">
+                <field name="partner_id"/>
+                <field name="product_code"/>
+                <field name="product_name"/>
+                <field name="product_tmpl_id"/>
+                <filter name="xb_vbp_learned" string="Learned from a bill"
+                        domain="[('xb_vbp_cost_synced', '=', True)]"/>
+                <filter name="xb_vbp_no_code" string="Without a vendor code"
+                        domain="[('product_code', 'in', (False, ''))]"/>
+                <group>
+                    <filter name="group_partner" string="Vendor" domain="[]"
+                            context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_product" string="Product" domain="[]"
+                            context="{'group_by': 'product_tmpl_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="xb_vbp_supplierinfo_view_list" model="ir.ui.view">
+        <field name="name">product.supplierinfo.list.xb.vbp</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="arch" type="xml">
+            <list string="Vendor codes" editable="bottom">
+                <field name="partner_id"/>
+                <field name="product_code" string="Vendor code"/>
+                <field name="product_name" string="Vendor name" optional="show"/>
+                <field name="product_tmpl_id" string="Product"/>
+                <field name="product_id" string="Variant" optional="hide"
+                       groups="product.group_product_variant"/>
+                <field name="min_qty" optional="hide"/>
+                <field name="price"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="xb_vbp_cost_synced" string="From a bill" optional="show"/>
+                <field name="xb_vbp_last_move_id" string="Last bill" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="xb_vbp_supplierinfo_action" model="ir.actions.act_window">
+        <field name="name">Vendor Codes</field>
+        <field name="res_model">product.supplierinfo</field>
+        <field name="view_mode">list</field>
+        <!-- Without this the action would pick up whichever list view for
+             product.supplierinfo happens to have the highest priority. -->
+        <field name="view_id" ref="xb_vbp_supplierinfo_view_list"/>
+        <field name="search_view_id" ref="xb_vbp_supplierinfo_view_search"/>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No vendor code recorded yet
+            </p>
+            <p>
+                This is the translation table between the reference a vendor
+                prints on their invoice and the product in your catalogue.
+                Every bill you import fills it in, and every line you fill in
+                makes the next bill match on its own.
+            </p>
+        </field>
+    </record>
+
+    <!--
+      Product form tab. Purchase already ships one, so this one is switched
+      off at install time when Purchase is present (see the post-init hook).
+    -->
+    <record id="product_template_form_view_xb_vbp_sellers" model="ir.ui.view">
+        <field name="name">product.template.form.xb.vbp.sellers</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Vendors" name="xb_vbp_sellers">
+                    <field name="seller_ids">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="partner_id"/>
+                            <field name="product_code" string="Vendor code"/>
+                            <field name="product_name" string="Vendor name"/>
+                            <field name="min_qty"/>
+                            <field name="price"/>
+                            <field name="currency_id" column_invisible="True"/>
+                            <field name="xb_vbp_cost_synced" string="From a bill"
+                                   readonly="1"/>
+                            <field name="company_id" groups="base.group_multi_company"
+                                   optional="hide"/>
+                        </list>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</odoo>

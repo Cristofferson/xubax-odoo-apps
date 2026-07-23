@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="xb_bill_product_proposal_view_search" model="ir.ui.view">
+        <field name="name">xb.bill.product.proposal.search</field>
+        <field name="model">xb.bill.product.proposal</field>
+        <field name="arch" type="xml">
+            <search string="Proposed products">
+                <field name="name" string="Description"
+                       filter_domain="['|', ('name', 'ilike', self), ('vendor_code', 'ilike', self)]"/>
+                <field name="partner_id"/>
+                <field name="vendor_code"/>
+                <field name="product_id"/>
+                <field name="move_ids" string="Bill"/>
+                <filter name="filter_draft" string="To review"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_done" string="Applied"
+                        domain="[('state', '=', 'done')]"/>
+                <filter name="filter_rejected" string="Rejected"
+                        domain="[('state', '=', 'rejected')]"/>
+                <separator/>
+                <filter name="filter_repeated" string="Seen more than once"
+                        domain="[('occurrence_count', '&gt;', 1)]"/>
+                <filter name="filter_with_image" string="With a chosen image"
+                        domain="[('image_1920', '!=', False)]"/>
+                <separator/>
+                <filter name="filter_last_seen" string="Last seen" date="last_seen"/>
+                <group>
+                    <filter name="group_partner" string="Vendor" domain="[]"
+                            context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_state" string="Status" domain="[]"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_move" string="Last bill" domain="[]"
+                            context="{'group_by': 'move_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="xb_bill_product_proposal_view_list" model="ir.ui.view">
+        <field name="name">xb.bill.product.proposal.list</field>
+        <field name="model">xb.bill.product.proposal</field>
+        <field name="arch" type="xml">
+            <list string="Proposed products" multi_edit="1"
+                  decoration-muted="state == 'rejected'"
+                  decoration-success="state == 'done'">
+                <field name="last_seen" optional="hide"/>
+                <field name="partner_id"/>
+                <field name="vendor_code" optional="show"/>
+                <field name="name"/>
+                <field name="occurrence_count" string="Seen"/>
+                <field name="quantity" optional="hide"/>
+                <field name="price_unit" widget="monetary"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="product_id" readonly="state == 'done'"/>
+                <field name="image_state" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-success="state == 'done'"
+                       decoration-muted="state == 'rejected'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <button name="action_create_product" type="object" icon="fa-plus-circle"
+                        string="Create product" invisible="state != 'draft' or product_id"/>
+                <button name="action_link_product" type="object" icon="fa-link"
+                        string="Link" invisible="state != 'draft' or not product_id"/>
+                <button name="action_reject" type="object" icon="fa-times"
+                        string="Reject" invisible="state != 'draft'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="xb_bill_product_proposal_view_form" model="ir.ui.view">
+        <field name="name">xb.bill.product.proposal.form</field>
+        <field name="model">xb.bill.product.proposal</field>
+        <field name="arch" type="xml">
+            <form string="Proposed product">
+                <header>
+                    <button name="action_create_product" type="object" string="Create product"
+                            class="btn-primary" invisible="state != 'draft' or product_id"/>
+                    <button name="action_link_product" type="object" string="Link to this product"
+                            class="btn-primary" invisible="state != 'draft' or not product_id"/>
+                    <button name="action_search_images" type="object" string="Look for images"
+                            invisible="state == 'rejected'"/>
+                    <button name="action_reject" type="object" string="Reject"
+                            invisible="state != 'draft'"/>
+                    <button name="action_reset_to_draft" type="object" string="Back to review"
+                            invisible="state == 'draft'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_bills" type="object" class="oe_stat_button"
+                                icon="fa-file-text-o">
+                            <field name="occurrence_count" widget="statinfo" string="Times seen"/>
+                        </button>
+                    </div>
+                    <field name="image_1920" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label for="name" string="Description on the bill"/>
+                        <h1><field name="name" placeholder="e.g. Cable HDMI 2 m"/></h1>
+                    </div>
+                    <group>
+                        <group string="What the vendor sent">
+                            <field name="partner_id" readonly="state != 'draft'"/>
+                            <field name="vendor_code"/>
+                            <field name="barcode"/>
+                            <field name="extra_code" invisible="not extra_code"/>
+                            <field name="uom_id" groups="uom.group_uom"/>
+                        </group>
+                        <group string="Last figures">
+                            <field name="currency_id" invisible="1"/>
+                            <field name="price_unit" widget="monetary"/>
+                            <field name="quantity"/>
+                            <field name="move_id"/>
+                            <field name="first_seen"/>
+                            <field name="last_seen"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Result">
+                        <field name="product_id" readonly="state == 'done'"
+                               options="{'no_quick_create': True}"
+                               help="Leave empty and press Create product, or pick the product this item really is."/>
+                    </group>
+                    <notebook>
+                        <page string="Image candidates" name="images">
+                            <field name="image_state" readonly="1"/>
+                            <field name="image_candidate_ids" mode="kanban" readonly="1">
+                                <kanban>
+                                    <templates>
+                                        <t t-name="card">
+                                            <div class="d-flex flex-column h-100 text-center">
+                                                <field name="image_1920" widget="image"
+                                                       class="align-self-center mb-2"
+                                                       options="{'size': [150, 150]}"/>
+                                                <div class="fw-bold text-truncate">
+                                                    <field name="name"/>
+                                                </div>
+                                                <div class="text-muted small">
+                                                    <field name="width"/> × <field name="height"/> px
+                                                </div>
+                                                <div class="text-muted small text-truncate">
+                                                    <field name="source"/>
+                                                </div>
+                                                <button name="action_choose" type="object"
+                                                        class="btn btn-sm btn-primary mt-2 align-self-center"
+                                                        string="Use this one"/>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                        </page>
+                        <page string="Bills" name="bills">
+                            <field name="move_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="invoice_date"/>
+                                    <field name="partner_id"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note" placeholder="Anything worth remembering about this item."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="xb_bill_product_proposal_action" model="ir.actions.act_window">
+        <field name="name">Proposed Products</field>
+        <field name="res_model">xb.bill.product.proposal</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_filter_draft': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Nothing waiting for review
+            </p>
+            <p>
+                When an imported vendor bill mentions a product that is not in
+                your catalogue yet, it lands here: the vendor, their code, the
+                price and how many bills it has appeared on. Create it, link it
+                to a product you already have, or reject it.
+            </p>
+        </field>
+    </record>
+
+</odoo>

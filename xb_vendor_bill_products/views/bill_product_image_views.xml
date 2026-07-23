@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="xb_bill_product_image_view_kanban" model="ir.ui.view">
+        <field name="name">xb.bill.product.image.kanban</field>
+        <field name="model">xb.bill.product.image</field>
+        <field name="arch" type="xml">
+            <kanban string="Image candidates">
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex flex-column h-100 text-center">
+                            <field name="image_1920" widget="image"
+                                   class="align-self-center mb-2"
+                                   options="{'size': [170, 170]}"/>
+                            <div class="fw-bold text-truncate"><field name="name"/></div>
+                            <div class="text-muted small">
+                                <field name="width"/> × <field name="height"/> px
+                            </div>
+                            <div class="text-muted small text-truncate">
+                                <field name="source"/>
+                            </div>
+                            <button name="action_choose" type="object"
+                                    class="btn btn-sm btn-primary mt-2 align-self-center"
+                                    string="Use this one"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="xb_bill_product_image_view_list" model="ir.ui.view">
+        <field name="name">xb.bill.product.image.list</field>
+        <field name="model">xb.bill.product.image</field>
+        <field name="arch" type="xml">
+            <list string="Image candidates">
+                <field name="sequence" widget="handle"/>
+                <field name="image_1920" widget="image" options="{'size': [50, 50]}"/>
+                <field name="name"/>
+                <field name="width"/>
+                <field name="height"/>
+                <field name="source"/>
+                <button name="action_choose" type="object" icon="fa-check"
+                        string="Use this one"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

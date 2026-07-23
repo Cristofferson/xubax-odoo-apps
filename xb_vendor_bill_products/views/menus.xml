@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_xb_bill_product_proposal"
+              name="Proposed Products"
+              parent="account.menu_finance_payables"
+              action="xb_bill_product_proposal_action"
+              groups="account.group_account_invoice"
+              sequence="90"/>
+
+    <menuitem id="menu_xb_vbp_supplierinfo"
+              name="Vendor Codes"
+              parent="account.menu_finance_payables"
+              action="xb_vbp_supplierinfo_action"
+              groups="account.group_account_invoice"
+              sequence="91"/>
+
+</odoo>

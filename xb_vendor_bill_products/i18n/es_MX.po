@@ -1,0 +1,988 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_vendor_bill_products
+#
+# Translators:
+# Cristofferson Reyes, 2026
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-23 14:16+0000\n"
+"PO-Revision-Date: 2026-07-23 14:16+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: xb_vendor_bill_products
+#. odoo-python
+#: code:addons/xb_vendor_bill_products/models/bill_product_proposal.py:0
+msgid "%s has no bill to take the company and currency from."
+msgstr "%s no tiene ninguna factura de donde tomar la compañía y la moneda."
+
+#. module: xb_vendor_bill_products
+#. odoo-python
+#: code:addons/xb_vendor_bill_products/models/bill_product_proposal.py:0
+msgid "%s is already linked to a product. Use \"Link\" instead."
+msgstr "%s ya está ligado a un producto. Usa \"Ligar\" en su lugar."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_company__xb_vbp_image_query_suffix
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_config_settings__xb_vbp_image_query_suffix
+msgid "Add to every image search"
+msgstr "Agregar a toda búsqueda de imágenes"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_company__xb_vbp_update_standard_price
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_config_settings__xb_vbp_update_standard_price
+msgid "Also update the product cost"
+msgstr "Actualizar también el costo del producto"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__res_company__xb_vbp_cost_policy__always
+msgid "Always"
+msgstr "Siempre"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_xb_bill_product_proposal__extra_code
+msgid ""
+"Any classification code carried by the file, such as the Mexican CFDI "
+"ClaveProdServ."
+msgstr "Cualquier código de clasificación que traiga el archivo, como la ClaveProdServ del CFDI mexicano."
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_form
+msgid "Anything worth remembering about this item."
+msgstr "Cualquier cosa que valga la pena recordar de este artículo."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_company__xb_vbp_image_query_suffix
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_config_settings__xb_vbp_image_query_suffix
+msgid ""
+"Appended to the product description when searching, to steer the results. "
+"For example a brand, or \"producto\"."
+msgstr "Se agrega a la descripción del producto al buscar, para dirigir los resultados. Por ejemplo una marca, o \"producto\"."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__xb_bill_product_proposal__state__done
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_search
+msgid "Applied"
+msgstr "Aplicado"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_company__xb_vbp_margin_percent
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_config_settings__xb_vbp_margin_percent
+msgid ""
+"Applied on the cost to propose a sale price for products created from a "
+"bill. Zero leaves the sale price at zero."
+msgstr "Se aplica sobre el costo para proponer un precio de venta en los productos creados desde una factura. Cero deja el precio de venta en cero."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__res_company__xb_vbp_image_mode__auto
+msgid "Attach the best match"
+msgstr "Adjuntar la mejor coincidencia"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_form
+msgid "Back to review"
+msgstr "Regresar a revisión"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__barcode
+msgid "Barcode / GTIN"
+msgstr "Código de barras / GTIN"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_company__xb_vbp_update_standard_price
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_config_settings__xb_vbp_update_standard_price
+msgid ""
+"Besides the vendor pricelist, write the bill price on the product's Cost "
+"field. Only done when the product's costing method is Standard Price, so "
+"automated FIFO/AVCO valuations are never disturbed."
+msgstr "Además de la lista del proveedor, escribe el precio de la factura en el campo Costo del producto. Solo se hace cuando el método de costeo es Precio Estándar, para nunca alterar una valuación automática FIFO/AVCO."
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_search
+msgid "Bill"
+msgstr "Factura"
+
+#. module: xb_vendor_bill_products
+#. odoo-python
+#: code:addons/xb_vendor_bill_products/models/bill_product_proposal.py:0
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_form
+msgid "Bills"
+msgstr "Facturas"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model,name:xb_vendor_bill_products.model_xb_bill_product_image
+msgid "Candidate Image for a Product"
+msgstr "Imagen candidata para un producto"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__product_template__xb_vbp_image_state__proposed
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__xb_bill_product_proposal__image_state__proposed
+msgid "Candidates found"
+msgstr "Candidatas encontradas"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_company__xb_vbp_image_candidates
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_config_settings__xb_vbp_image_candidates
+msgid "Candidates per product"
+msgstr "Candidatas por producto"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_company__xb_vbp_image_min_px
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_config_settings__xb_vbp_image_min_px
+msgid "Candidates smaller than this on their shortest side are discarded."
+msgstr "Se descartan las candidatas cuyo lado más corto sea menor a esto."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_company__xb_vbp_categ_id
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_config_settings__xb_vbp_categ_id
+msgid "Category for new products"
+msgstr "Categoría para productos nuevos"
+
+#. module: xb_vendor_bill_products
+#. odoo-python
+#: code:addons/xb_vendor_bill_products/models/bill_product_proposal.py:0
+msgid "Choose a product on \"%s\" before linking it."
+msgstr "Elige un producto en \"%s\" antes de ligarlo."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__image_1920
+msgid "Chosen image"
+msgstr "Imagen elegida"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__extra_code
+msgid "Classification"
+msgstr "Clasificación"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model,name:xb_vendor_bill_products.model_account_edi_common
+msgid ""
+"Common functions for EDI documents: generate the data, the constraints, etc"
+msgstr "Funciones comunes para documentos EDI: generar los datos, las restricciones, etc."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model,name:xb_vendor_bill_products.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model,name:xb_vendor_bill_products.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.res_config_settings_view_form_xb_vbp
+msgid "Cost from the bill"
+msgstr "Costo desde la factura"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_product_supplierinfo__xb_vbp_cost_synced
+msgid "Cost taken from a bill"
+msgstr "Costo tomado de una factura"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__res_company__xb_vbp_mode__auto
+msgid "Create automatically"
+msgstr "Crear automáticamente"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_form
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_list
+msgid "Create product"
+msgstr "Crear producto"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_image__create_uid
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_product_product__xb_vbp_auto_created
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_product_template__xb_vbp_auto_created
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.product_template_search_view_xb_vbp
+msgid "Created from a vendor bill"
+msgstr "Creado desde una factura de proveedor"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_image__create_date
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__name
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_search
+msgid "Description"
+msgstr "Descripción"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_form
+msgid "Description on the bill"
+msgstr "Descripción en la factura"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__res_company__xb_vbp_image_mode__off
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__res_company__xb_vbp_mode__off
+msgid "Disabled"
+msgstr "Desactivado"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_account_edi_common__display_name
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_account_move__display_name
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_product_product__display_name
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_product_supplierinfo__display_name
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_product_template__display_name
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_company__display_name
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_image__display_name
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__display_name
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_product_image_finder__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__res_company__xb_vbp_image_provider__duckduckgo
+msgid "DuckDuckGo (no API key)"
+msgstr "DuckDuckGo (sin llave de API)"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_company__xb_vbp_set_barcode
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_config_settings__xb_vbp_set_barcode
+msgid ""
+"Electronic invoices may carry a GTIN/EAN for the item. When it is not used "
+"by another product, it is set as the barcode."
+msgstr "Las facturas electrónicas pueden traer un GTIN/EAN del artículo. Cuando no lo usa otro producto, se pone como código de barras."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_xb_bill_product_proposal__move_ids
+msgid "Every bill this item has arrived on."
+msgstr "Todas las facturas en las que ha llegado este artículo."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__first_seen
+msgid "First Seen"
+msgstr "Visto por primera vez"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_image__source
+msgid "Found on"
+msgstr "Encontrada en"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.product_template_form_view_xb_vbp_sellers
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_vbp_supplierinfo_view_list
+msgid "From a bill"
+msgstr "De una factura"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__res_company__xb_vbp_product_type__consu
+msgid "Goods"
+msgstr "Bienes"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_company__xb_vbp_image_google_key
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_config_settings__xb_vbp_image_google_key
+msgid "Google API key"
+msgstr "Llave de API de Google"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__res_company__xb_vbp_image_provider__google_cse
+msgid "Google Programmable Search (API key)"
+msgstr "Google Programmable Search (con llave de API)"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_company__xb_vbp_image_google_cx
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_config_settings__xb_vbp_image_google_cx
+msgid "Google search engine ID"
+msgstr "ID del buscador de Google"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_image__height
+msgid "Height"
+msgstr "Alto"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.res_config_settings_view_form_xb_vbp
+msgid ""
+"How often the price on the bill is written back on the vendor pricelist and "
+"on the product cost."
+msgstr "Cada cuándo el precio de la factura se escribe de regreso en la lista del proveedor y en el costo del producto."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_account_edi_common__id
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_account_move__id
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_product_product__id
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_product_supplierinfo__id
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_product_template__id
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_company__id
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_config_settings__id
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_image__id
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__id
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_product_image_finder__id
+msgid "ID"
+msgstr "ID"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_image__image_1920
+msgid "Image 1920"
+msgstr "Imagen 1920"
+
+#. module: xb_vendor_bill_products
+#. odoo-python
+#: code:addons/xb_vendor_bill_products/models/product_template.py:0
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_product_product__xb_vbp_image_candidate_ids
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_product_template__xb_vbp_image_candidate_ids
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__image_candidate_ids
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.product_template_form_view_xb_vbp
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_image_view_kanban
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_image_view_list
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_form
+msgid "Image candidates"
+msgstr "Imágenes candidatas"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__xb_bill_product_proposal__image_state__done
+msgid "Image chosen"
+msgstr "Imagen elegida"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_product_product__xb_vbp_image_state
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_product_template__xb_vbp_image_state
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__image_state
+msgid "Image search"
+msgstr "Búsqueda de imagen"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_company__xb_vbp_image_provider
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_config_settings__xb_vbp_image_provider
+msgid "Image search engine"
+msgstr "Buscador de imágenes"
+
+#. module: xb_vendor_bill_products
+#. odoo-python
+#: code:addons/xb_vendor_bill_products/models/product_template.py:0
+msgid "Image search finished."
+msgstr "Búsqueda de imágenes terminada."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__product_template__xb_vbp_image_state__done
+msgid "Image set"
+msgstr "Imagen puesta"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model,name:xb_vendor_bill_products.model_account_move
+msgid "Journal Entry"
+msgstr "Asiento contable"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__last_seen
+msgid "Last Seen"
+msgstr "Visto por última vez"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_image__write_uid
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_image__write_date
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__move_id
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_search
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_vbp_supplierinfo_view_list
+msgid "Last bill"
+msgstr "Última factura"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_product_supplierinfo__xb_vbp_last_move_id
+msgid "Last bill read"
+msgstr "Última factura leída"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_form
+msgid "Last figures"
+msgstr "Últimas cifras"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__price_unit
+msgid "Last price"
+msgstr "Último precio"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__quantity
+msgid "Last quantity"
+msgstr "Última cantidad"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_search
+msgid "Last seen"
+msgstr "Visto por última vez"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_vbp_supplierinfo_view_search
+msgid "Learned from a bill"
+msgstr "Aprendido de una factura"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_form
+msgid ""
+"Leave empty and press Create product, or pick the product this item really "
+"is."
+msgstr "Déjalo vacío y presiona Crear producto, o elige el producto que en realidad es este artículo."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_company__xb_vbp_categ_id
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_config_settings__xb_vbp_categ_id
+msgid "Left empty, Odoo's default category is used."
+msgstr "Si se deja vacío, se usa la categoría por omisión de Odoo."
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_list
+msgid "Link"
+msgstr "Ligar"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_form
+msgid "Link to this product"
+msgstr "Ligar a este producto"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_company__xb_vbp_image_mode
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_config_settings__xb_vbp_image_mode
+msgid ""
+"Look for a picture for products that do not have one. The search runs in a "
+"scheduled action, never during the import."
+msgstr "Busca una foto para los productos que no tienen. La búsqueda corre en una acción planificada, nunca durante la importación."
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.res_config_settings_view_form_xb_vbp
+msgid ""
+"Look for a picture for products that have none. The search runs in a "
+"scheduled action, never while a bill is being imported. Check that you have "
+"the right to use any image before you publish it."
+msgstr "Busca una foto para los productos que no tienen. La búsqueda corre en una acción planificada, nunca mientras se importa una factura. Verifica que tengas derecho a usar cualquier imagen antes de publicarla."
+
+#. module: xb_vendor_bill_products
+#: model:ir.actions.server,name:xb_vendor_bill_products.action_xb_vbp_search_images
+msgid "Look for a product image"
+msgstr "Buscar imagen del producto"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_form
+msgid "Look for images"
+msgstr "Buscar imágenes"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_company__xb_vbp_image_min_px
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_config_settings__xb_vbp_image_min_px
+msgid "Minimum image side (px)"
+msgstr "Lado mínimo de la imagen (px)"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__res_company__xb_vbp_cost_policy__never
+msgid "Never"
+msgstr "Nunca"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_company__xb_vbp_cost_policy
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_config_settings__xb_vbp_cost_policy
+msgid ""
+"Never: the bill price is only informative.\n"
+"Only the first time: the price is recorded when the product and the vendor are first linked, and never touched again.\n"
+"Always: every bill updates the vendor price and the cost."
+msgstr "Nunca: el precio de la factura es solo informativo.\nSolo la primera vez: el precio se registra cuando el producto y el proveedor se ligan por primera vez, y ya no se vuelve a tocar.\nSiempre: cada factura actualiza el precio del proveedor y el costo."
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.actions.act_window,help:xb_vendor_bill_products.xb_vbp_supplierinfo_action
+msgid "No vendor code recorded yet"
+msgstr "Todavía no hay ningún código de proveedor registrado"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__note
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_form
+msgid "Notes"
+msgstr "Notas"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__product_template__xb_vbp_image_state__failed
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__xb_bill_product_proposal__image_state__failed
+msgid "Nothing found"
+msgstr "No se encontró nada"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.actions.act_window,help:xb_vendor_bill_products.xb_bill_product_proposal_action
+msgid "Nothing waiting for review"
+msgstr "Nada esperando revisión"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_company__xb_vbp_set_default_code
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_config_settings__xb_vbp_set_default_code
+msgid ""
+"Off by default: the vendor's code is their code, not yours, and two vendors "
+"may use the same one. It is always stored on the vendor pricelist regardless"
+" of this setting."
+msgstr "Apagado por omisión: el código del proveedor es de él, no tuyo, y dos proveedores pueden usar el mismo. De cualquier forma siempre se guarda en la lista del proveedor."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_company__xb_vbp_is_storable
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_config_settings__xb_vbp_is_storable
+msgid ""
+"Only applies to goods, and only when Inventory is installed. A product "
+"created without this flag never moves stock."
+msgstr "Solo aplica a bienes, y solo cuando Inventario está instalado. Un producto creado sin esta marca nunca mueve existencias."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__res_company__xb_vbp_cost_policy__first
+msgid "Only the first time"
+msgstr "Solo la primera vez"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_product_product__xb_vbp_origin_move_id
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_product_template__xb_vbp_origin_move_id
+msgid "Originating bill"
+msgstr "Factura de origen"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model,name:xb_vendor_bill_products.model_product_template
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_image__product_tmpl_id
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__product_id
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_vbp_supplierinfo_view_list
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_vbp_supplierinfo_view_search
+msgid "Product"
+msgstr "Producto"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model,name:xb_vendor_bill_products.model_xb_product_image_finder
+msgid "Product Image Finder"
+msgstr "Buscador de imágenes de producto"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model,name:xb_vendor_bill_products.model_xb_bill_product_proposal
+msgid "Product Proposed by a Vendor Bill"
+msgstr "Producto propuesto por una factura de proveedor"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model,name:xb_vendor_bill_products.model_product_product
+msgid "Product Variant"
+msgstr "Variante de producto"
+
+#. module: xb_vendor_bill_products
+#. odoo-python
+#: code:addons/xb_vendor_bill_products/models/product_product.py:0
+msgid "Product created from this bill: %s"
+msgstr "Producto creado desde esta factura: %s"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_company__xb_vbp_image_mode
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_config_settings__xb_vbp_image_mode
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.res_config_settings_view_form_xb_vbp
+msgid "Product images"
+msgstr "Imágenes de producto"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.res_config_settings_view_form_xb_vbp
+msgid "Products from Vendor Bills"
+msgstr "Productos desde facturas de proveedor"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_image__proposal_id
+msgid "Proposal"
+msgstr "Propuesta"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__res_company__xb_vbp_image_mode__propose
+msgid "Propose candidates"
+msgstr "Proponer candidatas"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__res_company__xb_vbp_mode__propose
+msgid "Propose for review"
+msgstr "Proponer para revisión"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.view_move_form_xb_vbp
+msgid "Proposed"
+msgstr "Propuestos"
+
+#. module: xb_vendor_bill_products
+#: model:ir.actions.act_window,name:xb_vendor_bill_products.xb_bill_product_proposal_action
+#: model:ir.ui.menu,name:xb_vendor_bill_products.menu_xb_bill_product_proposal
+msgid "Proposed Products"
+msgstr "Productos propuestos"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_form
+msgid "Proposed product"
+msgstr "Producto propuesto"
+
+#. module: xb_vendor_bill_products
+#. odoo-python
+#: code:addons/xb_vendor_bill_products/models/account_move.py:0
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_account_bank_statement_line__xb_vbp_proposal_ids
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_account_move__xb_vbp_proposal_ids
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_list
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_search
+msgid "Proposed products"
+msgstr "Productos propuestos"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_form
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_list
+msgid "Reject"
+msgstr "Descartar"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__xb_bill_product_proposal__state__rejected
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_search
+msgid "Rejected"
+msgstr "Descartado"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_form
+msgid "Result"
+msgstr "Resultado"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_company__xb_vbp_margin_percent
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_config_settings__xb_vbp_margin_percent
+msgid "Sale price margin (%)"
+msgstr "Margen de precio de venta (%)"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__product_template__xb_vbp_image_state__pending
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__xb_bill_product_proposal__image_state__pending
+msgid "Searching"
+msgstr "Buscando"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_list
+msgid "Seen"
+msgstr "Visto"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_search
+msgid "Seen more than once"
+msgstr "Visto más de una vez"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__move_ids
+msgid "Seen on"
+msgstr "Visto en"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_image__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__res_company__xb_vbp_product_type__service
+msgid "Service"
+msgstr "Servicio"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_xb_bill_product_proposal__product_id
+msgid ""
+"Set it to link this item to a product you already have, or leave it empty "
+"and let the proposal create one."
+msgstr "Ponlo para ligar este artículo a un producto que ya tienes, o déjalo vacío y deja que la propuesta cree uno."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_product_supplierinfo__xb_vbp_cost_synced
+msgid ""
+"Set the first time a vendor bill wrote the price on this line. The \"only "
+"the first time\" cost policy relies on it."
+msgstr "Se marca la primera vez que una factura de proveedor escribió el precio en esta línea. La política de costo \"solo la primera vez\" se apoya en ella."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_image__url
+msgid "Source URL"
+msgstr "URL de origen"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__state
+msgid "State"
+msgstr "Estado"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_search
+msgid "Status"
+msgstr "Estado"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model,name:xb_vendor_bill_products.model_product_supplierinfo
+msgid "Supplier Pricelist"
+msgstr "Lista de precios del proveedor"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_xb_bill_product_proposal__name
+msgid "The description exactly as it arrived on the vendor's file."
+msgstr "La descripción tal cual llegó en el archivo del proveedor."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_xb_bill_product_proposal__vendor_code
+msgid "The reference the vendor uses for this item."
+msgstr "La referencia que el proveedor usa para este artículo."
+
+#. module: xb_vendor_bill_products
+#. odoo-python
+#: code:addons/xb_vendor_bill_products/models/bill_product_image.py:0
+msgid "This candidate could not be downloaded."
+msgstr "No se pudo descargar esta candidata."
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.actions.act_window,help:xb_vendor_bill_products.xb_vbp_supplierinfo_action
+msgid ""
+"This is the translation table between the reference a vendor\n"
+"                prints on their invoice and the product in your catalogue.\n"
+"                Every bill you import fills it in, and every line you fill in\n"
+"                makes the next bill match on its own."
+msgstr "Ésta es la tabla de traducción entre la referencia que el proveedor\n                imprime en su factura y el producto de tu catálogo.\n                Cada factura que importas la va llenando, y cada renglón que llenas\n                hace que la siguiente factura empareje sola."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.constraint,message:xb_vendor_bill_products.constraint_xb_bill_product_proposal_uniq_vendor_code
+msgid "This vendor code is already proposed for this vendor."
+msgstr "Este código ya está propuesto para este proveedor."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__occurrence_count
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_form
+msgid "Times seen"
+msgstr "Veces visto"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_image__name
+msgid "Title"
+msgstr "Título"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields.selection,name:xb_vendor_bill_products.selection__xb_bill_product_proposal__state__draft
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_search
+msgid "To review"
+msgstr "Por revisar"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_company__xb_vbp_is_storable
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_config_settings__xb_vbp_is_storable
+msgid "Track inventory on new products"
+msgstr "Controlar inventario en los productos nuevos"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_company__xb_vbp_product_type
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_config_settings__xb_vbp_product_type
+msgid "Type for new products"
+msgstr "Tipo para los productos nuevos"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__uom_id
+msgid "Unit"
+msgstr "Unidad"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.res_config_settings_view_form_xb_vbp
+msgid "Unknown products"
+msgstr "Productos desconocidos"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_company__xb_vbp_mode
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_config_settings__xb_vbp_mode
+msgid "Unknown products on vendor bills"
+msgstr "Productos desconocidos en facturas de proveedor"
+
+#. module: xb_vendor_bill_products
+#. odoo-python
+#: code:addons/xb_vendor_bill_products/models/bill_product_proposal.py:0
+msgid "Unnamed item"
+msgstr "Artículo sin nombre"
+
+#. module: xb_vendor_bill_products
+#. odoo-python
+#: code:addons/xb_vendor_bill_products/models/product_product.py:0
+msgid "Unnamed product"
+msgstr "Producto sin nombre"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_company__xb_vbp_cost_policy
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_config_settings__xb_vbp_cost_policy
+msgid "Update cost from the bill"
+msgstr "Actualizar el costo desde la factura"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_company__xb_vbp_set_barcode
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_config_settings__xb_vbp_set_barcode
+msgid "Use the standard item identifier as barcode"
+msgstr "Usar el identificador estándar del artículo como código de barras"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_company__xb_vbp_set_default_code
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_res_config_settings__xb_vbp_set_default_code
+msgid "Use the vendor code as internal reference"
+msgstr "Usar el código del proveedor como referencia interna"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_image_view_kanban
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_image_view_list
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_form
+msgid "Use this one"
+msgstr "Usar ésta"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_vbp_supplierinfo_view_list
+msgid "Variant"
+msgstr "Variante"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__partner_id
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_search
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_vbp_supplierinfo_view_search
+msgid "Vendor"
+msgstr "Proveedor"
+
+#. module: xb_vendor_bill_products
+#: model:ir.actions.act_window,name:xb_vendor_bill_products.xb_vbp_supplierinfo_action
+#: model:ir.ui.menu,name:xb_vendor_bill_products.menu_xb_vbp_supplierinfo
+msgid "Vendor Codes"
+msgstr "Códigos de proveedor"
+
+#. module: xb_vendor_bill_products
+#: model:ir.actions.server,name:xb_vendor_bill_products.ir_cron_xb_vbp_fetch_images_ir_actions_server
+msgid "Vendor bill products: look for product images"
+msgstr "Productos desde facturas: buscar imágenes de producto"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_proposal__vendor_code
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.product_template_form_view_xb_vbp_sellers
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_vbp_supplierinfo_view_list
+msgid "Vendor code"
+msgstr "Código del proveedor"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_vbp_supplierinfo_view_list
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_vbp_supplierinfo_view_search
+msgid "Vendor codes"
+msgstr "Códigos de proveedor"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.product_template_form_view_xb_vbp_sellers
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_vbp_supplierinfo_view_list
+msgid "Vendor name"
+msgstr "Nombre en el proveedor"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.product_template_form_view_xb_vbp_sellers
+msgid "Vendors"
+msgstr "Proveedores"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_form
+msgid "What the vendor sent"
+msgstr "Lo que mandó el proveedor"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_company__xb_vbp_mode
+#: model:ir.model.fields,help:xb_vendor_bill_products.field_res_config_settings__xb_vbp_mode
+msgid ""
+"What to do when a line of an imported vendor bill refers to a product that "
+"is not in the catalogue yet."
+msgstr "Qué hacer cuando una línea de una factura de proveedor importada se refiere a un producto que todavía no está en el catálogo."
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.res_config_settings_view_form_xb_vbp
+msgid ""
+"What to do when an imported vendor bill mentions a product you do not have "
+"yet. Whatever the mode, the vendor's own item code is always learned, so the"
+" next bill matches on its own."
+msgstr "Qué hacer cuando una factura de proveedor importada menciona un producto que todavía no tienes. Sea cual sea el modo, el código del proveedor siempre se aprende, para que la siguiente factura empareje sola."
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.actions.act_window,help:xb_vendor_bill_products.xb_bill_product_proposal_action
+msgid ""
+"When an imported vendor bill mentions a product that is not in\n"
+"                your catalogue yet, it lands here: the vendor, their code, the\n"
+"                price and how many bills it has appeared on. Create it, link it\n"
+"                to a product you already have, or reject it."
+msgstr "Cuando una factura de proveedor importada menciona un producto que todavía\n                no está en tu catálogo, aterriza aquí: el proveedor, su código, el\n                precio y en cuántas facturas ha aparecido. Créalo, lígalo a un\n                producto que ya tengas, o descártalo."
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_xb_bill_product_image__width
+msgid "Width"
+msgstr "Ancho"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_search
+msgid "With a chosen image"
+msgstr "Con imagen elegida"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_vbp_supplierinfo_view_search
+msgid "Without a vendor code"
+msgstr "Sin código de proveedor"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.product_template_search_view_xb_vbp
+msgid "Without image"
+msgstr "Sin imagen"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_product_product__xb_vbp_image_candidate_count
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_product_template__xb_vbp_image_candidate_count
+msgid "Xb Vbp Image Candidate Count"
+msgstr "Número de imágenes candidatas"
+
+#. module: xb_vendor_bill_products
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_account_bank_statement_line__xb_vbp_proposal_count
+#: model:ir.model.fields,field_description:xb_vendor_bill_products.field_account_move__xb_vbp_proposal_count
+msgid "Xb Vbp Proposal Count"
+msgstr "Número de productos propuestos"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_form
+msgid "e.g. Cable HDMI 2 m"
+msgstr "p. ej. Cable HDMI 2 m"
+
+#. module: xb_vendor_bill_products
+#. odoo-python
+#: code:addons/xb_vendor_bill_products/models/bill_product_proposal.py:0
+msgid "id"
+msgstr "id"
+
+#. module: xb_vendor_bill_products
+#. odoo-python
+#: code:addons/xb_vendor_bill_products/models/account_move.py:0
+msgid "move_ids"
+msgstr "move_ids"
+
+#. module: xb_vendor_bill_products
+#. odoo-python
+#: code:addons/xb_vendor_bill_products/models/product_template.py:0
+msgid "product_tmpl_id"
+msgstr "product_tmpl_id"
+
+#. module: xb_vendor_bill_products
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_image_view_kanban
+#: model_terms:ir.ui.view,arch_db:xb_vendor_bill_products.xb_bill_product_proposal_view_form
+msgid "px"
+msgstr "px"

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ir_cron_xb_vbp_fetch_images" model="ir.cron">
+        <field name="name">Vendor bill products: look for product images</field>
+        <field name="model_id" ref="model_xb_product_image_finder"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_fetch_images()</field>
+        <field name="interval_number">30</field>
+        <field name="interval_type">minutes</field>
+        <field name="active" eval="True"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,140 @@
+<section style="font-family:Arial,Helvetica,sans-serif;color:#2b2b2b;">
+
+  <div style="text-align:center;margin-bottom:24px;">
+    <img src="banner.png" style="max-width:100%;border-radius:12px;"/>
+  </div>
+
+  <div style="max-width:920px;margin:0 auto;">
+
+    <h1 style="color:#C62828;font-size:30px;margin:0 0 6px;">
+      Products from Vendor Bills
+    </h1>
+    <p style="font-size:17px;color:#666;margin:0 0 28px;">
+      Odoo reads the vendor&rsquo;s electronic invoice and fills the lines. This module
+      deals with the <b>products</b>: it matches them by the code <i>that vendor</i>
+      uses, proposes the ones you do not have, keeps the cost up to date &mdash; and
+      even looks for a picture.
+    </p>
+
+    <div style="background:#FBEAEA;border-left:5px solid #C62828;padding:16px 20px;border-radius:6px;margin-bottom:30px;">
+      <h3 style="margin:0 0 8px;color:#A32020;">The problem</h3>
+      <p style="margin:0;font-size:15px;line-height:1.55;">
+        An item on the XML that is not already in your catalogue leaves the bill line
+        as bare text: no product, no stock, no cost, no traceability. And nothing is
+        remembered, so <b>the same bill next month fails to match again</b>. Odoo
+        compares the vendor&rsquo;s item code against <i>your</i> internal reference,
+        which almost never matches.
+      </p>
+    </div>
+
+    <h3 style="color:#C62828;margin:0 0 10px;">Matching that actually works</h3>
+    <p style="font-size:15px;color:#666;margin:0 0 12px;line-height:1.6;">
+      The translation between the reference a vendor prints on their invoice and the
+      product in your catalogue lives on the <b>vendor pricelist</b>. This module looks
+      there first &mdash; and writes back every match you confirm, so the next bill from
+      that vendor matches on its own. The catalogue teaches itself.
+    </p>
+    <img src="screenshots/04-vendor-codes.png"
+         style="max-width:100%;border:1px solid #E3DCCF;border-radius:8px;margin-bottom:8px;"/>
+    <p style="font-size:13.5px;color:#8A8378;margin:0 0 30px;">
+      The row learned from a bill carries the vendor&rsquo;s code and is flagged
+      &laquo;From a bill&raquo;.
+    </p>
+
+    <h3 style="color:#C62828;margin:0 0 10px;">Unknown products: proposed, not silently invented</h3>
+    <p style="font-size:15px;color:#666;margin:0 0 12px;line-height:1.6;">
+      Everything the bill mentions and you do not have lands in a review screen, with the
+      vendor, their code, the price, how many times it has been seen and on which bills.
+      Create it, link it to a product you already have, or reject it. Repeated items are
+      grouped into a single proposal with a counter.
+    </p>
+    <img src="screenshots/01-proposed-products.png"
+         style="max-width:100%;border:1px solid #E3DCCF;border-radius:8px;margin-bottom:30px;"/>
+
+    <h3 style="color:#C62828;margin:0 0 10px;">One click also fixes the bills</h3>
+    <p style="font-size:15px;color:#666;margin:0 0 12px;line-height:1.6;">
+      Creating or linking the product back-fills the draft bills where the item appeared
+      &mdash; <b>without touching the quantities, prices, discounts or taxes</b> that were
+      imported.
+    </p>
+    <img src="screenshots/02-proposal-form.png"
+         style="max-width:100%;border:1px solid #E3DCCF;border-radius:8px;margin-bottom:8px;"/>
+    <p style="font-size:13.5px;color:#8A8378;margin:0 0 30px;">
+      A catalogue built from bills has no pictures. The module can look for one and show
+      you the candidates side by side.
+    </p>
+
+    <h3 style="color:#C62828;margin:0 0 10px;">Three modes, and a cost policy you choose</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:14.5px;margin-bottom:14px;">
+      <tr style="background:#F6F1E8;">
+        <td style="padding:9px 12px;font-weight:bold;width:190px;border:1px solid #E3DCCF;">Unknown products</td>
+        <td style="padding:9px 12px;border:1px solid #E3DCCF;">
+          <b>Disabled</b> &middot; <b>Propose for review</b> (default) &middot; <b>Create automatically</b>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:9px 12px;font-weight:bold;border:1px solid #E3DCCF;">Cost from the bill</td>
+        <td style="padding:9px 12px;border:1px solid #E3DCCF;">
+          <b>Never</b> &middot; <b>Only the first time</b> (default) &middot; <b>Always</b>
+        </td>
+      </tr>
+      <tr style="background:#F6F1E8;">
+        <td style="padding:9px 12px;font-weight:bold;border:1px solid #E3DCCF;">Product images</td>
+        <td style="padding:9px 12px;border:1px solid #E3DCCF;">
+          <b>Disabled</b> &middot; <b>Propose candidates</b> &middot; <b>Attach the best match</b>
+        </td>
+      </tr>
+    </table>
+    <p style="font-size:15px;color:#666;margin:0 0 12px;line-height:1.6;">
+      The vendor pricelist price stays in the bill&rsquo;s own currency. The product cost is
+      converted to the company currency and is <b>only written when the costing method is
+      Standard Price</b>, so automated FIFO/AVCO valuations are never disturbed. A margin
+      can derive a sale price from the cost.
+    </p>
+    <img src="screenshots/05-settings.png"
+         style="max-width:100%;border:1px solid #E3DCCF;border-radius:8px;margin-bottom:30px;"/>
+
+    <h3 style="color:#C62828;margin:0 0 10px;">Images without an API key</h3>
+    <p style="font-size:15px;color:#666;margin:0 0 10px;line-height:1.6;">
+      Two search back ends are included: <b>DuckDuckGo</b>, which needs no credentials at
+      all, and <b>Google Programmable Search</b> if you already have a key. The search runs
+      in a scheduled action, <b>never during the import</b>, so importing a bill is never
+      slowed down or made to depend on the internet.
+    </p>
+    <p style="font-size:13.5px;color:#8A8378;margin:0 0 30px;line-height:1.55;">
+      You are responsible for making sure you have the right to use any image you attach.
+      The module helps you find candidates &mdash; review them.
+    </p>
+
+    <h3 style="color:#C62828;margin:0 0 10px;">Every format Odoo can read</h3>
+    <ul style="font-size:15px;line-height:1.75;margin:0 0 28px;padding-left:20px;color:#555;">
+      <li>Extends the standard import, so <b>UBL, Factur-X, XRechnung and CII</b> all
+          benefit &mdash; now and as Odoo adds more.</li>
+      <li><b>CFDI 4.0 (Mexico)</b> through the companion module
+          <code>xb_vendor_bill_products_mx</code>, which installs itself when Odoo&rsquo;s
+          Mexican localisation is present. It also fills in the line description, which the
+          Mexican decoder leaves empty.</li>
+      <li>Works <b>with or without Purchase and Inventory</b>. Without Purchase, Odoo has no
+          screen at all for vendor codes, so the module adds one.</li>
+      <li>No change to Odoo&rsquo;s accounting, valuation or tax logic.</li>
+    </ul>
+
+    <div style="background:#F6F1E8;border-radius:8px;padding:18px 22px;margin-bottom:26px;">
+      <h3 style="margin:0 0 8px;color:#A32020;">Configuration</h3>
+      <p style="margin:0;font-size:15px;line-height:1.55;">
+        <i>Accounting &#9656; Configuration &#9656; Settings &#9656; Products from Vendor Bills.</i>
+        Everything is per company. Two menus are added under
+        <i>Accounting &#9656; Vendors</i>: <b>Proposed Products</b> and <b>Vendor Codes</b>.
+      </p>
+    </div>
+
+    <p style="font-size:14px;color:#8A8378;margin:0 0 4px;">
+      Odoo 19.0 &mdash; Community and Enterprise.
+    </p>
+    <p style="font-size:14px;color:#8A8378;margin:0;">
+      Support: <a href="mailto:soporte@xubax.com" style="color:#C62828;">soporte@xubax.com</a>
+      &middot; <a href="https://www.xubax.com" style="color:#C62828;">www.xubax.com</a>
+    </p>
+
+  </div>
+</section>
