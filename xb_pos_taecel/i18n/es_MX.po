@@ -1047,3 +1047,152 @@ msgstr "referencia"
 #: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.xml:0
 msgid "← Back"
 msgstr "← Atrás"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__company_id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__company_id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__company_id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__company_id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_wallet__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__create_uid
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__create_uid
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__create_uid
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__create_uid
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_wallet__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__create_date
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__create_date
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__create_date
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__create_date
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_wallet__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__currency_id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__currency_id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__currency_id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__currency_id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_wallet__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order__display_name
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__display_name
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_session__display_name
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__display_name
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__display_name
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__display_name
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__display_name
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_wallet__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order__id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_session__id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_wallet__id
+msgid "ID"
+msgstr "ID"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__write_uid
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__write_uid
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__write_uid
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__write_uid
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_wallet__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__write_date
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__write_date
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__write_date
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__write_date
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_wallet__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__name
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__name
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__name
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_wallet__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
+msgid "Point of Sale"
+msgstr "Punto de venta"
+
+#. module: xb_pos_taecel
+#: model:ir.model,name:xb_pos_taecel.model_pos_order_line
+msgid "Point of Sale Order Lines"
+msgstr "Líneas de pedido del punto de venta"
+
+#. module: xb_pos_taecel
+#: model:ir.model,name:xb_pos_taecel.model_pos_order
+msgid "Point of Sale Orders"
+msgstr "Pedidos del punto de venta"
+
+#. module: xb_pos_taecel
+#: model:ir.model,name:xb_pos_taecel.model_pos_session
+msgid "Point of Sale Session"
+msgstr "Sesión del punto de venta"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__pos_order_id
+msgid "Pos Order"
+msgstr "Pedido del TPV"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__pos_order_line_id
+msgid "Pos Order Line"
+msgstr "Línea del pedido del TPV"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__pos_session_id
+msgid "Pos Session"
+msgstr "Sesión del TPV"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__product_ids
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__product_ids
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Products"
+msgstr "Productos"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__user_id
+msgid "User"
+msgstr "Usuario"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+msgid "account_id"
+msgstr "account_id"
