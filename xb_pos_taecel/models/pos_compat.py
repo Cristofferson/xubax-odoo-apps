@@ -24,7 +24,10 @@ from odoo import models, release
 from odoo.models import BaseModel
 
 #: Major Odoo version this instance runs (18, 19, ...).
-ODOO_VERSION = release.version_info[0]
+#: On SaaS builds ``version_info[0]`` is a *string* ('saas~18'), not an int, so
+#: keep only the digits before comparing -- ``'saas~18' <= 18`` raises TypeError.
+_MAJOR = str(release.version_info[0]).split('.')[0]
+ODOO_VERSION = int(''.join(c for c in _MAJOR if c.isdigit()) or 0)
 IS_ODOO_18 = ODOO_VERSION <= 18
 
 #: Odoo 19 replaced ``_sql_constraints`` with ``models.Constraint`` table
