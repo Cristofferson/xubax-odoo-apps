@@ -6,7 +6,11 @@ import { usePos, ControlButtons } from "../compat";
 
 export class XbTaecelControlButton extends Component {
     static template = "xb_pos_taecel.ControlButton";
-    static props = {};
+    /** The POS hands us its own button classes so we look like a native control
+     *  button in whatever panel we land in (they differ between the compact bar
+     *  and the expanded "More" panel, and between Odoo versions). */
+    static props = { buttonClass: { type: String, optional: true } };
+    static defaultProps = { buttonClass: "btn btn-secondary btn-lg py-5" };
 
     setup() {
         this.pos = usePos();

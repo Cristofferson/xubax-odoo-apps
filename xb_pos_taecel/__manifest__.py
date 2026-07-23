@@ -38,12 +38,12 @@ Runs on Odoo 18.0 and 19.0.
 """,
     'category': 'Sales/Point of Sale',
     'version': '19.0.1.0.0',
-    'author': 'Cristofferson Reyes Rodriguez',
+    'author': 'Cristofferson Reyes',
     'website': 'https://xubax.com',
     'license': 'OPL-1',
     'price': 249.00,
     'currency': 'USD',
-    'support': 'cristofferson28@gmail.com',
+    'support': 'soporte@xubax.com',
     'depends': [
         'point_of_sale',
     ],
@@ -63,7 +63,7 @@ Runs on Odoo 18.0 and 19.0.
             'xb_pos_taecel/static/src/app/**/*.scss',
         ],
     },
-    'images': ['static/description/banner.png'],
+    'images': ['static/description/banner.png', 'static/description/icon.png'],
     'application': True,
     'installable': True,
 }
