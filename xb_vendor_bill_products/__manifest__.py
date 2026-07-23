@@ -107,7 +107,7 @@ Compatibility
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",
     "category": "Accounting/Accounting",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "license": "OPL-1",
     "price": 89.00,
     "currency": "USD",

@@ -13,8 +13,12 @@
         <field name="model">product.supplierinfo</field>
         <field name="arch" type="xml">
             <search string="Vendor codes">
+                <!-- Someone on this screen is looking up a code, so that is what
+                     the first field has to search: it is the one the search bar
+                     uses by default. -->
+                <field name="product_code" string="Code or product"
+                       filter_domain="['|', '|', ('product_code', 'ilike', self), ('product_name', 'ilike', self), ('product_tmpl_id', 'ilike', self)]"/>
                 <field name="partner_id"/>
-                <field name="product_code"/>
                 <field name="product_name"/>
                 <field name="product_tmpl_id"/>
                 <filter name="xb_vbp_learned" string="Learned from a bill"
