@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_taecel_transaction_list" model="ir.ui.view">
+        <field name="name">xb.taecel.transaction.list</field>
+        <field name="model">xb.taecel.transaction</field>
+        <field name="arch" type="xml">
+            <list string="TAECEL Transactions" create="false">
+                <field name="create_date"/>
+                <field name="product_id"/>
+                <field name="reference"/>
+                <field name="amount"/>
+                <field name="customer_fee"/>
+                <field name="total_charged"/>
+                <field name="folio"/>
+                <field name="pos_order_id"/>
+                <field name="user_id"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'done'"
+                       decoration-danger="state == 'failed'"
+                       decoration-warning="state == 'timeout'"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_taecel_transaction_form" model="ir.ui.view">
+        <field name="name">xb.taecel.transaction.form</field>
+        <field name="model">xb.taecel.transaction</field>
+        <field name="arch" type="xml">
+            <form string="TAECEL Transaction" create="false">
+                <header>
+                    <button name="action_query_status" type="object"
+                            string="Reconcile Now" class="btn-primary"
+                            invisible="state not in ['timeout', 'sent']"
+                            help="Match this transaction in TAECEL's sales.
+                                  Read-only: it never dispatches a second recharge."/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="state != 'timeout'">
+                        TAECEL never confirmed this sale at the till. It is
+                        matched against TAECEL's sales automatically every few
+                        minutes. It is never re-sent: the recharge may already
+                        have reached the customer.
+                    </div>
+                    <group>
+                        <group string="Sale">
+                            <field name="product_id"/>
+                            <field name="product_code"/>
+                            <field name="reference"/>
+                            <field name="amount"/>
+                            <field name="customer_fee"/>
+                            <field name="total_charged"/>
+                        </group>
+                        <group string="TAECEL">
+                            <field name="trans_id"/>
+                            <field name="folio"/>
+                            <field name="authorization"/>
+                            <field name="pin"/>
+                            <field name="attempt_count"/>
+                            <field name="error_message" invisible="not error_message"/>
+                        </group>
+                        <group string="Point of Sale">
+                            <field name="pos_order_id"/>
+                            <field name="pos_session_id"/>
+                            <field name="user_id"/>
+                            <field name="sent_date"/>
+                            <field name="done_date"/>
+                        </group>
+                        <group string="Account">
+                            <field name="account_id"/>
+                            <field name="bolsa_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Receipt Note" invisible="not receipt_note">
+                        <field name="receipt_note" nolabel="1" readonly="1"/>
+                    </group>
+                    <group string="Raw Exchange" groups="point_of_sale.group_pos_manager">
+                        <field name="raw_request" readonly="1"/>
+                        <field name="raw_response" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_taecel_transaction_search" model="ir.ui.view">
+        <field name="name">xb.taecel.transaction.search</field>
+        <field name="model">xb.taecel.transaction</field>
+        <field name="arch" type="xml">
+            <search string="TAECEL Transactions">
+                <field name="reference"/>
+                <field name="folio"/>
+                <field name="trans_id"/>
+                <filter name="done" string="Successful" domain="[('state', '=', 'done')]"/>
+                <filter name="pending" string="Awaiting Confirmation"
+                        domain="[('state', 'in', ['sent', 'timeout'])]"/>
+                <filter name="failed" string="Failed" domain="[('state', '=', 'failed')]"/>
+                <group>
+                    <filter name="by_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="by_user" string="Cashier" context="{'group_by': 'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_taecel_transaction" model="ir.actions.act_window">
+        <field name="name">TAECEL Transactions</field>
+        <field name="res_model">xb.taecel.transaction</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

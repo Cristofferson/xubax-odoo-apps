@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_taecel_carrier_list" model="ir.ui.view">
+        <field name="name">xb.taecel.carrier.list</field>
+        <field name="model">xb.taecel.carrier</field>
+        <field name="arch" type="xml">
+            <list string="TAECEL Carriers">
+                <field name="name"/>
+                <field name="category"/>
+                <field name="bolsa_id"/>
+                <field name="carrier_type"/>
+                <field name="field_label"/>
+                <field name="field_min"/>
+                <field name="field_max"/>
+                <field name="product_count"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_taecel_carrier_form" model="ir.ui.view">
+        <field name="name">xb.taecel.carrier.form</field>
+        <field name="model">xb.taecel.carrier</field>
+        <field name="arch" type="xml">
+            <form string="TAECEL Carrier">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Carrier">
+                            <field name="carrier_uid"/>
+                            <field name="category"/>
+                            <field name="bolsa_id"/>
+                            <field name="carrier_type"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Cashier Input (Campos)">
+                            <field name="field_label"/>
+                            <field name="field_key"/>
+                            <field name="field_min"/>
+                            <field name="field_max"/>
+                            <field name="field_format"/>
+                            <field name="field_required"/>
+                        </group>
+                    </group>
+                    <field name="product_ids">
+                        <list>
+                            <field name="code"/>
+                            <field name="name"/>
+                            <field name="amount"/>
+                            <field name="validity"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_taecel_carrier" model="ir.actions.act_window">
+        <field name="name">TAECEL Carriers</field>
+        <field name="res_model">xb.taecel.carrier</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_taecel_product_list" model="ir.ui.view">
+        <field name="name">xb.taecel.product.list</field>
+        <field name="model">xb.taecel.product</field>
+        <field name="arch" type="xml">
+            <list string="TAECEL Catalog">
+                <field name="carrier_name"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="category"/>
+                <field name="amount"/>
+                <field name="validity"/>
+                <field name="bolsa_id"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_taecel_product_form" model="ir.ui.view">
+        <field name="name">xb.taecel.product.form</field>
+        <field name="model">xb.taecel.product</field>
+        <field name="arch" type="xml">
+            <form string="TAECEL Product">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="code"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="carrier_id"/>
+                            <field name="carrier_name"/>
+                            <field name="category"/>
+                            <field name="bolsa_id"/>
+                        </group>
+                        <group>
+                            <field name="amount"/>
+                            <field name="validity"/>
+                            <field name="taecel_pro_id"/>
+                            <field name="active"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="description"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_taecel_product_search" model="ir.ui.view">
+        <field name="name">xb.taecel.product.search</field>
+        <field name="model">xb.taecel.product</field>
+        <field name="arch" type="xml">
+            <search string="TAECEL Catalog">
+                <field name="name"/>
+                <field name="carrier_name"/>
+                <field name="code"/>
+                <filter name="airtime" string="Airtime"
+                        domain="[('bolsa_id', '=', '1')]"/>
+                <filter name="services" string="Services / Giftcards"
+                        domain="[('bolsa_id', '=', '2')]"/>
+                <group>
+                    <filter name="by_carrier" string="Carrier"
+                            context="{'group_by': 'carrier_name'}"/>
+                    <filter name="by_category" string="Category"
+                            context="{'group_by': 'category'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_taecel_product" model="ir.actions.act_window">
+        <field name="name">TAECEL Catalog</field>
+        <field name="res_model">xb.taecel.product</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

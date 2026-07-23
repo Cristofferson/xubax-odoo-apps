@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_taecel_root" name="TAECEL"
+              parent="point_of_sale.menu_point_root"
+              groups="point_of_sale.group_pos_manager" sequence="90"/>
+
+    <menuitem id="menu_taecel_transaction" name="Transactions"
+              parent="menu_taecel_root" action="action_taecel_transaction"
+              sequence="10"/>
+
+    <menuitem id="menu_taecel_product" name="Catalog"
+              parent="menu_taecel_root" action="action_taecel_product"
+              sequence="20"/>
+
+    <menuitem id="menu_taecel_carrier" name="Carriers"
+              parent="menu_taecel_root" action="action_taecel_carrier"
+              sequence="30"/>
+
+    <menuitem id="menu_taecel_account" name="Account"
+              parent="menu_taecel_root" action="action_taecel_account"
+              sequence="40"/>
+
+</odoo>

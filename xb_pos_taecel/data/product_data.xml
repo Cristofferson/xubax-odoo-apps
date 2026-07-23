@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Generic product every TAECEL sale line hangs off. A recharge is an
+         ordinary POS line on this product; the carrier, code, reference and
+         amount ride along as line metadata. One product keeps the customer's
+         real catalog clean, with no product.product per carrier or amount. -->
+    <record id="product_taecel_service" model="product.template">
+        <field name="name">TAECEL Recharge</field>
+        <field name="default_code">XBTAECEL</field>
+        <field name="type">service</field>
+        <field name="available_in_pos" eval="True"/>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="list_price">0.0</field>
+        <field name="taxes_id" eval="[(5, 0, 0)]"/>
+        <field name="description_sale">Airtime, bill payment or PIN sold through TAECEL.</field>
+    </record>
+</odoo>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_taecel_account_form" model="ir.ui.view">
+        <field name="name">xb.taecel.account.form</field>
+        <field name="model">xb.taecel.account</field>
+        <field name="arch" type="xml">
+            <form string="TAECEL Account">
+                <header>
+                    <button name="action_test_connection" type="object"
+                            string="Test Connection" class="btn-primary"/>
+                    <button name="action_sync_catalog" type="object"
+                            string="Sync Catalog"/>
+                    <button name="action_refresh_balance" type="object"
+                            string="Refresh Balance"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,connected"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_products" type="object"
+                                class="oe_stat_button" icon="fa-mobile">
+                            <field name="product_count" widget="statinfo"
+                                   string="Products"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="TAECEL"/></h1>
+                    </div>
+                    <div class="alert alert-info" role="status"
+                         invisible="not test_mode">
+                        Test mode. Switch it off only once TAECEL has validated
+                        your test transactions and issued production credentials.
+                    </div>
+                    <group>
+                        <group string="Credentials">
+                            <field name="api_key" password="True"/>
+                            <field name="api_nip" password="True"/>
+                            <field name="test_mode"/>
+                            <field name="timeout"/>
+                        </group>
+                        <group string="Endpoints">
+                            <field name="url_test"/>
+                            <field name="url_prod"/>
+                            <field name="catalog_date" readonly="1"/>
+                            <field name="carrier_count" readonly="1"/>
+                        </group>
+                        <group string="Commercial">
+                            <field name="commission_rate"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Wallets" name="wallets">
+                            <field name="wallet_ids" readonly="1">
+                                <list>
+                                    <field name="bolsa_id"/>
+                                    <field name="name"/>
+                                    <field name="balance"/>
+                                    <field name="balance_date"/>
+                                    <field name="low_threshold" readonly="0"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                            <p class="text-muted">
+                                Balances come from getBalance, which returns
+                                every bolsa in one call. Refreshed on a schedule
+                                and after each settled recharge.
+                            </p>
+                        </page>
+                        <page string="Points of Sale" name="pos">
+                            <field name="config_ids" widget="many2many_tags"
+                                   placeholder="Leave empty for every POS"/>
+                        </page>
+                    </notebook>
+                    <field name="connection_msg" readonly="1" invisible="not connection_msg"/>
+                    <field name="currency_id" invisible="1"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_taecel_account_list" model="ir.ui.view">
+        <field name="name">xb.taecel.account.list</field>
+        <field name="model">xb.taecel.account</field>
+        <field name="arch" type="xml">
+            <list string="TAECEL Accounts">
+                <field name="name"/>
+                <field name="test_mode"/>
+                <field name="product_count"/>
+                <field name="catalog_date"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_taecel_account" model="ir.actions.act_window">
+        <field name="name">TAECEL Account</field>
+        <field name="res_model">xb.taecel.account</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>
