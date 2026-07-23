@@ -1,0 +1,67 @@
+.xb-taecel-dialog {
+    min-width: 32rem;
+    max-width: 100%;
+
+    .xb-taecel-group-title {
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        opacity: 0.6;
+        margin: 0.75rem 0 0.35rem;
+    }
+
+    .xb-taecel-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+        gap: 0.5rem;
+    }
+
+    .xb-taecel-card,
+    .xb-taecel-amount {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.25rem;
+        padding: 0.75rem 0.5rem;
+        min-height: 4.5rem;
+        border: 1px solid var(--border-color, #dee2e6);
+        border-radius: 0.5rem;
+        background: var(--bs-body-bg, #fff);
+        cursor: pointer;
+        text-align: center;
+
+        &:hover {
+            border-color: var(--primary, #714b67);
+        }
+    }
+
+    .xb-taecel-logo {
+        max-height: 2rem;
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    .xb-taecel-amount-value {
+        font-size: 1.25rem;
+        font-weight: 700;
+    }
+
+    .xb-taecel-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .xb-taecel-summary {
+        border-top: 1px solid var(--border-color, #dee2e6);
+        margin-top: 0.75rem;
+        padding-top: 0.5rem;
+
+        .xb-taecel-total {
+            font-size: 1.15rem;
+            margin-top: 0.25rem;
+        }
+    }
+}

@@ -1,0 +1,1049 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_pos_taecel
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: XUBAX\n"
+"Language-Team: \n"
+"Language: es_MX\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+msgid "%(c)s carriers, %(p)s products synced."
+msgstr "%(c)s compañías y %(p)s productos sincronizados."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__api_key
+msgid "API Key"
+msgstr "API Key"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__api_nip
+msgid "API NIP"
+msgstr "API NIP"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__account_id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__account_id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__account_id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_wallet__account_id
+#: model:ir.ui.menu,name:xb_pos_taecel.menu_taecel_account
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__active
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__active
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.xml:0
+msgid "Add to order"
+msgstr "Agregar a la venta"
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/control_button/taecel_control_button.xml:0
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_product_search
+msgid "Airtime"
+msgstr "Tiempo aire"
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid "Airtime & Bill Payments"
+msgstr "Recargas y Pago de Servicios"
+
+#. module: xb_pos_taecel
+#: model:product.template,description_sale:xb_pos_taecel.product_taecel_service
+msgid "Airtime, bill payment or PIN sold through TAECEL."
+msgstr "Tiempo aire, pago de servicio o PIN vendido por TAECEL."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_carrier__field_format__2
+msgid "Alphanumeric"
+msgstr "Alfanumérico"
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.xml:0
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__amount
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__amount
+msgid "Amount"
+msgstr "Monto"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__attempt_count
+msgid "Attempt Count"
+msgstr "Intentos"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__authorization
+msgid "Authorization"
+msgstr "Autorización"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_transaction__state__timeout
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_search
+msgid "Awaiting Confirmation"
+msgstr "Esperando confirmación"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_wallet__balance
+msgid "Balance"
+msgstr "Saldo"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_wallet__balance_date
+msgid "Balance Date"
+msgstr "Fecha del saldo"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid ""
+"Balances come from getBalance, which returns\n"
+"                                every bolsa in one call. Refreshed on a schedule\n"
+"                                and after each settled recharge."
+msgstr "Los saldos vienen de getBalance, que devuelve todas las bolsas en una sola llamada. Se actualizan por tarea programada y después de cada recarga liquidada."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__bolsa_id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__bolsa_id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__bolsa_id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_wallet__bolsa_id
+msgid "Bolsa"
+msgstr "Bolsa"
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.xml:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__carrier_ids
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__carrier_id
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__carrier_id
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_form
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_product_search
+msgid "Carrier"
+msgstr "Compañía"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__carrier_count
+msgid "Carrier Count"
+msgstr "Compañías"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__carrier_uid
+msgid "Carrier ID in the TAECEL catalog."
+msgstr "Id de la compañía en el catálogo TAECEL."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__carrier_name
+msgid "Carrier Name"
+msgstr "Nombre de la compañía"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__carrier_type
+msgid "Carrier Type"
+msgstr "Tipo de compañía"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__carrier_uid
+msgid "Carrier Uid"
+msgstr "Uid de la compañía"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__authorization
+msgid "Carrier authorization code."
+msgstr "Código de autorización de la compañía."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_product__carrier_name
+msgid "Carrier name as it came from TAECEL."
+msgstr "Nombre de la compañía tal como lo entrega TAECEL."
+
+#. module: xb_pos_taecel
+#: model:ir.ui.menu,name:xb_pos_taecel.menu_taecel_carrier
+msgid "Carriers"
+msgstr "Compañías"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_search
+msgid "Cashier"
+msgstr "Cajero"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_form
+msgid "Cashier Input (Campos)"
+msgstr "Captura del cajero (Campos)"
+
+#. module: xb_pos_taecel
+#: model:ir.ui.menu,name:xb_pos_taecel.menu_taecel_product
+msgid "Catalog"
+msgstr "Catálogo"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_carrier__carrier_type__0
+msgid "Catalog (fixed amounts)"
+msgstr "Catálogo (montos fijos)"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__catalog_date
+msgid "Catalog Synced"
+msgstr "Catálogo sincronizado"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+msgid "Catalog synced."
+msgstr "Catálogo sincronizado."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__category
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__category
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_product_search
+msgid "Category"
+msgstr "Categoría"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__category_uid
+msgid "Category Uid"
+msgstr "Uid de categoría"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__code
+msgid "Code"
+msgstr "Código"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Commercial"
+msgstr "Comercial"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__commission_rate
+msgid ""
+"Commission TAECEL grants on airtime. Starts at 6.5%% and scales to 6.95%% "
+"with volume (you must request the review). Informational."
+msgstr "Comisión que TAECEL otorga sobre tiempo aire. Empieza en 6.5%% y sube a 6.95%% por volumen (la revisión la pide usted). Informativo."
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.xml:0
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__field_confirm
+msgid "Confirm Reference"
+msgstr "Confirmar referencia"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_account__state__connected
+msgid "Connected"
+msgstr "Conectada"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__connection_msg
+msgid "Connection Msg"
+msgstr "Mensaje de conexión"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+msgid "Connection OK."
+msgstr "Conexión correcta."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/taecel_client.py:0
+msgid "Could not reach TAECEL: %s"
+msgstr "No se pudo contactar a TAECEL: %s"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+msgid ""
+"Could not read the TAECEL catalog:\n"
+"\n"
+"%s"
+msgstr ""
+"No se pudo leer el catálogo de TAECEL:\n"
+"\n"
+"%s"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Credentials"
+msgstr "Credenciales"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__customer_fee
+msgid "Customer Fee"
+msgstr "Comisión al cliente"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__customer_fee
+msgid "Customer Service Fee"
+msgstr "Comisión de servicio al cliente"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
+msgid "Declined by TAECEL."
+msgstr "Rechazada por TAECEL."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__commission_rate
+msgid "Distributor Commission (%)"
+msgstr "Comisión de distribuidor (%)"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__done_date
+msgid "Done Date"
+msgstr "Fecha de conclusión"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_transaction__state__draft
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_carrier__field_format__3
+msgid "Email"
+msgstr "Correo electrónico"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Endpoints"
+msgstr "Endpoints"
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid "Enter a valid email."
+msgstr "Capture un correo válido."
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid "Enter an amount greater than zero."
+msgstr "Capture un monto mayor a cero."
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid "Enter the %s."
+msgstr "Capture %s."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_account__state__error
+msgid "Error"
+msgstr "Error"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__error_message
+msgid "Error Message"
+msgstr "Mensaje de error"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_transaction__state__failed
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_search
+msgid "Failed"
+msgstr "Fracasada"
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.xml:0
+msgid "Fee"
+msgstr "Comisión"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__customer_fee
+msgid ""
+"Fee charged to the customer on top of the amount (TAECEL ComisionCliente). "
+"Typically 0 for airtime; set for services."
+msgstr "Comisión que se cobra al cliente sobre el monto (ComisiónCliente de TAECEL). Normalmente 0 en tiempo aire; se aplica en servicios."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__customer_fee
+msgid ""
+"Fee charged to the customer on top of the amount, as configured in the "
+"TAECEL platform. Must appear on the receipt."
+msgstr "Comisión que se cobra al cliente sobre el monto, según la configuración en la plataforma de TAECEL. Debe aparecer en el ticket."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__field_format
+msgid "Field Format"
+msgstr "Formato del campo"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__field_key
+msgid "Field Key"
+msgstr "Clave del campo"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__field_label
+msgid "Field Label"
+msgstr "Etiqueta del campo"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__field_max
+msgid "Field Max"
+msgstr "Largo máximo"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__field_min
+msgid "Field Min"
+msgstr "Largo mínimo"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__field_required
+msgid "Field Required"
+msgstr "Campo obligatorio"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_product__amount
+msgid "Fixed sale amount for this product."
+msgstr "Monto fijo de venta de este producto."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__folio
+msgid "Folio"
+msgstr "Folio"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_carrier__carrier_type__1
+msgid "Free amount"
+msgstr "Monto libre"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__timeout
+msgid ""
+"How long the cashier waits for TAECEL before the sale is parked for "
+"automatic reconciliation. Keep it short."
+msgstr "Cuanto espera el cajero a TAECEL antes de que la venta quede pendiente de conciliacion automatica. Manténgalo corto."
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Leave empty for every POS"
+msgstr "Vacío = todos los puntos de venta"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__logo_url
+msgid "Logo Url"
+msgstr "URL del logo"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_wallet__low_threshold
+msgid "Low-balance Warning"
+msgstr "Aviso de saldo bajo"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
+msgid ""
+"Match this transaction in TAECEL's sales.                                   "
+"Read-only: it never dispatches a second recharge."
+msgstr "Busca esta transaccion en las ventas de TAECEL. Solo lectura: nunca despacha una segúnda recarga."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__field_max
+msgid "Maximum length of the reference."
+msgstr "Largo máximo de la referencia."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__field_min
+msgid "Minimum length of the reference."
+msgstr "Largo mínimo de la referencia."
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.xml:0
+msgid "No amounts available for this carrier."
+msgstr "No hay montos para esta compañía."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_account__state__draft
+msgid "Not Connected"
+msgstr "Sin conexión"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_carrier__field_format__1
+msgid "Numeric"
+msgstr "Numérico"
+
+#. module: xb_pos_taecel
+#: model:ir.model.constraint,message:xb_pos_taecel.constraint_xb_taecel_account_company_uniq
+msgid "Only one TAECEL account per company."
+msgstr "Solo una cuenta TAECEL por compañía."
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid "Other"
+msgstr "Otros"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__pin
+msgid "PIN delivered by TAECEL, when applicable."
+msgstr "PIN entregado por TAECEL, cuando aplica."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__config_ids
+msgid "POS where this TAECEL account can be used. Leave empty for all."
+msgstr "Puntos de venta donde puede usarse esta cuenta TAECEL. Vacío = todos."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__field_key
+msgid "Parameter name TAECEL expects, e.g. \"referencia\"."
+msgstr "Nombre del parámetro que espera TAECEL, p. ej. \"referencia\"."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__reference
+msgid ""
+"Phone number for airtime and PINs, or the bill reference for service "
+"payments."
+msgstr "Número telefónico para tiempo aire y PINs, o la referencia de pago para servicios."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_pos_order_line__taecel_reference
+msgid "Phone number or bill reference the recharge is dispatched to."
+msgstr "Teléfono o referencia de pago a la que se despacha la recarga."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__pin
+msgid "Pin"
+msgstr "PIN"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__config_ids
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Points of Sale"
+msgstr "Puntos de venta"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__product_code
+msgid "Product Code"
+msgstr "Código de producto"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__product_count
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__product_count
+msgid "Product Count"
+msgstr "Productos"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_product__code
+msgid "Product code TAECEL expects to dispatch, e.g. TEL050."
+msgstr "Código de producto que TAECEL espera para despachar, p. ej. TEL050."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__url_prod
+msgid "Production URL"
+msgstr "URL de producción"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_product__description
+msgid "Promo/plan detail, shown to the cashier."
+msgstr "Detalle de promoción o plan, visible para el cajero."
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
+msgid "Raw Exchange"
+msgstr "Intercambio en crudo"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__raw_request
+msgid "Raw Request"
+msgstr "Petición en crudo"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__raw_response
+msgid "Raw Response"
+msgstr "Respuesta en crudo"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__receipt_note
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
+msgid "Receipt Note"
+msgstr "Nota del ticket"
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/control_button/taecel_control_button.xml:0
+msgid "Recharges"
+msgstr "Recargas"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
+msgid "Reconcile Now"
+msgstr "Conciliar ahora"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__attempt_count
+msgid "Reconciliation queries made, not dispatches."
+msgstr "Consultas de conciliación realizadas, no despachos."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__reference
+msgid "Reference"
+msgstr "Referencia"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Refresh Balance"
+msgstr "Actualizar saldo"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
+msgid "Sale"
+msgstr "Venta"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_transaction__state__sent
+msgid "Sent"
+msgstr "Enviada"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__sent_date
+msgid "Sent Date"
+msgstr "Fecha de envío"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_product_search
+msgid "Services / Giftcards"
+msgstr "Servicios / Tarjetas de regalo"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__state
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__state
+msgid "State"
+msgstr "Estado"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_search
+msgid "Status"
+msgstr "Estatus"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__subscription
+msgid "Subscription"
+msgstr "Suscripción"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_transaction__state__done
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_search
+msgid "Successful"
+msgstr "Exitosa"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Sync Catalog"
+msgstr "Sincronizar catálogo"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+#: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
+#: model:ir.ui.menu,name:xb_pos_taecel.menu_taecel_root
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
+msgid "TAECEL"
+msgstr "TAECEL"
+
+#. module: xb_pos_taecel
+#: model:ir.actions.act_window,name:xb_pos_taecel.action_taecel_account
+#: model:ir.model,name:xb_pos_taecel.model_xb_taecel_account
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "TAECEL Account"
+msgstr "Cuenta TAECEL"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_list
+msgid "TAECEL Accounts"
+msgstr "Cuentas TAECEL"
+
+#. module: xb_pos_taecel
+#: model:ir.model,name:xb_pos_taecel.model_xb_taecel_carrier
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_carrier_id
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_form
+msgid "TAECEL Carrier"
+msgstr "Compañía TAECEL"
+
+#. module: xb_pos_taecel
+#: model:ir.actions.act_window,name:xb_pos_taecel.action_taecel_carrier
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_list
+msgid "TAECEL Carriers"
+msgstr "Compañías TAECEL"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+#: model:ir.actions.act_window,name:xb_pos_taecel.action_taecel_product
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_product_list
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_product_search
+msgid "TAECEL Catalog"
+msgstr "Catálogo TAECEL"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_fee
+msgid "TAECEL Customer Fee"
+msgstr "Comisión al cliente TAECEL"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_is_taecel
+msgid "TAECEL Line"
+msgstr "Línea TAECEL"
+
+#. module: xb_pos_taecel
+#: model:ir.model,name:xb_pos_taecel.model_xb_taecel_product
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_product_form
+msgid "TAECEL Product"
+msgstr "Producto TAECEL"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_product_code
+msgid "TAECEL Product Code"
+msgstr "Código de producto TAECEL"
+
+#. module: xb_pos_taecel
+#: model:product.template,name:xb_pos_taecel.product_taecel_service
+msgid "TAECEL Recharge"
+msgstr "Recarga TAECEL"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_reference
+msgid "TAECEL Reference"
+msgstr "Referencia TAECEL"
+
+#. module: xb_pos_taecel
+#: model:ir.model,name:xb_pos_taecel.model_xb_taecel_transaction
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
+msgid "TAECEL Transaction"
+msgstr "Transacción TAECEL"
+
+#. module: xb_pos_taecel
+#: model:ir.actions.act_window,name:xb_pos_taecel.action_taecel_transaction
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_list
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_search
+msgid "TAECEL Transactions"
+msgstr "Transacciones TAECEL"
+
+#. module: xb_pos_taecel
+#: model:ir.model,name:xb_pos_taecel.model_xb_taecel_wallet
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_bolsa_id
+msgid "TAECEL Wallet"
+msgstr "Bolsa TAECEL"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
+msgid "TAECEL accepted the request but returned no transID."
+msgstr "TAECEL aceptó la petición pero no devolvió transID."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__field_confirm
+msgid "TAECEL asks the cashier to type the reference twice."
+msgstr "TAECEL pide que el cajero escriba la referencia dos veces."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_wallet__bolsa_id
+msgid "TAECEL bolsa id (1/2/3)."
+msgstr "Id de bolsa TAECEL (1/2/3)."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+msgid "TAECEL catalog"
+msgstr "catálogo TAECEL"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
+msgid "TAECEL declined the request."
+msgstr "TAECEL rechazó la petición."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/taecel_client.py:0
+msgid "TAECEL did not answer in time."
+msgstr "TAECEL no respondió a tiempo."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
+msgid "TAECEL did not confirm in time; parked for reconciliation."
+msgstr "TAECEL no confirmó a tiempo; se dejó pendiente de conciliación."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__folio
+msgid "TAECEL folio, printed on the receipt."
+msgstr "Folio de TAECEL, impreso en el ticket."
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
+msgid ""
+"TAECEL never confirmed this sale at the till. It is\n"
+"                        matched against TAECEL's sales automatically every few\n"
+"                        minutes. It is never re-sent: the recharge may already\n"
+"                        have reached the customer."
+msgstr "TAECEL no confirmo esta venta en la caja. Se compara automáticamente contra las ventas de TAECEL cada pocos minutos. Nunca se reenvía: la recarga pudo haber llegado ya al cliente."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__taecel_pro_id
+msgid "TAECEL proID"
+msgstr "proID de TAECEL"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__product_code
+msgid "TAECEL product code sent to dispatch."
+msgstr "Código de producto TAECEL enviado al despachar."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+msgid ""
+"TAECEL refused the connection:\n"
+"\n"
+"%s"
+msgstr ""
+"TAECEL rechazó la conexión:\n"
+"\n"
+"%s"
+
+#. module: xb_pos_taecel
+#: model:ir.actions.server,name:xb_pos_taecel.cron_taecel_dispatch_ir_actions_server
+msgid "TAECEL: dispatch pending recharges"
+msgstr "TAECEL: despachar recargas pendientes"
+
+#. module: xb_pos_taecel
+#: model:ir.actions.server,name:xb_pos_taecel.cron_taecel_reconcile_ir_actions_server
+msgid "TAECEL: reconcile pending transactions"
+msgstr "TAECEL: conciliar transacciones pendientes"
+
+#. module: xb_pos_taecel
+#: model:ir.actions.server,name:xb_pos_taecel.cron_taecel_balance_ir_actions_server
+msgid "TAECEL: refresh wallet balances"
+msgstr "TAECEL: actualizar saldos de las bolsas"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_transaction_ids
+msgid "Taecel Transaction"
+msgstr "Transacción TAECEL"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Test Connection"
+msgstr "Probar conexión"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__test_mode
+msgid "Test Mode"
+msgstr "Modo de pruebas"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__url_test
+msgid "Test URL"
+msgstr "URL de pruebas"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid ""
+"Test mode. Switch it off only once TAECEL has validated\n"
+"                        your test transactions and issued production credentials."
+msgstr "Modo de pruebas. Desactívelo solo cuando TAECEL haya validado sus transacciones de prueba y le entregue credenciales de producción."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__receipt_note
+msgid ""
+"Text TAECEL requires on the customer receipt (carrier terms, balance query "
+"codes, PIN redemption instructions)."
+msgstr "Texto que TAECEL exige en el ticket del cliente (términos de la compañía, códigos de consulta de saldo, instrucciones de canje del PIN)."
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid "The %(label)s allows at most %(n)s characters."
+msgstr "%(label)s admite como máximo %(n)s caracteres."
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid "The %(label)s needs at least %(n)s characters."
+msgstr "%(label)s necesita al menos %(n)s caracteres."
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid "The %s must be numeric."
+msgstr "%s debe ser numérico."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+msgid ""
+"The TAECEL account has no credentials yet.\n"
+"\n"
+"They are issued once TAECEL approves your \"Levantamiento Tecnologico\" (cc@taecel.com) and validates your test transactions."
+msgstr "La cuenta TAECEL aún no tiene credenciales. Se entregan cuando TAECEL aprueba su \"Levantamiento Tecnológico\" (cc@taecel.com) y valida sus transacciones de prueba."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/taecel_client.py:0
+msgid "The TAECEL account is missing its URL, key or NIP."
+msgstr "A la cuenta TAECEL le falta la URL, la key o el NIP."
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid ""
+"The TAECEL sale product is missing. Reinstall the module or contact support."
+msgstr "Falta el producto de venta TAECEL. Reinstale el módulo o contacte a soporte."
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid "The two references do not match."
+msgstr "Las dos referencias no coinciden."
+
+#. module: xb_pos_taecel
+#: model:ir.model.constraint,message:xb_pos_taecel.constraint_xb_taecel_product_code_account_uniq
+msgid "This TAECEL product code already exists for this account."
+msgstr "Este código de producto TAECEL ya existe para esta cuenta."
+
+#. module: xb_pos_taecel
+#: model:ir.model.constraint,message:xb_pos_taecel.constraint_xb_taecel_carrier_carrier_account_uniq
+msgid "This carrier already exists for the account."
+msgstr "Esta compañía ya existe para la cuenta."
+
+#. module: xb_pos_taecel
+#: model:ir.model.constraint,message:xb_pos_taecel.constraint_xb_taecel_wallet_bolsa_account_uniq
+msgid "This wallet already exists for the account."
+msgstr "Esta bolsa ya existe para la cuenta."
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid "This wallet has only %s left."
+msgstr "Esta bolsa solo tiene %s disponibles."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__timeout
+msgid "Timeout (s)"
+msgstr "Tiempo límite (s)"
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.xml:0
+msgid "Total"
+msgstr "Total"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__total_charged
+msgid "Total Charged"
+msgstr "Total cobrado"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__trans_id
+msgid ""
+"TransID returned by TAECEL; the key that matches this sale in getSales "
+"without dispatching again."
+msgstr "TransID que devuelve TAECEL; la clave que localiza esta venta en getSales sin volver a despachar."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__trans_id
+msgid "Transaction Handle"
+msgstr "Folio de transacción"
+
+#. module: xb_pos_taecel
+#: model:ir.ui.menu,name:xb_pos_taecel.menu_taecel_transaction
+msgid "Transactions"
+msgstr "Transacciones"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/taecel_client.py:0
+msgid "Unreadable answer from TAECEL."
+msgstr "Respuesta ilegible de TAECEL."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__test_mode
+msgid ""
+"Use the TAECEL test endpoint and test product codes. Turn this off only once"
+" TAECEL has validated your test transactions and issued production "
+"credentials."
+msgstr "Usa el endpoint de pruebas de TAECEL y los códigos de producto de prueba. Desactívelo solo cuando TAECEL haya validado sus transacciones de prueba y le entregue credenciales de producción."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__validity
+msgid "Vigencia"
+msgstr "Vigencia"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__wallet_ids
+msgid "Wallet"
+msgstr "Bolsa"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+msgid "Wallet %s"
+msgstr "Bolsa %s"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__bolsa_id
+msgid "Wallet charged for this transaction."
+msgstr "Bolsa a la que se cargó esta transacción."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__bolsa_id
+msgid "Wallet this carrier is charged against."
+msgstr "Bolsa a la que se carga esta compañía."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_product__bolsa_id
+msgid "Wallet this product is charged against."
+msgstr "Bolsa a la que se carga este producto."
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Wallets"
+msgstr "Bolsas"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_wallet__low_threshold
+msgid "Warn the cashier in the POS when this wallet drops below it."
+msgstr "Avisar al cajero en el TPV cuando la bolsa baje de este monto."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__field_label
+msgid "What the cashier is asked for, e.g. \"Numero Celular\"."
+msgstr "Lo que se le pide al cajero, p. ej. \"Numero Celular\"."
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid "reference"
+msgstr "referencia"
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.xml:0
+msgid "← Back"
+msgstr "← Atrás"

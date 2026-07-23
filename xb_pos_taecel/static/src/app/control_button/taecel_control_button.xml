@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="xb_pos_taecel.ControlButton">
+        <button
+            t-if="isAvailable"
+            class="control-button btn btn-light rounded-0 fw-bolder"
+            t-on-click="onClick">
+            <i class="fa fa-mobile me-1" role="img" aria-label="Airtime" title="Airtime"/>
+            <span>Recharges</span>
+        </button>
+    </t>
+
+    <!-- Insert the button into the expanded ("More") control-buttons panel. -->
+    <t t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('control-buttons-modal')]" position="inside">
+            <XbTaecelControlButton/>
+        </xpath>
+    </t>
+
+</templates>

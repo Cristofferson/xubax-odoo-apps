@@ -1,0 +1,173 @@
+<section style="font-family:Arial,Helvetica,sans-serif;color:#2b2b2b;">
+
+  <div style="text-align:center;margin-bottom:24px;">
+    <img src="banner.png" style="max-width:100%;border-radius:12px;"/>
+  </div>
+
+  <div style="max-width:920px;margin:0 auto;">
+
+    <h1 style="color:#C62828;font-size:30px;margin:0 0 6px;">
+      Airtime &amp; Bill Payments in the Point of Sale
+    </h1>
+    <p style="font-size:17px;color:#666;margin:0 0 28px;">
+      Sell mobile top-ups, data packages, bill payments and electronic PINs from
+      the register you already use, through the <b>TAECEL</b> network
+      (Mexico) &mdash; 30+ carriers, live balance and automatic settlement of
+      interrupted sales.
+    </p>
+
+    <div style="background:#fdf3f3;border-left:5px solid #C62828;padding:16px 20px;border-radius:6px;margin-bottom:28px;">
+      <h3 style="margin:0 0 8px;color:#C62828;">The problem</h3>
+      <p style="margin:0;font-size:15px;line-height:1.5;">
+        A shop that sells airtime runs two businesses on one counter: the Point
+        of Sale for its own products, and the provider&rsquo;s web portal, in
+        another tab, for every recharge. The recharge never reaches the ticket,
+        the cash drawer never matches, and when a recharge hangs, nobody knows
+        whether the customer was charged &mdash; so the cashier sends it again.
+      </p>
+    </div>
+
+    <div style="margin:0 0 32px;">
+      <p style="font-size:15px;color:#666;margin:0 0 10px;">
+        One button in the register opens the whole catalog, grouped as TAECEL
+        publishes it &mdash; airtime, data packages, bill payments:
+      </p>
+      <img src="screenshots/carriers.png"
+           style="max-width:100%;border:1px solid #ecdede;border-radius:8px;"/>
+    </div>
+
+    <div style="margin:0 0 32px;">
+      <p style="font-size:15px;color:#666;margin:0 0 10px;">
+        Fixed amounts come from the carrier itself, with the validity it
+        publishes. Free-amount carriers (most utilities) ask for the amount
+        instead:
+      </p>
+      <img src="screenshots/amounts.png"
+           style="max-width:100%;border:1px solid #ecdede;border-radius:8px;"/>
+    </div>
+
+    <div style="margin:0 0 32px;">
+      <p style="font-size:15px;color:#666;margin:0 0 10px;">
+        The reference is validated <b>before</b> the sale, against the rules
+        that carrier declares &mdash; its own label, minimum and maximum length,
+        numeric or e-mail format, and a second field to confirm it. A recharge
+        to a mistyped number cannot be undone, so it is caught here:
+      </p>
+      <img src="screenshots/reference.png"
+           style="max-width:100%;border:1px solid #ecdede;border-radius:8px;"/>
+    </div>
+
+    <div style="margin:0 0 32px;">
+      <p style="font-size:15px;color:#666;margin:0 0 10px;">
+        It lands as an ordinary order line &mdash; carrier and reference in
+        plain sight for the cashier and on the printed receipt, next to the
+        bread and the soda, in the same payment and the same cash count:
+      </p>
+      <img src="screenshots/order_line.png"
+           style="max-width:100%;border:1px solid #ecdede;border-radius:8px;"/>
+    </div>
+
+    <h3 style="color:#C62828;margin:0 0 10px;">What the shop gets</h3>
+    <ul style="font-size:15px;line-height:1.7;margin:0 0 28px;padding-left:20px;">
+      <li><b>30+ Mexican carriers</b> &mdash; Telcel, Movistar, AT&amp;T, Unefon,
+          Bait, Virgin, Weex and the rest, plus utilities such as CFE, Telmex,
+          Sky, Dish and Megacable. The catalog is synchronised from TAECEL on
+          demand and on a schedule, so new products appear without an update.</li>
+      <li><b>Your own service fee</b> per carrier, added to the line and printed
+          on the receipt as TAECEL requires.</li>
+      <li><b>Electronic PINs</b> handed to the customer on the ticket.</li>
+      <li><b>One product, not one per amount</b>: every recharge is the same
+          generic service product, so the product catalog stays clean.</li>
+    </ul>
+
+    <div style="background:#fdf3f3;border-left:5px solid #C62828;padding:16px 20px;border-radius:6px;margin-bottom:28px;">
+      <h3 style="margin:0 0 8px;color:#C62828;">Never a double recharge</h3>
+      <p style="margin:0 0 10px;font-size:15px;line-height:1.5;">
+        TAECEL states it plainly: a successful recharge is never reversed, and
+        anything left &ldquo;in progress&rdquo; is charged to you. So this module
+        never guesses.
+      </p>
+      <ul style="font-size:15px;line-height:1.7;margin:0;padding-left:20px;">
+        <li>Every sale is dispatched <b>once</b>, from the server, and then
+            polled until TAECEL answers.</li>
+        <li>A recharge that times out is <b>parked, not retried</b>. A scheduled
+            job settles it against TAECEL&rsquo;s own record of sales and closes
+            it as successful or failed, with the folio.</li>
+        <li>States that are already final are never re-queried, so a successful
+            recharge can never be flipped by a later answer.</li>
+      </ul>
+    </div>
+
+    <div style="margin:0 0 32px;">
+      <p style="font-size:15px;color:#666;margin:0 0 10px;">
+        Every request is kept against its POS order, with folio, authorization
+        and the amount actually charged:
+      </p>
+      <img src="screenshots/transactions.png"
+           style="max-width:100%;border:1px solid #ecdede;border-radius:8px;"/>
+    </div>
+
+    <div style="background:#fdf3f3;border-left:5px solid #C62828;padding:16px 20px;border-radius:6px;margin-bottom:28px;">
+      <h3 style="margin:0 0 8px;color:#C62828;">Two wallets, guarded separately</h3>
+      <p style="margin:0;font-size:15px;line-height:1.5;">
+        TAECEL funds airtime and bill payments as <b>separate balances</b>, and
+        they are not transferable. Both are read live from TAECEL and tracked
+        independently, and the cashier is warned <i>before</i> a sale that would
+        overdraw one &mdash; instead of finding out when the recharge fails at
+        the counter.
+      </p>
+    </div>
+
+    <h3 style="color:#C62828;margin:0 0 10px;">Configuration</h3>
+    <p style="font-size:15px;line-height:1.6;margin:0 0 14px;">
+      One account record holds the credentials, the commission and the Points of
+      Sale allowed to sell. <b>Test Connection</b>, <b>Sync Catalog</b> and
+      <b>Refresh Balance</b> are one click each; the catalog and the balances
+      also refresh on a schedule.
+    </p>
+    <div style="margin:0 0 32px;">
+      <img src="screenshots/account.png"
+           style="max-width:100%;border:1px solid #ecdede;border-radius:8px;"/>
+      <p style="font-size:13px;color:#888;margin:8px 0 0;">
+        Test mode points at TAECEL&rsquo;s sandbox. Switch it off once TAECEL has
+        validated your test transactions and issued production credentials.
+      </p>
+    </div>
+
+    <h3 style="color:#C62828;margin:0 0 10px;">Requirements</h3>
+    <ul style="font-size:15px;line-height:1.7;margin:0 0 28px;padding-left:20px;">
+      <li>A <b>TAECEL account with API access</b>. TAECEL issues web-service
+          credentials after its <i>Levantamiento Tecnol&oacute;gico</i>
+          (cc@taecel.com) and after validating your test transactions. A
+          distributor account on its own does not include API access.</li>
+      <li>The Point of Sale must reach <code>https://taecel.com</code> from the
+          Odoo server &mdash; not from the browser.</li>
+      <li>Mexico only: TAECEL sells Mexican airtime and Mexican utilities.</li>
+    </ul>
+
+    <h3 style="color:#C62828;margin:0 0 10px;">Technical notes</h3>
+    <ul style="font-size:15px;line-height:1.7;margin:0 0 28px;padding-left:20px;">
+      <li>Dispatch happens <b>server-side</b>, in the POS order flow, so the
+          credentials never reach the browser and a closed tab cannot leave a
+          sale half-sent.</li>
+      <li>Nothing is added to <i>product.product</i> per amount and no POS core
+          model is replaced: the recharge is a normal order line carrying its
+          TAECEL metadata.</li>
+      <li>Runs on <b>Odoo 18.0 and 19.0</b> from one codebase.</li>
+    </ul>
+
+    <h3 style="color:#C62828;margin:0 0 10px;">Compatibility</h3>
+    <ul style="font-size:15px;line-height:1.7;margin:0 0 28px;padding-left:20px;">
+      <li>Odoo <b>18.0</b> and <b>19.0</b>, Community and Enterprise.</li>
+      <li>Depends on <b>Point of Sale</b> (point_of_sale) only.</li>
+      <li>English and Spanish (es_MX).</li>
+    </ul>
+
+    <div style="border-top:1px solid #ecdede;padding-top:16px;font-size:14px;color:#666;">
+      <b>XUBAX</b> &mdash; Cristofferson Reyes &middot;
+      <a href="https://www.xubax.com" style="color:#C62828;">www.xubax.com</a> &middot;
+      soporte@xubax.com
+    </div>
+
+  </div>
+</section>
