@@ -5,7 +5,7 @@
         <field name="name">xb.taecel.transaction.list</field>
         <field name="model">xb.taecel.transaction</field>
         <field name="arch" type="xml">
-            <list string="TAECEL Transactions" create="false">
+            <list string="Transactions" create="false">
                 <field name="create_date"/>
                 <field name="product_id"/>
                 <field name="reference"/>
@@ -28,7 +28,7 @@
         <field name="name">xb.taecel.transaction.form</field>
         <field name="model">xb.taecel.transaction</field>
         <field name="arch" type="xml">
-            <form string="TAECEL Transaction" create="false">
+            <form string="Transaction" create="false">
                 <header>
                     <button name="action_query_status" type="object"
                             string="Reconcile Now" class="btn-primary"
@@ -54,7 +54,7 @@
                             <field name="customer_fee"/>
                             <field name="total_charged"/>
                         </group>
-                        <group string="TAECEL">
+                        <group string="Dispatch">
                             <field name="trans_id"/>
                             <field name="folio"/>
                             <field name="authorization"/>
@@ -92,7 +92,7 @@
         <field name="name">xb.taecel.transaction.search</field>
         <field name="model">xb.taecel.transaction</field>
         <field name="arch" type="xml">
-            <search string="TAECEL Transactions">
+            <search string="Transactions">
                 <field name="reference"/>
                 <field name="folio"/>
                 <field name="trans_id"/>
@@ -109,7 +109,7 @@
     </record>
 
     <record id="action_taecel_transaction" model="ir.actions.act_window">
-        <field name="name">TAECEL Transactions</field>
+        <field name="name">Transactions</field>
         <field name="res_model">xb.taecel.transaction</field>
         <field name="view_mode">list,form</field>
     </record>

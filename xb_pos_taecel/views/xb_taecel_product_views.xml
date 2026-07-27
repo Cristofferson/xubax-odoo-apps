@@ -5,7 +5,7 @@
         <field name="name">xb.taecel.carrier.list</field>
         <field name="model">xb.taecel.carrier</field>
         <field name="arch" type="xml">
-            <list string="TAECEL Carriers">
+            <list string="Carriers">
                 <field name="name"/>
                 <field name="category"/>
                 <field name="bolsa_id"/>
@@ -22,7 +22,7 @@
         <field name="name">xb.taecel.carrier.form</field>
         <field name="model">xb.taecel.carrier</field>
         <field name="arch" type="xml">
-            <form string="TAECEL Carrier">
+            <form string="Carrier">
                 <sheet>
                     <div class="oe_title">
                         <h1><field name="name"/></h1>
@@ -59,7 +59,7 @@
     </record>
 
     <record id="action_taecel_carrier" model="ir.actions.act_window">
-        <field name="name">TAECEL Carriers</field>
+        <field name="name">Carriers</field>
         <field name="res_model">xb.taecel.carrier</field>
         <field name="view_mode">list,form</field>
     </record>
@@ -68,7 +68,7 @@
         <field name="name">xb.taecel.product.list</field>
         <field name="model">xb.taecel.product</field>
         <field name="arch" type="xml">
-            <list string="TAECEL Catalog">
+            <list string="Catalog">
                 <field name="carrier_name"/>
                 <field name="name"/>
                 <field name="code"/>
@@ -85,7 +85,7 @@
         <field name="name">xb.taecel.product.form</field>
         <field name="model">xb.taecel.product</field>
         <field name="arch" type="xml">
-            <form string="TAECEL Product">
+            <form string="Product">
                 <sheet>
                     <div class="oe_title">
                         <h1><field name="code"/></h1>
@@ -111,11 +111,49 @@
         </field>
     </record>
 
+    <record id="view_taecel_carrier_search" model="ir.ui.view">
+        <field name="name">xb.taecel.carrier.search</field>
+        <field name="model">xb.taecel.carrier</field>
+        <field name="arch" type="xml">
+            <!-- NB: in a search view a <group> takes no attributes at all
+                 (no string, no expand): Odoo's RelaxNG rejects them and the
+                 whole view fails to load. The label comes from the filters. -->
+            <search string="Carriers">
+                <field name="name"/>
+                <field name="carrier_uid" string="TAECEL Code"/>
+                <field name="category"/>
+                <filter name="airtime" string="Airtime"
+                        domain="[('bolsa_id', '=', '1')]"/>
+                <filter name="services" string="Bill Payments"
+                        domain="[('bolsa_id', '=', '2')]"/>
+                <separator/>
+                <filter name="fixed_amount" string="Fixed Amount"
+                        domain="[('carrier_type', '=', '0')]"/>
+                <filter name="open_amount" string="Open Amount"
+                        domain="[('carrier_type', '=', '1')]"/>
+                <separator/>
+                <filter name="giftcards" string="Giftcards"
+                        domain="[('category', 'ilike', 'giftcard')]"/>
+                <separator/>
+                <filter name="inactive" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="by_category" string="Category"
+                            context="{'group_by': 'category'}"/>
+                    <filter name="by_bolsa" string="Wallet"
+                            context="{'group_by': 'bolsa_id'}"/>
+                    <filter name="by_type" string="Sale Type"
+                            context="{'group_by': 'carrier_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
     <record id="view_taecel_product_search" model="ir.ui.view">
         <field name="name">xb.taecel.product.search</field>
         <field name="model">xb.taecel.product</field>
         <field name="arch" type="xml">
-            <search string="TAECEL Catalog">
+            <search string="Catalog">
                 <field name="name"/>
                 <field name="carrier_name"/>
                 <field name="code"/>
@@ -134,7 +172,7 @@
     </record>
 
     <record id="action_taecel_product" model="ir.actions.act_window">
-        <field name="name">TAECEL Catalog</field>
+        <field name="name">Catalog</field>
         <field name="res_model">xb.taecel.product</field>
         <field name="view_mode">list,form</field>
     </record>

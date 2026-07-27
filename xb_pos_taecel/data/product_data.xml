@@ -5,7 +5,7 @@
          amount ride along as line metadata. One product keeps the customer's
          real catalog clean, with no product.product per carrier or amount. -->
     <record id="product_taecel_service" model="product.template">
-        <field name="name">TAECEL Recharge</field>
+        <field name="name">Recharges &amp; Bill Payments</field>
         <field name="default_code">XBTAECEL</field>
         <field name="type">service</field>
         <field name="available_in_pos" eval="True"/>
