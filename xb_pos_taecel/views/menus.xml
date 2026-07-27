@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <menuitem id="menu_taecel_root" name="TAECEL"
+    <menuitem id="menu_taecel_root" name="Recharges"
               parent="point_of_sale.menu_point_root"
               groups="point_of_sale.group_pos_manager" sequence="90"/>
 

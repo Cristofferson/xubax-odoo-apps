@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 13:47+0000\n"
-"PO-Revision-Date: 2026-07-23 13:47+0000\n"
+"POT-Creation-Date: 2026-07-27 20:53+0000\n"
+"PO-Revision-Date: 2026-07-27 20:53+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -32,13 +32,20 @@ msgid "API NIP"
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model:ir.actions.act_window,name:xb_pos_taecel.action_taecel_account
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__account_id
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__account_id
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__account_id
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_wallet__account_id
 #: model:ir.ui.menu,name:xb_pos_taecel.menu_taecel_account
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
 msgid "Account"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_list
+msgid "Accounts"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -57,6 +64,7 @@ msgstr ""
 #. module: xb_pos_taecel
 #. odoo-javascript
 #: code:addons/xb_pos_taecel/static/src/app/control_button/taecel_control_button.xml:0
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_product_search
 msgid "Airtime"
 msgstr ""
@@ -83,6 +91,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__amount
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__amount
 msgid "Amount"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
+msgid "Archived"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -117,6 +130,11 @@ msgid ""
 "Balances come from getBalance, which returns\n"
 "                                every bolsa in one call. Refreshed on a schedule\n"
 "                                and after each settled recharge."
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
+msgid "Bill Payments"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -178,7 +196,10 @@ msgid "Carrier name as it came from TAECEL."
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model:ir.actions.act_window,name:xb_pos_taecel.action_taecel_carrier
 #: model:ir.ui.menu,name:xb_pos_taecel.menu_taecel_carrier
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_list
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
 msgid "Carriers"
 msgstr ""
 
@@ -193,7 +214,10 @@ msgid "Cashier Input (Campos)"
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model:ir.actions.act_window,name:xb_pos_taecel.action_taecel_product
 #: model:ir.ui.menu,name:xb_pos_taecel.menu_taecel_product
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_product_list
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_product_search
 msgid "Catalog"
 msgstr ""
 
@@ -216,6 +240,7 @@ msgstr ""
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__category
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__category
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_product_search
 msgid "Category"
 msgstr ""
@@ -347,6 +372,11 @@ msgid "Description"
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
+msgid "Dispatch"
+msgstr ""
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order__display_name
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__display_name
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_session__display_name
@@ -468,6 +498,11 @@ msgid "Field Required"
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
+msgid "Fixed Amount"
+msgstr ""
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_product__amount
 msgid "Fixed sale amount for this product."
 msgstr ""
@@ -480,6 +515,11 @@ msgstr ""
 #. module: xb_pos_taecel
 #: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_carrier__carrier_type__1
 msgid "Free amount"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
+msgid "Giftcards"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -581,6 +621,11 @@ msgid "Only one TAECEL account per company."
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
+msgid "Open Amount"
+msgstr ""
+
+#. module: xb_pos_taecel
 #. odoo-javascript
 #: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
 msgid "Other"
@@ -663,6 +708,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__product_ids
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__product_ids
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__product_id
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_product_form
 msgid "Product"
 msgstr ""
 
@@ -721,7 +767,13 @@ msgstr ""
 #. module: xb_pos_taecel
 #. odoo-javascript
 #: code:addons/xb_pos_taecel/static/src/app/control_button/taecel_control_button.xml:0
+#: model:ir.ui.menu,name:xb_pos_taecel.menu_taecel_root
 msgid "Recharges"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:product.template,name:xb_pos_taecel.product_taecel_service
+msgid "Recharges & Bill Payments"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -747,6 +799,11 @@ msgstr ""
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
 msgid "Sale"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
+msgid "Sale Type"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -795,44 +852,30 @@ msgstr ""
 #. odoo-python
 #: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
 #: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
-#: model:ir.ui.menu,name:xb_pos_taecel.menu_taecel_root
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
 msgid "TAECEL"
 msgstr ""
 
 #. module: xb_pos_taecel
-#: model:ir.actions.act_window,name:xb_pos_taecel.action_taecel_account
 #: model:ir.model,name:xb_pos_taecel.model_xb_taecel_account
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "TAECEL Account"
-msgstr ""
-
-#. module: xb_pos_taecel
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_list
-msgid "TAECEL Accounts"
 msgstr ""
 
 #. module: xb_pos_taecel
 #: model:ir.model,name:xb_pos_taecel.model_xb_taecel_carrier
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_carrier_id
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_form
 msgid "TAECEL Carrier"
-msgstr ""
-
-#. module: xb_pos_taecel
-#: model:ir.actions.act_window,name:xb_pos_taecel.action_taecel_carrier
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_list
-msgid "TAECEL Carriers"
 msgstr ""
 
 #. module: xb_pos_taecel
 #. odoo-python
 #: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
-#: model:ir.actions.act_window,name:xb_pos_taecel.action_taecel_product
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_product_list
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_product_search
 msgid "TAECEL Catalog"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
+msgid "TAECEL Code"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -847,7 +890,6 @@ msgstr ""
 
 #. module: xb_pos_taecel
 #: model:ir.model,name:xb_pos_taecel.model_xb_taecel_product
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_product_form
 msgid "TAECEL Product"
 msgstr ""
 
@@ -857,26 +899,13 @@ msgid "TAECEL Product Code"
 msgstr ""
 
 #. module: xb_pos_taecel
-#: model:product.template,name:xb_pos_taecel.product_taecel_service
-msgid "TAECEL Recharge"
-msgstr ""
-
-#. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_reference
 msgid "TAECEL Reference"
 msgstr ""
 
 #. module: xb_pos_taecel
 #: model:ir.model,name:xb_pos_taecel.model_xb_taecel_transaction
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
 msgid "TAECEL Transaction"
-msgstr ""
-
-#. module: xb_pos_taecel
-#: model:ir.actions.act_window,name:xb_pos_taecel.action_taecel_transaction
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_list
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_search
-msgid "TAECEL Transactions"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -1098,12 +1127,20 @@ msgid ""
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
+msgid "Transaction"
+msgstr ""
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__trans_id
 msgid "Transaction Handle"
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model:ir.actions.act_window,name:xb_pos_taecel.action_taecel_transaction
 #: model:ir.ui.menu,name:xb_pos_taecel.menu_taecel_transaction
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_list
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_search
 msgid "Transactions"
 msgstr ""
 
@@ -1135,6 +1172,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__wallet_ids
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
 msgid "Wallet"
 msgstr ""
 
