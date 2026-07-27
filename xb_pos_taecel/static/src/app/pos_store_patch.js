@@ -36,9 +36,49 @@ patch(PosStore.prototype, {
         return this.models["xb.taecel.wallet"]?.getAll() || [];
     },
 
+    xbTaecelWallet(bolsaId) {
+        return this.xbTaecelWallets.find((w) => w.bolsa_id === String(bolsaId)) || null;
+    },
+
     xbTaecelWalletBalance(bolsaId) {
-        const wallet = this.xbTaecelWallets.find((w) => w.bolsa_id === String(bolsaId));
+        const wallet = this.xbTaecelWallet(bolsaId);
         return wallet ? wallet.balance : null;
+    },
+
+    /** Balances as they stand right now, keyed by bolsa id.
+     *
+     *  The figures loaded with the session age as the day goes on -- other
+     *  registers spend the same wallets, and a register is often open for
+     *  hours. Returns null when the read fails (offline): the caller then
+     *  falls back to the loaded figures rather than blocking sales.
+     */
+    async xbTaecelFetchBalances() {
+        const account = this.xbTaecelAccount;
+        if (!account) {
+            return null;
+        }
+        try {
+            return await this.env.services.orm.call(
+                "xb.taecel.wallet",
+                "xb_pos_balances",
+                [account.id]
+            );
+        } catch {
+            return null;
+        }
+    },
+
+    /** Amount already committed to a wallet by the order being built.
+     *
+     *  Two $200 recharges on one ticket draw on the same wallet, so checking
+     *  each against the full balance would let a single ticket overdraw it.
+     */
+    xbTaecelCommitted(bolsaId) {
+        const order = this.getOrder?.() || this.get_order?.() || null;
+        const lines = order?.lines || [];
+        return lines
+            .filter((l) => l.taecel_is_taecel && String(l.taecel_bolsa_id) === String(bolsaId))
+            .reduce((sum, l) => sum + ((l.price_unit || 0) - (l.taecel_fee || 0)), 0);
     },
 
     /** The generic product every TAECEL line hangs off (see product_data.xml).

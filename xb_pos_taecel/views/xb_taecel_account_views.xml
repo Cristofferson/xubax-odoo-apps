@@ -8,7 +8,8 @@
             <form string="Account">
                 <header>
                     <button name="action_test_connection" type="object"
-                            string="Test Connection" class="btn-primary"/>
+                            string="Test Connection" class="btn-primary"
+                            groups="base.group_system"/>
                     <button name="action_sync_catalog" type="object"
                             string="Sync Catalog"/>
                     <button name="action_refresh_balance" type="object"
@@ -27,28 +28,42 @@
                     <div class="oe_title">
                         <h1><field name="name" placeholder="TAECEL"/></h1>
                     </div>
-                    <div class="alert alert-info" role="status"
-                         invisible="not test_mode">
-                        Test mode. Switch it off only once TAECEL has validated
-                        your test transactions and issued production credentials.
-                    </div>
                     <group>
-                        <group string="Credentials">
-                            <field name="api_key" password="True"/>
-                            <field name="api_nip" password="True"/>
-                            <field name="test_mode"/>
-                            <field name="timeout"/>
+                        <group string="Account">
+                            <field name="role"/>
+                            <field name="taecel_uid" placeholder="e.g. 352494"/>
+                            <field name="commission_rate"/>
+                            <field name="active"/>
                         </group>
-                        <group string="Endpoints">
-                            <field name="url_test"/>
-                            <field name="url_prod"/>
+                        <group string="Catalog">
                             <field name="catalog_date" readonly="1"/>
                             <field name="carrier_count" readonly="1"/>
                         </group>
-                        <group string="Commercial">
-                            <field name="commission_rate"/>
-                            <field name="company_id" groups="base.group_multi_company"/>
-                            <field name="active"/>
+                        <group string="Companies" groups="base.group_multi_company">
+                            <field name="company_id"/>
+                            <field name="shared_company_ids" widget="many2many_tags"
+                                   placeholder="Other companies selling on this account"/>
+                        </group>
+                    </group>
+                    <!-- Credentials and endpoints: settings-level only. These
+                         spend real money at TAECEL, and a POS manager has no
+                         reason to read them (the field-level groups also keep
+                         them out of the RPC payload, not just out of sight). -->
+                    <group groups="base.group_system" string="Technical">
+                        <div class="alert alert-info col-12" role="status"
+                             invisible="not test_mode">
+                            Test mode. Switch it off only once TAECEL has validated
+                            your test transactions and issued production credentials.
+                        </div>
+                        <group>
+                            <field name="api_key" password="True"/>
+                            <field name="api_nip" password="True"/>
+                            <field name="test_mode"/>
+                        </group>
+                        <group>
+                            <field name="timeout"/>
+                            <field name="url_test"/>
+                            <field name="url_prod"/>
                         </group>
                     </group>
                     <notebook>
