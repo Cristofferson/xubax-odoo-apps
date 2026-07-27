@@ -12,13 +12,26 @@ class PosOrder(models.Model):
     _inherit = 'pos.order'
 
     def _xb_taecel_account(self):
-        """The TAECEL account serving this order's POS, if any."""
+        """The TAECEL account serving this order's POS, if any.
+
+        The account owned by the order's company wins. Failing that, any
+        active account that serves this register is used: the POS front end
+        offers accounts without filtering by company (see
+        ``_load_pos_data_domain``), so a register whose company owns no
+        account of its own can legitimately sell on a single parent account
+        -- one distributor account serving several companies of the same
+        group. Refusing here would take the customer's money and never
+        dispatch the recharge, which is exactly what happened before.
+        """
         self.ensure_one()
-        return self.env['xb.taecel.account'].search([
-            ('active', '=', True), ('company_id', '=', self.company_id.id),
-            '|', ('config_ids', '=', False),
-            ('config_ids', 'in', self.config_id.ids),
-        ], limit=1)
+        Account = self.env['xb.taecel.account']
+        serves_this_pos = ['|', ('config_ids', '=', False),
+                           ('config_ids', 'in', self.config_id.ids)]
+        own = Account.search(
+            [('active', '=', True), ('company_id', '=', self.company_id.id)]
+            + serves_this_pos, limit=1)
+        return own or Account.search(
+            [('active', '=', True)] + serves_this_pos, limit=1)
 
     def _process_order(self, order, existing_order):
         """After the core saves the order, materialise its TAECEL transactions.
