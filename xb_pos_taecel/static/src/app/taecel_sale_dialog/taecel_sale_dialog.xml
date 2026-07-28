@@ -11,10 +11,16 @@
                         <div class="xb-taecel-group-title" t-esc="group.name"/>
                         <div class="xb-taecel-grid">
                             <t t-foreach="group.carriers" t-as="carrier" t-key="carrier.id">
-                                <button class="xb-taecel-card" t-on-click="() => this.selectCarrier(carrier)">
+                                <button class="xb-taecel-card"
+                                        t-att-class="{ 'xb-taecel-card-blocked': isCarrierBlocked(carrier) }"
+                                        t-att-disabled="isCarrierBlocked(carrier) or false"
+                                        t-on-click="() => this.selectCarrier(carrier)">
                                     <img t-if="carrier.logo_url" t-att-src="carrier.logo_url"
                                          class="xb-taecel-logo" t-att-alt="carrier.name"/>
                                     <span t-esc="carrier.name"/>
+                                    <small t-if="isCarrierBlocked(carrier)" class="xb-taecel-card-note">
+                                        No balance
+                                    </small>
                                 </button>
                             </t>
                         </div>
@@ -29,7 +35,10 @@
                     </div>
                     <div class="xb-taecel-grid">
                         <t t-foreach="products" t-as="product" t-key="product.id">
-                            <button class="xb-taecel-amount" t-on-click="() => this.selectProduct(product)">
+                            <button class="xb-taecel-amount"
+                                    t-att-class="{ 'xb-taecel-card-blocked': isAmountBlocked(product.amount) }"
+                                    t-att-disabled="isAmountBlocked(product.amount) or false"
+                                    t-on-click="() => this.selectProduct(product)">
                                 <span class="xb-taecel-amount-value"
                                       t-esc="formatCurrency(product.amount)"/>
                                 <small t-if="product.validity" t-esc="product.validity"/>
@@ -85,13 +94,17 @@
                         </div>
                     </div>
 
-                    <div t-if="walletWarning" class="alert alert-warning py-1 my-2" t-esc="walletWarning"/>
+                    <div t-if="walletShortfall" class="alert alert-danger py-1 my-2"
+                         t-esc="walletShortfall"/>
+                    <div t-elif="walletWarning" class="alert alert-warning py-1 my-2"
+                         t-esc="walletWarning"/>
                     <div t-if="state.error" class="alert alert-danger py-1 my-2" t-esc="state.error"/>
                 </t>
             </div>
 
             <t t-set-slot="footer">
                 <button t-if="state.step === 'reference'" class="btn btn-primary btn-lg"
+                        t-att-disabled="walletShortfall and true"
                         t-on-click="confirm">
                     Add to order
                 </button>

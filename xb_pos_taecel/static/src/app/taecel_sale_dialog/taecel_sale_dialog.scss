@@ -34,6 +34,23 @@
         &:hover {
             border-color: var(--primary, #714b67);
         }
+
+        // Wallet empty (or short for this amount): still listed, so the
+        // cashier can tell the customer why, but not sellable.
+        &.xb-taecel-card-blocked,
+        &.xb-taecel-card-blocked:hover {
+            opacity: 0.45;
+            cursor: not-allowed;
+            border-color: var(--border-color, #dee2e6);
+            border-style: dashed;
+        }
+    }
+
+    .xb-taecel-card-note {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--danger, #d9534f);
     }
 
     .xb-taecel-logo {

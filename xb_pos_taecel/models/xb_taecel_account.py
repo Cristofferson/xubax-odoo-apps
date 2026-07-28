@@ -32,16 +32,24 @@ class XbTaecelAccount(models.Model):
     name = fields.Char(required=True, default='TAECEL')
     company_id = fields.Many2one(
         'res.company', required=True, default=lambda self: self.env.company)
+    shared_company_ids = fields.Many2many(
+        'res.company', 'xb_taecel_account_shared_company_rel',
+        'account_id', 'company_id', string='Also Used By',
+        help='Other companies whose registers sell on this account. A group '
+             'that funds one single TAECEL account lists them here; leave it '
+             'empty to keep the account private to its own company.')
     currency_id = fields.Many2one(related='company_id.currency_id')
     active = fields.Boolean(default=True)
 
     # -- Credentials -------------------------------------------------------
     # Issued by TAECEL only after the "Levantamiento Tecnologico" is approved
-    # and test transactions are verified. Manager-only, never sent to the POS.
-    api_key = fields.Char(
-        string='API Key', groups='point_of_sale.group_pos_manager')
-    api_nip = fields.Char(
-        string='API NIP', groups='point_of_sale.group_pos_manager')
+    # and test transactions are verified. Never sent to the POS, and readable
+    # only by Settings administrators: whoever holds these can spend the
+    # wallets from outside Odoo, which is not a shop manager's business. The
+    # groups are declared on the field, not just hidden in the view, so they
+    # never reach the browser. Internal calls go through _get_client (sudo).
+    api_key = fields.Char(string='API Key', groups='base.group_system')
+    api_nip = fields.Char(string='API NIP', groups='base.group_system')
     test_mode = fields.Boolean(
         string='Test Mode', default=True,
         help='Use the TAECEL test endpoint and test product codes. Turn this '
@@ -70,10 +78,41 @@ class XbTaecelAccount(models.Model):
     connection_msg = fields.Char(readonly=True, copy=False)
 
     # -- Commercial --------------------------------------------------------
+    # TAECEL grants a commission to the account holder, and a distributor
+    # re-grants a smaller one to each affiliate it registers in MI RED: the
+    # distributor's profit is the difference. So the rate is a property of
+    # *this* account, not a constant -- a distributor install and an affiliate
+    # install of this module hold different numbers.
+    role = fields.Selection([
+        ('distributor', 'Distributor'),
+        ('affiliate', 'Affiliate'),
+    ], string='Account Type', default='distributor', required=True,
+        help='Distributor: you contracted TAECEL directly and may register '
+             'affiliates. Affiliate: a distributor registered you and funds '
+             'your wallets, and sets the commission you earn.')
+    taecel_uid = fields.Char(
+        string='TAECEL Account ID',
+        help='Account number TAECEL assigned you, as shown in the portal. '
+             'A distributor looks its affiliates up by this number in MI RED.')
     commission_rate = fields.Float(
-        string='Distributor Commission (%)', default=6.5,
-        help='Commission TAECEL grants on airtime. Starts at 6.5%% and scales '
-             'to 6.95%% with volume (you must request the review). Informational.')
+        string='My Commission (%)', default=6.5,
+        help='Commission granted on THIS account, not the one you grant to '
+             'others. A distributor starts at 6.5% and can request 6.95% '
+             'with volume; an affiliate earns whatever its distributor '
+             'assigned it in MI RED. Informational.')
+
+    @api.onchange('role')
+    def _onchange_role(self):
+        """Keep the rate honest when the account type changes.
+
+        6.5% is the distributor's own commission; leaving it on an affiliate
+        account would overstate what that counter actually earns.
+        """
+        for account in self:
+            if account.role == 'affiliate' and account.commission_rate == 6.5:
+                account.commission_rate = 5.5  # market floor TAECEL suggests
+            elif account.role == 'distributor' and account.commission_rate == 5.5:
+                account.commission_rate = 6.5
 
     config_ids = fields.Many2many(
         'pos.config', string='Points of Sale',
@@ -249,13 +288,28 @@ class XbTaecelAccount(models.Model):
 
     # -- POS ---------------------------------------------------------------
     @api.model
-    def _load_pos_data_domain(self, data, config=None):
-        pos_config = pos_config_record(self.env, config)
+    def _serving_domain(self, pos_config=None, company=None):
+        """Accounts a given register may sell on.
+
+        The single source of truth for "who may use this account", shared by
+        the POS loader and by ``pos.order._xb_taecel_account``. Keeping one
+        definition is not tidiness: when the front end offered an account the
+        back end then refused, the register took the customer's money and never
+        dispatched the recharge.
+        """
         domain = [('active', '=', True)]
         if pos_config:
             domain += ['|', ('config_ids', '=', False),
                        ('config_ids', 'in', pos_config.ids)]
+        company = company or (pos_config.company_id if pos_config else None)
+        if company:
+            domain += ['|', ('company_id', 'in', company.ids),
+                       ('shared_company_ids', 'in', company.ids)]
         return domain
+
+    @api.model
+    def _load_pos_data_domain(self, data, config=None):
+        return self._serving_domain(pos_config_record(self.env, config))
 
     @api.model
     def _load_pos_data_fields(self, config=None):

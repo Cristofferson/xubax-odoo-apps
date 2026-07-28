@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-27 20:53+0000\n"
-"PO-Revision-Date: 2026-07-27 20:53+0000\n"
+"POT-Creation-Date: 2026-07-27 23:02+0000\n"
+"PO-Revision-Date: 2026-07-27 23:02+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,6 +19,21 @@ msgstr ""
 #. odoo-python
 #: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
 msgid "%(c)s carriers, %(p)s products synced."
+msgstr ""
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid ""
+"%(wallet)s has %(left)s available, this sale needs %(needed)s. Fund the "
+"wallet at TAECEL before selling it: the customer would pay and the recharge "
+"would be rejected."
+msgstr ""
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid "%(wallet)s: %(left)s left after this sale."
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -44,6 +59,18 @@ msgid "Account"
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__role
+msgid "Account Type"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__taecel_uid
+msgid ""
+"Account number TAECEL assigned you, as shown in the portal. A distributor "
+"looks its affiliates up by this number in MI RED."
+msgstr ""
+
+#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_list
 msgid "Accounts"
 msgstr ""
@@ -59,6 +86,11 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.xml:0
 msgid "Add to order"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_account__role__affiliate
+msgid "Affiliate"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -83,6 +115,11 @@ msgstr ""
 #. module: xb_pos_taecel
 #: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_carrier__field_format__2
 msgid "Alphanumeric"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__shared_company_ids
+msgid "Also Used By"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -216,6 +253,7 @@ msgstr ""
 #. module: xb_pos_taecel
 #: model:ir.actions.act_window,name:xb_pos_taecel.action_taecel_product
 #: model:ir.ui.menu,name:xb_pos_taecel.menu_taecel_product
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_product_list
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_product_search
 msgid "Catalog"
@@ -256,15 +294,16 @@ msgid "Code"
 msgstr ""
 
 #. module: xb_pos_taecel
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
-msgid "Commercial"
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__commission_rate
+msgid ""
+"Commission granted on THIS account, not the one you grant to others. A "
+"distributor starts at 6.5% and can request 6.95% with volume; an affiliate"
+" earns whatever its distributor assigned it in MI RED. Informational."
 msgstr ""
 
 #. module: xb_pos_taecel
-#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__commission_rate
-msgid ""
-"Commission TAECEL grants on airtime. Starts at 6.5%% and scales to 6.95%% "
-"with volume (you must request the review). Informational."
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Companies"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -337,11 +376,6 @@ msgid "Created on"
 msgstr ""
 
 #. module: xb_pos_taecel
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
-msgid "Credentials"
-msgstr ""
-
-#. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__currency_id
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__currency_id
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__currency_id
@@ -389,8 +423,16 @@ msgid "Display Name"
 msgstr ""
 
 #. module: xb_pos_taecel
-#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__commission_rate
-msgid "Distributor Commission (%)"
+#: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_account__role__distributor
+msgid "Distributor"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__role
+msgid ""
+"Distributor: you contracted TAECEL directly and may register affiliates. "
+"Affiliate: a distributor registered you and funds your wallets, and sets the"
+" commission you earn."
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -406,11 +448,6 @@ msgstr ""
 #. module: xb_pos_taecel
 #: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_carrier__field_format__3
 msgid "Email"
-msgstr ""
-
-#. module: xb_pos_taecel
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
-msgid "Endpoints"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -592,6 +629,11 @@ msgid "Minimum length of the reference."
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__commission_rate
+msgid "My Commission (%)"
+msgstr ""
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__name
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__name
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__name
@@ -603,6 +645,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.xml:0
 msgid "No amounts available for this carrier."
+msgstr ""
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.xml:0
+msgid "No balance"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -629,6 +677,19 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
 msgid "Other"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Other companies selling on this account"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__shared_company_ids
+msgid ""
+"Other companies whose registers sell on this account. A group that funds one"
+" single TAECEL account lists them here; leave it empty to keep the account "
+"private to its own company."
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -862,6 +923,11 @@ msgid "TAECEL Account"
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__taecel_uid
+msgid "TAECEL Account ID"
+msgstr ""
+
+#. module: xb_pos_taecel
 #: model:ir.model,name:xb_pos_taecel.model_xb_taecel_carrier
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_carrier_id
 msgid "TAECEL Carrier"
@@ -1009,6 +1075,11 @@ msgstr ""
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Technical"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "Test Connection"
 msgstr ""
 
@@ -1026,7 +1097,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid ""
 "Test mode. Switch it off only once TAECEL has validated\n"
-"                        your test transactions and issued production credentials."
+"                            your test transactions and issued production credentials."
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -1095,12 +1166,6 @@ msgstr ""
 #. module: xb_pos_taecel
 #: model:ir.model.constraint,message:xb_pos_taecel.constraint_xb_taecel_wallet_bolsa_account_uniq
 msgid "This wallet already exists for the account."
-msgstr ""
-
-#. module: xb_pos_taecel
-#. odoo-javascript
-#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
-msgid "This wallet has only %s left."
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -1216,6 +1281,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
 msgid "account_id"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "e.g. 352494"
 msgstr ""
 
 #. module: xb_pos_taecel

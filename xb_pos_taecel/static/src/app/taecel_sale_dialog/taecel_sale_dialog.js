@@ -6,7 +6,7 @@
  *  server-side once the transactional API is on file. This dialog only builds
  *  a correct, validated order line.
  */
-import { Component, useState } from "@odoo/owl";
+import { Component, onWillStart, useState } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
 import { _t } from "@web/core/l10n/translation";
 import { usePos } from "../compat";
@@ -29,6 +29,13 @@ export class XbTaecelSaleDialog extends Component {
             reference: "",
             referenceConfirm: "",
             error: "",
+            balances: null, // bolsa id -> {name, balance, low_threshold}
+        });
+        // Balances are re-read every time the dialog opens: TAECEL funds each
+        // bolsa separately and the wallet a carrier draws on may have been
+        // emptied by another register since this one was opened.
+        onWillStart(async () => {
+            this.state.balances = await this.pos.xbTaecelFetchBalances();
         });
     }
 
@@ -67,16 +74,86 @@ export class XbTaecelSaleDialog extends Component {
         return (this.state.amount || 0) + this.customerFee;
     }
 
-    get walletWarning() {
+    // -- wallets ---------------------------------------------------------
+    /** Wallet figures for a bolsa: freshly read if we could, as loaded
+     *  otherwise. Returns null when the wallet is unknown -- an account whose
+     *  balance was never refreshed must not have every sale blocked. */
+    walletInfo(bolsaId) {
+        const fresh = this.state.balances?.[String(bolsaId)];
+        if (fresh) {
+            return fresh;
+        }
+        const wallet = this.pos.xbTaecelWallet(bolsaId);
+        return wallet
+            ? {
+                  name: wallet.name,
+                  balance: wallet.balance,
+                  low_threshold: wallet.low_threshold,
+              }
+            : null;
+    }
+
+    /** What is left in the wallet once this ticket's other TAECEL lines are
+     *  taken into account. null means "unknown", never "zero". */
+    available(bolsaId) {
+        const info = this.walletInfo(bolsaId);
+        if (!info) {
+            return null;
+        }
+        return info.balance - this.pos.xbTaecelCommitted(bolsaId);
+    }
+
+    /** A carrier whose wallet is empty cannot be sold at all: TAECEL would
+     *  reject the recharge after the customer already paid. Shown disabled
+     *  rather than hidden, so the cashier knows why it is unavailable. */
+    isCarrierBlocked(carrier) {
+        const left = this.available(carrier.bolsa_id);
+        return left !== null && left <= 0;
+    }
+
+    isAmountBlocked(amount) {
+        const left = this.available(this.state.carrier?.bolsa_id);
+        return left !== null && amount + this.customerFee > left;
+    }
+
+    /** Hard stop: the wallet cannot cover this sale. */
+    get walletShortfall() {
         const carrier = this.state.carrier;
         if (!carrier) {
             return null;
         }
-        const balance = this.pos.xbTaecelWalletBalance(carrier.bolsa_id);
-        if (balance !== null && this.total > balance) {
-            return _t("This wallet has only %s left.", this.formatCurrency(balance));
+        const left = this.available(carrier.bolsa_id);
+        if (left === null || this.total <= left) {
+            return null;
         }
-        return null;
+        const info = this.walletInfo(carrier.bolsa_id);
+        return _t(
+            "%(wallet)s has %(left)s available, this sale needs %(needed)s. "
+            + "Fund the wallet at TAECEL before selling it: the customer would "
+            + "pay and the recharge would be rejected.",
+            {
+                wallet: info.name,
+                left: this.formatCurrency(Math.max(left, 0)),
+                needed: this.formatCurrency(this.total),
+            }
+        );
+    }
+
+    /** Soft warning: the sale goes through, but the wallet is running out. */
+    get walletWarning() {
+        const carrier = this.state.carrier;
+        if (!carrier || this.walletShortfall) {
+            return null;
+        }
+        const info = this.walletInfo(carrier.bolsa_id);
+        const left = this.available(carrier.bolsa_id);
+        if (left === null || !info.low_threshold || left - this.total > info.low_threshold) {
+            return null;
+        }
+        return _t("%(wallet)s: %(left)s left after this sale.", {
+            wallet: info.name,
+            left: this.formatCurrency(left - this.total),
+        });
     }
 
     formatCurrency(value) {
@@ -85,6 +162,9 @@ export class XbTaecelSaleDialog extends Component {
 
     // -- navigation ------------------------------------------------------
     selectCarrier(carrier) {
+        if (this.isCarrierBlocked(carrier)) {
+            return;
+        }
         this.state.carrier = carrier;
         this.state.product = null;
         this.state.amount = 0;
@@ -95,6 +175,9 @@ export class XbTaecelSaleDialog extends Component {
     }
 
     selectProduct(product) {
+        if (this.isAmountBlocked(product.amount)) {
+            return;
+        }
         this.state.product = product;
         this.state.amount = product.amount;
         this.state.step = "reference";
@@ -153,6 +236,14 @@ export class XbTaecelSaleDialog extends Component {
         const error = this.validateReference();
         if (error) {
             this.state.error = error;
+            return;
+        }
+        // Checked here and not only on the pickers: a free-amount carrier lets
+        // the cashier type any figure, and the balance may have moved while
+        // this dialog was open.
+        const shortfall = this.walletShortfall;
+        if (shortfall) {
+            this.state.error = shortfall;
             return;
         }
         const product = this.pos.xbTaecelProduct;

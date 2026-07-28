@@ -14,24 +14,25 @@ class PosOrder(models.Model):
     def _xb_taecel_account(self):
         """The TAECEL account serving this order's POS, if any.
 
-        The account owned by the order's company wins. Failing that, any
-        active account that serves this register is used: the POS front end
-        offers accounts without filtering by company (see
-        ``_load_pos_data_domain``), so a register whose company owns no
-        account of its own can legitimately sell on a single parent account
-        -- one distributor account serving several companies of the same
-        group. Refusing here would take the customer's money and never
-        dispatch the recharge, which is exactly what happened before.
+        Resolved through ``_serving_domain`` -- the very same rule the POS
+        loader uses to decide which account to offer the cashier. When the two
+        disagreed, the register happily sold a recharge the back end then
+        refused to dispatch: money taken, nothing delivered, no error.
+
+        The account owned by the order's company wins; otherwise the account
+        that company was explicitly added to (``shared_company_ids``), which is
+        how a group funds one single TAECEL account for several companies.
         """
         self.ensure_one()
         Account = self.env['xb.taecel.account']
-        serves_this_pos = ['|', ('config_ids', '=', False),
-                           ('config_ids', 'in', self.config_id.ids)]
-        own = Account.search(
-            [('active', '=', True), ('company_id', '=', self.company_id.id)]
-            + serves_this_pos, limit=1)
-        return own or Account.search(
-            [('active', '=', True)] + serves_this_pos, limit=1)
+        # sudo: the business rule lives in the domain. Reading through record
+        # rules on top of it could silently drop the account the cashier was
+        # just allowed to sell on -- and a missing account here means a paid,
+        # undelivered recharge.
+        candidates = Account.sudo().search(
+            Account._serving_domain(self.config_id, self.company_id))
+        own = candidates.filtered(lambda a: a.company_id == self.company_id)
+        return (own or candidates)[:1]
 
     def _process_order(self, order, existing_order):
         """After the core saves the order, materialise its TAECEL transactions.

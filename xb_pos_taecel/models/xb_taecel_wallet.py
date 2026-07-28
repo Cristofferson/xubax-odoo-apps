@@ -56,6 +56,26 @@ class XbTaecelWallet(models.Model):
                 else wallet.balance)
 
     @api.model
+    def xb_pos_balances(self, account_id):
+        """Current balances for the register, keyed by bolsa id.
+
+        The POS loads its data once, when the register is opened; a counter
+        left open all day would otherwise guard the sale against this
+        morning's balance. Read straight from the database (no TAECEL call):
+        every settled recharge writes the balance back, and the scheduled
+        getBalance keeps it honest, so this is both fresh and free.
+        """
+        wallets = self.search([('account_id', '=', account_id)])
+        return {
+            wallet.bolsa_id: {
+                'name': wallet.name,
+                'balance': wallet.balance,
+                'low_threshold': wallet.low_threshold,
+            }
+            for wallet in wallets
+        }
+
+    @api.model
     def _load_pos_data_domain(self, data, config=None):
         return [('account_id.active', '=', True)]
 
