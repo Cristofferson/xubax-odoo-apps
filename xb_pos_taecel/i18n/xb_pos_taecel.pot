@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-27 23:02+0000\n"
-"PO-Revision-Date: 2026-07-27 23:02+0000\n"
+"POT-Creation-Date: 2026-07-28 20:19+0000\n"
+"PO-Revision-Date: 2026-07-28 20:19+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -297,8 +297,8 @@ msgstr ""
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__commission_rate
 msgid ""
 "Commission granted on THIS account, not the one you grant to others. A "
-"distributor starts at 6.5% and can request 6.95% with volume; an affiliate"
-" earns whatever its distributor assigned it in MI RED. Informational."
+"distributor starts at 6.5% and can request 6.95% with volume; an affiliate "
+"earns whatever its distributor assigned it in MI RED. Informational."
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -358,6 +358,15 @@ msgid ""
 msgstr ""
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+msgid ""
+"Could not read the deposit reference:\n"
+"\n"
+"%s"
+msgstr ""
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__create_uid
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__create_uid
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__create_uid
@@ -398,6 +407,24 @@ msgstr ""
 #. odoo-python
 #: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
 msgid "Declined by TAECEL."
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__deposit_reference
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Deposit Reference"
+msgstr ""
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+msgid "Deposit against reference %s to top up this account."
+msgstr ""
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+msgid "Deposit reference"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -555,6 +582,11 @@ msgid "Free amount"
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Funding"
+msgstr ""
+
+#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
 msgid "Giftcards"
 msgstr ""
@@ -599,6 +631,13 @@ msgstr ""
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "Leave empty for every POS"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__deposit_url
+msgid ""
+"Link to TAECEL's form for reporting a deposit that was not referenced, so it"
+" can be applied manually."
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -820,6 +859,11 @@ msgid "Raw Response"
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Read it from TAECEL"
+msgstr ""
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__receipt_note
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
 msgid "Receipt Note"
@@ -853,8 +897,26 @@ msgid "Reference"
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__deposit_date
+msgid "Reference Read"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__deposit_reference
+msgid ""
+"Reference to quote when depositing at the bank (transfer, practicaja or "
+"teller). The deposit is credited to this account automatically, with no "
+"transfer from anyone else."
+msgstr ""
+
+#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "Refresh Balance"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__deposit_url
+msgid "Report a Deposit"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -1051,6 +1113,12 @@ msgid ""
 "TAECEL refused the connection:\n"
 "\n"
 "%s"
+msgstr ""
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/taecel_client.py:0
+msgid "TAECEL returned no deposit reference."
 msgstr ""
 
 #. module: xb_pos_taecel

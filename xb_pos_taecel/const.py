@@ -35,6 +35,13 @@ PATH_PRODUCTS = 'getProducts'          # full catalog
 PATH_SALES = 'getSales'                # sales history (params: fecha, bolsa)
 PATH_REGISTER = 'RegistroCuenta'       # register an affiliate sub-account
 PATH_REPORT_BUY = 'public/ReportarCompra'   # report a bank deposit (funding)
+PATH_REPORT_URL = 'urlReporteCompra'   # this account's deposit reference + form
+
+# urlReporteCompra response. VERIFIED LIVE: this endpoint is the odd one out --
+# it answers with a FLAT dict, with no success/error/message/data envelope
+# around it, so the generic parsing cannot judge it. Read the raw payload.
+K_REPORT_REF = 'refCompra'             # bank reference to deposit against
+K_REPORT_URL = 'urlReporte'            # pre-authenticated "report a deposit" form
 
 # CONFIRMED -- transactional API, documented in the manual (image pages of
 # "Manual TAECEL", API Integracion) and validated live against the test account.

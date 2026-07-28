@@ -104,6 +104,35 @@ class TaecelClient:
         """
         return self._post(const.PATH_SALES, {'fecha': fecha, 'bolsa': bolsa})
 
+    def get_deposit_reference(self):
+        """The bank reference this account is funded through, and the URL of
+        TAECEL's "report a deposit" form.
+
+        Depositing against the reference credits the account automatically, so
+        an affiliate never depends on its distributor transferring balance by
+        hand (that path is portal-only and has a 30-minute confirmation window).
+
+        Careful: unlike every other method, this one answers with a FLAT dict
+        -- ``{"refCompra": ..., "urlReporte": ...}`` -- with no success/data
+        envelope, so ``_post`` cannot tell success from failure and always
+        reports ok=False. Verified live against a production account. We judge
+        it here by whether a reference actually came back.
+        """
+        result = self._post(const.PATH_REPORT_URL)
+        raw = result.raw if isinstance(result.raw, dict) else {}
+        reference = str(raw.get(const.K_REPORT_REF) or '').strip()
+        if not reference:
+            return TaecelResult(
+                False,
+                message=result.message or _('TAECEL returned no deposit reference.'),
+                raw=result.raw,
+                timed_out=result.timed_out,
+            )
+        return TaecelResult(True, data={
+            const.K_REPORT_REF: reference,
+            const.K_REPORT_URL: str(raw.get(const.K_REPORT_URL) or '').strip(),
+        }, raw=result.raw)
+
     def register_account(self, values):
         """Register an affiliate sub-account (the reseller-network model).
 

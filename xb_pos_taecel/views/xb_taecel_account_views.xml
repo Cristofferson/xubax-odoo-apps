@@ -14,6 +14,8 @@
                             string="Sync Catalog"/>
                     <button name="action_refresh_balance" type="object"
                             string="Refresh Balance"/>
+                    <button name="action_fetch_deposit_reference" type="object"
+                            string="Deposit Reference"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,connected"/>
                 </header>
@@ -38,6 +40,15 @@
                         <group string="Catalog">
                             <field name="catalog_date" readonly="1"/>
                             <field name="carrier_count" readonly="1"/>
+                        </group>
+                        <!-- Deposit against this reference and the balance is
+                             credited automatically: no transfer to wait on. -->
+                        <group string="Funding">
+                            <field name="deposit_reference"
+                                   placeholder="Read it from TAECEL"/>
+                            <field name="deposit_url" widget="url"
+                                   invisible="not deposit_url"/>
+                            <field name="deposit_date" invisible="not deposit_date"/>
                         </group>
                         <group string="Companies" groups="base.group_multi_company">
                             <field name="company_id"/>
