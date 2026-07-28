@@ -101,6 +101,25 @@ class XbTaecelAccount(models.Model):
              'with volume; an affiliate earns whatever its distributor '
              'assigned it in MI RED. Informational.')
 
+    # -- Funding -----------------------------------------------------------
+    # A wallet is topped up by depositing at the bank against THIS account's
+    # reference, which credits it automatically. Worth surfacing: the manual
+    # alternative (a distributor transferring balance from its own wallet) is
+    # portal-only, needs an e-mail to TAECEL at that very moment, and is
+    # rejected after 30 minutes. The reference is meant to be handed out --
+    # it is how people pay you -- so it is not a credential.
+    deposit_reference = fields.Char(
+        string='Deposit Reference', readonly=True, copy=False,
+        help='Reference to quote when depositing at the bank (transfer, '
+             'practicaja or teller). The deposit is credited to this account '
+             'automatically, with no transfer from anyone else.')
+    deposit_url = fields.Char(
+        string='Report a Deposit', readonly=True, copy=False,
+        help="Link to TAECEL's form for reporting a deposit that was not "
+             'referenced, so it can be applied manually.')
+    deposit_date = fields.Datetime(
+        string='Reference Read', readonly=True, copy=False)
+
     @api.onchange('role')
     def _onchange_role(self):
         """Keep the rate honest when the account type changes.
@@ -210,6 +229,30 @@ class XbTaecelAccount(models.Model):
             return self._notify(_('TAECEL'), _('Connection OK.'))
         self.write({'state': 'error', 'connection_msg': result.message})
         raise UserError(_('TAECEL refused the connection:\n\n%s', result.message))
+
+    # -- Funding -----------------------------------------------------------
+    def action_fetch_deposit_reference(self):
+        """Ask TAECEL for the bank reference that funds this account.
+
+        The reference belongs to whoever authenticates, so each install reads
+        its own: a distributor cannot look its affiliates' references up, and
+        does not need to -- every affiliate reads its own from here instead of
+        waiting on a balance transfer.
+        """
+        self.ensure_one()
+        result = self._get_client().get_deposit_reference()
+        if not result.ok:
+            raise UserError(_('Could not read the deposit reference:\n\n%s',
+                              result.message))
+        self.write({
+            'deposit_reference': result.data.get(const.K_REPORT_REF),
+            'deposit_url': result.data.get(const.K_REPORT_URL),
+            'deposit_date': fields.Datetime.now(),
+        })
+        return self._notify(
+            _('Deposit reference'),
+            _('Deposit against reference %s to top up this account.',
+              self.deposit_reference))
 
     # -- Balance via getBalance (CONFIRMED) --------------------------------
     def action_refresh_balance(self):

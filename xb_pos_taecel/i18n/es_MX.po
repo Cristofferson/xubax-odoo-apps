@@ -296,9 +296,9 @@ msgstr "Código"
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__commission_rate
 msgid ""
 "Commission granted on THIS account, not the one you grant to others. A "
-"distributor starts at 6.5% and can request 6.95% with volume; an affiliate"
-" earns whatever its distributor assigned it in MI RED. Informational."
-msgstr "Comisión que se otorga a ESTA cuenta, no la que tú otorgas a otros. Un distribuidor empieza en 6.5% y puede pedir 6.95% con volumen; un afiliado gana lo que su distribuidor le haya asignado en MI RED. Informativo."
+"distributor starts at 6.5% and can request 6.95% with volume; an affiliate "
+"earns whatever its distributor assigned it in MI RED. Informational."
+msgstr "Comisión que se otorga a ESTA cuenta, no la que tú le otorgas a otros. Un distribuidor arranca en 6.5% y puede pedir 6.95% por volumen; un afiliado gana lo que su distribuidor le haya asignado en MI RED. Informativo."
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
@@ -360,6 +360,15 @@ msgstr ""
 "%s"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+msgid ""
+"Could not read the deposit reference:\n"
+"\n"
+"%s"
+msgstr "No se pudo leer la referencia de depósito:\\n\\n%s"
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__create_uid
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__create_uid
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__create_uid
@@ -401,6 +410,24 @@ msgstr "Comisión de servicio al cliente"
 #: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
 msgid "Declined by TAECEL."
 msgstr "Rechazada por TAECEL."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__deposit_reference
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Deposit Reference"
+msgstr "Referencia de depósito"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+msgid "Deposit against reference %s to top up this account."
+msgstr "Deposita con la referencia %s para abonar saldo a esta cuenta."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+msgid "Deposit reference"
+msgstr "Referencia de depósito"
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__description
@@ -557,6 +584,11 @@ msgid "Free amount"
 msgstr "Monto libre"
 
 #. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Funding"
+msgstr "Fondeo"
+
+#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
 msgid "Giftcards"
 msgstr "GiftCards"
@@ -602,6 +634,13 @@ msgstr "Última actualización el"
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "Leave empty for every POS"
 msgstr "Vacío = todos los puntos de venta"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__deposit_url
+msgid ""
+"Link to TAECEL's form for reporting a deposit that was not referenced, so it"
+" can be applied manually."
+msgstr "Liga al formulario de TAECEL para reportar un depósito que no se referenció, y que lo apliquen manualmente."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__logo_url
@@ -822,6 +861,11 @@ msgid "Raw Response"
 msgstr "Respuesta en crudo"
 
 #. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Read it from TAECEL"
+msgstr "Consúltala en TAECEL"
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__receipt_note
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
 msgid "Receipt Note"
@@ -855,9 +899,27 @@ msgid "Reference"
 msgstr "Referencia"
 
 #. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__deposit_date
+msgid "Reference Read"
+msgstr "Referencia consultada"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__deposit_reference
+msgid ""
+"Reference to quote when depositing at the bank (transfer, practicaja or "
+"teller). The deposit is credited to this account automatically, with no "
+"transfer from anyone else."
+msgstr "Referencia que debes indicar al depositar en el banco (transferencia, practicaja o ventanilla). El depósito se abona solo a esta cuenta, sin que nadie tenga que traspasarte saldo."
+
+#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "Refresh Balance"
 msgstr "Actualizar saldo"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__deposit_url
+msgid "Report a Deposit"
+msgstr "Reportar un depósito"
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
@@ -1057,6 +1119,12 @@ msgstr ""
 "TAECEL rechazó la conexión:\n"
 "\n"
 "%s"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/taecel_client.py:0
+msgid "TAECEL returned no deposit reference."
+msgstr "TAECEL no devolvió ninguna referencia de depósito."
 
 #. module: xb_pos_taecel
 #: model:ir.actions.server,name:xb_pos_taecel.cron_taecel_dispatch_ir_actions_server
