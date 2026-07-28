@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Reads each affiliate's balance and today's sales. Hourly, not by the
+         minute: nothing here is on the critical path of a sale, and every
+         affiliate costs one getBalance plus one getSales per wallet. -->
+    <record id="cron_taecel_network_refresh" model="ir.cron">
+        <field name="name">TAECEL: refresh affiliate network</field>
+        <field name="model_id" ref="model_xb_taecel_affiliate"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_refresh_network()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="active" eval="True"/>
+    </record>
+
+</odoo>

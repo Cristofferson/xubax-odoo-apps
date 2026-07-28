@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Hangs off the base module's "Recharges" root so a distributor has one
+         place for everything TAECEL, not two. -->
+    <menuitem id="menu_taecel_network" name="Network"
+              parent="xb_pos_taecel.menu_taecel_root" sequence="50"/>
+
+    <menuitem id="menu_taecel_affiliate" name="Affiliates"
+              parent="menu_taecel_network" action="action_taecel_affiliate"
+              sequence="10"/>
+
+    <menuitem id="menu_taecel_affiliate_sale" name="Network Sales"
+              parent="menu_taecel_network" action="action_taecel_affiliate_sale"
+              sequence="20"/>
+
+</odoo>
