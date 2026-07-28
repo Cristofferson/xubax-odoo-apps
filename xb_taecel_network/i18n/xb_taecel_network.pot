@@ -1,0 +1,629 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_taecel_network
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-28 21:01+0000\n"
+"PO-Revision-Date: 2026-07-28 21:01+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: xb_taecel_network
+#. odoo-python
+#: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
+msgid "%(n)s sales pulled for %(d)s."
+msgstr ""
+
+#. module: xb_taecel_network
+#. odoo-python
+#: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
+msgid "%(name)s funds itself with reference %(ref)s."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__api_key
+msgid "API Key"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__api_nip
+msgid "API NIP"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate__taecel_uid
+msgid ""
+"Account number TAECEL assigned to this affiliate, as shown in MI RED. This "
+"is what you search by in the portal."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__active
+msgid "Active"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.actions.act_window,help:xb_taecel_network.action_taecel_affiliate
+msgid "Add the affiliates you registered in MI RED"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__affiliate_id
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_wallet__affiliate_id
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_sale_search
+msgid "Affiliate"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.actions.act_window,name:xb_taecel_network.action_taecel_affiliate
+#: model:ir.ui.menu,name:xb_taecel_network.menu_taecel_affiliate
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_list
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_search
+msgid "Affiliates"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__amount
+msgid "Amount"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+msgid "Anything you want to remember about this point of sale"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_search
+msgid "Archived"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_wallet__balance
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+msgid "Balance"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__final_balance
+msgid "Balance After"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__balance_date
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_wallet__balance_date
+msgid "Balance Date"
+msgstr ""
+
+#. module: xb_taecel_network
+#. odoo-python
+#: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
+msgid "Balances refreshed."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate__deposit_reference
+msgid ""
+"Bank reference THIS affiliate deposits against. A deposit quoting it is "
+"credited to the affiliate automatically, so no balance transfer from you is "
+"needed."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_wallet__bolsa_id
+msgid "Bolsa"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__carrier
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_sale_search
+msgid "Carrier"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__commission
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_sale_list
+msgid "Commission"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate__my_commission_rate
+msgid ""
+"Commission granted on THIS account, not the one you grant to others. A "
+"distributor starts at 6.5% and can request 6.95% with volume; an affiliate "
+"earns whatever its distributor assigned it in MI RED. Informational."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate__commission_rate
+msgid ""
+"Commission you granted this affiliate in MI RED. TAECEL suggests 5.5% as the"
+" market floor."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__company_id
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__company_id
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_wallet__company_id
+msgid "Company"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields.selection,name:xb_taecel_network.selection__xb_taecel_affiliate__state__connected
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_search
+msgid "Connected"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__connection_msg
+msgid "Connection Msg"
+msgstr ""
+
+#. module: xb_taecel_network
+#. odoo-python
+#: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
+msgid "Connection OK."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__partner_id
+msgid "Contact"
+msgstr ""
+
+#. module: xb_taecel_network
+#. odoo-python
+#: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
+msgid ""
+"Could not read the deposit reference:\n"
+"\n"
+"%s"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__create_uid
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__create_uid
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_wallet__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__create_date
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__create_date
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_wallet__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+msgid "Credentials"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__currency_id
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__currency_id
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_wallet__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__date
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_sale_search
+msgid "Date"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__deposit_reference
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+msgid "Deposit Reference"
+msgstr ""
+
+#. module: xb_taecel_network
+#. odoo-python
+#: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
+msgid "Deposit reference"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__display_name
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__display_name
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_wallet__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__account_id
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_search
+msgid "Distributor Account"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields.selection,name:xb_taecel_network.selection__xb_taecel_affiliate__state__error
+msgid "Error"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields.selection,name:xb_taecel_network.selection__xb_taecel_affiliate_sale__status__ko
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_sale_search
+msgid "Failed"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__folio
+msgid "Folio"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+msgid "Funding"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__id
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__id
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_wallet__id
+msgid "ID"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_search
+msgid "In Error"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields.selection,name:xb_taecel_network.selection__xb_taecel_affiliate_sale__status__pending
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_sale_search
+msgid "In Progress"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__write_uid
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__write_uid
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_wallet__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__write_date
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__write_date
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_wallet__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_list
+msgid "Margin"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__my_commission_rate
+msgid "My Commission (%)"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__my_margin
+msgid "My Margin"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__margin_rate
+msgid "My Margin (%)"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__name
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_wallet__name
+msgid "Name"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.ui.menu,name:xb_taecel_network.menu_taecel_network
+msgid "Network"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.actions.act_window,name:xb_taecel_network.action_taecel_affiliate_sale
+#: model:ir.ui.menu,name:xb_taecel_network.menu_taecel_affiliate_sale
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_sale_list
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_sale_search
+msgid "Network Sales"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_search
+msgid "No Credentials"
+msgstr ""
+
+#. module: xb_taecel_network
+#. odoo-python
+#: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
+msgid ""
+"No credentials for %s yet.\n"
+"\n"
+"TAECEL issues its own ws key and NIP to each affiliate when you register it in MI RED; they are mailed to the address on the account. Ask for them as a PDF: the portal truncates the key on screen and a copied key is rejected with a 403."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields.selection,name:xb_taecel_network.selection__xb_taecel_affiliate__state__draft
+msgid "Not Connected"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__note
+msgid "Note"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__note
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+msgid "Notes"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate__partner_id
+msgid "Optional: who runs this point of sale, for your own records."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__reference
+msgid "Phone / Reference"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+msgid "Pull Sales"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+msgid "Read it from TAECEL"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__deposit_date
+msgid "Reference Read"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+msgid "Refresh Balance"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__deposit_url
+msgid "Report a Deposit"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+msgid "Results"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__sale_ids
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_sale_form
+msgid "Sale"
+msgstr ""
+
+#. module: xb_taecel_network
+#. odoo-python
+#: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__sales_count
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+msgid "Sales"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__state
+msgid "State"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__status
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_sale_search
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_search
+msgid "Status"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields.selection,name:xb_taecel_network.selection__xb_taecel_affiliate_sale__status__ok
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_sale_search
+msgid "Successful"
+msgstr ""
+
+#. module: xb_taecel_network
+#. odoo-python
+#: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
+msgid "TAECEL"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__taecel_uid
+msgid "TAECEL Account ID"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model,name:xb_taecel_network.model_xb_taecel_affiliate
+msgid "TAECEL Affiliate"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model,name:xb_taecel_network.model_xb_taecel_affiliate_sale
+msgid "TAECEL Affiliate Sale"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model,name:xb_taecel_network.model_xb_taecel_affiliate_wallet
+msgid "TAECEL Affiliate Wallet"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate_wallet__bolsa_id
+msgid "TAECEL bolsa id (1/2/3)."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.actions.act_window,help:xb_taecel_network.action_taecel_affiliate
+msgid ""
+"TAECEL has no web-service method to list your network, so each\n"
+"                affiliate is recorded here once, with the ws key and NIP TAECEL\n"
+"                issued to it. From then on its balance, sales and your margin\n"
+"                are read automatically."
+msgstr ""
+
+#. module: xb_taecel_network
+#. odoo-python
+#: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
+msgid "TAECEL network"
+msgstr ""
+
+#. module: xb_taecel_network
+#. odoo-python
+#: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
+msgid ""
+"TAECEL refused the connection:\n"
+"\n"
+"%s"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.actions.server,name:xb_taecel_network.cron_taecel_network_refresh_ir_actions_server
+msgid "TAECEL: refresh affiliate network"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+msgid "Test Connection"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate_sale__final_balance
+msgid "The affiliate wallet balance TAECEL reported after this sale."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate__margin_rate
+msgid ""
+"The spread you keep: your commission minus theirs. This is where a "
+"distributor earns."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__commission_rate
+msgid "Their Commission (%)"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.constraint,message:xb_taecel_network.constraint_xb_taecel_affiliate_uid_account_uniq
+msgid "This affiliate is already registered under that account."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.constraint,message:xb_taecel_network.constraint_xb_taecel_affiliate_sale_txn_affiliate_uniq
+msgid "This transaction is already recorded for the affiliate."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.constraint,message:xb_taecel_network.constraint_xb_taecel_affiliate_wallet_bolsa_affiliate_uniq
+msgid "This wallet already exists for the affiliate."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_sale_search
+msgid "Today"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_list
+msgid "Total"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__balance_total
+msgid "Total Balance"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+msgid "Trade name"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate__name
+msgid "Trade name of the point of sale."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__trans_id
+msgid "TransID"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__sales_volume
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_list
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_sale_list
+msgid "Volume"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+msgid ""
+"Volume counts successful sales only: TAECEL\n"
+"                                refunds a failed recharge, so it moves no money\n"
+"                                and earns no spread. The margin is your\n"
+"                                commission minus the affiliate's, applied to\n"
+"                                that volume."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__wallet_ids
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__bolsa_id
+msgid "Wallet"
+msgstr ""
+
+#. module: xb_taecel_network
+#. odoo-python
+#: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
+msgid "Wallet %s"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+msgid "Wallets"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate_sale__commission
+msgid "What TAECEL paid the affiliate on this sale."
+msgstr ""
+
+#. module: xb_taecel_network
+#. odoo-python
+#: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
+msgid ""
+"You granted %(theirs).2f%% to %(name)s but TAECEL grants you %(mine).2f%%. "
+"Every sale would cost you the difference."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate__account_id
+msgid "Your own TAECEL account, the one that registered this affiliate."
+msgstr ""
+
+#. module: xb_taecel_network
+#. odoo-python
+#: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
+msgid "affiliate_id"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+msgid "e.g. 378613"
+msgstr ""

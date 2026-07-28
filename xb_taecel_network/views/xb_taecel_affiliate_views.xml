@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_taecel_affiliate_form" model="ir.ui.view">
+        <field name="name">xb.taecel.affiliate.form</field>
+        <field name="model">xb.taecel.affiliate</field>
+        <field name="arch" type="xml">
+            <form string="Affiliate">
+                <header>
+                    <button name="action_test_connection" type="object"
+                            string="Test Connection" class="btn-primary"
+                            groups="base.group_system"/>
+                    <button name="action_refresh_balance" type="object"
+                            string="Refresh Balance"/>
+                    <button name="action_pull_sales" type="object"
+                            string="Pull Sales"/>
+                    <button name="action_fetch_deposit_reference" type="object"
+                            string="Deposit Reference"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,connected"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_sales" type="object"
+                                class="oe_stat_button" icon="fa-exchange">
+                            <field name="sales_count" widget="statinfo"
+                                   string="Sales"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Trade name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Affiliate">
+                            <field name="taecel_uid" placeholder="e.g. 378613"/>
+                            <field name="partner_id"/>
+                            <field name="account_id"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Commission">
+                            <field name="my_commission_rate"/>
+                            <field name="commission_rate"/>
+                            <field name="margin_rate"/>
+                        </group>
+                        <group string="Balance">
+                            <field name="balance_total"/>
+                            <field name="balance_date"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <!-- Handing this over is what replaces transferring
+                             balance by hand: a referenced deposit credits the
+                             affiliate on its own. -->
+                        <group string="Funding">
+                            <field name="deposit_reference"
+                                   placeholder="Read it from TAECEL"/>
+                            <field name="deposit_url" widget="url"
+                                   invisible="not deposit_url"/>
+                            <field name="deposit_date" invisible="not deposit_date"/>
+                        </group>
+                    </group>
+                    <!-- The affiliate's OWN credentials. Whoever holds them can
+                         spend that affiliate's balance from outside Odoo, so
+                         they are settings-level, declared on the field too. -->
+                    <group groups="base.group_system" string="Credentials">
+                        <field name="api_key" password="True"/>
+                        <field name="api_nip" password="True"/>
+                        <field name="connection_msg" readonly="1"
+                               invisible="not connection_msg"/>
+                    </group>
+                    <notebook>
+                        <page string="Wallets" name="wallets">
+                            <field name="wallet_ids" readonly="1">
+                                <list>
+                                    <field name="bolsa_id"/>
+                                    <field name="name"/>
+                                    <field name="balance"/>
+                                    <field name="balance_date"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Results" name="results">
+                            <group>
+                                <field name="sales_volume"/>
+                                <field name="my_margin"/>
+                            </group>
+                            <p class="text-muted">
+                                Volume counts successful sales only: TAECEL
+                                refunds a failed recharge, so it moves no money
+                                and earns no spread. The margin is your
+                                commission minus the affiliate's, applied to
+                                that volume.
+                            </p>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note" placeholder="Anything you want to remember about this point of sale"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_taecel_affiliate_list" model="ir.ui.view">
+        <field name="name">xb.taecel.affiliate.list</field>
+        <field name="model">xb.taecel.affiliate</field>
+        <field name="arch" type="xml">
+            <list string="Affiliates">
+                <field name="name"/>
+                <field name="taecel_uid"/>
+                <field name="commission_rate"/>
+                <field name="margin_rate"/>
+                <field name="balance_total" sum="Total"/>
+                <field name="sales_volume" sum="Volume"/>
+                <field name="my_margin" sum="Margin"/>
+                <field name="balance_date"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'connected'"
+                       decoration-danger="state == 'error'"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_taecel_affiliate_search" model="ir.ui.view">
+        <field name="name">xb.taecel.affiliate.search</field>
+        <field name="model">xb.taecel.affiliate</field>
+        <field name="arch" type="xml">
+            <search string="Affiliates">
+                <field name="name"/>
+                <field name="taecel_uid"/>
+                <field name="partner_id"/>
+                <filter name="connected" string="Connected"
+                        domain="[('state', '=', 'connected')]"/>
+                <filter name="error" string="In Error"
+                        domain="[('state', '=', 'error')]"/>
+                <separator/>
+                <filter name="no_credentials" string="No Credentials"
+                        domain="[('api_key', '=', False)]"
+                        groups="base.group_system"/>
+                <separator/>
+                <filter name="inactive" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <!-- Odoo 19 rejects attributes on a search view's <group>:
+                     the RELAXNG refuses expand/string and the view fails to
+                     load. The label comes from the filters themselves. -->
+                <group>
+                    <filter name="group_account" string="Distributor Account"
+                            context="{'group_by': 'account_id'}"/>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_taecel_affiliate" model="ir.actions.act_window">
+        <field name="name">Affiliates</field>
+        <field name="res_model">xb.taecel.affiliate</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add the affiliates you registered in MI RED
+            </p>
+            <p>
+                TAECEL has no web-service method to list your network, so each
+                affiliate is recorded here once, with the ws key and NIP TAECEL
+                issued to it. From then on its balance, sales and your margin
+                are read automatically.
+            </p>
+        </field>
+    </record>
+
+</odoo>

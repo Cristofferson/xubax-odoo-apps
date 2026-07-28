@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_taecel_affiliate_manager,taecel.affiliate.manager,model_xb_taecel_affiliate,point_of_sale.group_pos_manager,1,1,1,1
+access_taecel_affiliate_wallet_manager,taecel.affiliate.wallet.manager,model_xb_taecel_affiliate_wallet,point_of_sale.group_pos_manager,1,1,1,1
+access_taecel_affiliate_sale_manager,taecel.affiliate.sale.manager,model_xb_taecel_affiliate_sale,point_of_sale.group_pos_manager,1,1,1,1
