@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-28 21:01+0000\n"
-"PO-Revision-Date: 2026-07-28 21:01+0000\n"
+"POT-Creation-Date: 2026-07-29 04:27+0000\n"
+"PO-Revision-Date: 2026-07-29 04:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -28,6 +28,16 @@ msgid "%(name)s funds itself with reference %(ref)s."
 msgstr ""
 
 #. module: xb_taecel_network
+#: model:ir.actions.report,print_report_name:xb_taecel_network.action_report_taecel_affiliate_deposit
+msgid "'Deposit - %s' % object.name"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+msgid "99... — from the affiliate's portal"
+msgstr ""
+
+#. module: xb_taecel_network
 #: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__api_key
 msgid "API Key"
 msgstr ""
@@ -41,7 +51,8 @@ msgstr ""
 #: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate__taecel_uid
 msgid ""
 "Account number TAECEL assigned to this affiliate, as shown in MI RED. This "
-"is what you search by in the portal."
+"is what you search by in the portal. Leave it empty until TAECEL gives it to"
+" you."
 msgstr ""
 
 #. module: xb_taecel_network
@@ -63,11 +74,21 @@ msgid "Affiliate"
 msgstr ""
 
 #. module: xb_taecel_network
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.report_deposit_affiliate
+msgid "Affiliate:"
+msgstr ""
+
+#. module: xb_taecel_network
 #: model:ir.actions.act_window,name:xb_taecel_network.action_taecel_affiliate
 #: model:ir.ui.menu,name:xb_taecel_network.menu_taecel_affiliate
 #: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_list
 #: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_search
 msgid "Affiliates"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__deposit_reference
+msgid "Airtime Deposit Reference"
 msgstr ""
 
 #. module: xb_taecel_network
@@ -111,9 +132,14 @@ msgstr ""
 #. module: xb_taecel_network
 #: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate__deposit_reference
 msgid ""
-"Bank reference THIS affiliate deposits against. A deposit quoting it is "
-"credited to the affiliate automatically, so no balance transfer from you is "
-"needed."
+"Bank reference THIS affiliate deposits against to fund its AIRTIME wallet. A"
+" deposit quoting it is credited to the affiliate automatically, so no "
+"balance transfer from you is needed. TAECEL issues it starting with 88."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__deposit_reference_services
+msgid "Bill Payments Deposit Reference"
 msgstr ""
 
 #. module: xb_taecel_network
@@ -220,9 +246,13 @@ msgid "Date"
 msgstr ""
 
 #. module: xb_taecel_network
-#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__deposit_reference
 #: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
 msgid "Deposit Reference"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.actions.report,name:xb_taecel_network.action_report_taecel_affiliate_deposit
+msgid "Deposit Sheet"
 msgstr ""
 
 #. module: xb_taecel_network
@@ -389,6 +419,15 @@ msgstr ""
 #. module: xb_taecel_network
 #: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__deposit_date
 msgid "Reference Read"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate__deposit_reference_services
+msgid ""
+"Reference that funds this affiliate's BILL PAYMENTS wallet. The API does not"
+" return it: the affiliate reads it in its own TAECEL portal under Buy "
+"Balance > Available Accounts, or in the app under \"Where to deposit\". "
+"TAECEL issues it starting with 99."
 msgstr ""
 
 #. module: xb_taecel_network

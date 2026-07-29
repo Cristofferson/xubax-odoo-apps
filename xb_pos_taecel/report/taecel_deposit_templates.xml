@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Deposit sheet: what you hand somebody so they can fund their TAECEL
+         wallets on their own. Laid out with tables on purpose: wkhtmltopdf
+         runs an old WebKit where flexbox and CSS grid come out crooked.
+
+         The body is shared so the network module can print the very same sheet
+         for an affiliate without copying the layout. -->
+    <template id="report_deposit_body">
+        <div class="page" style="font-family: Arial, sans-serif; color:#1A1A1A;">
+
+            <table width="100%" style="background:#1A1A1A; margin-bottom:18px;">
+                <tr>
+                    <td style="padding:14px 18px; vertical-align:middle;">
+                        <img t-if="company and company.logo" style="max-height:38px;"
+                             t-att-src="image_data_uri(company.logo)" alt="Logo"/>
+                        <span t-else="" style="color:#FFF; font-size:20px; font-weight:bold;"
+                              t-esc="company.name if company else ''"/>
+                    </td>
+                    <td style="padding:14px 18px; text-align:right; vertical-align:middle;">
+                        <div style="color:#FFF; font-size:17px; font-weight:bold;">Deposit Sheet</div>
+                        <div style="color:#C62828; font-size:12px; letter-spacing:2px;">TAECEL</div>
+                    </td>
+                </tr>
+            </table>
+
+            <div style="font-size:15px; margin-bottom:4px;">
+                <span style="color:#777;" t-esc="entity_label"/>
+                <span style="font-weight:bold;" t-esc="entity_name"/>
+            </div>
+            <p style="font-size:11px; color:#555; margin-bottom:16px;">
+                Deposit against the reference below and the balance is credited
+                to this account automatically. Each wallet has its OWN
+                reference, and TAECEL only moves balance between wallets of the
+                same type: a deposit made with the wrong reference cannot be
+                moved across afterwards.
+            </p>
+
+            <table width="100%" style="margin-bottom:18px;">
+                <tr>
+                    <td width="50%" style="text-align:center; padding:0 6px;">
+                        <div style="font-size:11px; color:#555;">Airtime payment reference</div>
+                        <div t-if="ref_airtime"
+                             style="background:#C62828; color:#FFF; font-size:22px; font-weight:bold;
+                                    letter-spacing:2px; padding:9px 0; margin-top:5px;
+                                    border-radius:22px;"
+                             t-esc="ref_airtime"/>
+                        <div t-else=""
+                             style="border:1px dashed #BBB; color:#999; font-size:12px;
+                                    padding:14px 6px; margin-top:5px;">
+                            Read it from TAECEL
+                        </div>
+                    </td>
+                    <td width="50%" style="text-align:center; padding:0 6px;">
+                        <div style="font-size:11px; color:#555;">Bill payments reference</div>
+                        <div t-if="ref_services"
+                             style="background:#C62828; color:#FFF; font-size:22px; font-weight:bold;
+                                    letter-spacing:2px; padding:9px 0; margin-top:5px;
+                                    border-radius:22px;"
+                             t-esc="ref_services"/>
+                        <div t-else=""
+                             style="border:1px dashed #BBB; color:#999; font-size:11px;
+                                    padding:9px 6px; margin-top:5px;">
+                            Not issued by the API. Read it in the TAECEL portal
+                            under Buy Balance &gt; Available Accounts.
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <div style="font-size:13px; font-weight:bold; border-bottom:2px solid #1A1A1A;
+                        padding-bottom:3px; margin-bottom:10px;">
+                Where to deposit
+            </div>
+
+            <!-- The destinations live here once, as data, and are printed
+                 through t-esc so no account number is ever a translatable
+                 string: a typo in a .po file would send money to the wrong
+                 bank. TAECEL owns these accounts and can change them. -->
+            <t t-set="banks" t-value="[
+                {'bank': 'BBVA Bancomer', 'acc': '0116521347',
+                 'clabe': '012680001165213479',
+                 'name': 'IO Enterprise Holding SAPI de CV', 'rfc': 'IEH200902EK5'},
+                {'bank': 'Scotiabank', 'acc': '25601172634', 'clabe': '',
+                 'name': 'IO Enterprise Holding SAPI de CV', 'rfc': 'IEH200902EK5'},
+                {'bank': 'BanCoppel', 'acc': '12000003679', 'clabe': '',
+                 'name': 'Sistema de Prepago Electronico S de RL de CV', 'rfc': 'SPE11071516A'},
+                {'bank': 'Banco Azteca', 'acc': '20080197639069', 'clabe': '',
+                 'name': 'Sistema de Prepago Electronico S de RL de CV', 'rfc': 'SPE11071516A'},
+                {'bank': 'OXXO (Scotiabank)', 'acc': '', 'clabe': '',
+                 'card': '4043-1300-2922-9537',
+                 'name': 'IO Enterprise Holding SAPI de CV', 'rfc': 'IEH200902EK5'},
+            ]"/>
+            <div>
+                <t t-foreach="banks" t-as="b">
+                    <!-- Left-hand cards carry the gutter, so the pair sits
+                         flush with the margins on both sides. -->
+                    <div t-att-style="'display:inline-block; width:48.5%; vertical-align:top;
+                                border:1px solid #DDD; padding:9px; margin:0 0 7px 0;
+                                box-sizing:border-box;' + ('' if b_index % 2 else ' margin-right:2%;')">
+                        <div style="font-size:13px; font-weight:bold;" t-esc="b['bank']"/>
+                        <div style="font-size:11px; line-height:1.55;">
+                            <t t-if="b['acc']">Account: <b t-esc="b['acc']"/><br/></t>
+                            <t t-if="b.get('card')">Card: <b t-esc="b['card']"/><br/></t>
+                            <t t-if="b['clabe']">CLABE: <b t-esc="b['clabe']"/><br/></t>
+                            Name: <b t-esc="b['name']"/><br/>
+                            RFC: <b t-esc="b['rfc']"/>
+                        </div>
+                    </div>
+                </t>
+            </div>
+
+            <div style="margin-top:16px; border-left:3px solid #C62828; padding:2px 0 2px 10px;
+                        font-size:11px; line-height:1.6;">
+                <b>Transfer:</b> put the reference in the payment description.<br/>
+                <b>Practicaja:</b> type the reference into the payment description.<br/>
+                <b>Teller:</b> tell the clerk you are adding a reference to the
+                payment, and give them the number.
+            </div>
+
+            <p style="margin-top:16px; font-size:10px; color:#888;">
+                TAECEL sets these destination accounts and can change them.
+                Confirm them in the TAECEL portal before a first deposit.
+            </p>
+        </div>
+    </template>
+
+    <!-- Sheet for your own TAECEL account.
+
+         The "article" wrapper is not decoration: _prepare_html splits the
+         document by that class to build each PDF body. Without it Odoo takes
+         the fallback branch, which serialises the body with no head at all,
+         so wkhtmltopdf never sees a charset, falls back to latin-1, and every
+         accented character comes out mangled. -->
+    <template id="report_deposit_account">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <div class="article" t-att-data-oe-model="doc._name"
+                     t-att-data-oe-id="doc.id" t-att-data-oe-lang="doc.env.lang">
+                    <t t-call="xb_pos_taecel.report_deposit_body">
+                        <t t-set="entity_label">Account:</t>
+                        <t t-set="entity_name" t-value="doc.name"/>
+                        <t t-set="ref_airtime" t-value="doc.deposit_reference"/>
+                        <t t-set="ref_services" t-value="doc.deposit_reference_services"/>
+                        <t t-set="company" t-value="doc.company_id"/>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

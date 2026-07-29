@@ -36,9 +36,30 @@ msgid "%(wallet)s: %(left)s left after this sale."
 msgstr "%(wallet)s: quedan %(left)s después de esta venta."
 
 #. module: xb_pos_taecel
+#: model:ir.actions.report,print_report_name:xb_pos_taecel.action_report_taecel_deposit
+msgid "'Deposit - %s' % object.name"
+msgstr "'Deposito - %s' % object.name"
+
+#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "99... — from the TAECEL portal"
 msgstr "99… — del portal de TAECEL"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+msgid ""
+"<b>Transfer:</b> put the reference in the payment description.<br/>\n"
+"                <b>Practicaja:</b> type the reference into the payment description.<br/>\n"
+"                <b>Teller:</b> tell the clerk you are adding a reference to the\n"
+"                payment, and give them the number."
+msgstr "<b>Transferencia:</b> pon la referencia en el motivo de pago.<br/> <b>Practicaja:</b> captura la referencia en el motivo de pago.<br/> <b>Ventanilla:</b> indícale al cajero que vas a agregar una referencia al pago y dale el número."
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+msgid ""
+"<br/>\n"
+"                            RFC:"
+msgstr "<br/> RFC:"
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__api_key
@@ -73,6 +94,12 @@ msgid ""
 "Account number TAECEL assigned you, as shown in the portal. A distributor "
 "looks its affiliates up by this number in MI RED."
 msgstr "Número de cuenta que te asignó TAECEL, tal como aparece en el portal. El distribuidor busca a sus afiliados por este número en MI RED."
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_account
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+msgid "Account:"
+msgstr "Cuenta:"
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_list
@@ -115,6 +142,11 @@ msgstr "Recargas y Pago de Servicios"
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__deposit_reference
 msgid "Airtime Deposit Reference"
 msgstr "Referencia de depósito de Tiempo Aire"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+msgid "Airtime payment reference"
+msgstr "Referencia de pago de Tiempo Aire"
 
 #. module: xb_pos_taecel
 #: model:product.template,description_sale:xb_pos_taecel.product_taecel_service
@@ -189,6 +221,11 @@ msgid "Bill Payments Deposit Reference"
 msgstr "Referencia de depósito de Pago de Servicios"
 
 #. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+msgid "Bill payments reference"
+msgstr "Referencia de pago de Pago de Servicios"
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__bolsa_id
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__bolsa_id
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__bolsa_id
@@ -197,10 +234,20 @@ msgid "Bolsa"
 msgstr "Bolsa"
 
 #. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+msgid "CLABE:"
+msgstr "CLABE:"
+
+#. module: xb_pos_taecel
 #. odoo-javascript
 #: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.xml:0
 msgid "Cancel"
 msgstr "Cancelar"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+msgid "Card:"
+msgstr "Tarjeta:"
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__carrier_ids
@@ -432,6 +479,12 @@ msgid "Deposit Reference"
 msgstr "Referencia de depósito"
 
 #. module: xb_pos_taecel
+#: model:ir.actions.report,name:xb_pos_taecel.action_report_taecel_deposit
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+msgid "Deposit Sheet"
+msgstr "Ficha de depósito"
+
+#. module: xb_pos_taecel
 #. odoo-python
 #: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
 msgid ""
@@ -444,6 +497,16 @@ msgstr "Deposita con la referencia %s para fondear TIEMPO AIRE. Los pagos de ser
 #: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
 msgid "Deposit against reference %s to top up this account."
 msgstr "Deposita con la referencia %s para abonar saldo a esta cuenta."
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+msgid ""
+"Deposit against the reference below and the balance is credited\n"
+"                to this account automatically. Each wallet has its OWN\n"
+"                reference, and TAECEL only moves balance between wallets of the\n"
+"                same type: a deposit made with the wrong reference cannot be\n"
+"                moved across afterwards."
+msgstr "Deposita con la referencia de abajo y el saldo se abona a esta cuenta en automático. Cada bolsa tiene su PROPIA referencia, y TAECEL solo traspasa saldo entre bolsas del mismo tipo: un depósito hecho con la referencia equivocada ya no se puede mover."
 
 #. module: xb_pos_taecel
 #. odoo-python
@@ -665,6 +728,11 @@ msgid ""
 msgstr "Liga al formulario de TAECEL para reportar un depósito que no se referenció, y que lo apliquen manualmente."
 
 #. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+msgid "Logo"
+msgstr "Logo"
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__logo_url
 msgid "Logo Url"
 msgstr "URL del logo"
@@ -705,6 +773,11 @@ msgid "Name"
 msgstr "Nombre"
 
 #. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+msgid "Name:"
+msgstr "Razón social:"
+
+#. module: xb_pos_taecel
 #. odoo-javascript
 #: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.xml:0
 msgid "No amounts available for this carrier."
@@ -720,6 +793,13 @@ msgstr "Sin saldo"
 #: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_account__state__draft
 msgid "Not Connected"
 msgstr "Sin conexión"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+msgid ""
+"Not issued by the API. Read it in the TAECEL portal\n"
+"                            under Buy Balance &gt; Available Accounts."
+msgstr "La API no la entrega. Léela en el portal de TAECEL en Comprar saldo &gt; Ver cuentas disponibles."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_carrier__field_format__1
@@ -883,6 +963,7 @@ msgid "Raw Response"
 msgstr "Respuesta en crudo"
 
 #. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "Read it from TAECEL"
 msgstr "Consúltala en TAECEL"
@@ -1009,6 +1090,7 @@ msgstr "Sincronizar catálogo"
 #. odoo-python
 #: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
 #: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "TAECEL"
 msgstr "TAECEL"
@@ -1157,6 +1239,13 @@ msgstr ""
 #: code:addons/xb_pos_taecel/models/taecel_client.py:0
 msgid "TAECEL returned no deposit reference."
 msgstr "TAECEL no devolvió ninguna referencia de depósito."
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+msgid ""
+"TAECEL sets these destination accounts and can change them.\n"
+"                Confirm them in the TAECEL portal before a first deposit."
+msgstr "TAECEL define estas cuentas de destino y puede cambiarlas. Confírmalas en el portal de TAECEL antes de un primer depósito."
 
 #. module: xb_pos_taecel
 #: model:ir.actions.server,name:xb_pos_taecel.cron_taecel_dispatch_ir_actions_server
@@ -1381,6 +1470,11 @@ msgstr "Avisar al cajero en el TPV cuando la bolsa baje de este monto."
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__field_label
 msgid "What the cashier is asked for, e.g. \"Numero Celular\"."
 msgstr "Lo que se le pide al cajero, p. ej. \"Numero Celular\"."
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+msgid "Where to deposit"
+msgstr "Dónde depositar"
 
 #. module: xb_pos_taecel
 #. odoo-python

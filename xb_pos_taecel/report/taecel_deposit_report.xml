@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Own paper format: the sheet draws its own header band, so the default
+         40mm top margin left for a company header pushed everything a third of
+         the way down the page. -->
+    <record id="paperformat_taecel_deposit" model="report.paperformat">
+        <field name="name">TAECEL Deposit Sheet</field>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">6</field>
+        <field name="margin_bottom">8</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_report_taecel_deposit" model="ir.actions.report">
+        <field name="paperformat_id" ref="paperformat_taecel_deposit"/>
+        <field name="name">Deposit Sheet</field>
+        <field name="model">xb.taecel.account</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xb_pos_taecel.report_deposit_account</field>
+        <field name="report_file">xb_pos_taecel.report_deposit_account</field>
+        <field name="binding_model_id" ref="model_xb_taecel_account"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Deposit - %s' % object.name</field>
+    </record>
+
+</odoo>

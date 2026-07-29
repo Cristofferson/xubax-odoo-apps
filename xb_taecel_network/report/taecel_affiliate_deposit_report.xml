@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- The same sheet the base module prints for your own account, filled in
+         with an affiliate's references: this is what a distributor hands over
+         so the affiliate funds itself, instead of waiting on a manual balance
+         transfer (portal-only, and rejected after 30 minutes). -->
+    <template id="report_deposit_affiliate">
+        <t t-call="web.html_container">
+            <!-- "article" is what _prepare_html splits on; without it the PDF
+                 body loses its <head> and wkhtmltopdf mangles every accent. -->
+            <t t-foreach="docs" t-as="doc">
+                <div class="article" t-att-data-oe-model="doc._name"
+                     t-att-data-oe-id="doc.id" t-att-data-oe-lang="doc.env.lang">
+                    <t t-call="xb_pos_taecel.report_deposit_body">
+                        <t t-set="entity_label">Affiliate:</t>
+                        <t t-set="entity_name" t-value="doc.name"/>
+                        <t t-set="ref_airtime" t-value="doc.deposit_reference"/>
+                        <t t-set="ref_services" t-value="doc.deposit_reference_services"/>
+                        <t t-set="company" t-value="doc.company_id"/>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_taecel_affiliate_deposit" model="ir.actions.report">
+        <field name="paperformat_id" ref="xb_pos_taecel.paperformat_taecel_deposit"/>
+        <field name="name">Deposit Sheet</field>
+        <field name="model">xb.taecel.affiliate</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xb_taecel_network.report_deposit_affiliate</field>
+        <field name="report_file">xb_taecel_network.report_deposit_affiliate</field>
+        <field name="binding_model_id" ref="model_xb_taecel_affiliate"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Deposit - %s' % object.name</field>
+    </record>
+
+</odoo>

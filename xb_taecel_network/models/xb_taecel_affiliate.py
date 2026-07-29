@@ -90,11 +90,21 @@ class XbTaecelAffiliate(models.Model):
              'where a distributor earns.')
 
     # -- Funding -----------------------------------------------------------
+    # One reference per wallet: TAECEL funds airtime and bill payments
+    # separately and never moves balance between the two, so handing an
+    # affiliate the wrong one strands its money.
     deposit_reference = fields.Char(
-        string='Deposit Reference', readonly=True, copy=False,
-        help='Bank reference THIS affiliate deposits against. A deposit '
-             'quoting it is credited to the affiliate automatically, so no '
-             'balance transfer from you is needed.')
+        string='Airtime Deposit Reference', readonly=True, copy=False,
+        help='Bank reference THIS affiliate deposits against to fund its '
+             'AIRTIME wallet. A deposit quoting it is credited to the '
+             'affiliate automatically, so no balance transfer from you is '
+             'needed. TAECEL issues it starting with 88.')
+    deposit_reference_services = fields.Char(
+        string='Bill Payments Deposit Reference', copy=False,
+        help='Reference that funds this affiliate\'s BILL PAYMENTS wallet. '
+             'The API does not return it: the affiliate reads it in its own '
+             'TAECEL portal under Buy Balance > Available Accounts, or in the '
+             'app under "Where to deposit". TAECEL issues it starting with 99.')
     deposit_url = fields.Char(string='Report a Deposit', readonly=True, copy=False)
     deposit_date = fields.Datetime(string='Reference Read', readonly=True, copy=False)
 
