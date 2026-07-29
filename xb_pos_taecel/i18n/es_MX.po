@@ -36,6 +36,11 @@ msgid "%(wallet)s: %(left)s left after this sale."
 msgstr "%(wallet)s: quedan %(left)s después de esta venta."
 
 #. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "99... — from the TAECEL portal"
+msgstr "99… — del portal de TAECEL"
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__api_key
 msgid "API Key"
 msgstr "API Key"
@@ -107,6 +112,11 @@ msgid "Airtime & Bill Payments"
 msgstr "Recargas y Pago de Servicios"
 
 #. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__deposit_reference
+msgid "Airtime Deposit Reference"
+msgstr "Referencia de depósito de Tiempo Aire"
+
+#. module: xb_pos_taecel
 #: model:product.template,description_sale:xb_pos_taecel.product_taecel_service
 msgid "Airtime, bill payment or PIN sold through TAECEL."
 msgstr "Tiempo aire, pago de servicio o PIN vendido por TAECEL."
@@ -172,6 +182,11 @@ msgstr "Los saldos vienen de getBalance, que devuelve todas las bolsas en una so
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
 msgid "Bill Payments"
 msgstr "Pagos de servicio"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__deposit_reference_services
+msgid "Bill Payments Deposit Reference"
+msgstr "Referencia de depósito de Pago de Servicios"
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__bolsa_id
@@ -412,10 +427,17 @@ msgid "Declined by TAECEL."
 msgstr "Rechazada por TAECEL."
 
 #. module: xb_pos_taecel
-#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__deposit_reference
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "Deposit Reference"
 msgstr "Referencia de depósito"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+msgid ""
+"Deposit against reference %s to top up AIRTIME. Bill payments are funded "
+"through a separate reference that TAECEL only shows in its portal."
+msgstr "Deposita con la referencia %s para fondear TIEMPO AIRE. Los pagos de servicio se fondean con una referencia distinta, que TAECEL solo muestra en su portal."
 
 #. module: xb_pos_taecel
 #. odoo-python
@@ -904,12 +926,22 @@ msgid "Reference Read"
 msgstr "Referencia consultada"
 
 #. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__deposit_reference_services
+msgid ""
+"Reference that funds the BILL PAYMENTS wallet, which TAECEL keeps separate "
+"from airtime. The API does not return it: read it in the TAECEL portal under"
+" Buy Balance > Available Accounts, or in the TAECEL app under \"Where to "
+"deposit\", and type it here. TAECEL issues it starting with 99."
+msgstr "Referencia que fondea la bolsa de PAGO DE SERVICIOS, que TAECEL mantiene separada de la de tiempo aire. La API no la devuelve: léela en el portal de TAECEL en Comprar saldo > Ver cuentas disponibles, o en la app de TAECEL en \"Dónde depositar\", y captúrala aquí. TAECEL la emite empezando con 99."
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__deposit_reference
 msgid ""
 "Reference to quote when depositing at the bank (transfer, practicaja or "
-"teller). The deposit is credited to this account automatically, with no "
-"transfer from anyone else."
-msgstr "Referencia que debes indicar al depositar en el banco (transferencia, practicaja o ventanilla). El depósito se abona solo a esta cuenta, sin que nadie tenga que traspasarte saldo."
+"teller) to fund the AIRTIME wallet. The deposit is credited to this account "
+"automatically, with no transfer from anyone else. TAECEL issues it starting "
+"with 88."
+msgstr "Referencia que debes indicar al depositar en el banco (transferencia, practicaja o ventanilla) para fondear la bolsa de TIEMPO AIRE. El depósito se abona a esta cuenta en automático, sin que nadie te traspase saldo. TAECEL la emite empezando con 88."
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
@@ -1358,8 +1390,8 @@ msgstr "account_id"
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
-msgid "e.g. 352494"
-msgstr "p. ej. 352494"
+msgid "e.g. 300000"
+msgstr "p. ej. 300000"
 
 #. module: xb_pos_taecel
 #. odoo-javascript
