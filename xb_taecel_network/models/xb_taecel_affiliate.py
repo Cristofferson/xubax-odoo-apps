@@ -36,10 +36,15 @@ class XbTaecelAffiliate(models.Model):
     _order = 'name'
 
     name = fields.Char(required=True, help='Trade name of the point of sale.')
+    # Not required on purpose: TAECEL hands the account number over on its own
+    # schedule, and the panel never needs it -- balances and sales are pulled
+    # with the affiliate's own credentials. Demanding it up front would block
+    # registering an affiliate that is already selling.
     taecel_uid = fields.Char(
-        string='TAECEL Account ID', required=True,
+        string='TAECEL Account ID',
         help='Account number TAECEL assigned to this affiliate, as shown in '
-             'MI RED. This is what you search by in the portal.')
+             'MI RED. This is what you search by in the portal. Leave it empty '
+             'until TAECEL gives it to you.')
     active = fields.Boolean(default=True)
     partner_id = fields.Many2one(
         'res.partner', string='Contact',
@@ -103,6 +108,10 @@ class XbTaecelAffiliate(models.Model):
     sales_volume = fields.Monetary(compute='_compute_sales', string='Volume')
     my_margin = fields.Monetary(compute='_compute_sales', string='My Margin')
 
+    # The pair stays unique, but only for affiliates whose number is known: an
+    # empty string counts as a value for a UNIQUE index, so two affiliates
+    # still waiting on their number would collide. Postgres keeps NULLs
+    # distinct, so blanks are normalised to NULL on the way in.
     if HAS_MODEL_CONSTRAINT:
         _uid_account_uniq = models.Constraint(
             'unique(taecel_uid, account_id)',
@@ -113,6 +122,24 @@ class XbTaecelAffiliate(models.Model):
             ('uid_account_uniq', 'unique(taecel_uid, account_id)',
              "This affiliate is already registered under that account."),
         ]
+
+    @api.model
+    def _clean_uid(self, vals):
+        """Blank or padded account numbers are never a real number.
+
+        A stray space would also defeat the lookup in MI RED, which is the
+        whole point of storing it.
+        """
+        if 'taecel_uid' in vals:
+            vals['taecel_uid'] = (vals['taecel_uid'] or '').strip() or False
+        return vals
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        return super().create([self._clean_uid(vals) for vals in vals_list])
+
+    def write(self, vals):
+        return super().write(self._clean_uid(vals))
 
     @api.depends('commission_rate', 'account_id.commission_rate')
     def _compute_margin_rate(self):
