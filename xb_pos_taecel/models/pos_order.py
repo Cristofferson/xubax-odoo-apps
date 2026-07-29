@@ -56,6 +56,7 @@ class PosOrder(models.Model):
         ``txn.action_dispatch()``.
         """
         Txn = self.env['xb.taecel.transaction']
+        Product = self.env['xb.taecel.product']
         for order in self:
             if order.state not in ('paid', 'done', 'invoiced'):
                 continue
@@ -69,9 +70,18 @@ class PosOrder(models.Model):
                         order.name)
                     continue
                 fee = line.taecel_fee
+                # The register sends the code, which is what dispatch needs;
+                # point at the catalog record too, so the back office reads
+                # "Telcel $ 50.00" instead of an empty cell. Unique per
+                # (code, account), and free-amount carriers simply have none.
+                product = Product.sudo().search([
+                    ('account_id', '=', account.id),
+                    ('code', '=', line.taecel_product_code),
+                ], limit=1) if line.taecel_product_code else Product
                 Txn.create({
                     'account_id': account.id,
                     'carrier_id': line.taecel_carrier_id.id or False,
+                    'product_id': product.id or False,
                     'product_code': line.taecel_product_code,
                     'bolsa_id': line.taecel_bolsa_id,
                     'reference': line.taecel_reference or '',
