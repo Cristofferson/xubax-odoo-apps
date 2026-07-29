@@ -129,7 +129,7 @@ export class XbTaecelSaleDialog extends Component {
         const info = this.walletInfo(carrier.bolsa_id);
         return _t(
             "%(wallet)s has %(left)s available, this sale needs %(needed)s. "
-            + "Fund the wallet at TAECEL before selling it: the customer would "
+            + "Fund the wallet before selling it: the customer would "
             + "pay and the recharge would be rejected.",
             {
                 wallet: info.name,
@@ -249,7 +249,7 @@ export class XbTaecelSaleDialog extends Component {
         const product = this.pos.xbTaecelProduct;
         if (!product) {
             this.state.error = _t(
-                "The TAECEL sale product is missing. Reinstall the module or "
+                "The recharge sale product is missing. Reinstall the module or "
                 + "contact support."
             );
             return;

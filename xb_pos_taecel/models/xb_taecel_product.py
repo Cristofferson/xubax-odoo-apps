@@ -21,7 +21,7 @@ class XbTaecelProduct(models.Model):
     till; only catalog carriers list fixed amounts.
     """
     _name = 'xb.taecel.product'
-    _description = 'TAECEL Product'
+    _description = 'Recharge Product'
     _order = 'carrier_id, amount'
     _inherit = ['pos.load.mixin']
 
@@ -32,15 +32,15 @@ class XbTaecelProduct(models.Model):
 
     carrier_id = fields.Many2one('xb.taecel.carrier', ondelete='cascade', index=True)
     code = fields.Char(required=True, index=True,
-                       help='Product code TAECEL expects to dispatch, e.g. TEL050.')
+                       help='Product code the provider expects to dispatch, e.g. TEL050.')
     name = fields.Char()
-    carrier_name = fields.Char(help='Carrier name as it came from TAECEL.')
+    carrier_name = fields.Char(help='Carrier name as it came from the provider.')
     bolsa_id = fields.Char(help='Wallet this product is charged against.')
     category = fields.Char()
     amount = fields.Monetary(help='Fixed sale amount for this product.')
     description = fields.Text(help='Promo/plan detail, shown to the cashier.')
     validity = fields.Char(string='Vigencia')
-    taecel_pro_id = fields.Char(string='TAECEL proID')
+    taecel_pro_id = fields.Char(string='Provider proID')
     subscription = fields.Boolean()
     active = fields.Boolean(default=True)
 
@@ -50,12 +50,12 @@ class XbTaecelProduct(models.Model):
     if HAS_MODEL_CONSTRAINT:
         _code_account_uniq = models.Constraint(
             'unique(code, account_id)',
-            "This TAECEL product code already exists for this account.",
+            "This product code already exists for this account.",
         )
     else:
         _sql_constraints = [
             ('code_account_uniq', 'unique(code, account_id)',
-             "This TAECEL product code already exists for this account."),
+             "This product code already exists for this account."),
         ]
 
     @api.depends('name', 'carrier_name', 'amount', 'currency_id')

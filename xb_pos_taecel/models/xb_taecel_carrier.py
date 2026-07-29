@@ -25,7 +25,7 @@ class XbTaecelCarrier(models.Model):
     because past transactions and products point here.
     """
     _name = 'xb.taecel.carrier'
-    _description = 'TAECEL Carrier'
+    _description = 'Recharge Carrier'
     _order = 'bolsa_id, name'
     _inherit = ['pos.load.mixin']
 
@@ -34,7 +34,7 @@ class XbTaecelCarrier(models.Model):
     company_id = fields.Many2one(related='account_id.company_id', store=True)
 
     carrier_uid = fields.Char(
-        required=True, index=True, help='Carrier ID in the TAECEL catalog.')
+        required=True, index=True, help='Carrier ID in the provider catalog.')
     name = fields.Char(required=True)
     logo_url = fields.Char()
     bolsa_id = fields.Char(help='Wallet this carrier is charged against.')
@@ -47,8 +47,8 @@ class XbTaecelCarrier(models.Model):
     active = fields.Boolean(default=True)
     customer_fee = fields.Monetary(
         string='Customer Fee',
-        help='Fee charged to the customer on top of the amount (TAECEL '
-             'ComisionCliente). Typically 0 for airtime; set for services.')
+        help='Fee charged to the customer on top of the amount, as agreed '
+             'with your provider. Typically 0 for airtime; set for services.')
     currency_id = fields.Many2one(related='account_id.currency_id')
 
     product_ids = fields.One2many('xb.taecel.product', 'carrier_id')
@@ -56,7 +56,7 @@ class XbTaecelCarrier(models.Model):
 
     # -- Input field spec (the carrier's single Campos entry) --------------
     field_label = fields.Char(help='What the cashier is asked for, e.g. "Numero Celular".')
-    field_key = fields.Char(help='Parameter name TAECEL expects, e.g. "referencia".')
+    field_key = fields.Char(help='Parameter name the provider expects, e.g. "referencia".')
     field_min = fields.Integer(help='Minimum length of the reference.')
     field_max = fields.Integer(help='Maximum length of the reference.')
     field_format = fields.Selection([
@@ -67,7 +67,7 @@ class XbTaecelCarrier(models.Model):
     field_required = fields.Boolean(default=True)
     field_confirm = fields.Boolean(
         string='Confirm Reference',
-        help='TAECEL asks the cashier to type the reference twice.')
+        help='The provider asks the cashier to type the reference twice.')
 
     # Odoo 19 dropped _sql_constraints in favour of models.Constraint;
     # Odoo 18 has no models.Constraint. Declaring the wrong one is a

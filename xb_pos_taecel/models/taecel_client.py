@@ -49,7 +49,7 @@ class TaecelClient:
 
     def __init__(self, base_url, key, nip, timeout=const.DEFAULT_TIMEOUT):
         if not (base_url and key and nip):
-            raise UserError(_('The TAECEL account is missing its URL, key or NIP.'))
+            raise UserError(_('The recharges account is missing its URL, key or NIP.'))
         self.base_url = base_url.rstrip('/')
         self.key = key
         self.nip = nip
@@ -68,18 +68,18 @@ class TaecelClient:
             # Never a failure: TAECEL may well have dispatched. The caller
             # parks it for the reconciler.
             _logger.warning('TAECEL timeout on %s after %ss', path, self.timeout)
-            return TaecelResult(False, message=_('TAECEL did not answer in time.'),
+            return TaecelResult(False, message=_('The provider did not answer in time.'),
                                 timed_out=True)
         except requests.RequestException as err:
             _logger.warning('TAECEL transport error on %s: %s', path, err)
-            return TaecelResult(False, message=_('Could not reach TAECEL: %s', err))
+            return TaecelResult(False, message=_('Could not reach the provider: %s', err))
 
         try:
             parsed = response.json()
         except ValueError:
             snippet = (response.text or '')[:200]
             _logger.warning('TAECEL non-JSON answer on %s: %s', path, snippet)
-            return TaecelResult(False, message=_('Unreadable answer from TAECEL.'),
+            return TaecelResult(False, message=_('Unreadable answer from the provider.'),
                                 raw=snippet)
 
         ok = bool(parsed.get(const.RESP_SUCCESS))
@@ -124,7 +124,7 @@ class TaecelClient:
         if not reference:
             return TaecelResult(
                 False,
-                message=result.message or _('TAECEL returned no deposit reference.'),
+                message=result.message or _('The provider returned no deposit reference.'),
                 raw=result.raw,
                 timed_out=result.timed_out,
             )

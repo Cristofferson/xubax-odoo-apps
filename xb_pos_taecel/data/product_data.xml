@@ -6,14 +6,14 @@
          real catalog clean, with no product.product per carrier or amount. -->
     <record id="product_taecel_service" model="product.template">
         <field name="name">Recharges &amp; Bill Payments</field>
-        <field name="default_code">XBTAECEL</field>
+        <field name="default_code">XBTOPUP</field>
         <field name="type">service</field>
         <field name="available_in_pos" eval="True"/>
         <field name="sale_ok" eval="True"/>
         <field name="purchase_ok" eval="False"/>
         <field name="list_price">0.0</field>
         <field name="taxes_id" eval="[(5, 0, 0)]"/>
-        <field name="description_sale">Airtime, bill payment or PIN sold through TAECEL.</field>
+        <field name="description_sale">Airtime, bill payment or PIN sold at the point of sale.</field>
         <!-- Without an image the POS grid paints an empty placeholder
              tile, which reads as a broken product to the cashier. -->
         <field name="image_1920" type="base64"
