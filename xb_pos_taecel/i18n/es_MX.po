@@ -4,15 +4,34 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: XUBAX\n"
+"POT-Creation-Date: 2026-07-29 23:20+0000\n"
+"PO-Revision-Date: 2026-07-29 23:20+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
-"Language: es_MX\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"%(balance)s Each wallet (airtime, bill payments) refreshes on its own every "
+"half hour, and on demand with the %(refresh)s button on the account. If a "
+"wallet runs short, the till warns before it lets a sale through."
+msgstr "%(balance)s El saldo de cada bolsa (tiempo aire, pago de servicios) se actualiza solo cada media hora, y también con el botón %(refresh)s en la ficha de la cuenta. Si una bolsa se queda corta, la caja avisa antes de dejar vender."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"%(before)s read the number out loud to the customer and have them confirm "
+"it. %(warning)s -- not by you and not by the provider. It is the one step in"
+" the process with no way back."
+msgstr "%(before)s lee el número en voz alta al cliente y que él te lo confirme. %(warning)s — ni por ti ni por el proveedor. Es el único paso del proceso que no tiene vuelta atrás."
 
 #. module: xb_pos_taecel
 #. odoo-python
@@ -21,13 +40,79 @@ msgid "%(c)s carriers, %(p)s products synced."
 msgstr "%(c)s compañías y %(p)s productos sincronizados."
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "%(dont)s. It is being verified and settles on its own."
+msgstr "%(dont)s. Se está verificando y se cierra sola."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"%(fee)s What the customer is charged on top comes from each carrier's "
+"configuration, not from the till. It is usually zero on airtime; on bill "
+"payments is where it shows up."
+msgstr "%(fee)s Lo que se le cobra de más al cliente sale de la configuración de cada compañía, no se captura en la caja. En tiempo aire normalmente es cero; en pagos de servicio es donde aparece."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"%(q)s If the recharge made it out, it is on record and closes itself when "
+"the connection is back. If it did not, nothing was sent. It is never sent "
+"twice."
+msgstr "%(q)s Si la recarga alcanzó a salir, queda registrada y se cierra sola cuando vuelve la conexión. Si no alcanzó a salir, no se envió nada. En ningún caso se envía dos veces."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"%(q)s No. Successful recharges are not cancelled by anyone. That is why the "
+"number is typed twice and confirmed with the customer before the line is "
+"added."
+msgstr "%(q)s No. Una recarga exitosa no la cancela nadie. Por eso el número se captura dos veces y se confirma con el cliente antes de agregar la línea."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"%(q)s That register has no account connected, or the account is restricted "
+"to other registers. The manager checks it under %(menu)s."
+msgstr "%(q)s Esa caja no tiene cuenta conectada, o la cuenta está limitada a otras cajas. Lo revisa el encargado en %(menu)s."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"%(q)s Yes, it is one more line of the order. It is charged together and "
+"lands in the same till closing."
+msgstr "%(q)s Sí, es una línea más del pedido. Se cobra todo junto y entra al mismo corte de caja."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"%(q)s Yes. Once a folio comes back it is printed on the ticket along with "
+"the carrier and the number, which is what the customer needs in order to "
+"claim."
+msgstr "%(q)s Sí. Cuando llega el folio queda impreso en el ticket, junto con la compañía y el número, que es lo que le sirve al cliente para reclamar."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"%(reco)s Recharges left unconfirmed are checked automatically every few "
+"minutes until they close. Nothing to do by hand."
+msgstr "%(reco)s Las recargas que quedan sin confirmar se revisan solas cada pocos minutos hasta cerrarlas. No hay que hacer nada a mano."
+
+#. module: xb_pos_taecel
 #. odoo-javascript
 #: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
 msgid ""
 "%(wallet)s has %(left)s available, this sale needs %(needed)s. Fund the "
-"wallet at TAECEL before selling it: the customer would pay and the recharge "
-"would be rejected."
-msgstr "%(wallet)s tiene %(left)s disponibles y esta venta necesita %(needed)s. Fondea la bolsa en TAECEL antes de venderla: el cliente pagaría y la recarga sería rechazada."
+"wallet before selling it: the customer would pay and the recharge would be "
+"rejected."
+msgstr "%(wallet)s tiene %(left)s disponible y esta venta necesita %(needed)s. Fondea la bolsa antes de venderla: el cliente pagaría y la recarga saldría rechazada."
 
 #. module: xb_pos_taecel
 #. odoo-javascript
@@ -36,13 +121,21 @@ msgid "%(wallet)s: %(left)s left after this sale."
 msgstr "%(wallet)s: quedan %(left)s después de esta venta."
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"%(watch)s the amount on a service is typed by you off the bill. Check it "
+"with the customer before adding the line: just like a recharge, %(sent)s."
+msgstr "%(watch)s el monto de un servicio lo capturas tú a partir del recibo. Revísalo con el cliente antes de agregar la línea: igual que una recarga, %(sent)s."
+
+#. module: xb_pos_taecel
 #. odoo-javascript
 #: code:addons/xb_pos_taecel/static/src/app/taecel_alerts.js:0
 msgid ""
 "%(what)s has not been confirmed yet.\n"
 "\n"
 "Do NOT refund it and do NOT sell it again: it is still being verified and may go through. It will be settled under Recharges > Transactions."
-msgstr "%(what)s todavía no tiene confirmación.\n\nNO la devuelvas y NO la vuelvas a vender: se está verificando y puede completarse. Quedará resuelta en Recargas > Transacciones."
+msgstr "%(what)s todavía no tiene confirmación.\\n\\nNO la devuelvas y NO la vuelvas a vender: se está verificando y puede completarse. Quedará resuelta en Recargas > Transacciones."
 
 #. module: xb_pos_taecel
 #. odoo-javascript
@@ -52,7 +145,17 @@ msgid ""
 "Reason: %(reason)s\n"
 "\n"
 "The customer paid %(amount)s for it. Refund that line."
-msgstr "%(what)s NO se entregó.\nMotivo: %(reason)s\n\nEl cliente pagó %(amount)s por ella. Devuélvele esa línea."
+msgstr "%(what)s NO se entregó.\\nMotivo: %(reason)s\\n\\nEl cliente pagó %(amount)s por ella. Devuélvele esa línea."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"%(why)s refunding a recharge that did arrive is giving money away, and "
+"selling it again puts credit on the customer's phone twice, with the shop "
+"paying for both. That is why the two notices read differently: one asks you "
+"to refund, the other asks you to wait."
+msgstr "%(why)s devolver una recarga que sí llegó es regalar dinero, y volver a venderla le abona dos veces al teléfono del cliente, con la tienda pagando las dos. Por eso los dos avisos dicen cosas distintas: uno te pide devolver, el otro te pide esperar."
 
 #. module: xb_pos_taecel
 #: model:ir.actions.report,print_report_name:xb_pos_taecel.action_report_taecel_deposit
@@ -60,9 +163,45 @@ msgid "'Deposit - %s' % object.name"
 msgstr "'Deposito - %s' % object.name"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "1 - Open the Recharges button"
+msgstr "1 · Abre el botón Recargas"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "2 - Pick the carrier or the service"
+msgstr "2 · Elige la compañía o el servicio"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "3 - Tap the amount the customer asked for"
+msgstr "3 · Toca el monto que pidió el cliente"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "4 - Type the number, twice"
+msgstr "4 · Captura el número, dos veces"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "5 - Add it to the sale"
+msgstr "5 · Agrégala a la venta"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "6 - Charge as usual"
+msgstr "6 · Cobra como siempre"
+
+#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
-msgid "99... — from the TAECEL portal"
-msgstr "99… — del portal de TAECEL"
+msgid "99... — from the provider portal"
+msgstr "99... — del portal del proveedor"
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
@@ -79,6 +218,28 @@ msgid ""
 "<br/>\n"
 "                            RFC:"
 msgstr "<br/> RFC:"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"A recharge is not sent while the customer waits: the carrier is allowed up "
+"to a minute to answer, and nobody is going to hold the queue for that. It "
+"goes out the moment you validate, and the answer comes back seconds later --"
+" by then the ticket has printed and you may already be on another sale."
+msgstr "La recarga no se manda mientras el cliente espera: la compañía puede tardar hasta un minuto en contestar, y nadie va a detener la fila por eso. Sale en el momento en que validas, y la respuesta llega segundos después: para entonces el ticket ya se imprimió y quizá ya estés en otra venta."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "A recharge that has been sent cannot be cancelled or refunded"
+msgstr "Una recarga enviada no se puede cancelar ni devolver"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "A top-up and a bill payment on the same order"
+msgstr "Una recarga y un pago de servicio en el mismo pedido"
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__api_key
@@ -108,11 +269,17 @@ msgid "Account Type"
 msgstr "Tipo de cuenta"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Account form with the deposit references"
+msgstr "Ficha de la cuenta con las referencias de depósito"
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__taecel_uid
 msgid ""
-"Account number TAECEL assigned you, as shown in the portal. A distributor "
-"looks its affiliates up by this number in MI RED."
-msgstr "Número de cuenta que te asignó TAECEL, tal como aparece en el portal. El distribuidor busca a sus afiliados por este número en MI RED."
+"Account number the provider assigned you, as shown in the portal. A "
+"distributor looks its affiliates up by this number in MI RED."
+msgstr "Número de cuenta que te asignó el proveedor, como aparece en el portal. Un distribuidor busca a sus afiliados por este número en MI RED."
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_account
@@ -144,6 +311,12 @@ msgid "Add to order"
 msgstr "Agregar a la venta"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Add to sale"
+msgstr "Agregar a la venta"
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_account__role__affiliate
 msgid "Affiliate"
 msgstr "Afiliado"
@@ -168,14 +341,23 @@ msgid "Airtime Deposit Reference"
 msgstr "Referencia de depósito de Tiempo Aire"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"Airtime and bill payments are funded separately and balance is never moved "
+"between them, so each one has %(own)s. Depositing with the wrong one leaves "
+"the money stuck in the wrong wallet."
+msgstr "El tiempo aire y los pagos de servicio se fondean por separado y el saldo nunca se mueve de una bolsa a la otra, así que cada una tiene %(own)s. Depositar con la equivocada deja el dinero atorado en la bolsa que no era."
+
+#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
 msgid "Airtime payment reference"
 msgstr "Referencia de pago de Tiempo Aire"
 
 #. module: xb_pos_taecel
 #: model:product.template,description_sale:xb_pos_taecel.product_taecel_service
-msgid "Airtime, bill payment or PIN sold through TAECEL."
-msgstr "Tiempo aire, pago de servicio o PIN vendido por TAECEL."
+msgid "Airtime, bill payment or PIN sold at the point of sale."
+msgstr "Tiempo aire, pago de servicios o PIN vendido en el punto de venta."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_carrier__field_format__2
@@ -194,6 +376,12 @@ msgstr "También la usan"
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__amount
 msgid "Amount"
 msgstr "Monto"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Amounts and packages for the carrier"
+msgstr "Montos y paquetes de la compañía"
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
@@ -227,12 +415,30 @@ msgid "Balance Date"
 msgstr "Fecha del saldo"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Balance."
+msgstr "Saldo."
+
+#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid ""
 "Balances come from getBalance, which returns\n"
 "                                every bolsa in one call. Refreshed on a schedule\n"
 "                                and after each settled recharge."
 msgstr "Los saldos vienen de getBalance, que devuelve todas las bolsas en una sola llamada. Se actualizan por tarea programada y después de cada recarga liquidada."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Before you add it:"
+msgstr "Antes de agregarla:"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Before you start"
+msgstr "Antes de empezar"
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
@@ -250,6 +456,12 @@ msgid "Bill payments reference"
 msgstr "Referencia de pago de Pago de Servicios"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Bill payments: power, water, cable..."
+msgstr "Pagos de servicio: luz, agua, cable…"
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__bolsa_id
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__bolsa_id
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__bolsa_id
@@ -263,10 +475,28 @@ msgid "CLABE:"
 msgstr "CLABE:"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Can I cancel a recharge I already charged?"
+msgstr "¿Puedo cancelar una recarga que ya cobré?"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Can I sell a recharge and the groceries on one ticket?"
+msgstr "¿Puedo vender una recarga y el mandado en el mismo ticket?"
+
+#. module: xb_pos_taecel
 #. odoo-javascript
 #: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.xml:0
 msgid "Cancel"
 msgstr "Cancelar"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Capturing a bill payment: amount and service number"
+msgstr "Captura de un pago de servicio: importe y número de servicio"
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
@@ -274,6 +504,7 @@ msgid "Card:"
 msgstr "Tarjeta:"
 
 #. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_carrier_id
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__carrier_ids
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__carrier_id
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__carrier_id
@@ -289,8 +520,8 @@ msgstr "Compañías"
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__carrier_uid
-msgid "Carrier ID in the TAECEL catalog."
-msgstr "Id de la compañía en el catálogo TAECEL."
+msgid "Carrier ID in the provider catalog."
+msgstr "ID de la compañía en el catálogo del proveedor."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__carrier_name
@@ -314,8 +545,8 @@ msgstr "Código de autorización de la compañía."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_product__carrier_name
-msgid "Carrier name as it came from TAECEL."
-msgstr "Nombre de la compañía tal como lo entrega TAECEL."
+msgid "Carrier name as it came from the provider."
+msgstr "Nombre de la compañía tal como lo manda el proveedor."
 
 #. module: xb_pos_taecel
 #: model:ir.actions.act_window,name:xb_pos_taecel.action_taecel_carrier
@@ -324,6 +555,15 @@ msgstr "Nombre de la compañía tal como lo entrega TAECEL."
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
 msgid "Carriers"
 msgstr "Compañías"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"Cash, card or whatever method you normally use, and validate. Validating is "
+"when the recharge goes out to the carrier. You can sell a recharge together "
+"with the groceries on the same ticket."
+msgstr "Efectivo, tarjeta o el método que uses normalmente, y validas. Al validar es cuando la recarga sale hacia la compañía. Puedes vender la recarga junto con el mandado en el mismo ticket."
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_search
@@ -336,6 +576,8 @@ msgid "Cashier Input (Campos)"
 msgstr "Captura del cajero (Campos)"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
 #: model:ir.actions.act_window,name:xb_pos_taecel.action_taecel_product
 #: model:ir.ui.menu,name:xb_pos_taecel.menu_taecel_product
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
@@ -417,6 +659,12 @@ msgid "Connected"
 msgstr "Conectada"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+msgid "Connection"
+msgstr "Conexión"
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__connection_msg
 msgid "Connection Msg"
 msgstr "Mensaje de conexión"
@@ -430,17 +678,17 @@ msgstr "Conexión correcta."
 #. module: xb_pos_taecel
 #. odoo-python
 #: code:addons/xb_pos_taecel/models/taecel_client.py:0
-msgid "Could not reach TAECEL: %s"
-msgstr "No se pudo contactar a TAECEL: %s"
+msgid "Could not reach the provider: %s"
+msgstr "No se pudo conectar con el proveedor: %s"
 
 #. module: xb_pos_taecel
 #. odoo-python
 #: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
 msgid ""
-"Could not read the TAECEL catalog:\n"
+"Could not read the catalog:\n"
 "\n"
 "%s"
-msgstr "No se pudo leer el catálogo de TAECEL:\n\n%s"
+msgstr "No se pudo leer el catálogo:\n\n%s"
 
 #. module: xb_pos_taecel
 #. odoo-python
@@ -449,7 +697,7 @@ msgid ""
 "Could not read the deposit reference:\n"
 "\n"
 "%s"
-msgstr "No se pudo leer la referencia de depósito:\\n\\n%s"
+msgstr "No se pudo leer la referencia de depósito:\\\\n\\\\n%s"
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_search
@@ -484,6 +732,13 @@ msgid "Currency"
 msgstr "Moneda"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_fee
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__customer_fee
 msgid "Customer Fee"
 msgstr "Comisión al cliente"
@@ -495,11 +750,19 @@ msgstr "Comisión de servicio al cliente"
 
 #. module: xb_pos_taecel
 #. odoo-python
-#: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
-msgid "Declined by TAECEL."
-msgstr "Rechazada por TAECEL."
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Customer fee."
+msgstr "Comisión al cliente."
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
+msgid "Declined by the provider."
+msgstr "Rechazada por el proveedor."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
 #: model:ir.actions.report,name:xb_pos_taecel.action_report_taecel_deposit
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
@@ -546,10 +809,22 @@ msgstr "Distribuidor"
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__role
 msgid ""
-"Distributor: you contracted TAECEL directly and may register affiliates. "
-"Affiliate: a distributor registered you and funds your wallets, and sets the"
-" commission you earn."
-msgstr "Distribuidor: contrataste TAECEL directamente y puedes registrar afiliados. Afiliado: un distribuidor te registró, fondea tus bolsas y fija la comisión que ganas."
+"Distributor: you contracted the provider directly and may register "
+"affiliates. Affiliate: a distributor registered you and funds your wallets, "
+"and sets the commission you earn."
+msgstr "Distribuidor: contrataste al proveedor directo y puedes registrar afiliados. Afiliado: un distribuidor te registró, te fondea las bolsas y fija la comisión que ganas."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Do NOT refund it and do NOT sell it again"
+msgstr "NO la devuelvas y NO la vuelvas a vender"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Does the ticket carry the folio?"
+msgstr "¿El ticket lleva el folio?"
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__done_date
@@ -557,9 +832,20 @@ msgid "Done Date"
 msgstr "Fecha de conclusión"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
 #: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_transaction__state__draft
 msgid "Draft"
 msgstr "Borrador"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"Each carrier brings its own amounts and packages, with the validity that "
+"applies to them. For an open-amount service -- a power bill, say -- you get "
+"a field to type the exact amount instead of the list."
+msgstr "Cada compañía trae sus montos y sus paquetes, con la vigencia que les corresponde. Cuando el servicio es de monto libre —un recibo de luz, por ejemplo— en lugar de la lista aparece un campo para capturar la cantidad exacta."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_carrier__field_format__3
@@ -595,6 +881,17 @@ msgid "Error Message"
 msgstr "Mensaje de error"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"Every sale leaves its own transaction under %(menu)s, with the folio the "
+"carrier returns, the amount, the fee charged to the customer and the point-"
+"of-sale order it came from."
+msgstr "Cada venta deja su propia transacción en %(menu)s, con el folio que devuelve la compañía, el monto, la comisión cobrada al cliente y el pedido del punto de venta del que salió."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
 #: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_transaction__state__failed
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_search
 msgid "Failed"
@@ -609,16 +906,16 @@ msgstr "Comisión"
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__customer_fee
 msgid ""
-"Fee charged to the customer on top of the amount (TAECEL ComisionCliente). "
-"Typically 0 for airtime; set for services."
-msgstr "Comisión que se cobra al cliente sobre el monto (ComisiónCliente de TAECEL). Normalmente 0 en tiempo aire; se aplica en servicios."
+"Fee charged to the customer on top of the amount, as agreed with your "
+"provider. Typically 0 for airtime; set for services."
+msgstr "Comisión que se le cobra al cliente encima del monto, según lo acordado con tu proveedor. Normalmente 0 en tiempo aire; se usa en servicios."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__customer_fee
 msgid ""
-"Fee charged to the customer on top of the amount, as configured in the "
-"TAECEL platform. Must appear on the receipt."
-msgstr "Comisión que se cobra al cliente sobre el monto, según la configuración en la plataforma de TAECEL. Debe aparecer en el ticket."
+"Fee charged to the customer on top of the amount, as configured with your "
+"provider. Must appear on the receipt."
+msgstr "Comisión que se le cobra al cliente encima del monto, según lo acordado con tu proveedor. Debe aparecer en el ticket."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__field_format
@@ -666,14 +963,35 @@ msgid "Folio"
 msgstr "Folio"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "For the manager"
+msgstr "Para el encargado"
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_carrier__carrier_type__1
 msgid "Free amount"
 msgstr "Monto libre"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"From there everything is identical: %(add)s puts the payment in as one more "
+"line, and you charge it all together on the same ticket. One sale can carry "
+"the groceries, a phone top-up and the power bill."
+msgstr "De ahí en adelante todo es idéntico: %(add)s mete el pago como una línea más, y cobras todo junto en el mismo ticket. En una sola venta puedes cobrar el mandado, una recarga de teléfono y el recibo de la luz."
+
+#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "Funding"
 msgstr "Fondeo"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Funding the wallets"
+msgstr "Fondear las bolsas"
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
@@ -683,9 +1001,9 @@ msgstr "GiftCards"
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__timeout
 msgid ""
-"How long the cashier waits for TAECEL before the sale is parked for "
+"How long the cashier waits for the provider before the sale is parked for "
 "automatic reconciliation. Keep it short."
-msgstr "Cuanto espera el cajero a TAECEL antes de que la venta quede pendiente de conciliacion automatica. Manténgalo corto."
+msgstr "Cuánto espera la cajera al proveedor antes de que la venta quede en conciliación automática. Déjalo corto."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order__id
@@ -698,6 +1016,18 @@ msgstr "Cuanto espera el cajero a TAECEL antes de que la venta quede pendiente d
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_wallet__id
 msgid "ID"
 msgstr "ID"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "If a recharge comes back rejected"
+msgstr "Si una recarga vuelve rechazada"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "It has been requested and the confirmation is pending."
+msgstr "Ya se pidió y se está esperando la confirmación."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__write_uid
@@ -725,9 +1055,21 @@ msgstr "Vacío = todos los puntos de venta"
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__deposit_url
 msgid ""
-"Link to TAECEL's form for reporting a deposit that was not referenced, so it"
-" can be applied manually."
-msgstr "Liga al formulario de TAECEL para reportar un depósito que no se referenció, y que lo apliquen manualmente."
+"Link to the provider's form for reporting a deposit that was not referenced,"
+" so it can be applied manually."
+msgstr "Liga al formulario del proveedor para reportar un depósito que no se referenció, y que lo apliquen a mano."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "List of carriers and services"
+msgstr "Lista de compañías y servicios"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "List of services"
+msgstr "Lista de servicios"
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
@@ -747,14 +1089,21 @@ msgstr "Aviso de saldo bajo"
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
 msgid ""
-"Match this transaction in TAECEL's sales.                                   "
-"Read-only: it never dispatches a second recharge."
-msgstr "Busca esta transaccion en las ventas de TAECEL. Solo lectura: nunca despacha una segúnda recarga."
+"Match this transaction in the provider's sales."
+"                                   Read-only: it never dispatches a second "
+"recharge."
+msgstr "Busca esta transacción en las ventas del proveedor. Solo lectura: nunca despacha una segunda recarga."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__field_max
 msgid "Maximum length of the reference."
 msgstr "Largo máximo de la referencia."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Means"
+msgstr "Significa"
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__field_min
@@ -802,14 +1151,20 @@ msgid "Not Connected"
 msgstr "Sin conexión"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Note"
+msgstr "Nota"
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_carrier__field_format__1
 msgid "Numeric"
 msgstr "Numérico"
 
 #. module: xb_pos_taecel
 #: model:ir.model.constraint,message:xb_pos_taecel.constraint_xb_taecel_account_company_uniq
-msgid "Only one TAECEL account per company."
-msgstr "Solo una cuenta TAECEL por compañía."
+msgid "Only one recharges account per company."
+msgstr "Solo una cuenta de recargas por compañía."
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
@@ -831,24 +1186,30 @@ msgstr "Otras compañías que venden con esta cuenta"
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__shared_company_ids
 msgid ""
 "Other companies whose registers sell on this account. A group that funds one"
-" single TAECEL account lists them here; leave it empty to keep the account "
-"private to its own company."
-msgstr "Otras compañías cuyas cajas venden con esta cuenta. Un grupo que fondea una sola cuenta TAECEL las lista aquí; déjalo vacío para que la cuenta quede privada a su propia compañía."
+" single recharges account lists them here; leave it empty to keep the "
+"account private to its own company."
+msgstr "Otras compañías cuyas cajas venden con esta cuenta. Un grupo que fondea una sola cuenta de recargas las lista aquí; déjalo vacío para que la cuenta sea solo de su propia compañía."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__pin
-msgid "PIN delivered by TAECEL, when applicable."
-msgstr "PIN entregado por TAECEL, cuando aplica."
+msgid "PIN delivered by the provider, when applicable."
+msgstr "PIN que entrega el proveedor, cuando aplica."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__config_ids
-msgid "POS where this TAECEL account can be used. Leave empty for all."
-msgstr "Puntos de venta donde puede usarse esta cuenta TAECEL. Vacío = todos."
+msgid "POS where this recharges account can be used. Leave empty for all."
+msgstr "Cajas donde se puede usar esta cuenta de recargas. Vacío = todas."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__field_key
-msgid "Parameter name TAECEL expects, e.g. \"referencia\"."
-msgstr "Nombre del parámetro que espera TAECEL, p. ej. \"referencia\"."
+msgid "Parameter name the provider expects, e.g. \"referencia\"."
+msgstr "Nombre del parámetro que espera el proveedor, por ejemplo \"referencia\"."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Payment screen"
+msgstr "Pantalla de cobro"
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__reference
@@ -888,6 +1249,12 @@ msgid "Point of Sale Session"
 msgstr "Sesión del punto de venta"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Point of sale actions panel with the Recharges button"
+msgstr "Panel de acciones del punto de venta con el botón Recargas"
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__config_ids
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "Points of Sale"
@@ -917,6 +1284,7 @@ msgid "Product"
 msgstr "Producto"
 
 #. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_product_code
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__product_code
 msgid "Product Code"
 msgstr "Código de producto"
@@ -928,9 +1296,14 @@ msgid "Product Count"
 msgstr "Productos"
 
 #. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__product_code
+msgid "Product code sent to dispatch."
+msgstr "Código de producto que se manda a despachar."
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_product__code
-msgid "Product code TAECEL expects to dispatch, e.g. TEL050."
-msgstr "Código de producto que TAECEL espera para despachar, p. ej. TEL050."
+msgid "Product code the provider expects to dispatch, e.g. TEL050."
+msgstr "Código de producto que el proveedor espera para despachar, por ejemplo TEL050."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__url_prod
@@ -946,6 +1319,37 @@ msgstr "Productos"
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_product__description
 msgid "Promo/plan detail, shown to the cashier."
 msgstr "Detalle de promoción o plan, visible para el cajero."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__taecel_uid
+msgid "Provider Account ID"
+msgstr "ID de cuenta del proveedor"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
+msgid "Provider Code"
+msgstr "Código del proveedor"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__folio
+msgid "Provider folio, printed on the receipt."
+msgstr "Folio del proveedor, impreso en el ticket."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__taecel_pro_id
+msgid "Provider proID"
+msgstr "proID del proveedor"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_wallet__bolsa_id
+msgid "Provider wallet id (1/2/3)."
+msgstr "ID de bolsa del proveedor (1/2/3)."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Questions that come up"
+msgstr "Preguntas que salen seguido"
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
@@ -964,8 +1368,8 @@ msgstr "Respuesta en crudo"
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
-msgid "Read it from TAECEL"
-msgstr "Consúltala en TAECEL"
+msgid "Read it from your provider"
+msgstr "Léela de tu proveedor"
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__receipt_note
@@ -974,19 +1378,61 @@ msgid "Receipt Note"
 msgstr "Nota del ticket"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
+msgid "Recharge"
+msgstr "Recarga"
+
+#. module: xb_pos_taecel
+#: model:ir.model,name:xb_pos_taecel.model_xb_taecel_carrier
+msgid "Recharge Carrier"
+msgstr "Compañía de recargas"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_is_taecel
+msgid "Recharge Line"
+msgstr "Línea de recarga"
+
+#. module: xb_pos_taecel
+#: model:ir.model,name:xb_pos_taecel.model_xb_taecel_product
+msgid "Recharge Product"
+msgstr "Producto de recarga"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_reference
+msgid "Recharge Reference"
+msgstr "Referencia de la recarga"
+
+#. module: xb_pos_taecel
+#: model:ir.model,name:xb_pos_taecel.model_xb_taecel_transaction
+msgid "Recharge Transaction"
+msgstr "Transacción de recarga"
+
+#. module: xb_pos_taecel
+#: model:ir.model,name:xb_pos_taecel.model_xb_taecel_wallet
+msgid "Recharge Wallet"
+msgstr "Bolsa de recargas"
+
+#. module: xb_pos_taecel
 #. odoo-javascript
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
 #: code:addons/xb_pos_taecel/static/src/app/taecel_alerts.js:0
 msgid "Recharge failed"
 msgstr "Recarga fracasada"
 
 #. module: xb_pos_taecel
 #. odoo-javascript
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
 #: code:addons/xb_pos_taecel/static/src/app/taecel_alerts.js:0
 msgid "Recharge unconfirmed"
 msgstr "Recarga sin confirmar"
 
 #. module: xb_pos_taecel
 #. odoo-javascript
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
 #: code:addons/xb_pos_taecel/static/src/app/control_button/taecel_control_button.xml:0
 #: model:ir.ui.menu,name:xb_pos_taecel.menu_taecel_root
 msgid "Recharges"
@@ -996,6 +1442,49 @@ msgstr "Recargas"
 #: model:product.template,name:xb_pos_taecel.product_taecel_service
 msgid "Recharges & Bill Payments"
 msgstr "Recargas y servicios"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Recharges > Account"
+msgstr "Recargas > Cuenta"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Recharges > Transactions"
+msgstr "Recargas > Transacciones"
+
+#. module: xb_pos_taecel
+#: model:ir.model,name:xb_pos_taecel.model_xb_taecel_account
+msgid "Recharges Account"
+msgstr "Cuenta de recargas"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
+msgid "Recharges account"
+msgstr "Cuenta de recargas"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Recharges and bill payments at the till"
+msgstr "Recargas y pagos de servicio desde la caja"
+
+#. module: xb_pos_taecel
+#: model:ir.actions.server,name:xb_pos_taecel.cron_taecel_dispatch_ir_actions_server
+msgid "Recharges: dispatch pending recharges"
+msgstr "Recargas: despachar recargas pendientes"
+
+#. module: xb_pos_taecel
+#: model:ir.actions.server,name:xb_pos_taecel.cron_taecel_reconcile_ir_actions_server
+msgid "Recharges: reconcile pending transactions"
+msgstr "Recargas: conciliar transacciones pendientes"
+
+#. module: xb_pos_taecel
+#: model:ir.actions.server,name:xb_pos_taecel.cron_taecel_balance_ir_actions_server
+msgid "Recharges: refresh wallet balances"
+msgstr "Recargas: actualizar saldos de las bolsas"
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
@@ -1008,6 +1497,12 @@ msgid "Reconciliation queries made, not dispatches."
 msgstr "Consultas de conciliación realizadas, no despachos."
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Reconciliation."
+msgstr "Conciliación."
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__reference
 msgid "Reference"
 msgstr "Referencia"
@@ -1016,6 +1511,12 @@ msgstr "Referencia"
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__deposit_date
 msgid "Reference Read"
 msgstr "Referencia consultada"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Reference capture with confirmation and breakdown"
+msgstr "Captura de la referencia con confirmación y desglose"
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__deposit_reference_services
@@ -1030,14 +1531,28 @@ msgstr "Referencia que fondea la bolsa de PAGO DE SERVICIOS, aparte de la de tie
 msgid ""
 "Reference to quote when depositing at the bank (transfer, practicaja or "
 "teller) to fund the AIRTIME wallet. The deposit is credited to this account "
-"automatically, with no transfer from anyone else. TAECEL issues it starting "
-"with 88."
-msgstr "Referencia que debes indicar al depositar en el banco (transferencia, practicaja o ventanilla) para fondear la bolsa de TIEMPO AIRE. El depósito se abona a esta cuenta en automático, sin que nadie te traspase saldo. TAECEL la emite empezando con 88."
+"automatically, with no transfer from anyone else. The provider issues it "
+"starting with 88."
+msgstr "Referencia que hay que citar al depositar en el banco (transferencia, practicaja o ventanilla) para fondear la bolsa de TIEMPO AIRE. El depósito se abona a esta cuenta automáticamente, sin traspaso de nadie más. El proveedor la entrega empezando con 88."
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "Refresh Balance"
 msgstr "Actualizar saldo"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Refund that line to the customer. Nothing was delivered."
+msgstr "Devuélvele esa línea al cliente. No se entregó nada."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Rejected recharge notice at the till"
+msgstr "Aviso de recarga rechazada en la caja"
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__deposit_url
@@ -1055,6 +1570,18 @@ msgid "Sale Type"
 msgstr "Tipo de venta"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"Sell airtime, data packages and bill payments without leaving the point of "
+"sale. Six steps, under thirty seconds a sale. Everything is charged on the "
+"same ticket as the rest of the basket: there is no separate till and no "
+"separate closing."
+msgstr "Vender tiempo aire, paquetes de datos y pagos de servicio sin salir del punto de venta. Seis pasos, menos de treinta segundos por venta. Todo se cobra en el mismo ticket que el resto de la compra: no hay una caja aparte ni un corte aparte."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
 #: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_transaction__state__sent
 msgid "Sent"
 msgstr "Enviada"
@@ -1070,6 +1597,16 @@ msgid "Services / Giftcards"
 msgstr "Servicios / Tarjetas de regalo"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"So the till tells you. If it came back rejected, a message pops up on the "
+"screen wherever you are, with the reason and %(how_much)s:"
+msgstr "Por eso la caja te avisa. Si volvió rechazada, sale un mensaje en la pantalla donde estés, con el motivo y %(how_much)s:"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__state
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__state
 msgid "State"
@@ -1086,6 +1623,8 @@ msgid "Subscription"
 msgstr "Suscripción"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
 #: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_transaction__state__done
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_search
 msgid "Successful"
@@ -1097,174 +1636,27 @@ msgid "Sync Catalog"
 msgstr "Sincronizar catálogo"
 
 #. module: xb_pos_taecel
-#. odoo-python
-#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
-#: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
-msgid "TAECEL"
-msgstr "TAECEL"
-
-#. module: xb_pos_taecel
-#: model:ir.model,name:xb_pos_taecel.model_xb_taecel_account
-msgid "TAECEL Account"
-msgstr "Cuenta TAECEL"
-
-#. module: xb_pos_taecel
-#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__taecel_uid
-msgid "TAECEL Account ID"
-msgstr "ID de cuenta TAECEL"
-
-#. module: xb_pos_taecel
-#: model:ir.model,name:xb_pos_taecel.model_xb_taecel_carrier
-#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_carrier_id
-msgid "TAECEL Carrier"
-msgstr "Compañía TAECEL"
-
-#. module: xb_pos_taecel
-#. odoo-python
-#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
-msgid "TAECEL Catalog"
-msgstr "Catálogo TAECEL"
-
-#. module: xb_pos_taecel
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
-msgid "TAECEL Code"
-msgstr "Código TAECEL"
-
-#. module: xb_pos_taecel
-#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_fee
-msgid "TAECEL Customer Fee"
-msgstr "Comisión al cliente TAECEL"
-
-#. module: xb_pos_taecel
-#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_is_taecel
-msgid "TAECEL Line"
-msgstr "Línea TAECEL"
-
-#. module: xb_pos_taecel
-#: model:ir.model,name:xb_pos_taecel.model_xb_taecel_product
-msgid "TAECEL Product"
-msgstr "Producto TAECEL"
-
-#. module: xb_pos_taecel
-#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_product_code
-msgid "TAECEL Product Code"
-msgstr "Código de producto TAECEL"
-
-#. module: xb_pos_taecel
-#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_reference
-msgid "TAECEL Reference"
-msgstr "Referencia TAECEL"
-
-#. module: xb_pos_taecel
-#: model:ir.model,name:xb_pos_taecel.model_xb_taecel_transaction
-msgid "TAECEL Transaction"
-msgstr "Transacción TAECEL"
-
-#. module: xb_pos_taecel
-#: model:ir.model,name:xb_pos_taecel.model_xb_taecel_wallet
-#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_bolsa_id
-msgid "TAECEL Wallet"
-msgstr "Bolsa TAECEL"
-
-#. module: xb_pos_taecel
-#. odoo-python
-#: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
-msgid "TAECEL accepted the request but returned no transID."
-msgstr "TAECEL aceptó la petición pero no devolvió transID."
-
-#. module: xb_pos_taecel
-#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__field_confirm
-msgid "TAECEL asks the cashier to type the reference twice."
-msgstr "TAECEL pide que el cajero escriba la referencia dos veces."
-
-#. module: xb_pos_taecel
-#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_wallet__bolsa_id
-msgid "TAECEL bolsa id (1/2/3)."
-msgstr "Id de bolsa TAECEL (1/2/3)."
-
-#. module: xb_pos_taecel
-#. odoo-python
-#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
-msgid "TAECEL catalog"
-msgstr "catálogo TAECEL"
-
-#. module: xb_pos_taecel
-#. odoo-python
-#: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
-msgid "TAECEL declined the request."
-msgstr "TAECEL rechazó la petición."
-
-#. module: xb_pos_taecel
-#. odoo-python
-#: code:addons/xb_pos_taecel/models/taecel_client.py:0
-msgid "TAECEL did not answer in time."
-msgstr "TAECEL no respondió a tiempo."
-
-#. module: xb_pos_taecel
-#. odoo-python
-#: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
-msgid "TAECEL did not confirm in time; parked for reconciliation."
-msgstr "TAECEL no confirmó a tiempo; se dejó pendiente de conciliación."
-
-#. module: xb_pos_taecel
-#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__folio
-msgid "TAECEL folio, printed on the receipt."
-msgstr "Folio de TAECEL, impreso en el ticket."
-
-#. module: xb_pos_taecel
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
-msgid ""
-"TAECEL never confirmed this sale at the till. It is\n"
-"                        matched against TAECEL's sales automatically every few\n"
-"                        minutes. It is never re-sent: the recharge may already\n"
-"                        have reached the customer."
-msgstr "TAECEL no confirmo esta venta en la caja. Se compara automáticamente contra las ventas de TAECEL cada pocos minutos. Nunca se reenvía: la recarga pudo haber llegado ya al cliente."
-
-#. module: xb_pos_taecel
-#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__taecel_pro_id
-msgid "TAECEL proID"
-msgstr "proID de TAECEL"
-
-#. module: xb_pos_taecel
-#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__product_code
-msgid "TAECEL product code sent to dispatch."
-msgstr "Código de producto TAECEL enviado al despachar."
-
-#. module: xb_pos_taecel
-#. odoo-python
-#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
-msgid ""
-"TAECEL refused the connection:\n"
-"\n"
-"%s"
-msgstr "TAECEL rechazó la conexión:\n\n%s"
-
-#. module: xb_pos_taecel
-#. odoo-python
-#: code:addons/xb_pos_taecel/models/taecel_client.py:0
-msgid "TAECEL returned no deposit reference."
-msgstr "TAECEL no devolvió ninguna referencia de depósito."
-
-#. module: xb_pos_taecel
-#: model:ir.actions.server,name:xb_pos_taecel.cron_taecel_dispatch_ir_actions_server
-msgid "TAECEL: dispatch pending recharges"
-msgstr "TAECEL: despachar recargas pendientes"
-
-#. module: xb_pos_taecel
-#: model:ir.actions.server,name:xb_pos_taecel.cron_taecel_reconcile_ir_actions_server
-msgid "TAECEL: reconcile pending transactions"
-msgstr "TAECEL: conciliar transacciones pendientes"
-
-#. module: xb_pos_taecel
-#: model:ir.actions.server,name:xb_pos_taecel.cron_taecel_balance_ir_actions_server
-msgid "TAECEL: refresh wallet balances"
-msgstr "TAECEL: actualizar saldos de las bolsas"
-
-#. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_transaction_ids
 msgid "Taecel Transaction"
 msgstr "Transacción TAECEL"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"Taking a bill is the same flow with one change. In the list, next to the "
+"mobile carriers, are the services: power, water, gas, cable, internet, pay "
+"TV and several government offices. Pick the one on the customer's bill."
+msgstr "Cobrar un recibo es el mismo flujo, con un solo cambio. En la lista, además de las compañías de celular, están los servicios: luz, agua, gas, cable, internet, televisión de paga y varios gobiernos. Elige el que trae el recibo del cliente."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"Tapping %(ok)s marks the notice as seen on the server, not just in this "
+"browser: reloading the screen will not lose it, and it will not pop up again"
+" on the next shift."
+msgstr "Tocar %(ok)s marca el aviso como visto en el servidor, no nada más en esta pestaña: recargar la pantalla no lo pierde, y no vuelve a salir en el siguiente turno."
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
@@ -1289,16 +1681,25 @@ msgstr "URL de pruebas"
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid ""
-"Test mode. Switch it off only once TAECEL has validated\n"
+"Test mode. Switch it off only once your provider has validated\n"
 "                            your test transactions and issued production credentials."
-msgstr "Modo de pruebas. Desactívalo sólo cuando TAECEL haya validado\n                            tus transacciones de prueba y te haya entregado credenciales productivas."
+msgstr "Modo de pruebas. Apágalo solo cuando tu proveedor haya validado tus transacciones de prueba y te haya entregado las credenciales productivas."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__receipt_note
 msgid ""
-"Text TAECEL requires on the customer receipt (carrier terms, balance query "
-"codes, PIN redemption instructions)."
-msgstr "Texto que TAECEL exige en el ticket del cliente (términos de la compañía, códigos de consulta de saldo, instrucciones de canje del PIN)."
+"Text the provider requires on the customer receipt (carrier terms, balance "
+"query codes, PIN redemption instructions)."
+msgstr "Texto que el proveedor exige en el ticket del cliente (términos de la compañía, códigos de consulta de saldo, instrucciones para redimir el PIN)."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"The %(button)s button shows up inside the point of sale once the shop has "
+"its recharges account connected. If you cannot see it, it is not hidden: "
+"that register has no account yet, and the manager sets that up."
+msgstr "El botón %(button)s aparece dentro del punto de venta cuando la tienda ya tiene su cuenta de recargas conectada. Si no lo ves, no es que esté escondido: esa caja todavía no tiene cuenta, y eso lo configura el encargado."
 
 #. module: xb_pos_taecel
 #. odoo-javascript
@@ -1313,6 +1714,16 @@ msgid "The %(label)s needs at least %(n)s characters."
 msgstr "%(label)s necesita al menos %(n)s caracteres."
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"The %(sheet)s button prints a page with both references and the bank "
+"details, ready to hand to whoever makes the deposit. The reference is yours "
+"for good: the deposit is credited to your account automatically, with no "
+"transfer to wait on."
+msgstr "El botón %(sheet)s imprime una hoja con las dos referencias y los datos bancarios, lista para dársela a quien va a depositar. La referencia es tuya de por vida: el depósito se abona solo a tu cuenta, sin traspasos que esperar."
+
+#. module: xb_pos_taecel
 #. odoo-javascript
 #: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
 msgid "The %s must be numeric."
@@ -1320,25 +1731,154 @@ msgstr "%s debe ser numérico."
 
 #. module: xb_pos_taecel
 #. odoo-python
-#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "The Recharges button is not there."
+msgstr "No aparece el botón Recargas."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
 msgid ""
-"The TAECEL account has no credentials yet.\n"
-"\n"
-"They are issued once TAECEL approves your \"Levantamiento Tecnologico\" (cc@taecel.com) and validates your test transactions."
-msgstr "La cuenta TAECEL aún no tiene credenciales. Se entregan cuando TAECEL aprueba su \"Levantamiento Tecnológico\" (cc@taecel.com) y valida sus transacciones de prueba."
+"The carrier credited it and returned a folio. This is the only state that "
+"spends balance for good."
+msgstr "La compañía la abonó y devolvió folio. Es el único estado que descuenta saldo en firme."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "The carrier has not answered yet. It may still go through."
+msgstr "La compañía todavía no contesta. Puede que sí se complete."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"The carrier rejected it. The amount is refunded to your wallet "
+"automatically."
+msgstr "La compañía la rechazó. El importe se reembolsa a tu bolsa automáticamente."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "The carrier rejected it. The money was not spent."
+msgstr "La compañía la rechazó. El dinero no se gastó."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"The difference: a service has %(no_fixed)s. Instead you type two things off "
+"the bill -- the %(amount)s the customer is paying and the %(number)s (or "
+"contract number). As with a phone, the reference is typed twice to confirm "
+"it."
+msgstr "La diferencia: un servicio %(no_fixed)s. En su lugar capturas dos cosas del recibo: el %(amount)s que va a pagar el cliente y el %(number)s (o de contrato). Igual que con un teléfono, la referencia se escribe dos veces para confirmarla."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"The full list opens: mobile carriers at the top, services (power, cable, "
+"internet, pay TV) further down. It is the catalog your provider publishes, "
+"so if it shows here, it can be sold."
+msgstr "Se abre la lista completa: las compañías de celular arriba y los servicios (luz, cable, internet, televisión de paga) más abajo. Es el catálogo que publica tu proveedor, así que si aparece aquí, se puede vender."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
+msgid "The provider accepted the request but returned no transID."
+msgstr "El proveedor aceptó la solicitud pero no devolvió transID."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__field_confirm
+msgid "The provider asks the cashier to type the reference twice."
+msgstr "El proveedor pide que la cajera capture la referencia dos veces."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
+msgid "The provider declined the request."
+msgstr "El proveedor rechazó la solicitud."
 
 #. module: xb_pos_taecel
 #. odoo-python
 #: code:addons/xb_pos_taecel/models/taecel_client.py:0
-msgid "The TAECEL account is missing its URL, key or NIP."
-msgstr "A la cuenta TAECEL le falta la URL, la key o el NIP."
+msgid "The provider did not answer in time."
+msgstr "El proveedor no contestó a tiempo."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
+msgid "The provider did not confirm in time; parked for reconciliation."
+msgstr "El proveedor no confirmó a tiempo; queda en conciliación."
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
+msgid ""
+"The provider never confirmed this sale at the till. It is\n"
+"                        matched against the provider's sales automatically every few\n"
+"                        minutes. It is never re-sent: the recharge may already\n"
+"                        have reached the customer."
+msgstr "El proveedor nunca confirmó esta venta en la caja. Se compara automáticamente contra las ventas del proveedor cada pocos minutos. Nunca se reenvía: puede que la recarga ya le haya llegado al cliente."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+msgid ""
+"The provider refused the connection:\n"
+"\n"
+"%s"
+msgstr "El proveedor rechazó la conexión:\n\n%s"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/taecel_client.py:0
+msgid "The provider returned no deposit reference."
+msgstr "El proveedor no devolvió referencia de depósito."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "The recharge as an order line"
+msgstr "La recarga como línea del pedido"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"The recharge goes in as one more line of the order. The carrier and the "
+"number are written under the line, so you can check them at a glance before "
+"charging. Got it wrong? You can still delete the line: nothing has been sent"
+" until you take the money."
+msgstr "La recarga entra como una línea más del pedido. Debajo de la línea queda escrita la compañía y el número, para que puedas confirmarlo de un vistazo antes de cobrar. ¿Te equivocaste? Todavía puedes borrar la línea: mientras no cobres, no se ha enviado nada."
 
 #. module: xb_pos_taecel
 #. odoo-javascript
 #: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
 msgid ""
-"The TAECEL sale product is missing. Reinstall the module or contact support."
-msgstr "Falta el producto de venta TAECEL. Reinstale el módulo o contacte a soporte."
+"The recharge sale product is missing. Reinstall the module or contact "
+"support."
+msgstr "Falta el producto de venta de recargas. Reinstala el módulo o contacta a soporte."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+msgid ""
+"The recharges account has no credentials yet.\n"
+"\n"
+"Your provider issues them once it has approved your integration and validated your test transactions."
+msgstr "La cuenta de recargas todavía no tiene credenciales.\n\nTu proveedor las entrega cuando ha aprobado tu integración y validado tus transacciones de prueba."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/models/taecel_client.py:0
+msgid "The recharges account is missing its URL, key or NIP."
+msgstr "A la cuenta de recargas le falta su URL, key o NIP."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "The sale was charged and the recharge is queued to go out."
+msgstr "La venta se cobró y la recarga está en la fila para salir."
 
 #. module: xb_pos_taecel
 #. odoo-javascript
@@ -1354,14 +1894,14 @@ msgid ""
 msgstr "Estas cuentas de destino las define el proveedor y pueden cambiar. Confírmalas antes de un primer depósito."
 
 #. module: xb_pos_taecel
-#: model:ir.model.constraint,message:xb_pos_taecel.constraint_xb_taecel_product_code_account_uniq
-msgid "This TAECEL product code already exists for this account."
-msgstr "Este código de producto TAECEL ya existe para esta cuenta."
-
-#. module: xb_pos_taecel
 #: model:ir.model.constraint,message:xb_pos_taecel.constraint_xb_taecel_carrier_carrier_account_uniq
 msgid "This carrier already exists for the account."
 msgstr "Esta compañía ya existe para la cuenta."
+
+#. module: xb_pos_taecel
+#: model:ir.model.constraint,message:xb_pos_taecel.constraint_xb_taecel_product_code_account_uniq
+msgid "This product code already exists for this account."
+msgstr "Este código de producto ya existe para esta cuenta."
 
 #. module: xb_pos_taecel
 #: model:ir.model.constraint,message:xb_pos_taecel.constraint_xb_taecel_wallet_bolsa_account_uniq
@@ -1387,9 +1927,9 @@ msgstr "Total cobrado"
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__trans_id
 msgid ""
-"TransID returned by TAECEL; the key that matches this sale in getSales "
-"without dispatching again."
-msgstr "TransID que devuelve TAECEL; la clave que localiza esta venta en getSales sin volver a despachar."
+"TransID returned by the provider; the key that matches this sale in getSales"
+" without dispatching again."
+msgstr "TransID que devuelve el proveedor; la llave que empata esta venta en getSales sin volver a despachar."
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
@@ -1410,7 +1950,32 @@ msgid "Transactions"
 msgstr "Transacciones"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Transactions list"
+msgstr "Lista de transacciones"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"Type the phone number or the bill reference, then type it again below. If "
+"the two do not match, you cannot continue. The length is checked against "
+"what that carrier expects."
+msgstr "Escribe el número de teléfono o la referencia del recibo, y vuelve a escribirlo abajo. Si los dos no coinciden, no te deja continuar. También se revisa que tenga el largo que espera esa compañía."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"Underneath you get the breakdown: the amount, the fee charged to the "
+"customer and the total. No mental arithmetic."
+msgstr "Abajo verás el desglose: el monto, la comisión que se le cobra al cliente y el total. No tienes que hacer cuentas."
+
+#. module: xb_pos_taecel
 #. odoo-javascript
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
 #: code:addons/xb_pos_taecel/static/src/app/taecel_alerts.js:0
 msgid "Understood"
 msgstr "Entendido"
@@ -1418,16 +1983,16 @@ msgstr "Entendido"
 #. module: xb_pos_taecel
 #. odoo-python
 #: code:addons/xb_pos_taecel/models/taecel_client.py:0
-msgid "Unreadable answer from TAECEL."
-msgstr "Respuesta ilegible de TAECEL."
+msgid "Unreadable answer from the provider."
+msgstr "Respuesta ilegible del proveedor."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__test_mode
 msgid ""
-"Use the TAECEL test endpoint and test product codes. Turn this off only once"
-" TAECEL has validated your test transactions and issued production "
-"credentials."
-msgstr "Usa el endpoint de pruebas de TAECEL y los códigos de producto de prueba. Desactívelo solo cuando TAECEL haya validado sus transacciones de prueba y le entregue credenciales de producción."
+"Use the provider test endpoint and test product codes. Turn this off only "
+"once your provider has validated your test transactions and issued "
+"production credentials."
+msgstr "Usar el endpoint de pruebas del proveedor y los códigos de prueba. Apágalo solo cuando tu proveedor haya validado tus transacciones de prueba y te haya entregado las credenciales productivas."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__user_id
@@ -1442,6 +2007,7 @@ msgstr "Vigencia"
 #. module: xb_pos_taecel
 #. odoo-python
 #: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_bolsa_id
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__wallet_ids
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
 msgid "Wallet"
@@ -1479,9 +2045,39 @@ msgid "Warn the cashier in the POS when this wallet drops below it."
 msgstr "Avisar al cajero en el TPV cuando la bolsa baje de este monto."
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Watch the amount:"
+msgstr "Ojo con el importe:"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "What if the power or the internet drops mid-sale?"
+msgstr "¿Y si se va la luz o el internet a media venta?"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "What it means"
+msgstr "Qué pasó"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "What it says"
+msgstr "Lo que dice"
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__field_label
 msgid "What the cashier is asked for, e.g. \"Numero Celular\"."
-msgstr "Lo que se le pide al cajero, p. ej. \"Numero Celular\"."
+msgstr "Lo que se le pide al cajero, p. ej. \\\"Numero Celular\\\"."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "What you do"
+msgstr "Qué haces"
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__cashier_alert_date
@@ -1498,14 +2094,58 @@ msgstr "Dónde depositar"
 
 #. module: xb_pos_taecel
 #. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "Why the difference:"
+msgstr "Por qué la diferencia:"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid ""
+"With the order open, tap the three-dot button under the order, next to "
+"%(customer)s and %(note)s. %(recharges)s is in there."
+msgstr "Con el pedido abierto, toca el botón de los tres puntos que está debajo del pedido, junto a %(customer)s y %(note)s. Ahí adentro está %(recharges)s."
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "a payment that has been sent cannot be cancelled"
+msgstr "un pago enviado no se puede cancelar"
+
+#. module: xb_pos_taecel
+#. odoo-python
 #: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
 msgid "account_id"
 msgstr "account_id"
 
 #. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "amount"
+msgstr "importe"
+
+#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "e.g. 300000"
 msgstr "p. ej. 300000"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "how much to refund"
+msgstr "cuánto devolver"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "its own deposit reference"
+msgstr "su propia referencia de depósito"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "no fixed amounts"
+msgstr "no tiene montos fijos"
 
 #. module: xb_pos_taecel
 #. odoo-javascript
@@ -1518,6 +2158,12 @@ msgstr "referencia"
 #: code:addons/xb_pos_taecel/static/src/app/taecel_alerts.js:0
 msgid "rejected by the operator"
 msgstr "rechazada por la operadora"
+
+#. module: xb_pos_taecel
+#. odoo-python
+#: code:addons/xb_pos_taecel/manual.py:0
+msgid "service number"
+msgstr "número de servicio"
 
 #. module: xb_pos_taecel
 #. odoo-javascript

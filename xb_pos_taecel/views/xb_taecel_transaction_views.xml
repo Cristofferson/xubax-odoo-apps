@@ -33,15 +33,15 @@
                     <button name="action_query_status" type="object"
                             string="Reconcile Now" class="btn-primary"
                             invisible="state not in ['timeout', 'sent']"
-                            help="Match this transaction in TAECEL's sales.
+                            help="Match this transaction in the provider's sales.
                                   Read-only: it never dispatches a second recharge."/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
                     <div class="alert alert-warning" role="alert"
                          invisible="state != 'timeout'">
-                        TAECEL never confirmed this sale at the till. It is
-                        matched against TAECEL's sales automatically every few
+                        The provider never confirmed this sale at the till. It is
+                        matched against the provider's sales automatically every few
                         minutes. It is never re-sent: the recharge may already
                         have reached the customer.
                     </div>

@@ -5,7 +5,7 @@
          then polls StatusTXN to settle. Runs every minute so airtime reaches
          the phone promptly. Never re-sends: dispatch moves draft->sent. -->
     <record id="cron_taecel_dispatch" model="ir.cron">
-        <field name="name">TAECEL: dispatch pending recharges</field>
+        <field name="name">Recharges: dispatch pending recharges</field>
         <field name="model_id" ref="model_xb_taecel_transaction"/>
         <field name="state">code</field>
         <field name="code">model._cron_dispatch()</field>
@@ -19,7 +19,7 @@
          read-only and idempotent, and until it runs the till has a sale nobody
          can account for. -->
     <record id="cron_taecel_reconcile" model="ir.cron">
-        <field name="name">TAECEL: reconcile pending transactions</field>
+        <field name="name">Recharges: reconcile pending transactions</field>
         <field name="model_id" ref="model_xb_taecel_transaction"/>
         <field name="state">code</field>
         <field name="code">model._cron_reconcile()</field>
@@ -31,7 +31,7 @@
     <!-- Refreshes every wallet from a single getBalance call (one row per
          bolsa). Direct and accurate; getSales is left to reconciliation. -->
     <record id="cron_taecel_balance" model="ir.cron">
-        <field name="name">TAECEL: refresh wallet balances</field>
+        <field name="name">Recharges: refresh wallet balances</field>
         <field name="model_id" ref="model_xb_taecel_account"/>
         <field name="state">code</field>
         <field name="code">model._cron_refresh_balance()</field>

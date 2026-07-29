@@ -23,7 +23,7 @@ class XbTaecelTransaction(models.Model):
     that settles a transaction already works against the confirmed getSales.
     """
     _name = 'xb.taecel.transaction'
-    _description = 'TAECEL Transaction'
+    _description = 'Recharge Transaction'
     _order = 'create_date desc, id desc'
     _inherit = ['pos.load.mixin']
 
@@ -34,7 +34,7 @@ class XbTaecelTransaction(models.Model):
     product_id = fields.Many2one('xb.taecel.product', ondelete='restrict')
     carrier_id = fields.Many2one('xb.taecel.carrier', ondelete='restrict')
     bolsa_id = fields.Char(help='Wallet charged for this transaction.')
-    product_code = fields.Char(help='TAECEL product code sent to dispatch.')
+    product_code = fields.Char(help='Product code sent to dispatch.')
 
     reference = fields.Char(
         required=True,
@@ -44,7 +44,7 @@ class XbTaecelTransaction(models.Model):
     customer_fee = fields.Monetary(
         string='Customer Service Fee',
         help='Fee charged to the customer on top of the amount, as configured '
-             'in the TAECEL platform. Must appear on the receipt.')
+             'with your provider. Must appear on the receipt.')
     total_charged = fields.Monetary(compute='_compute_total_charged', store=True)
 
     state = fields.Selection([
@@ -58,13 +58,13 @@ class XbTaecelTransaction(models.Model):
     # -- TAECEL identifiers ------------------------------------------------
     trans_id = fields.Char(
         string='Transaction Handle', copy=False, index=True,
-        help='TransID returned by TAECEL; the key that matches this sale in '
+        help='TransID returned by the provider; the key that matches this sale in '
              'getSales without dispatching again.')
-    folio = fields.Char(copy=False, help='TAECEL folio, printed on the receipt.')
+    folio = fields.Char(copy=False, help='Provider folio, printed on the receipt.')
     authorization = fields.Char(copy=False, help='Carrier authorization code.')
-    pin = fields.Char(copy=False, help='PIN delivered by TAECEL, when applicable.')
+    pin = fields.Char(copy=False, help='PIN delivered by the provider, when applicable.')
     receipt_note = fields.Text(
-        help='Text TAECEL requires on the customer receipt (carrier terms, '
+        help='Text the provider requires on the customer receipt (carrier terms, '
              'balance query codes, PIN redemption instructions).')
     error_message = fields.Char(copy=False)
 
@@ -96,7 +96,7 @@ class XbTaecelTransaction(models.Model):
     @api.depends('product_id', 'reference', 'folio')
     def _compute_display_name(self):
         for txn in self:
-            label = txn.product_id.display_name or txn.product_code or _('TAECEL')
+            label = txn.product_id.display_name or txn.product_code or _('Recharge')
             txn.display_name = '%s - %s%s' % (
                 label, txn.reference or '',
                 ' (%s)' % txn.folio if txn.folio else '')
@@ -124,7 +124,7 @@ class XbTaecelTransaction(models.Model):
             })
             return const.STATE_DONE
         if status == const.SALE_STATUS_KO:
-            return self._mark_failed(note or _('Declined by TAECEL.'))
+            return self._mark_failed(note or _('Declined by the provider.'))
         # Present but not yet in a terminal state -- leave it for the next pass.
         return self.state
 
@@ -185,13 +185,13 @@ class XbTaecelTransaction(models.Model):
         if result.timed_out:
             return self._mark_timeout(result.message)
         if not result.ok:
-            return self._mark_failed(result.message or _('TAECEL declined the request.'))
+            return self._mark_failed(result.message or _('The provider declined the request.'))
 
         data = result.data or {}
         trans_id = data.get(const.K_TXN_TRANS_ID) or data.get(const.K_SALE_TRANS_ID)
         if not trans_id:
             return self._mark_timeout(
-                _('TAECEL accepted the request but returned no transID.'))
+                _('The provider accepted the request but returned no transID.'))
         self.write({'trans_id': str(trans_id)})
         return self._poll_status(client)
 
@@ -223,7 +223,7 @@ class XbTaecelTransaction(models.Model):
                 # else: 'En proceso' -- _settle_from_sale left the state as-is.
             if waited >= const.DISPATCH_POLL_MAX:
                 return self._mark_timeout(
-                    _('TAECEL did not confirm in time; parked for reconciliation.'))
+                    _('The provider did not confirm in time; parked for reconciliation.'))
             time.sleep(const.DISPATCH_POLL_INTERVAL)
             waited += const.DISPATCH_POLL_INTERVAL
 

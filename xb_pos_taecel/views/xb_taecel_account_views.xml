@@ -28,7 +28,7 @@
                         </button>
                     </div>
                     <div class="oe_title">
-                        <h1><field name="name" placeholder="TAECEL"/></h1>
+                        <h1><field name="name" placeholder="Recharges account"/></h1>
                     </div>
                     <group>
                         <group string="Account">
@@ -47,9 +47,9 @@
                              separately and never moves money between the two. -->
                         <group string="Funding">
                             <field name="deposit_reference"
-                                   placeholder="Read it from TAECEL"/>
+                                   placeholder="Read it from your provider"/>
                             <field name="deposit_reference_services"
-                                   placeholder="99... — from the TAECEL portal"/>
+                                   placeholder="99... — from the provider portal"/>
                             <field name="deposit_url" widget="url"
                                    invisible="not deposit_url"/>
                             <field name="deposit_date" invisible="not deposit_date"/>
@@ -67,7 +67,7 @@
                     <group groups="base.group_system" string="Technical">
                         <div class="alert alert-info col-12" role="status"
                              invisible="not test_mode">
-                            Test mode. Switch it off only once TAECEL has validated
+                            Test mode. Switch it off only once your provider has validated
                             your test transactions and issued production credentials.
                         </div>
                         <group>

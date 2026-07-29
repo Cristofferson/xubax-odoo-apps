@@ -120,7 +120,7 @@
                  whole view fails to load. The label comes from the filters. -->
             <search string="Carriers">
                 <field name="name"/>
-                <field name="carrier_uid" string="TAECEL Code"/>
+                <field name="carrier_uid" string="Provider Code"/>
                 <field name="category"/>
                 <filter name="airtime" string="Airtime"
                         domain="[('bolsa_id', '=', '1')]"/>

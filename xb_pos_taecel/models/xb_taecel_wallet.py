@@ -16,7 +16,7 @@ class XbTaecelWallet(models.Model):
     from TAECEL is data, not a migration.
     """
     _name = 'xb.taecel.wallet'
-    _description = 'TAECEL Wallet'
+    _description = 'Recharge Wallet'
     _order = 'bolsa_id'
     _inherit = ['pos.load.mixin']
 
@@ -25,7 +25,7 @@ class XbTaecelWallet(models.Model):
     company_id = fields.Many2one(related='account_id.company_id', store=True)
     currency_id = fields.Many2one(related='account_id.currency_id')
 
-    bolsa_id = fields.Char(required=True, help='TAECEL bolsa id (1/2/3).')
+    bolsa_id = fields.Char(required=True, help='Provider wallet id (1/2/3).')
     name = fields.Char(required=True)
     balance = fields.Monetary(readonly=True)
     balance_date = fields.Datetime(readonly=True)

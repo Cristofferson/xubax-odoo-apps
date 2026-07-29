@@ -82,15 +82,18 @@ patch(PosStore.prototype, {
     },
 
     /** The generic product every TAECEL line hangs off (see product_data.xml).
-     *  In 19 the POS sells product.template; fall back to a variant if needed. */
+     *  In 19 the POS sells product.template; fall back to a variant if needed.
+     *  XBTAECEL is the pre-1.0.12 code, still accepted so a till running the
+     *  previous bundle keeps selling during an upgrade window. */
     get xbTaecelProduct() {
+        const isTopUp = (p) => p.default_code === "XBTOPUP" || p.default_code === "XBTAECEL";
         const templates = this.models["product.template"]?.getAll() || [];
-        const tmpl = templates.find((p) => p.default_code === "XBTAECEL");
+        const tmpl = templates.find(isTopUp);
         if (tmpl) {
             return tmpl;
         }
         const products = this.models["product.product"]?.getAll() || [];
-        return products.find((p) => p.default_code === "XBTAECEL") || null;
+        return products.find(isTopUp) || null;
     },
 
     async xbOpenTaecelSale() {

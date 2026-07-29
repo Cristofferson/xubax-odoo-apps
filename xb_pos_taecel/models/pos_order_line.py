@@ -11,15 +11,15 @@ class PosOrderLine(models.Model):
     """
     _inherit = 'pos.order.line'
 
-    taecel_is_taecel = fields.Boolean(string='TAECEL Line', copy=False)
+    taecel_is_taecel = fields.Boolean(string='Recharge Line', copy=False)
     taecel_carrier_id = fields.Many2one(
-        'xb.taecel.carrier', string='TAECEL Carrier', copy=False, ondelete='restrict')
-    taecel_product_code = fields.Char(string='TAECEL Product Code', copy=False)
+        'xb.taecel.carrier', string='Carrier', copy=False, ondelete='restrict')
+    taecel_product_code = fields.Char(string='Product Code', copy=False)
     taecel_reference = fields.Char(
-        string='TAECEL Reference', copy=False,
+        string='Recharge Reference', copy=False,
         help='Phone number or bill reference the recharge is dispatched to.')
-    taecel_bolsa_id = fields.Char(string='TAECEL Wallet', copy=False)
-    taecel_fee = fields.Monetary(string='TAECEL Customer Fee', copy=False)
+    taecel_bolsa_id = fields.Char(string='Wallet', copy=False)
+    taecel_fee = fields.Monetary(string='Customer Fee', copy=False)
     taecel_transaction_ids = fields.One2many(
         'xb.taecel.transaction', 'pos_order_line_id', copy=False)
 

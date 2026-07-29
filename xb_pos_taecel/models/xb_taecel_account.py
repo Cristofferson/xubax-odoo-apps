@@ -43,17 +43,17 @@ def _services_reference(airtime_reference):
 
 class XbTaecelAccount(models.Model):
     _name = 'xb.taecel.account'
-    _description = 'TAECEL Account'
+    _description = 'Recharges Account'
     _inherit = ['pos.load.mixin']
 
-    name = fields.Char(required=True, default='TAECEL')
+    name = fields.Char(required=True, default='Recharges')
     company_id = fields.Many2one(
         'res.company', required=True, default=lambda self: self.env.company)
     shared_company_ids = fields.Many2many(
         'res.company', 'xb_taecel_account_shared_company_rel',
         'account_id', 'company_id', string='Also Used By',
         help='Other companies whose registers sell on this account. A group '
-             'that funds one single TAECEL account lists them here; leave it '
+             'that funds one single recharges account lists them here; leave it '
              'empty to keep the account private to its own company.')
     currency_id = fields.Many2one(related='company_id.currency_id')
     active = fields.Boolean(default=True)
@@ -69,14 +69,14 @@ class XbTaecelAccount(models.Model):
     api_nip = fields.Char(string='API NIP', groups='base.group_system')
     test_mode = fields.Boolean(
         string='Test Mode', default=True,
-        help='Use the TAECEL test endpoint and test product codes. Turn this '
-             'off only once TAECEL has validated your test transactions and '
+        help='Use the provider test endpoint and test product codes. Turn this '
+             'off only once your provider has validated your test transactions and '
              'issued production credentials.')
     url_prod = fields.Char(string='Production URL', default=const.DEFAULT_URL_PROD)
     url_test = fields.Char(string='Test URL', default=const.DEFAULT_URL_TEST)
     timeout = fields.Integer(
         string='Timeout (s)', default=const.DEFAULT_TIMEOUT,
-        help='How long the cashier waits for TAECEL before the sale is parked '
+        help='How long the cashier waits for the provider before the sale is parked '
              'for automatic reconciliation. Keep it short.')
 
     # -- Catalog & wallets -------------------------------------------------
@@ -104,12 +104,12 @@ class XbTaecelAccount(models.Model):
         ('distributor', 'Distributor'),
         ('affiliate', 'Affiliate'),
     ], string='Account Type', default='distributor', required=True,
-        help='Distributor: you contracted TAECEL directly and may register '
+        help='Distributor: you contracted the provider directly and may register '
              'affiliates. Affiliate: a distributor registered you and funds '
              'your wallets, and sets the commission you earn.')
     taecel_uid = fields.Char(
-        string='TAECEL Account ID',
-        help='Account number TAECEL assigned you, as shown in the portal. '
+        string='Provider Account ID',
+        help='Account number the provider assigned you, as shown in the portal. '
              'A distributor looks its affiliates up by this number in MI RED.')
     commission_rate = fields.Float(
         string='My Commission (%)', default=6.5,
@@ -130,7 +130,7 @@ class XbTaecelAccount(models.Model):
         help='Reference to quote when depositing at the bank (transfer, '
              'practicaja or teller) to fund the AIRTIME wallet. The deposit is '
              'credited to this account automatically, with no transfer from '
-             'anyone else. TAECEL issues it starting with 88.')
+             'anyone else. The provider issues it starting with 88.')
     # Derived, not fetched: the API only ever answers with the airtime
     # reference, and the pair differs only in the leading pair of digits --
     # 88xxxxxx funds airtime, 99xxxxxx funds bill payments, same tail. Kept
@@ -146,7 +146,7 @@ class XbTaecelAccount(models.Model):
 
     deposit_url = fields.Char(
         string='Report a Deposit', readonly=True, copy=False,
-        help="Link to TAECEL's form for reporting a deposit that was not "
+        help="Link to the provider's form for reporting a deposit that was not "
              'referenced, so it can be applied manually.')
     deposit_date = fields.Datetime(
         string='Reference Read', readonly=True, copy=False)
@@ -172,7 +172,7 @@ class XbTaecelAccount(models.Model):
 
     config_ids = fields.Many2many(
         'pos.config', string='Points of Sale',
-        help='POS where this TAECEL account can be used. Leave empty for all.')
+        help='POS where this recharges account can be used. Leave empty for all.')
 
     # Odoo 19 dropped _sql_constraints in favour of models.Constraint;
     # Odoo 18 has no models.Constraint. Declaring the wrong one is a
@@ -180,12 +180,12 @@ class XbTaecelAccount(models.Model):
     if HAS_MODEL_CONSTRAINT:
         _company_uniq = models.Constraint(
             'unique(company_id)',
-            "Only one TAECEL account per company.",
+            "Only one recharges account per company.",
         )
     else:
         _sql_constraints = [
             ('company_uniq', 'unique(company_id)',
-             "Only one TAECEL account per company."),
+             "Only one recharges account per company."),
         ]
 
     @api.depends('carrier_ids', 'product_ids')
@@ -205,10 +205,9 @@ class XbTaecelAccount(models.Model):
         account = self.sudo()
         if not (account.api_key and account.api_nip):
             raise UserError(_(
-                'The TAECEL account has no credentials yet.\n\n'
-                'They are issued once TAECEL approves your "Levantamiento '
-                'Tecnologico" (cc@taecel.com) and validates your test '
-                'transactions.'))
+                'The recharges account has no credentials yet.\n\n'
+                'Your provider issues them once it has approved your '
+                'integration and validated your test transactions.'))
         return TaecelClient(
             account.base_url, account.api_key, account.api_nip, account.timeout)
 
@@ -236,7 +235,7 @@ class XbTaecelAccount(models.Model):
         result = self._get_client().get_products()
         if not result.ok:
             self.write({'state': 'error', 'connection_msg': result.message})
-            raise UserError(_('Could not read the TAECEL catalog:\n\n%s', result.message))
+            raise UserError(_('Could not read the catalog:\n\n%s', result.message))
 
         data = result.data or {}
         # Bolsas -> wallets (names come from TAECEL; balances filled by sales).
@@ -253,7 +252,7 @@ class XbTaecelAccount(models.Model):
             'connection_msg': _('Catalog synced.'),
             'catalog_date': fields.Datetime.now(),
         })
-        return self._notify(_('TAECEL catalog'),
+        return self._notify(_('Catalog'),
                             _('%(c)s carriers, %(p)s products synced.',
                               c=len(carriers_by_uid), p=count))
 
@@ -263,9 +262,9 @@ class XbTaecelAccount(models.Model):
         result = self._get_client().get_products()
         if result.ok:
             self.write({'state': 'connected', 'connection_msg': _('Connection OK.')})
-            return self._notify(_('TAECEL'), _('Connection OK.'))
+            return self._notify(_('Connection'), _('Connection OK.'))
         self.write({'state': 'error', 'connection_msg': result.message})
-        raise UserError(_('TAECEL refused the connection:\n\n%s', result.message))
+        raise UserError(_('The provider refused the connection:\n\n%s', result.message))
 
     # -- Funding -----------------------------------------------------------
     def action_print_deposit_sheet(self):
@@ -422,7 +421,7 @@ class XbTaecelAccount(models.Model):
         self.ensure_one()
         return {
             'type': 'ir.actions.act_window',
-            'name': _('TAECEL Catalog'),
+            'name': _('Catalog'),
             'res_model': 'xb.taecel.product',
             'view_mode': 'list,form',
             'domain': [('account_id', '=', self.id)],
