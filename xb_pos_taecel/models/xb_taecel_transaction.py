@@ -71,12 +71,19 @@ class XbTaecelTransaction(models.Model):
     # -- POS links ---------------------------------------------------------
     pos_order_id = fields.Many2one('pos.order', ondelete='set null', index=True)
     pos_order_line_id = fields.Many2one('pos.order.line', ondelete='set null')
-    pos_session_id = fields.Many2one('pos.session', ondelete='set null')
+    # Indexed: every open register polls this column every few seconds looking
+    # for outcomes its cashier still has to act on.
+    pos_session_id = fields.Many2one('pos.session', ondelete='set null', index=True)
     user_id = fields.Many2one('res.users', default=lambda self: self.env.user)
     sent_date = fields.Datetime(copy=False)
     done_date = fields.Datetime(copy=False)
     attempt_count = fields.Integer(default=0, copy=False,
                                    help='Reconciliation queries made, not dispatches.')
+    cashier_alert_date = fields.Datetime(
+        string='Acknowledged at Register', copy=False, readonly=True,
+        help='When the register acknowledged a bad outcome. Empty on a '
+             'transaction that failed means nobody at the counter has been '
+             'told yet -- that is money taken for a recharge never delivered.')
 
     raw_request = fields.Text(copy=False, groups='point_of_sale.group_pos_manager')
     raw_response = fields.Text(copy=False, groups='point_of_sale.group_pos_manager')
@@ -271,6 +278,47 @@ class XbTaecelTransaction(models.Model):
         return True
 
     # -- POS ---------------------------------------------------------------
+    @api.model
+    def xb_pos_alerts(self, session_id):
+        """Outcomes the cashier of this session still has to act on.
+
+        Dispatch is asynchronous by design -- calling TAECEL while the customer
+        waits would put a service that answers in up to 60s in the middle of
+        every checkout. The cost of that choice is that a rejected recharge
+        lands after the ticket is printed and the screen has moved on, so
+        nobody at the counter learns the customer paid for nothing. This is the
+        register's way of finding out: it polls, and a failure raises a popup
+        while the customer is still there.
+
+        Only non-terminal-for-the-cashier outcomes are returned, and only until
+        acknowledged, so a browser reload cannot lose the warning.
+        """
+        alerts = self.search([
+            ('pos_session_id', '=', session_id),
+            ('state', 'in', (const.STATE_FAILED, const.STATE_TIMEOUT)),
+            ('cashier_alert_date', '=', False),
+        ])
+        return [{
+            'id': alert.id,
+            'state': alert.state,
+            'label': alert.product_id.display_name or alert.product_code or '',
+            'reference': alert.reference or '',
+            'amount': alert.total_charged,
+            'error': alert.error_message or '',
+        } for alert in alerts]
+
+    @api.model
+    def xb_pos_ack_alerts(self, txn_ids):
+        """Stamp the warnings the cashier has just been shown.
+
+        Stamped on dismissal rather than on display: an alert the cashier never
+        saw -- a reload, a crash mid-popup -- has to come back.
+        """
+        alerts = self.browse(txn_ids).exists().filtered(
+            lambda t: not t.cashier_alert_date)
+        alerts.sudo().write({'cashier_alert_date': fields.Datetime.now()})
+        return True
+
     @api.model
     def _load_pos_data_domain(self, data, config=None):
         return [('create_date', '>=', fields.Date.context_today(self))]

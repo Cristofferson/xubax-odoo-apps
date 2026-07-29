@@ -57,6 +57,7 @@ class PosOrder(models.Model):
         """
         Txn = self.env['xb.taecel.transaction']
         Product = self.env['xb.taecel.product']
+        created = Txn.browse()
         for order in self:
             if order.state not in ('paid', 'done', 'invoiced'):
                 continue
@@ -81,7 +82,7 @@ class PosOrder(models.Model):
                     ('account_id', '=', account.id),
                     ('code', '=', line.taecel_product_code),
                 ], limit=1) if line.taecel_product_code else Product
-                Txn.create({
+                created |= Txn.create({
                     'account_id': account.id,
                     'carrier_id': line.taecel_carrier_id.id or False,
                     'product_id': product.id or False,
@@ -96,4 +97,33 @@ class PosOrder(models.Model):
                     'user_id': order.user_id.id or self.env.uid,
                     'state': const.STATE_DRAFT,
                 })
+        if created:
+            self._xb_wake_dispatcher()
+        return True
+
+    @api.model
+    def _xb_wake_dispatcher(self):
+        """Ask the dispatcher cron to run now instead of at its next turn.
+
+        Dispatch stays out of the checkout on purpose: TAECEL is allowed up to
+        60 seconds to answer, and no cashier is going to hold a customer for
+        that. But leaving the recharge to the cron's own schedule adds a wait
+        of its own -- a minute nominally, longer where one cron thread serves
+        many databases -- and that delay is dead time in which the customer
+        walks away before a rejection can be caught.
+
+        ``_trigger`` costs one row and a NOTIFY: the register is not kept
+        waiting, and the recharge leaves within seconds. Failure to wake the
+        cron is not an error worth losing the sale over -- the scheduled run
+        picks the transaction up anyway -- so it is logged, not raised.
+        """
+        cron = self.env.ref('xb_pos_taecel.cron_taecel_dispatch',
+                            raise_if_not_found=False)
+        if not cron:
+            return False
+        try:
+            cron.sudo()._trigger()
+        except Exception:  # noqa: BLE001 - never let this break a paid order
+            _logger.exception('TAECEL: could not wake the dispatch cron.')
+            return False
         return True

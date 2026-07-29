@@ -36,6 +36,25 @@ msgid "%(wallet)s: %(left)s left after this sale."
 msgstr "%(wallet)s: quedan %(left)s después de esta venta."
 
 #. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_alerts.js:0
+msgid ""
+"%(what)s has not been confirmed yet.\n"
+"\n"
+"Do NOT refund it and do NOT sell it again: it is still being verified and may go through. It will be settled under Recharges > Transactions."
+msgstr "%(what)s todavía no tiene confirmación.\n\nNO la devuelvas y NO la vuelvas a vender: se está verificando y puede completarse. Quedará resuelta en Recargas > Transacciones."
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_alerts.js:0
+msgid ""
+"%(what)s was NOT delivered.\n"
+"Reason: %(reason)s\n"
+"\n"
+"The customer paid %(amount)s for it. Refund that line."
+msgstr "%(what)s NO se entregó.\nMotivo: %(reason)s\n\nEl cliente pagó %(amount)s por ella. Devuélvele esa línea."
+
+#. module: xb_pos_taecel
 #: model:ir.actions.report,print_report_name:xb_pos_taecel.action_report_taecel_deposit
 msgid "'Deposit - %s' % object.name"
 msgstr "'Deposito - %s' % object.name"
@@ -105,6 +124,11 @@ msgstr "Cuenta:"
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_list
 msgid "Accounts"
 msgstr "Cuentas"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__cashier_alert_date
+msgid "Acknowledged at Register"
+msgstr "Avisado en caja"
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__active
@@ -416,10 +440,7 @@ msgid ""
 "Could not read the TAECEL catalog:\n"
 "\n"
 "%s"
-msgstr ""
-"No se pudo leer el catálogo de TAECEL:\n"
-"\n"
-"%s"
+msgstr "No se pudo leer el catálogo de TAECEL:\n\n%s"
 
 #. module: xb_pos_taecel
 #. odoo-python
@@ -429,6 +450,11 @@ msgid ""
 "\n"
 "%s"
 msgstr "No se pudo leer la referencia de depósito:\\n\\n%s"
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_search
+msgid "Counter Not Warned"
+msgstr "Caja sin avisar"
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__create_uid
@@ -481,14 +507,6 @@ msgid "Deposit Sheet"
 msgstr "Ficha de depósito"
 
 #. module: xb_pos_taecel
-#. odoo-python
-#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
-msgid ""
-"Deposit against reference %s to top up AIRTIME. Bill payments are funded "
-"through a separate reference that TAECEL only shows in its portal."
-msgstr "Deposita con la referencia %s para fondear TIEMPO AIRE. Los pagos de servicio se fondean con una referencia distinta, que TAECEL solo muestra en su portal."
-
-#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
 msgid ""
 "Deposit against the reference below and the balance is credited\n"
@@ -497,12 +515,6 @@ msgid ""
 "                type: a deposit made with the wrong reference cannot be moved\n"
 "                across afterwards."
 msgstr "Deposita con la referencia de abajo y el saldo se abona a esta cuenta en automático. Cada bolsa tiene su PROPIA referencia, y el saldo solo se traspasa entre bolsas del mismo tipo: un depósito hecho con la referencia equivocada ya no se puede mover."
-
-#. module: xb_pos_taecel
-#. odoo-python
-#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
-msgid "Deposit reference"
-msgstr "Referencia de depósito"
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__description
@@ -963,6 +975,18 @@ msgstr "Nota del ticket"
 
 #. module: xb_pos_taecel
 #. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_alerts.js:0
+msgid "Recharge failed"
+msgstr "Recarga fracasada"
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_alerts.js:0
+msgid "Recharge unconfirmed"
+msgstr "Recarga sin confirmar"
+
+#. module: xb_pos_taecel
+#. odoo-javascript
 #: code:addons/xb_pos_taecel/static/src/app/control_button/taecel_control_button.xml:0
 #: model:ir.ui.menu,name:xb_pos_taecel.menu_taecel_root
 msgid "Recharges"
@@ -1214,10 +1238,7 @@ msgid ""
 "TAECEL refused the connection:\n"
 "\n"
 "%s"
-msgstr ""
-"TAECEL rechazó la conexión:\n"
-"\n"
-"%s"
+msgstr "TAECEL rechazó la conexión:\n\n%s"
 
 #. module: xb_pos_taecel
 #. odoo-python
@@ -1389,6 +1410,12 @@ msgid "Transactions"
 msgstr "Transacciones"
 
 #. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_alerts.js:0
+msgid "Understood"
+msgstr "Entendido"
+
+#. module: xb_pos_taecel
 #. odoo-python
 #: code:addons/xb_pos_taecel/models/taecel_client.py:0
 msgid "Unreadable answer from TAECEL."
@@ -1457,6 +1484,14 @@ msgid "What the cashier is asked for, e.g. \"Numero Celular\"."
 msgstr "Lo que se le pide al cajero, p. ej. \"Numero Celular\"."
 
 #. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__cashier_alert_date
+msgid ""
+"When the register acknowledged a bad outcome. Empty on a transaction that "
+"failed means nobody at the counter has been told yet -- that is money taken "
+"for a recharge never delivered."
+msgstr "Cuándo la caja se dio por enterada de un resultado malo. Vacío en una transacción fracasada significa que en el mostrador todavía nadie lo sabe: es dinero cobrado por una recarga que nunca se entregó."
+
+#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
 msgid "Where to deposit"
 msgstr "Dónde depositar"
@@ -1477,6 +1512,12 @@ msgstr "p. ej. 300000"
 #: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
 msgid "reference"
 msgstr "referencia"
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_alerts.js:0
+msgid "rejected by the operator"
+msgstr "rechazada por la operadora"
 
 #. module: xb_pos_taecel
 #. odoo-javascript

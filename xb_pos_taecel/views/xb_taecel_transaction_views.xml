@@ -68,6 +68,8 @@
                             <field name="user_id"/>
                             <field name="sent_date"/>
                             <field name="done_date"/>
+                            <field name="cashier_alert_date"
+                                   invisible="state not in ['failed', 'timeout']"/>
                         </group>
                         <group string="Account">
                             <field name="account_id"/>
@@ -100,6 +102,11 @@
                 <filter name="pending" string="Awaiting Confirmation"
                         domain="[('state', 'in', ['sent', 'timeout'])]"/>
                 <filter name="failed" string="Failed" domain="[('state', '=', 'failed')]"/>
+                <!-- The counter was never told, so the customer most likely
+                     paid for a recharge that never arrived and walked away. -->
+                <filter name="unacknowledged" string="Counter Not Warned"
+                        domain="[('state', 'in', ['failed', 'timeout']),
+                                 ('cashier_alert_date', '=', False)]"/>
                 <group>
                     <filter name="by_state" string="Status" context="{'group_by': 'state'}"/>
                     <filter name="by_user" string="Cashier" context="{'group_by': 'user_id'}"/>

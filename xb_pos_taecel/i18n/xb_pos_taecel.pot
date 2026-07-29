@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-29 04:58+0000\n"
-"PO-Revision-Date: 2026-07-29 04:58+0000\n"
+"POT-Creation-Date: 2026-07-29 16:33+0000\n"
+"PO-Revision-Date: 2026-07-29 16:33+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -34,6 +34,25 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
 msgid "%(wallet)s: %(left)s left after this sale."
+msgstr ""
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_alerts.js:0
+msgid ""
+"%(what)s has not been confirmed yet.\n"
+"\n"
+"Do NOT refund it and do NOT sell it again: it is still being verified and may go through. It will be settled under Recharges > Transactions."
+msgstr ""
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_alerts.js:0
+msgid ""
+"%(what)s was NOT delivered.\n"
+"Reason: %(reason)s\n"
+"\n"
+"The customer paid %(amount)s for it. Refund that line."
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -105,6 +124,11 @@ msgstr ""
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_list
 msgid "Accounts"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__cashier_alert_date
+msgid "Acknowledged at Register"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -429,6 +453,11 @@ msgid ""
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_search
+msgid "Counter Not Warned"
+msgstr ""
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__create_uid
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__create_uid
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__create_uid
@@ -479,14 +508,6 @@ msgid "Deposit Sheet"
 msgstr ""
 
 #. module: xb_pos_taecel
-#. odoo-python
-#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
-msgid ""
-"Deposit against reference %s to top up AIRTIME. Bill payments are funded "
-"through a separate reference that TAECEL only shows in its portal."
-msgstr ""
-
-#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
 msgid ""
 "Deposit against the reference below and the balance is credited\n"
@@ -494,12 +515,6 @@ msgid ""
 "                reference, and balance only moves between wallets of the same\n"
 "                type: a deposit made with the wrong reference cannot be moved\n"
 "                across afterwards."
-msgstr ""
-
-#. module: xb_pos_taecel
-#. odoo-python
-#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
-msgid "Deposit reference"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -961,6 +976,18 @@ msgstr ""
 
 #. module: xb_pos_taecel
 #. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_alerts.js:0
+msgid "Recharge failed"
+msgstr ""
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_alerts.js:0
+msgid "Recharge unconfirmed"
+msgstr ""
+
+#. module: xb_pos_taecel
+#. odoo-javascript
 #: code:addons/xb_pos_taecel/static/src/app/control_button/taecel_control_button.xml:0
 #: model:ir.ui.menu,name:xb_pos_taecel.menu_taecel_root
 msgid "Recharges"
@@ -1384,6 +1411,12 @@ msgid "Transactions"
 msgstr ""
 
 #. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_alerts.js:0
+msgid "Understood"
+msgstr ""
+
+#. module: xb_pos_taecel
 #. odoo-python
 #: code:addons/xb_pos_taecel/models/taecel_client.py:0
 msgid "Unreadable answer from TAECEL."
@@ -1452,6 +1485,14 @@ msgid "What the cashier is asked for, e.g. \"Numero Celular\"."
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__cashier_alert_date
+msgid ""
+"When the register acknowledged a bad outcome. Empty on a transaction that "
+"failed means nobody at the counter has been told yet -- that is money taken "
+"for a recharge never delivered."
+msgstr ""
+
+#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
 msgid "Where to deposit"
 msgstr ""
@@ -1471,6 +1512,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
 msgid "reference"
+msgstr ""
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_alerts.js:0
+msgid "rejected by the operator"
 msgstr ""
 
 #. module: xb_pos_taecel
