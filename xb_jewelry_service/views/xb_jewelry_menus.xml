@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_jewelry_root" name="Jewelry"
+              web_icon="xb_jewelry_service,static/description/icon.png"
+              groups="group_jewelry_counter" sequence="72"/>
+
+    <menuitem id="menu_jewelry_operations" name="Operations"
+              parent="menu_jewelry_root" sequence="10"/>
+
+    <menuitem id="menu_jewelry_board" name="Workshop Board"
+              parent="menu_jewelry_operations"
+              action="xb_jewelry_board_action" sequence="5"/>
+
+    <menuitem id="menu_jewelry_pieces" name="Pieces"
+              parent="menu_jewelry_operations"
+              action="xb_jewelry_piece_action" sequence="10"/>
+
+    <menuitem id="menu_jewelry_custody" name="In Custody"
+              parent="menu_jewelry_operations"
+              action="xb_jewelry_piece_action_custody" sequence="20"/>
+
+    <menuitem id="menu_jewelry_repairs" name="Service Orders"
+              parent="menu_jewelry_operations"
+              action="repair.action_repair_order_tree" sequence="30"/>
+
+    <menuitem id="menu_jewelry_dispatch" name="Workshop Dispatches"
+              parent="menu_jewelry_operations"
+              action="xb_jewelry_dispatch_action" sequence="40"
+              groups="group_jewelry_workshop"/>
+
+    <menuitem id="menu_jewelry_jewelers" name="Jewelers"
+              parent="menu_jewelry_root"
+              action="res_partner_action_jewelers" sequence="20"
+              groups="group_jewelry_workshop"/>
+
+    <menuitem id="menu_jewelry_settlements" name="Settlements"
+              parent="menu_jewelry_root"
+              action="xb_jeweler_settlement_action" sequence="30"
+              groups="group_jewelry_manager"/>
+
+    <menuitem id="menu_jewelry_config" name="Configuration"
+              parent="menu_jewelry_root" sequence="90"
+              groups="group_jewelry_manager"/>
+
+    <menuitem id="menu_jewelry_settings" name="Settings"
+              parent="menu_jewelry_config"
+              action="xb_jewelry_config_settings_action" sequence="1"/>
+
+    <menuitem id="menu_jewelry_photo_kinds" name="Photo Kinds"
+              parent="menu_jewelry_config"
+              action="xb_jewelry_photo_kind_action" sequence="10"/>
+
+    <menuitem id="menu_jewelry_rates" name="Jeweler Rates"
+              parent="menu_jewelry_config"
+              action="xb_jeweler_rate_action" sequence="15"/>
+
+    <menuitem id="menu_jewelry_metal_purity" name="Metal Purity"
+              parent="menu_jewelry_config"
+              action="xb_metal_purity_action" sequence="20"/>
+
+</odoo>

@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="xb_jewelry_service_pos.JewelryIntakeDialog">
+        <Dialog title="dialogTitle" size="'lg'" bodyClass="'o_xb_jewelry'">
+
+            <div class="mb-3 text-muted">
+                <i class="fa fa-user me-1"/><t t-esc="props.partner.name"/>
+                <!-- La pantalla del QR va después del último paso: contarla
+                     daría "paso 5 de 4". -->
+                <span t-if="!state.photoLink" class="float-end">
+                    Step <t t-esc="state.step + 1"/> of <t t-esc="steps.length"/>
+                </span>
+            </div>
+
+            <!-- 0. What kind of work is this -->
+            <div t-if="currentStep === 'kind'" class="d-flex flex-column gap-3">
+                <button class="btn o_xb_big_action text-start"
+                        t-att-class="state.serviceType === 'repair' ? 'btn-primary' : 'btn-outline-secondary'"
+                        t-on-click="() => this.setServiceType('repair')">
+                    <i class="fa fa-wrench me-2"/>Repair
+                    <div class="small fw-normal">
+                        The customer's own piece comes back fixed.
+                    </div>
+                </button>
+                <button class="btn o_xb_big_action text-start"
+                        t-att-class="state.serviceType === 'custom' ? 'btn-primary' : 'btn-outline-secondary'"
+                        t-on-click="() => this.setServiceType('custom')">
+                    <i class="fa fa-magic me-2"/>Commission
+                    <div class="small fw-normal">
+                        A new piece is made. The customer may bring gold for it.
+                    </div>
+                </button>
+                <button class="btn o_xb_big_action text-start"
+                        t-att-class="state.serviceType === 'transform' ? 'btn-primary' : 'btn-outline-secondary'"
+                        t-on-click="() => this.setServiceType('transform')">
+                    <i class="fa fa-refresh me-2"/>Transformation
+                    <div class="small fw-normal">
+                        The customer's pieces are melted down into another one.
+                    </div>
+                </button>
+            </div>
+
+            <!-- 1. What is it -->
+            <div t-if="currentStep === 'piece'">
+                <label class="form-label">
+                    <t t-if="state.serviceType === 'repair'">What did the customer leave?</t>
+                    <t t-else="">What are we going to make?</t>
+                </label>
+                <input type="text" class="form-control o_xb_step_field mb-3"
+                       placeholder="Yellow gold ring with a stone"
+                       t-model="state.piece.description"/>
+
+                <label class="form-label">Kind of piece</label>
+                <select class="form-select o_xb_step_field mb-3"
+                        t-model="state.piece.piece_type_id">
+                    <option t-foreach="state.tipos" t-as="tipo" t-key="tipo.id"
+                            t-att-value="tipo.id" t-esc="tipo.name"/>
+                </select>
+
+                <label class="form-label">What has to be done</label>
+                <textarea class="form-control o_xb_step_field" rows="3"
+                          placeholder="Weld the shank, keep the original size"
+                          t-model="state.piece.note"/>
+            </div>
+
+            <!-- 1b. The commission: what to make, and with whose gold -->
+            <div t-if="currentStep === 'spec'">
+                <label class="form-label">Specifications for the jeweler</label>
+                <textarea class="form-control o_xb_step_field mb-3" rows="4"
+                          placeholder="Model, metal, weight, stones, size, finish.
+                                       This is what the jeweler will be held to."
+                          t-model="state.spec"/>
+
+                <label class="form-label d-flex justify-content-between align-items-center">
+                    <span>Gold the customer is bringing in</span>
+                    <button class="btn btn-sm btn-outline-primary"
+                            t-on-click="() => this.addInputPiece()">
+                        <i class="fa fa-plus me-1"/>Add
+                    </button>
+                </label>
+                <div t-if="!state.inputPieces.length"
+                     class="alert alert-light border mb-0">
+                    Nothing yet. Leave it empty if the shop supplies all the metal.
+                </div>
+                <div t-foreach="state.inputPieces" t-as="ip" t-key="ip_index"
+                     class="row g-2 mb-2 align-items-end">
+                    <div class="col-6">
+                        <input type="text" class="form-control"
+                               placeholder="Old chain, broken"
+                               t-model="ip.description"/>
+                    </div>
+                    <div class="col-3">
+                        <input type="number" step="0.001" class="form-control"
+                               placeholder="g" t-model.number="ip.weight_g"/>
+                    </div>
+                    <div class="col-2">
+                        <select class="form-select" t-model="ip.metal_value_id">
+                            <option value="false">Metal</option>
+                            <option t-foreach="state.metals" t-as="m" t-key="m.id"
+                                    t-att-value="m.id" t-esc="m.name"/>
+                        </select>
+                    </div>
+                    <div class="col-1">
+                        <button class="btn btn-outline-danger"
+                                t-on-click="() => this.removeInputPiece(ip_index)">
+                            <i class="fa fa-times"/>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Metal and measurements -->
+            <div t-if="currentStep === 'metal'">
+                <label class="form-label">Metal</label>
+                <select class="form-select o_xb_step_field mb-3"
+                        t-model="state.piece.metal_value_id">
+                    <option value="false">Not stated</option>
+                    <option t-foreach="state.metals" t-as="metal" t-key="metal.id"
+                            t-att-value="metal.id" t-esc="metal.name"/>
+                </select>
+
+                <label class="form-label">Weight on the scale (g)</label>
+                <input type="number" step="0.001" class="form-control o_xb_step_field mb-3"
+                       t-model.number="state.piece.weight_g"/>
+
+                <div t-if="pieceKind === 'ring'">
+                    <label class="form-label">Size</label>
+                    <select class="form-select o_xb_step_field mb-3"
+                            t-model="state.piece.size_value_id">
+                        <option value="false">Not stated</option>
+                        <option t-foreach="state.medidas" t-as="med" t-key="med.id"
+                                t-att-value="med.id" t-esc="med.name"/>
+                    </select>
+                </div>
+                <div t-if="pieceKind === 'chain'">
+                    <label class="form-label">Length (cm)</label>
+                    <input type="number" step="0.1" class="form-control o_xb_step_field mb-3"
+                           t-model.number="state.piece.length_cm"/>
+                </div>
+
+                <label class="form-label">Number of stones</label>
+                <input type="number" class="form-control o_xb_step_field mb-3"
+                       t-model.number="state.piece.stone_count"/>
+
+                <div class="form-check form-switch mb-2">
+                    <input class="form-check-input" type="checkbox"
+                           id="xb_has_diamond" t-model="state.piece.has_diamond"/>
+                    <label class="form-check-label" for="xb_has_diamond">
+                        It has a diamond
+                    </label>
+                </div>
+                <div t-if="state.piece.has_diamond" class="ms-4">
+                    <label class="form-label">Tester</label>
+                    <select class="form-select o_xb_step_field mb-3"
+                            t-model="state.piece.diamond_tester">
+                        <option value="false">Not tested</option>
+                        <option value="pass">Passed</option>
+                        <option value="fail">Failed</option>
+                    </select>
+                    <div class="form-check form-switch mb-2">
+                        <input class="form-check-input" type="checkbox"
+                               id="xb_has_laser"
+                               t-model="state.piece.has_laser_inscription"/>
+                        <label class="form-check-label" for="xb_has_laser">
+                            The stone is laser inscribed
+                        </label>
+                    </div>
+                    <div t-if="state.piece.has_laser_inscription">
+                        <label class="form-label">Inscription number</label>
+                        <input type="text" class="form-control o_xb_step_field"
+                               t-model="state.piece.laser_inscription"/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Photos -->
+            <div t-if="currentStep === 'photos'">
+                <p class="text-muted">
+                    Tap each box to take the photo.
+                    <t t-if="!props.hasCamera">
+                        This register has no camera, so pick the picture taken with the phone.
+                    </t>
+                </p>
+                <div class="row g-3">
+                    <div t-foreach="kinds" t-as="kind" t-key="kind.id" class="col-6 col-md-4">
+                        <label class="o_xb_photo_slot w-100 mb-1"
+                               t-att-class="{ o_xb_done: state.photos[kind.code] }">
+                            <img t-if="state.photos[kind.code]"
+                                 t-att-src="photoPreview(kind.code)" alt="photo"/>
+                            <span t-else="">
+                                <i class="fa fa-camera fa-2x d-block mb-1"/>
+                                <t t-esc="kind.name"/>
+                            </span>
+                            <input type="file" accept="image/*" capture="environment"
+                                   class="d-none"
+                                   t-on-change="(ev) => this.onPhotoPicked(kind, ev)"/>
+                        </label>
+                        <div class="small text-center">
+                            <t t-esc="kind.name"/>
+                            <span t-if="kind.required" class="text-danger">*</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Lo que el mostrador exige AHORA y lo que la pieza debe son
+                     dos cosas distintas: la primera hace esperar al cliente. -->
+                <div t-if="missingNow.length" class="alert alert-warning mt-3">
+                    Needed before the customer leaves:
+                    <t t-esc="missingNow.map((k) => k.name).join(', ')"/>
+                </div>
+                <div t-elif="missingPhotos.length" class="alert alert-info mt-3">
+                    <i class="fa fa-info-circle me-1"/>
+                    The customer can go. These are still owed before the piece
+                    may leave for the workshop:
+                    <t t-esc="missingPhotos.map((k) => k.name).join(', ')"/>
+                </div>
+                <button t-if="missingPhotos.length" class="btn btn-outline-primary w-100"
+                        t-on-click="() => this.usePhoneForPhotos()">
+                    <i class="fa fa-qrcode me-2"/>Take the photos with a phone instead
+                </button>
+            </div>
+
+            <!-- QR shown after saving, when the photos come from a phone -->
+            <div t-if="state.photoLink" class="text-center">
+                <h5>Scan this with the phone</h5>
+                <p class="text-muted">
+                    <t t-esc="state.savedRepair.name"/> ·
+                    the link expires in <t t-esc="state.photoLink.minutes"/> minutes
+                </p>
+                <img t-att-src="state.photoLink.qr" alt="QR" class="img-fluid"
+                     style="max-width: 260px;"/>
+                <p class="small text-muted mt-2 text-break">
+                    <t t-esc="state.photoLink.url"/>
+                </p>
+                <div class="alert alert-info mb-0">
+                    The piece is already registered. It just cannot go to the
+                    workshop until the photos are there.
+                </div>
+            </div>
+
+            <!-- 4. Signature -->
+            <div t-if="currentStep === 'sign'">
+                <p>
+                    The customer confirms they leave the piece as described, with the
+                    photos just taken.
+                </p>
+                <label class="form-label">Left by</label>
+                <input type="text" class="form-control o_xb_step_field mb-3"
+                       t-model="state.signedBy"/>
+
+                <div t-if="state.signature" class="o_xb_signature_done mb-2">
+                    <img class="o_xb_signature_preview border rounded"
+                         t-att-src="'data:image/png;base64,' + state.signature"
+                         alt="Signature"/>
+                    <div class="d-flex gap-2 mt-2">
+                        <button class="btn btn-outline-secondary btn-sm"
+                                t-on-click="() => this.captureSignature()">
+                            <i class="fa fa-pencil me-1"/>Sign again
+                        </button>
+                        <button t-if="!signatureRequired"
+                                class="btn btn-outline-danger btn-sm"
+                                t-on-click="() => this.clearSignature()">
+                            <i class="fa fa-times me-1"/>Remove
+                        </button>
+                    </div>
+                </div>
+                <button t-else="" class="btn btn-primary o_xb_big_action w-100"
+                        t-on-click="() => this.captureSignature()">
+                    <i class="fa fa-pencil-square-o me-2"/>Sign here
+                </button>
+
+                <div t-if="signatureRequired and !state.signature"
+                     class="alert alert-warning mt-3 mb-0">
+                    <i class="fa fa-exclamation-triangle me-1"/>
+                    This shop does not take a piece in without the customer's
+                    signature.
+                </div>
+            </div>
+
+            <t t-set-slot="footer">
+                <t t-if="!state.photoLink">
+                    <button t-if="state.step > 0" class="btn btn-secondary"
+                            t-on-click="() => this.previous()">Back</button>
+                    <button t-if="state.step &lt; steps.length - 1"
+                            class="btn btn-primary"
+                            t-att-disabled="!canAdvance()"
+                            t-on-click="() => this.next()">Next</button>
+                    <button t-if="state.step === steps.length - 1"
+                            class="btn btn-success"
+                            t-att-disabled="state.saving"
+                            t-on-click="() => this.save()">
+                        <i class="fa fa-check me-1"/>Receive the piece
+                    </button>
+                    <button class="btn btn-light" t-on-click="() => this.props.close()">
+                        Cancel
+                    </button>
+                </t>
+                <button t-else="" class="btn btn-primary"
+                        t-on-click="() => this.props.close()">Done</button>
+            </t>
+        </Dialog>
+    </t>
+
+</templates>

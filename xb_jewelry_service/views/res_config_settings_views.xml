@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+      Its own section in Settings. It used to hang from Inventory, which is
+      where Odoo puts Repairs, but a jewellery shop does not think of custody,
+      scrap and jeweler payments as an inventory matter: it is the workshop.
+    -->
+    <record id="res_config_settings_view_form_jewelry" model="ir.ui.view">
+        <field name="name">res.config.settings.form.jewelry</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="40"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Jewelry Workshop" string="Jewelry Workshop"
+                     name="xb_jewelry_service"
+                     groups="xb_jewelry_service.group_jewelry_manager"
+                     logo="/xb_jewelry_service/static/description/icon.png">
+
+                    <block title="At the counter"
+                           name="xb_jewelry_counter_container">
+                        <setting string="Photos required to take a piece in"
+                                 help="What the cashier must photograph while the customer is
+                                       standing there. Whatever you choose here, no piece goes
+                                       to the workshop until every applicable photo exists.">
+                            <field name="xb_intake_photo_policy" widget="radio"/>
+                            <div class="mt-2"
+                                 invisible="xb_intake_photo_policy != 'min'">
+                                <field name="xb_intake_main_photo_kind_id"
+                                       placeholder="Which single shot"/>
+                            </div>
+                        </setting>
+                        <setting string="Signatures"
+                                 help="Ask for a handwritten signature at each hand-over">
+                            <div>
+                                <field name="xb_require_intake_signature"/>
+                                <label for="xb_require_intake_signature"/>
+                            </div>
+                            <div>
+                                <field name="xb_require_dispatch_signature"/>
+                                <label for="xb_require_dispatch_signature"/>
+                            </div>
+                            <div>
+                                <field name="xb_require_delivery_signature"/>
+                                <label for="xb_require_delivery_signature"/>
+                            </div>
+                        </setting>
+                        <setting string="Photo link from a phone"
+                                 help="Minutes a QR upload link stays valid, for registers with no camera">
+                            <field name="xb_photo_link_minutes"/> min
+                        </setting>
+                    </block>
+
+                    <block title="Vocabulary of the shop"
+                           name="xb_jewelry_vocab_container">
+                        <setting string="Metal attribute"
+                                 help="Reuse the product attribute you already use for metal and karat">
+                            <field name="xb_metal_attribute_id"/>
+                        </setting>
+                        <setting string="Size attribute"
+                                 help="Reuse the attribute you already use for ring sizes">
+                            <field name="xb_size_attribute_id"/>
+                        </setting>
+                        <setting string="Photo checklist"
+                                 help="Which shots are asked for, and when">
+                            <button type="action"
+                                    name="%(xb_jewelry_photo_kind_action)d"
+                                    string="Photo kinds" class="btn-link"
+                                    icon="fa-arrow-right"/>
+                        </setting>
+                        <setting string="Metal purity"
+                                 help="The number behind each karat label, needed to reconcile scrap">
+                            <button type="action"
+                                    name="%(xb_metal_purity_action)d"
+                                    string="Purity table" class="btn-link"
+                                    icon="fa-arrow-right"/>
+                        </setting>
+                    </block>
+
+                    <block title="Workshop" name="xb_jewelry_workshop_container">
+                        <setting string="Scrap tolerance"
+                                 help="Accepted loss on metal handed to a jeweler. Each jeweler
+                                       can override it, and so can a single hand-over.">
+                            <field name="xb_scrap_tolerance"/> %
+                        </setting>
+                        <setting string="Warranty"
+                                 help="Days of warranty granted on a finished repair">
+                            <field name="xb_warranty_days"/> days
+                        </setting>
+                        <setting string="Unclaimed pieces"
+                                 help="Days after a piece is ready before it counts as unclaimed">
+                            <field name="xb_unclaimed_days"/> days
+                        </setting>
+                        <setting string="Jeweler rates"
+                                 help="What each jeweler charges for each job">
+                            <button type="action"
+                                    name="%(xb_jeweler_rate_action)d"
+                                    string="Rate cards" class="btn-link"
+                                    icon="fa-arrow-right"/>
+                        </setting>
+                    </block>
+
+                    <block title="Paperwork and stock"
+                           name="xb_jewelry_paperwork_container">
+                        <setting string="Intake terms"
+                                 help="Printed on the receipt the customer signs. Have your lawyer review it">
+                            <field name="xb_intake_terms"/>
+                        </setting>
+                        <setting string="Delivery terms"
+                                 help="Printed on the delivery receipt">
+                            <field name="xb_delivery_terms"/>
+                        </setting>
+                        <setting string="Custody location"
+                                 help="Where customer pieces are kept while in your hands">
+                            <field name="xb_custody_location_id"/>
+                        </setting>
+                        <setting string="Jeweler service product"
+                                 help="Fallback product for vendor bills when a job has none of its own">
+                            <field name="xb_jeweler_service_product_id"/>
+                        </setting>
+                        <setting string="Custody product"
+                                 help="Serial tracked product used to trace customer pieces. Keep its cost at zero">
+                            <field name="xb_custody_product_id"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="xb_jewelry_config_settings_action" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <!-- 'inline' stopped being a valid target in Odoo 19; the settings
+             form opens in the current window and picks its own section. -->
+        <field name="target">current</field>
+        <field name="context">{'module': 'xb_jewelry_service'}</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Shared block: everything that identifies the piece.
+         Printed identically on the shop copy and the customer copy, so a
+         dispute is settled by comparing two pieces of paper. -->
+    <template id="jewelry_piece_block">
+        <table style="width:100%; font-size:11px; border-collapse:collapse;">
+            <tr t-if="piece.metal_value_id">
+                <td style="padding:1px 0;">Metal</td>
+                <!-- .name, not the record: t-field on the value prints
+                     "Metal: 14kt" and repeats the label. -->
+                <td style="text-align:right;"><span t-out="piece.metal_value_id.name"/></td>
+            </tr>
+            <tr t-if="piece.weight_g">
+                <td style="padding:1px 0;">Weight</td>
+                <td style="text-align:right;">
+                    <span t-field="piece.weight_g"/> g
+                </td>
+            </tr>
+            <tr t-if="piece.purity">
+                <td style="padding:1px 0;">Pure metal</td>
+                <td style="text-align:right;">
+                    <span t-field="piece.pure_metal_weight_g"/> g
+                </td>
+            </tr>
+            <tr t-if="piece.size_value_id">
+                <td style="padding:1px 0;">Size</td>
+                <td style="text-align:right;"><span t-out="piece.size_value_id.name"/></td>
+            </tr>
+            <tr t-if="piece.length_cm">
+                <td style="padding:1px 0;">Length</td>
+                <td style="text-align:right;"><span t-field="piece.length_cm"/> cm</td>
+            </tr>
+            <tr t-if="piece.stone_count">
+                <td style="padding:1px 0;">Stones</td>
+                <td style="text-align:right;"><span t-field="piece.stone_count"/></td>
+            </tr>
+            <tr t-if="piece.has_diamond">
+                <td style="padding:1px 0;">Diamond</td>
+                <td style="text-align:right;">
+                    Yes
+                    <t t-if="piece.diamond_tester">
+                        - tester <span t-field="piece.diamond_tester"/>
+                    </t>
+                </td>
+            </tr>
+            <tr t-if="piece.laser_inscription">
+                <td style="padding:1px 0;">Inscription</td>
+                <td style="text-align:right;"><span t-field="piece.laser_inscription"/></td>
+            </tr>
+        </table>
+    </template>
+
+    <!-- ============ INTAKE, 80 mm ticket ============ -->
+    <template id="report_jewelry_intake_ticket_document">
+        <t t-set="piece" t-value="doc.jewelry_piece_id"/>
+        <t t-set="company" t-value="doc.company_id or res_company"/>
+        <div class="page" style="font-family: sans-serif; font-size:12px;">
+            <div style="text-align:center;">
+                <strong style="font-size:14px;"><span t-field="company.name"/></strong>
+                <div t-if="company.phone" style="font-size:10px;">
+                    <span t-field="company.phone"/>
+                </div>
+                <div style="font-size:13px; margin-top:4px;">
+                    <strong>PIECE RECEIPT</strong>
+                </div>
+            </div>
+            <hr style="border-top:1px dashed #000; margin:6px 0;"/>
+
+            <table style="width:100%; font-size:11px;">
+                <tr>
+                    <td>Ref.</td>
+                    <td style="text-align:right;"><strong t-field="doc.name"/></td>
+                </tr>
+                <tr>
+                    <td>Piece</td>
+                    <td style="text-align:right;"><span t-field="piece.name"/></td>
+                </tr>
+                <tr>
+                    <td>Date</td>
+                    <td style="text-align:right;">
+                        <span t-field="doc.create_date" t-options="{'widget': 'datetime'}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Customer</td>
+                    <td style="text-align:right;"><span t-field="doc.partner_id.name"/></td>
+                </tr>
+                <tr t-if="doc.sale_order_id">
+                    <td>Order</td>
+                    <td style="text-align:right;"><span t-field="doc.sale_order_id.name"/></td>
+                </tr>
+            </table>
+
+            <hr style="border-top:1px dashed #000; margin:6px 0;"/>
+            <strong style="font-size:12px;"><span t-field="piece.description"/></strong>
+            <t t-call="xb_jewelry_service.jewelry_piece_block"/>
+
+            <t t-if="doc.repair_request">
+                <hr style="border-top:1px dashed #000; margin:6px 0;"/>
+                <div style="font-size:11px;">
+                    <strong>Work requested</strong><br/>
+                    <span t-field="doc.repair_request"/>
+                </div>
+            </t>
+
+            <t t-if="doc.photo_ids">
+                <hr style="border-top:1px dashed #000; margin:6px 0;"/>
+                <div style="font-size:10px;">
+                    <strong t-out="len(doc.photo_ids)"/> photographs were taken at
+                    intake and are kept on file:
+                    <span t-out="', '.join(doc.photo_ids.mapped('kind_id.name'))"/>.
+                </div>
+            </t>
+
+            <t t-if="doc.jeweler_promised_date">
+                <hr style="border-top:1px dashed #000; margin:6px 0;"/>
+                <div style="font-size:11px;">
+                    Estimated ready:
+                    <strong t-field="doc.jeweler_promised_date"/>
+                </div>
+            </t>
+
+            <t t-if="company.xb_intake_terms">
+                <hr style="border-top:1px dashed #000; margin:6px 0;"/>
+                <div style="font-size:8px; text-align:justify;">
+                    <span t-field="company.xb_intake_terms"/>
+                </div>
+            </t>
+
+            <!--
+              The signature box. When the customer already signed on a tablet
+              the ticket prints the stroke itself and needs no room to write;
+              when they did not, the box has to be big enough to actually sign
+              in, which on a 58 mm roll means giving it real height.
+            -->
+            <div style="margin-top:14px; text-align:center; font-size:10px;">
+                <t t-if="doc.intake_signature">
+                    <img t-att-src="image_data_uri(doc.intake_signature)"
+                         style="max-height:110px; max-width:90%;" alt="signature"/>
+                    <div style="border-top:1px solid #000; width:85%; margin:2px auto 0;"/>
+                    <span t-esc="doc.intake_signed_by or doc.partner_id.name"/>
+                    <div>Signed on the tablet</div>
+                </t>
+                <t t-else="">
+                    <div style="height:110px;"/>
+                    <div style="border-top:1px solid #000; width:85%; margin:0 auto;"/>
+                    <span t-field="doc.partner_id.name"/>
+                    <div>Customer signature</div>
+                </t>
+            </div>
+        </div>
+    </template>
+
+    <template id="report_jewelry_intake_ticket">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="doc">
+                <!-- Two copies on the same roll: one stays, one leaves. -->
+                <t t-call="xb_jewelry_service.report_jewelry_intake_ticket_document"/>
+                <p style="page-break-before:always;"/>
+                <t t-call="xb_jewelry_service.report_jewelry_intake_ticket_document"/>
+            </t>
+        </t>
+    </template>
+
+    <!-- ============ INTAKE, full page with photographs ============ -->
+    <template id="report_jewelry_intake_full_document">
+        <t t-set="piece" t-value="doc.jewelry_piece_id"/>
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>Piece Receipt <span t-field="doc.name"/></h2>
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <strong>Customer</strong><br/>
+                        <span t-field="doc.partner_id"
+                              t-options="{'widget': 'contact'}"/>
+                    </div>
+                    <div class="col-6">
+                        <strong>Piece</strong> <span t-field="piece.name"/><br/>
+                        <strong>Received</strong>
+                        <span t-field="doc.create_date"
+                              t-options="{'widget': 'datetime'}"/><br/>
+                        <t t-if="doc.sale_order_id">
+                            <strong>Order</strong> <span t-field="doc.sale_order_id.name"/>
+                        </t>
+                    </div>
+                </div>
+
+                <h4 class="mt-4"><span t-field="piece.description"/></h4>
+                <t t-call="xb_jewelry_service.jewelry_piece_block"/>
+
+                <t t-if="doc.repair_request">
+                    <h5 class="mt-3">Work requested</h5>
+                    <p><span t-field="doc.repair_request"/></p>
+                </t>
+
+                <t t-if="doc.photo_ids">
+                    <h5 class="mt-3">Condition on arrival</h5>
+                    <div class="row">
+                        <div t-foreach="doc.photo_ids" t-as="photo"
+                             class="col-4 text-center mb-3">
+                            <img t-att-src="image_data_uri(photo.image)"
+                                 style="max-width:100%; max-height:150px;"
+                                 alt="photo"/>
+                            <div style="font-size:11px;">
+                                <span t-field="photo.kind_id.name"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+
+                <t t-if="doc.company_id.xb_intake_terms">
+                    <div style="font-size:10px; text-align:justify;" class="mt-3">
+                        <span t-field="doc.company_id.xb_intake_terms"/>
+                    </div>
+                </t>
+
+                <div class="row mt-5">
+                    <div class="col-6 text-center">
+                        <t t-if="doc.intake_signature">
+                            <img t-att-src="image_data_uri(doc.intake_signature)"
+                                 style="max-height:130px; max-width:100%;"
+                                 alt="signature"/>
+                            <div style="border-top:1px solid #000; margin-top:4px;"/>
+                            <span t-esc="doc.intake_signed_by or doc.partner_id.name"/>
+                            <div style="font-size:11px;">Customer (signed on the tablet)</div>
+                        </t>
+                        <t t-else="">
+                            <div style="height:135px;"/>
+                            <div style="border-top:1px solid #000;"/>
+                            <span t-esc="doc.intake_signed_by or doc.partner_id.name"/>
+                            <div style="font-size:11px;">Customer</div>
+                        </t>
+                    </div>
+                    <div class="col-6 text-center">
+                        <div style="height:135px;"/>
+                        <div style="border-top:1px solid #000;"/>
+                        <span t-field="doc.user_id.name"/>
+                        <div style="font-size:11px;">Received by</div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_jewelry_intake_full">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="xb_jewelry_service.report_jewelry_intake_full_document"/>
+            </t>
+        </t>
+    </template>
+
+    <!-- ============ DELIVERY, 80 mm ticket ============ -->
+    <template id="report_jewelry_delivery_ticket">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="doc">
+                <t t-set="piece" t-value="doc.jewelry_piece_id"/>
+                <t t-set="company" t-value="doc.company_id or res_company"/>
+                <div class="page" style="font-family: sans-serif; font-size:12px;">
+                    <div style="text-align:center;">
+                        <strong style="font-size:14px;"><span t-field="company.name"/></strong>
+                        <div style="font-size:13px; margin-top:4px;">
+                            <strong>DELIVERY RECEIPT</strong>
+                        </div>
+                    </div>
+                    <hr style="border-top:1px dashed #000; margin:6px 0;"/>
+                    <table style="width:100%; font-size:11px;">
+                        <tr><td>Ref.</td>
+                            <td style="text-align:right;"><strong t-field="doc.name"/></td></tr>
+                        <tr><td>Piece</td>
+                            <td style="text-align:right;"><span t-field="piece.name"/></td></tr>
+                        <tr><td>Customer</td>
+                            <td style="text-align:right;"><span t-field="doc.partner_id.name"/></td></tr>
+                        <tr t-if="doc.warranty_until"><td>Warranty until</td>
+                            <td style="text-align:right;"><span t-field="doc.warranty_until"/></td></tr>
+                    </table>
+                    <hr style="border-top:1px dashed #000; margin:6px 0;"/>
+                    <strong><span t-field="piece.description"/></strong>
+                    <t t-call="xb_jewelry_service.jewelry_piece_block"/>
+                    <t t-if="company.xb_delivery_terms">
+                        <hr style="border-top:1px dashed #000; margin:6px 0;"/>
+                        <div style="font-size:8px; text-align:justify;">
+                            <span t-field="company.xb_delivery_terms"/>
+                        </div>
+                    </t>
+                    <div style="margin-top:26px; text-align:center; font-size:10px;">
+                        <div style="border-top:1px solid #000; width:80%; margin:0 auto;"/>
+                        <span t-field="doc.partner_id.name"/>
+                        <div>Received in good order</div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!-- ============ WORKSHOP DISPATCH NOTE ============ -->
+    <template id="report_jewelry_dispatch">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page" style="font-family: sans-serif; font-size:12px;">
+                    <div style="text-align:center;">
+                        <strong style="font-size:14px;">
+                            <span t-field="doc.company_id.name"/>
+                        </strong>
+                        <div style="font-size:13px; margin-top:4px;">
+                            <strong>WORKSHOP DISPATCH</strong>
+                        </div>
+                    </div>
+                    <hr style="border-top:1px dashed #000; margin:6px 0;"/>
+                    <table style="width:100%; font-size:11px;">
+                        <tr><td>Ref.</td>
+                            <td style="text-align:right;"><strong t-field="doc.name"/></td></tr>
+                        <tr><td>Jeweler</td>
+                            <td style="text-align:right;"><span t-field="doc.jeweler_id.name"/></td></tr>
+                        <tr><td>Out</td>
+                            <td style="text-align:right;">
+                                <span t-field="doc.date" t-options="{'widget': 'datetime'}"/>
+                            </td></tr>
+                        <tr t-if="doc.promised_date"><td>Promised</td>
+                            <td style="text-align:right;"><span t-field="doc.promised_date"/></td></tr>
+                    </table>
+
+                    <hr style="border-top:1px dashed #000; margin:6px 0;"/>
+                    <strong style="font-size:11px;">Pieces</strong>
+                    <t t-foreach="doc.repair_ids" t-as="line">
+                        <div style="font-size:11px; margin-top:4px;">
+                            <strong t-field="line.name"/> -
+                            <span t-field="line.jewelry_piece_id.description"/><br/>
+                            <span style="font-size:10px;">
+                                <t t-if="line.jewelry_piece_id.weight_g">
+                                    <span t-field="line.jewelry_piece_id.weight_g"/> g
+                                </t>
+                                <t t-if="line.jewelry_piece_id.metal_value_id">
+                                    · <span t-out="line.jewelry_piece_id.metal_value_id.name"/>
+                                </t>
+                                <t t-if="line.jewelry_piece_id.stone_count">
+                                    · <span t-field="line.jewelry_piece_id.stone_count"/> stones
+                                </t>
+                            </span>
+                        </div>
+                    </t>
+
+                    <t t-if="doc.material_line_ids">
+                        <hr style="border-top:1px dashed #000; margin:6px 0;"/>
+                        <strong style="font-size:11px;">Material handed over</strong>
+                        <table style="width:100%; font-size:10px;">
+                            <t t-foreach="doc.material_line_ids" t-as="mat">
+                                <tr>
+                                    <td><span t-field="mat.product_id.name"/></td>
+                                    <td style="text-align:right;">
+                                        <span t-field="mat.qty_out_g"/> g
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+                        <div style="font-size:10px; margin-top:4px;">
+                            Scrap must be returned. Accepted loss:
+                            <strong t-field="doc.scrap_tolerance"/>%.
+                        </div>
+                    </t>
+
+                    <div style="margin-top:26px; text-align:center; font-size:10px;">
+                        <div style="border-top:1px solid #000; width:80%; margin:0 auto;"/>
+                        <span t-field="doc.jeweler_id.name"/>
+                        <div>Jeweler signature</div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

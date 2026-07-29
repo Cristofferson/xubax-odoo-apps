@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- 80 mm roll: what the counter actually prints -->
+    <record id="paperformat_jewelry_ticket" model="report.paperformat">
+        <field name="name">Jewelry Ticket 80mm</field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <!-- A real height is required: with 0 the format is ignored and the
+             ticket comes out on a letter page. -->
+        <field name="page_height">250</field>
+        <field name="page_width">80</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">2</field>
+        <field name="margin_bottom">2</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">2</field>
+        <field name="disable_shrinking" eval="True"/>
+        <field name="dpi">96</field>
+    </record>
+
+    <record id="action_report_jewelry_intake_ticket" model="ir.actions.report">
+        <field name="name">Intake Receipt (ticket)</field>
+        <field name="model">repair.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xb_jewelry_service.report_jewelry_intake_ticket</field>
+        <field name="report_file">xb_jewelry_service.report_jewelry_intake_ticket</field>
+        <field name="paperformat_id" ref="paperformat_jewelry_ticket"/>
+        <field name="binding_model_id" ref="repair.model_repair_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_jewelry_intake_full" model="ir.actions.report">
+        <field name="name">Intake Receipt (full page)</field>
+        <field name="model">repair.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xb_jewelry_service.report_jewelry_intake_full</field>
+        <field name="report_file">xb_jewelry_service.report_jewelry_intake_full</field>
+        <field name="binding_model_id" ref="repair.model_repair_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_jewelry_delivery_ticket" model="ir.actions.report">
+        <field name="name">Delivery Receipt (ticket)</field>
+        <field name="model">repair.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xb_jewelry_service.report_jewelry_delivery_ticket</field>
+        <field name="report_file">xb_jewelry_service.report_jewelry_delivery_ticket</field>
+        <field name="paperformat_id" ref="paperformat_jewelry_ticket"/>
+        <field name="binding_model_id" ref="repair.model_repair_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_jewelry_dispatch" model="ir.actions.report">
+        <field name="name">Workshop Dispatch Note</field>
+        <field name="model">xb.jewelry.dispatch</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xb_jewelry_service.report_jewelry_dispatch</field>
+        <field name="report_file">xb_jewelry_service.report_jewelry_dispatch</field>
+        <field name="paperformat_id" ref="paperformat_jewelry_ticket"/>
+        <field name="binding_model_id" ref="model_xb_jewelry_dispatch"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

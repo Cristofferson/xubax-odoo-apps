@@ -1,0 +1,852 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_jewelry_service_pos
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-27 14:46+0000\n"
+"PO-Revision-Date: 2026-07-27 14:46+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "%(count)s piece(s) handed over: %(ref)s"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "%s delivered."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "A new piece is made. The customer may bring gold for it."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Add"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service_pos.res_config_settings_view_form_jewelry_pos
+msgid "Adds a Jewelry button to the Point of Sale"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/signature/jewelry_signature.xml:0
+msgid "Ask the customer to sign in the box above."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "At workshop"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Back"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "Being inspected"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+#: code:addons/xb_jewelry_service_pos/static/src/app/signature/jewelry_signature.xml:0
+msgid "Cancel"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "Close"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Commission"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#: model:ir.model,name:xb_jewelry_service_pos.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/signature/jewelry_signature.xml:0
+msgid "Confirm signature"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "Could not deliver the piece."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "Customer"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-python
+#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
+msgid "Customer's gold"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "Deliver a finished piece"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "Deliver to customer"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "Delivered"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "Delivery receipt"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#: model:ir.model.fields,field_description:xb_jewelry_service_pos.field_pos_config__display_name
+#: model:ir.model.fields,field_description:xb_jewelry_service_pos.field_pos_session__display_name
+#: model:ir.model.fields,field_description:xb_jewelry_service_pos.field_repair_order__display_name
+#: model:ir.model.fields,field_description:xb_jewelry_service_pos.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:xb_jewelry_service_pos.field_xb_jewelry_photo_kind__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Done"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Failed"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Gold the customer is bringing in"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "Hand over"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "Hand pieces to a jeweler"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-python
+#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
+msgid ""
+"Handing pieces to a jeweler is done by the workshop. Ask someone with that "
+"access to do it."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#: model:ir.model.fields,field_description:xb_jewelry_service_pos.field_pos_config__id
+#: model:ir.model.fields,field_description:xb_jewelry_service_pos.field_pos_session__id
+#: model:ir.model.fields,field_description:xb_jewelry_service_pos.field_repair_order__id
+#: model:ir.model.fields,field_description:xb_jewelry_service_pos.field_res_config_settings__id
+#: model:ir.model.fields,field_description:xb_jewelry_service_pos.field_xb_jewelry_photo_kind__id
+msgid "ID"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "In custody"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Inscription number"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.js:0
+msgid "Intake receipt"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "It has a diamond"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "Jeweler"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/control_buttons/control_buttons.xml:0
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "Jewelry"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#: model:ir.model,name:xb_jewelry_service_pos.model_xb_jewelry_photo_kind
+msgid "Jewelry Photo Kind"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#: model:ir.model.fields,field_description:xb_jewelry_service_pos.field_pos_config__xb_jewelry_enabled
+#: model:ir.model.fields,field_description:xb_jewelry_service_pos.field_res_config_settings__pos_xb_jewelry_enabled
+msgid "Jewelry workshop"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Kind of piece"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Left by"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Length (cm)"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "Look up a piece"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Metal"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-python
+#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
+msgid "Missing photos: %(kinds)s"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid ""
+"Model, metal, weight, stones, size, finish."
+"                                        This is what the jeweler will be "
+"held to."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Needed before the customer leaves:"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "New"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Next"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "No piece is waiting at the counter."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-python
+#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
+msgid "No sale order was raised: the POS order bridge is not installed."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Not stated"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Not tested"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "Nothing found."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Nothing yet. Leave it empty if the shop supplies all the metal."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Number of stones"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Old chain, broken"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "Order"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-python
+#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
+msgid ""
+"Order %(order)s was created under %(theirs)s while this service belongs to "
+"%(ours)s, so they were left unlinked. Check which company the register "
+"trades under."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Passed"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.js:0
+msgid "Photos from a phone"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-python
+#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
+msgid "Pick at least one piece to hand over."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "Pick at least one piece."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-python
+#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
+msgid "Pick the jeweler taking the pieces."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "Pick the jeweler."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-python
+#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
+msgid "Piece"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.js:0
+msgid "Piece received: %s"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#: model:ir.model,name:xb_jewelry_service_pos.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#: model:ir.model,name:xb_jewelry_service_pos.model_pos_session
+msgid "Point of Sale Session"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "Promised"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "QR"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "Ready for pickup"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.js:0
+msgid "Receive a piece"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Receive the piece"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service_pos.res_config_settings_view_form_jewelry_pos
+msgid "Receive, look up and deliver repair pieces from this register"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "Received by"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "Reference"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "Reference, customer or piece"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Remove"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Repair"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#: model:ir.model,name:xb_jewelry_service_pos.model_repair_order
+msgid "Repair Order"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Scan this with the phone"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-python
+#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
+msgid "Select the customer first."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "Select the customer on the order first."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "Sent back"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#: model:ir.model.fields,help:xb_jewelry_service_pos.field_pos_config__xb_jewelry_enabled
+#: model:ir.model.fields,help:xb_jewelry_service_pos.field_res_config_settings__pos_xb_jewelry_enabled
+msgid ""
+"Show the jewelry button so this register can receive, look up and deliver "
+"repair pieces."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Sign again"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Sign here"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+#: code:addons/xb_jewelry_service_pos/static/src/app/signature/jewelry_signature.js:0
+msgid "Signature"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Size"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.js:0
+msgid "Some required photos are missing."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Specifications for the jeweler"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "Status"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Step"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Take the photos with a phone instead"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Tap each box to take the photo."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Tester"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid ""
+"The customer can go. These are still owed before the piece\n"
+"                    may leave for the workshop:"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid ""
+"The customer confirms the piece they are taking back is theirs and the work "
+"is the one agreed."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid ""
+"The customer confirms they leave the piece as described, with the\n"
+"                    photos just taken."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.js:0
+msgid ""
+"The customer confirms they leave the piece as described, with the photos "
+"just taken."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-python
+#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
+msgid "The customer has not authorized the quote yet."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-python
+#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
+msgid "The customer has not signed the intake receipt."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-python
+#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
+msgid "The customer has to sign for the piece before it is handed back."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-python
+#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
+msgid ""
+"The customer has to sign the intake receipt before the shop takes the piece."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.js:0
+msgid "The customer still has to sign."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "The customer's own piece comes back fixed."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "The customer's pieces are melted down into another one."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "The hand-over could not be recorded."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-python
+#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
+msgid "The jeweler has to sign for the pieces."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "The jeweler signs for the pieces they are taking with them."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.js:0
+msgid "The piece could not be received."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid ""
+"The piece is already registered. It just cannot go to the\n"
+"                    workshop until the photos are there."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-python
+#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
+msgid "The piece was taken in, but the order could not be raised: %(err)s"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "The stone is laser inscribed"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-python
+#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
+msgid "This piece is not at the counter."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "This piece is not ready to be handed back yet."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "This register has no camera, so pick the picture taken with the phone."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid ""
+"This register has no camera. Photos will have to be taken from a\n"
+"                    phone and picked from a file."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid ""
+"This shop does not take a piece in without the customer's\n"
+"                    signature."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-python
+#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
+msgid "This warehouse has no repair operation type configured."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Transformation"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "Waiting authorization"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "Weight"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Weight on the scale (g)"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Weld the shank, keep the original size"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "What are we going to make?"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "What did the customer leave?"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "What has to be done"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "Workshop hand-over"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "Yellow gold ring with a stone"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "minutes"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "of"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid "photo"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
+msgid ""
+"·\n"
+"                    the link expires in"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "· due"
+msgstr ""

@@ -1,0 +1,3090 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_jewelry_service
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: XUBAX\n"
+"Language-Team: Spanish (Mexico)\n"
+"Language: es_MX\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/controllers/photo_upload.py:0
+msgid "%(count)s photo(s) uploaded from a phone."
+msgstr "%(count)s foto(s) subidas desde un celular."
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/xb_jewelry_dispatch.py:0
+msgid "%(ref)s is not at the workshop."
+msgstr "%(ref)s no está en el taller."
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid "%(ref)s is not ready to be delivered."
+msgstr "%(ref)s no está lista para entregarse."
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/xb_jeweler_settlement.py:0
+msgid "%(repair)s - %(piece)s"
+msgstr "%(repair)s - %(piece)s"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__state
+msgid ""
+"* The 'New' status is used when a user is encoding a new and unconfirmed repair order.\n"
+"* The 'Confirmed' status is used when a user confirms the repair order.\n"
+"* The 'Under Repair' status is used when the repair is ongoing.\n"
+"* The 'Repaired' status is set when repairing is completed.\n"
+"* The 'Cancelled' status is used when user cancel repair order."
+msgstr "* El estado 'Nuevo' se usa cuando un usuario está configurando una orden de reparación nueva o que no se ha confirmado.\n* El estado 'Confirmado' se usa cuando un usuario confirma una orden de reparación.\n* El estado 'En reparación' se usa cuando se está realizando una reparación.\n* El estado 'Reparado' se usa cuando se terminó una reparación.\n* El estado 'Cancelado' se usa cuando un usuario cancela una orden de reparación."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.jewelry_piece_block
+msgid "- tester"
+msgstr "- probador"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_full_document
+msgid ""
+"<br/>\n"
+"                        <strong>Received</strong>"
+msgstr "<br/>\n                        <strong>Recibida</strong>"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_dispatch
+msgid "<strong style=\"font-size:11px;\">Material handed over</strong>"
+msgstr "<strong style=\"font-size:11px;\">Material entregado</strong>"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_dispatch
+msgid "<strong style=\"font-size:11px;\">Pieces</strong>"
+msgstr "<strong style=\"font-size:11px;\">Piezas</strong>"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_full_document
+msgid "<strong>Customer</strong><br/>"
+msgstr "<strong>Cliente</strong><br/>"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_delivery_ticket
+msgid "<strong>DELIVERY RECEIPT</strong>"
+msgstr "<strong>COMPROBANTE DE ENTREGA</strong>"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.portal_jewelry_detail
+msgid "<strong>Length:</strong>"
+msgstr "<strong>Largo:</strong>"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.portal_jewelry_detail
+msgid "<strong>Metal:</strong>"
+msgstr "<strong>Metal:</strong>"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_full_document
+msgid "<strong>Order</strong>"
+msgstr "<strong>Pedido</strong>"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_ticket_document
+msgid "<strong>PIECE RECEIPT</strong>"
+msgstr "<strong>BOLETA DE RESGUARDO</strong>"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_full_document
+msgid "<strong>Piece</strong>"
+msgstr "<strong>Pieza</strong>"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.portal_jewelry_detail
+msgid "<strong>Service history</strong>"
+msgstr "<strong>Historial de servicios</strong>"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.portal_jewelry_detail
+msgid "<strong>Size:</strong>"
+msgstr "<strong>Talla:</strong>"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.portal_jewelry_detail
+msgid "<strong>Stones:</strong>"
+msgstr "<strong>Piedras:</strong>"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_dispatch
+msgid "<strong>WORKSHOP DISPATCH</strong>"
+msgstr "<strong>REMISIÓN A TALLER</strong>"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.portal_jewelry_detail
+msgid "<strong>Weight:</strong>"
+msgstr "<strong>Peso:</strong>"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_ticket_document
+msgid "<strong>Work requested</strong><br/>"
+msgstr "<strong>Trabajo solicitado</strong><br/>"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order_photo_link.py:0
+msgid "A photo upload link was generated, valid for %(min)s minutes."
+msgstr "Se generó un enlace para subir fotos, válido por %(min)s minutos."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.actions.act_window,help:xb_jewelry_service.xb_jewelry_piece_action
+msgid ""
+"A piece is a permanent file: it keeps its photos, its metal and its whole\n"
+"                service history, long after each repair is closed."
+msgstr "Una pieza es un expediente permanente: conserva sus fotos, su metal y todo su\n                historial de servicios, mucho después de cerrada cada reparación."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.actions.act_window,help:xb_jewelry_service.xb_jewelry_photo_kind_action
+msgid ""
+"A required photo blocks the piece from leaving to the workshop until it "
+"exists."
+msgstr "Una foto obligatoria impide que la pieza salga al taller mientras no exista."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_photo_kind__required
+msgid ""
+"A required photo blocks the piece from moving forward until it has been "
+"taken."
+msgstr "Una foto obligatoria impide que la pieza avance mientras no se haya tomado."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Accepted loss on metal handed to a jeweler"
+msgstr "Merma aceptada sobre el metal entregado a un joyero"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_company__xb_scrap_tolerance
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_config_settings__xb_scrap_tolerance
+msgid "Accepted loss on metal handed to a jeweler."
+msgstr "Merma aceptada sobre el metal entregado a un joyero."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_partner__jeweler_scrap_tolerance
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_users__jeweler_scrap_tolerance
+msgid "Accepted loss on metal handed to this jeweler."
+msgstr "Merma aceptada sobre el metal entregado a este joyero."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__access_warning
+msgid "Access warning"
+msgstr "Advertencia de acceso"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__message_needaction
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__message_needaction
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__message_needaction
+msgid "Action Needed"
+msgstr "Acción requerida"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_rate__active
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo_kind__active
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__active
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_metal_purity__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__activity_ids
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__activity_ids
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__activity_ids
+msgid "Activities"
+msgstr "Actividades"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__activity_exception_decoration
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__activity_exception_decoration
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Decoración de Actividad de Excepción"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__activity_state
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__activity_state
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__activity_state
+msgid "Activity State"
+msgstr "Estado de la actividad"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__activity_type_icon
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__activity_type_icon
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Icono de tipo de actividad"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/xb_jewelry_dispatch.py:0
+msgid "Add at least one piece to %(ref)s."
+msgstr "Agrega al menos una pieza a %(ref)s."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__weight_gain_g
+msgid "Added to pieces (g)"
+msgstr "Quedó en las piezas (g)"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_photo_kind__stage__after
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_photo_kind_view_search
+msgid "After repair"
+msgstr "Después de la reparación"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.portal_jewelry_detail
+msgid "After the work"
+msgstr "Después del trabajo"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__jeweler_cost
+msgid ""
+"Agreed rate for this job. Filled in from the jeweler's rate card, and always"
+" editable for this particular piece."
+msgstr "Tarifa pactada para este trabajo. Se toma del tarifario del joyero y siempre se puede editar para esta pieza en particular."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_photo_kind__condition__always
+msgid "Always"
+msgstr "Siempre"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__amount_total
+msgid "Amount Total"
+msgstr "Importe total"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_photo_kind_view_search
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_piece_view_form
+msgid "Archived"
+msgstr "Archivado"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.portal_jewelry_detail
+msgid "As we received it"
+msgstr "Como la recibimos"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Ask Authorization"
+msgstr "Pedir autorización"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Ask for a handwritten signature at each hand-over"
+msgstr "Pedir firma de puño y letra en cada entrega"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid "Assign a jeweler to %(ref)s first."
+msgstr "Primero asigna un joyero a %(ref)s."
+
+#. module: xb_jewelry_service
+#: model:res.groups,comment:xb_jewelry_service.group_jewelry_workshop
+msgid "Assigns jewelers, dispatches pieces and runs quality control."
+msgstr "Asigna joyeros, entrega piezas al taller y hace el control de calidad."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_dispatch__state__out
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_piece__custody_state__at_workshop
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_dispatch_view_search
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_piece_view_search
+msgid "At workshop"
+msgstr "En taller"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__message_attachment_count
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__message_attachment_count
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__message_attachment_count
+msgid "Attachment Count"
+msgstr "Número de archivos adjuntos"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Authorized by Customer"
+msgstr "Autorizado por el cliente"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_partner__jeweler_avg_rating
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_users__jeweler_avg_rating
+msgid "Avg. workmanship"
+msgstr "Calidad promedio"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Back to Jeweler"
+msgstr "Regresar al joyero"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jeweler_settlement_view_form
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_dispatch_view_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jeweler_settlement__state__cancel
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_dispatch__state__cancel
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid ""
+"Cannot hand %(ref)s to the workshop: the customer has not signed the intake "
+"receipt."
+msgstr "No se puede entregar %(ref)s al taller: el cliente no ha firmado la boleta de resguardo."
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid ""
+"Cannot hand %(ref)s to the workshop: the following photos are still missing:"
+" %(kinds)s."
+msgstr "No se puede entregar %(ref)s al taller: faltan estas fotos: %(kinds)s."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__product_category__xb_jewelry_kind__chain
+msgid "Chain or bracelet"
+msgstr "Cadena o pulsera"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_photo_kind__condition__chain
+msgid "Chains and bracelets only"
+msgstr "Solo cadenas y pulseras"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Checklist"
+msgstr "Lista de comprobación"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo_kind__code
+msgid "Code"
+msgstr "Código"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jeweler_settlement_view_form
+msgid "Collect Jobs"
+msgstr "Juntar trabajos"
+
+#. module: xb_jewelry_service
+#: model:ir.model,name:xb_jewelry_service.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_rate__company_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__company_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__company_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__company_currency_id
+msgid "Company Currency"
+msgstr "Moneda de la compañía"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo_kind__condition
+msgid "Condition"
+msgstr "Condición"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_full_document
+msgid "Condition on arrival"
+msgstr "Estado al recibirla"
+
+#. module: xb_jewelry_service
+#: model:ir.model,name:xb_jewelry_service.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: xb_jewelry_service
+#: model:ir.ui.menu,name:xb_jewelry_service.menu_jewelry_config
+msgid "Configuration"
+msgstr "Configuración"
+
+#. module: xb_jewelry_service
+#: model:res.groups,comment:xb_jewelry_service.group_jewelry_manager
+msgid "Configures the workshop and settles jeweler payments."
+msgstr "Configura el taller y liquida los pagos a joyeros."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jeweler_settlement_view_form
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jeweler_settlement__state__confirmed
+msgid "Confirmed"
+msgstr "Confirmado"
+
+#. module: xb_jewelry_service
+#: model:ir.model,name:xb_jewelry_service.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: xb_jewelry_service
+#: model:res.groups,name:xb_jewelry_service.group_jewelry_counter
+msgid "Counter"
+msgstr "Mostrador"
+
+#. module: xb_jewelry_service
+#: model:ir.model,website_form_label:xb_jewelry_service.model_res_partner
+msgid "Create a Customer"
+msgstr "Crear un cliente"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_rate__create_uid
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__create_uid
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__create_uid
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch_material__create_uid
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo__create_uid
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo_kind__create_uid
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__create_uid
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_metal_purity__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_rate__create_date
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__create_date
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__create_date
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch_material__create_date
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo__create_date
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo_kind__create_date
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__create_date
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_metal_purity__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_rate__currency_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_piece_view_search
+msgid "Custody"
+msgstr "Custodia"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__custody_state
+msgid "Custody State"
+msgstr "Estado de custodia"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_custody_location_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__xb_custody_location_id
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Custody location"
+msgstr "Ubicación de custodia"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_custody_product_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__xb_custody_product_id
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Custody product"
+msgstr "Producto de custodia"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_partner__jeweler_scrap_tolerance_custom
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_users__jeweler_scrap_tolerance_custom
+msgid "Custom scrap tolerance"
+msgstr "Merma personalizada"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_delivery_ticket
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_full_document
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_ticket_document
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__access_url
+msgid "Customer Portal URL"
+msgstr "URL del portal de cliente"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_ticket_document
+msgid "Customer signature"
+msgstr "Firma del cliente"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__delivery_signature
+msgid "Customer signature (delivery)"
+msgstr "Firma del cliente (entrega)"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__intake_signature
+msgid "Customer signature (intake)"
+msgstr "Firma del cliente (recepción)"
+
+#. module: xb_jewelry_service
+#: model:xb.jewelry.photo.kind,name:xb_jewelry_service.photo_kind_damage
+msgid "Damage"
+msgstr "Daño"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__date
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo__date
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_ticket_document
+msgid "Date"
+msgstr "Fecha"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_rate__date_from
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__date_from
+msgid "Date From"
+msgstr "Desde"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__date_to
+msgid "Date To"
+msgstr "Hasta"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_dispatch__promised_date
+msgid "Date the jeweler commits to when taking the pieces."
+msgstr "Fecha que el joyero se compromete al llevarse las piezas."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__jeweler_promised_date
+msgid "Date the jeweller commits to when the piece is handed over."
+msgstr "Fecha que el joyero se compromete al recibir la pieza."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Days after a piece is ready before it counts as unclaimed"
+msgstr "Días desde que la pieza está lista para considerarla no reclamada"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_company__xb_unclaimed_days
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_config_settings__xb_unclaimed_days
+msgid "Days after the piece is ready before it counts as unclaimed."
+msgstr "Días desde que la pieza está lista para considerarla no reclamada."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__delay_days
+msgid "Days between the promised date and the actual completion."
+msgstr "Días entre la fecha comprometida y la terminación real."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Days of warranty granted on a finished repair"
+msgstr "Días de garantía que se otorgan sobre una reparación terminada"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__piece_kind
+msgid "Decides which measurements and photos the piece needs."
+msgstr "Define qué medidas y qué fotos necesita la pieza."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.actions.act_window,help:xb_jewelry_service.xb_jewelry_photo_kind_action
+msgid "Define the photos your counter must take"
+msgstr "Define las fotos que debe tomar tu mostrador"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__delay_days
+msgid "Delay Days"
+msgstr "Días de atraso"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Deliver to Customer"
+msgstr "Entregar al cliente"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__repair_order__state__delivered
+msgid "Delivered"
+msgstr "Entregado"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Delivery"
+msgstr "Entrega"
+
+#. module: xb_jewelry_service
+#: model:ir.actions.report,name:xb_jewelry_service.action_report_jewelry_delivery_ticket
+msgid "Delivery Receipt (ticket)"
+msgstr "Comprobante de entrega (ticket)"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__delivery_signed_by
+msgid "Delivery Signed By"
+msgstr "Entrega firmada por"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__delivery_signed_on
+msgid "Delivery Signed On"
+msgstr "Entrega firmada el"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_delivery_terms
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__xb_delivery_terms
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Delivery terms"
+msgstr "Términos de entrega"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.jewelry_piece_block
+msgid "Diamond"
+msgstr "Diamante"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__diamond_tester
+msgid "Diamond tester"
+msgstr "Probador de diamante"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__qc_tester_ok
+msgid "Diamond tester passed"
+msgstr "Pasó el probador de diamante"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch_material__dispatch_id
+msgid "Dispatch"
+msgstr "Remisión"
+
+#. module: xb_jewelry_service
+#: model:ir.model,name:xb_jewelry_service.model_xb_jewelry_dispatch_material
+msgid "Dispatch Material"
+msgstr "Material de la remisión"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_product_category__display_name
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__display_name
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__display_name
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_partner__display_name
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_rate__display_name
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__display_name
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__display_name
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch_material__display_name
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo__display_name
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo_kind__display_name
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__display_name
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_metal_purity__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jeweler_settlement__state__draft
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_dispatch__state__draft
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: xb_jewelry_service
+#: model:ir.model.constraint,message:xb_jewelry_service.constraint_xb_metal_purity_value_uniq
+msgid "Each metal value can only have one purity."
+msgstr "Cada valor de metal solo puede tener una pureza."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__res_partner__jeweler_type__internal
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_ticket_document
+msgid "Estimated ready:"
+msgstr "Estimada para:"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/xb_jeweler_settlement.py:0
+msgid "Every job in %(ref)s has a zero rate."
+msgstr "Todos los trabajos de %(ref)s tienen tarifa en cero."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.actions.act_window,help:xb_jewelry_service.res_partner_action_jewelers
+msgid ""
+"External jewelers are vendors, so you invoice and pay them with standard\n"
+"                Odoo. Employees are linked to their contact. Archive one and it simply\n"
+"                stops being offered."
+msgstr "Los joyeros externos son proveedores, así que les facturas y les pagas con el\n                Odoo de siempre. Los empleados quedan ligados a su contacto. Si archivas uno,\n                simplemente deja de ofrecerse."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__res_partner__jeweler_type__external
+msgid "External workshop"
+msgstr "Taller externo"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_piece__diamond_tester__fail
+msgid "Failed"
+msgstr "Fallido"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Fallback product for vendor bills when a job has none of its own"
+msgstr "Producto de respaldo para facturas de proveedor cuando el trabajo no tiene uno propio"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_company__xb_jeweler_service_product_id
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_config_settings__xb_jeweler_service_product_id
+msgid ""
+"Fallback product used on vendor bills when a job has no service product of "
+"its own."
+msgstr "Producto de respaldo que se usa en las facturas de proveedor cuando un trabajo no tiene producto de servicio propio."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__qc_rating
+msgid "Feeds the jeweller scorecard."
+msgstr "Alimenta el tablero del joyero."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__purity
+msgid ""
+"Fineness as a number. Filled in from the metal, override it when the piece "
+"has been tested."
+msgstr "La ley expresada como número. Se llena a partir del metal; cámbiala cuando la pieza haya sido probada."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__qc_finish_ok
+msgid "Finish acceptable"
+msgstr "Acabado aceptable"
+
+#. module: xb_jewelry_service
+#: model:xb.jewelry.photo.kind,name:xb_jewelry_service.photo_kind_after
+msgid "Finished piece"
+msgstr "Pieza terminada"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.portal_my_home_jewelry
+msgid "Follow your pieces and see their photographs"
+msgstr "Sigue tus piezas y mira sus fotografías"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__message_follower_ids
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__message_follower_ids
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__message_partner_ids
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__message_partner_ids
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Contactos)"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jeweler_settlement__activity_type_icon
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_dispatch__activity_type_icon
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Icono de Font Awesome p. ej. fa-tasks"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_metal_purity__purity
+msgid ""
+"Fraction of pure metal, between 0 and 1. For example 18kt gold is 0.7500 and"
+" sterling silver is 0.9250."
+msgstr "Fracción de metal puro, entre 0 y 1. Por ejemplo, el oro de 18kt es 0.7500 y la plata ley es 0.9250."
+
+#. module: xb_jewelry_service
+#: model:xb.jewelry.photo.kind,name:xb_jewelry_service.photo_kind_front
+msgid "Front"
+msgstr "Frente"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_company__xb_custody_product_id
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_config_settings__xb_custody_product_id
+msgid ""
+"Generic serial-tracked product used to trace customer pieces through "
+"Inventory. Keep its cost at zero."
+msgstr "Producto genérico con número de serie que sirve para rastrear las piezas del cliente en Inventario. Mantén su costo en cero."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.actions.act_window,help:xb_jewelry_service.xb_metal_purity_action
+msgid "Give each metal a number"
+msgstr "Ponle un número a cada metal"
+
+#. module: xb_jewelry_service
+#: model:xb.jewelry.photo.kind,name:xb_jewelry_service.photo_kind_hallmark
+msgid "Hallmark"
+msgstr "Kinto"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_dispatch_view_form
+msgid "Hand Over"
+msgstr "Entregar"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.actions.act_window,help:xb_jewelry_service.xb_jewelry_dispatch_action
+msgid "Hand pieces over to a jeweler"
+msgstr "Entrega piezas a un joyero"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Hand to Jeweler"
+msgstr "Entregar al joyero"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__dispatch_id
+msgid "Hand-over document this piece left with."
+msgstr "Documento de salida con el que se fue esta pieza."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__material_out_g
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch_material__qty_out_g
+msgid "Handed over (g)"
+msgstr "Entregado (g)"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__has_diamond
+msgid "Has Diamond"
+msgstr "Tiene diamante"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__has_message
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__has_message
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__has_message
+msgid "Has Message"
+msgstr "Tiene un mensaje"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_company__xb_photo_link_minutes
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_config_settings__xb_photo_link_minutes
+msgid "How long the QR link to upload photos from a phone stays alive."
+msgstr "Cuánto tiempo vive el enlace QR para subir fotos desde un celular."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_dispatch__weight_gain_g
+msgid ""
+"How much heavier the pieces came back, which is metal that legitimately "
+"stayed in the work."
+msgstr "Cuánto más pesadas regresaron las piezas, que es metal que legítimamente se quedó en el trabajo."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_metal_purity__karat
+msgid "Human readable label, e.g. 18kt or 925."
+msgstr "Etiqueta legible, por ejemplo 18kt o 925."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_product_category__id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_partner__id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_rate__id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch_material__id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo__id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo_kind__id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_metal_purity__id
+msgid "ID"
+msgstr "ID"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_partner__jeweler_id_document
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_users__jeweler_id_document
+msgid "ID document"
+msgstr "Identificación"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__activity_exception_icon
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__activity_exception_icon
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__activity_exception_icon
+msgid "Icon"
+msgstr "Icono"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jeweler_settlement__activity_exception_icon
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_dispatch__activity_exception_icon
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Icono para indicar una actividad de excepción."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jeweler_settlement__message_needaction
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_dispatch__message_needaction
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcada, hay nuevos mensajes que requieren su atención."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jeweler_settlement__message_has_error
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jeweler_settlement__message_has_sms_error
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_dispatch__message_has_error
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_dispatch__message_has_sms_error
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__message_has_error
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si está marcada, algunos mensajes tienen error de envío."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo__image
+msgid "Image"
+msgstr "Imagen"
+
+#. module: xb_jewelry_service
+#: model:ir.actions.act_window,name:xb_jewelry_service.xb_jewelry_piece_action_custody
+#: model:ir.ui.menu,name:xb_jewelry_service.menu_jewelry_custody
+msgid "In Custody"
+msgstr "En custodia"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_piece__custody_state__in_custody
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_piece_view_search
+msgid "In custody"
+msgstr "En custodia"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_dispatch__scrap_tolerance
+msgid ""
+"Inherited from the jeweler, or from the company when the jeweler has no "
+"specific tolerance. Override it here for this hand-over only."
+msgstr "Se hereda del joyero, o de la compañía cuando el joyero no tiene una tolerancia propia. Aquí la puedes pisar solo para esta entrega."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.jewelry_piece_block
+msgid "Inscription"
+msgstr "Inscripción"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__laser_inscription
+msgid "Inscription number on the stone, when it has one."
+msgstr "Número de inscripción en la piedra, cuando la trae."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__qc_user_id
+msgid "Inspected by"
+msgstr "Inspeccionada por"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__repair_order__state__inspection
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Inspection"
+msgstr "Inspección"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Inspection Passed"
+msgstr "Inspección aprobada"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__qc_note
+msgid "Inspection notes"
+msgstr "Notas de inspección"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_photo_kind__stage__intake
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_photo_kind_view_search
+msgid "Intake"
+msgstr "Recepción"
+
+#. module: xb_jewelry_service
+#: model:ir.actions.report,name:xb_jewelry_service.action_report_jewelry_intake_full
+msgid "Intake Receipt (full page)"
+msgstr "Boleta de resguardo (hoja completa)"
+
+#. module: xb_jewelry_service
+#: model:ir.actions.report,name:xb_jewelry_service.action_report_jewelry_intake_ticket
+msgid "Intake Receipt (ticket)"
+msgstr "Boleta de resguardo (ticket)"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__intake_signed_by
+msgid "Intake Signed By"
+msgstr "Recepción firmada por"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__intake_signed_on
+msgid "Intake Signed On"
+msgstr "Recepción firmada el"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_photo__stage
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_photo_kind__stage
+msgid ""
+"Intake photos are taken when the piece is received, 'after' photos once the "
+"repair is approved."
+msgstr "Las fotos de recepción se toman cuando llega la pieza; las del 'después', una vez aprobada la reparación."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_intake_terms
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__xb_intake_terms
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Intake terms"
+msgstr "Términos de resguardo"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__message_is_follower
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__message_is_follower
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__message_is_follower
+msgid "Is Follower"
+msgstr "Es un seguidor"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_metal_purity__is_precious
+msgid "Is Precious"
+msgstr "Es precioso"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_partner__is_jeweler
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_users__is_jeweler
+msgid "Is a jeweler"
+msgstr "Es joyero"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__jeweler_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_rate__partner_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__jeweler_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__jeweler_id
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__repair_order__material_supplied_by__jeweler
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_dispatch
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_partner_view_form_jeweler
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_dispatch_view_search
+msgid "Jeweler"
+msgstr "Joyero"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_partner__jeweler_id_document_name
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_users__jeweler_id_document_name
+msgid "Jeweler Id Document Name"
+msgstr "Nombre del archivo de identificación"
+
+#. module: xb_jewelry_service
+#: model:ir.model,name:xb_jewelry_service.model_xb_jeweler_rate
+msgid "Jeweler Rate"
+msgstr "Tarifa de joyero"
+
+#. module: xb_jewelry_service
+#: model:ir.actions.act_window,name:xb_jewelry_service.xb_jeweler_rate_action
+#: model:ir.ui.menu,name:xb_jewelry_service.menu_jewelry_rates
+msgid "Jeweler Rates"
+msgstr "Tarifas de joyeros"
+
+#. module: xb_jewelry_service
+#: model:ir.model,name:xb_jewelry_service.model_xb_jeweler_settlement
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jeweler_settlement_view_form
+msgid "Jeweler Settlement"
+msgstr "Corte de joyero"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_partner__jeweler_type
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_users__jeweler_type
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__jeweler_type
+msgid "Jeweler Type"
+msgstr "Tipo de joyero"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__jeweler_cost
+msgid "Jeweler cost"
+msgstr "Costo del joyero"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_jeweler_service_product_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__xb_jeweler_service_product_id
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Jeweler service product"
+msgstr "Producto de servicio del joyero"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__signature
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_dispatch
+msgid "Jeweler signature"
+msgstr "Firma del joyero"
+
+#. module: xb_jewelry_service
+#: model:ir.actions.act_window,name:xb_jewelry_service.res_partner_action_jewelers
+#: model:ir.ui.menu,name:xb_jewelry_service.menu_jewelry_jewelers
+msgid "Jewelers"
+msgstr "Joyeros"
+
+#. module: xb_jewelry_service
+#: model:ir.ui.menu,name:xb_jewelry_service.menu_jewelry_root
+msgid "Jewelry"
+msgstr "Joyería"
+
+#. module: xb_jewelry_service
+#: model:ir.model,name:xb_jewelry_service.model_xb_jewelry_photo
+msgid "Jewelry Photo"
+msgstr "Foto de joyería"
+
+#. module: xb_jewelry_service
+#: model:ir.model,name:xb_jewelry_service.model_xb_jewelry_photo_kind
+msgid "Jewelry Photo Kind"
+msgstr "Tipo de foto"
+
+#. module: xb_jewelry_service
+#: model:ir.model,name:xb_jewelry_service.model_xb_jewelry_piece
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_piece_view_form
+msgid "Jewelry Piece"
+msgstr "Pieza de joyería"
+
+#. module: xb_jewelry_service
+#: model:res.groups.privilege,name:xb_jewelry_service.res_groups_privilege_jewelry
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Jewelry Workshop"
+msgstr "Taller de joyería"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_product_category__xb_jewelry_kind
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__piece_kind
+msgid "Jewelry kind"
+msgstr "Naturaleza de la joya"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_rate__product_id
+msgid "Job"
+msgstr "Empleo"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__job_count
+msgid "Job Count"
+msgstr "Número de trabajos"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__repair_ids
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jeweler_settlement_view_form
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jeweler_settlement_view_list
+msgid "Jobs"
+msgstr "Empleos"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/res_partner.py:0
+msgid "Jobs of %s"
+msgstr "Trabajos de %s"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_partner__jeweler_service_ids
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_users__jeweler_service_ids
+msgid "Jobs this jeweler takes. Used to suggest who to assign."
+msgstr "Trabajos que toma este joyero. Sirve para sugerir a quién asignarle."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_metal_purity__karat
+msgid "Karat"
+msgstr "Kilataje"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.actions.act_window,help:xb_jewelry_service.xb_metal_purity_action
+msgid ""
+"Karat written as text cannot be used for arithmetic. Mapping every metal\n"
+"                value to its fineness is what makes pure metal weight, and the scrap\n"
+"                reconciliation with your jewelers, possible."
+msgstr "El kilataje escrito como texto no sirve para hacer cuentas. Mapear cada valor de\n                metal a su ley es lo que hace posible el peso de metal puro y el cuadre de\n                merma con tus joyeros."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo__kind_id
+msgid "Kind"
+msgstr "Tipo"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__laser_inscription
+msgid "Laser Inscription"
+msgstr "Inscripción láser"
+
+#. module: xb_jewelry_service
+#: model:xb.jewelry.photo.kind,name:xb_jewelry_service.photo_kind_laser
+msgid "Laser inscription"
+msgstr "Inscripción láser"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_rate__write_uid
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__write_uid
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__write_uid
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch_material__write_uid
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo__write_uid
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo_kind__write_uid
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__write_uid
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_metal_purity__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_rate__write_date
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__write_date
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__write_date
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch_material__write_date
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo__write_date
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo_kind__write_date
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__write_date
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_metal_purity__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: xb_jewelry_service
+#: model:xb.jewelry.photo.kind,name:xb_jewelry_service.photo_kind_length
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.jewelry_piece_block
+msgid "Length"
+msgstr "Longitud"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__length_cm
+msgid "Length (cm)"
+msgstr "Largo (cm)"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__loss_pct
+msgid "Loss (%)"
+msgstr "Merma (%)"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__loss_g
+msgid "Loss (g)"
+msgstr "Merma (g)"
+
+#. module: xb_jewelry_service
+#: model:res.groups,name:xb_jewelry_service.group_jewelry_manager
+msgid "Manager"
+msgstr "Gerente"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jeweler_settlement_view_form
+msgid "Mark as Paid"
+msgstr "Marcar como pagado"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_product_category__xb_jewelry_kind
+msgid ""
+"Mark the categories that describe a customer piece. Only these are offered "
+"when a piece is received, and the kind decides which measurements and photos"
+" are asked for."
+msgstr "Marca las categorías que describen una pieza del cliente. Solo esas se ofrecen al recibir, y la naturaleza decide qué medidas y qué fotos se piden."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch_material__product_id
+msgid "Material"
+msgstr "Material"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_dispatch_view_form
+msgid "Material & Scrap"
+msgstr "Material y merma"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__material_supplied_by
+msgid "Material Supplied By"
+msgstr "Material lo pone"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__material_line_ids
+msgid "Material handed over"
+msgstr "Material entregado"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_piece_view_form
+msgid "Measurements"
+msgstr "Medidas"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__qc_size_ok
+msgid "Measurements correct"
+msgstr "Medidas correctas"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__message_has_error
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__message_has_error
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__message_has_error
+msgid "Message Delivery error"
+msgstr "Error de envío de mensaje"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__message_ids
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__message_ids
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch_material__metal_value_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__metal_value_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_metal_purity__attribute_value_id
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.jewelry_piece_block
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_piece_view_form
+msgid "Metal"
+msgstr "Metal"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__metal_attribute_id
+msgid "Metal Attribute"
+msgstr "Atributo de metal"
+
+#. module: xb_jewelry_service
+#: model:ir.actions.act_window,name:xb_jewelry_service.xb_metal_purity_action
+#: model:ir.model,name:xb_jewelry_service.model_xb_metal_purity
+#: model:ir.ui.menu,name:xb_jewelry_service.menu_jewelry_metal_purity
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_metal_purity_view_list
+msgid "Metal Purity"
+msgstr "Pureza del metal"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_metal_attribute_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__xb_metal_attribute_id
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Metal attribute"
+msgstr "Atributo de metal"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/xb_jewelry_dispatch.py:0
+msgid ""
+"Metal loss is %(loss)s%%, above the %(tol)s%% tolerance agreed with this "
+"jeweler."
+msgstr "La merma de metal es %(loss)s%%, por encima de la tolerancia de %(tol)s%% pactada con este joyero."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Minutes a QR upload link stays valid, for registers with no camera"
+msgstr "Minutos que vive el enlace QR, para cajas sin cámara"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Missing before it can leave"
+msgstr "Falta antes de que pueda salir"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__missing_photo_kind_ids
+msgid "Missing photos"
+msgstr "Fotos faltantes"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__my_activity_date_deadline
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__my_activity_date_deadline
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Fecha límite de mi actividad"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__name
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__name
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo_kind__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/xb_jeweler_settlement.py:0
+#: code:addons/xb_jewelry_service/models/xb_jewelry_dispatch.py:0
+#: code:addons/xb_jewelry_service/models/xb_jewelry_piece.py:0
+msgid "New"
+msgstr "Nuevo"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/controllers/portal.py:0
+msgid "Newest"
+msgstr "Más reciente"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__activity_calendar_event_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__activity_calendar_event_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "Siguiente evento en el calendario de actividades."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__activity_date_deadline
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__activity_date_deadline
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Fecha límite de la siguiente actividad"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__activity_summary
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__activity_summary
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__activity_summary
+msgid "Next Activity Summary"
+msgstr "Resumen de la siguiente actividad"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__activity_type_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__activity_type_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__activity_type_id
+msgid "Next Activity Type"
+msgstr "Tipo de la siguiente actividad"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/xb_jeweler_settlement.py:0
+msgid "No unpaid finished jobs for this jeweler in that period."
+msgstr "No hay trabajos terminados sin pagar de este joyero en ese periodo."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__note
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__note
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo__note
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__note
+msgid "Note"
+msgstr "Nota"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jeweler_settlement_view_form
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_dispatch_view_form
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_piece_view_form
+msgid "Notes"
+msgstr "Notas"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__message_needaction_counter
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__message_needaction_counter
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de acciones"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__message_has_error_counter
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__message_has_error_counter
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de errores"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jeweler_settlement__message_needaction_counter
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_dispatch__message_needaction_counter
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Número de mensajes que requieren una acción"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jeweler_settlement__message_has_error_counter
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_dispatch__message_has_error_counter
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensajes con error de envío"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.actions.act_window,help:xb_jewelry_service.xb_jewelry_dispatch_action
+msgid ""
+"One document per jeweler, with as many pieces as they take, the metal you\n"
+"                supply and their signature. When the pieces come back, the scrap is\n"
+"                weighed and the loss is checked against the agreed tolerance."
+msgstr "Un documento por joyero, con todas las piezas que se lleve, el metal que tú\n                le surtes y su firma. Cuando las piezas regresan, se pesa el sobrante y la\n                merma se compara contra la tolerancia pactada."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_photo_kind__condition
+msgid "Only ask for this photo when the piece matches the condition."
+msgstr "Pedir esta foto solo cuando la pieza cumpla la condición."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__length_cm
+msgid "Only meaningful for chains and bracelets."
+msgstr "Solo tiene sentido en cadenas y pulseras."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__size_value_id
+msgid "Only meaningful for rings. Uses the same size list as the catalogue."
+msgstr "Solo tiene sentido en anillos. Usa la misma lista de medidas del catálogo."
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid "Only pieces at the workshop can be received back."
+msgstr "Solo se pueden recibir de vuelta las piezas que están en el taller."
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid "Only pieces under inspection can be sent to rework."
+msgstr "Solo las piezas en inspección se pueden mandar a retrabajo."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__qc_tester_ok
+msgid "Only required when the piece carries a diamond."
+msgstr "Solo se exige cuando la pieza trae diamante."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_partner__jeweler_open_repair_count
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_users__jeweler_open_repair_count
+msgid "Open jobs"
+msgstr "Trabajos abiertos"
+
+#. module: xb_jewelry_service
+#: model:ir.ui.menu,name:xb_jewelry_service.menu_jewelry_operations
+msgid "Operations"
+msgstr "Operaciones"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jeweler_rate__date_from
+msgid "Optional. Leave empty for a rate that is always valid."
+msgstr "Opcional. Déjalo vacío para una tarifa siempre vigente."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__lot_id
+msgid ""
+"Optional. Links the piece to a serial number so its movements are traced by "
+"Inventory."
+msgstr "Opcional. Liga la pieza a un número de serie para que Inventario rastree sus movimientos."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_ticket_document
+msgid "Order"
+msgstr "Pedido"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__origin_repair_id
+msgid "Original service"
+msgstr "Servicio original"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__product_category__xb_jewelry_kind__other
+msgid "Other piece"
+msgstr "Otra pieza"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_dispatch
+msgid "Out"
+msgstr "Salida"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_dispatch_view_search
+msgid "Over tolerance"
+msgstr "Fuera de tolerancia"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__partner_id
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_piece_view_form
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_piece_view_search
+msgid "Owner"
+msgstr "Propietario"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jeweler_settlement__state__paid
+msgid "Paid"
+msgstr "Pagada"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_piece__diamond_tester__pass
+msgid "Passed"
+msgstr "Aprobado"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.actions.act_window,help:xb_jewelry_service.xb_jeweler_settlement_action
+msgid "Pay your jewelers"
+msgstr "Paga a tus joyeros"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__repair_order__state__pending_auth
+msgid "Pending Authorization"
+msgstr "Por autorizar"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__photo_count
+msgid "Photo Count"
+msgstr "Número de fotos"
+
+#. module: xb_jewelry_service
+#: model:ir.actions.act_window,name:xb_jewelry_service.xb_jewelry_photo_kind_action
+#: model:ir.ui.menu,name:xb_jewelry_service.menu_jewelry_photo_kinds
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_photo_kind_view_list
+msgid "Photo Kinds"
+msgstr "Tipos de foto"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Photo link for a phone"
+msgstr "Enlace de fotos para celular"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Photo link from a phone"
+msgstr "Enlace de fotos desde el celular"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_photo_link_minutes
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__xb_photo_link_minutes
+msgid "Photo link validity (min)"
+msgstr "Vigencia del enlace de fotos (min)"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.photo_link_invalid
+msgid "Photo links expire on purpose. Ask the counter for a new one."
+msgstr "Los enlaces de fotos caducan a propósito. Pide uno nuevo en el mostrador."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__photo_ids
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__photo_ids
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.portal_my_jewelry
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_piece_view_form
+msgid "Photos"
+msgstr "Fotos"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.actions.act_window,help:xb_jewelry_service.xb_jeweler_settlement_action
+msgid ""
+"Pick a jeweler and a period, press Collect Jobs, and every finished job\n"
+"                nobody has paid yet is pulled in. External jewelers get a vendor bill\n"
+"                out of it; a single job settled on its own works exactly the same way."
+msgstr "Elige un joyero y un periodo, presiona Juntar trabajos, y entra cada trabajo\n                terminado que nadie ha pagado. A los joyeros externos les sale una factura\n                de proveedor; un solo trabajo liquidado por su cuenta funciona igual."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__jewelry_piece_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo__piece_id
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.portal_my_jewelry
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_delivery_ticket
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_ticket_document
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_piece_view_form
+msgid "Piece"
+msgstr "Pieza"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Piece & Photos"
+msgstr "Pieza y fotos"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_full_document
+msgid "Piece Receipt"
+msgstr "Boleta de resguardo"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__piece_type_id
+msgid "Piece type"
+msgstr "Tipo de pieza"
+
+#. module: xb_jewelry_service
+#: model:ir.actions.act_window,name:xb_jewelry_service.xb_jewelry_piece_action
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__repair_ids
+#: model:ir.ui.menu,name:xb_jewelry_service.menu_jewelry_pieces
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_dispatch_view_form
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_dispatch_view_list
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_piece_view_list
+msgid "Pieces"
+msgstr "Piezas"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/xb_jewelry_dispatch.py:0
+msgid "Pieces of %s"
+msgstr "Piezas de %s"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_photo_kind__condition__diamond
+msgid "Pieces with diamonds only"
+msgstr "Solo piezas con diamante"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__access_url
+msgid "Portal Access URL"
+msgstr "URL de acceso al portal"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_rate__price
+msgid "Price"
+msgstr "Precio"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Printed on the delivery receipt"
+msgstr "Se imprime en el comprobante de entrega"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_company__xb_intake_terms
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_config_settings__xb_intake_terms
+msgid ""
+"Printed on the receipt the customer signs when leaving a piece. Have it "
+"reviewed by your lawyer: this is what protects you if the customer later "
+"disputes the condition the piece was in."
+msgstr "Se imprime en la boleta que firma el cliente al dejar una pieza. Que la revise tu abogado: es lo que te protege si después el cliente discute en qué estado estaba la pieza."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Printed on the receipt the customer signs. Have your lawyer review it"
+msgstr "Se imprime en la boleta que firma el cliente. Que la revise tu abogado"
+
+#. module: xb_jewelry_service
+#: model:ir.model,name:xb_jewelry_service.model_product_category
+msgid "Product Category"
+msgstr "Categoría de producto"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_dispatch
+msgid "Promised"
+msgstr "Comprometida"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__promised_date
+msgid "Promised Date"
+msgstr "Fecha comprometida"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__jeweler_promised_date
+msgid "Promised by jeweler"
+msgstr "Comprometida por el joyero"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch_material__pure_back_g
+msgid "Pure back (g)"
+msgstr "Puro devuelto (g)"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.jewelry_piece_block
+msgid "Pure metal"
+msgstr "Metal puro"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__pure_metal_weight_g
+msgid "Pure metal (g)"
+msgstr "Metal puro (g)"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch_material__pure_out_g
+msgid "Pure out (g)"
+msgstr "Puro entregado (g)"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch_material__purity
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__purity
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_metal_purity__purity
+msgid "Purity"
+msgstr "Pureza"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/xb_metal_purity.py:0
+msgid "Purity must be greater than 0 and at most 1."
+msgstr "La pureza debe ser mayor que 0 y como máximo 1."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__qc_date
+msgid "Qc Date"
+msgstr "Fecha de inspección"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_partner__jeweler_rate_ids
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_users__jeweler_rate_ids
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_partner_view_form_jeweler
+msgid "Rate card"
+msgstr "Tarifario"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jeweler_rate_view_list
+msgid "Rates"
+msgstr "Tarifas"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__rating_ids
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__rating_ids
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__rating_ids
+msgid "Ratings"
+msgstr "Calificaciones"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_piece__custody_state__ready
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_piece_view_search
+msgid "Ready for pickup"
+msgstr "Lista para entrega"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_dispatch_view_form
+msgid "Receive Back"
+msgstr "Recibir de vuelta"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Receive from Workshop"
+msgstr "Recibir del taller"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_full_document
+msgid "Received by"
+msgstr "Recibido por"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_delivery_ticket
+msgid "Received in good order"
+msgstr "Recibida a entera satisfacción"
+
+#. module: xb_jewelry_service
+#: model:res.groups,comment:xb_jewelry_service.group_jewelry_counter
+msgid "Receives pieces, records photos and delivers finished work."
+msgstr "Recibe piezas, registra fotos y entrega el trabajo terminado."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_delivery_ticket
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_dispatch
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_ticket_document
+msgid "Ref."
+msgstr "Ref."
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/controllers/portal.py:0
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__name
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.portal_my_jewelry
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_piece_view_search
+msgid "Reference"
+msgstr "Referencia"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.actions.act_window,help:xb_jewelry_service.xb_jewelry_piece_action
+msgid "Register your first customer piece"
+msgstr "Registra tu primera pieza de cliente"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.actions.act_window,help:xb_jewelry_service.res_partner_action_jewelers
+msgid "Register your jewelers"
+msgstr "Registra a tus joyeros"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo__repair_id
+msgid "Repair"
+msgstr "Reparación"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__repair_count
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__repair_count
+msgid "Repair Count"
+msgstr "Número de reparaciones"
+
+#. module: xb_jewelry_service
+#: model:ir.model,name:xb_jewelry_service.model_repair_order
+msgid "Repair Order"
+msgstr "Orden de reparación"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo_kind__required
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_photo_kind_view_search
+msgid "Required"
+msgstr "Obligatorio"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__user_id
+msgid "Responsible"
+msgstr "Responsable"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__activity_user_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__activity_user_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__activity_user_id
+msgid "Responsible User"
+msgstr "Usuario responsable"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Result"
+msgstr "Resultado"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__diamond_tester
+msgid ""
+"Result of the tester at intake. Comparing it against the reading taken when "
+"the piece comes back is what catches a swap."
+msgstr "Resultado del probador al recibir. Compararlo contra la lectura de cuando la pieza regresa es lo que detecta un cambio de piedra."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__return_date
+msgid "Return Date"
+msgstr "Fecha de regreso"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_dispatch__state__returned
+msgid "Returned"
+msgstr "Devuelto"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch_material__qty_back_g
+msgid "Returned (g)"
+msgstr "Devuelto (g)"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Reuse the attribute you already use for ring sizes"
+msgstr "Reutiliza el atributo que ya usas para las medidas de anillo"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Reuse the product attribute you already use for metal and karat"
+msgstr "Reutiliza el atributo de producto que ya usas para metal y kilataje"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__repair_order__state__rework
+msgid "Rework"
+msgstr "Retrabajo"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_partner__jeweler_rework_rate
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_users__jeweler_rework_rate
+msgid "Rework rate (%)"
+msgstr "Retrabajo (%)"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__product_category__xb_jewelry_kind__ring
+msgid "Ring"
+msgstr "Anillo"
+
+#. module: xb_jewelry_service
+#: model:xb.jewelry.photo.kind,name:xb_jewelry_service.photo_kind_ring_size
+msgid "Ring size"
+msgstr "Talla"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_photo_kind__condition__ring
+msgid "Rings only"
+msgstr "Solo anillos"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__message_has_sms_error
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__message_has_sms_error
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Error de envío del SMS"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_partner_view_form_jeweler
+msgid "Scorecard"
+msgstr "Sistema de puntuación"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_dispatch
+msgid "Scrap must be returned. Accepted loss:"
+msgstr "El sobrante debe devolverse. Merma aceptada:"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__scrap_back_g
+msgid "Scrap returned (g)"
+msgstr "Sobrante devuelto (g)"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Scrap tolerance"
+msgstr "Merma tolerada"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_scrap_tolerance
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__xb_scrap_tolerance
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_partner__jeweler_scrap_tolerance
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_users__jeweler_scrap_tolerance
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__scrap_tolerance
+msgid "Scrap tolerance (%)"
+msgstr "Merma tolerada (%)"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__access_token
+msgid "Security Token"
+msgstr "Token de seguridad"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_partner_view_form_jeweler
+msgid "See jobs"
+msgstr "Ver trabajos"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Send to Rework"
+msgstr "Mandar a retrabajo"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo__sequence
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo_kind__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__lot_id
+msgid "Serial"
+msgstr "Número de serie"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid ""
+"Serial tracked product used to trace customer pieces. Keep its cost at zero"
+msgstr "Producto con número de serie que rastrea las piezas del cliente. Mantén su costo en cero"
+
+#. module: xb_jewelry_service
+#: model:ir.ui.menu,name:xb_jewelry_service.menu_jewelry_repairs
+msgid "Service Orders"
+msgstr "Órdenes de servicio"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__repair_order_ids
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_piece_view_form
+msgid "Service history"
+msgstr "Historial de servicios"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_piece_view_form
+msgid "Services"
+msgstr "Servicios"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/xb_jewelry_piece.py:0
+msgid "Services of %s"
+msgstr "Servicios de %s"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/xb_jeweler_settlement.py:0
+msgid ""
+"Set a default jeweler service product in the settings so the vendor bill can"
+" be built."
+msgstr "Configura un producto de servicio de joyero en los ajustes para poder armar la factura de proveedor."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.actions.act_window,help:xb_jewelry_service.xb_jeweler_rate_action
+msgid "Set what each jeweler charges"
+msgstr "Define cuánto cobra cada joyero"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__origin_repair_id
+msgid "Set when this order redoes a previous one under warranty."
+msgstr "Se llena cuando esta orden rehace una anterior por garantía."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__settlement_id
+msgid "Settlement"
+msgstr "Corte"
+
+#. module: xb_jewelry_service
+#: model:ir.actions.act_window,name:xb_jewelry_service.xb_jeweler_settlement_action
+#: model:ir.ui.menu,name:xb_jewelry_service.menu_jewelry_settlements
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jeweler_settlement_view_list
+msgid "Settlements"
+msgstr "Cortes"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_partner__jeweler_rework_rate
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_users__jeweler_rework_rate
+msgid "Share of jobs that had to be sent back for quality."
+msgstr "Proporción de trabajos que hubo que regresar por calidad."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__repair_order__material_supplied_by__shop
+msgid "Shop"
+msgstr "Tienda"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_dispatch_view_form
+msgid "Signature"
+msgstr "Firma"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_require_delivery_signature
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__xb_require_delivery_signature
+msgid "Signature on delivery"
+msgstr "Firma en la entrega"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_require_intake_signature
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__xb_require_intake_signature
+msgid "Signature on intake"
+msgstr "Firma en la recepción"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_require_dispatch_signature
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__xb_require_dispatch_signature
+msgid "Signature on workshop dispatch"
+msgstr "Firma en la salida a taller"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Signatures"
+msgstr "Firmas"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__signed_by
+msgid "Signed By"
+msgstr "Firmada por"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__signed_on
+msgid "Signed On"
+msgstr "Firmado el"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__size_value_id
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.jewelry_piece_block
+msgid "Size"
+msgstr "Medida"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__size_attribute_id
+msgid "Size Attribute"
+msgstr "Atributo de medida"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_size_attribute_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__xb_size_attribute_id
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Size attribute"
+msgstr "Atributo de medida"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__qc_solder_ok
+msgid "Soldering sound"
+msgstr "Soldadura firme"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_partner__jeweler_service_ids
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_users__jeweler_service_ids
+msgid "Specialties"
+msgstr "Especialidades"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo__stage
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo_kind__stage
+msgid "Stage"
+msgstr "Etapa"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__state
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__state
+msgid "State"
+msgstr "Estado"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/controllers/portal.py:0
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__state
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.portal_my_jewelry
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_dispatch_view_search
+msgid "Status"
+msgstr "Estado"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jeweler_settlement__activity_state
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_dispatch__activity_state
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr "Estado basado en actividades\nVencida: la fecha límite ya ha pasado\nHoy: la fecha límite es hoy\nPlanificada: actividades futuras."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__stone_count
+msgid "Stone Count"
+msgstr "Número de piedras"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.jewelry_piece_block
+msgid "Stones"
+msgstr "Piedras"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__qc_stones_ok
+msgid "Stones complete"
+msgstr "Piedras completas"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.photo_link_page
+msgid "Taken"
+msgstr "Ocupado"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo__user_id
+msgid "Taken by"
+msgstr "Tomada por"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__metal_value_id
+msgid ""
+"Taken from the same attribute used to create products, so the vocabulary "
+"stays consistent across the company."
+msgstr "Se toma del mismo atributo con el que das de alta productos, para que el vocabulario sea el mismo en toda la compañía."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__piece_type_id
+msgid ""
+"Taken from the shop's own product categories, so the vocabulary is the same "
+"one used in the catalogue."
+msgstr "Sale de las categorías de producto de la propia tienda, para que el vocabulario sea el mismo del catálogo."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_photo_kind__code
+msgid "Technical identifier, used by the Point of Sale screens."
+msgstr "Identificador técnico, lo usan las pantallas del Punto de Venta."
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid "The customer must sign the delivery of %(ref)s."
+msgstr "El cliente debe firmar la entrega de %(ref)s."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__jewelry_piece_id
+msgid "The customer's piece this service is about."
+msgstr "La pieza del cliente a la que se refiere este servicio."
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid ""
+"The inspection checklist of %(ref)s is not complete. Send the piece back for"
+" rework instead."
+msgstr "La lista de inspección de %(ref)s no está completa. Mejor manda la pieza a retrabajo."
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/xb_jewelry_dispatch.py:0
+msgid "The jeweler must sign for %(ref)s before taking the pieces."
+msgstr "El joyero debe firmar %(ref)s antes de llevarse las piezas."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_dispatch_view_form
+msgid ""
+"The metal loss is above the tolerance agreed with this\n"
+"                                jeweler. Weigh the pieces and the returned scrap again\n"
+"                                before closing."
+msgstr "La merma de metal está por encima de la tolerancia pactada con este\n                                joyero. Vuelve a pesar las piezas y el sobrante devuelto\n                                antes de cerrar."
+
+#. module: xb_jewelry_service
+#: model:ir.model.constraint,message:xb_jewelry_service.constraint_xb_jewelry_photo_kind_code_uniq
+msgid "The photo kind code must be unique."
+msgstr "El código del tipo de foto debe ser único."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__partner_id
+msgid ""
+"The piece belongs to this customer at all times. It never becomes shop "
+"property."
+msgstr "La pieza es del cliente en todo momento. Nunca pasa a ser propiedad de la tienda."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_company__xb_metal_attribute_id
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_config_settings__xb_metal_attribute_id
+msgid ""
+"The product attribute this shop already uses for metal and karat. Intake "
+"reuses its values instead of a parallel list."
+msgstr "El atributo de producto que esta tienda ya usa para metal y kilataje. La recepción reutiliza sus valores en vez de una lista paralela."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_company__xb_size_attribute_id
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_config_settings__xb_size_attribute_id
+msgid ""
+"The product attribute this shop already uses for ring sizes. Intake reuses "
+"its values instead of a free text box."
+msgstr "El atributo de producto que esta tienda ya usa para las medidas de anillo. La recepción reutiliza sus valores en vez de una caja de texto libre."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.actions.act_window,help:xb_jewelry_service.xb_jeweler_rate_action
+msgid "The rate is only a default: any piece can still be priced on its own."
+msgstr "La tarifa es solo un valor por omisión: cualquier pieza se puede cotizar aparte."
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/xb_jeweler_settlement.py:0
+msgid "There is nothing to settle in %(ref)s."
+msgstr "No hay nada que liquidar en %(ref)s."
+
+#. module: xb_jewelry_service
+#: model:ir.model.constraint,message:xb_jewelry_service.constraint_xb_jeweler_rate_rate_uniq
+msgid "This jeweler already has a rate for that job."
+msgstr "Este joyero ya tiene una tarifa para ese trabajo."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.photo_link_page
+msgid ""
+"This link expires shortly. The photos go straight into the\n"
+"                    piece file."
+msgstr "Este enlace caduca pronto. Las fotos se van directo al\n                    expediente de la pieza."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.photo_link_invalid
+msgid "This link is no longer valid"
+msgstr "Este enlace ya no es válido"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_partner__jeweler_scrap_tolerance_custom
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_users__jeweler_scrap_tolerance_custom
+msgid ""
+"Tick to give this jeweler a tolerance of their own instead of the company "
+"default."
+msgstr "Marca esto para darle a este joyero una tolerancia propia en vez de la de la compañía."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jeweler_settlement_view_form
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jeweler_settlement_view_list
+msgid "Total"
+msgstr "Total"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_piece_view_search
+msgid "Type"
+msgstr "Tipo"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jeweler_settlement__activity_exception_decoration
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_dispatch__activity_exception_decoration
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo de actividad de excepción en el registro."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_metal_purity__is_precious
+msgid ""
+"Uncheck for steel, plated or imitation metals, where scrap reconciliation "
+"makes no sense."
+msgstr "Desmárcalo para acero, baños o imitaciones, donde el cuadre de merma no tiene sentido."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_unclaimed_days
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__xb_unclaimed_days
+msgid "Unclaimed after (days)"
+msgstr "No reclamada después de (días)"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Unclaimed pieces"
+msgstr "Piezas no reclamadas"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.photo_link_page
+msgid "Upload"
+msgstr "Subir"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jeweler_settlement_view_form
+msgid "Vendor Bill"
+msgstr "Factura de proveedor"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__move_id
+msgid "Vendor bill"
+msgstr "Factura de proveedor"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Warranty"
+msgstr "Garantía"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_warranty_days
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__xb_warranty_days
+msgid "Warranty (days)"
+msgstr "Garantía (días)"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__warranty_until
+msgid "Warranty Until"
+msgstr "Garantía hasta"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.portal_jewelry_detail
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_delivery_ticket
+msgid "Warranty until"
+msgstr "Garantía hasta"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jeweler_settlement__website_message_ids
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__website_message_ids
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes del sitio web"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jeweler_settlement__website_message_ids
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_dispatch__website_message_ids
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__website_message_ids
+msgid "Website communication history"
+msgstr "Historial de comunicación del sitio web"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__weight_after_g
+msgid ""
+"Weigh the piece again when it comes back. The difference against intake is "
+"metal that legitimately stayed in the work."
+msgstr "Vuelve a pesar la pieza cuando regrese. La diferencia contra la recepción es metal que legítimamente se quedó en el trabajo."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.jewelry_piece_block
+msgid "Weight"
+msgstr "Peso"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__weight_g
+msgid "Weight (g)"
+msgstr "Peso (g)"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__weight_diff_g
+msgid "Weight change (g)"
+msgstr "Cambio de peso (g)"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__qc_weight_ok
+msgid "Weight matches"
+msgstr "El peso coincide"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__weight_after_g
+msgid "Weight on return (g)"
+msgstr "Peso al regresar (g)"
+
+#. module: xb_jewelry_service
+#: model:xb.jewelry.photo.kind,name:xb_jewelry_service.photo_kind_weight
+msgid "Weight on the scale"
+msgstr "Peso en la báscula"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "What was checked, and anything unusual."
+msgstr "Qué se revisó y cualquier cosa fuera de lo normal."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Where customer pieces are kept while in your hands"
+msgstr "Dónde se guardan las piezas del cliente mientras están en tus manos"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_partner_view_form_jeweler
+msgid "Which jobs does this jeweler take?"
+msgstr "¿Qué trabajos toma este joyero?"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__material_supplied_by
+msgid "Who provides the metal, solder and stones for this job."
+msgstr "Quién pone el metal, la soldadura y las piedras de este trabajo."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_piece__custody_state__with_customer
+msgid "With customer"
+msgstr "Con el cliente"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_piece_view_search
+msgid "With diamonds"
+msgstr "Con diamante"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__within_tolerance
+msgid "Within Tolerance"
+msgstr "Dentro de tolerancia"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_full_document
+msgid "Work requested"
+msgstr "Trabajo solicitado"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__qc_rating
+msgid "Workmanship"
+msgstr "Calidad del trabajo"
+
+#. module: xb_jewelry_service
+#: model:res.groups,name:xb_jewelry_service.group_jewelry_workshop
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Workshop"
+msgstr "Taller"
+
+#. module: xb_jewelry_service
+#: model:ir.model,name:xb_jewelry_service.model_xb_jewelry_dispatch
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_dispatch_view_form
+msgid "Workshop Dispatch"
+msgstr "Remisión a taller"
+
+#. module: xb_jewelry_service
+#: model:ir.actions.report,name:xb_jewelry_service.action_report_jewelry_dispatch
+msgid "Workshop Dispatch Note"
+msgstr "Nota de remisión a taller"
+
+#. module: xb_jewelry_service
+#: model:ir.actions.act_window,name:xb_jewelry_service.xb_jewelry_dispatch_action
+#: model:ir.ui.menu,name:xb_jewelry_service.menu_jewelry_dispatch
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jewelry_dispatch_view_list
+msgid "Workshop Dispatches"
+msgstr "Remisiones a taller"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__dispatch_id
+msgid "Workshop dispatch"
+msgstr "Remisión a taller"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__xb_photo_token
+msgid "Xb Photo Token"
+msgstr "Token de foto"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__xb_photo_token_expiry
+msgid "Xb Photo Token Expiry"
+msgstr "Vigencia del token de foto"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.jewelry_piece_block
+msgid "Yes"
+msgstr "Sí"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.portal_my_jewelry
+msgid "You have no pieces with us right now."
+msgstr "Ahora mismo no tienes piezas con nosotros."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.portal_my_home_jewelry
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.portal_my_jewelry
+msgid "Your Pieces"
+msgstr "Tus piezas"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.jewelry_piece_block
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.portal_jewelry_detail
+msgid "cm"
+msgstr "cm"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "days"
+msgstr "días"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "min"
+msgstr "min"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_full_document
+msgid "photo"
+msgstr "foto"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.photo_link_page
+msgid "photo(s) saved. You can close this page."
+msgstr "foto(s) guardadas. Ya puedes cerrar esta página."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_ticket_document
+msgid ""
+"photographs were taken at\n"
+"                    intake and are kept on file:"
+msgstr "fotografías se tomaron al\n                    recibir la pieza y quedan en el expediente:"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_full_document
+msgid "signature"
+msgstr "firma"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_dispatch
+msgid "stones"
+msgstr "piedras"
+
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/controllers/photo_upload.py:0
+msgid ""
+"%(count)s upload(s) were refused: not an image, too large, or not a photo "
+"this piece is asked for."
+msgstr "Se rechazaron %(count)s archivo(s): no son una foto, pesan demasiado o no corresponden a una toma que esta pieza necesite."
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid ""
+"%(ref)s is still waiting for the customer to authorize the quote. Nothing "
+"goes to the workshop before that."
+msgstr "%(ref)s sigue esperando que el cliente autorice el presupuesto. Nada sale al taller antes de eso."
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid "A warranty claim was opened: %(ref)s."
+msgstr "Se abrió una reposición en garantía: %(ref)s."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__rework_count
+msgid ""
+"How often this job failed inspection. Kept as a counter because the state "
+"only says where the piece is now, not what it went through."
+msgstr "Cuántas veces este trabajo no pasó la inspección. Se lleva como contador porque el estado solo dice dónde está la pieza hoy, no por lo que pasó."
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid "Only a piece under inspection can pass quality control."
+msgstr "Solo una pieza en inspección puede aprobar el control de calidad."
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid "Only finished jobs can be settled."
+msgstr "Solo se pueden liquidar trabajos terminados."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Redo under Warranty"
+msgstr "Reponer en garantía"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid "Settle jobs of one jeweler at a time."
+msgstr "Liquida los trabajos de un joyero a la vez."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Settle with Jeweler"
+msgstr "Liquidar al joyero"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid "Some of these jobs are already on a settlement."
+msgstr "Algunos de estos trabajos ya están en un corte."
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid ""
+"The warranty on %(ref)s is not in force: it either has no warranty date, has"
+" expired, or the work is not finished."
+msgstr "La garantía de %(ref)s no está vigente: o no tiene fecha de garantía, o ya venció, o el trabajo no está terminado."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__warranty_active
+msgid "The work on this piece is still covered."
+msgstr "El trabajo de esta pieza sigue cubierto por la garantía."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__rework_count
+msgid "Times sent back"
+msgstr "Veces devuelta"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid "Unsupported search on the warranty."
+msgstr "Esa búsqueda sobre la garantía no está soportada."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__warranty_active
+msgid "Warranty Active"
+msgstr "Garantía vigente"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__warranty_claim_count
+msgid "Warranty Claim Count"
+msgstr "Reposiciones en garantía"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid "Warranty claim on %(ref)s, covered until %(date)s."
+msgstr "Reposición en garantía de %(ref)s, cubierta hasta el %(date)s."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__warranty_repair_ids
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Warranty claims"
+msgstr "Reposiciones en garantía"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid "Warranty claims on %s"
+msgstr "Reposiciones en garantía de %s"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__xb_customer_request
+msgid "What the customer asks for"
+msgstr "Lo que pide el cliente"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "What the customer asks for, in their words."
+msgstr "Lo que pide el cliente, con sus propias palabras."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.photo_link_page
+msgid ""
+"file(s) were not accepted. Send a\n"
+"                    photo taken with the camera, under 12 MB."
+msgstr "archivo(s) no se aceptaron. Manda una\n                    foto tomada con la cámara, de menos de 12 MB."
+
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_kanban_jewelry
+msgid "<i class=\"fa fa-camera me-1\" role=\"img\" aria-label=\"Photos missing\"/>"
+msgstr "<i class=\\\"fa fa-camera me-1\\\" role=\\\"img\\\" aria-label=\\\"Faltan fotos\\\"/>"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_kanban_jewelry
+msgid ""
+"<i class=\"fa fa-clock-o me-1\" title=\"Promised date\" role=\"img\" aria-"
+"label=\"Promised date\"/>"
+msgstr "<i class=\\\"fa fa-clock-o me-1\\\" title=\\\"Fecha compromiso\\\" role=\\\"img\\\" aria-label=\\\"Fecha compromiso\\\"/>"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_kanban_jewelry
+msgid "<i class=\"fa fa-undo me-1\" role=\"img\" aria-label=\"Sent back\"/>"
+msgstr "<i class=\\\"fa fa-undo me-1\\\" role=\\\"img\\\" aria-label=\\\"Devuelta\\\"/>"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_kanban_jewelry
+msgid "<i class=\"fa fa-user-o me-1\" title=\"Jeweler\" role=\"img\" aria-label=\"Jeweler\"/>"
+msgstr "<i class=\\\"fa fa-user-o me-1\\\" title=\\\"Joyero\\\" role=\\\"img\\\" aria-label=\\\"Joyero\\\"/>"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__xb_service_type
+msgid ""
+"A repair returns the same piece. A commission makes a new one, sometimes out"
+" of gold the customer brings in. A transformation melts the customer's own "
+"pieces into something else entirely."
+msgstr "Una reparación devuelve la misma pieza. Una hechura elabora una nueva, a veces con oro que trae el cliente. Una transformación funde las piezas del propio cliente para hacer algo distinto."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid ""
+"Accepted loss on metal handed to a jeweler. Each jeweler"
+"                                        can override it, and so can a single"
+" hand-over."
+msgstr "Merma aceptada sobre el metal entregado al joyero. Cada joyero puede tener la suya, y también cada remisión en concreto."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "At the counter"
+msgstr "En el mostrador"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__repair_order__xb_service_type__custom
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Commission"
+msgstr "Hechura"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_full_document
+msgid "Customer (signed on the tablet)"
+msgstr "Cliente (firmó en la tableta)"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__xb_input_piece_ids
+msgid "Customer's gold"
+msgstr "Oro del cliente"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__customer_gold_g
+msgid "Customer's gold (g)"
+msgstr "Oro del cliente (g)"
+
+#. module: xb_jewelry_service
+#: model:xb.jewelry.photo.kind,name:xb_jewelry_service.photo_kind_input_gold
+msgid "Customer's gold on the scale"
+msgstr "El oro del cliente en la báscula"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__xb_input_pure_g
+msgid "Customer's pure metal (g)"
+msgstr "Metal puro del cliente (g)"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid ""
+"Describe the piece the customer is                                         "
+"commissioning: model, metal, weight,"
+"                                         stones, size, finish. This is what "
+"the                                         jeweler will be held to."
+msgstr "Describe la pieza que encarga el cliente: modelo, metal, peso, piedras, medida, acabado. Es a lo que se va a comprometer el joyero."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_photo__stage
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_photo_kind__stage
+msgid ""
+"Design photos are what the customer wants made, shown at the counter for a "
+"commission. Intake photos are the piece as it was received, and 'after' "
+"photos the finished work."
+msgstr "Las fotos de diseño son lo que el cliente quiere que se le haga, y se piden en el mostrador cuando es una hechura. Las de resguardo son la pieza tal como llegó, y las 'de después' el trabajo terminado."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_photo_kind__stage__design
+#: model:xb.jewelry.photo.kind,name:xb_jewelry_service.photo_kind_design
+msgid "Design reference"
+msgstr "Referencia de diseño"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_photo_kind__condition__diamond_laser
+msgid "Diamonds with a laser inscription only"
+msgstr "Solo diamantes con inscripción láser"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__repair_order__xb_board_alert__soon
+msgid "Due soon"
+msgstr "Por vencer"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__res_company__xb_intake_photo_policy__all
+msgid "Every shot that applies"
+msgstr "Todas las que apliquen"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__missing_photo_kind_ids
+msgid ""
+"Everything still to be photographed before the piece may leave for the "
+"workshop."
+msgstr "Todo lo que falta fotografiar antes de que la pieza pueda salir al taller."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_company__xb_intake_photo_policy
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_config_settings__xb_intake_photo_policy
+msgid ""
+"How much photography the counter has to do with the customer standing there."
+" Whatever is chosen, the piece still cannot go to the workshop until every "
+"applicable photo exists: this setting only decides how long the customer "
+"waits, never whether the evidence is eventually taken."
+msgstr "Cuántas fotos tiene que tomar el mostrador con el cliente enfrente. Elijas lo que elijas, la pieza no sale al taller hasta que estén todas las que apliquen: esto solo decide cuánto espera el cliente, nunca si al final se levanta la evidencia."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Jeweler rates"
+msgstr "Tarifas de joyeros"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__xb_service_type
+msgid "Kind of work"
+msgstr "Tipo de trabajo"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__has_laser_inscription
+msgid "Laser inscribed"
+msgstr "Con inscripción láser"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__repair_order__xb_board_alert__late
+msgid "Late"
+msgstr "Atrasada"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_intake_main_photo_kind_id
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__xb_intake_main_photo_kind_id
+msgid "Main intake photo"
+msgstr "Foto principal de resguardo"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Metal purity"
+msgstr "Ley del metal"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_dispatch__customer_gold_g
+msgid ""
+"Metal the customer brought in for a commission or a transformation. It "
+"leaves with the jeweler like the shop's own material, and has to come back "
+"the same way."
+msgstr "Metal que trajo el cliente para una hechura o una transformación. Sale con el joyero igual que el material de la casa, y tiene que regresar igual."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__xb_intake_missing_kind_ids
+msgid "Missing at the counter"
+msgstr "Faltan en el mostrador"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__res_company__xb_intake_photo_policy__none
+msgid "None while the customer waits"
+msgstr "Ninguna mientras el cliente espera"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.actions.act_window,help:xb_jewelry_service.xb_jewelry_board_action
+msgid "Nothing on the bench."
+msgstr "No hay nada en el banco."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__repair_order__xb_board_alert__ok
+msgid "On time"
+msgstr "En tiempo"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__res_company__xb_intake_photo_policy__min
+msgid "Only the main shot"
+msgstr "Solo la principal"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Paperwork and stock"
+msgstr "Papelería e inventario"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Photo checklist"
+msgstr "Lista de fotos"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Photo kinds"
+msgstr "Tipos de foto"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_intake_photo_policy
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__xb_intake_photo_policy
+msgid "Photos required at intake"
+msgstr "Fotos obligatorias al recibir"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Photos required to take a piece in"
+msgstr "Fotos obligatorias para recibir una pieza"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_kanban_jewelry
+msgid "Photos still missing"
+msgstr "Fotos que faltan"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "Pieces handed in to be melted down"
+msgstr "Piezas que se dejan para fundir"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.actions.act_window,help:xb_jewelry_service.xb_jewelry_board_action
+msgid ""
+"Pieces received at the counter show up here. Drag a card to move\n"
+"               the piece along."
+msgstr "Aquí aparecen las piezas que se reciben en el mostrador. Arrastra una tarjeta para avanzarla."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__xb_input_piece_ids
+msgid ""
+"Pieces the customer hands over to be melted down or reworked into the new "
+"one. They are in the shop's custody just like a repair, and their metal "
+"counts towards what the jeweler has to account for."
+msgstr "Piezas que el cliente entrega para fundirse o rehacerse en la nueva. Están bajo resguardo de la tienda igual que una reparación, y su metal cuenta para lo que el joyero tiene que devolver."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Purity table"
+msgstr "Tabla de leyes"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Rate cards"
+msgstr "Tarifarios"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_kanban_jewelry
+msgid "Sent back"
+msgstr "Devuelta"
+
+#. module: xb_jewelry_service
+#: model:ir.actions.act_window,name:xb_jewelry_service.xb_jewelry_config_settings_action
+#: model:ir.ui.menu,name:xb_jewelry_service.menu_jewelry_settings
+msgid "Settings"
+msgstr "Ajustes"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_ticket_document
+msgid "Signed on the tablet"
+msgstr "Firmó en la tableta"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__piece_type_id
+msgid ""
+"Taken from the shop's own product categories, so the vocabulary is the same "
+"one used in the catalogue. Left empty for scrap gold a customer brings in to"
+" be melted down, which belongs to no category of the catalogue and never "
+"will."
+msgstr "Sale de las categorías de producto que la tienda ya tiene, para no manejar dos vocabularios. Se deja vacío para el oro de desecho que trae el cliente a fundir, que no pertenece a ninguna categoría del catálogo ni la va a tener."
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "The customer's gold"
+msgstr "El oro del cliente"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "The number behind each karat label, needed to reconcile scrap"
+msgstr "El número detrás de cada kilataje, necesario para cuadrar la merma"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__jewelry_piece_id
+msgid ""
+"The piece this service is about: the one received for a repair, or the one "
+"being made for a commission."
+msgstr "La pieza de la que trata este servicio: la que se recibió en una reparación, o la que se va a elaborar en una hechura."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_company__xb_intake_main_photo_kind_id
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_config_settings__xb_intake_main_photo_kind_id
+msgid "The single shot asked for when only the main one is required."
+msgstr "La única foto que se pide cuando solo se exige la principal."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__xb_intake_missing_kind_ids
+msgid ""
+"The subset the shop demands while the customer is still there. The rest can "
+"be taken afterwards, from a phone."
+msgstr "Las que la tienda exige con el cliente todavía enfrente. El resto se pueden tomar después, desde un celular."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__has_laser_inscription
+msgid ""
+"Tick when the stone carries an inscription. Only then is a photograph of it "
+"worth asking for."
+msgstr "Marca cuando la piedra trae inscripción. Solo entonces tiene sentido pedir una foto de ella."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__xb_board_alert
+msgid "Timeliness"
+msgstr "Puntualidad"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__repair_order__xb_service_type__transform
+msgid "Transformation"
+msgstr "Transformación"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Vocabulary of the shop"
+msgstr "Vocabulario de la tienda"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "What each jeweler charges for each job"
+msgstr "Lo que cobra cada joyero por cada trabajo"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid ""
+"What the cashier must photograph while the customer is"
+"                                        standing there. Whatever you choose "
+"here, no piece goes                                        to the workshop "
+"until every applicable photo exists."
+msgstr "Lo que el cajero tiene que fotografiar con el cliente enfrente. Elijas lo que elijas aquí, ninguna pieza sale al taller hasta que existan todas las fotos que apliquen."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__xb_spec
+msgid ""
+"What the customer is commissioning, in enough detail that the jeweler and "
+"the customer are agreeing to the same thing."
+msgstr "Lo que el cliente está encargando, con el detalle suficiente para que el joyero y el cliente estén de acuerdo en lo mismo."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__xb_spec
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
+msgid "What to make"
+msgstr "Qué hay que elaborar"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Which shots are asked for, and when"
+msgstr "Qué fotos se piden, y en qué momento"
+
+#. module: xb_jewelry_service
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Which single shot"
+msgstr "Cuál foto"
+
+#. module: xb_jewelry_service
+#: model:ir.actions.act_window,name:xb_jewelry_service.xb_jewelry_board_action
+#: model:ir.ui.menu,name:xb_jewelry_service.menu_jewelry_board
+msgid "Workshop Board"
+msgstr "Tablero del taller"

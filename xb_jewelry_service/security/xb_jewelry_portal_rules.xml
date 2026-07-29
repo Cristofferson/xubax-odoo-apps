@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- The customer sees their own pieces and nothing else. Written against
+         the commercial partner so a company's contacts see the company's
+         pieces, which is how Odoo's portal behaves everywhere else. -->
+    <record id="xb_jewelry_piece_portal_rule" model="ir.rule">
+        <field name="name">Jewelry piece: portal sees own pieces</field>
+        <field name="model_id" ref="model_xb_jewelry_piece"/>
+        <field name="domain_force">[('partner_id', 'child_of', user.partner_id.commercial_partner_id.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="xb_jewelry_photo_portal_rule" model="ir.rule">
+        <field name="name">Jewelry photo: portal sees own photos</field>
+        <field name="model_id" ref="model_xb_jewelry_photo"/>
+        <field name="domain_force">[('piece_id.partner_id', 'child_of', user.partner_id.commercial_partner_id.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="repair_order_view_form_jewelry" model="ir.ui.view">
+        <field name="name">repair.order.form.jewelry</field>
+        <field name="model">repair.order</field>
+        <field name="inherit_id" ref="repair.view_repair_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='state']" position="attributes">
+                <attribute name="statusbar_visible">draft,confirmed,under_repair,inspection,done,delivered</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='action_repair_start']" position="before">
+                <button name="action_request_authorization" type="object"
+                        string="Ask Authorization" invisible="state != 'draft'"/>
+                <button name="action_authorize" type="object" class="oe_highlight"
+                        string="Authorized by Customer" invisible="state != 'pending_auth'"/>
+            </xpath>
+
+            <xpath expr="//button[@name='action_repair_start']" position="attributes">
+                <attribute name="string">Hand to Jeweler</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='action_repair_end'][1]" position="before">
+                <button name="action_receive_from_workshop" type="object"
+                        class="oe_highlight" string="Receive from Workshop"
+                        invisible="state not in ('under_repair', 'rework')"/>
+                <button name="action_qc_pass" type="object" class="oe_highlight"
+                        string="Inspection Passed" invisible="state != 'inspection'"/>
+                <button name="action_qc_fail" type="object"
+                        string="Send to Rework" invisible="state != 'inspection'"/>
+                <button name="action_send_back_to_workshop" type="object"
+                        string="Back to Jeweler" invisible="state != 'rework'"/>
+                <button name="action_deliver" type="object" class="oe_highlight"
+                        string="Deliver to Customer" invisible="state != 'done'"/>
+                <button name="action_create_warranty_service" type="object"
+                        string="Redo under Warranty"
+                        invisible="not warranty_active"/>
+                <button name="action_settle_now" type="object"
+                        string="Settle with Jeweler"
+                        groups="xb_jewelry_service.group_jewelry_manager"
+                        invisible="state not in ('done', 'delivered') or settlement_id or not jeweler_cost"/>
+            </xpath>
+
+            <xpath expr="//button[@name='action_repair_end']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='repair_request']" position="after">
+                <field name="xb_service_type" widget="radio"
+                       options="{'horizontal': True}"/>
+                <field name="jewelry_piece_id"/>
+                <field name="xb_customer_request"
+                       placeholder="What the customer asks for, in their words."/>
+                <field name="origin_repair_id" invisible="not origin_repair_id"/>
+                <field name="warranty_until" invisible="not warranty_until"/>
+                <field name="warranty_active" invisible="1"/>
+                <field name="settlement_id" invisible="not settlement_id"/>
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_warranty_claims" type="object"
+                        class="oe_stat_button" icon="fa-shield"
+                        invisible="not warranty_claim_count">
+                    <field name="warranty_claim_count" widget="statinfo"
+                           string="Warranty claims"/>
+                </button>
+            </xpath>
+
+            <xpath expr="//notebook" position="inside">
+                <page string="Commission" name="jewelry_commission"
+                      invisible="xb_service_type == 'repair'">
+                    <group>
+                        <group string="The customer's gold">
+                            <field name="xb_input_piece_ids"
+                                   widget="many2many_tags"
+                                   options="{'no_create_edit': True}"
+                                   placeholder="Pieces handed in to be melted down"/>
+                            <field name="xb_input_pure_g"/>
+                        </group>
+                    </group>
+                    <separator string="What to make"/>
+                    <field name="xb_spec"
+                           placeholder="Describe the piece the customer is
+                                        commissioning: model, metal, weight,
+                                        stones, size, finish. This is what the
+                                        jeweler will be held to."/>
+                </page>
+
+                <page string="Piece &amp; Photos" name="jewelry_intake">
+                    <group>
+                        <group string="Workshop">
+                            <field name="jeweler_id"/>
+                            <field name="jeweler_promised_date"/>
+                            <field name="material_supplied_by"/>
+                            <field name="company_currency_id" invisible="1"/>
+                            <field name="jeweler_cost"/>
+                            <field name="delay_days" invisible="not delay_days"/>
+                        </group>
+                        <group string="Missing before it can leave">
+                        <button name="action_xb_photo_link" type="object"
+                                string="Photo link for a phone" class="btn-link"
+                                colspan="2"/>
+                            <field name="missing_photo_kind_ids" widget="many2many_tags"
+                                   nolabel="1" colspan="2" readonly="1"/>
+                        </group>
+                    </group>
+                    <field name="photo_ids" mode="kanban">
+                        <kanban>
+                            <templates>
+                                <t t-name="card">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <field name="image" widget="image"
+                                                   options="{'size': [120, 120]}"/>
+                                        </div>
+                                        <div class="col-8">
+                                            <strong><field name="kind_id"/></strong>
+                                            <div class="text-muted"><field name="date"/></div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                        <form>
+                            <group>
+                                <field name="kind_id"/>
+                                <field name="note"/>
+                            </group>
+                            <field name="image" widget="image"/>
+                        </form>
+                    </field>
+                </page>
+
+                <page string="Inspection" name="jewelry_qc"
+                      invisible="state in ('draft', 'pending_auth')">
+                    <group>
+                        <group string="Checklist">
+                            <field name="qc_weight_ok"/>
+                            <field name="qc_stones_ok"/>
+                            <field name="qc_size_ok"/>
+                            <field name="qc_solder_ok"/>
+                            <field name="qc_finish_ok"/>
+                            <field name="qc_tester_ok"/>
+                        </group>
+                        <group string="Result">
+                            <field name="qc_rating" widget="radio" options="{'horizontal': True}"/>
+                            <field name="rework_count"/>
+                            <field name="qc_user_id"/>
+                            <field name="qc_date"/>
+                        </group>
+                    </group>
+                    <field name="qc_note" placeholder="What was checked, and anything unusual."/>
+                </page>
+
+                <page string="Signatures" name="jewelry_signatures">
+                    <group>
+                        <group string="Intake">
+                            <field name="intake_signature" widget="signature"
+                                   options="{'full_name': 'intake_signed_by'}"/>
+                            <field name="intake_signed_by"/>
+                            <field name="intake_signed_on"/>
+                        </group>
+                        <group string="Delivery">
+                            <field name="delivery_signature" widget="signature"
+                                   options="{'full_name': 'delivery_signed_by'}"/>
+                            <field name="delivery_signed_by"/>
+                            <field name="delivery_signed_on"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!--
+      The workshop board. Cards, not a list: the encargado wants to see the
+      whole bench at once and move a piece along by dragging it, the same way
+      the pieces themselves move from tray to tray.
+    -->
+    <record id="repair_order_view_kanban_jewelry" model="ir.ui.view">
+        <field name="name">repair.order.kanban.jewelry</field>
+        <field name="model">repair.order</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" quick_create="false"
+                    group_create="false" group_delete="false">
+                <field name="state"/>
+                <field name="missing_photo_kind_ids"/>
+                <field name="xb_board_alert"/>
+                <field name="rework_count"/>
+                <!-- Estrictamente JSON: el parser del kanban lo pasa por
+                     JSON.parse y unas comillas simples tumban la vista. -->
+                <progressbar field="xb_board_alert"
+                             colors='{"late": "danger", "soon": "warning", "ok": "success"}'/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between mb-1">
+                            <strong class="fs-6">
+                                <field name="jewelry_piece_id"/>
+                            </strong>
+                            <field name="xb_service_type" widget="badge"
+                                   class="ms-1"/>
+                        </div>
+                        <div class="text-muted small">
+                            <field name="name"/> ·
+                            <field name="partner_id"/>
+                        </div>
+                        <div t-if="record.jeweler_id.raw_value" class="mt-1">
+                            <i class="fa fa-user-o me-1" title="Jeweler" role="img"
+                               aria-label="Jeweler"/>
+                            <field name="jeweler_id"/>
+                        </div>
+                        <div class="mt-1 d-flex align-items-center gap-2">
+                            <span t-if="record.jeweler_promised_date.raw_value"
+                                  class="badge"
+                                  t-attf-class="text-bg-{{ record.xb_board_alert.raw_value === 'late' ? 'danger' : (record.xb_board_alert.raw_value === 'soon' ? 'warning' : 'light') }}">
+                                <i class="fa fa-clock-o me-1" title="Promised date"
+                                   role="img" aria-label="Promised date"/>
+                                <field name="jeweler_promised_date"/>
+                            </span>
+                            <span t-if="record.missing_photo_kind_ids.raw_value.length"
+                                  class="badge text-bg-secondary"
+                                  title="Photos still missing">
+                                <i class="fa fa-camera me-1" role="img"
+                                   aria-label="Photos missing"/>
+                                <t t-esc="record.missing_photo_kind_ids.raw_value.length"/>
+                            </span>
+                            <span t-if="record.rework_count.raw_value"
+                                  class="badge text-bg-danger" title="Sent back">
+                                <i class="fa fa-undo me-1" role="img"
+                                   aria-label="Sent back"/>
+                                <field name="rework_count"/>
+                            </span>
+                        </div>
+                        <footer class="pt-2">
+                            <field name="priority" widget="priority"/>
+                            <field name="activity_ids" widget="kanban_activity"/>
+                            <field name="user_id" widget="many2one_avatar_user"
+                                   class="ms-auto"/>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="xb_jewelry_board_action" model="ir.actions.act_window">
+        <field name="name">Workshop Board</field>
+        <field name="res_model">repair.order</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('state', 'not in', ('delivered', 'cancel'))]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nothing on the bench.</p>
+            <p>Pieces received at the counter show up here. Drag a card to move
+               the piece along.</p>
+        </field>
+    </record>
+
+    <!-- Bound explicitly: Repairs ships its own kanban at the same priority,
+         and Odoo would pick whichever was created first, which is the native
+         one. This board is the whole point of the menu entry. -->
+    <record id="xb_jewelry_board_action_kanban" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="repair_order_view_kanban_jewelry"/>
+        <field name="act_window_id" ref="xb_jewelry_board_action"/>
+    </record>
+
+    <record id="xb_jewelry_board_action_list" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">list</field>
+        <field name="act_window_id" ref="xb_jewelry_board_action"/>
+    </record>
+
+    <record id="xb_jewelry_board_action_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">form</field>
+        <field name="act_window_id" ref="xb_jewelry_board_action"/>
+    </record>
+
+    <record id="repair_order_view_list_jewelry" model="ir.ui.view">
+        <field name="name">repair.order.list.jewelry</field>
+        <field name="model">repair.order</field>
+        <field name="inherit_id" ref="repair.view_repair_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="jewelry_piece_id" optional="show"/>
+                <field name="jeweler_id" optional="show"/>
+                <field name="jeweler_promised_date" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

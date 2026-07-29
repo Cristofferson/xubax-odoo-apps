@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="xb_jeweler_settlement_view_list" model="ir.ui.view">
+        <field name="name">xb.jeweler.settlement.list</field>
+        <field name="model">xb.jeweler.settlement</field>
+        <field name="arch" type="xml">
+            <list string="Settlements">
+                <field name="name"/>
+                <field name="jeweler_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="job_count" string="Jobs"/>
+                <field name="amount_total" sum="Total"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'confirmed'"
+                       decoration-success="state == 'paid'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="xb_jeweler_settlement_view_form" model="ir.ui.view">
+        <field name="name">xb.jeweler.settlement.form</field>
+        <field name="model">xb.jeweler.settlement</field>
+        <field name="arch" type="xml">
+            <form string="Jeweler Settlement">
+                <header>
+                    <button name="action_gather_jobs" type="object"
+                            string="Collect Jobs" invisible="state != 'draft'"/>
+                    <button name="action_confirm" type="object" class="oe_highlight"
+                            string="Confirm" invisible="state != 'draft'"/>
+                    <button name="action_mark_paid" type="object" class="oe_highlight"
+                            string="Mark as Paid" invisible="state != 'confirmed'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('paid', 'cancel')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed,paid"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_bill" type="object"
+                                class="oe_stat_button" icon="fa-file-text-o"
+                                invisible="not move_id" string="Vendor Bill"/>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="jeweler_id" readonly="state != 'draft'"/>
+                            <field name="jeweler_type"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="date_from" readonly="state != 'draft'"/>
+                            <field name="date_to" readonly="state != 'draft'"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="amount_total"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Jobs" name="jobs">
+                            <field name="repair_ids" readonly="state != 'draft'">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="jewelry_piece_id"/>
+                                    <field name="qc_date"/>
+                                    <field name="qc_rating"/>
+                                    <field name="jeweler_cost" sum="Total"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="xb_jeweler_settlement_action" model="ir.actions.act_window">
+        <field name="name">Settlements</field>
+        <field name="res_model">xb.jeweler.settlement</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Pay your jewelers</p>
+            <p>
+                Pick a jeweler and a period, press Collect Jobs, and every finished job
+                nobody has paid yet is pulled in. External jewelers get a vendor bill
+                out of it; a single job settled on its own works exactly the same way.
+            </p>
+        </field>
+    </record>
+
+    <record id="xb_jeweler_rate_view_list" model="ir.ui.view">
+        <field name="name">xb.jeweler.rate.list</field>
+        <field name="model">xb.jeweler.rate</field>
+        <field name="arch" type="xml">
+            <list string="Rates" editable="bottom">
+                <field name="partner_id"/>
+                <field name="product_id"/>
+                <field name="price"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="date_from" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="xb_jeweler_rate_action" model="ir.actions.act_window">
+        <field name="name">Jeweler Rates</field>
+        <field name="res_model">xb.jeweler.rate</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Set what each jeweler charges</p>
+            <p>The rate is only a default: any piece can still be priced on its own.</p>
+        </field>
+    </record>
+
+</odoo>

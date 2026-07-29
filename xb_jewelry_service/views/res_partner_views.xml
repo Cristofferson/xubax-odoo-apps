@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_partner_view_form_jeweler" model="ir.ui.view">
+        <field name="name">res.partner.form.jeweler</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Jeweler" name="jeweler"
+                      groups="xb_jewelry_service.group_jewelry_workshop">
+                    <group>
+                        <group>
+                            <field name="is_jeweler"/>
+                            <field name="jeweler_type" invisible="not is_jeweler"/>
+                            <field name="jeweler_id_document" filename="jeweler_id_document_name"
+                                   invisible="not is_jeweler"/>
+                            <field name="jeweler_id_document_name" invisible="1"/>
+                            <field name="jeweler_scrap_tolerance_custom"
+                                   invisible="not is_jeweler"/>
+                            <field name="jeweler_scrap_tolerance"
+                                   invisible="not jeweler_scrap_tolerance_custom"
+                                   required="jeweler_scrap_tolerance_custom"/>
+                        </group>
+                        <group string="Scorecard" invisible="not is_jeweler">
+                            <field name="jeweler_open_repair_count"/>
+                            <field name="jeweler_avg_rating"/>
+                            <field name="jeweler_rework_rate"/>
+                            <button name="action_view_jeweler_repairs" type="object"
+                                    string="See jobs" class="btn-link"/>
+                        </group>
+                    </group>
+                    <field name="jeweler_service_ids" widget="many2many_tags"
+                           invisible="not is_jeweler"
+                           placeholder="Which jobs does this jeweler take?"/>
+                    <separator string="Rate card" invisible="not is_jeweler"/>
+                    <field name="jeweler_rate_ids" invisible="not is_jeweler">
+                        <list editable="bottom">
+                            <field name="product_id"/>
+                            <field name="price"/>
+                            <field name="currency_id" column_invisible="1"/>
+                            <field name="date_from" optional="hide"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_partner_action_jewelers" model="ir.actions.act_window">
+        <field name="name">Jewelers</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('is_jeweler', '=', True)]</field>
+        <field name="context">{'default_is_jeweler': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register your jewelers</p>
+            <p>
+                External jewelers are vendors, so you invoice and pay them with standard
+                Odoo. Employees are linked to their contact. Archive one and it simply
+                stops being offered.
+            </p>
+        </field>
+    </record>
+
+</odoo>

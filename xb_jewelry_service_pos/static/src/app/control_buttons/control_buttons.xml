@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <!--
+      One entry point only. Gated per register by xb_jewelry_enabled so a shop
+      with several tills can turn it on where pieces are actually received.
+    -->
+    <t t-name="xb_jewelry_service_pos.ControlButtons"
+       t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('o_pricelist_button')]" position="before">
+            <button t-if="pos.config.xb_jewelry_enabled"
+                    class="o_xb_jewelry_button"
+                    t-att-class="buttonClass"
+                    t-on-click="() => this.xbOpenJewelry()">
+                <i class="fa fa-diamond me-1" role="img" aria-label="Jewelry" title="Jewelry"/>
+                Jewelry
+            </button>
+        </xpath>
+    </t>
+</templates>

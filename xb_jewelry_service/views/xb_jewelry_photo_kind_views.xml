@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="xb_jewelry_photo_kind_view_list" model="ir.ui.view">
+        <field name="name">xb.jewelry.photo.kind.list</field>
+        <field name="model">xb.jewelry.photo.kind</field>
+        <field name="arch" type="xml">
+            <list string="Photo Kinds" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="stage"/>
+                <field name="condition"/>
+                <field name="required"/>
+                <field name="active" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="xb_jewelry_photo_kind_view_search" model="ir.ui.view">
+        <field name="name">xb.jewelry.photo.kind.search</field>
+        <field name="model">xb.jewelry.photo.kind</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <filter name="intake" string="Intake" domain="[('stage', '=', 'intake')]"/>
+                <filter name="after" string="After repair" domain="[('stage', '=', 'after')]"/>
+                <filter name="required" string="Required" domain="[('required', '=', True)]"/>
+                <filter name="inactive" string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="xb_jewelry_photo_kind_action" model="ir.actions.act_window">
+        <field name="name">Photo Kinds</field>
+        <field name="res_model">xb.jewelry.photo.kind</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Define the photos your counter must take</p>
+            <p>A required photo blocks the piece from leaving to the workshop until it exists.</p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="xb_jewelry_service_pos.JewelryDialog">
+        <Dialog title="dialogTitle" size="'lg'" bodyClass="'o_xb_jewelry'">
+
+            <!-- Menu: four big buttons, nothing to read -->
+            <div t-if="state.view === 'menu'" class="d-flex flex-column gap-3">
+                <button class="btn btn-primary o_xb_big_action"
+                        t-on-click="() => this.openIntake()">
+                    <i class="fa fa-plus-circle me-2"/>Receive a piece
+                </button>
+                <button class="btn btn-secondary o_xb_big_action"
+                        t-on-click="() => this.openSearch(false)">
+                    <i class="fa fa-search me-2"/>Look up a piece
+                </button>
+                <button class="btn btn-success o_xb_big_action"
+                        t-on-click="() => this.openSearch(true)">
+                    <i class="fa fa-check-circle me-2"/>Deliver a finished piece
+                </button>
+                <button t-if="state.settings.can_dispatch"
+                        class="btn btn-warning o_xb_big_action"
+                        t-on-click="() => this.openDispatch()">
+                    <i class="fa fa-hand-o-right me-2"/>Hand pieces to a jeweler
+                </button>
+                <div t-if="!hasCamera" class="alert alert-info mb-0">
+                    <i class="fa fa-info-circle me-1"/>
+                    This register has no camera. Photos will have to be taken from a
+                    phone and picked from a file.
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div t-if="state.view === 'search'">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control o_xb_step_field"
+                           placeholder="Reference, customer or piece"
+                           t-model="state.query"
+                           t-on-keyup="(ev) => ev.key === 'Enter' &amp;&amp; this.search()"/>
+                    <button class="btn btn-primary" t-on-click="() => this.search()">
+                        <i class="fa fa-search"/>
+                    </button>
+                </div>
+                <div t-if="state.loading" class="text-center p-4">
+                    <i class="fa fa-circle-o-notch fa-spin fa-2x"/>
+                </div>
+                <div t-else="">
+                    <div t-if="!state.results.length" class="text-center text-muted p-4">
+                        Nothing found.
+                    </div>
+                    <div t-foreach="state.results" t-as="row" t-key="row.id"
+                         class="o_xb_result_row" t-on-click="() => this.select(row)">
+                        <div class="d-flex justify-content-between">
+                            <strong t-esc="row.piece_description"/>
+                            <span class="badge text-bg-secondary"
+                                  t-esc="stateLabel(row.state)"/>
+                        </div>
+                        <div class="text-muted small">
+                            <t t-esc="row.name"/> ·
+                            <t t-esc="row.partner_name"/>
+                            <t t-if="row.jeweler_name"> · <t t-esc="row.jeweler_name"/></t>
+                            <t t-if="row.promised_date"> · due <t t-esc="row.promised_date"/></t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detail -->
+            <div t-if="state.view === 'detail' and state.selected">
+                <h4 t-esc="state.selected.piece_description"/>
+                <table class="table table-sm">
+                    <tr><td>Reference</td><td t-esc="state.selected.name"/></tr>
+                    <tr><td>Customer</td><td t-esc="state.selected.partner_name"/></tr>
+                    <tr><td>Status</td>
+                        <td><span class="badge text-bg-primary"
+                                  t-esc="stateLabel(state.selected.state)"/></td></tr>
+                    <tr t-if="state.selected.metal">
+                        <td>Metal</td><td t-esc="state.selected.metal"/></tr>
+                    <tr t-if="state.selected.weight_g">
+                        <td>Weight</td><td><t t-esc="state.selected.weight_g"/> g</td></tr>
+                    <tr t-if="state.selected.jeweler_name">
+                        <td>Jeweler</td><td t-esc="state.selected.jeweler_name"/></tr>
+                    <tr t-if="state.selected.promised_date">
+                        <td>Promised</td><td t-esc="state.selected.promised_date"/></tr>
+                    <tr t-if="state.selected.sale_order_name">
+                        <td>Order</td><td t-esc="state.selected.sale_order_name"/></tr>
+                </table>
+
+                <div t-if="state.selected.state === 'done'" class="mt-3">
+                    <label class="form-label">Received by</label>
+                    <input type="text" class="form-control o_xb_step_field"
+                           t-model="state.signedBy"/>
+                    <button class="btn btn-success o_xb_big_action w-100 mt-3"
+                            t-att-disabled="state.loading"
+                            t-on-click="() => this.deliver()">
+                        <i class="fa fa-check me-2"/>Deliver to customer
+                    </button>
+                </div>
+                <div t-else="" class="alert alert-secondary mt-3 mb-0">
+                    This piece is not ready to be handed back yet.
+                </div>
+            </div>
+
+            <!-- Workshop hand-over -->
+            <div t-if="state.view === 'dispatch'">
+                <div class="row g-2 mb-3">
+                    <div class="col-7">
+                        <label class="form-label">Jeweler</label>
+                        <select class="form-select o_xb_step_field"
+                                t-model="state.jewelerId">
+                            <option value="">-</option>
+                            <option t-foreach="state.jewelers" t-as="j" t-key="j.id"
+                                    t-att-value="j.id" t-esc="j.name"/>
+                        </select>
+                    </div>
+                    <div class="col-5">
+                        <label class="form-label">Promised</label>
+                        <input type="date" class="form-control o_xb_step_field"
+                               t-model="state.promisedDate"/>
+                    </div>
+                </div>
+
+                <div t-if="state.loading" class="text-center p-4">
+                    <i class="fa fa-circle-o-notch fa-spin fa-2x"/>
+                </div>
+                <div t-else="">
+                    <div t-if="!state.results.length"
+                         class="text-center text-muted p-4">
+                        No piece is waiting at the counter.
+                    </div>
+                    <div t-foreach="state.results" t-as="row" t-key="row.id"
+                         class="o_xb_result_row"
+                         t-att-class="{ 'o_xb_picked': state.picked[row.id],
+                                        'o_xb_blocked': row.dispatch_blocker }"
+                         t-on-click="() => this.togglePick(row)">
+                        <div class="d-flex justify-content-between">
+                            <strong>
+                                <i class="me-1 fa"
+                                   t-att-class="state.picked[row.id] ? 'fa-check-square-o' : 'fa-square-o'"/>
+                                <t t-esc="row.piece_description"/>
+                            </strong>
+                            <span class="badge text-bg-secondary"
+                                  t-esc="stateLabel(row.state)"/>
+                        </div>
+                        <div class="text-muted small">
+                            <t t-esc="row.name"/> · <t t-esc="row.partner_name"/>
+                        </div>
+                        <div t-if="row.dispatch_blocker"
+                             class="small text-danger">
+                            <i class="fa fa-lock me-1"/><t t-esc="row.dispatch_blocker"/>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-warning o_xb_big_action w-100 mt-3"
+                        t-att-disabled="state.loading"
+                        t-on-click="() => this.confirmDispatch()">
+                    <i class="fa fa-hand-o-right me-2"/>Hand over
+                    <t t-if="pickedIds.length">
+                        (<t t-esc="pickedIds.length"/>)
+                    </t>
+                </button>
+            </div>
+
+            <t t-set-slot="footer">
+                <button t-if="state.view !== 'menu'" class="btn btn-secondary"
+                        t-on-click="() => this.back()">Back</button>
+                <button class="btn btn-light" t-on-click="() => this.props.close()">
+                    Close
+                </button>
+            </t>
+        </Dialog>
+    </t>
+
+</templates>

@@ -1,0 +1,298 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_jewelry_service_whatsapp
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: XUBAX\n"
+"Language-Team: Spanish (Mexico)\n"
+"Language: es_MX\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: xb_jewelry_service_whatsapp
+#. odoo-python
+#: code:addons/xb_jewelry_service_whatsapp/models/repair_order.py:0
+msgid ""
+"%(days)s days ready and not picked up. Decide what to do following the terms"
+" the customer signed."
+msgstr "%(days)s días lista y sin recoger. Decide qué hacer conforme a los términos que firmó el cliente."
+
+#. module: xb_jewelry_service_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service_whatsapp.repair_order_view_form_jewelry_wa
+msgid "Ask Authorization by WhatsApp"
+msgstr "Pedir autorización por WhatsApp"
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.model,name:xb_jewelry_service_whatsapp.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.model,name:xb_jewelry_service_whatsapp.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: xb_jewelry_service_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service_whatsapp.res_config_settings_view_form_jewelry_wa
+msgid "Confirm the intake"
+msgstr "Confirmar la recepción"
+
+#. module: xb_jewelry_service_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service_whatsapp.res_config_settings_view_form_jewelry_wa
+msgid "Days after the piece is ready to chase the customer, comma separated"
+msgstr "Días después de que la pieza está lista para recordarle al cliente, separados por comas"
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.model.fields,help:xb_jewelry_service_whatsapp.field_res_company__xb_wa_reminder_days
+#: model:ir.model.fields,help:xb_jewelry_service_whatsapp.field_res_config_settings__xb_wa_reminder_days
+msgid ""
+"Days after the piece is ready to remind the customer, separated by commas. "
+"Leave empty to never chase."
+msgstr "Días después de que la pieza está lista para recordarle al cliente, separados por comas. Déjalo vacío para no insistir."
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_repair_order__display_name
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_company__display_name
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: xb_jewelry_service_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service_whatsapp.repair_order_view_form_jewelry_wa
+msgid "Follow-up"
+msgstr "Seguimiento"
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.model.fields,help:xb_jewelry_service_whatsapp.field_repair_order__xb_wa_reminder_stage
+msgid ""
+"Highest reminder threshold already sent, so the same nudge is never sent "
+"twice."
+msgstr "Último recordatorio ya enviado, para que el mismo aviso no se mande dos veces."
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_repair_order__id
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_company__id
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_config_settings__id
+msgid "ID"
+msgstr "ID"
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.actions.server,name:xb_jewelry_service_whatsapp.ir_cron_xb_jewelry_pickup_reminders_ir_actions_server
+msgid "Jewelry: pickup reminders and unclaimed pieces"
+msgstr "Joyería: recordatorios de entrega y piezas no reclamadas"
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_repair_order__xb_wa_reminder_stage
+msgid "Last reminder (days)"
+msgstr "Último recordatorio (días)"
+
+#. module: xb_jewelry_service_whatsapp
+#. odoo-python
+#: code:addons/xb_jewelry_service_whatsapp/models/repair_order.py:0
+msgid "No phone number on file, WhatsApp not sent."
+msgstr "No hay teléfono registrado, no se envió WhatsApp."
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_company__xb_wa_notify_received
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_config_settings__xb_wa_notify_received
+msgid "Notify on intake"
+msgstr "Avisar al recibir"
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_company__xb_wa_notify_ready
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_config_settings__xb_wa_notify_ready
+msgid "Notify when ready"
+msgstr "Avisar cuando esté lista"
+
+#. module: xb_jewelry_service_whatsapp
+#. odoo-python
+#: code:addons/xb_jewelry_service_whatsapp/models/repair_order.py:0
+msgid "Pick the 'piece ready' template in the settings first."
+msgstr "Primero elige la plantilla de 'pieza lista' en los ajustes."
+
+#. module: xb_jewelry_service_whatsapp
+#. odoo-python
+#: code:addons/xb_jewelry_service_whatsapp/models/repair_order.py:0
+msgid "Pick the 'quote to authorize' template in the settings first."
+msgstr "Primero elige la plantilla de 'presupuesto por autorizar' en los ajustes."
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_company__xb_wa_template_reminder_id
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_config_settings__xb_wa_template_reminder_id
+msgid "Pickup reminder"
+msgstr "Recordatorio de entrega"
+
+#. module: xb_jewelry_service_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service_whatsapp.res_config_settings_view_form_jewelry_wa
+msgid "Pickup reminders"
+msgstr "Recordatorios de entrega"
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_company__xb_wa_template_ready_id
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_config_settings__xb_wa_template_ready_id
+msgid "Piece ready"
+msgstr "Pieza lista"
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_company__xb_wa_template_received_id
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_config_settings__xb_wa_template_received_id
+msgid "Piece received"
+msgstr "Pieza recibida"
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_company__xb_wa_template_quote_id
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_config_settings__xb_wa_template_quote_id
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service_whatsapp.res_config_settings_view_form_jewelry_wa
+msgid "Quote to authorize"
+msgstr "Presupuesto por autorizar"
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.model.fields,help:xb_jewelry_service_whatsapp.field_repair_order__xb_wa_unclaimed
+msgid "Ready for longer than the shop's limit and still not picked up."
+msgstr "Lista desde hace más tiempo del límite de la tienda y todavía sin recoger."
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_company__xb_wa_reminder_days
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_config_settings__xb_wa_reminder_days
+msgid "Reminder days"
+msgstr "Días de recordatorio"
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.model,name:xb_jewelry_service_whatsapp.model_repair_order
+msgid "Repair Order"
+msgstr "Orden de reparación"
+
+#. module: xb_jewelry_service_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service_whatsapp.repair_order_view_form_jewelry_wa
+msgid "Send WhatsApp"
+msgstr "Enviar WhatsApp"
+
+#. module: xb_jewelry_service_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service_whatsapp.res_config_settings_view_form_jewelry_wa
+msgid "Sends a message when the piece is taken in"
+msgstr "Manda un mensaje cuando se recibe la pieza"
+
+#. module: xb_jewelry_service_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service_whatsapp.res_config_settings_view_form_jewelry_wa
+msgid "Sends the template the moment the inspection is passed"
+msgstr "Manda la plantilla en cuanto se aprueba la inspección"
+
+#. module: xb_jewelry_service_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service_whatsapp.res_config_settings_view_form_jewelry_wa
+msgid "Tell the customer when it is ready"
+msgstr "Avisarle al cliente cuando esté lista"
+
+#. module: xb_jewelry_service_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service_whatsapp.res_config_settings_view_form_jewelry_wa
+msgid "Template used when the work needs the customer's approval"
+msgstr "Plantilla que se usa cuando el trabajo necesita la aprobación del cliente"
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_repair_order__xb_wa_unclaimed
+msgid "Unclaimed"
+msgstr "No reclamada"
+
+#. module: xb_jewelry_service_whatsapp
+#. odoo-python
+#: code:addons/xb_jewelry_service_whatsapp/models/repair_order.py:0
+msgid "Unclaimed piece"
+msgstr "Pieza no reclamada"
+
+#. module: xb_jewelry_service_whatsapp
+#. odoo-python
+#: code:addons/xb_jewelry_service_whatsapp/models/repair_order.py:0
+msgid "WhatsApp could not be sent: %(err)s"
+msgstr "No se pudo enviar el WhatsApp: %(err)s"
+
+
+#. module: xb_jewelry_service_whatsapp
+#. odoo-python
+#: code:addons/xb_jewelry_service_whatsapp/models/repair_order.py:0
+msgid "%(company)s - piece received (%(ref)s)"
+msgstr "%(company)s - pieza recibida (%(ref)s)"
+
+#. module: xb_jewelry_service_whatsapp
+#. odoo-python
+#: code:addons/xb_jewelry_service_whatsapp/models/repair_order.py:0
+msgid ""
+"<p>Hello %(name)s,</p><p>We have your %(piece)s in our care under reference "
+"<strong>%(ref)s</strong>. We will let you know as soon as it is ready.</p>"
+msgstr "<p>Hola %(name)s,</p><p>Tenemos tu %(piece)s bajo resguardo con el folio <strong>%(ref)s</strong>. Te avisamos en cuanto esté lista.</p>"
+
+#. module: xb_jewelry_service_whatsapp
+#. odoo-python
+#: code:addons/xb_jewelry_service_whatsapp/models/repair_order.py:0
+msgid "Customer could not be notified"
+msgstr "No se pudo avisar al cliente"
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_company__xb_email_fallback
+#: model:ir.model.fields,field_description:xb_jewelry_service_whatsapp.field_res_config_settings__xb_email_fallback
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service_whatsapp.res_config_settings_view_form_jewelry_wa
+msgid "Fall back to email"
+msgstr "Avisar por correo si no hay WhatsApp"
+
+#. module: xb_jewelry_service_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service_whatsapp.res_config_settings_view_form_jewelry_wa
+msgid "Keeping the customer informed"
+msgstr "Mantener informado al cliente"
+
+#. module: xb_jewelry_service_whatsapp
+#. odoo-python
+#: code:addons/xb_jewelry_service_whatsapp/models/repair_order.py:0
+msgid "Neither WhatsApp nor email was possible for %(ref)s."
+msgstr "No se pudo ni por WhatsApp ni por correo con %(ref)s."
+
+#. module: xb_jewelry_service_whatsapp
+#. odoo-python
+#: code:addons/xb_jewelry_service_whatsapp/models/repair_order.py:0
+msgid ""
+"No phone and no email on file: the customer was not notified. Tell them "
+"yourself."
+msgstr "Sin teléfono y sin correo: al cliente no se le avisó. Avísale tú."
+
+#. module: xb_jewelry_service_whatsapp
+#. odoo-python
+#: code:addons/xb_jewelry_service_whatsapp/models/repair_order.py:0
+msgid "Notified by email instead of WhatsApp: %(why)s."
+msgstr "Se avisó por correo en lugar de WhatsApp: %(why)s."
+
+#. module: xb_jewelry_service_whatsapp
+#: model:ir.model.fields,help:xb_jewelry_service_whatsapp.field_res_company__xb_email_fallback
+#: model:ir.model.fields,help:xb_jewelry_service_whatsapp.field_res_config_settings__xb_email_fallback
+msgid ""
+"When WhatsApp is not possible, because the customer has no phone on file or "
+"the message fails, write to them instead. The customer just handed over "
+"gold: silence is not an option."
+msgstr "Cuando no se pueda por WhatsApp, porque el cliente no tiene teléfono registrado o el mensaje falla, escríbele por correo. Acaba de entregar oro: el silencio no es una opción."
+
+#. module: xb_jewelry_service_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service_whatsapp.res_config_settings_view_form_jewelry_wa
+msgid ""
+"When WhatsApp is not possible, write to the customer instead."
+"                                Somebody who just handed over gold should "
+"never be left                                without an acknowledgement."
+msgstr "Cuando no se pueda por WhatsApp, escríbele al cliente por correo. A quien acaba de entregar oro nunca se le puede dejar sin acuse."
+
+#. module: xb_jewelry_service_whatsapp
+#. odoo-python
+#: code:addons/xb_jewelry_service_whatsapp/models/repair_order.py:0
+msgid "no WhatsApp template is configured"
+msgstr "no hay ninguna plantilla de WhatsApp configurada"
+
+#. module: xb_jewelry_service_whatsapp
+#. odoo-python
+#: code:addons/xb_jewelry_service_whatsapp/models/repair_order.py:0
+msgid "no phone number on file"
+msgstr "no hay teléfono registrado"
+
+#. module: xb_jewelry_service_whatsapp
+#. odoo-python
+#: code:addons/xb_jewelry_service_whatsapp/models/repair_order.py:0
+msgid "piece"
+msgstr "pieza"

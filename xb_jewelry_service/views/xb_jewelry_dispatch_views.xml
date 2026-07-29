@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="xb_jewelry_dispatch_view_list" model="ir.ui.view">
+        <field name="name">xb.jewelry.dispatch.list</field>
+        <field name="model">xb.jewelry.dispatch</field>
+        <field name="arch" type="xml">
+            <list string="Workshop Dispatches"
+                  decoration-danger="not within_tolerance and state == 'returned'">
+                <field name="name"/>
+                <field name="jeweler_id"/>
+                <field name="date"/>
+                <field name="promised_date"/>
+                <field name="repair_count" string="Pieces"/>
+                <field name="material_out_g" optional="show"/>
+                <field name="scrap_back_g" optional="show"/>
+                <field name="loss_pct" optional="show"/>
+                <field name="scrap_tolerance" optional="hide"/>
+                <field name="within_tolerance" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-warning="state == 'out'"
+                       decoration-success="state == 'returned'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="xb_jewelry_dispatch_view_form" model="ir.ui.view">
+        <field name="name">xb.jewelry.dispatch.form</field>
+        <field name="model">xb.jewelry.dispatch</field>
+        <field name="arch" type="xml">
+            <form string="Workshop Dispatch">
+                <header>
+                    <button name="action_dispatch" type="object" class="oe_highlight"
+                            string="Hand Over" invisible="state != 'draft'"/>
+                    <button name="action_return" type="object" class="oe_highlight"
+                            string="Receive Back" invisible="state != 'out'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('returned', 'cancel')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,out,returned"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_repairs" type="object"
+                                class="oe_stat_button" icon="fa-wrench">
+                            <field name="repair_count" widget="statinfo" string="Pieces"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="jeweler_id"
+                                   readonly="state != 'draft'"/>
+                            <field name="date"/>
+                            <field name="promised_date"/>
+                            <field name="return_date" invisible="not return_date"/>
+                        </group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="scrap_tolerance"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Pieces" name="pieces">
+                            <field name="repair_ids" readonly="state != 'draft'">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="jewelry_piece_id"/>
+                                    <field name="jeweler_cost"/>
+                                    <field name="weight_after_g"/>
+                                    <field name="weight_diff_g"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Material &amp; Scrap" name="material">
+                            <field name="material_line_ids">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="metal_value_id"/>
+                                    <field name="purity"/>
+                                    <field name="qty_out_g"/>
+                                    <field name="qty_back_g"/>
+                                    <field name="pure_out_g" optional="hide"/>
+                                    <field name="pure_back_g" optional="hide"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="material_out_g"/>
+                                <field name="scrap_back_g"/>
+                                <field name="weight_gain_g"/>
+                                <field name="loss_g"/>
+                                <field name="loss_pct"/>
+                                <field name="within_tolerance"
+                                       invisible="not material_out_g"/>
+                            </group>
+                            <div class="alert alert-danger" role="alert"
+                                 invisible="within_tolerance or not material_out_g">
+                                The metal loss is above the tolerance agreed with this
+                                jeweler. Weigh the pieces and the returned scrap again
+                                before closing.
+                            </div>
+                        </page>
+                        <page string="Signature" name="signature">
+                            <group>
+                                <field name="signature" widget="signature"
+                                       options="{'full_name': 'signed_by'}"/>
+                                <field name="signed_by"/>
+                                <field name="signed_on"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="xb_jewelry_dispatch_view_search" model="ir.ui.view">
+        <field name="name">xb.jewelry.dispatch.search</field>
+        <field name="model">xb.jewelry.dispatch</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="jeweler_id"/>
+                <filter name="out" string="At workshop" domain="[('state', '=', 'out')]"/>
+                <filter name="over" string="Over tolerance"
+                        domain="[('within_tolerance', '=', False), ('material_out_g', '>', 0)]"/>
+                <group>
+                    <filter name="group_jeweler" string="Jeweler"
+                            context="{'group_by': 'jeweler_id'}"/>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="xb_jewelry_dispatch_action" model="ir.actions.act_window">
+        <field name="name">Workshop Dispatches</field>
+        <field name="res_model">xb.jewelry.dispatch</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Hand pieces over to a jeweler</p>
+            <p>
+                One document per jeweler, with as many pieces as they take, the metal you
+                supply and their signature. When the pieces come back, the scrap is
+                weighed and the loss is checked against the agreed tolerance.
+            </p>
+        </field>
+    </record>
+
+</odoo>

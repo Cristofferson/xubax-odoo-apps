@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="xb_jewelry_piece_view_list" model="ir.ui.view">
+        <field name="name">xb.jewelry.piece.list</field>
+        <field name="model">xb.jewelry.piece</field>
+        <field name="arch" type="xml">
+            <list string="Pieces">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="description"/>
+                <field name="piece_type_id"/>
+                <field name="metal_value_id" optional="show"/>
+                <field name="weight_g" optional="show"/>
+                <field name="pure_metal_weight_g" optional="hide"/>
+                <field name="has_diamond" optional="hide"/>
+                <field name="custody_state" widget="badge"
+                       decoration-info="custody_state == 'in_custody'"
+                       decoration-warning="custody_state == 'at_workshop'"
+                       decoration-success="custody_state == 'ready'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="xb_jewelry_piece_view_form" model="ir.ui.view">
+        <field name="name">xb.jewelry.piece.form</field>
+        <field name="model">xb.jewelry.piece</field>
+        <field name="arch" type="xml">
+            <form string="Jewelry Piece">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_repairs" type="object"
+                                class="oe_stat_button" icon="fa-wrench">
+                            <field name="repair_count" widget="statinfo" string="Services"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <label class="o_form_label" for="name"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Owner">
+                            <field name="partner_id"/>
+                            <field name="custody_state" widget="badge"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Piece">
+                            <field name="description"/>
+                            <field name="piece_type_id"/>
+                            <field name="piece_kind" invisible="1"/>
+                            <field name="lot_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Metal">
+                            <field name="metal_attribute_id" invisible="1"/>
+                            <field name="metal_value_id"/>
+                            <field name="purity"/>
+                            <field name="weight_g"/>
+                            <field name="pure_metal_weight_g"/>
+                        </group>
+                        <group string="Measurements">
+                            <field name="size_attribute_id" invisible="1"/>
+                            <field name="size_value_id" invisible="piece_kind != 'ring'"/>
+                            <field name="length_cm" invisible="piece_kind != 'chain'"/>
+                            <field name="stone_count"/>
+                            <field name="has_diamond"/>
+                            <field name="diamond_tester" invisible="not has_diamond"
+                                   required="has_diamond"/>
+                            <field name="laser_inscription" invisible="not has_diamond"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Photos" name="photos">
+                            <field name="photo_ids" mode="kanban">
+                                <kanban>
+                                    <templates>
+                                        <t t-name="card">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <field name="image" widget="image"
+                                                           options="{'size': [120, 120]}"/>
+                                                </div>
+                                                <div class="col-8">
+                                                    <strong><field name="kind_id"/></strong>
+                                                    <div class="text-muted">
+                                                        <field name="date"/>
+                                                    </div>
+                                                    <field name="note"/>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                                <form>
+                                    <group>
+                                        <field name="kind_id"/>
+                                        <field name="note"/>
+                                    </group>
+                                    <field name="image" widget="image"/>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Service history" name="history">
+                            <field name="repair_order_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="create_date"/>
+                                    <field name="jeweler_id"/>
+                                    <field name="state"/>
+                                    <field name="warranty_until"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="xb_jewelry_piece_view_search" model="ir.ui.view">
+        <field name="name">xb.jewelry.piece.search</field>
+        <field name="model">xb.jewelry.piece</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Reference"/>
+                <field name="partner_id"/>
+                <field name="description"/>
+                <field name="lot_id"/>
+                <filter name="in_custody" string="In custody"
+                        domain="[('custody_state', '=', 'in_custody')]"/>
+                <filter name="at_workshop" string="At workshop"
+                        domain="[('custody_state', '=', 'at_workshop')]"/>
+                <filter name="ready" string="Ready for pickup"
+                        domain="[('custody_state', '=', 'ready')]"/>
+                <separator/>
+                <filter name="diamond" string="With diamonds"
+                        domain="[('has_diamond', '=', True)]"/>
+                <group>
+                    <filter name="group_partner" string="Owner"
+                            context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_custody" string="Custody"
+                            context="{'group_by': 'custody_state'}"/>
+                    <filter name="group_type" string="Type"
+                            context="{'group_by': 'piece_type_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="xb_jewelry_piece_action" model="ir.actions.act_window">
+        <field name="name">Pieces</field>
+        <field name="res_model">xb.jewelry.piece</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="xb_jewelry_piece_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register your first customer piece</p>
+            <p>
+                A piece is a permanent file: it keeps its photos, its metal and its whole
+                service history, long after each repair is closed.
+            </p>
+        </field>
+    </record>
+
+    <record id="xb_jewelry_piece_action_custody" model="ir.actions.act_window">
+        <field name="name">In Custody</field>
+        <field name="res_model">xb.jewelry.piece</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('custody_state', '!=', 'with_customer')]</field>
+        <field name="context">{'search_default_group_custody': 1}</field>
+    </record>
+
+</odoo>

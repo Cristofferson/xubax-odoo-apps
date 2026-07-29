@@ -1,0 +1,35 @@
+{
+    "name": "Jewelry Repairs & Workshop - Point of Sale",
+    "version": "19.0.1.2.0",
+    "category": "Sales/Point of Sale",
+    "summary": "Receive, track and deliver repair pieces without leaving the Point of Sale",
+    "author": "XUBAX",
+    "website": "https://www.xubax.com",
+    "license": "OPL-1",
+    "price": 79.0,
+    "currency": "USD",
+    "depends": [
+        "xb_jewelry_service",
+        "point_of_sale",
+        "pos_sale",
+    ],
+    "data": [
+        "views/pos_config_views.xml",
+    ],
+    "assets": {
+        "point_of_sale._assets_pos": [
+            "xb_jewelry_service_pos/static/src/app/control_buttons/control_buttons.js",
+            "xb_jewelry_service_pos/static/src/app/control_buttons/control_buttons.xml",
+            "xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js",
+            "xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml",
+            "xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.js",
+            "xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml",
+            "xb_jewelry_service_pos/static/src/app/signature/jewelry_signature.js",
+            "xb_jewelry_service_pos/static/src/app/signature/jewelry_signature.xml",
+            "xb_jewelry_service_pos/static/src/app/screens/jewelry.scss",
+        ],
+    },
+    "images": ["static/description/banner.png"],
+    "installable": True,
+    "application": False,
+}

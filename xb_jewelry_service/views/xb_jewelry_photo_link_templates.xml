@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="photo_link_invalid" name="Photo link expired">
+        <t t-call="web.frontend_layout">
+            <div class="container my-5" style="max-width: 480px;">
+                <div class="alert alert-warning text-center">
+                    <h4>This link is no longer valid</h4>
+                    <p class="mb-0">
+                        Photo links expire on purpose. Ask the counter for a new one.
+                    </p>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="photo_link_page" name="Upload piece photos">
+        <t t-call="web.frontend_layout">
+            <div class="container my-4" style="max-width: 520px;">
+                <h4 class="mb-1"><span t-field="company.name"/></h4>
+                <p class="text-muted mb-3">
+                    <span t-field="piece.description"/>
+                    <span class="float-end" t-field="repair.name"/>
+                </p>
+
+                <div t-if="uploaded and uploaded != '0'" class="alert alert-success">
+                    <t t-esc="uploaded"/> photo(s) saved. You can close this page.
+                </div>
+
+                <div t-if="rejected and rejected != '0'" class="alert alert-warning">
+                    <t t-esc="rejected"/> file(s) were not accepted. Send a
+                    photo taken with the camera, under 12 MB.
+                </div>
+
+                <form t-attf-action="/jewelry/photo/#{repair.id}/#{token}/upload"
+                      method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token"
+                           t-att-value="request.csrf_token()"/>
+
+                    <div t-foreach="kinds" t-as="kind" class="mb-3">
+                        <label class="form-label d-block fw-bold">
+                            <t t-esc="kind.name"/>
+                            <span t-if="kind.required" class="text-danger">*</span>
+                            <span t-if="taken.get(kind.id)"
+                                  class="badge text-bg-success float-end">Taken</span>
+                        </label>
+                        <input type="file" accept="image/*" capture="environment"
+                               class="form-control form-control-lg"
+                               t-attf-name="kind_#{kind.id}"/>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                        Upload
+                    </button>
+                </form>
+
+                <p class="text-muted small mt-3 mb-0">
+                    This link expires shortly. The photos go straight into the
+                    piece file.
+                </p>
+            </div>
+        </t>
+    </template>
+
+</odoo>

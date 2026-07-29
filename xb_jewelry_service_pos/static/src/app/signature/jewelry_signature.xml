@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="xb_jewelry_service_pos.JewelrySignaturePopup">
+        <Dialog title="props.title" size="'lg'">
+            <div class="o_xb_jewelry_signature">
+                <p t-if="props.subtitle" class="text-muted" t-esc="props.subtitle"/>
+                <div t-if="props.terms" class="o_xb_terms border rounded p-2 mb-3 small"
+                     t-out="termsMarkup"/>
+                <NameAndSignature t-props="nameAndSignatureProps"/>
+                <div t-if="state.warn" class="alert alert-warning mt-2 mb-0">
+                    <i class="fa fa-exclamation-triangle me-1"/>
+                    Ask the customer to sign in the box above.
+                </div>
+            </div>
+            <t t-set-slot="footer">
+                <button class="btn btn-primary" t-on-click="() => this.confirm()">
+                    <i class="fa fa-check me-1"/>Confirm signature
+                </button>
+                <button class="btn btn-secondary" t-on-click="() => this.cancel()">
+                    Cancel
+                </button>
+            </t>
+        </Dialog>
+    </t>
+
+</templates>

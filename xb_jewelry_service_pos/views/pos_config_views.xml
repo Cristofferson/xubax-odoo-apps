@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_jewelry_pos" model="ir.ui.view">
+        <field name="name">res.config.settings.form.jewelry.pos</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='pos_interface_section']" position="inside">
+                <setting title="Receive, look up and deliver repair pieces from this register"
+                         help="Adds a Jewelry button to the Point of Sale">
+                    <field name="pos_xb_jewelry_enabled"/>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="repair_order_view_form_jewelry_wa" model="ir.ui.view">
+        <field name="name">repair.order.form.jewelry.whatsapp</field>
+        <field name="model">repair.order</field>
+        <field name="inherit_id"
+               ref="xb_jewelry_service.repair_order_view_form_jewelry"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_deliver']" position="before">
+                <button name="action_xb_wa_send_ready" type="object"
+                        string="Send WhatsApp" invisible="state != 'done'"/>
+                <button name="action_xb_wa_send_quote" type="object"
+                        string="Ask Authorization by WhatsApp"
+                        invisible="state != 'pending_auth'"/>
+            </xpath>
+            <xpath expr="//page[@name='jewelry_qc']" position="after">
+                <page string="Follow-up" name="jewelry_wa">
+                    <group>
+                        <group>
+                            <field name="xb_wa_reminder_stage"/>
+                            <field name="xb_wa_unclaimed"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

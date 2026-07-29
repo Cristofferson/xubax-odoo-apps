@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_my_home_jewelry" name="Portal My Home: jewelry"
+              inherit_id="portal.portal_my_home" priority="40" customize_show="True">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_client_category" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Your Pieces</t>
+                <t t-set="url" t-value="'/my/jewelry'"/>
+                <t t-set="text">Follow your pieces and see their photographs</t>
+                <t t-set="placeholder_count" t-value="'jewelry_count'"/>
+            </t>
+        </div>
+    </template>
+
+    <template id="portal_my_jewelry" name="My Pieces">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Your Pieces</t>
+            </t>
+            <t t-if="not pieces">
+                <div class="alert alert-info">
+                    You have no pieces with us right now.
+                </div>
+            </t>
+            <t t-else="">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Piece</th>
+                            <th>Status</th>
+                            <th class="text-end">Photos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="pieces" t-as="piece">
+                            <td>
+                                <a t-att-href="piece.access_url">
+                                    <span t-field="piece.name"/>
+                                </a>
+                            </td>
+                            <td><span t-field="piece.description"/></td>
+                            <td>
+                                <span t-attf-class="badge #{
+                                        piece.custody_state == 'ready' and 'text-bg-success'
+                                        or piece.custody_state == 'at_workshop' and 'text-bg-warning'
+                                        or 'text-bg-secondary'}"
+                                      t-field="piece.custody_state"/>
+                            </td>
+                            <td class="text-end"><span t-field="piece.photo_count"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+        </t>
+    </template>
+
+    <template id="portal_jewelry_detail" name="Piece">
+        <t t-call="portal.portal_layout">
+            <!-- Odoo 19 has no portal.portal_record_layout: the card is ours. -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <span t-field="piece.name"/>
+                        <span t-attf-class="badge float-end #{
+                                piece.custody_state == 'ready' and 'text-bg-success'
+                                or piece.custody_state == 'at_workshop' and 'text-bg-warning'
+                                or 'text-bg-secondary'}"
+                              t-field="piece.custody_state"/>
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <h5 t-field="piece.description"/>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li t-if="piece.metal_value_id">
+                                    <strong>Metal:</strong>
+                                    <span t-out="piece.metal_value_id.name"/>
+                                </li>
+                                <li t-if="piece.weight_g">
+                                    <strong>Weight:</strong>
+                                    <span t-field="piece.weight_g"/> g
+                                </li>
+                                <li t-if="piece.size_value_id">
+                                    <strong>Size:</strong>
+                                    <span t-out="piece.size_value_id.name"/>
+                                </li>
+                                <li t-if="piece.length_cm">
+                                    <strong>Length:</strong>
+                                    <span t-field="piece.length_cm"/> cm
+                                </li>
+                                <li t-if="piece.stone_count">
+                                    <strong>Stones:</strong>
+                                    <span t-field="piece.stone_count"/>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <t t-if="piece.repair_order_ids">
+                                <strong>Service history</strong>
+                                <ul class="list-unstyled">
+                                    <li t-foreach="piece.repair_order_ids" t-as="service">
+                                        <span t-field="service.name"/> -
+                                        <span t-field="service.state"/>
+                                        <t t-if="service.warranty_until">
+                                            <br/>
+                                            <small class="text-muted">
+                                                Warranty until
+                                                <span t-field="service.warranty_until"/>
+                                            </small>
+                                        </t>
+                                    </li>
+                                </ul>
+                            </t>
+                        </div>
+                    </div>
+
+                    <t t-if="after_photos">
+                        <hr/>
+                        <h6>After the work</h6>
+                        <div class="row">
+                            <div t-foreach="after_photos" t-as="photo"
+                                 class="col-6 col-md-4 mb-3 text-center">
+                                <img class="img-fluid rounded"
+                                     t-attf-src="/web/image/xb.jewelry.photo/#{photo.id}/image"
+                                     t-att-alt="photo.kind_id.name"/>
+                                <div class="small text-muted">
+                                    <span t-field="photo.kind_id.name"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+
+                    <t t-if="intake_photos">
+                        <hr/>
+                        <h6>As we received it</h6>
+                        <div class="row">
+                            <div t-foreach="intake_photos" t-as="photo"
+                                 class="col-6 col-md-4 mb-3 text-center">
+                                <img class="img-fluid rounded"
+                                     t-attf-src="/web/image/xb.jewelry.photo/#{photo.id}/image"
+                                     t-att-alt="photo.kind_id.name"/>
+                                <div class="small text-muted">
+                                    <span t-field="photo.kind_id.name"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

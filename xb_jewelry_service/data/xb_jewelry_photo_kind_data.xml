@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="photo_kind_front" model="xb.jewelry.photo.kind">
+        <field name="name">Front</field>
+        <field name="code">front</field>
+        <field name="sequence">10</field>
+        <field name="stage">intake</field>
+        <field name="required" eval="True"/>
+        <field name="condition">always</field>
+    </record>
+
+    <record id="photo_kind_hallmark" model="xb.jewelry.photo.kind">
+        <field name="name">Hallmark</field>
+        <field name="code">hallmark</field>
+        <field name="sequence">20</field>
+        <field name="stage">intake</field>
+        <field name="required" eval="True"/>
+        <field name="condition">always</field>
+    </record>
+
+    <record id="photo_kind_ring_size" model="xb.jewelry.photo.kind">
+        <field name="name">Ring size</field>
+        <field name="code">ring_size</field>
+        <field name="sequence">30</field>
+        <field name="stage">intake</field>
+        <field name="required" eval="True"/>
+        <field name="condition">ring</field>
+    </record>
+
+    <record id="photo_kind_length" model="xb.jewelry.photo.kind">
+        <field name="name">Length</field>
+        <field name="code">length</field>
+        <field name="sequence">40</field>
+        <field name="stage">intake</field>
+        <field name="required" eval="True"/>
+        <field name="condition">chain</field>
+    </record>
+
+    <record id="photo_kind_weight" model="xb.jewelry.photo.kind">
+        <field name="name">Weight on the scale</field>
+        <field name="code">weight</field>
+        <field name="sequence">50</field>
+        <field name="stage">intake</field>
+        <field name="required" eval="True"/>
+        <field name="condition">always</field>
+    </record>
+
+    <record id="photo_kind_damage" model="xb.jewelry.photo.kind">
+        <field name="name">Damage</field>
+        <field name="code">damage</field>
+        <field name="sequence">60</field>
+        <field name="stage">intake</field>
+        <field name="required" eval="True"/>
+        <field name="condition">always</field>
+    </record>
+
+    <record id="photo_kind_laser" model="xb.jewelry.photo.kind">
+        <field name="name">Laser inscription</field>
+        <field name="code">laser</field>
+        <field name="sequence">70</field>
+        <field name="stage">intake</field>
+        <field name="required" eval="False"/>
+        <!-- Only worth asking for when the stone actually carries one. -->
+        <field name="condition">diamond_laser</field>
+    </record>
+
+    <!-- A commission is agreed on a drawing or a photograph the customer
+         brings; without it there is nothing to hold either side to. -->
+    <record id="photo_kind_design" model="xb.jewelry.photo.kind">
+        <field name="name">Design reference</field>
+        <field name="code">design</field>
+        <field name="sequence">10</field>
+        <field name="stage">design</field>
+        <field name="required" eval="True"/>
+        <field name="condition">always</field>
+    </record>
+
+    <record id="photo_kind_input_gold" model="xb.jewelry.photo.kind">
+        <field name="name">Customer's gold on the scale</field>
+        <field name="code">input_gold</field>
+        <field name="sequence">20</field>
+        <field name="stage">design</field>
+        <field name="required" eval="False"/>
+        <field name="condition">always</field>
+    </record>
+
+    <record id="photo_kind_after" model="xb.jewelry.photo.kind">
+        <field name="name">Finished piece</field>
+        <field name="code">after</field>
+        <field name="sequence">10</field>
+        <field name="stage">after</field>
+        <field name="required" eval="True"/>
+        <field name="condition">always</field>
+    </record>
+
+</odoo>
