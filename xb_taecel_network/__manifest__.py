@@ -38,7 +38,7 @@ does not pretend to replace the portal.
 Runs on Odoo 18.0 and 19.0.
 """,
     'category': 'Sales/Point of Sale',
-    'version': '1.0.2',
+    'version': '1.0.3',
     'author': 'Cristofferson Reyes',
     'website': 'https://xubax.com',
     'license': 'OPL-1',
@@ -55,6 +55,7 @@ Runs on Odoo 18.0 and 19.0.
         'views/xb_taecel_affiliate_views.xml',
         'views/xb_taecel_affiliate_sale_views.xml',
         'views/menus.xml',
+        'report/taecel_affiliate_deposit_report.xml',
     ],
     # No 'images' yet: banner.png / icon.png are still to be produced, and
     # pointing the manifest at files that do not exist breaks the store zip.

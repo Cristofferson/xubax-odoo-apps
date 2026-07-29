@@ -53,6 +53,8 @@
                         <group string="Funding">
                             <field name="deposit_reference"
                                    placeholder="Read it from TAECEL"/>
+                            <field name="deposit_reference_services"
+                                   placeholder="99... — from the affiliate's portal"/>
                             <field name="deposit_url" widget="url"
                                    invisible="not deposit_url"/>
                             <field name="deposit_date" invisible="not deposit_date"/>
