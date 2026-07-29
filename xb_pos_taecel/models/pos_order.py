@@ -74,7 +74,10 @@ class PosOrder(models.Model):
                 # point at the catalog record too, so the back office reads
                 # "Telcel $ 50.00" instead of an empty cell. Unique per
                 # (code, account), and free-amount carriers simply have none.
-                product = Product.sudo().search([
+                # Archived products count: TAECEL retires codes and the sync
+                # deactivates rather than deletes them, precisely so that what
+                # was sold keeps pointing at what it was.
+                product = Product.sudo().with_context(active_test=False).search([
                     ('account_id', '=', account.id),
                     ('code', '=', line.taecel_product_code),
                 ], limit=1) if line.taecel_product_code else Product
