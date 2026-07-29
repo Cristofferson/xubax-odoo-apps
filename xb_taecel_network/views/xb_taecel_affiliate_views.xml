@@ -109,7 +109,13 @@
         <field name="arch" type="xml">
             <list string="Affiliates">
                 <field name="name"/>
-                <field name="taecel_uid"/>
+                <!-- Hidden by default: the panel never uses this number (every
+                     figure here is pulled with the affiliate's own credentials)
+                     and TAECEL hands it over whenever it feels like it, so a
+                     column of blanks only invites the question of what is
+                     missing. Still one click away in the optional columns, and
+                     on the form, for whoever has to search MI RED. -->
+                <field name="taecel_uid" optional="hide"/>
                 <!-- The reference is what you hand the affiliate so it can fund
                      itself, so it belongs in the list: hunting for it one form
                      at a time is the whole friction this panel exists to
@@ -118,8 +124,8 @@
                 <field name="commission_rate"/>
                 <field name="margin_rate"/>
                 <field name="balance_total" sum="Total"/>
-                <field name="sales_volume" sum="Volume"/>
-                <field name="my_margin" sum="Margin"/>
+                <field name="sales_volume" sum="Sales"/>
+                <field name="my_margin" sum="Profit"/>
                 <field name="balance_date"/>
                 <field name="state" widget="badge"
                        decoration-success="state == 'connected'"

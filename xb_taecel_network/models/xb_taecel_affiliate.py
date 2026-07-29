@@ -125,9 +125,20 @@ class XbTaecelAffiliate(models.Model):
     balance_total = fields.Monetary(
         compute='_compute_balance_total', store=True, string='Total Balance')
     balance_date = fields.Datetime(readonly=True, copy=False)
-    sales_count = fields.Integer(compute='_compute_sales', string='Sales')
-    sales_volume = fields.Monetary(compute='_compute_sales', string='Volume')
-    my_margin = fields.Monetary(compute='_compute_sales', string='My Margin')
+    # "Volume" and "My Margin" read as jargon next to a percentage column of
+    # the same name: what these hold is plainly what the affiliate sold and
+    # what you keep out of it.
+    sales_count = fields.Integer(
+        compute='_compute_sales', string='Recharges Sold',
+        help='Successful recharges and bill payments pulled so far.')
+    sales_volume = fields.Monetary(
+        compute='_compute_sales', string='Sales',
+        help='What this affiliate sold, counting only successful operations: '
+             'a failed recharge is refunded by TAECEL, so it moves no money.')
+    my_margin = fields.Monetary(
+        compute='_compute_sales', string='Profit',
+        help='What you keep out of those sales: the spread between your '
+             'commission and theirs.')
 
     # The pair stays unique, but only for affiliates whose number is known: an
     # empty string counts as a value for a UNIQUE index, so two affiliates

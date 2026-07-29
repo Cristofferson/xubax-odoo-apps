@@ -22,12 +22,6 @@ msgid "%(n)s sales pulled for %(d)s."
 msgstr "%(n)s ventas descargadas del %(d)s."
 
 #. module: xb_taecel_network
-#. odoo-python
-#: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
-msgid "%(name)s funds itself with reference %(ref)s."
-msgstr "%(name)s se fondea con la referencia %(ref)s."
-
-#. module: xb_taecel_network
 #: model:ir.actions.report,print_report_name:xb_taecel_network.action_report_taecel_affiliate_deposit
 msgid "'Deposit - %s' % object.name"
 msgstr "'Deposito - %s' % object.name"
@@ -252,12 +246,6 @@ msgid "Deposit Sheet"
 msgstr "Ficha de depósito"
 
 #. module: xb_taecel_network
-#. odoo-python
-#: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
-msgid "Deposit reference"
-msgstr "Referencia de depósito"
-
-#. module: xb_taecel_network
 #: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__display_name
 #: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__display_name
 #: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_wallet__display_name
@@ -324,19 +312,9 @@ msgid "Last Updated on"
 msgstr "Última actualización el"
 
 #. module: xb_taecel_network
-#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_list
-msgid "Margin"
-msgstr "Margen"
-
-#. module: xb_taecel_network
 #: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__my_commission_rate
 msgid "My Commission (%)"
 msgstr "Mi comisión (%)"
-
-#. module: xb_taecel_network
-#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__my_margin
-msgid "My Margin"
-msgstr "Mi margen"
 
 #. module: xb_taecel_network
 #: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__margin_rate
@@ -403,6 +381,12 @@ msgid "Phone / Reference"
 msgstr "Teléfono / Referencia"
 
 #. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__my_margin
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_list
+msgid "Profit"
+msgstr "Utilidad"
+
+#. module: xb_taecel_network
 #: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
 msgid "Pull Sales"
 msgstr "Descargar ventas"
@@ -411,6 +395,11 @@ msgstr "Descargar ventas"
 #: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
 msgid "Read it from TAECEL"
 msgstr "Consúltala en TAECEL"
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__sales_count
+msgid "Recharges Sold"
+msgstr "Recargas vendidas"
 
 #. module: xb_taecel_network
 #: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__deposit_date
@@ -448,8 +437,9 @@ msgstr "Venta"
 #. module: xb_taecel_network
 #. odoo-python
 #: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
-#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__sales_count
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__sales_volume
 #: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_list
 msgid "Sales"
 msgstr "Ventas"
 
@@ -470,6 +460,11 @@ msgstr "Estatus"
 #: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_sale_search
 msgid "Successful"
 msgstr "Exitosa"
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate__sales_count
+msgid "Successful recharges and bill payments pulled so far."
+msgstr "Recargas y pagos de servicio exitosos consultados hasta ahora."
 
 #. module: xb_taecel_network
 #. odoo-python
@@ -599,8 +594,6 @@ msgid "TransID"
 msgstr "TransID"
 
 #. module: xb_taecel_network
-#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__sales_volume
-#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_list
 #: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_sale_list
 msgid "Volume"
 msgstr "Volumen"
@@ -636,6 +629,20 @@ msgstr "Bolsas"
 #: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate_sale__commission
 msgid "What TAECEL paid the affiliate on this sale."
 msgstr "Lo que TAECEL le pagó al afiliado por esta venta."
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate__sales_volume
+msgid ""
+"What this affiliate sold, counting only successful operations: a failed "
+"recharge is refunded by TAECEL, so it moves no money."
+msgstr "Lo que vendió este afiliado, contando solo las operaciones exitosas: una recarga fracasada la reembolsa TAECEL, así que no mueve dinero."
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate__my_margin
+msgid ""
+"What you keep out of those sales: the spread between your commission and "
+"theirs."
+msgstr "Lo que te queda de esas ventas: el diferencial entre tu comisión y la suya."
 
 #. module: xb_taecel_network
 #. odoo-python

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-29 04:58+0000\n"
-"PO-Revision-Date: 2026-07-29 04:58+0000\n"
+"POT-Creation-Date: 2026-07-29 16:33+0000\n"
+"PO-Revision-Date: 2026-07-29 16:33+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,12 +19,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
 msgid "%(n)s sales pulled for %(d)s."
-msgstr ""
-
-#. module: xb_taecel_network
-#. odoo-python
-#: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
-msgid "%(name)s funds itself with reference %(ref)s."
 msgstr ""
 
 #. module: xb_taecel_network
@@ -252,12 +246,6 @@ msgid "Deposit Sheet"
 msgstr ""
 
 #. module: xb_taecel_network
-#. odoo-python
-#: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
-msgid "Deposit reference"
-msgstr ""
-
-#. module: xb_taecel_network
 #: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__display_name
 #: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_sale__display_name
 #: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate_wallet__display_name
@@ -324,18 +312,8 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: xb_taecel_network
-#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_list
-msgid "Margin"
-msgstr ""
-
-#. module: xb_taecel_network
 #: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__my_commission_rate
 msgid "My Commission (%)"
-msgstr ""
-
-#. module: xb_taecel_network
-#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__my_margin
-msgid "My Margin"
 msgstr ""
 
 #. module: xb_taecel_network
@@ -403,6 +381,12 @@ msgid "Phone / Reference"
 msgstr ""
 
 #. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__my_margin
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_list
+msgid "Profit"
+msgstr ""
+
+#. module: xb_taecel_network
 #: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
 msgid "Pull Sales"
 msgstr ""
@@ -410,6 +394,11 @@ msgstr ""
 #. module: xb_taecel_network
 #: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
 msgid "Read it from TAECEL"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__sales_count
+msgid "Recharges Sold"
 msgstr ""
 
 #. module: xb_taecel_network
@@ -448,8 +437,9 @@ msgstr ""
 #. module: xb_taecel_network
 #. odoo-python
 #: code:addons/xb_taecel_network/models/xb_taecel_affiliate.py:0
-#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__sales_count
+#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__sales_volume
 #: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_list
 msgid "Sales"
 msgstr ""
 
@@ -469,6 +459,11 @@ msgstr ""
 #: model:ir.model.fields.selection,name:xb_taecel_network.selection__xb_taecel_affiliate_sale__status__ok
 #: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_sale_search
 msgid "Successful"
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate__sales_count
+msgid "Successful recharges and bill payments pulled so far."
 msgstr ""
 
 #. module: xb_taecel_network
@@ -599,8 +594,6 @@ msgid "TransID"
 msgstr ""
 
 #. module: xb_taecel_network
-#: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__sales_volume
-#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_list
 #: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_sale_list
 msgid "Volume"
 msgstr ""
@@ -635,6 +628,20 @@ msgstr ""
 #. module: xb_taecel_network
 #: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate_sale__commission
 msgid "What TAECEL paid the affiliate on this sale."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate__sales_volume
+msgid ""
+"What this affiliate sold, counting only successful operations: a failed "
+"recharge is refunded by TAECEL, so it moves no money."
+msgstr ""
+
+#. module: xb_taecel_network
+#: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate__my_margin
+msgid ""
+"What you keep out of those sales: the spread between your commission and "
+"theirs."
 msgstr ""
 
 #. module: xb_taecel_network
