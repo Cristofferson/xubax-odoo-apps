@@ -14,5 +14,9 @@
         <field name="list_price">0.0</field>
         <field name="taxes_id" eval="[(5, 0, 0)]"/>
         <field name="description_sale">Airtime, bill payment or PIN sold through TAECEL.</field>
+        <!-- Without an image the POS grid paints an empty placeholder
+             tile, which reads as a broken product to the cashier. -->
+        <field name="image_1920" type="base64"
+               file="xb_pos_taecel/static/description/icon.png"/>
     </record>
 </odoo>
