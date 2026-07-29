@@ -38,7 +38,7 @@ does not pretend to replace the portal.
 Runs on Odoo 18.0 and 19.0.
 """,
     'category': 'Sales/Point of Sale',
-    'version': '1.0.1',
+    'version': '1.0.2',
     'author': 'Cristofferson Reyes',
     'website': 'https://xubax.com',
     'license': 'OPL-1',
