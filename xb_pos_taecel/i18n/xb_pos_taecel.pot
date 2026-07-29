@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-29 04:27+0000\n"
-"PO-Revision-Date: 2026-07-29 04:27+0000\n"
+"POT-Creation-Date: 2026-07-29 04:58+0000\n"
+"PO-Revision-Date: 2026-07-29 04:58+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -472,13 +472,9 @@ msgid "Declined by TAECEL."
 msgstr ""
 
 #. module: xb_pos_taecel
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
-msgid "Deposit Reference"
-msgstr ""
-
-#. module: xb_pos_taecel
 #: model:ir.actions.report,name:xb_pos_taecel.action_report_taecel_deposit
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "Deposit Sheet"
 msgstr ""
 
@@ -491,19 +487,13 @@ msgid ""
 msgstr ""
 
 #. module: xb_pos_taecel
-#. odoo-python
-#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
-msgid "Deposit against reference %s to top up this account."
-msgstr ""
-
-#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
 msgid ""
 "Deposit against the reference below and the balance is credited\n"
 "                to this account automatically. Each wallet has its OWN\n"
-"                reference, and TAECEL only moves balance between wallets of the\n"
-"                same type: a deposit made with the wrong reference cannot be\n"
-"                moved across afterwards."
+"                reference, and balance only moves between wallets of the same\n"
+"                type: a deposit made with the wrong reference cannot be moved\n"
+"                across afterwards."
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -788,15 +778,13 @@ msgid "No balance"
 msgstr ""
 
 #. module: xb_pos_taecel
-#: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_account__state__draft
-msgid "Not Connected"
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+msgid "No reference yet"
 msgstr ""
 
 #. module: xb_pos_taecel
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
-msgid ""
-"Not issued by the API. Read it in the TAECEL portal\n"
-"                            under Buy Balance &gt; Available Accounts."
+#: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_account__state__draft
+msgid "Not Connected"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -961,7 +949,6 @@ msgid "Raw Response"
 msgstr ""
 
 #. module: xb_pos_taecel
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "Read it from TAECEL"
 msgstr ""
@@ -1007,10 +994,9 @@ msgstr ""
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__deposit_reference_services
 msgid ""
-"Reference that funds the BILL PAYMENTS wallet, which TAECEL keeps separate "
-"from airtime. The API does not return it: read it in the TAECEL portal under"
-" Buy Balance > Available Accounts, or in the TAECEL app under \"Where to "
-"deposit\", and type it here. TAECEL issues it starting with 99."
+"Reference that funds the BILL PAYMENTS wallet, kept separate from airtime. "
+"Derived from the airtime reference: same digits with 99 instead of 88. Edit "
+"it if your provider says otherwise."
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -1088,7 +1074,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
 #: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "TAECEL"
 msgstr ""
@@ -1236,13 +1221,6 @@ msgid "TAECEL returned no deposit reference."
 msgstr ""
 
 #. module: xb_pos_taecel
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
-msgid ""
-"TAECEL sets these destination accounts and can change them.\n"
-"                Confirm them in the TAECEL portal before a first deposit."
-msgstr ""
-
-#. module: xb_pos_taecel
 #: model:ir.actions.server,name:xb_pos_taecel.cron_taecel_dispatch_ir_actions_server
 msgid "TAECEL: dispatch pending recharges"
 msgstr ""
@@ -1340,6 +1318,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
 msgid "The two references do not match."
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+msgid ""
+"These destination accounts are set by the provider and can\n"
+"                change. Confirm them before a first deposit."
 msgstr ""
 
 #. module: xb_pos_taecel

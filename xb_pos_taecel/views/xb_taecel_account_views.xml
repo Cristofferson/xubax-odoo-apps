@@ -14,8 +14,8 @@
                             string="Sync Catalog"/>
                     <button name="action_refresh_balance" type="object"
                             string="Refresh Balance"/>
-                    <button name="action_fetch_deposit_reference" type="object"
-                            string="Deposit Reference"/>
+                    <button name="action_print_deposit_sheet" type="object"
+                            string="Deposit Sheet"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,connected"/>
                 </header>

@@ -23,6 +23,7 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 from odoo.addons.xb_pos_taecel import const
+from odoo.addons.xb_pos_taecel.models.xb_taecel_account import _services_reference
 from odoo.addons.xb_pos_taecel.models.pos_compat import HAS_MODEL_CONSTRAINT
 from odoo.addons.xb_pos_taecel.models.taecel_client import TaecelClient
 from odoo.addons.xb_pos_taecel.models.xb_taecel_account import _money
@@ -99,17 +100,27 @@ class XbTaecelAffiliate(models.Model):
              'AIRTIME wallet. A deposit quoting it is credited to the '
              'affiliate automatically, so no balance transfer from you is '
              'needed. TAECEL issues it starting with 88.')
+    # Derived from the airtime one: the pair differs only in the leading two
+    # digits. Editable in case an account ever breaks the pattern.
     deposit_reference_services = fields.Char(
         string='Bill Payments Deposit Reference', copy=False,
+        compute='_compute_deposit_reference_services',
+        store=True, readonly=False,
         help='Reference that funds this affiliate\'s BILL PAYMENTS wallet. '
-             'The API does not return it: the affiliate reads it in its own '
-             'TAECEL portal under Buy Balance > Available Accounts, or in the '
-             'app under "Where to deposit". TAECEL issues it starting with 99.')
+             'Derived from the airtime reference: same digits with 99 instead '
+             'of 88.')
+
     deposit_url = fields.Char(string='Report a Deposit', readonly=True, copy=False)
     deposit_date = fields.Datetime(string='Reference Read', readonly=True, copy=False)
 
     # -- Balances & sales --------------------------------------------------
     wallet_ids = fields.One2many('xb.taecel.affiliate.wallet', 'affiliate_id')
+
+    @api.depends('deposit_reference')
+    def _compute_deposit_reference_services(self):
+        for affiliate in self:
+            affiliate.deposit_reference_services = _services_reference(
+                affiliate.deposit_reference)
     sale_ids = fields.One2many('xb.taecel.affiliate.sale', 'affiliate_id')
     balance_total = fields.Monetary(
         compute='_compute_balance_total', store=True, string='Total Balance')
@@ -252,14 +263,24 @@ class XbTaecelAffiliate(models.Model):
             })
         return True
 
-    def action_fetch_deposit_reference(self):
-        """The reference this affiliate funds itself with.
+    def action_print_deposit_sheet(self):
+        """The sheet you hand this affiliate so it funds itself.
 
         Handing it over is what makes a distributor stop transferring balance
         by hand: a referenced deposit is credited automatically, while a
         transfer is portal-only and rejected 30 minutes after it is raised
-        unless TAECEL is e-mailed at that very moment.
+        unless the provider is e-mailed at that very moment.
+
+        Read once and kept: the reference is fixed for the life of the account.
         """
+        self.ensure_one()
+        if not self.deposit_reference:
+            self._fetch_deposit_reference()
+        return self.env.ref(
+            'xb_taecel_network.action_report_taecel_affiliate_deposit'
+        ).report_action(self)
+
+    def _fetch_deposit_reference(self):
         self.ensure_one()
         result = self._get_client().get_deposit_reference()
         if not result.ok:
@@ -270,10 +291,6 @@ class XbTaecelAffiliate(models.Model):
             'deposit_url': result.data.get(const.K_REPORT_URL),
             'deposit_date': fields.Datetime.now(),
         })
-        return self._notify(
-            _('Deposit reference'),
-            _('%(name)s funds itself with reference %(ref)s.',
-              name=self.name, ref=self.deposit_reference))
 
     def action_pull_sales(self, day=None):
         """Pull one day of sales, per wallet, for each affiliate.

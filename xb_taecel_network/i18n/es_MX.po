@@ -246,12 +246,8 @@ msgid "Date"
 msgstr "Fecha"
 
 #. module: xb_taecel_network
-#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
-msgid "Deposit Reference"
-msgstr "Referencia de depósito"
-
-#. module: xb_taecel_network
 #: model:ir.actions.report,name:xb_taecel_network.action_report_taecel_affiliate_deposit
+#: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
 msgid "Deposit Sheet"
 msgstr "Ficha de depósito"
 
@@ -424,11 +420,9 @@ msgstr "Referencia consultada"
 #. module: xb_taecel_network
 #: model:ir.model.fields,help:xb_taecel_network.field_xb_taecel_affiliate__deposit_reference_services
 msgid ""
-"Reference that funds this affiliate's BILL PAYMENTS wallet. The API does not"
-" return it: the affiliate reads it in its own TAECEL portal under Buy "
-"Balance > Available Accounts, or in the app under \"Where to deposit\". "
-"TAECEL issues it starting with 99."
-msgstr "Dónde depositar"
+"Reference that funds this affiliate's BILL PAYMENTS wallet. Derived from the"
+" airtime reference: same digits with 99 instead of 88."
+msgstr "Referencia que fondea la bolsa de PAGO DE SERVICIOS de este afiliado. Se deriva de la de tiempo aire: los mismos dígitos con 99 en vez de 88."
 
 #. module: xb_taecel_network
 #: model_terms:ir.ui.view,arch_db:xb_taecel_network.view_taecel_affiliate_form
