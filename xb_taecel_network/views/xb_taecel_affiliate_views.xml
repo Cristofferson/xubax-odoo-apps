@@ -108,6 +108,11 @@
             <list string="Affiliates">
                 <field name="name"/>
                 <field name="taecel_uid"/>
+                <!-- The reference is what you hand the affiliate so it can fund
+                     itself, so it belongs in the list: hunting for it one form
+                     at a time is the whole friction this panel exists to
+                     remove. It is not a credential. -->
+                <field name="deposit_reference" optional="show"/>
                 <field name="commission_rate"/>
                 <field name="margin_rate"/>
                 <field name="balance_total" sum="Total"/>
