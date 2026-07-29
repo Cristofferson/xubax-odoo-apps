@@ -33,7 +33,7 @@
                     <group>
                         <group string="Account">
                             <field name="role"/>
-                            <field name="taecel_uid" placeholder="e.g. 352494"/>
+                            <field name="taecel_uid" placeholder="e.g. 300000"/>
                             <field name="commission_rate"/>
                             <field name="active"/>
                         </group>
@@ -41,11 +41,15 @@
                             <field name="catalog_date" readonly="1"/>
                             <field name="carrier_count" readonly="1"/>
                         </group>
-                        <!-- Deposit against this reference and the balance is
-                             credited automatically: no transfer to wait on. -->
+                        <!-- Deposit against these references and the balance is
+                             credited automatically: no transfer to wait on.
+                             One reference per wallet, because TAECEL funds them
+                             separately and never moves money between the two. -->
                         <group string="Funding">
                             <field name="deposit_reference"
                                    placeholder="Read it from TAECEL"/>
+                            <field name="deposit_reference_services"
+                                   placeholder="99... — from the TAECEL portal"/>
                             <field name="deposit_url" widget="url"
                                    invisible="not deposit_url"/>
                             <field name="deposit_date" invisible="not deposit_date"/>

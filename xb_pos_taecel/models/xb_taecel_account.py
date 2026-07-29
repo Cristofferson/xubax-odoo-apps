@@ -109,10 +109,24 @@ class XbTaecelAccount(models.Model):
     # rejected after 30 minutes. The reference is meant to be handed out --
     # it is how people pay you -- so it is not a credential.
     deposit_reference = fields.Char(
-        string='Deposit Reference', readonly=True, copy=False,
+        string='Airtime Deposit Reference', readonly=True, copy=False,
         help='Reference to quote when depositing at the bank (transfer, '
-             'practicaja or teller). The deposit is credited to this account '
-             'automatically, with no transfer from anyone else.')
+             'practicaja or teller) to fund the AIRTIME wallet. The deposit is '
+             'credited to this account automatically, with no transfer from '
+             'anyone else. TAECEL issues it starting with 88.')
+    # TAECEL funds each wallet through its own bank reference, and the API only
+    # ever hands back the airtime one. The services reference has to be read by
+    # a human from TAECEL's portal, so it is captured here by hand -- without
+    # it, a shop that deposits the airtime reference expecting to fund bill
+    # payments strands the money: TAECEL only transfers between wallets of the
+    # SAME type, so it cannot be moved across afterwards.
+    deposit_reference_services = fields.Char(
+        string='Bill Payments Deposit Reference', copy=False,
+        help='Reference that funds the BILL PAYMENTS wallet, which TAECEL '
+             'keeps separate from airtime. The API does not return it: read it '
+             'in the TAECEL portal under Buy Balance > Available Accounts, or '
+             'in the TAECEL app under "Where to deposit", and type it here. '
+             'TAECEL issues it starting with 99.')
     deposit_url = fields.Char(
         string='Report a Deposit', readonly=True, copy=False,
         help="Link to TAECEL's form for reporting a deposit that was not "
@@ -238,6 +252,11 @@ class XbTaecelAccount(models.Model):
         its own: a distributor cannot look its affiliates' references up, and
         does not need to -- every affiliate reads its own from here instead of
         waiting on a balance transfer.
+
+        Only the AIRTIME reference comes back: urlReporteCompra answers with a
+        single ``refCompra``, while TAECEL's own distributor manual shows two
+        references per account (airtime and bill payments). The other one is
+        portal-only, hence the field the user fills in by hand.
         """
         self.ensure_one()
         result = self._get_client().get_deposit_reference()
@@ -251,8 +270,9 @@ class XbTaecelAccount(models.Model):
         })
         return self._notify(
             _('Deposit reference'),
-            _('Deposit against reference %s to top up this account.',
-              self.deposit_reference))
+            _('Deposit against reference %s to top up AIRTIME. Bill payments '
+              'are funded through a separate reference that TAECEL only shows '
+              'in its portal.', self.deposit_reference))
 
     # -- Balance via getBalance (CONFIRMED) --------------------------------
     def action_refresh_balance(self):
