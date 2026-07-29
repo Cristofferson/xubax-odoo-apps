@@ -31,6 +31,9 @@ class ResConfigSettings(models.TransientModel):
     xb_require_delivery_signature = fields.Boolean(
         related="company_id.xb_require_delivery_signature", readonly=False
     )
+    xb_delivery_balance_policy = fields.Selection(
+        related="company_id.xb_delivery_balance_policy", readonly=False
+    )
     xb_custody_location_id = fields.Many2one(
         related="company_id.xb_custody_location_id", readonly=False
     )

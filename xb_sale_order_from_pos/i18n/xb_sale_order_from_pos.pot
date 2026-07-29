@@ -457,3 +457,17 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
 msgid "XUBAX - Sale Order / Quotation"
 msgstr ""
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/control_buttons/control_buttons.js:0
+msgid "This cart already has an order"
+msgstr ""
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/control_buttons/control_buttons.js:0
+msgid ""
+"%s was already created from these products. Charge or edit that one instead "
+"of raising a second document for the same goods."
+msgstr ""

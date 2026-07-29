@@ -84,6 +84,11 @@
                         <td>Promised</td><td t-esc="state.selected.promised_date"/></tr>
                     <tr t-if="state.selected.sale_order_name">
                         <td>Order</td><td t-esc="state.selected.sale_order_name"/></tr>
+                    <!-- Read before the piece is handed back, not after. -->
+                    <tr t-if="state.selected.balance_due > 0">
+                        <td>Balance</td>
+                        <td class="text-danger fw-bold"
+                            t-esc="state.selected.balance_due_label"/></tr>
                 </table>
 
                 <div t-if="state.selected.state === 'done'" class="mt-3">

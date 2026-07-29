@@ -67,6 +67,19 @@ class ResCompany(models.Model):
     xb_require_delivery_signature = fields.Boolean(
         string="Signature on delivery", default=True
     )
+    xb_delivery_balance_policy = fields.Selection(
+        [
+            ("none", "Hand the piece over anyway"),
+            ("warn", "Warn the counter, let it through"),
+            ("block", "Refuse until the balance is settled"),
+        ],
+        string="Unpaid balance on delivery",
+        default="warn",
+        required=True,
+        help="What to do when a finished piece is collected while the customer "
+        "still owes money on it. The signature only proves who took the piece, "
+        "never that it was paid for, so the two are checked separately.",
+    )
     xb_custody_location_id = fields.Many2one(
         "stock.location",
         string="Custody location",

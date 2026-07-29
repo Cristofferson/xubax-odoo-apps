@@ -1,5 +1,6 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools.misc import formatLang
 
 
 class RepairOrder(models.Model):
@@ -431,6 +432,57 @@ class RepairOrder(models.Model):
                         ref=repair.name,
                     )
                 )
+            if company.xb_delivery_balance_policy == "block":
+                due = repair._xb_balance_due()
+                currency = repair._xb_balance_currency()
+                if currency.compare_amounts(due, 0.0) > 0:
+                    raise UserError(
+                        _(
+                            "%(ref)s still owes %(due)s. Settle it at the "
+                            "register before the piece leaves, or change how "
+                            "this shop treats an unpaid balance on delivery.",
+                            ref=repair.name,
+                            due=formatLang(
+                                self.env, due, currency_obj=currency
+                            ),
+                        )
+                    )
+
+    def _xb_balance_currency(self):
+        self.ensure_one()
+        return (
+            self.sale_order_id.currency_id
+            or (self.company_id or self.env.company).currency_id
+        )
+
+    def _xb_balance_due(self):
+        """What the customer still owes on the order this job hangs from.
+
+        A signature only proves who walked out with the piece. Whether it was
+        paid for is a different question, and one nobody was asking: the piece
+        could be handed back with the whole job unpaid.
+
+        When the commercial bridge is installed it already keeps the honest
+        figure for a shop that charges at the register, because it counts the
+        POS payments too. On its own, Odoo can still tell us what is not
+        invoiced yet plus what is invoiced and unpaid, which is the same
+        question asked with fewer facts.
+        """
+        self.ensure_one()
+        order = self.sale_order_id
+        if not order:
+            return 0.0
+        if "amount_unpaid" in order._fields:
+            return order.amount_unpaid
+        invoices = order.invoice_ids.filtered(
+            lambda m: m.state == "posted"
+            and m.move_type in ("out_invoice", "out_refund")
+        )
+        return max(
+            order.amount_to_invoice
+            + sum(invoices.mapped("amount_residual_signed")),
+            0.0,
+        )
 
     def _check_ready_for_workshop(self):
         for repair in self:

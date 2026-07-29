@@ -256,9 +256,25 @@ export class JewelryIntakeDialog extends Component {
      * Returns null when that module is not installed, or the cart is empty,
      * in which case the piece is still taken into custody on its own.
      */
+    /**
+     * The sale order the cashier already raised on this cart, if any.
+     *
+     * "Create Order" stashes it here; both buttons feed the same cart to the
+     * same backend method, so without looking first the counter ends up with
+     * two documents for one ring.
+     */
+    get existingSaleOrder() {
+        return this.props.order?.uiState?.xbSaleOrder || null;
+    }
+
     buildSalePayload() {
         const order = this.props.order;
         if (!order || !order.getOrderlines?.().length) {
+            return null;
+        }
+        if (this.existingSaleOrder?.sale_order_id) {
+            // Already invoiced through the other button: the piece links to
+            // that order instead of raising a second one.
             return null;
         }
         const helper = Object.create(ControlButtons.prototype);
@@ -361,11 +377,23 @@ export class JewelryIntakeDialog extends Component {
                 signed_by: this.state.signedBy,
                 signature: this.state.signature || false,
                 // Misma pasada: la custodia y el pedido que se va a cobrar.
+                // Si la cajera ya lo levantó con «Create Order», se reutiliza
+                // ese en vez de crear un segundo por la misma pieza.
+                sale_order_id: this.existingSaleOrder?.sale_order_id || false,
                 sale_payload: this.buildSalePayload(),
             };
             const repair = await this.orm.call(
                 "repair.order", "xb_pos_receive_piece", [vals]
             );
+            // Remember the order on the cart so "Create Order" knows it is
+            // already done and refuses to raise a twin.
+            const so = repair.sale_order;
+            if (so?.sale_order_id && this.props.order) {
+                this.props.order.uiState.xbSaleOrder = {
+                    ...(this.props.order.uiState.xbSaleOrder || {}),
+                    ...so,
+                };
+            }
             this.notification.add(
                 _t("Piece received: %s", repair.name),
                 { type: "success" }

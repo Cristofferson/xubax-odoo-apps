@@ -46,6 +46,12 @@
                                 <label for="xb_require_delivery_signature"/>
                             </div>
                         </setting>
+                        <setting string="Unpaid balance on delivery"
+                                 help="A signature says who took the piece, not that it was
+                                       paid for. Decide what the counter does when a finished
+                                       piece is collected with money still owed on it.">
+                            <field name="xb_delivery_balance_policy" widget="radio"/>
+                        </setting>
                         <setting string="Photo link from a phone"
                                  help="Minutes a QR upload link stays valid, for registers with no camera">
                             <field name="xb_photo_link_minutes"/> min

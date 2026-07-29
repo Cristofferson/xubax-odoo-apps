@@ -1,5 +1,6 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools.misc import formatLang
 
 
 class RepairOrder(models.Model):
@@ -32,6 +33,15 @@ class RepairOrder(models.Model):
                 "promised_date": repair.jeweler_promised_date
                 and fields.Date.to_string(repair.jeweler_promised_date),
                 "sale_order_name": repair.sale_order_id.name,
+                # A signature is not a payment. The counter has to be able to
+                # see, before handing the piece back, whether anything is
+                # still owed on it.
+                "balance_due": repair.sale_order_id and repair._xb_balance_due() or 0.0,
+                "balance_due_label": repair.sale_order_id and formatLang(
+                    self.env,
+                    repair._xb_balance_due(),
+                    currency_obj=repair._xb_balance_currency(),
+                ) or "",
                 "missing_photos": repair.missing_photo_kind_ids.mapped("name"),
                 "has_intake_signature": bool(repair.intake_signature),
                 "has_delivery_signature": bool(repair.delivery_signature),
@@ -101,6 +111,9 @@ class RepairOrder(models.Model):
             "can_dispatch": self.env.user.has_group(
                 "xb_jewelry_service.group_jewelry_workshop"
             ),
+            # Whether an unpaid balance stops the hand-over, only warns, or is
+            # nobody's business at the counter.
+            "delivery_balance_policy": company.xb_delivery_balance_policy,
         }
 
     @api.model
@@ -231,15 +244,36 @@ class RepairOrder(models.Model):
         # One pass at the counter: the same click that takes the piece in also
         # raises the order that will be charged, so the cashier never has to
         # remember to do the commercial half separately.
-        if vals.get("sale_payload"):
-            repair._xb_pos_attach_sale_order(vals["sale_payload"])
+        #
+        # Unless the cashier already raised it, with the "Create Order" button
+        # of the commercial bridge. Both buttons hand the SAME cart to the SAME
+        # backend method, and neither used to ask whether the other had already
+        # been pressed: two sale orders for one ring, which is precisely the
+        # confusion this app exists to prevent. When the register tells us
+        # which order it is already carrying, the job is hung off that one and
+        # nothing new is created.
+        sale_info = False
+        existing = self.env["sale.order"].browse(vals.get("sale_order_id") or []).exists()
+        if existing:
+            repair._xb_pos_bind_sale_order(existing)
+            sale_info = {
+                "sale_order_id": existing.id,
+                "name": existing.name,
+                "reused": True,
+            }
+        elif vals.get("sale_payload"):
+            sale_info = repair._xb_pos_attach_sale_order(vals["sale_payload"])
 
         # Soft hook: the WhatsApp bridge is a separate, optional module, so the
         # call is made only when it is installed.
         if hasattr(repair, "xb_pos_receive_piece_hook"):
             repair.xb_pos_receive_piece_hook()
 
-        return repair._xb_pos_read()[0]
+        payload = repair._xb_pos_read()[0]
+        # Handed back so the register can remember the order on its cart and
+        # stop offering to create a second one.
+        payload["sale_order"] = sale_info or False
+        return payload
 
     def _xb_pos_attach_sale_order(self, payload):
         """Raise the sale order for this service and hang the job off its line.
@@ -272,21 +306,32 @@ class RepairOrder(models.Model):
         order = SaleOrder.browse(result.get("sale_order_id")).exists()
         if not order:
             return False
+        self._xb_pos_bind_sale_order(order)
+        return result
+
+    def _xb_pos_bind_sale_order(self, order):
+        """Hang this job off the right line of an order that already exists.
+
+        Used both by the order this module raises itself and by the one the
+        cashier raised a minute earlier with "Create Order": from here on the
+        two paths are the same, and only one document ever exists per piece.
+        """
+        self.ensure_one()
         if order.company_id != self.company_id:
             # Odoo refuses to cross companies, and it is right to. Say so
             # plainly instead of letting the counter meet a traceback: the
             # piece is already in custody either way.
             self.message_post(
                 body=_(
-                    "Order %(order)s was created under %(theirs)s while this "
-                    "service belongs to %(ours)s, so they were left unlinked. "
-                    "Check which company the register trades under.",
+                    "Order %(order)s belongs to %(theirs)s while this service "
+                    "belongs to %(ours)s, so they were left unlinked. Check "
+                    "which company the register trades under.",
                     order=order.name,
                     theirs=order.company_id.display_name,
                     ours=self.company_id.display_name,
                 )
             )
-            return order
+            return False
         # Prefer the line that IS the repair service; fall back to any service,
         # then to the first line, so the job is never left dangling.
         lines = order.order_line.filtered(lambda l: not l.display_type)

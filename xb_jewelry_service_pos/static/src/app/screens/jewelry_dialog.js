@@ -7,7 +7,8 @@ import { Component, useState, onWillStart } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
 import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
-import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
+import { makeAwaitable, ask } from "@point_of_sale/app/utils/make_awaitable_dialog";
+import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { JewelryIntakeDialog } from "@xb_jewelry_service_pos/app/screens/jewelry_intake";
 import { JewelrySignaturePopup } from "@xb_jewelry_service_pos/app/signature/jewelry_signature";
 
@@ -236,8 +237,49 @@ export class JewelryDialog extends Component {
         this.state.selected = null;
     }
 
+    /**
+     * A signature proves who took the piece, never that it was paid for, and
+     * until now nothing looked at the balance: a finished job could walk out
+     * of the shop unpaid. Checked BEFORE the signature is asked for, so the
+     * customer is not made to sign for something that is about to be refused.
+     *
+     * The shop decides how strict this is (Settings ▸ Unpaid balance on
+     * delivery). Blocking is also enforced server side; this only spares the
+     * counter a traceback.
+     */
+    async balanceAllowsDelivery(row) {
+        const policy = this.state.settings.delivery_balance_policy || "warn";
+        if (policy === "none" || !(row.balance_due > 0)) {
+            return true;
+        }
+        const owed = row.balance_due_label || row.balance_due;
+        if (policy === "block") {
+            this.dialog.add(AlertDialog, {
+                title: _t("There is still a balance"),
+                body: _t(
+                    "%(ref)s cannot be handed over: %(owed)s is still owed. " +
+                        "Charge it at the register first.",
+                    { ref: row.name, owed }
+                ),
+            });
+            return false;
+        }
+        return await ask(this.dialog, {
+            title: _t("There is still a balance"),
+            body: _t(
+                "%(ref)s still owes %(owed)s. Hand the piece over anyway?",
+                { ref: row.name, owed }
+            ),
+            confirmLabel: _t("Hand it over"),
+            cancelLabel: _t("Go back"),
+        });
+    }
+
     async deliver() {
         const row = this.state.selected;
+        if (!(await this.balanceAllowsDelivery(row))) {
+            return;
+        }
         let signature = false;
         let signedBy = this.state.signedBy;
         if (this.state.settings.require_delivery_signature) {

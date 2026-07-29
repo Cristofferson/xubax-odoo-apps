@@ -1,6 +1,6 @@
 {
     "name": "Jewelry Repairs & Workshop",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.3.0",
     "category": "Inventory/Repair",
     "summary": "Customer piece custody, typed intake photos, signatures, jeweler dispatch, scrap control and QC on top of Odoo Repairs",
     "author": "XUBAX",

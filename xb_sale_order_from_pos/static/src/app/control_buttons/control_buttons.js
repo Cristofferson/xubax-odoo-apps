@@ -163,6 +163,26 @@ patch(ControlButtons.prototype, {
             return;
         }
 
+        // This cart may already have raised its order elsewhere: another module
+        // can create one from the same cart and stash it here (the jewelry
+        // workshop's "Receive a piece" does exactly that). A second document
+        // for the same goods is never what anybody wanted. Our own flow
+        // discards the cart right after creating, so this cannot fire on a
+        // repeat click of this button.
+        const pending = order.uiState?.xbSaleOrder;
+        if (pending?.sale_order_id) {
+            this.dialog.add(AlertDialog, {
+                title: _t("This cart already has an order"),
+                body: _t(
+                    "%s was already created from these products. Charge or " +
+                        "edit that one instead of raising a second document " +
+                        "for the same goods.",
+                    pending.name || ""
+                ),
+            });
+            return;
+        }
+
         // Bug 1 fix: read ALL reactive state synchronously and build a PLAIN
         // payload BEFORE opening any popup. Clicking our button inside the "More"
         // actions popup makes that popup close and DESTROY this component while we

@@ -46,7 +46,12 @@ msgid ""
 "* The 'Under Repair' status is used when the repair is ongoing.\n"
 "* The 'Repaired' status is set when repairing is completed.\n"
 "* The 'Cancelled' status is used when user cancel repair order."
-msgstr "* El estado 'Nuevo' se usa cuando un usuario está configurando una orden de reparación nueva o que no se ha confirmado.\n* El estado 'Confirmado' se usa cuando un usuario confirma una orden de reparación.\n* El estado 'En reparación' se usa cuando se está realizando una reparación.\n* El estado 'Reparado' se usa cuando se terminó una reparación.\n* El estado 'Cancelado' se usa cuando un usuario cancela una orden de reparación."
+msgstr ""
+"* El estado 'Nuevo' se usa cuando un usuario está configurando una orden de reparación nueva o que no se ha confirmado.\n"
+"* El estado 'Confirmado' se usa cuando un usuario confirma una orden de reparación.\n"
+"* El estado 'En reparación' se usa cuando se está realizando una reparación.\n"
+"* El estado 'Reparado' se usa cuando se terminó una reparación.\n"
+"* El estado 'Cancelado' se usa cuando un usuario cancela una orden de reparación."
 
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.jewelry_piece_block
@@ -58,7 +63,9 @@ msgstr "- probador"
 msgid ""
 "<br/>\n"
 "                        <strong>Received</strong>"
-msgstr "<br/>\n                        <strong>Recibida</strong>"
+msgstr ""
+"<br/>\n"
+"                        <strong>Recibida</strong>"
 
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_dispatch
@@ -146,21 +153,25 @@ msgstr "Se generó un enlace para subir fotos, válido por %(min)s minutos."
 msgid ""
 "A piece is a permanent file: it keeps its photos, its metal and its whole\n"
 "                service history, long after each repair is closed."
-msgstr "Una pieza es un expediente permanente: conserva sus fotos, su metal y todo su\n                historial de servicios, mucho después de cerrada cada reparación."
+msgstr ""
+"Una pieza es un expediente permanente: conserva sus fotos, su metal y todo su\n"
+"                historial de servicios, mucho después de cerrada cada reparación."
 
 #. module: xb_jewelry_service
 #: model_terms:ir.actions.act_window,help:xb_jewelry_service.xb_jewelry_photo_kind_action
 msgid ""
 "A required photo blocks the piece from leaving to the workshop until it "
 "exists."
-msgstr "Una foto obligatoria impide que la pieza salga al taller mientras no exista."
+msgstr ""
+"Una foto obligatoria impide que la pieza salga al taller mientras no exista."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_photo_kind__required
 msgid ""
 "A required photo blocks the piece from moving forward until it has been "
 "taken."
-msgstr "Una foto obligatoria impide que la pieza avance mientras no se haya tomado."
+msgstr ""
+"Una foto obligatoria impide que la pieza avance mientras no se haya tomado."
 
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
@@ -254,7 +265,9 @@ msgstr "Después del trabajo"
 msgid ""
 "Agreed rate for this job. Filled in from the jeweler's rate card, and always"
 " editable for this particular piece."
-msgstr "Tarifa pactada para este trabajo. Se toma del tarifario del joyero y siempre se puede editar para esta pieza en particular."
+msgstr ""
+"Tarifa pactada para este trabajo. Se toma del tarifario del joyero y siempre"
+" se puede editar para esta pieza en particular."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_photo_kind__condition__always
@@ -296,7 +309,8 @@ msgstr "Primero asigna un joyero a %(ref)s."
 #. module: xb_jewelry_service
 #: model:res.groups,comment:xb_jewelry_service.group_jewelry_workshop
 msgid "Assigns jewelers, dispatches pieces and runs quality control."
-msgstr "Asigna joyeros, entrega piezas al taller y hace el control de calidad."
+msgstr ""
+"Asigna joyeros, entrega piezas al taller y hace el control de calidad."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_dispatch__state__out
@@ -347,7 +361,9 @@ msgstr "Cancelado"
 msgid ""
 "Cannot hand %(ref)s to the workshop: the customer has not signed the intake "
 "receipt."
-msgstr "No se puede entregar %(ref)s al taller: el cliente no ha firmado la boleta de resguardo."
+msgstr ""
+"No se puede entregar %(ref)s al taller: el cliente no ha firmado la boleta "
+"de resguardo."
 
 #. module: xb_jewelry_service
 #. odoo-python
@@ -355,7 +371,8 @@ msgstr "No se puede entregar %(ref)s al taller: el cliente no ha firmado la bole
 msgid ""
 "Cannot hand %(ref)s to the workshop: the following photos are still missing:"
 " %(kinds)s."
-msgstr "No se puede entregar %(ref)s al taller: faltan estas fotos: %(kinds)s."
+msgstr ""
+"No se puede entregar %(ref)s al taller: faltan estas fotos: %(kinds)s."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields.selection,name:xb_jewelry_service.selection__product_category__xb_jewelry_kind__chain
@@ -723,7 +740,10 @@ msgid ""
 "External jewelers are vendors, so you invoice and pay them with standard\n"
 "                Odoo. Employees are linked to their contact. Archive one and it simply\n"
 "                stops being offered."
-msgstr "Los joyeros externos son proveedores, así que les facturas y les pagas con el\n                Odoo de siempre. Los empleados quedan ligados a su contacto. Si archivas uno,\n                simplemente deja de ofrecerse."
+msgstr ""
+"Los joyeros externos son proveedores, así que les facturas y les pagas con el\n"
+"                Odoo de siempre. Los empleados quedan ligados a su contacto. Si archivas uno,\n"
+"                simplemente deja de ofrecerse."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields.selection,name:xb_jewelry_service.selection__res_partner__jeweler_type__external
@@ -738,7 +758,9 @@ msgstr "Fallido"
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
 msgid "Fallback product for vendor bills when a job has none of its own"
-msgstr "Producto de respaldo para facturas de proveedor cuando el trabajo no tiene uno propio"
+msgstr ""
+"Producto de respaldo para facturas de proveedor cuando el trabajo no tiene "
+"uno propio"
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,help:xb_jewelry_service.field_res_company__xb_jeweler_service_product_id
@@ -746,7 +768,9 @@ msgstr "Producto de respaldo para facturas de proveedor cuando el trabajo no tie
 msgid ""
 "Fallback product used on vendor bills when a job has no service product of "
 "its own."
-msgstr "Producto de respaldo que se usa en las facturas de proveedor cuando un trabajo no tiene producto de servicio propio."
+msgstr ""
+"Producto de respaldo que se usa en las facturas de proveedor cuando un "
+"trabajo no tiene producto de servicio propio."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__qc_rating
@@ -758,7 +782,9 @@ msgstr "Alimenta el tablero del joyero."
 msgid ""
 "Fineness as a number. Filled in from the metal, override it when the piece "
 "has been tested."
-msgstr "La ley expresada como número. Se llena a partir del metal; cámbiala cuando la pieza haya sido probada."
+msgstr ""
+"La ley expresada como número. Se llena a partir del metal; cámbiala cuando "
+"la pieza haya sido probada."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__qc_finish_ok
@@ -801,7 +827,9 @@ msgstr "Icono de Font Awesome p. ej. fa-tasks"
 msgid ""
 "Fraction of pure metal, between 0 and 1. For example 18kt gold is 0.7500 and"
 " sterling silver is 0.9250."
-msgstr "Fracción de metal puro, entre 0 y 1. Por ejemplo, el oro de 18kt es 0.7500 y la plata ley es 0.9250."
+msgstr ""
+"Fracción de metal puro, entre 0 y 1. Por ejemplo, el oro de 18kt es 0.7500 y"
+" la plata ley es 0.9250."
 
 #. module: xb_jewelry_service
 #: model:xb.jewelry.photo.kind,name:xb_jewelry_service.photo_kind_front
@@ -814,7 +842,9 @@ msgstr "Frente"
 msgid ""
 "Generic serial-tracked product used to trace customer pieces through "
 "Inventory. Keep its cost at zero."
-msgstr "Producto genérico con número de serie que sirve para rastrear las piezas del cliente en Inventario. Mantén su costo en cero."
+msgstr ""
+"Producto genérico con número de serie que sirve para rastrear las piezas del"
+" cliente en Inventario. Mantén su costo en cero."
 
 #. module: xb_jewelry_service
 #: model_terms:ir.actions.act_window,help:xb_jewelry_service.xb_metal_purity_action
@@ -875,7 +905,9 @@ msgstr "Cuánto tiempo vive el enlace QR para subir fotos desde un celular."
 msgid ""
 "How much heavier the pieces came back, which is metal that legitimately "
 "stayed in the work."
-msgstr "Cuánto más pesadas regresaron las piezas, que es metal que legítimamente se quedó en el trabajo."
+msgstr ""
+"Cuánto más pesadas regresaron las piezas, que es metal que legítimamente se "
+"quedó en el trabajo."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,help:xb_jewelry_service.field_xb_metal_purity__karat
@@ -958,7 +990,9 @@ msgstr "En custodia"
 msgid ""
 "Inherited from the jeweler, or from the company when the jeweler has no "
 "specific tolerance. Override it here for this hand-over only."
-msgstr "Se hereda del joyero, o de la compañía cuando el joyero no tiene una tolerancia propia. Aquí la puedes pisar solo para esta entrega."
+msgstr ""
+"Se hereda del joyero, o de la compañía cuando el joyero no tiene una "
+"tolerancia propia. Aquí la puedes pisar solo para esta entrega."
 
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.jewelry_piece_block
@@ -1024,7 +1058,9 @@ msgstr "Recepción firmada el"
 msgid ""
 "Intake photos are taken when the piece is received, 'after' photos once the "
 "repair is approved."
-msgstr "Las fotos de recepción se toman cuando llega la pieza; las del 'después', una vez aprobada la reparación."
+msgstr ""
+"Las fotos de recepción se toman cuando llega la pieza; las del 'después', "
+"una vez aprobada la reparación."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_intake_terms
@@ -1190,7 +1226,10 @@ msgid ""
 "Karat written as text cannot be used for arithmetic. Mapping every metal\n"
 "                value to its fineness is what makes pure metal weight, and the scrap\n"
 "                reconciliation with your jewelers, possible."
-msgstr "El kilataje escrito como texto no sirve para hacer cuentas. Mapear cada valor de\n                metal a su ley es lo que hace posible el peso de metal puro y el cuadre de\n                merma con tus joyeros."
+msgstr ""
+"El kilataje escrito como texto no sirve para hacer cuentas. Mapear cada valor de\n"
+"                metal a su ley es lo que hace posible el peso de metal puro y el cuadre de\n"
+"                merma con tus joyeros."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_photo__kind_id
@@ -1268,7 +1307,9 @@ msgid ""
 "Mark the categories that describe a customer piece. Only these are offered "
 "when a piece is received, and the kind decides which measurements and photos"
 " are asked for."
-msgstr "Marca las categorías que describen una pieza del cliente. Solo esas se ofrecen al recibir, y la naturaleza decide qué medidas y qué fotos se piden."
+msgstr ""
+"Marca las categorías que describen una pieza del cliente. Solo esas se "
+"ofrecen al recibir, y la naturaleza decide qué medidas y qué fotos se piden."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch_material__product_id
@@ -1349,7 +1390,9 @@ msgstr "Atributo de metal"
 msgid ""
 "Metal loss is %(loss)s%%, above the %(tol)s%% tolerance agreed with this "
 "jeweler."
-msgstr "La merma de metal es %(loss)s%%, por encima de la tolerancia de %(tol)s%% pactada con este joyero."
+msgstr ""
+"La merma de metal es %(loss)s%%, por encima de la tolerancia de %(tol)s%% "
+"pactada con este joyero."
 
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
@@ -1477,7 +1520,10 @@ msgid ""
 "One document per jeweler, with as many pieces as they take, the metal you\n"
 "                supply and their signature. When the pieces come back, the scrap is\n"
 "                weighed and the loss is checked against the agreed tolerance."
-msgstr "Un documento por joyero, con todas las piezas que se lleve, el metal que tú\n                le surtes y su firma. Cuando las piezas regresan, se pesa el sobrante y la\n                merma se compara contra la tolerancia pactada."
+msgstr ""
+"Un documento por joyero, con todas las piezas que se lleve, el metal que tú\n"
+"                le surtes y su firma. Cuando las piezas regresan, se pesa el sobrante y la\n"
+"                merma se compara contra la tolerancia pactada."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_photo_kind__condition
@@ -1492,7 +1538,8 @@ msgstr "Solo tiene sentido en cadenas y pulseras."
 #. module: xb_jewelry_service
 #: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__size_value_id
 msgid "Only meaningful for rings. Uses the same size list as the catalogue."
-msgstr "Solo tiene sentido en anillos. Usa la misma lista de medidas del catálogo."
+msgstr ""
+"Solo tiene sentido en anillos. Usa la misma lista de medidas del catálogo."
 
 #. module: xb_jewelry_service
 #. odoo-python
@@ -1532,7 +1579,9 @@ msgstr "Opcional. Déjalo vacío para una tarifa siempre vigente."
 msgid ""
 "Optional. Links the piece to a serial number so its movements are traced by "
 "Inventory."
-msgstr "Opcional. Liga la pieza a un número de serie para que Inventario rastree sus movimientos."
+msgstr ""
+"Opcional. Liga la pieza a un número de serie para que Inventario rastree sus"
+" movimientos."
 
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_ticket_document
@@ -1617,7 +1666,8 @@ msgstr "Vigencia del enlace de fotos (min)"
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.photo_link_invalid
 msgid "Photo links expire on purpose. Ask the counter for a new one."
-msgstr "Los enlaces de fotos caducan a propósito. Pide uno nuevo en el mostrador."
+msgstr ""
+"Los enlaces de fotos caducan a propósito. Pide uno nuevo en el mostrador."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__photo_ids
@@ -1633,7 +1683,10 @@ msgid ""
 "Pick a jeweler and a period, press Collect Jobs, and every finished job\n"
 "                nobody has paid yet is pulled in. External jewelers get a vendor bill\n"
 "                out of it; a single job settled on its own works exactly the same way."
-msgstr "Elige un joyero y un periodo, presiona Juntar trabajos, y entra cada trabajo\n                terminado que nadie ha pagado. A los joyeros externos les sale una factura\n                de proveedor; un solo trabajo liquidado por su cuenta funciona igual."
+msgstr ""
+"Elige un joyero y un periodo, presiona Juntar trabajos, y entra cada trabajo\n"
+"                terminado que nadie ha pagado. A los joyeros externos les sale una factura\n"
+"                de proveedor; un solo trabajo liquidado por su cuenta funciona igual."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__jewelry_piece_id
@@ -1703,12 +1756,16 @@ msgid ""
 "Printed on the receipt the customer signs when leaving a piece. Have it "
 "reviewed by your lawyer: this is what protects you if the customer later "
 "disputes the condition the piece was in."
-msgstr "Se imprime en la boleta que firma el cliente al dejar una pieza. Que la revise tu abogado: es lo que te protege si después el cliente discute en qué estado estaba la pieza."
+msgstr ""
+"Se imprime en la boleta que firma el cliente al dejar una pieza. Que la "
+"revise tu abogado: es lo que te protege si después el cliente discute en qué"
+" estado estaba la pieza."
 
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
 msgid "Printed on the receipt the customer signs. Have your lawyer review it"
-msgstr "Se imprime en la boleta que firma el cliente. Que la revise tu abogado"
+msgstr ""
+"Se imprime en la boleta que firma el cliente. Que la revise tu abogado"
 
 #. module: xb_jewelry_service
 #: model:ir.model,name:xb_jewelry_service.model_product_category
@@ -1888,7 +1945,9 @@ msgstr "Resultado"
 msgid ""
 "Result of the tester at intake. Comparing it against the reading taken when "
 "the piece comes back is what catches a swap."
-msgstr "Resultado del probador al recibir. Compararlo contra la lectura de cuando la pieza regresa es lo que detecta un cambio de piedra."
+msgstr ""
+"Resultado del probador al recibir. Compararlo contra la lectura de cuando la"
+" pieza regresa es lo que detecta un cambio de piedra."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_dispatch__return_date
@@ -2007,7 +2066,9 @@ msgstr "Número de serie"
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
 msgid ""
 "Serial tracked product used to trace customer pieces. Keep its cost at zero"
-msgstr "Producto con número de serie que rastrea las piezas del cliente. Mantén su costo en cero"
+msgstr ""
+"Producto con número de serie que rastrea las piezas del cliente. Mantén su "
+"costo en cero"
 
 #. module: xb_jewelry_service
 #: model:ir.ui.menu,name:xb_jewelry_service.menu_jewelry_repairs
@@ -2037,7 +2098,9 @@ msgstr "Servicios de %s"
 msgid ""
 "Set a default jeweler service product in the settings so the vendor bill can"
 " be built."
-msgstr "Configura un producto de servicio de joyero en los ajustes para poder armar la factura de proveedor."
+msgstr ""
+"Configura un producto de servicio de joyero en los ajustes para poder armar "
+"la factura de proveedor."
 
 #. module: xb_jewelry_service
 #: model_terms:ir.actions.act_window,help:xb_jewelry_service.xb_jeweler_rate_action
@@ -2170,7 +2233,11 @@ msgid ""
 "Overdue: Due date is already passed\n"
 "Today: Activity date is today\n"
 "Planned: Future activities."
-msgstr "Estado basado en actividades\nVencida: la fecha límite ya ha pasado\nHoy: la fecha límite es hoy\nPlanificada: actividades futuras."
+msgstr ""
+"Estado basado en actividades\n"
+"Vencida: la fecha límite ya ha pasado\n"
+"Hoy: la fecha límite es hoy\n"
+"Planificada: actividades futuras."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,field_description:xb_jewelry_service.field_xb_jewelry_piece__stone_count
@@ -2202,14 +2269,18 @@ msgstr "Tomada por"
 msgid ""
 "Taken from the same attribute used to create products, so the vocabulary "
 "stays consistent across the company."
-msgstr "Se toma del mismo atributo con el que das de alta productos, para que el vocabulario sea el mismo en toda la compañía."
+msgstr ""
+"Se toma del mismo atributo con el que das de alta productos, para que el "
+"vocabulario sea el mismo en toda la compañía."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__piece_type_id
 msgid ""
 "Taken from the shop's own product categories, so the vocabulary is the same "
 "one used in the catalogue."
-msgstr "Sale de las categorías de producto de la propia tienda, para que el vocabulario sea el mismo del catálogo."
+msgstr ""
+"Sale de las categorías de producto de la propia tienda, para que el "
+"vocabulario sea el mismo del catálogo."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_photo_kind__code
@@ -2233,7 +2304,9 @@ msgstr "La pieza del cliente a la que se refiere este servicio."
 msgid ""
 "The inspection checklist of %(ref)s is not complete. Send the piece back for"
 " rework instead."
-msgstr "La lista de inspección de %(ref)s no está completa. Mejor manda la pieza a retrabajo."
+msgstr ""
+"La lista de inspección de %(ref)s no está completa. Mejor manda la pieza a "
+"retrabajo."
 
 #. module: xb_jewelry_service
 #. odoo-python
@@ -2247,7 +2320,10 @@ msgid ""
 "The metal loss is above the tolerance agreed with this\n"
 "                                jeweler. Weigh the pieces and the returned scrap again\n"
 "                                before closing."
-msgstr "La merma de metal está por encima de la tolerancia pactada con este\n                                joyero. Vuelve a pesar las piezas y el sobrante devuelto\n                                antes de cerrar."
+msgstr ""
+"La merma de metal está por encima de la tolerancia pactada con este\n"
+"                                joyero. Vuelve a pesar las piezas y el sobrante devuelto\n"
+"                                antes de cerrar."
 
 #. module: xb_jewelry_service
 #: model:ir.model.constraint,message:xb_jewelry_service.constraint_xb_jewelry_photo_kind_code_uniq
@@ -2259,7 +2335,9 @@ msgstr "El código del tipo de foto debe ser único."
 msgid ""
 "The piece belongs to this customer at all times. It never becomes shop "
 "property."
-msgstr "La pieza es del cliente en todo momento. Nunca pasa a ser propiedad de la tienda."
+msgstr ""
+"La pieza es del cliente en todo momento. Nunca pasa a ser propiedad de la "
+"tienda."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,help:xb_jewelry_service.field_res_company__xb_metal_attribute_id
@@ -2267,7 +2345,9 @@ msgstr "La pieza es del cliente en todo momento. Nunca pasa a ser propiedad de l
 msgid ""
 "The product attribute this shop already uses for metal and karat. Intake "
 "reuses its values instead of a parallel list."
-msgstr "El atributo de producto que esta tienda ya usa para metal y kilataje. La recepción reutiliza sus valores en vez de una lista paralela."
+msgstr ""
+"El atributo de producto que esta tienda ya usa para metal y kilataje. La "
+"recepción reutiliza sus valores en vez de una lista paralela."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,help:xb_jewelry_service.field_res_company__xb_size_attribute_id
@@ -2275,12 +2355,16 @@ msgstr "El atributo de producto que esta tienda ya usa para metal y kilataje. La
 msgid ""
 "The product attribute this shop already uses for ring sizes. Intake reuses "
 "its values instead of a free text box."
-msgstr "El atributo de producto que esta tienda ya usa para las medidas de anillo. La recepción reutiliza sus valores en vez de una caja de texto libre."
+msgstr ""
+"El atributo de producto que esta tienda ya usa para las medidas de anillo. "
+"La recepción reutiliza sus valores en vez de una caja de texto libre."
 
 #. module: xb_jewelry_service
 #: model_terms:ir.actions.act_window,help:xb_jewelry_service.xb_jeweler_rate_action
 msgid "The rate is only a default: any piece can still be priced on its own."
-msgstr "La tarifa es solo un valor por omisión: cualquier pieza se puede cotizar aparte."
+msgstr ""
+"La tarifa es solo un valor por omisión: cualquier pieza se puede cotizar "
+"aparte."
 
 #. module: xb_jewelry_service
 #. odoo-python
@@ -2298,7 +2382,9 @@ msgstr "Este joyero ya tiene una tarifa para ese trabajo."
 msgid ""
 "This link expires shortly. The photos go straight into the\n"
 "                    piece file."
-msgstr "Este enlace caduca pronto. Las fotos se van directo al\n                    expediente de la pieza."
+msgstr ""
+"Este enlace caduca pronto. Las fotos se van directo al\n"
+"                    expediente de la pieza."
 
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.photo_link_invalid
@@ -2311,7 +2397,9 @@ msgstr "Este enlace ya no es válido"
 msgid ""
 "Tick to give this jeweler a tolerance of their own instead of the company "
 "default."
-msgstr "Marca esto para darle a este joyero una tolerancia propia en vez de la de la compañía."
+msgstr ""
+"Marca esto para darle a este joyero una tolerancia propia en vez de la de la"
+" compañía."
 
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.xb_jeweler_settlement_view_form
@@ -2336,7 +2424,9 @@ msgstr "Tipo de actividad de excepción en el registro."
 msgid ""
 "Uncheck for steel, plated or imitation metals, where scrap reconciliation "
 "makes no sense."
-msgstr "Desmárcalo para acero, baños o imitaciones, donde el cuadre de merma no tiene sentido."
+msgstr ""
+"Desmárcalo para acero, baños o imitaciones, donde el cuadre de merma no "
+"tiene sentido."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_unclaimed_days
@@ -2405,7 +2495,9 @@ msgstr "Historial de comunicación del sitio web"
 msgid ""
 "Weigh the piece again when it comes back. The difference against intake is "
 "metal that legitimately stayed in the work."
-msgstr "Vuelve a pesar la pieza cuando regrese. La diferencia contra la recepción es metal que legítimamente se quedó en el trabajo."
+msgstr ""
+"Vuelve a pesar la pieza cuando regrese. La diferencia contra la recepción es"
+" metal que legítimamente se quedó en el trabajo."
 
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.jewelry_piece_block
@@ -2568,7 +2660,9 @@ msgstr "foto(s) guardadas. Ya puedes cerrar esta página."
 msgid ""
 "photographs were taken at\n"
 "                    intake and are kept on file:"
-msgstr "fotografías se tomaron al\n                    recibir la pieza y quedan en el expediente:"
+msgstr ""
+"fotografías se tomaron al\n"
+"                    recibir la pieza y quedan en el expediente:"
 
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_intake_full_document
@@ -2580,14 +2674,15 @@ msgstr "firma"
 msgid "stones"
 msgstr "piedras"
 
-
 #. module: xb_jewelry_service
 #. odoo-python
 #: code:addons/xb_jewelry_service/controllers/photo_upload.py:0
 msgid ""
 "%(count)s upload(s) were refused: not an image, too large, or not a photo "
 "this piece is asked for."
-msgstr "Se rechazaron %(count)s archivo(s): no son una foto, pesan demasiado o no corresponden a una toma que esta pieza necesite."
+msgstr ""
+"Se rechazaron %(count)s archivo(s): no son una foto, pesan demasiado o no "
+"corresponden a una toma que esta pieza necesite."
 
 #. module: xb_jewelry_service
 #. odoo-python
@@ -2595,7 +2690,9 @@ msgstr "Se rechazaron %(count)s archivo(s): no son una foto, pesan demasiado o n
 msgid ""
 "%(ref)s is still waiting for the customer to authorize the quote. Nothing "
 "goes to the workshop before that."
-msgstr "%(ref)s sigue esperando que el cliente autorice el presupuesto. Nada sale al taller antes de eso."
+msgstr ""
+"%(ref)s sigue esperando que el cliente autorice el presupuesto. Nada sale al"
+" taller antes de eso."
 
 #. module: xb_jewelry_service
 #. odoo-python
@@ -2608,7 +2705,9 @@ msgstr "Se abrió una reposición en garantía: %(ref)s."
 msgid ""
 "How often this job failed inspection. Kept as a counter because the state "
 "only says where the piece is now, not what it went through."
-msgstr "Cuántas veces este trabajo no pasó la inspección. Se lleva como contador porque el estado solo dice dónde está la pieza hoy, no por lo que pasó."
+msgstr ""
+"Cuántas veces este trabajo no pasó la inspección. Se lleva como contador "
+"porque el estado solo dice dónde está la pieza hoy, no por lo que pasó."
 
 #. module: xb_jewelry_service
 #. odoo-python
@@ -2650,7 +2749,9 @@ msgstr "Algunos de estos trabajos ya están en un corte."
 msgid ""
 "The warranty on %(ref)s is not in force: it either has no warranty date, has"
 " expired, or the work is not finished."
-msgstr "La garantía de %(ref)s no está vigente: o no tiene fecha de garantía, o ya venció, o el trabajo no está terminado."
+msgstr ""
+"La garantía de %(ref)s no está vigente: o no tiene fecha de garantía, o ya "
+"venció, o el trabajo no está terminado."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__warranty_active
@@ -2711,8 +2812,9 @@ msgstr "Lo que pide el cliente, con sus propias palabras."
 msgid ""
 "file(s) were not accepted. Send a\n"
 "                    photo taken with the camera, under 12 MB."
-msgstr "archivo(s) no se aceptaron. Manda una\n                    foto tomada con la cámara, de menos de 12 MB."
-
+msgstr ""
+"archivo(s) no se aceptaron. Manda una\n"
+"                    foto tomada con la cámara, de menos de 12 MB."
 
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_kanban_jewelry
@@ -2724,7 +2826,9 @@ msgstr "<i class=\\\"fa fa-camera me-1\\\" role=\\\"img\\\" aria-label=\\\"Falta
 msgid ""
 "<i class=\"fa fa-clock-o me-1\" title=\"Promised date\" role=\"img\" aria-"
 "label=\"Promised date\"/>"
-msgstr "<i class=\\\"fa fa-clock-o me-1\\\" title=\\\"Fecha compromiso\\\" role=\\\"img\\\" aria-label=\\\"Fecha compromiso\\\"/>"
+msgstr ""
+"<i class=\\\"fa fa-clock-o me-1\\\" title=\\\"Fecha compromiso\\\" "
+"role=\\\"img\\\" aria-label=\\\"Fecha compromiso\\\"/>"
 
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_kanban_jewelry
@@ -2742,7 +2846,10 @@ msgid ""
 "A repair returns the same piece. A commission makes a new one, sometimes out"
 " of gold the customer brings in. A transformation melts the customer's own "
 "pieces into something else entirely."
-msgstr "Una reparación devuelve la misma pieza. Una hechura elabora una nueva, a veces con oro que trae el cliente. Una transformación funde las piezas del propio cliente para hacer algo distinto."
+msgstr ""
+"Una reparación devuelve la misma pieza. Una hechura elabora una nueva, a "
+"veces con oro que trae el cliente. Una transformación funde las piezas del "
+"propio cliente para hacer algo distinto."
 
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
@@ -2750,7 +2857,9 @@ msgid ""
 "Accepted loss on metal handed to a jeweler. Each jeweler"
 "                                        can override it, and so can a single"
 " hand-over."
-msgstr "Merma aceptada sobre el metal entregado al joyero. Cada joyero puede tener la suya, y también cada remisión en concreto."
+msgstr ""
+"Merma aceptada sobre el metal entregado al joyero. Cada joyero puede tener "
+"la suya, y también cada remisión en concreto."
 
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
@@ -2795,7 +2904,9 @@ msgid ""
 "commissioning: model, metal, weight,"
 "                                         stones, size, finish. This is what "
 "the                                         jeweler will be held to."
-msgstr "Describe la pieza que encarga el cliente: modelo, metal, peso, piedras, medida, acabado. Es a lo que se va a comprometer el joyero."
+msgstr ""
+"Describe la pieza que encarga el cliente: modelo, metal, peso, piedras, "
+"medida, acabado. Es a lo que se va a comprometer el joyero."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_photo__stage
@@ -2804,7 +2915,10 @@ msgid ""
 "Design photos are what the customer wants made, shown at the counter for a "
 "commission. Intake photos are the piece as it was received, and 'after' "
 "photos the finished work."
-msgstr "Las fotos de diseño son lo que el cliente quiere que se le haga, y se piden en el mostrador cuando es una hechura. Las de resguardo son la pieza tal como llegó, y las 'de después' el trabajo terminado."
+msgstr ""
+"Las fotos de diseño son lo que el cliente quiere que se le haga, y se piden "
+"en el mostrador cuando es una hechura. Las de resguardo son la pieza tal "
+"como llegó, y las 'de después' el trabajo terminado."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields.selection,name:xb_jewelry_service.selection__xb_jewelry_photo_kind__stage__design
@@ -2832,7 +2946,8 @@ msgstr "Todas las que apliquen"
 msgid ""
 "Everything still to be photographed before the piece may leave for the "
 "workshop."
-msgstr "Todo lo que falta fotografiar antes de que la pieza pueda salir al taller."
+msgstr ""
+"Todo lo que falta fotografiar antes de que la pieza pueda salir al taller."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,help:xb_jewelry_service.field_res_company__xb_intake_photo_policy
@@ -2842,7 +2957,11 @@ msgid ""
 " Whatever is chosen, the piece still cannot go to the workshop until every "
 "applicable photo exists: this setting only decides how long the customer "
 "waits, never whether the evidence is eventually taken."
-msgstr "Cuántas fotos tiene que tomar el mostrador con el cliente enfrente. Elijas lo que elijas, la pieza no sale al taller hasta que estén todas las que apliquen: esto solo decide cuánto espera el cliente, nunca si al final se levanta la evidencia."
+msgstr ""
+"Cuántas fotos tiene que tomar el mostrador con el cliente enfrente. Elijas "
+"lo que elijas, la pieza no sale al taller hasta que estén todas las que "
+"apliquen: esto solo decide cuánto espera el cliente, nunca si al final se "
+"levanta la evidencia."
 
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
@@ -2881,7 +3000,9 @@ msgid ""
 "Metal the customer brought in for a commission or a transformation. It "
 "leaves with the jeweler like the shop's own material, and has to come back "
 "the same way."
-msgstr "Metal que trajo el cliente para una hechura o una transformación. Sale con el joyero igual que el material de la casa, y tiene que regresar igual."
+msgstr ""
+"Metal que trajo el cliente para una hechura o una transformación. Sale con "
+"el joyero igual que el material de la casa, y tiene que regresar igual."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__xb_intake_missing_kind_ids
@@ -2949,7 +3070,9 @@ msgstr "Piezas que se dejan para fundir"
 msgid ""
 "Pieces received at the counter show up here. Drag a card to move\n"
 "               the piece along."
-msgstr "Aquí aparecen las piezas que se reciben en el mostrador. Arrastra una tarjeta para avanzarla."
+msgstr ""
+"Aquí aparecen las piezas que se reciben en el mostrador. Arrastra una "
+"tarjeta para avanzarla."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__xb_input_piece_ids
@@ -2957,7 +3080,10 @@ msgid ""
 "Pieces the customer hands over to be melted down or reworked into the new "
 "one. They are in the shop's custody just like a repair, and their metal "
 "counts towards what the jeweler has to account for."
-msgstr "Piezas que el cliente entrega para fundirse o rehacerse en la nueva. Están bajo resguardo de la tienda igual que una reparación, y su metal cuenta para lo que el joyero tiene que devolver."
+msgstr ""
+"Piezas que el cliente entrega para fundirse o rehacerse en la nueva. Están "
+"bajo resguardo de la tienda igual que una reparación, y su metal cuenta para"
+" lo que el joyero tiene que devolver."
 
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
@@ -2992,7 +3118,10 @@ msgid ""
 "one used in the catalogue. Left empty for scrap gold a customer brings in to"
 " be melted down, which belongs to no category of the catalogue and never "
 "will."
-msgstr "Sale de las categorías de producto que la tienda ya tiene, para no manejar dos vocabularios. Se deja vacío para el oro de desecho que trae el cliente a fundir, que no pertenece a ninguna categoría del catálogo ni la va a tener."
+msgstr ""
+"Sale de las categorías de producto que la tienda ya tiene, para no manejar "
+"dos vocabularios. Se deja vacío para el oro de desecho que trae el cliente a"
+" fundir, que no pertenece a ninguna categoría del catálogo ni la va a tener."
 
 #. module: xb_jewelry_service
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.repair_order_view_form_jewelry
@@ -3009,7 +3138,9 @@ msgstr "El número detrás de cada kilataje, necesario para cuadrar la merma"
 msgid ""
 "The piece this service is about: the one received for a repair, or the one "
 "being made for a commission."
-msgstr "La pieza de la que trata este servicio: la que se recibió en una reparación, o la que se va a elaborar en una hechura."
+msgstr ""
+"La pieza de la que trata este servicio: la que se recibió en una reparación,"
+" o la que se va a elaborar en una hechura."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,help:xb_jewelry_service.field_res_company__xb_intake_main_photo_kind_id
@@ -3022,14 +3153,18 @@ msgstr "La única foto que se pide cuando solo se exige la principal."
 msgid ""
 "The subset the shop demands while the customer is still there. The rest can "
 "be taken afterwards, from a phone."
-msgstr "Las que la tienda exige con el cliente todavía enfrente. El resto se pueden tomar después, desde un celular."
+msgstr ""
+"Las que la tienda exige con el cliente todavía enfrente. El resto se pueden "
+"tomar después, desde un celular."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,help:xb_jewelry_service.field_xb_jewelry_piece__has_laser_inscription
 msgid ""
 "Tick when the stone carries an inscription. Only then is a photograph of it "
 "worth asking for."
-msgstr "Marca cuando la piedra trae inscripción. Solo entonces tiene sentido pedir una foto de ella."
+msgstr ""
+"Marca cuando la piedra trae inscripción. Solo entonces tiene sentido pedir "
+"una foto de ella."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__xb_board_alert
@@ -3058,14 +3193,19 @@ msgid ""
 "                                        standing there. Whatever you choose "
 "here, no piece goes                                        to the workshop "
 "until every applicable photo exists."
-msgstr "Lo que el cajero tiene que fotografiar con el cliente enfrente. Elijas lo que elijas aquí, ninguna pieza sale al taller hasta que existan todas las fotos que apliquen."
+msgstr ""
+"Lo que el cajero tiene que fotografiar con el cliente enfrente. Elijas lo "
+"que elijas aquí, ninguna pieza sale al taller hasta que existan todas las "
+"fotos que apliquen."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,help:xb_jewelry_service.field_repair_order__xb_spec
 msgid ""
 "What the customer is commissioning, in enough detail that the jeweler and "
 "the customer are agreeing to the same thing."
-msgstr "Lo que el cliente está encargando, con el detalle suficiente para que el joyero y el cliente estén de acuerdo en lo mismo."
+msgstr ""
+"Lo que el cliente está encargando, con el detalle suficiente para que el "
+"joyero y el cliente estén de acuerdo en lo mismo."
 
 #. module: xb_jewelry_service
 #: model:ir.model.fields,field_description:xb_jewelry_service.field_repair_order__xb_spec
@@ -3088,3 +3228,47 @@ msgstr "Cuál foto"
 #: model:ir.ui.menu,name:xb_jewelry_service.menu_jewelry_board
 msgid "Workshop Board"
 msgstr "Tablero del taller"
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid ""
+"%(ref)s still owes %(due)s. Settle it at the register before the piece "
+"leaves, or change how this shop treats an unpaid balance on delivery."
+msgstr ""
+"%(ref)s todavía debe %(due)s. Cóbralo en caja antes de que la pieza salga, o"
+" cambia lo que hace esta tienda con un saldo pendiente en la entrega."
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_delivery_balance_policy
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__xb_delivery_balance_policy
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Unpaid balance on delivery"
+msgstr "Saldo pendiente en la entrega"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__res_company__xb_delivery_balance_policy__none
+msgid "Hand the piece over anyway"
+msgstr "Entregar la pieza de todas formas"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__res_company__xb_delivery_balance_policy__warn
+msgid "Warn the counter, let it through"
+msgstr "Avisar al mostrador y dejar pasar"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__res_company__xb_delivery_balance_policy__block
+msgid "Refuse until the balance is settled"
+msgstr "No entregar hasta liquidar el saldo"
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_company__xb_delivery_balance_policy
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_config_settings__xb_delivery_balance_policy
+msgid ""
+"What to do when a finished piece is collected while the customer still owes "
+"money on it. The signature only proves who took the piece, never that it was"
+" paid for, so the two are checked separately."
+msgstr ""
+"Qué hacer cuando se recoge una pieza terminada y el cliente todavía debe "
+"dinero por ella. La firma solo prueba quién se llevó la pieza, nunca que "
+"esté pagada, así que se revisan por separado."

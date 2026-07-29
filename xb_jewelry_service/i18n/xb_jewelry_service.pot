@@ -3065,3 +3065,42 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:xb_jewelry_service.report_jewelry_dispatch
 msgid "stones"
 msgstr ""
+
+#. module: xb_jewelry_service
+#. odoo-python
+#: code:addons/xb_jewelry_service/models/repair_order.py:0
+msgid ""
+"%(ref)s still owes %(due)s. Settle it at the register before the piece "
+"leaves, or change how this shop treats an unpaid balance on delivery."
+msgstr ""
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_company__xb_delivery_balance_policy
+#: model:ir.model.fields,field_description:xb_jewelry_service.field_res_config_settings__xb_delivery_balance_policy
+#: model_terms:ir.ui.view,arch_db:xb_jewelry_service.res_config_settings_view_form_jewelry
+msgid "Unpaid balance on delivery"
+msgstr ""
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__res_company__xb_delivery_balance_policy__none
+msgid "Hand the piece over anyway"
+msgstr ""
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__res_company__xb_delivery_balance_policy__warn
+msgid "Warn the counter, let it through"
+msgstr ""
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields.selection,name:xb_jewelry_service.selection__res_company__xb_delivery_balance_policy__block
+msgid "Refuse until the balance is settled"
+msgstr ""
+
+#. module: xb_jewelry_service
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_company__xb_delivery_balance_policy
+#: model:ir.model.fields,help:xb_jewelry_service.field_res_config_settings__xb_delivery_balance_policy
+msgid ""
+"What to do when a finished piece is collected while the customer still owes "
+"money on it. The signature only proves who took the piece, never that it was"
+" paid for, so the two are checked separately."
+msgstr ""

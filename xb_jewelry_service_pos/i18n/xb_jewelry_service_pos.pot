@@ -364,15 +364,6 @@ msgid "Order"
 msgstr ""
 
 #. module: xb_jewelry_service_pos
-#. odoo-python
-#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
-msgid ""
-"Order %(order)s was created under %(theirs)s while this service belongs to "
-"%(ours)s, so they were left unlinked. Check which company the register "
-"trades under."
-msgstr ""
-
-#. module: xb_jewelry_service_pos
 #. odoo-javascript
 #: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
 msgid "Passed"
@@ -849,4 +840,51 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
 msgid "· due"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "There is still a balance"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid ""
+"%(ref)s cannot be handed over: %(owed)s is still owed. Charge it at the "
+"register first."
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "%(ref)s still owes %(owed)s. Hand the piece over anyway?"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "Hand it over"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "Go back"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "Balance"
+msgstr ""
+
+#. module: xb_jewelry_service_pos
+#. odoo-python
+#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
+msgid ""
+"Order %(order)s belongs to %(theirs)s while this service belongs to "
+"%(ours)s, so they were left unlinked. Check which company the register "
+"trades under."
 msgstr ""

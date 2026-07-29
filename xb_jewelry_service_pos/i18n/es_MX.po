@@ -144,7 +144,7 @@ msgstr "Joyero"
 #: code:addons/xb_jewelry_service_pos/static/src/app/control_buttons/control_buttons.xml:0
 #: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
 msgid "Jewelry"
-msgstr "Joyería"
+msgstr "Taller"
 
 #. module: xb_jewelry_service_pos
 #: model:ir.model,name:xb_jewelry_service_pos.model_xb_jewelry_photo_kind
@@ -359,7 +359,9 @@ msgstr "Regresada"
 msgid ""
 "Show the jewelry button so this register can receive, look up and deliver "
 "repair pieces."
-msgstr "Muestra el botón de joyería para que esta caja pueda recibir, consultar y entregar piezas de reparación."
+msgstr ""
+"Muestra el botón de joyería para que esta caja pueda recibir, consultar y "
+"entregar piezas de reparación."
 
 #. module: xb_jewelry_service_pos
 #. odoo-javascript
@@ -415,7 +417,9 @@ msgstr "Probador"
 msgid ""
 "The customer confirms they leave the piece as described, with the\n"
 "                    photos just taken."
-msgstr "El cliente confirma que deja la pieza tal como se describe, con las\n                    fotos que se acaban de tomar."
+msgstr ""
+"El cliente confirma que deja la pieza tal como se describe, con las\n"
+"                    fotos que se acaban de tomar."
 
 #. module: xb_jewelry_service_pos
 #. odoo-javascript
@@ -423,7 +427,9 @@ msgstr "El cliente confirma que deja la pieza tal como se describe, con las\n   
 msgid ""
 "The handwritten signature is captured on the printed receipt or on\n"
 "                    the back office form."
-msgstr "La firma de puño y letra se captura en la boleta impresa o en\n                    el formulario del backoffice."
+msgstr ""
+"La firma de puño y letra se captura en la boleta impresa o en\n"
+"                    el formulario del backoffice."
 
 #. module: xb_jewelry_service_pos
 #. odoo-javascript
@@ -437,7 +443,9 @@ msgstr "No se pudo recibir la pieza."
 msgid ""
 "The piece is already registered. It just cannot go to the\n"
 "                    workshop until the photos are there."
-msgstr "La pieza ya quedó registrada. Lo único que no puede es irse al\n                    taller mientras no estén las fotos."
+msgstr ""
+"La pieza ya quedó registrada. Lo único que no puede es irse al\n"
+"                    taller mientras no estén las fotos."
 
 #. module: xb_jewelry_service_pos
 #. odoo-javascript
@@ -449,7 +457,8 @@ msgstr "Esta pieza todavía no está lista para devolverse."
 #. odoo-javascript
 #: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
 msgid "This register has no camera, so pick the picture taken with the phone."
-msgstr "Esta caja no tiene cámara, así que elige la foto tomada con el celular."
+msgstr ""
+"Esta caja no tiene cámara, así que elige la foto tomada con el celular."
 
 #. module: xb_jewelry_service_pos
 #. odoo-javascript
@@ -457,7 +466,9 @@ msgstr "Esta caja no tiene cámara, así que elige la foto tomada con el celular
 msgid ""
 "This register has no camera. Photos will have to be taken from a\n"
 "                    phone and picked from a file."
-msgstr "Esta caja no tiene cámara. Las fotos tendrán que tomarse desde un\n                    celular y elegirse como archivo."
+msgstr ""
+"Esta caja no tiene cámara. Las fotos tendrán que tomarse desde un\n"
+"                    celular y elegirse como archivo."
 
 #. module: xb_jewelry_service_pos
 #. odoo-python
@@ -531,14 +542,15 @@ msgstr "foto"
 msgid ""
 "·\n"
 "                    the link expires in"
-msgstr "·\n                    el enlace caduca en"
+msgstr ""
+"·\n"
+"                    el enlace caduca en"
 
 #. module: xb_jewelry_service_pos
 #. odoo-javascript
 #: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
 msgid "· due"
 msgstr "· para"
-
 
 #. module: xb_jewelry_service_pos
 #. odoo-javascript
@@ -582,7 +594,9 @@ msgstr "Entregar piezas a un joyero"
 msgid ""
 "Handing pieces to a jeweler is done by the workshop. Ask someone with that "
 "access to do it."
-msgstr "La salida a taller la hace el taller. Pídele a alguien con ese acceso que la registre."
+msgstr ""
+"La salida a taller la hace el taller. Pídele a alguien con ese acceso que la"
+" registre."
 
 #. module: xb_jewelry_service_pos
 #. odoo-javascript
@@ -657,7 +671,9 @@ msgstr "Firma"
 msgid ""
 "The customer confirms the piece they are taking back is theirs and the work "
 "is the one agreed."
-msgstr "El cliente confirma que la pieza que se lleva es la suya y que el trabajo es el que se acordó."
+msgstr ""
+"El cliente confirma que la pieza que se lleva es la suya y que el trabajo es"
+" el que se acordó."
 
 #. module: xb_jewelry_service_pos
 #. odoo-javascript
@@ -665,7 +681,9 @@ msgstr "El cliente confirma que la pieza que se lleva es la suya y que el trabaj
 msgid ""
 "The customer confirms they leave the piece as described, with the photos "
 "just taken."
-msgstr "El cliente confirma que deja la pieza tal como se describe, con las fotos que se acaban de tomar."
+msgstr ""
+"El cliente confirma que deja la pieza tal como se describe, con las fotos "
+"que se acaban de tomar."
 
 #. module: xb_jewelry_service_pos
 #. odoo-python
@@ -683,14 +701,18 @@ msgstr "El cliente no ha firmado la boleta de resguardo."
 #. odoo-python
 #: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
 msgid "The customer has to sign for the piece before it is handed back."
-msgstr "El cliente tiene que firmar de recibido antes de que se le entregue la pieza."
+msgstr ""
+"El cliente tiene que firmar de recibido antes de que se le entregue la "
+"pieza."
 
 #. module: xb_jewelry_service_pos
 #. odoo-python
 #: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
 msgid ""
 "The customer has to sign the intake receipt before the shop takes the piece."
-msgstr "El cliente tiene que firmar la boleta de resguardo antes de que la tienda se quede con la pieza."
+msgstr ""
+"El cliente tiene que firmar la boleta de resguardo antes de que la tienda se"
+" quede con la pieza."
 
 #. module: xb_jewelry_service_pos
 #. odoo-javascript
@@ -728,14 +750,15 @@ msgstr "Esta pieza no está en el mostrador."
 msgid ""
 "This shop does not take a piece in without the customer's\n"
 "                    signature."
-msgstr "Esta tienda no recibe una pieza sin la firma del\n                    cliente."
+msgstr ""
+"Esta tienda no recibe una pieza sin la firma del\n"
+"                    cliente."
 
 #. module: xb_jewelry_service_pos
 #. odoo-javascript
 #: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
 msgid "Workshop hand-over"
 msgstr "Salida a taller"
-
 
 #. module: xb_jewelry_service_pos
 #. odoo-javascript
@@ -780,7 +803,9 @@ msgid ""
 "Model, metal, weight, stones, size, finish."
 "                                        This is what the jeweler will be "
 "held to."
-msgstr "Modelo, metal, peso, piedras, medida, acabado. Es a lo que se va a comprometer el joyero."
+msgstr ""
+"Modelo, metal, peso, piedras, medida, acabado. Es a lo que se va a "
+"comprometer el joyero."
 
 #. module: xb_jewelry_service_pos
 #. odoo-javascript
@@ -792,7 +817,8 @@ msgstr "Falta antes de que el cliente se vaya:"
 #. odoo-python
 #: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
 msgid "No sale order was raised: the POS order bridge is not installed."
-msgstr "No se levantó ningún pedido: el puente de pedidos del PdV no está instalado."
+msgstr ""
+"No se levantó ningún pedido: el puente de pedidos del PdV no está instalado."
 
 #. module: xb_jewelry_service_pos
 #. odoo-javascript
@@ -805,15 +831,6 @@ msgstr "Nada todavía. Déjalo vacío si la casa pone todo el metal."
 #: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
 msgid "Old chain, broken"
 msgstr "Cadena vieja, rota"
-
-#. module: xb_jewelry_service_pos
-#. odoo-python
-#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
-msgid ""
-"Order %(order)s was created under %(theirs)s while this service belongs to "
-"%(ours)s, so they were left unlinked. Check which company the register "
-"trades under."
-msgstr "El pedido %(order)s se creó en %(theirs)s y este servicio pertenece a %(ours)s, así que quedaron sin enlazar. Revisa bajo qué compañía factura la caja."
 
 #. module: xb_jewelry_service_pos
 #. odoo-javascript
@@ -833,7 +850,9 @@ msgstr "Especificaciones para el joyero"
 msgid ""
 "The customer can go. These are still owed before the piece\n"
 "                    may leave for the workshop:"
-msgstr "El cliente ya se puede ir. Esto sigue pendiente antes de que la pieza salga al taller:"
+msgstr ""
+"El cliente ya se puede ir. Esto sigue pendiente antes de que la pieza salga "
+"al taller:"
 
 #. module: xb_jewelry_service_pos
 #. odoo-javascript
@@ -851,7 +870,8 @@ msgstr "Las piezas del cliente se funden para hacer otra."
 #. odoo-python
 #: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
 msgid "The piece was taken in, but the order could not be raised: %(err)s"
-msgstr "La pieza quedó en resguardo, pero no se pudo levantar el pedido: %(err)s"
+msgstr ""
+"La pieza quedó en resguardo, pero no se pudo levantar el pedido: %(err)s"
 
 #. module: xb_jewelry_service_pos
 #. odoo-javascript
@@ -870,3 +890,54 @@ msgstr "Transformación"
 #: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_intake.xml:0
 msgid "What are we going to make?"
 msgstr "¿Qué vamos a elaborar?"
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "There is still a balance"
+msgstr "Todavía hay saldo"
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid ""
+"%(ref)s cannot be handed over: %(owed)s is still owed. Charge it at the "
+"register first."
+msgstr ""
+"%(ref)s no se puede entregar: todavía se deben %(owed)s. Cóbralo primero en "
+"la caja."
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "%(ref)s still owes %(owed)s. Hand the piece over anyway?"
+msgstr "%(ref)s todavía debe %(owed)s. ¿Entregar la pieza de todas formas?"
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "Hand it over"
+msgstr "Entregar"
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.js:0
+msgid "Go back"
+msgstr "Regresar"
+
+#. module: xb_jewelry_service_pos
+#. odoo-javascript
+#: code:addons/xb_jewelry_service_pos/static/src/app/screens/jewelry_dialog.xml:0
+msgid "Balance"
+msgstr "Saldo"
+
+#. module: xb_jewelry_service_pos
+#. odoo-python
+#: code:addons/xb_jewelry_service_pos/models/repair_order.py:0
+msgid ""
+"Order %(order)s belongs to %(theirs)s while this service belongs to "
+"%(ours)s, so they were left unlinked. Check which company the register "
+"trades under."
+msgstr ""
+"El pedido %(order)s es de %(theirs)s y este servicio es de %(ours)s, así que"
+" quedaron sin enlazar. Revisa bajo qué compañía vende la caja."
