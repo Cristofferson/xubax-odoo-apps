@@ -24,6 +24,23 @@ def _money(text):
         return 0.0
 
 
+def _services_reference(airtime_reference):
+    """The bill-payments deposit reference, from the airtime one.
+
+    Each wallet is funded through its own bank reference and the two differ
+    only in the leading pair: 88xxxxxx credits airtime, 99xxxxxx credits bill
+    payments, same tail. The API only ever hands back the airtime one, so the
+    other is derived rather than fetched.
+
+    Anything that does not look like an 88 reference is left alone: better an
+    empty field than a number somebody might deposit against.
+    """
+    reference = (airtime_reference or '').strip()
+    if reference.startswith('88') and reference[2:].isdigit():
+        return '99' + reference[2:]
+    return False
+
+
 class XbTaecelAccount(models.Model):
     _name = 'xb.taecel.account'
     _description = 'TAECEL Account'
@@ -114,25 +131,31 @@ class XbTaecelAccount(models.Model):
              'practicaja or teller) to fund the AIRTIME wallet. The deposit is '
              'credited to this account automatically, with no transfer from '
              'anyone else. TAECEL issues it starting with 88.')
-    # TAECEL funds each wallet through its own bank reference, and the API only
-    # ever hands back the airtime one. The services reference has to be read by
-    # a human from TAECEL's portal, so it is captured here by hand -- without
-    # it, a shop that deposits the airtime reference expecting to fund bill
-    # payments strands the money: TAECEL only transfers between wallets of the
-    # SAME type, so it cannot be moved across afterwards.
+    # Derived, not fetched: the API only ever answers with the airtime
+    # reference, and the pair differs only in the leading pair of digits --
+    # 88xxxxxx funds airtime, 99xxxxxx funds bill payments, same tail. Kept
+    # editable (readonly=False) so an account that ever breaks the pattern can
+    # be corrected by hand without a patch.
     deposit_reference_services = fields.Char(
         string='Bill Payments Deposit Reference', copy=False,
-        help='Reference that funds the BILL PAYMENTS wallet, which TAECEL '
-             'keeps separate from airtime. The API does not return it: read it '
-             'in the TAECEL portal under Buy Balance > Available Accounts, or '
-             'in the TAECEL app under "Where to deposit", and type it here. '
-             'TAECEL issues it starting with 99.')
+        compute='_compute_deposit_reference_services',
+        store=True, readonly=False,
+        help='Reference that funds the BILL PAYMENTS wallet, kept separate '
+             'from airtime. Derived from the airtime reference: same digits '
+             'with 99 instead of 88. Edit it if your provider says otherwise.')
+
     deposit_url = fields.Char(
         string='Report a Deposit', readonly=True, copy=False,
         help="Link to TAECEL's form for reporting a deposit that was not "
              'referenced, so it can be applied manually.')
     deposit_date = fields.Datetime(
         string='Reference Read', readonly=True, copy=False)
+
+    @api.depends('deposit_reference')
+    def _compute_deposit_reference_services(self):
+        for account in self:
+            account.deposit_reference_services = _services_reference(
+                account.deposit_reference)
 
     @api.onchange('role')
     def _onchange_role(self):
@@ -245,18 +268,30 @@ class XbTaecelAccount(models.Model):
         raise UserError(_('TAECEL refused the connection:\n\n%s', result.message))
 
     # -- Funding -----------------------------------------------------------
-    def action_fetch_deposit_reference(self):
-        """Ask TAECEL for the bank reference that funds this account.
+    def action_print_deposit_sheet(self):
+        """Print the sheet somebody needs in order to fund this account.
 
         The reference belongs to whoever authenticates, so each install reads
         its own: a distributor cannot look its affiliates' references up, and
         does not need to -- every affiliate reads its own from here instead of
         waiting on a balance transfer.
 
+        Read once and kept: the reference is fixed for the life of the account,
+        so there is no reason to spend a network call every time somebody
+        prints the sheet.
+        """
+        self.ensure_one()
+        if not self.deposit_reference:
+            self._fetch_deposit_reference()
+        return self.env.ref(
+            'xb_pos_taecel.action_report_taecel_deposit').report_action(self)
+
+    def _fetch_deposit_reference(self):
+        """Read the deposit reference from the provider.
+
         Only the AIRTIME reference comes back: urlReporteCompra answers with a
-        single ``refCompra``, while TAECEL's own distributor manual shows two
-        references per account (airtime and bill payments). The other one is
-        portal-only, hence the field the user fills in by hand.
+        single ``refCompra``. The bill-payments one is derived from it (see
+        _services_reference).
         """
         self.ensure_one()
         result = self._get_client().get_deposit_reference()
@@ -268,11 +303,6 @@ class XbTaecelAccount(models.Model):
             'deposit_url': result.data.get(const.K_REPORT_URL),
             'deposit_date': fields.Datetime.now(),
         })
-        return self._notify(
-            _('Deposit reference'),
-            _('Deposit against reference %s to top up AIRTIME. Bill payments '
-              'are funded through a separate reference that TAECEL only shows '
-              'in its portal.', self.deposit_reference))
 
     # -- Balance via getBalance (CONFIRMED) --------------------------------
     def action_refresh_balance(self):

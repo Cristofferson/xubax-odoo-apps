@@ -474,13 +474,9 @@ msgid "Declined by TAECEL."
 msgstr "Rechazada por TAECEL."
 
 #. module: xb_pos_taecel
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
-msgid "Deposit Reference"
-msgstr "Referencia de depósito"
-
-#. module: xb_pos_taecel
 #: model:ir.actions.report,name:xb_pos_taecel.action_report_taecel_deposit
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "Deposit Sheet"
 msgstr "Ficha de depósito"
 
@@ -493,20 +489,14 @@ msgid ""
 msgstr "Deposita con la referencia %s para fondear TIEMPO AIRE. Los pagos de servicio se fondean con una referencia distinta, que TAECEL solo muestra en su portal."
 
 #. module: xb_pos_taecel
-#. odoo-python
-#: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
-msgid "Deposit against reference %s to top up this account."
-msgstr "Deposita con la referencia %s para abonar saldo a esta cuenta."
-
-#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
 msgid ""
 "Deposit against the reference below and the balance is credited\n"
 "                to this account automatically. Each wallet has its OWN\n"
-"                reference, and TAECEL only moves balance between wallets of the\n"
-"                same type: a deposit made with the wrong reference cannot be\n"
-"                moved across afterwards."
-msgstr "Deposita con la referencia de abajo y el saldo se abona a esta cuenta en automático. Cada bolsa tiene su PROPIA referencia, y TAECEL solo traspasa saldo entre bolsas del mismo tipo: un depósito hecho con la referencia equivocada ya no se puede mover."
+"                reference, and balance only moves between wallets of the same\n"
+"                type: a deposit made with the wrong reference cannot be moved\n"
+"                across afterwards."
+msgstr "Deposita con la referencia de abajo y el saldo se abona a esta cuenta en automático. Cada bolsa tiene su PROPIA referencia, y el saldo solo se traspasa entre bolsas del mismo tipo: un depósito hecho con la referencia equivocada ya no se puede mover."
 
 #. module: xb_pos_taecel
 #. odoo-python
@@ -790,16 +780,14 @@ msgid "No balance"
 msgstr "Sin saldo"
 
 #. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+msgid "No reference yet"
+msgstr "Aún sin referencia"
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_account__state__draft
 msgid "Not Connected"
 msgstr "Sin conexión"
-
-#. module: xb_pos_taecel
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
-msgid ""
-"Not issued by the API. Read it in the TAECEL portal\n"
-"                            under Buy Balance &gt; Available Accounts."
-msgstr "La API no la entrega. Léela en el portal de TAECEL en Comprar saldo &gt; Ver cuentas disponibles."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_carrier__field_format__1
@@ -963,7 +951,6 @@ msgid "Raw Response"
 msgstr "Respuesta en crudo"
 
 #. module: xb_pos_taecel
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "Read it from TAECEL"
 msgstr "Consúltala en TAECEL"
@@ -1009,11 +996,10 @@ msgstr "Referencia consultada"
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__deposit_reference_services
 msgid ""
-"Reference that funds the BILL PAYMENTS wallet, which TAECEL keeps separate "
-"from airtime. The API does not return it: read it in the TAECEL portal under"
-" Buy Balance > Available Accounts, or in the TAECEL app under \"Where to "
-"deposit\", and type it here. TAECEL issues it starting with 99."
-msgstr "Referencia que fondea la bolsa de PAGO DE SERVICIOS, que TAECEL mantiene separada de la de tiempo aire. La API no la devuelve: léela en el portal de TAECEL en Comprar saldo > Ver cuentas disponibles, o en la app de TAECEL en \"Dónde depositar\", y captúrala aquí. TAECEL la emite empezando con 99."
+"Reference that funds the BILL PAYMENTS wallet, kept separate from airtime. "
+"Derived from the airtime reference: same digits with 99 instead of 88. Edit "
+"it if your provider says otherwise."
+msgstr "Referencia que fondea la bolsa de PAGO DE SERVICIOS, aparte de la de tiempo aire. Se deriva de la referencia de tiempo aire: los mismos dígitos con 99 en lugar de 88. Edítala si tu proveedor indica otra."
 
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__deposit_reference
@@ -1090,7 +1076,6 @@ msgstr "Sincronizar catálogo"
 #. odoo-python
 #: code:addons/xb_pos_taecel/models/xb_taecel_account.py:0
 #: code:addons/xb_pos_taecel/models/xb_taecel_transaction.py:0
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_account_form
 msgid "TAECEL"
 msgstr "TAECEL"
@@ -1241,13 +1226,6 @@ msgid "TAECEL returned no deposit reference."
 msgstr "TAECEL no devolvió ninguna referencia de depósito."
 
 #. module: xb_pos_taecel
-#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
-msgid ""
-"TAECEL sets these destination accounts and can change them.\n"
-"                Confirm them in the TAECEL portal before a first deposit."
-msgstr "TAECEL define estas cuentas de destino y puede cambiarlas. Confírmalas en el portal de TAECEL antes de un primer depósito."
-
-#. module: xb_pos_taecel
 #: model:ir.actions.server,name:xb_pos_taecel.cron_taecel_dispatch_ir_actions_server
 msgid "TAECEL: dispatch pending recharges"
 msgstr "TAECEL: despachar recargas pendientes"
@@ -1346,6 +1324,13 @@ msgstr "Falta el producto de venta TAECEL. Reinstale el módulo o contacte a sop
 #: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
 msgid "The two references do not match."
 msgstr "Las dos referencias no coinciden."
+
+#. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.report_deposit_body
+msgid ""
+"These destination accounts are set by the provider and can\n"
+"                change. Confirm them before a first deposit."
+msgstr "Estas cuentas de destino las define el proveedor y pueden cambiar. Confírmalas antes de un primer depósito."
 
 #. module: xb_pos_taecel
 #: model:ir.model.constraint,message:xb_pos_taecel.constraint_xb_taecel_product_code_account_uniq

@@ -14,8 +14,8 @@
                             string="Refresh Balance"/>
                     <button name="action_pull_sales" type="object"
                             string="Pull Sales"/>
-                    <button name="action_fetch_deposit_reference" type="object"
-                            string="Deposit Reference"/>
+                    <button name="action_print_deposit_sheet" type="object"
+                            string="Deposit Sheet"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,connected"/>
                 </header>
