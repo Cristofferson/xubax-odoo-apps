@@ -9,6 +9,8 @@
                 <field name="server_id"/>
                 <field name="purpose"/>
                 <field name="client_type"/>
+                <field name="resolution" optional="show"/>
+                <field name="orientation" optional="hide"/>
                 <field name="logged_in" widget="boolean_toggle" readonly="1"/>
                 <field name="last_accessed"/>
                 <field name="active" widget="boolean_toggle"/>
@@ -41,11 +43,15 @@
                             <field name="xibo_display_id" readonly="1"/>
                             <field name="own_display_group_id" readonly="1"/>
                             <field name="client_type" readonly="1"/>
+                            <field name="resolution" readonly="1"/>
+                            <field name="orientation" readonly="1"/>
+                            <field name="resolution_xibo_id" readonly="1" groups="base.group_no_one"/>
                         </group>
                         <group>
                             <field name="purpose"/>
                             <field name="logged_in" readonly="1"/>
                             <field name="last_accessed" readonly="1"/>
+                            <field name="force_schedule"/>
                             <field name="active"/>
                         </group>
                     </group>

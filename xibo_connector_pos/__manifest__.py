@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Xibo Connector — Point of Sale',
-    'version': '19.0.1.5.33',
+    'version': '19.0.1.5.35',
     'category': 'Marketing/Digital Signage',
     'summary': 'AI thank-you with audio, dynamic customer display mirror, and contextual product recommendations on Xibo from your POS.',
     'description': """
@@ -13,6 +13,47 @@ Contextual Recommendations for POS via Xibo CMS.
 
 Changelog
 ---------
+19.0.1.5.35 (2026-07)
+~~~~~~~~~~~~~~~~~~~~~
+* **Screens that never reacted now do.** Some players ignore a real-time
+  layout change even though the CMS accepts it, and only ever play what is
+  on their schedule — the cart mirror and the Thank-You message simply never
+  appeared on those, with nothing in the log to explain it. Tick *Player
+  Ignores Instant Changes* on the display (Xibo Connector) and this module
+  schedules the content for exactly as long as it is shown, asks the player
+  to collect, and clears the entry afterwards. Untouched screens keep using
+  the instant push alone.
+* Ending the cart mirror now also takes it off the schedule before reverting:
+  on a schedule-only player, reverting to a schedule that still holds the
+  mirror changed nothing.
+
+19.0.1.5.34 (2026-07)
+~~~~~~~~~~~~~~~~~~~~~
+* **Thank-You message could be sent twice for one order.** Both
+  ``create()`` and ``write(state=paid)`` schedule the broadcast, and the
+  loser of that race took its database snapshot *before* the winner
+  committed (Odoo cursors run in REPEATABLE READ), so it read the "already
+  sent" flag as False, broadcast a second time and then died with
+  ``could not serialize access due to concurrent update``. The background
+  runner now works in READ COMMITTED and claims the order with a single
+  atomic ``UPDATE ... WHERE NOT sent``, and re-saving an order that is
+  already paid no longer schedules anything.
+* **Layouts are built on the canvas of the screen they target** (Customer
+  Display mirror and Recommendations), instead of always 1920x1080.
+* **The Thank-You layout is now created and repaired automatically**, on
+  the canvas of the target screen, with a *Rebuild for this screen* button
+  in the settings. Previously it was built by hand: it was designed at
+  1920x1080 whatever the screen was, and if somebody deleted it from the
+  CMS the POS kept pointing at a dead id with nothing in the log to say so.
+* **Saving the Xibo settings refreshes the POS.** Odoo's own
+  ``last_data_change`` stamp only depends on native POS fields, so open POS
+  tabs kept reading their cached copy of the Xibo settings and never called
+  the server. The stamp is now moved forward when a setting the front-end
+  reads changes.
+* Fixed: the "mirror already active" flag lived in memory, so with several
+  workers it depended on which process answered the request. It is stored
+  in the database now, and expires by itself if a revert is ever lost.
+
 19.0.1.5.33 (2026-06)
 ~~~~~~~~~~~~~~~~~~~~~
 * **Privacy — optional access key on the Thank-You page**. The public

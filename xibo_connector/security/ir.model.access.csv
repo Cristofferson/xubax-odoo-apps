@@ -19,6 +19,8 @@ access_xibo_layout_user,xibo.layout user,model_xibo_layout,group_xibo_user,1,1,0
 access_xibo_layout_manager,xibo.layout manager,model_xibo_layout,group_xibo_manager,1,1,1,1
 access_xibo_broadcast_user,xibo.broadcast user,model_xibo_broadcast,group_xibo_user,1,1,1,0
 access_xibo_broadcast_manager,xibo.broadcast manager,model_xibo_broadcast,group_xibo_manager,1,1,1,1
+access_xibo_schedule_event_user,xibo.schedule.event user,model_xibo_schedule_event,group_xibo_user,1,0,0,0
+access_xibo_schedule_event_manager,xibo.schedule.event manager,model_xibo_schedule_event,group_xibo_manager,1,1,1,1
 access_xibo_media_upload_wizard_user,xibo.media.upload.wizard user,model_xibo_media_upload_wizard,group_xibo_user,1,1,1,1
 access_xibo_media_upload_wizard_line_user,xibo.media.upload.wizard.line user,model_xibo_media_upload_wizard_line,group_xibo_user,1,1,1,1
 access_xibo_quick_display_wizard_user,xibo.quick.display.wizard user,model_xibo_quick_display_wizard,group_xibo_user,1,1,1,1

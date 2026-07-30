@@ -405,6 +405,22 @@ class PosOrder(models.Model):
                 import odoo
                 registry = odoo.modules.registry.Registry(_db_name)
                 with registry.cursor() as cr:
+                    # === Isolation level: READ COMMITTED ===
+                    # Odoo opens every cursor in REPEATABLE READ, which takes
+                    # the transaction snapshot at the FIRST statement. That
+                    # broke the dedup below: the loser of the race took its
+                    # snapshot while waiting for the advisory lock — i.e.
+                    # BEFORE the winner committed — so it still read
+                    # xibo_thanks_sent = FALSE, sent the message a second
+                    # time, and then died on `could not serialize access due
+                    # to concurrent update` when it wrote the flag.
+                    #
+                    # Under READ COMMITTED each statement takes a fresh
+                    # snapshot, so after the lock is granted we see the
+                    # winner's committed flag and step aside cleanly. This
+                    # MUST be the first statement of the transaction.
+                    cr.execute("SET TRANSACTION ISOLATION LEVEL READ COMMITTED")
+
                     # === Concurrency lock (PostgreSQL advisory lock) ===
                     # Both pos.order.create() AND write(state=paid) schedule
                     # the same callback, so up to two threads will race here.
@@ -424,45 +440,38 @@ class PosOrder(models.Model):
                     lock_key = (LOCK_NAMESPACE << 48) | (_order_id & 0xFFFFFFFFFFFF)
                     cr.execute("SELECT pg_advisory_xact_lock(%s)", (lock_key,))
 
-                    # After acquiring the lock, check the dedup flag.
-                    # The first thread will find it False, immediately mark
-                    # it True (so any racing thread that wakes up will see
-                    # True and skip), and then do the work. The second
-                    # thread (blocked above) wakes up after first commits,
-                    # finds it True and skips cleanly.
-                    cr.execute(
-                        "SELECT xibo_thanks_sent FROM pos_order WHERE id = %s",
-                        (_order_id,),
-                    )
-                    row = cr.fetchone()
-                    if not row:
-                        _logger.warning(
-                            "[XIBO POS THANKS] async runner: order_id=%s not "
-                            "found in DB (unexpected after post-commit)",
-                            _order_id,
-                        )
-                        return
-                    if row[0]:
-                        _logger.info(
-                            "[XIBO POS THANKS] async runner: order_id=%s "
-                            "already sent (lost the race) — skipping",
-                            _order_id,
-                        )
-                        return
-
-                    # === Mark sent UP-FRONT ===
-                    # Using a raw SQL UPDATE inside the same cursor avoids
-                    # the ORM cache and any 2nd-level write conflicts with
-                    # the AI server action (which also writes to this row).
-                    # We commit immediately so that ANY other process
-                    # reading this row sees the flag — including parallel
-                    # AI invocations and post-commit hooks fired in other
-                    # workers.
+                    # === Claim the order, atomically ===
+                    # One statement both checks the dedup flag and marks the
+                    # order as taken. Whoever gets a row back owns the
+                    # broadcast; everybody else exits without touching the
+                    # row, so no second writer can hit a write conflict.
+                    # Raw SQL keeps this out of the ORM cache and away from
+                    # the AI server action, which writes to this row too.
                     cr.execute(
                         "UPDATE pos_order SET xibo_thanks_sent = TRUE "
-                        "WHERE id = %s",
+                        "WHERE id = %s AND xibo_thanks_sent IS NOT TRUE "
+                        "RETURNING id",
                         (_order_id,),
                     )
+                    if not cr.fetchone():
+                        cr.execute(
+                            "SELECT xibo_thanks_sent FROM pos_order WHERE id = %s",
+                            (_order_id,),
+                        )
+                        row = cr.fetchone()
+                        if not row:
+                            _logger.warning(
+                                "[XIBO POS THANKS] async runner: order_id=%s not "
+                                "found in DB (unexpected after post-commit)",
+                                _order_id,
+                            )
+                        else:
+                            _logger.info(
+                                "[XIBO POS THANKS] async runner: order_id=%s "
+                                "already sent (lost the race) — skipping",
+                                _order_id,
+                            )
+                        return
 
                     env = odoo.api.Environment(cr, odoo.SUPERUSER_ID, {})
                     # Invalidate any cached value of the flag from the new
@@ -492,12 +501,19 @@ class PosOrder(models.Model):
         # cursor. If the transaction rolls back, the callback is never run.
         self.env.cr.postcommit.add(_launch_thread)
 
+    # States in which an order is worth a Thank-You.
+    _XIBO_THANKS_STATES = ('paid', 'done', 'invoiced')
+
     @api.model_create_multi
     def create(self, vals_list):
         orders = super().create(vals_list)
-        _logger.info("[XIBO POS THANKS] pos.order.create() hook fired: %s order(s) created",
-                     len(orders))
-        for o in orders:
+        # Only orders that are ALREADY payable-complete are worth scheduling.
+        # A draft order will come back through write(state=paid) later; if we
+        # scheduled it here too, both hooks would race for the same order.
+        due = orders.filtered(lambda o: o.state in self._XIBO_THANKS_STATES)
+        _logger.info("[XIBO POS THANKS] pos.order.create() hook fired: %s order(s) created, %s to notify",
+                     len(orders), len(due))
+        for o in due:
             try:
                 o._xibo_send_thanks_async()
             except Exception as e:
@@ -505,11 +521,18 @@ class PosOrder(models.Model):
         return orders
 
     def write(self, vals):
+        # Which records actually TRANSITION into a thank-you state — read
+        # before super(), while the old value is still there. Re-saving an
+        # order that is already paid used to schedule a second broadcast for
+        # nothing.
+        entering = self.browse()
+        if vals.get('state') in self._XIBO_THANKS_STATES:
+            entering = self.filtered(lambda o: o.state != vals['state'])
         result = super().write(vals)
-        if 'state' in vals and vals['state'] in ('paid', 'done', 'invoiced'):
+        if entering:
             _logger.info("[XIBO POS THANKS] pos.order.write() hook fired: state→%s for %s order(s) (ids=%s)",
-                         vals['state'], len(self), self.ids)
-            for o in self:
+                         vals['state'], len(entering), entering.ids)
+            for o in entering:
                 try:
                     o._xibo_send_thanks_async()
                 except Exception as e:

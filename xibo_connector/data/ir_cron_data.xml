@@ -11,6 +11,16 @@
             <field name="active" eval="True"/>
         </record>
 
+        <record id="cron_gc_schedule_events" model="ir.cron">
+            <field name="name">Xibo: Remove expired temporary schedule entries</field>
+            <field name="model_id" ref="model_xibo_schedule_event"/>
+            <field name="state">code</field>
+            <field name="code">model._gc_expired()</field>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="active" eval="True"/>
+        </record>
+
         <record id="cron_prune_event_log" model="ir.cron">
             <field name="name">Xibo: Prune event log (older than 30 days)</field>
             <field name="model_id" ref="model_xibo_event_log"/>

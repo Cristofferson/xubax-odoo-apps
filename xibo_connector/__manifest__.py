@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Xibo Connector',
-    'version': '19.0.1.6.2',
+    'version': '19.0.1.6.4',
     'category': 'Marketing/Digital Signage',
     'summary': 'Manage Xibo CMS digital signage from Odoo: displays, media, datasets, layouts, broadcasts.',
 
@@ -51,6 +51,44 @@ soporte@xubax.com
 
 Changelog
 ---------
+19.0.1.6.4 (2026-07)
+~~~~~~~~~~~~~~~~~~~~
+* **Scheduling from Odoo went to the CMS in the wrong hour.** Xibo reads
+  every scheduling date in the CMS's own local time and Odoo stores them in
+  UTC, so a broadcast set for 10:00 reached a CMS in Mexico City as 04:00 —
+  accepted by both systems, wrong on screen. Odoo now learns the CMS clock
+  offset from the CMS itself (``/api/clock``) and shifts the dates, so a
+  daylight-saving change fixes itself with no setting to maintain.
+* **Broadcasts of a layout were rejected outright.** The display groups were
+  sent under a key stripped of its ``[]``, which the CMS answers with
+  *422 Invalid Argument displayGroupIds*. Only ticker broadcasts worked.
+* **New: displays can be marked as ignoring instant changes.** Some players
+  never act on a real-time layout change even though the CMS accepts the
+  order, and only ever play what is on their schedule. Ticking *Player
+  Ignores Instant Changes* makes Odoo schedule the content for exactly as
+  long as it is needed and ask the player to collect, instead of relying on
+  the push alone. Entries created this way are tracked and removed
+  automatically, so the CMS calendar does not fill up with dead events.
+
+19.0.1.6.3 (2026-07)
+~~~~~~~~~~~~~~~~~~~~
+* **Displays now carry their screen geometry.** ``xibo.display`` stores the
+  orientation and resolution the player reports, plus the CMS resolution
+  that matches it. New ``_layout_geometry()`` returns the canvas any layout
+  aimed at that screen must use, so child modules stop hard-coding
+  1920x1080 — a portrait screen gets a portrait layout and a 3x1 videowall
+  gets the whole wall instead of only its middle panel.
+* New ``xibo.server._resolution_catalogue()`` / ``_match_resolution()``:
+  map a reported screen size onto a CMS resolution, matching exactly when
+  possible and otherwise by aspect ratio (never by pixel count, which is
+  what silently letterboxed videowalls).
+* ``change_layout()`` now sends ``downloadRequired`` so a player that never
+  cached the layout fetches it instead of silently staying on its schedule.
+* Fixed: contacts whose ``xibo_show_in_public_screens`` was never set kept
+  a NULL, which reads as "hide" — their name was replaced by the anonymous
+  greeting on screen even though the field defaults to "show". A migration
+  normalises those rows; explicit opt-outs are preserved.
+
 19.0.1.6.2 (2026-05)
 ~~~~~~~~~~~~~~~~~~~~
 * New helper ``xibo.server._dataset_insert_row(dataset_xibo_id, row_data)``:

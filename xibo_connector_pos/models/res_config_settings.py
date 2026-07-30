@@ -28,6 +28,16 @@ class ResConfigSettings(models.TransientModel):
     pos_xibo_thanks_url = fields.Char(related='pos_config_id.xibo_thanks_url', readonly=True)
     pos_xibo_thanks_require_token = fields.Boolean(related='pos_config_id.xibo_thanks_require_token', readonly=False)
 
+    def action_xibo_rebuild_thanks_layout(self):
+        """Settings button — delegate to the POS being configured.
+
+        Saves first: the layout is built from the screens and the URL of the
+        POS, and the admin usually clicks this right after changing them.
+        """
+        self.ensure_one()
+        self.execute()
+        return self.pos_config_id.action_xibo_rebuild_thanks_layout()
+
     # ④ Thank-You Audio (since v19.0.1.5.31)
     pos_xibo_thanks_audio_enabled = fields.Boolean(related='pos_config_id.xibo_thanks_audio_enabled', readonly=False)
     pos_xibo_thanks_audio_preset = fields.Selection(related='pos_config_id.xibo_thanks_audio_preset', readonly=False)

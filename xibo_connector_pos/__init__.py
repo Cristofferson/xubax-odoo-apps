@@ -68,6 +68,10 @@ _POS_CONFIG_COLUMNS = [
     ('xibo_thanks_require_token', 'BOOLEAN DEFAULT FALSE',
      'When TRUE, /xibo/thanks/<id> requires ?key=<token>. Default FALSE so '
      'existing screens keep working until their URL is updated.'),
+    # ---- Customer Display mirror state (since v1.5.34) ----
+    ('xibo_mirror_active_since', 'TIMESTAMP',
+     'When the Customer Display mirror was switched on. Replaces the old '
+     'in-memory flag, which was per-worker and therefore unreliable.'),
 ]
 
 

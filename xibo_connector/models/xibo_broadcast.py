@@ -180,8 +180,11 @@ class XiboBroadcast(models.Model):
             'eventTypeId': XIBO_EVENT_TYPE[self.display_mode],
             'campaignId': self.layout_id.xibo_campaign_id,
             'displayGroupIds[]': xibo_group_ids,
-            'fromDt': self.from_dt.strftime('%Y-%m-%d %H:%M:%S'),
-            'toDt': self.to_dt.strftime('%Y-%m-%d %H:%M:%S'),
+            # The CMS reads these in ITS OWN local time; Odoo stores UTC.
+            # Sent raw, every broadcast started as many hours late as the
+            # CMS clock is away from UTC.
+            'fromDt': self.server_id._cms_dt(self.from_dt),
+            'toDt': self.server_id._cms_dt(self.to_dt),
             'isPriority': 1 if self.is_priority else 0,
             'displayOrder': 0,
         }
@@ -196,8 +199,9 @@ class XiboBroadcast(models.Model):
                 if dow:
                     body['recurrenceRepeatsOn'] = dow
 
-        clean_body = {k.rstrip('[]'): v for k, v in body.items()}
-        resp = self.server_id._request('POST', '/api/schedule', data=clean_body)
+        # Keep the [] on displayGroupIds: PHP only builds an array from a key
+        # that carries it, so stripping it dropped the display groups.
+        resp = self.server_id._request('POST', '/api/schedule', data=body)
         event_id = resp.get('eventId') if isinstance(resp, dict) else False
         self.write({
             'xibo_event_id': event_id,

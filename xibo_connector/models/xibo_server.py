@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import logging
+import re
 import time
 from datetime import timedelta
 
@@ -13,6 +14,9 @@ _logger = logging.getLogger(__name__)
 
 DEFAULT_TIMEOUT = 30
 MAX_LOG_BODY = 2000
+# How long a learned CMS clock offset is trusted before asking again. Short
+# enough to pick up a daylight-saving change on the day it happens.
+CMS_CLOCK_TTL = 6 * 3600
 
 
 def _reload_action(notification=None):
@@ -55,6 +59,21 @@ class XiboServer(models.Model):
         string='Use Real-Time Refresh', default=True,
         help="When enabled, Odoo asks the CMS to push an XMR refresh "
              "to the affected display group(s) after data changes.",
+    )
+
+    # ---- CMS clock (since v19.0.1.6.4) ----
+    # Xibo reads every scheduling date in the CMS's own local time, while Odoo
+    # stores them in UTC. Without this offset an event scheduled from Odoo
+    # starts hours late — silently, because both systems accept the value.
+    cms_utc_offset = fields.Integer(
+        string='CMS Clock Offset (min)', readonly=True, copy=False,
+        help="Minutes the CMS clock runs ahead of UTC (negative when behind). "
+             "Learned from the CMS itself, so a daylight-saving change fixes "
+             "itself. Note: a CMS at UTC-10:00 or further behind cannot be "
+             "told apart from its UTC+14-ish counterpart by clock alone.",
+    )
+    cms_utc_offset_checked = fields.Datetime(
+        string='CMS Clock Read On', readonly=True, copy=False,
     )
 
     access_token = fields.Char(readonly=True, copy=False, groups='xibo_connector.group_xibo_manager')
@@ -392,7 +411,7 @@ class XiboServer(models.Model):
     # =========================================================================
     # XMR helpers (Xibo Message Relay) — instant layout changes on displays
     # =========================================================================
-    def change_layout(self, display_group_xibo_id, layout_xibo_id=None, duration=0, change_mode='replace', campaign_xibo_id=None):
+    def change_layout(self, display_group_xibo_id, layout_xibo_id=None, duration=0, change_mode='replace', campaign_xibo_id=None, download_required=True):
         """Send a `changeLayout` action via XMR to a display group.
 
         :param display_group_xibo_id: the Xibo *displayGroupId* (not Odoo id)
@@ -400,6 +419,11 @@ class XiboServer(models.Model):
         :param duration: seconds to keep the layout; 0 = use layout's natural duration
         :param change_mode: 'replace' (interrupt) or 'queue' (after current)
         :param campaign_xibo_id: the Xibo *campaignId* (stable across publishes - PREFERRED)
+        :param download_required: ask the CMS to make sure the player has the
+            layout downloaded before switching to it. The CMS only forces
+            this on its own the first time a layout is assigned to the
+            group; without it a player that never cached the layout has
+            nothing to show and silently stays on its schedule.
         :returns: response dict from Xibo, or False on failure
         """
         self.ensure_one()
@@ -407,6 +431,8 @@ class XiboServer(models.Model):
             payload = {
                 'changeMode': change_mode,
             }
+            if download_required:
+                payload['downloadRequired'] = 1
             # Prefer campaignId because it doesn't change on publish/unpublish.
             if campaign_xibo_id:
                 payload['campaignId'] = campaign_xibo_id
@@ -430,6 +456,123 @@ class XiboServer(models.Model):
             )
             return False
 
+    # =========================================================================
+    # CMS clock — every scheduling date travels in the CMS's local time
+    # =========================================================================
+    def _cms_utc_offset(self, force=False):
+        """Return the CMS clock offset from UTC, in minutes.
+
+        Asking the administrator to type a timezone is how integrations get
+        this wrong twice a year, so we measure it instead: the CMS tells us
+        what time it thinks it is and we compare with UTC.
+        """
+        self.ensure_one()
+        checked = self.cms_utc_offset_checked
+        if not force and checked and (fields.Datetime.now() - checked).total_seconds() < CMS_CLOCK_TTL:
+            return self.cms_utc_offset
+        offset = self._read_cms_clock_offset()
+        if offset is None:
+            # Keep the last known value rather than silently shifting to UTC.
+            return self.cms_utc_offset
+        if offset != self.cms_utc_offset:
+            _logger.info("Xibo CMS clock offset for %s: %s min (was %s)",
+                         self.name, offset, self.cms_utc_offset)
+        self.sudo().write({
+            'cms_utc_offset': offset,
+            'cms_utc_offset_checked': fields.Datetime.now(),
+        })
+        return offset
+
+    def _read_cms_clock_offset(self):
+        """Read /api/clock and return the offset in minutes, or None on failure."""
+        self.ensure_one()
+        try:
+            resp = self._request('GET', '/api/clock', raise_on_error=False)
+        except Exception as e:
+            _logger.warning("Could not read the Xibo CMS clock: %s", e)
+            return None
+        clock = resp.get('time') if isinstance(resp, dict) else None
+        match = re.match(r'\s*(\d{1,2}):(\d{2})', clock or '')
+        if not match:
+            _logger.warning("Unexpected answer from the Xibo CMS clock: %r", resp)
+            return None
+        cms_minutes = int(match.group(1)) * 60 + int(match.group(2))
+        now = fields.Datetime.now()
+        diff = (cms_minutes - (now.hour * 60 + now.minute)) % 1440
+        if diff > 840:  # beyond UTC+14 means the CMS is behind us, not ahead
+            diff -= 1440
+        # The clock has no seconds, so a reading taken across a minute
+        # boundary is off by one. Real offsets are whole quarters of an hour.
+        return int(round(diff / 15.0) * 15)
+
+    def _cms_dt(self, dt):
+        """Format a UTC datetime the way the CMS expects it: its own local time."""
+        self.ensure_one()
+        return fields.Datetime.to_string(dt + timedelta(minutes=self._cms_utc_offset()))
+
+    # =========================================================================
+    # Schedule helpers — for players that ignore an instant layout change
+    # =========================================================================
+    def schedule_layout(self, display_group_xibo_id, campaign_xibo_id,
+                        seconds=0, is_priority=True, from_dt=None):
+        """Put a layout on a display group's schedule and return the event id.
+
+        Some players (Windows 4 R407 among them) never act on a `changeLayout`
+        pushed over XMR, but do obey their schedule. Scheduling the layout and
+        asking the player to collect gets the content on screen on those
+        players; `change_layout` still brings it to the front instantly on the
+        ones that do listen.
+
+        :param seconds: length of the window; 0 leaves it open-ended (the
+            caller is then responsible for deleting the event).
+        :returns: the Xibo eventId, or False on failure.
+        """
+        self.ensure_one()
+        if not (display_group_xibo_id and campaign_xibo_id):
+            return False
+        start = from_dt or fields.Datetime.now()
+        # Start a minute in the past: the player compares against its own
+        # clock, and a window that begins "now" can be missed by a few
+        # seconds of drift.
+        start -= timedelta(minutes=1)
+        end = start + timedelta(seconds=seconds + 60) if seconds else start + timedelta(days=365)
+        try:
+            resp = self._request('POST', '/api/schedule', data={
+                'eventTypeId': 1,  # Layout / Campaign
+                'campaignId': campaign_xibo_id,
+                # The CMS runs on PHP: only a key ending in [] is parsed as an
+                # array. Sent as a plain key it arrives as a bare string and
+                # the event is created without any display group.
+                'displayGroupIds[]': display_group_xibo_id,
+                'dayPartId': 1,  # Custom — honours fromDt/toDt
+                'fromDt': self._cms_dt(start),
+                'toDt': self._cms_dt(end),
+                'isPriority': 1 if is_priority else 0,
+                'displayOrder': 0,
+            }, raise_on_error=False)
+        except Exception as e:
+            _logger.warning("Xibo schedule failed (dg=%s, campaign=%s): %s",
+                            display_group_xibo_id, campaign_xibo_id, e)
+            return False
+        event_id = resp.get('eventId') if isinstance(resp, dict) else None
+        if not event_id:
+            _logger.warning("Xibo schedule returned no eventId (dg=%s, campaign=%s): %r",
+                            display_group_xibo_id, campaign_xibo_id, resp)
+            return False
+        return event_id
+
+    def delete_schedule_event(self, event_id):
+        """Remove a scheduled event from the CMS. True when it is gone."""
+        self.ensure_one()
+        if not event_id:
+            return False
+        try:
+            self._request('DELETE', f'/api/schedule/{event_id}', raise_on_error=False)
+            return True
+        except Exception as e:
+            _logger.warning("Could not delete Xibo event %s: %s", event_id, e)
+            return False
+
     def revert_layout(self, display_group_xibo_id):
         """Send a `revertToSchedule` action via XMR — return the display group
         to its normal schedule. (Xibo 3.x+ renamed `revertLayout` to
@@ -449,6 +592,101 @@ class XiboServer(models.Model):
                 display_group_xibo_id, e
             )
             return False
+
+    # =========================================================================
+    # Resolution helpers — pick the right canvas for auto-created layouts
+    # =========================================================================
+    def _resolution_catalogue(self):
+        """Return the CMS resolution list as a list of dicts.
+
+        Empty list when the call fails; every caller degrades to 1080p
+        landscape in that case.
+        """
+        self.ensure_one()
+        try:
+            payload = self._request('GET', '/api/resolution', raise_on_error=False)
+        except Exception as e:
+            _logger.warning("Xibo: could not read the resolution catalogue: %s", e)
+            return []
+        if not isinstance(payload, list):
+            return []
+        return payload
+
+    def _match_resolution(self, resolution, orientation=None, catalogue=None):
+        """Map a screen geometry onto a CMS resolution.
+
+        :param resolution: what the player reports, e.g. ``'1080x1920'``
+        :param orientation: ``'portrait'`` / ``'landscape'``, used when the
+                            exact size is not in the catalogue
+        :param catalogue: pre-fetched ``_resolution_catalogue()`` output, to
+                          avoid one API call per display during a sync
+        :returns: ``{'resolution_id', 'width', 'height'}`` — falls back to
+                  1080p landscape when nothing matches.
+        """
+        self.ensure_one()
+        fallback = {'resolution_id': 1, 'width': 1920, 'height': 1080}
+        if catalogue is None:
+            catalogue = self._resolution_catalogue()
+        if not catalogue:
+            return fallback
+
+        try:
+            width, height = (resolution or '').lower().split('x')
+            width, height = int(width), int(height)
+        except (ValueError, AttributeError):
+            width = height = 0
+
+        def _entry(item):
+            return {
+                'resolution_id': item.get('resolutionId'),
+                'width': item.get('width') or 0,
+                'height': item.get('height') or 0,
+            }
+
+        # 1. Exact match on the reported size.
+        if width and height:
+            for item in catalogue:
+                if item.get('width') == width and item.get('height') == height:
+                    return _entry(item)
+
+        # 2. No exact match. What ruins a screen is the SHAPE, not the pixel
+        #    count: the player scales a layout to fit, but a canvas with the
+        #    wrong aspect ratio gets letterboxed — which is why a 3x1
+        #    videowall reporting 5780x1080 must NOT be handed a 1920x1080
+        #    canvas (it would only paint the middle screen). So pick the
+        #    closest aspect ratio, and only then the closest size.
+        portrait = (orientation or '').lower() == 'portrait'
+        if width and height:
+            portrait = height > width
+        candidates = [
+            item for item in catalogue
+            if item.get('enabled', 1) and item.get('width') and item.get('height')
+            and ((item['height'] > item['width']) == portrait)
+        ]
+        if not candidates:
+            return fallback
+
+        if width and height:
+            target_ratio = width / height
+            target_area = width * height
+            return _entry(min(candidates, key=lambda item: (
+                # 1. same shape
+                round(abs(item['width'] / item['height'] - target_ratio), 3),
+                # 2. never downscale on purpose: a canvas smaller than the
+                #    screen means the player upscales it and text goes soft
+                item['width'] * item['height'] < target_area,
+                # 3. and among those, the closest one
+                abs(item['width'] * item['height'] - target_area),
+            )))
+
+        # Nothing but the orientation to go on: 1080p is the safe default —
+        # universally available and cheap for any player to render.
+        for item in candidates:
+            if {item['width'], item['height']} == {1920, 1080}:
+                return _entry(item)
+        return _entry(min(
+            candidates, key=lambda item: item['width'] * item['height'],
+        ))
 
     # =========================================================================
     # DataSet helpers — direct API access for child modules that need to push

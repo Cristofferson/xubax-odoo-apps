@@ -9,4 +9,5 @@ from . import xibo_dataset
 from . import xibo_dataset_column
 from . import xibo_dataset_row
 from . import xibo_broadcast
+from . import xibo_schedule_event
 from . import res_partner

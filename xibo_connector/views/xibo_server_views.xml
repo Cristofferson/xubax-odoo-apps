@@ -74,6 +74,8 @@
                                     <field name="company_id" groups="base.group_multi_company"/>
                                     <field name="xmr_enabled"/>
                                     <field name="log_api_calls"/>
+                                    <field name="cms_utc_offset" groups="base.group_no_one"/>
+                                    <field name="cms_utc_offset_checked" groups="base.group_no_one"/>
                                 </group>
                             </group>
                             <group col="1">

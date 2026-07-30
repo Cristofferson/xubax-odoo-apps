@@ -64,7 +64,18 @@
                             </div>
                             <div class="row mt8">
                                 <label for="pos_xibo_thanks_layout_id" class="col-lg-4 o_light_label" string="Thank-You Layout in Xibo"/>
-                                <field name="pos_xibo_thanks_layout_id" options="{'no_create': True}" class="col-lg-8"/>
+                                <div class="col-lg-8">
+                                    <field name="pos_xibo_thanks_layout_id" options="{'no_create': True}"/>
+                                    <button name="action_xibo_rebuild_thanks_layout" type="object"
+                                            string="Rebuild for this screen" class="btn-link ps-0"
+                                            icon="fa-refresh"
+                                            invisible="not pos_xibo_thanks_display_ids"/>
+                                    <div class="text-muted small mt-1">
+                                        Leave empty and save: the layout is built automatically on the
+                                        canvas of the target screen. Rebuild it if you change the screen
+                                        or its resolution — a videowall needs the full width, not 1920×1080.
+                                    </div>
+                                </div>
                             </div>
                             <div class="row mt8">
                                 <label for="pos_xibo_thanks_duration" class="col-lg-4 o_light_label" string="Display For (s)"/>

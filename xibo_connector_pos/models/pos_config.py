@@ -8,6 +8,19 @@ from odoo.exceptions import UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
 
+# A Customer Display mirror older than this is considered gone, so the next
+# cart re-sends the XMR command instead of trusting a stale flag.
+MIRROR_STALE_AFTER = 4 * 3600  # seconds
+
+# pos.config fields the POS front-end reads (see static/src/cart_events.js).
+# Changing any of them must invalidate the browser-side POS cache.
+XIBO_POS_DATA_FIELDS = (
+    'xibo_server_id',
+    'xibo_customer_display_enabled',
+    'xibo_customer_display_device_uuid',
+    'xibo_reco_enabled',
+)
+
 
 class PosConfig(models.Model):
     _inherit = 'pos.config'
@@ -170,6 +183,16 @@ class PosConfig(models.Model):
         string='Mirror Duration (s)', default=0,
         help="0 = stay until cart is cleared/paid (recommended).",
     )
+    # Set when the mirror is switched on, cleared when it is reverted. Lives
+    # in the database on purpose: Odoo runs several workers and each one
+    # would otherwise keep its own idea of whether the screen is already
+    # mirroring (see _xibo_is_mirror_active).
+    xibo_mirror_active_since = fields.Datetime(
+        string='Xibo Mirror Active Since', readonly=True, copy=False,
+        help="Timestamp of the last time this POS switched its screen to the "
+             "Customer Display mirror. Used to avoid re-sending the same XMR "
+             "command on every product added to the cart.",
+    )
 
     # ④ Recommendations
     xibo_reco_enabled = fields.Boolean(string='Enable Contextual Recommendations', default=False)
@@ -264,6 +287,19 @@ class PosConfig(models.Model):
     # Auto-apply Customer Display Mirror on save
     def write(self, vals):
         result = super().write(vals)
+        # Odoo's own `last_data_change` stamp only depends on native POS
+        # fields (see point_of_sale's _compute_local_data_integrity), so
+        # saving the Xibo settings left every open POS tab running on its
+        # cached copy: cart_events.js kept reading the OLD value of
+        # xibo_server_id / *_enabled and never called the server. Moving the
+        # stamp forward makes the next reload of the POS drop its IndexedDB.
+        if any(k in vals for k in XIBO_POS_DATA_FIELDS):
+            try:
+                super().write({'last_data_change': fields.Datetime.now()})
+            except Exception as e:
+                # Never block saving the settings over a cache hint.
+                _logger.warning(
+                    "Xibo: could not refresh the POS data stamp: %s", e)
         if any(k in vals for k in (
                 'xibo_customer_display_enabled',
                 'xibo_customer_display_display_id',
@@ -291,6 +327,20 @@ class PosConfig(models.Model):
                             )
                         except Exception:
                             pass
+        # Same idea for the Thank-You screen: picking the target display is
+        # all the admin should have to do. Only builds when the current
+        # layout is missing, deleted or the wrong size for the screen.
+        if any(k in vals for k in (
+                'xibo_thanks_enabled',
+                'xibo_thanks_display_ids',
+                'xibo_server_id')):
+            for rec in self:
+                try:
+                    rec._xibo_ensure_thanks_layout()
+                except Exception as e:
+                    _logger.warning(
+                        "Auto-apply Thank-You layout failed for POS %s: %s",
+                        rec.name, e)
         return result
 
     def _xibo_has_target_displays(self):
@@ -328,11 +378,40 @@ class PosConfig(models.Model):
 
     def _xibo_create_customer_display_layout(self, name):
         self.ensure_one()
+        # Build the layout on the canvas of the SCREEN it targets. A portrait
+        # screen given a 1920x1080 layout shows a letterboxed sliver, which
+        # is what "the mirror looks broken" usually means.
+        return self._xibo_build_url_layout(
+            name,
+            self.xibo_customer_display_url,
+            self.xibo_customer_display_display_id._layout_geometry(),
+            widget_name=_("POS Customer Display"),
+        )
+
+    def _xibo_build_url_layout(self, name, url, geometry, widget_name=None,
+                               duration=86400):
+        """Create a published Xibo layout showing a single Webpage widget.
+
+        Shared by the Customer Display mirror and the Thank-You screen: both
+        are "one layout, one web page, full canvas".
+
+        :param geometry: ``_layout_geometry()`` output of the target display —
+                         the layout is built on THAT canvas, so a portrait
+                         screen or a videowall gets the whole surface instead
+                         of a centred 16:9 island.
+        :param duration: how long the widget lasts. The mirror stays up until
+                         the cart is cleared, so it keeps the 24h default;
+                         the Thank-You screen passes its own duration so the
+                         layout ends when the message does.
+        """
+        self.ensure_one()
         server = self.xibo_server_id
+        if not url:
+            raise UserError(_("There is no URL to show on the Xibo layout yet."))
         layout_resp = server._request('POST', '/api/layout', data={
             'name': name,
             'description': _("Auto-created for POS %s") % self.name,
-            'resolutionId': 1,
+            'resolutionId': geometry['resolution_id'],
         })
         published_layout_id = layout_resp.get('layoutId')
         campaign_id = layout_resp.get('campaignId') or 0
@@ -363,8 +442,8 @@ class PosConfig(models.Model):
                 'POST', f'/api/region/{draft_layout_id}',
                 data={
                     'type': 'playlist',
-                    'width': 1920,
-                    'height': 1080,
+                    'width': geometry['width'],
+                    'height': geometry['height'],
                     'top': 0,
                     'left': 0,
                 },
@@ -405,10 +484,10 @@ class PosConfig(models.Model):
         server._request(
             'PUT', f'/api/playlist/widget/{widget_id}',
             data={
-                'name': _("POS Customer Display"),
-                'uri': self.xibo_customer_display_url,
-                'link': self.xibo_customer_display_url,
-                'duration': 86400,
+                'name': widget_name or _("POS Customer Display"),
+                'uri': url,
+                'link': url,
+                'duration': duration,
                 'useDuration': 1,
                 'transparency': 0,
                 'modeId': 1,
@@ -434,8 +513,115 @@ class PosConfig(models.Model):
             'server_id': server.id,
             'xibo_layout_id': final_layout_id,
             'xibo_campaign_id': final_campaign_id,
-            'duration': 86400,
+            'duration': duration,
         })
+
+    # ===== ③b Thank-You layout =====
+    # Unlike the mirror, the Thank-You layout used to be built by hand in the
+    # CMS. Two things went wrong in the field: the layout was designed at
+    # 1920x1080 no matter what the screen was (a 3x1 videowall then only lit
+    # its middle panel), and when somebody deleted the layout from the CMS
+    # the POS kept pointing at a dead id, so sales stopped showing anything
+    # with nothing in the log to explain it. Both are now checked and fixed.
+
+    def _xibo_thanks_layout_geometry(self):
+        """Canvas for the Thank-You layout: that of the screens it targets.
+
+        With several target screens only one canvas can win — the first one.
+        Mixed orientations need one POS per screen shape.
+        """
+        self.ensure_one()
+        return self.xibo_thanks_display_ids[:1]._layout_geometry()
+
+    def _xibo_thanks_layout_status(self):
+        """Why the Thank-You layout needs rebuilding, or '' when it is fine.
+
+        Returns one of: ``'missing'`` (nothing configured), ``'deleted'``
+        (gone from the CMS), ``'resized'`` (canvas no longer matches the
+        screen), or ``''``.
+        """
+        self.ensure_one()
+        layout = self.xibo_thanks_layout_id
+        if not (layout and layout.xibo_layout_id):
+            return 'missing'
+        detail = self.xibo_server_id._request(
+            'GET', '/api/layout',
+            params={'layoutId': layout.xibo_layout_id},
+            raise_on_error=False,
+        )
+        if not (isinstance(detail, list) and detail):
+            return 'deleted'
+        geometry = self._xibo_thanks_layout_geometry()
+        try:
+            actual = (int(detail[0].get('width')), int(detail[0].get('height')))
+        except (TypeError, ValueError):
+            return ''  # CMS did not report a size; leave the layout alone
+        if actual != (geometry['width'], geometry['height']):
+            return 'resized'
+        return ''
+
+    def _xibo_ensure_thanks_layout(self, force=False):
+        """Make sure the Thank-You layout exists and fits the target screen.
+
+        :param force: rebuild even when the current layout checks out.
+        :returns: the ``xibo.layout`` in use, or False when this POS is not
+                  configured for the URL-render Thank-You flow.
+        """
+        self.ensure_one()
+        if not (self.xibo_thanks_enabled and self.xibo_server_id
+                and self.xibo_thanks_display_ids):
+            return False
+        if self.xibo_server_id.state != 'connected':
+            return False
+        reason = 'forced' if force else self._xibo_thanks_layout_status()
+        if not reason:
+            return self.xibo_thanks_layout_id
+        geometry = self._xibo_thanks_layout_geometry()
+        _logger.info(
+            "[XIBO POS THANKS] rebuilding the Thank-You layout for POS %s "
+            "(reason=%s, canvas=%sx%s, resolutionId=%s)",
+            self.name, reason, geometry['width'], geometry['height'],
+            geometry['resolution_id'],
+        )
+        # Timestamped like the mirror's: Xibo enforces unique layout names
+        # per owner, and earlier attempts may have left orphans behind.
+        name = _("POS Thank-You — %s [%s]") % (
+            self.name, fields.Datetime.now().strftime('%Y%m%d-%H%M%S'),
+        )
+        layout = self._xibo_build_url_layout(
+            name, self.xibo_thanks_url, geometry,
+            widget_name=_("POS Thank-You"),
+        )
+        self.sudo().write({'xibo_thanks_layout_id': layout.id})
+        return layout
+
+    def action_xibo_rebuild_thanks_layout(self):
+        """Settings button: rebuild the Thank-You layout from scratch."""
+        self.ensure_one()
+        layout = self._xibo_ensure_thanks_layout(force=True)
+        if not layout:
+            raise UserError(_(
+                "Enable the Thank-You message, pick a connected Xibo server "
+                "and at least one Thank-You screen first."))
+        geometry = self._xibo_thanks_layout_geometry()
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': _("Thank-You layout ready"),
+                'message': _(
+                    "%(layout)s built at %(width)s×%(height)s for %(screen)s. "
+                    "It is not scheduled in the CMS — the POS switches to it "
+                    "on each sale.",
+                    layout=layout.name,
+                    width=geometry['width'],
+                    height=geometry['height'],
+                    screen=self.xibo_thanks_display_ids[:1].display_name,
+                ),
+                'type': 'success',
+                'sticky': False,
+            },
+        }
 
     @staticmethod
     def _xibo_get_or_create_draft(server, published_layout_id):
@@ -565,21 +751,92 @@ class PosConfig(models.Model):
 
         return True
 
-    # In-memory tracking of which POS configs are currently mirroring.
-    # This avoids re-sending changeLayout XMR on every product added.
-    _xibo_mirror_active = set()
-
     def _xibo_set_mirror_active(self, active):
         """Mark this pos.config as having an active Customer Display mirror
         on its target screen. Used to deduplicate XMR calls when the
-        cashier adds multiple products to the same cart."""
-        if active:
-            self.__class__._xibo_mirror_active.add(self.id)
-        else:
-            self.__class__._xibo_mirror_active.discard(self.id)
+        cashier adds multiple products to the same cart.
+
+        Stored in the database (not in memory) because Odoo serves the POS
+        from several worker processes: with a per-process flag, whether the
+        mirror was "already active" depended on which worker answered the
+        RPC, so the same cart both skipped and re-sent XMR at random.
+        """
+        self.ensure_one()
+        self.sudo().write({
+            'xibo_mirror_active_since': fields.Datetime.now() if active else False,
+        })
 
     def _xibo_is_mirror_active(self):
-        return self.id in self.__class__._xibo_mirror_active
+        """True while this POS is known to be showing the mirror.
+
+        The flag self-heals: a mirror older than MIRROR_STALE_AFTER is
+        treated as gone, so a lost revert (worker restart, network blip,
+        someone changing the layout from the CMS) cannot leave the POS
+        permanently convinced that the screen is already mirroring.
+        """
+        self.ensure_one()
+        since = self.xibo_mirror_active_since
+        if not since:
+            return False
+        age = (fields.Datetime.now() - since).total_seconds()
+        return age < MIRROR_STALE_AFTER
+
+    # ===== Stubborn players — schedule the layout instead of only pushing it =====
+
+    def _xibo_show_on_screen(self, screen, layout, seconds, purpose):
+        """Put `layout` on `screen` right now; return the CMS answer.
+
+        Most players act on the layout change Odoo pushes over XMR and need
+        nothing else. The ones ticked as *Player Ignores Instant Changes* only
+        ever play what their schedule says, so for those we first schedule the
+        layout for exactly as long as we need it and ask the player to collect
+        — which reaches it over the same XMR channel and is immediate. The
+        push still follows, because on a player that does listen it is what
+        makes the change instant.
+
+        The scheduled window is bounded, so a screen recovers on its own even
+        if the entry is never removed.
+        """
+        self.ensure_one()
+        dg_xibo_id = screen.own_display_group_id
+        if not dg_xibo_id:
+            return False
+        if screen.force_schedule and layout.xibo_campaign_id:
+            self._xibo_drop_schedule(purpose)
+            event_id = self.xibo_server_id.schedule_layout(
+                dg_xibo_id, layout.xibo_campaign_id, seconds=seconds,
+            )
+            if event_id:
+                self.env['xibo.schedule.event'].track(
+                    server=self.xibo_server_id,
+                    event_id=event_id,
+                    display_group_xibo_id=dg_xibo_id,
+                    expires_at=fields.Datetime.add(fields.Datetime.now(), seconds=seconds),
+                    purpose=purpose,
+                    layout_name=layout.name,
+                )
+                self.xibo_server_id._trigger_collect_now([dg_xibo_id])
+                _logger.info(
+                    "[XIBO POS] scheduled layout for stubborn player: screen=%s event=%s window=%ss",
+                    screen.name, event_id, seconds,
+                )
+        return self.xibo_server_id.change_layout(
+            dg_xibo_id,
+            layout_xibo_id=layout.xibo_layout_id,
+            campaign_xibo_id=layout.xibo_campaign_id,
+            duration=seconds if seconds and seconds < MIRROR_STALE_AFTER else 0,
+            change_mode='replace',
+        )
+
+    def _xibo_drop_schedule(self, purpose):
+        """Remove the schedule entries this POS created for `purpose`."""
+        self.ensure_one()
+        entries = self.env['xibo.schedule.event'].sudo().search([
+            ('purpose', '=', purpose),
+        ])
+        if entries:
+            entries.drop()
+        return True
 
     def _xibo_activate_customer_display(self):
         self.ensure_one()
@@ -600,12 +857,14 @@ class PosConfig(models.Model):
                      dg_xibo_id,
                      self.xibo_customer_display_layout_id.xibo_campaign_id,
                      self.xibo_customer_display_layout_id.xibo_layout_id)
-        result = self.xibo_server_id.change_layout(
-            dg_xibo_id,
-            layout_xibo_id=self.xibo_customer_display_layout_id.xibo_layout_id,
-            campaign_xibo_id=self.xibo_customer_display_layout_id.xibo_campaign_id,
-            duration=self.xibo_customer_display_duration or 0,
-            change_mode='replace',
+        # The mirror stays up until the cart is cleared, so its window is the
+        # same one the stale-mirror flag uses: long enough for a real basket,
+        # short enough that a lost revert cannot strand the screen.
+        result = self._xibo_show_on_screen(
+            self.xibo_customer_display_display_id,
+            self.xibo_customer_display_layout_id,
+            seconds=self.xibo_customer_display_duration or MIRROR_STALE_AFTER,
+            purpose='pos-mirror-%s' % self.id,
         )
         _logger.info("[XIBO POS] change_layout result: %s", result)
         self._xibo_set_mirror_active(True)
@@ -622,6 +881,12 @@ class PosConfig(models.Model):
         if not dg_xibo_id:
             return False
         _logger.info("[XIBO POS] calling revert_layout: display_group=%s", dg_xibo_id)
+        # Take the mirror off the schedule before reverting: on a player that
+        # only follows its schedule, reverting to a schedule that still holds
+        # the mirror changes nothing.
+        self._xibo_drop_schedule('pos-mirror-%s' % self.id)
+        if self.xibo_customer_display_display_id.force_schedule:
+            self.xibo_server_id._trigger_collect_now([dg_xibo_id])
         result = self.xibo_server_id.revert_layout(dg_xibo_id)
         _logger.info("[XIBO POS] revert_layout result: %s", result)
         self._xibo_set_mirror_active(False)
@@ -774,12 +1039,10 @@ class PosConfig(models.Model):
                 screen.name, dg_xibo_id,
                 layout.xibo_campaign_id, layout.xibo_layout_id, duration,
             )
-            result = self.xibo_server_id.change_layout(
-                dg_xibo_id,
-                layout_xibo_id=layout.xibo_layout_id,
-                campaign_xibo_id=layout.xibo_campaign_id,
-                duration=duration,
-                change_mode='replace',
+            result = self._xibo_show_on_screen(
+                screen, layout,
+                seconds=duration,
+                purpose='pos-thanks-%s-%s' % (self.id, screen.id),
             )
             if result is not False and result is not None:
                 successes += 1
@@ -816,10 +1079,13 @@ class PosConfig(models.Model):
         if not media:
             return False
         try:
+            # Same canvas rule as the mirror: follow the target screen.
+            # With several targets we can only pick one — the first one wins.
+            geometry = self.xibo_display_ids[:1]._layout_geometry()
             layout = self.env['xibo.layout']._create_simple_image_layout(
                 self.xibo_server_id, media[0],
                 _('Reco: %s') % product.display_name[:40],
-                resolution_id=1,
+                resolution_id=geometry['resolution_id'],
             )
         except Exception as e:
             _logger.warning("Reco layout build failed: %s", e)
