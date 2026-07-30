@@ -5,13 +5,26 @@
     XUBAX AI Social Content Planner sits on top of Odoo's native <b>Social Marketing</b>.
     Describe your brand once, pick a month, and AI builds the full strategy — themes, copy,
     calls to action, hashtags <b>and on-brand images</b> — per network. Approve and push:
-    the posts publish through Odoo's own scheduler and calendar.
+    the posts publish through Odoo's own scheduler and calendar. Then it reads the
+    engagement those posts earned and plans the next month around what worked.
   </p>
 
   <div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:28px;">
     <div style="flex:1 1 280px;background:#fff;border:1px solid #e4e6f0;border-radius:12px;padding:20px;">
+      <h3 style="color:#714B67;margin:0 0 8px;">It learns from what worked</h3>
+      <p>The real engagement your connected accounts report is fed back into next month's strategy: best and worst angles, image vs text-only, best weekdays. A tab shows you <b>exactly</b> what the AI was told.</p>
+    </div>
+    <div style="flex:1 1 280px;background:#fff;border:1px solid #e4e6f0;border-radius:12px;padding:20px;">
+      <h3 style="color:#714B67;margin:0 0 8px;">Refine with AI</h3>
+      <p>One click on a post — or a whole selection: shorter, warmer, more professional, emoji-free, stronger CTA, or anything you type. Every network version is rewritten at once and the previous wording is kept in the chatter.</p>
+    </div>
+    <div style="flex:1 1 280px;background:#fff;border:1px solid #e4e6f0;border-radius:12px;padding:20px;">
+      <h3 style="color:#714B67;margin:0 0 8px;">Autopilot</h3>
+      <p>Pick a day of the month and next month's plan builds itself, then lands as an activity for whoever reviews it. Your posting weekdays, times and timezone, per brand. <b>Nothing is ever published without approval.</b></p>
+    </div>
+    <div style="flex:1 1 280px;background:#fff;border:1px solid #e4e6f0;border-radius:12px;padding:20px;">
       <h3 style="color:#714B67;margin:0 0 8px;">AI strategy &amp; copy</h3>
-      <p>Monthly theme, per-post copy, CTA, hashtags and inferred trends — written in your brand voice. It never invents testimonials, prices or dates.</p>
+      <p>Monthly theme, per-post copy, CTA, hashtags and inferred trends — written in your brand voice. It never invents testimonials, prices, dates or certifications.</p>
     </div>
     <div style="flex:1 1 280px;background:#fff;border:1px solid #e4e6f0;border-radius:12px;padding:20px;">
       <h3 style="color:#714B67;margin:0 0 8px;">On-brand images, two ways</h3>
@@ -47,6 +60,7 @@
         <li><b>Generate Month</b> — pick the brand, month and accounts.</li>
         <li>AI writes the strategy and queues per-post copy &amp; images (async cron).</li>
         <li>Review, approve, then <b>Push Approved</b> — they schedule as native posts.</li>
+        <li>Next month, turn on <b>Autopilot</b> and just review what it drafts.</li>
       </ol>
     </div>
     <div style="flex:1 1 340px;background:#faf9fc;border:1px solid #e4e6f0;border-radius:12px;padding:20px;">
