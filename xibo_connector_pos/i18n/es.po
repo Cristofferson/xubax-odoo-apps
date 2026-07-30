@@ -1,0 +1,1329 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xibo_connector_pos
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-30 18:43+0000\n"
+"PO-Revision-Date: 2026-07-30 18:43+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_config.py:0
+msgid ""
+"%(layout)s built at %(width)s×%(height)s for %(screen)s. It is not scheduled"
+" in the CMS — the POS switches to it on each sale."
+msgstr "%(layout)s construido a %(width)s×%(height)s para %(screen)s. No está programado en el CMS: el punto de venta cambia a él en cada venta."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_customer_display_duration
+#: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_customer_display_duration
+msgid "0 = stay until cart is cleared/paid (recommended)."
+msgstr "0 = permanece hasta que el carrito se vacíe o se cobre (recomendado)."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"<b>Android</b>, <b>webOS</b> and <b>Tizen</b> players have stricter cookie "
+"policies that may break the session-scoped URL."
+msgstr "Los reproductores <b>Android</b>, <b>webOS</b> y <b>Tizen</b> tienen políticas de cookies más estrictas que pueden romper la URL ligada a la sesión."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "<span class=\"mx-2\">to</span>"
+msgstr "<span class=\"mx-2\">a</span>"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"<span class=\"text-muted ms-2\">0 = stay until cart is cleared/paid "
+"(recommended).</span>"
+msgstr "<span class=\"text-muted ms-2\">0 = permanece hasta que el carrito se vacíe o se cobre (recomendado).</span>"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"<span class=\"text-muted ms-2\">Also depends on the Video Wall hardware "
+"volume.</span>"
+msgstr "<span class=\"text-muted ms-2\">También depende del volumen físico del videowall.</span>"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"<span class=\"text-muted ms-2\">If off, the fallback template is used "
+"directly.</span>"
+msgstr "<span class=\"text-muted ms-2\">Si está apagado, se usa directamente la plantilla de respaldo.</span>"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"<strong>Async:</strong> the order closes immediately. The broadcast fires a "
+"moment later when the AI responds."
+msgstr "<strong>Asíncrono:</strong> el pedido se cierra de inmediato. La transmisión sale un momento después, cuando responde la IA."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "<strong>Auto-applied at save time:</strong>"
+msgstr "<strong>Se aplica automáticamente al guardar:</strong>"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "<strong>How it works:</strong>"
+msgstr "<strong>Cómo funciona:</strong>"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"<strong>Note:</strong> the audio plays inside the Xibo player's embedded "
+"browser via HTML5 <code>&lt;audio autoplay&gt;</code>. Some kiosk setups "
+"have strict autoplay policies — if you hear no sound, check the player's "
+"console log and ensure the Video Wall isn't muted at the OS level."
+msgstr "<strong>Nota:</strong> el audio se reproduce dentro del navegador embebido del reproductor de Xibo mediante el <code>&lt;audio autoplay&gt;</code> de HTML5. Algunas instalaciones de quiosco tienen políticas de reproducción automática estrictas: si no se oye nada, revise la consola del reproductor y verifique que el videowall no esté silenciado a nivel del sistema operativo."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "<strong>Player compatibility:</strong>"
+msgstr "<strong>Compatibilidad de reproductores:</strong>"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"<strong>Prompt variables:</strong> <code>{customer_name}</code>, "
+"<code>{top_product}</code>, <code>{top_category}</code>, "
+"<code>{total}</code>, <code>{currency}</code>, <code>{product_list}</code>"
+msgstr "<strong>Variables del prompt:</strong> <code>{customer_name}</code>, <code>{top_product}</code>, <code>{top_category}</code>, <code>{total}</code>, <code>{currency}</code>, <code>{product_list}</code>"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_ai_agent_id
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_ai_agent_id
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "AI Agent"
+msgstr "Agente de IA"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "AI Prompt"
+msgstr "Prompt de IA"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_ai_prompt
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_ai_prompt
+msgid "AI Prompt Template"
+msgstr "Plantilla del prompt de IA"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_xibo_thanks_render__audio_url
+msgid ""
+"Absolute URL to the audio file to play, or empty when audio is disabled. "
+"Snapshotted at publish time."
+msgstr "URL absoluta del archivo de audio por reproducir, o vacío si el audio está desactivado. Se captura al momento de publicar."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_xibo_thanks_render__top_product_image_url
+msgid "Absolute URL to the largest product's image, or empty."
+msgstr "URL absoluta de la imagen del producto principal, o vacío."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__pos_config__xibo_reco_priority__accumulate
+msgid "Accumulate"
+msgstr "Acumular"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_time_from
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_time_from
+msgid "Active From"
+msgstr "Activo desde"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Active Time Window"
+msgstr "Ventana horaria activa"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_time_to
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_time_to
+msgid "Active To"
+msgstr "Activo hasta"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"An XMR <code>changeLayout</code> tells the target screens to switch to the "
+"Thank-You Layout, whose Webpage widget loads that URL."
+msgstr "Un <code>changeLayout</code> por XMR indica a las pantallas destino que cambien al diseño de agradecimiento, cuyo widget Página web carga esa URL."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Audio Notification"
+msgstr "Notificación de audio"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_audio_preset
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_audio_preset
+msgid "Audio Preset"
+msgstr "Preajuste de audio"
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_config.py:0
+msgid ""
+"Audio Preset is set to 'Custom' but Custom Audio URL is empty. Either fill "
+"in the URL or pick a built-in preset."
+msgstr "El preajuste de audio está en «Personalizado» pero la URL de audio personalizado está vacía. Complete la URL o elija un preajuste incluido."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__audio_url
+msgid "Audio URL"
+msgstr "URL del audio"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_audio_volume
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_audio_volume
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__audio_volume
+msgid "Audio Volume"
+msgstr "Volumen del audio"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_audio_volume
+#: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_audio_volume
+msgid ""
+"Audio volume from 0 (silent) to 100 (maximum). The actual physical loudness "
+"also depends on the Video Wall's hardware volume — adjust both for the best "
+"experience. Default 80."
+msgstr "Volumen del audio, de 0 (silencio) a 100 (máximo). El volumen real también depende del volumen físico del videowall: ajuste ambos para obtener el mejor resultado. Predeterminado: 80."
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_config.py:0
+msgid "Audio volume must be between 0 and 100 (got %s)."
+msgstr "El volumen del audio debe estar entre 0 y 100 (se recibió %s)."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_xibo_thanks_render__audio_volume
+msgid "Audio volume normalised to [0.0, 1.0] for HTML5 <audio>."
+msgstr "Volumen del audio normalizado a [0.0, 1.0] para el <audio> de HTML5."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_customer_display_layout_id
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_customer_display_layout_id
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Auto-Created Layout"
+msgstr "Diseño creado automáticamente"
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_config.py:0
+msgid "Auto-created for POS %s"
+msgstr "Creado automáticamente para el punto de venta %s"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__pos_config__xibo_thanks_audio_preset__bell
+msgid "Bell — single warm \"ding\" (hotel reception)"
+msgstr "Campana: un «ding» cálido (recepción de hotel)"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__xibo_thanks_render__preset__bold
+msgid "Bold"
+msgstr "Impactante"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__pos_config__xibo_thanks_preset__bold
+msgid "Bold — high contrast, big text, energetic"
+msgstr "Impactante: alto contraste, texto grande, enérgico"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__pos_config__xibo_thanks_audio_preset__cash
+msgid "Cash — register clicks and ka-ching"
+msgstr "Caja: clic de registradora y sonido de cobro"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__pos_config__xibo_thanks_audio_preset__chime
+msgid "Chime — soft bells (jewelry, premium retail)"
+msgstr "Campanilla: campanas suaves (joyería, comercio premium)"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.view_product_category_form_xibo
+msgid ""
+"Comma-separated tags. When a product of this category is added to the POS cart,\n"
+"                        Xibo media with matching tags will be broadcast (if the POS has Contextual Recommendations enabled)."
+msgstr ""
+"Etiquetas separadas por comas. Cuando se agrega al carrito un producto de esta categoría,\n"
+"                        se transmiten los medios de Xibo con etiquetas coincidentes (si el punto de venta tiene activadas las recomendaciones contextuales)."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_product_category__xibo_recommendation_tags
+msgid ""
+"Comma-separated tags. When a product of this category is added to the POS "
+"cart, Xibo media files matching ANY of these tags are shown on the "
+"configured screens. Example: tv,electronics,accessories. Individual products"
+" can override this in their own Sales tab."
+msgstr "Etiquetas separadas por comas. Cuando se agrega al carrito un producto de esta categoría, se muestran en las pantallas configuradas los archivos de medios de Xibo que coincidan con CUALQUIERA de estas etiquetas. Ejemplo: tv,electronics,accessories. Cada producto puede sobrescribirlas en su propia pestaña Ventas."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_order__xibo_thanks_summary
+msgid ""
+"Compact one-line summary of the order context for the AI prompt (e.g. "
+"'Customer: Diana | Top product: Diamond Ring | Category: Jewelry | Total: "
+"4500 MXN'). Read-only."
+msgstr "Resumen compacto, en una línea, del contexto del pedido para el prompt de IA (por ejemplo, «Cliente: Diana | Producto principal: Anillo de diamante | Categoría: Joyería | Total: 4500 MXN»). Solo lectura."
+
+#. module: xibo_connector_pos
+#: model:ir.model,name:xibo_connector_pos.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_reco_cooldown
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_reco_cooldown
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Cool-down (s)"
+msgstr "Tiempo de espera (s)"
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_config.py:0
+msgid ""
+"Could not locate or create a playlist on the Xibo layout. Check the Xibo "
+"Event Log for the most recent API responses."
+msgstr "No se pudo localizar ni crear una lista de reproducción en el diseño de Xibo. Consulte la bitácora de eventos de Xibo para ver las últimas respuestas de la API."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__currency_code
+msgid "Currency Code"
+msgstr "Código de moneda"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_audio_custom_url
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_audio_custom_url
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Custom Audio URL"
+msgstr "URL de audio personalizado"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__custom_html
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__xibo_thanks_render__preset__custom
+msgid "Custom HTML"
+msgstr "HTML personalizado"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_custom_html
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_custom_html
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Custom HTML Template"
+msgstr "Plantilla HTML personalizada"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__pos_config__xibo_thanks_preset__custom
+msgid "Custom — paste your own HTML below"
+msgstr "Personalizado: pegue su propio HTML abajo"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__pos_config__xibo_thanks_audio_preset__custom
+msgid "Custom — your own audio file URL"
+msgstr "Personalizado: la URL de su propio archivo de audio"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_customer_display_device_uuid
+msgid "Customer Display Device UUID"
+msgstr "UUID del dispositivo de la pantalla del cliente"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_customer_display_display_id
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_customer_display_display_id
+msgid "Customer Display Screen"
+msgstr "Pantalla del cliente"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_customer_display_url
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_customer_display_url
+msgid "Customer Display URL"
+msgstr "URL de la pantalla del cliente"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__customer_name
+msgid "Customer Name"
+msgstr "Nombre del cliente"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_order__xibo_thanks_customer
+msgid "Customer display name captured at payment time. Read-only."
+msgstr "Nombre del cliente capturado al momento del pago. Solo lectura."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_dataset_id
+#: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_dataset_id
+msgid ""
+"DEPRECATED. Only used by the legacy Camino A (Broadcast) flow. The new URL-"
+"render flow (default since 19.0.1.5.27) does not use this — it serves a "
+"fresh HTML page on every request, bypassing the player's DataSet cache."
+msgstr "OBSOLETO. Solo lo usa el flujo antiguo Camino A (transmisión). El nuevo flujo de render por URL (predeterminado desde la 19.0.1.5.27) no lo usa: sirve una página HTML nueva en cada petición y evita la caché de conjuntos de datos del reproductor."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_display_group_ids
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_display_group_ids
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Default Display Groups"
+msgstr "Grupos de pantallas predeterminados"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_display_ids
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_display_ids
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Default Displays"
+msgstr "Pantallas predeterminadas"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_duration
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_duration
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Display For (s)"
+msgstr "Mostrar durante (s)"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__display_name
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_order__display_name
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_session__display_name
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_product_category__display_name
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_product_product__display_name
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_product_template__display_name
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Display groups that receive broadcasts by default."
+msgstr "Grupos de pantallas que reciben las transmisiones de forma predeterminada."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Duration (s)"
+msgstr "Duración (s)"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_xibo_thanks_render__config_id
+msgid "Each POS config has its own Thank-You stream."
+msgstr "Cada configuración de punto de venta tiene su propio flujo de agradecimiento."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_enabled
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_enabled
+msgid "Enable AI Thank-You"
+msgstr "Activar agradecimiento con IA"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Enable Audio"
+msgstr "Activar audio"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_audio_enabled
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_audio_enabled
+msgid "Enable Audio Notification"
+msgstr "Activar notificación de audio"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_reco_enabled
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_reco_enabled
+msgid "Enable Contextual Recommendations"
+msgstr "Activar recomendaciones contextuales"
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_config.py:0
+msgid ""
+"Enable the Thank-You message, pick a connected Xibo server and at least one "
+"Thank-You screen first."
+msgstr "Primero active el mensaje de agradecimiento, elija un servidor Xibo conectado y al menos una pantalla de agradecimiento."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__expires_at
+msgid "Expires At"
+msgstr "Expira el"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_fallback_text
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_fallback_text
+msgid "Fallback Message"
+msgstr "Mensaje de respaldo"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Fallback Template"
+msgstr "Plantilla de respaldo"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__pos_config__xibo_reco_mode__fullscreen
+msgid "Full-screen"
+msgstr "Pantalla completa"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"Generate a personalized thank-you message with AI when an order is paid. The"
+" AI considers customer name, most expensive product, and category to craft a"
+" relevant message."
+msgstr "Genera con IA un mensaje de agradecimiento personalizado cuando se cobra un pedido. La IA toma en cuenta el nombre del cliente, el producto más caro y su categoría para redactar un mensaje pertinente."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__id
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_order__id
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_session__id
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_product_category__id
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_product_product__id
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_product_template__id
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__id
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__id
+msgid "ID"
+msgstr "ID"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_audio_enabled
+#: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_audio_enabled
+msgid ""
+"If enabled, the Thank-You page plays a short audio cue when it appears on "
+"the screen. The sound is played by the Xibo player's embedded browser (HTML5"
+" audio). Volume and preset are configured below."
+msgstr "Si está activado, la página de agradecimiento reproduce un aviso sonoro breve al aparecer en pantalla. El sonido lo reproduce el navegador embebido del reproductor de Xibo (audio HTML5). El volumen y el preajuste se configuran abajo."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_show_product_image
+#: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_show_product_image
+msgid ""
+"If enabled, the chosen visual preset includes a photo of the most expensive "
+"product in the order, served from this Odoo's Media library via a public "
+"URL. Has no effect on Custom HTML (use the {{product_image_url}} placeholder"
+" there)."
+msgstr "Si está activado, el preajuste visual elegido incluye una foto del producto más caro del pedido, servida desde la biblioteca de medios de este Odoo mediante una URL pública. No tiene efecto sobre el HTML personalizado (ahí use el marcador {{product_image_url}})."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_reco_last_sent
+msgid "Last Reco Sent"
+msgstr "Última recomendación enviada"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_reco_last_tag_signature
+msgid "Last Tag Signature"
+msgstr "Última firma de etiquetas"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__pos_config__xibo_reco_priority__latest
+msgid "Latest added wins"
+msgstr "Gana el último agregado"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"Leave OFF until every screen above uses the URL with the key. Turn ON to "
+"stop outsiders who guess the id from reading the Thank-You page."
+msgstr "Déjelo apagado hasta que todas las pantallas de arriba usen la URL con la llave. Enciéndalo para impedir que alguien de fuera que adivine el id pueda leer la página de agradecimiento."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"Leave empty and save: the layout is built automatically on the\n"
+"                                        canvas of the target screen. Rebuild it if you change the screen\n"
+"                                        or its resolution — a videowall needs the full width, not 1920×1080."
+msgstr ""
+"Déjelo vacío y guarde: el diseño se construye automáticamente sobre el\n"
+"                                        lienzo de la pantalla destino. Reconstrúyalo si cambia la pantalla\n"
+"                                        o su resolución: un videowall necesita el ancho completo, no 1920×1080."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.view_product_template_form_xibo
+msgid "Leave empty to inherit from category"
+msgstr "Déjelo vacío para heredar de la categoría"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__message
+msgid "Message"
+msgstr "Mensaje"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__xibo_thanks_render__preset__minimal
+msgid "Minimal"
+msgstr "Minimalista"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__pos_config__xibo_thanks_preset__minimal
+msgid "Minimal — clean, lots of whitespace, thin typography"
+msgstr "Minimalista: limpio, con mucho espacio en blanco y tipografía fina"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_min_amount
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_min_amount
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Minimum Order Total"
+msgstr "Importe mínimo del pedido"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_customer_display_enabled
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_customer_display_enabled
+msgid "Mirror Customer Display"
+msgstr "Reflejar la pantalla del cliente"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_customer_display_duration
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_customer_display_duration
+msgid "Mirror Duration (s)"
+msgstr "Duración del espejo (s)"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Mode"
+msgstr "Modo"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_order__xibo_thanks_top_product
+msgid "Most expensive product in the order. Read-only."
+msgstr "Producto más caro del pedido. Solo lectura."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__pos_config__xibo_reco_priority__most_expensive
+msgid "Most expensive wins"
+msgstr "Gana el más caro"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_reco_priority
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_reco_priority
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Multi-product Priority"
+msgstr "Prioridad con varios productos"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_require_token
+#: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_require_token
+msgid ""
+"OFF (default): the Thank-You page works with the old URL — nothing breaks on"
+" upgrade. Turn ON only after every screen's Xibo Webpage widget URL has been"
+" updated to the one shown below (with the key); then outsiders who guess the"
+" id can no longer read it."
+msgstr "Apagado (predeterminado): la página de agradecimiento sigue funcionando con la URL anterior, así que la actualización no rompe nada. Enciéndalo solo después de haber actualizado la URL del widget Página web de Xibo de todas las pantallas a la que se muestra abajo (con la llave); a partir de ahí, quien adivine el id ya no podrá leerla."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_ai_agent_id
+#: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_ai_agent_id
+msgid "Odoo AI agent that generates the message. Empty = system default."
+msgstr "Agente de IA de Odoo que genera el mensaje. Vacío = el predeterminado del sistema."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__amount_total
+msgid "Order Total"
+msgstr "Total del pedido"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__pos_config__xibo_reco_mode__overlay
+msgid "Overlay"
+msgstr "Superposición"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.view_product_template_form_xibo
+msgid ""
+"Override the Xibo recommendation tags inherited from this product's category.\n"
+"                            Leave empty to use the category's tags.\n"
+"                            When this product is added to the POS cart, Xibo media matching ANY of these\n"
+"                            tags will be broadcast on the configured screens (if Contextual Recommendations\n"
+"                            is enabled in the POS settings)."
+msgstr ""
+"Sobrescribe las etiquetas de recomendación de Xibo heredadas de la categoría de este producto.\n"
+"                            Déjelo vacío para usar las etiquetas de la categoría.\n"
+"                            Cuando este producto se agrega al carrito, los medios de Xibo que coincidan con CUALQUIERA\n"
+"                            de estas etiquetas se transmiten en las pantallas configuradas (si las recomendaciones\n"
+"                            contextuales están activadas en los ajustes del punto de venta)."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_product_product__xibo_recommendation_tags
+#: model:ir.model.fields,help:xibo_connector_pos.field_product_template__xibo_recommendation_tags
+msgid ""
+"Override the category-level tags for this specific product. Leave empty to "
+"inherit from the product category."
+msgstr "Sobrescribe las etiquetas de la categoría para este producto en concreto. Déjelo vacío para heredarlas de la categoría del producto."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__config_id
+msgid "POS Config"
+msgstr "Configuración del punto de venta"
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_config.py:0
+msgid "POS Customer Display"
+msgstr "Pantalla del cliente del punto de venta"
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_config.py:0
+msgid "POS Customer Display — %s [%s]"
+msgstr "Pantalla del cliente del punto de venta — %s [%s]"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__order_id
+msgid "POS Order"
+msgstr "Pedido del punto de venta"
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_config.py:0
+msgid "POS Thank-You"
+msgstr "Agradecimiento del punto de venta"
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_config.py:0
+msgid "POS Thank-You — %s [%s]"
+msgstr "Agradecimiento del punto de venta — %s [%s]"
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_order.py:0
+msgid "POS thanks"
+msgstr "Agradecimiento del punto de venta"
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_order.py:0
+msgid "POS thanks: %s"
+msgstr "Agradecimiento del punto de venta: %s"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_url
+#: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_url
+msgid ""
+"Paste this into the Xibo Webpage widget for the Thank-You screen. It already"
+" includes the access key."
+msgstr "Pegue esto en el widget Página web de Xibo de la pantalla de agradecimiento. Ya incluye la llave de acceso."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"Paste this into the Xibo Webpage widget. It already includes the secret key."
+msgstr "Pegue esto en el widget Página web de Xibo. Ya incluye la llave secreta."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"Placeholders: <code>{{message}}</code>, <code>{{customer_name}}</code>, "
+"<code>{{top_product}}</code>, <code>{{product_image_url}}</code>, "
+"<code>{{total}}</code>, <code>{{currency}}</code>, "
+"<code>{{company_name}}</code>, <code>{{company_logo_url}}</code>."
+msgstr "Marcadores: <code>{{message}}</code>, <code>{{customer_name}}</code>, <code>{{top_product}}</code>, <code>{{product_image_url}}</code>, <code>{{total}}</code>, <code>{{currency}}</code>, <code>{{company_name}}</code>, <code>{{company_logo_url}}</code>."
+
+#. module: xibo_connector_pos
+#: model:ir.model,name:xibo_connector_pos.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr ""
+
+#. module: xibo_connector_pos
+#: model:ir.model,name:xibo_connector_pos.model_pos_order
+msgid "Point of Sale Orders"
+msgstr ""
+
+#. module: xibo_connector_pos
+#: model:ir.model,name:xibo_connector_pos.model_pos_session
+msgid "Point of Sale Session"
+msgstr ""
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__preset
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Preset"
+msgstr "Preajuste"
+
+#. module: xibo_connector_pos
+#: model:ir.model,name:xibo_connector_pos.model_product_template
+msgid "Product"
+msgstr ""
+
+#. module: xibo_connector_pos
+#: model:ir.model,name:xibo_connector_pos.model_product_category
+msgid "Product Category"
+msgstr ""
+
+#. module: xibo_connector_pos
+#: model:ir.model,name:xibo_connector_pos.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"Public URL to an MP3, OGG or WAV. Recommended: under 25KB, under 2 seconds."
+msgstr "URL pública de un MP3, OGG o WAV. Recomendado: menos de 25 KB y menos de 2 segundos."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Rebuild for this screen"
+msgstr "Reconstruir para esta pantalla"
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_config.py:0
+msgid "Reco: %s"
+msgstr "Recomendación: %s"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_reco_duration
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_reco_duration
+msgid "Recommendation Display For (s)"
+msgstr "Mostrar la recomendación durante (s)"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_reco_mode
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_reco_mode
+msgid "Recommendation Mode"
+msgstr "Modo de recomendación"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Require key"
+msgstr "Exigir llave"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_require_token
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_require_token
+msgid "Require key on Thank-You URL"
+msgstr "Exigir llave en la URL de agradecimiento"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_audio_custom_url
+#: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_audio_custom_url
+msgid ""
+"Required when Audio Preset is 'Custom'. Full https:// URL to an audio file. "
+"Recommended format: MP3 mono ~96kbps, under 2 seconds. Larger files delay "
+"the audio start."
+msgstr "Obligatorio cuando el preajuste de audio es «Personalizado». URL https:// completa de un archivo de audio. Formato recomendado: MP3 mono de unos 96 kbps y menos de 2 segundos. Los archivos más grandes retrasan el inicio del audio."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Screens that receive broadcasts by default."
+msgstr "Pantallas que reciben las transmisiones de forma predeterminada."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_display_ids
+#: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_display_ids
+msgid ""
+"Screens that will receive the Thank-You broadcast. The Thank-You Layout on "
+"each of these screens must contain a Webpage widget pointing at this "
+"server's URL /xibo/thanks/<pos_config_id>. Leave empty to fall back to the "
+"legacy Broadcast path (Camino A) using the Default Displays."
+msgstr "Pantallas que recibirán la transmisión de agradecimiento. El diseño de agradecimiento de cada una de ellas debe contener un widget Página web que apunte a la URL /xibo/thanks/<pos_config_id> de este servidor. Déjelo vacío para recurrir al flujo antiguo de transmisión (Camino A) con las pantallas predeterminadas."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_token
+msgid "Secret key embedded in the Thank-You URL when 'Require key' is on."
+msgstr "Llave secreta incrustada en la URL de agradecimiento cuando «Exigir llave» está activo."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"Send AI-powered thank-you, dynamic customer display mirror and contextual "
+"recommendations to Xibo screens."
+msgstr "Envía a las pantallas de Xibo agradecimientos generados con IA, el espejo dinámico de la pantalla del cliente y recomendaciones contextuales."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Set the same tags on the matching <b>Product Categories</b>."
+msgstr "Ponga las mismas etiquetas en las <b>categorías de producto</b> correspondientes."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_order__xibo_thanks_sent
+msgid ""
+"Set to True after a successful Thank-You broadcast (either direct-XMR Camino"
+" B or legacy Broadcast Camino A). Prevents the message from being re-sent on"
+" subsequent state changes."
+msgstr "Se pone en verdadero tras una transmisión de agradecimiento exitosa (por XMR directo, Camino B, o por el flujo antiguo de transmisión, Camino A). Evita que el mensaje se reenvíe en los siguientes cambios de estado."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__show_product_image
+msgid "Show Product Image"
+msgstr "Mostrar la imagen del producto"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_show_product_image
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_show_product_image
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Show Top Product Image"
+msgstr "Mostrar la imagen del producto principal"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"Show Xibo media tagged for the products being added to the cart. Tags come "
+"from the product category, optionally overridden per product."
+msgstr "Muestra los medios de Xibo etiquetados para los productos que se van agregando al carrito. Las etiquetas vienen de la categoría del producto y pueden sobrescribirse producto por producto."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Sound Preset"
+msgstr "Preajuste de sonido"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_customer_display_device_uuid
+msgid ""
+"Stable identifier used in the Customer Display URL for the Xibo screen."
+msgstr "Identificador estable que se usa en la URL de la pantalla del cliente para la pantalla de Xibo."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__pos_config__xibo_thanks_audio_preset__success
+msgid "Success — modern ascending beep"
+msgstr "Éxito: pitido ascendente moderno"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"Tag your Xibo media files in the Xibo Library (e.g. "
+"<code>tv,electronics</code>)."
+msgstr "Etiquete sus archivos de medios en la biblioteca de Xibo (por ejemplo, <code>tv,electronics</code>)."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Target Screen"
+msgstr "Pantalla destino"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Target Screens"
+msgstr "Pantallas destino"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_dataset_id
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_dataset_id
+msgid "Thank-You DataSet (legacy)"
+msgstr "Conjunto de datos de agradecimiento (obsoleto)"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_layout_id
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_layout_id
+msgid "Thank-You Layout"
+msgstr "Diseño de agradecimiento"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Thank-You Layout in Xibo"
+msgstr "Diseño de agradecimiento en Xibo"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_display_ids
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_display_ids
+msgid "Thank-You Target Screens"
+msgstr "Pantallas destino del agradecimiento"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_token
+msgid "Thank-You URL Key"
+msgstr "Llave de la URL de agradecimiento"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_preset
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_preset
+msgid "Thank-You Visual Preset"
+msgstr "Preajuste visual del agradecimiento"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_url
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_url
+msgid "Thank-You Webpage URL"
+msgstr "URL de la página de agradecimiento"
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_config.py:0
+msgid "Thank-You layout ready"
+msgstr "Diseño de agradecimiento listo"
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_order.py:0
+msgid "Thank-you"
+msgstr "Agradecimiento"
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_order.py:0
+msgid "Thank-you (AI)"
+msgstr "Agradecimiento (IA)"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Thanks, {customer_name}!"
+msgstr "¡Gracias, {customer_name}!"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"The AI generates a short, contextual thank-you message using your prompt "
+"template."
+msgstr "La IA genera un mensaje de agradecimiento breve y contextual a partir de su plantilla de prompt."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"The Thank-You Layout on each screen must contain a single Webpage widget "
+"pointing to the URL below on this server."
+msgstr "El diseño de agradecimiento de cada pantalla debe contener un único widget Página web que apunte a la URL de abajo en este servidor."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_xibo_thanks_render__message
+msgid "The Thank-You message body (AI-generated or fallback)."
+msgstr "El cuerpo del mensaje de agradecimiento (generado por IA o de respaldo)."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_order__xibo_thanks_ai_message
+msgid ""
+"The Thank-You message generated by Odoo's native AI engine. Written by the "
+"bundled AI server action."
+msgstr "El mensaje de agradecimiento que genera el motor de IA nativo de Odoo. Lo escribe la acción de servidor de IA incluida."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"The connector creates a Layout in Xibo with a Webpage widget pointing to the"
+" Customer Display URL."
+msgstr "El conector crea en Xibo un diseño con un widget Página web que apunta a la URL de la pantalla del cliente."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"The cool-down avoids spam: a recommendation cannot fire again within that "
+"many seconds."
+msgstr "El tiempo de espera evita la saturación: una recomendación no puede volver a lanzarse dentro de esa cantidad de segundos."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"The message and selected visual preset are rendered into a fresh HTML page "
+"served at <code>/xibo/thanks/&lt;config_id&gt;</code>."
+msgstr "El mensaje y el preajuste visual elegido se renderizan en una página HTML nueva que se sirve en <code>/xibo/thanks/&lt;config_id&gt;</code>."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_xibo_thanks_render__order_id
+msgid "The order that triggered this render. Kept for audit only."
+msgstr "El pedido que originó este render. Se conserva solo para auditoría."
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_config.py:0
+msgid "There is no URL to show on the Xibo layout yet."
+msgstr "Todavía no hay una URL que mostrar en el diseño de Xibo."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Time of day when broadcasts from this POS are sent."
+msgstr "Franja del día en la que se envían las transmisiones de este punto de venta."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_mirror_active_since
+msgid ""
+"Timestamp of the last time this POS switched its screen to the Customer "
+"Display mirror. Used to avoid re-sending the same XMR command on every "
+"product added to the cart."
+msgstr "Marca de tiempo de la última vez que este punto de venta cambió su pantalla al espejo de la pantalla del cliente. Sirve para no reenviar el mismo comando XMR con cada producto que se agrega al carrito."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__top_product
+msgid "Top Product"
+msgstr "Producto principal"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_xibo_thanks_render__top_product_image_url
+msgid "Top Product Image URL"
+msgstr "URL de la imagen del producto principal"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "URL Used"
+msgstr "URL utilizada"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_xibo_thanks_render__expires_at
+msgid "UTC datetime after which this render is no longer served."
+msgstr "Fecha y hora en UTC a partir de la cual este render deja de servirse."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_use_ai
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_use_ai
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Use AI"
+msgstr "Usar IA"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_custom_html
+#: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_custom_html
+msgid ""
+"Used when Visual Preset is 'Custom'. The following placeholders will be replaced at render time:\n"
+"  {{message}}, {{customer_name}}, {{top_product}}, {{product_image_url}}, {{total}}, {{currency}}, {{company_name}}, {{company_logo_url}}.\n"
+"Tip: design at 1920×1080 with a dark or branded background so it looks crisp on full-HD screens."
+msgstr ""
+"Se usa cuando el preajuste visual es «Personalizado». Los siguientes marcadores se reemplazan al renderizar:\n"
+"  {{message}}, {{customer_name}}, {{top_product}}, {{product_image_url}}, {{total}}, {{currency}}, {{company_name}}, {{company_logo_url}}.\n"
+"Consejo: diseñe a 1920×1080 con un fondo oscuro o con la imagen de su marca para que se vea nítido en pantallas full HD."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_xibo_thanks_render__custom_html
+msgid ""
+"Used when preset='custom'. Snapshot of the user's template at render time."
+msgstr "Se usa cuando preset='custom'. Copia de la plantilla del usuario al momento de renderizar."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Visual Style"
+msgstr "Estilo visual"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_preset
+#: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_preset
+msgid ""
+"Visual style of the Thank-You page rendered by Xibo. Each preset is a self-"
+"contained, animated HTML template tuned for digital signage. Choose 'Custom'"
+" to paste your own."
+msgstr "Estilo visual de la página de agradecimiento que muestra Xibo. Cada preajuste es una plantilla HTML animada y autocontenida, pensada para señalización digital. Elija «Personalizado» para pegar la suya."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Volume (0-100)"
+msgstr "Volumen (0-100)"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__xibo_thanks_render__preset__warm
+msgid "Warm"
+msgstr "Cálido"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__pos_config__xibo_thanks_preset__warm
+msgid "Warm — jewelry-friendly, gold accents, soft animation"
+msgstr "Cálido: ideal para joyería, acentos dorados, animación suave"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Webpage URL (with key)"
+msgstr "URL de la página web (con llave)"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"When a product is added to the cart, the configured Xibo screen switches "
+"from its normal schedule to mirror the Odoo POS Customer Display. When the "
+"cart is cleared (paid or cancelled), the screen reverts to its normal "
+"content."
+msgstr "Cuando se agrega un producto al carrito, la pantalla de Xibo configurada abandona su programación normal y refleja la pantalla del cliente del punto de venta de Odoo. Cuando el carrito se vacía (por cobro o cancelación), la pantalla vuelve a su contenido habitual."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"When an order is paid, Odoo collects the customer name, the most expensive "
+"product and its category."
+msgstr "Cuando se cobra un pedido, Odoo recoge el nombre del cliente, el producto más caro y su categoría."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "When the cart is emptied, the screen reverts to its normal schedule."
+msgstr "Cuando el carrito se vacía, la pantalla vuelve a su programación normal."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"When the cashier adds a tagged product, the matching Xibo media is broadcast"
+" to the configured screens."
+msgstr "Cuando quien atiende la caja agrega un producto etiquetado, los medios de Xibo que coinciden se transmiten a las pantallas configuradas."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"When the cashier adds the first product, Xibo's XMR service instantly "
+"switches the screen to this Layout."
+msgstr "Cuando quien atiende la caja agrega el primer producto, el servicio XMR de Xibo cambia la pantalla a este diseño al instante."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_audio_preset
+#: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_audio_preset
+msgid ""
+"Which sound to play. Four royalty-free, synthetic presets are built in (each"
+" <25KB). Choose 'Custom' to point at your own audio file via URL — must be a"
+" publicly reachable MP3, OGG or WAV file that the Xibo player can fetch."
+msgstr "Qué sonido reproducir. Se incluyen cuatro preajustes sintéticos libres de regalías (de menos de 25 KB cada uno). Elija «Personalizado» para apuntar por URL a su propio archivo de audio: debe ser un MP3, OGG o WAV accesible públicamente que el reproductor de Xibo pueda descargar."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Works best on Xibo Player for <b>Windows</b> and <b>Linux</b>."
+msgstr "Funciona mejor en el reproductor de Xibo para <b>Windows</b> y <b>Linux</b>."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_server_id
+#: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_server_id
+msgid "Xibo CMS that this POS will broadcast to."
+msgstr "CMS de Xibo al que transmitirá este punto de venta."
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Xibo CMS that this POS will broadcast to. Leave empty to disable."
+msgstr "CMS de Xibo al que transmitirá este punto de venta. Déjelo vacío para desactivarlo."
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_config.py:0
+msgid "Xibo Connector — Setup Issue"
+msgstr "Conector Xibo: problema de configuración"
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_config.py:0
+msgid ""
+"Xibo Customer Display Mirror could not be auto-configured: %s. Review the "
+"Xibo Event Log for details and try saving again."
+msgstr "No se pudo configurar automáticamente el espejo de la pantalla del cliente de Xibo: %s. Revise la bitácora de eventos de Xibo para ver los detalles e intente guardar de nuevo."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_mirror_active_since
+msgid "Xibo Mirror Active Since"
+msgstr "Espejo de Xibo activo desde"
+
+#. module: xibo_connector_pos
+#: model:ir.model,name:xibo_connector_pos.model_xibo_thanks_render
+msgid "Xibo POS Thank-You Render Cache"
+msgstr "Caché de renders de agradecimiento del punto de venta de Xibo"
+
+#. module: xibo_connector_pos
+#: model:ir.actions.server,name:xibo_connector_pos.ir_cron_xibo_thanks_render_gc_ir_actions_server
+msgid "Xibo POS: Clean Expired Thank-You Renders"
+msgstr "Xibo POS: limpiar los renders de agradecimiento caducados"
+
+#. module: xibo_connector_pos
+#: model:ir.actions.server,name:xibo_connector_pos.action_pos_thanks_ai_compute
+msgid "Xibo POS: Compute Thank-You Message with AI"
+msgstr "Xibo POS: generar el mensaje de agradecimiento con IA"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_product_category__xibo_recommendation_tags
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_product_product__xibo_recommendation_tags
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_product_template__xibo_recommendation_tags
+msgid "Xibo Recommendation Tags"
+msgstr "Etiquetas de recomendación de Xibo"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_server_id
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_server_id
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Xibo Server"
+msgstr "Servidor Xibo"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.view_product_category_form_xibo
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.view_product_template_form_xibo
+msgid "Xibo Signage"
+msgstr "Señalización Xibo"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_order__xibo_thanks_sent
+msgid "Xibo Thank-You Sent"
+msgstr "Agradecimiento de Xibo enviado"
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_config.py:0
+msgid "Xibo did not return a layoutId."
+msgstr "Xibo no devolvió un layoutId."
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_config.py:0
+msgid "Xibo did not return a widgetId after widget creation."
+msgstr "Xibo no devolvió un widgetId después de crear el widget."
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_order__xibo_thanks_ai_message
+msgid "Xibo: Thank-You AI Message"
+msgstr "Xibo: mensaje de agradecimiento con IA"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_order__xibo_thanks_customer
+msgid "Xibo: Thank-You Customer"
+msgstr "Xibo: cliente del agradecimiento"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_order__xibo_thanks_summary
+msgid "Xibo: Thank-You Summary"
+msgstr "Xibo: resumen del agradecimiento"
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_order__xibo_thanks_top_product
+msgid "Xibo: Thank-You Top Product"
+msgstr "Xibo: producto principal del agradecimiento"
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_order.py:0
+msgid "guest"
+msgstr "invitado"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "https://example.com/notification.mp3"
+msgstr "https://example.com/notification.mp3"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.view_product_category_form_xibo
+msgid "tv,electronics,accessories"
+msgstr "tv,electronics,accessories"
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/models/pos_order.py:0
+msgid "valued customer"
+msgstr "cliente distinguido"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "① AI-Powered Thank-You"
+msgstr "① Agradecimiento con IA"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "③ Dynamic Customer Display Mirror"
+msgstr "③ Espejo dinámico de la pantalla del cliente"
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "④ Contextual Recommendations"
+msgstr "④ Recomendaciones contextuales"
+
+#. module: xibo_connector_pos
+#: model:ir.module.module,shortdesc:base.module_xibo_connector_pos
+msgid "Xibo Connector — Point of Sale"
+msgstr "Conector Xibo — Punto de venta"
+
+#. module: xibo_connector_pos
+#: model:ir.module.module,summary:base.module_xibo_connector_pos
+msgid "AI thank-you with audio, dynamic customer display mirror, and contextual product recommendations on Xibo from your POS."
+msgstr "Agradecimiento con IA y audio, espejo dinámico de la pantalla del cliente y recomendaciones contextuales de productos en Xibo, desde su punto de venta."
+

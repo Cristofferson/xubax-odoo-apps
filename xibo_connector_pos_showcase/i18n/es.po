@@ -1,0 +1,224 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xibo_connector_pos_showcase
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-30 18:43+0000\n"
+"PO-Revision-Date: 2026-07-30 18:43+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_pos_config__xibo_showcase_heading
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_res_config_settings__pos_xibo_showcase_heading
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos_showcase.res_config_settings_view_form_xibo_showcase
+msgid "Call to Action"
+msgstr "Llamada a la acción"
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_pos_config__xibo_showcase_url
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_res_config_settings__pos_xibo_showcase_url
+msgid "Catalog URL (QR target)"
+msgstr "URL del catálogo (destino del QR)"
+
+#. module: xibo_connector_pos_showcase
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos_showcase.res_config_settings_view_form_xibo_showcase
+msgid "Catalog URL (QR)"
+msgstr "URL del catálogo (QR)"
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model,name:xibo_connector_pos_showcase.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields.selection,name:xibo_connector_pos_showcase.selection__pos_config__xibo_showcase_order__curated
+msgid "Curated (website order)"
+msgstr "Curada (orden del sitio web)"
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_pos_config__display_name
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_pos_config__xibo_showcase_enabled
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_res_config_settings__pos_xibo_showcase_enabled
+msgid "Enable Videowall Showcase"
+msgstr "Activar escaparate en el videowall"
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields,help:xibo_connector_pos_showcase.field_pos_config__xibo_showcase_interval
+#: model:ir.model.fields,help:xibo_connector_pos_showcase.field_res_config_settings__pos_xibo_showcase_interval
+msgid "How long each piece stays on screen before the next one."
+msgstr "Cuánto tiempo permanece cada pieza en pantalla antes de pasar a la siguiente."
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields,help:xibo_connector_pos_showcase.field_pos_config__xibo_showcase_count
+#: model:ir.model.fields,help:xibo_connector_pos_showcase.field_res_config_settings__pos_xibo_showcase_count
+msgid "How many catalog pieces to cycle through on screen."
+msgstr "Cuántas piezas del catálogo se van rotando en pantalla."
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields,help:xibo_connector_pos_showcase.field_pos_config__xibo_showcase_order
+#: model:ir.model.fields,help:xibo_connector_pos_showcase.field_res_config_settings__pos_xibo_showcase_order
+msgid "How to pick and order the pieces on screen."
+msgstr "Cómo se eligen y se ordenan las piezas en pantalla."
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_pos_config__id
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_res_config_settings__id
+msgid "ID"
+msgstr "ID"
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields.selection,name:xibo_connector_pos_showcase.selection__pos_config__xibo_showcase_order__price_desc
+msgid "Most exclusive first (price high → low)"
+msgstr "Las más exclusivas primero (precio de mayor a menor)"
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields.selection,name:xibo_connector_pos_showcase.selection__pos_config__xibo_showcase_order__newest
+msgid "Newest first"
+msgstr "Las más nuevas primero"
+
+#. module: xibo_connector_pos_showcase
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos_showcase.res_config_settings_view_form_xibo_showcase
+msgid "Optional. Empty = all published pieces."
+msgstr "Opcional. Vacío = todas las piezas publicadas."
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields,help:xibo_connector_pos_showcase.field_pos_config__xibo_showcase_category_id
+#: model:ir.model.fields,help:xibo_connector_pos_showcase.field_res_config_settings__pos_xibo_showcase_category_id
+msgid ""
+"Optional: only feature pieces from this eCommerce category. Empty = all "
+"published products."
+msgstr "Opcional: mostrar únicamente piezas de esta categoría de comercio electrónico. Vacío = todos los productos publicados."
+
+#. module: xibo_connector_pos_showcase
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos_showcase.res_config_settings_view_form_xibo_showcase
+msgid "Order"
+msgstr "Orden"
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields,help:xibo_connector_pos_showcase.field_pos_config__xibo_showcase_widget_url
+#: model:ir.model.fields,help:xibo_connector_pos_showcase.field_res_config_settings__pos_xibo_showcase_widget_url
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos_showcase.res_config_settings_view_form_xibo_showcase
+msgid "Paste this into the Xibo Webpage widget of the idle/showcase layout."
+msgstr "Pegue esto en el widget Página web de Xibo del diseño de escaparate o reposo."
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_pos_config__xibo_showcase_count
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_res_config_settings__pos_xibo_showcase_count
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos_showcase.res_config_settings_view_form_xibo_showcase
+msgid "Pieces to Rotate"
+msgstr "Piezas en rotación"
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model,name:xibo_connector_pos_showcase.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr ""
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields.selection,name:xibo_connector_pos_showcase.selection__pos_config__xibo_showcase_order__price_asc
+msgid "Price low → high"
+msgstr "Precio de menor a mayor"
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields.selection,name:xibo_connector_pos_showcase.selection__pos_config__xibo_showcase_order__random
+msgid "Random each load"
+msgstr "Aleatorio en cada carga"
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_pos_config__xibo_showcase_interval
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_res_config_settings__pos_xibo_showcase_interval
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos_showcase.res_config_settings_view_form_xibo_showcase
+msgid "Seconds per Piece"
+msgstr "Segundos por pieza"
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_pos_config__xibo_showcase_category_id
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_res_config_settings__pos_xibo_showcase_category_id
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos_showcase.res_config_settings_view_form_xibo_showcase
+msgid "Showcase Category"
+msgstr "Categoría del escaparate"
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_pos_config__xibo_showcase_order
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_res_config_settings__pos_xibo_showcase_order
+msgid "Showcase Order"
+msgstr "Orden del escaparate"
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_pos_config__xibo_showcase_widget_url
+#: model:ir.model.fields,field_description:xibo_connector_pos_showcase.field_res_config_settings__pos_xibo_showcase_widget_url
+msgid "Showcase Webpage URL"
+msgstr "URL de la página del escaparate"
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields,help:xibo_connector_pos_showcase.field_pos_config__xibo_showcase_heading
+#: model:ir.model.fields,help:xibo_connector_pos_showcase.field_res_config_settings__pos_xibo_showcase_heading
+msgid "Text shown next to the QR code."
+msgstr "Texto que se muestra junto al código QR."
+
+#. module: xibo_connector_pos_showcase
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos_showcase.res_config_settings_view_form_xibo_showcase
+msgid "Webpage URL"
+msgstr "URL de la página web"
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields,help:xibo_connector_pos_showcase.field_pos_config__xibo_showcase_enabled
+#: model:ir.model.fields,help:xibo_connector_pos_showcase.field_res_config_settings__pos_xibo_showcase_enabled
+msgid ""
+"When idle, show a rotating catalog gallery + a QR that opens the online "
+"store on the customer's phone."
+msgstr "En reposo, muestra una galería rotativa del catálogo y un QR que abre la tienda en línea en el teléfono del cliente."
+
+#. module: xibo_connector_pos_showcase
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos_showcase.res_config_settings_view_form_xibo_showcase
+msgid ""
+"When idle, the videowall shows a rotating gallery of your online catalog "
+"plus a QR code that opens the web store on the customer's phone."
+msgstr "En reposo, el videowall muestra una galería rotativa de su catálogo en línea y un código QR que abre la tienda en el teléfono del cliente."
+
+#. module: xibo_connector_pos_showcase
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos_showcase.res_config_settings_view_form_xibo_showcase
+msgid "Where the QR sends the customer. Empty = this server's /shop."
+msgstr "A dónde lleva el QR al cliente. Vacío = la tienda (/shop) de este servidor."
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.model.fields,help:xibo_connector_pos_showcase.field_pos_config__xibo_showcase_url
+#: model:ir.model.fields,help:xibo_connector_pos_showcase.field_res_config_settings__pos_xibo_showcase_url
+msgid ""
+"Where the QR sends the customer. Leave empty to use this server's online "
+"shop (/shop)."
+msgstr "A dónde lleva el QR al cliente. Déjelo vacío para usar la tienda en línea de este servidor (/shop)."
+
+#. module: xibo_connector_pos_showcase
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos_showcase.res_config_settings_view_form_xibo_showcase
+msgid "https://www.anello.mx/shop"
+msgstr "https://www.anello.mx/shop"
+
+#. module: xibo_connector_pos_showcase
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos_showcase.res_config_settings_view_form_xibo_showcase
+msgid "⑤ Videowall Showcase"
+msgstr "⑤ Escaparate en el videowall"
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.module.module,shortdesc:base.module_xibo_connector_pos_showcase
+msgid "Xibo Connector — POS Videowall Showcase"
+msgstr "Conector Xibo — Escaparate en videowall para el punto de venta"
+
+#. module: xibo_connector_pos_showcase
+#: model:ir.module.module,summary:base.module_xibo_connector_pos_showcase
+msgid "Idle videowall content: rotating online-catalog gallery + QR to the web store, driven from the POS."
+msgstr "Contenido para el videowall en reposo: galería rotativa del catálogo en línea y un QR a la tienda web, gobernado desde el punto de venta."
+

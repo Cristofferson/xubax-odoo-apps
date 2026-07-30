@@ -1,0 +1,16 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xibo_connector_pos_showcase
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es_419\n"
+"Plural-Forms: \n"
+
+#. module: xibo_connector_pos_showcase
+msgid "Display Name"
+msgstr "Nombre en pantalla"

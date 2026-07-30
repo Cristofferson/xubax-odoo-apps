@@ -1,0 +1,2471 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xibo_connector
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-30 18:43+0000\n"
+"PO-Revision-Date: 2026-07-30 18:43+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_broadcast.py:0
+msgid "%s broadcast(s) dispatched to Xibo."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_media.py:0
+msgid "%s media file(s) uploaded to Xibo."
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "<b>How to get the Client ID and Secret:</b>"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "<span class=\"o_stat_text\">Event Log</span>"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "<span>to</span>"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_res_partner_form_xibo
+msgid ""
+"<strong>Display Nickname:</strong> the friendly short name shown on\n"
+"                            screens. Example: \"Paco\" instead of \"Francisco Pérez Cruz\". The system\n"
+"                            automatically asks Odoo's native AI to suggest a natural nickname when\n"
+"                            this contact is created or its name is edited. You can also override\n"
+"                            it manually, or click 🤖 to re-run the detection."
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_res_partner_form_xibo
+msgid ""
+"<strong>Show on Public Screens:</strong> when enabled, this customer's\n"
+"                            name may appear on Xibo digital signage screens. When disabled, a generic\n"
+"                            fallback such as \"valued customer\" is shown instead."
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.actions.act_window,help:xibo_connector.action_xibo_broadcast
+msgid ""
+"A broadcast is a message scheduled to appear on one or more Xibo displays.\n"
+"               Add-on modules create them automatically when business events happen."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__access_token
+msgid "Access Token"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__message_needaction
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__message_needaction
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__message_needaction
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__message_needaction
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__message_needaction
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__message_needaction
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Activate <b>Client Credentials</b>; leave Authorization Code off."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__active
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__active
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__active
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__active
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__active
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_broadcast__state__active
+msgid "Active"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/wizards/xibo_media_upload_wizard.py:0
+msgid "Add at least one file."
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Archived"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Assign scope <b>all</b> (or granular)."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__message_attachment_count
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__message_attachment_count
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__message_attachment_count
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__message_attachment_count
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__message_attachment_count
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__message_attachment_count
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_media__file_type__audio
+msgid "Audio"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_server.py:0
+msgid "Authenticated with %s"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_broadcast.py:0
+msgid "Auto broadcast"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_layout.py:0
+msgid "Auto-created by Odoo Xibo Connector"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_layout.py:0
+msgid "Auto-created from media \"%s\""
+msgstr ""
+
+#. module: xibo_connector
+#: model:base.automation,name:xibo_connector.automation_xibo_autofill_nickname
+msgid "Auto-detect Nickname for Contacts"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_res_partner_form_xibo
+msgid "Auto-filled by AI"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_server__url
+msgid ""
+"Base URL of your Xibo CMS, e.g. https://xibo.example.com (no trailing "
+"slash)."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/wizards/xibo_quick_display_wizard.py:0
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "Broadcast"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__broadcast_count
+msgid "Broadcast Count"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_broadcast.py:0
+msgid "Broadcast sent"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_server.py:0
+#: model:ir.actions.act_window,name:xibo_connector.action_xibo_broadcast
+#: model:ir.ui.menu,name:xibo_connector.menu_xibo_broadcast
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_list
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Broadcasts"
+msgstr ""
+
+#. module: xibo_connector
+#: model:res.groups,comment:xibo_connector.group_xibo_user
+msgid "Browse displays, upload media, view datasets and event log."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.actions.act_window,name:xibo_connector.action_xibo_media_upload_wizard
+#: model:ir.ui.menu,name:xibo_connector.menu_xibo_bulk_upload
+msgid "Bulk Upload"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model,name:xibo_connector.model_xibo_media_upload_wizard_line
+msgid "Bulk Upload Line"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model,name:xibo_connector.model_xibo_media_upload_wizard
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_upload_wizard_form
+msgid "Bulk Upload to Xibo"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__cms_utc_offset
+msgid "CMS Clock Offset (min)"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__cms_utc_offset_checked
+msgid "CMS Clock Read On"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__url
+msgid "CMS URL"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_upload_wizard_form
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_quick_display_wizard_form
+msgid "Cancel"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_broadcast__state__cancelled
+msgid "Cancelled"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__resolution_height
+msgid "Canvas Height"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__resolution_width
+msgid "Canvas Width"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Click <b>Add Application</b>."
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.actions.act_window,help:xibo_connector.action_xibo_display
+msgid "Click <b>Sync All</b> on a configured Xibo server to import them."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__client_id
+msgid "Client ID"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__client_secret
+msgid "Client Secret"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__code
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_column__code
+msgid "Code"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__column_ids
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_dataset_form
+msgid "Columns"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_media__tags
+msgid "Comma separated Xibo tags."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__company_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__company_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_row__company_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__company_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__company_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_event_log__company_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__company_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__company_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__company_id
+msgid "Company"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.ui.menu,name:xibo_connector.menu_xibo_config
+msgid "Configuration"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.actions.act_window,help:xibo_connector.action_xibo_server
+msgid "Connect your first Xibo CMS"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_server__state__connected
+msgid "Connected"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Connection"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_server.py:0
+msgid "Connection successful"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model,name:xibo_connector.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_server.py:0
+msgid ""
+"Could not authenticate with Xibo CMS:\n"
+"%s\n"
+"\n"
+"%s"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_layout.py:0
+msgid ""
+"Could not locate the default playlist for the new layout. You may need to "
+"edit it manually in Xibo."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_server.py:0
+msgid ""
+"Could not reach Xibo CMS:\n"
+"%s"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_quick_display_wizard_form
+msgid "Create & Broadcast"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model,website_form_label:xibo_connector.model_res_partner
+msgid "Create a Customer"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__create_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__create_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_column__create_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_row__create_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__create_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__create_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_event_log__create_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__create_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__create_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard__create_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard_line__create_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_quick_display_wizard__create_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_schedule_event__create_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__create_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__create_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_column__create_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_row__create_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__create_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__create_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_event_log__create_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__create_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__create_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard__create_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard_line__create_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_quick_display_wizard__create_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_schedule_event__create_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_broadcast__recurrence_type__day
+msgid "Daily"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__time_from
+msgid "Daily From"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_broadcast.py:0
+msgid "Daily From must be earlier than Daily To."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_broadcast.py:0
+msgid "Daily From/To must be between 0 and 24."
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "Daily Time Window"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__time_to
+msgid "Daily To"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_column__data_type
+msgid "Data Type"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__dataset_id
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_dataset_form
+msgid "DataSet"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_dataset.py:0
+msgid "DataSet '%s' has no Xibo ID. Sync first."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__dataset_values_json
+msgid "DataSet Values (JSON)"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_broadcast.py:0
+msgid "DataSet Values is empty for ticker mode."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_server.py:0
+#: model:ir.actions.act_window,name:xibo_connector.action_xibo_dataset
+#: model:ir.ui.menu,name:xibo_connector.menu_xibo_dataset
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_dataset_list
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "DataSets"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_column__dataset_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_row__dataset_id
+msgid "Dataset"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__dataset_count
+msgid "Dataset Count"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_dataset_column__data_type__date
+msgid "Date"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "Date Range"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "Days of the Week"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__duration
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard__default_duration
+msgid "Default Duration (s)"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard__default_tags
+msgid "Default Tags"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_form
+msgid "Delete from Xibo"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__description
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__description
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__description
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__description
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__description
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_dataset_form
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_display_form
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_display_group_form
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_layout_form
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_form
+msgid "Description"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.actions.server,name:xibo_connector.action_xibo_detect_nickname_ai
+msgid "Detect Nickname with AI"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.module.category,description:xibo_connector.module_category_xibo
+msgid "Digital Signage with Xibo CMS"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_display_form
+msgid "Display"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__display_count
+msgid "Display Count"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__duration_seconds
+msgid "Display Duration (s)"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_display_group_form
+msgid "Display Group"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__display_group_count
+msgid "Display Group Count"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_server.py:0
+#: model:ir.actions.act_window,name:xibo_connector.action_xibo_display_group
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__display_group_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_quick_display_wizard__display_group_ids
+#: model:ir.ui.menu,name:xibo_connector.menu_xibo_display_group
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_display_group_list
+msgid "Display Groups"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__display_mode
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_quick_display_wizard__display_mode
+msgid "Display Mode"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_res_partner__display_name
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__display_name
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__display_name
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_column__display_name
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_row__display_name
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__display_name
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__name
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__display_name
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_event_log__display_name
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__display_name
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__display_name
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard__display_name
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard_line__display_name
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard_line__name
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_quick_display_wizard__display_name
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_schedule_event__display_name
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_res_partner__xibo_display_nickname
+#: model:ir.model.fields,field_description:xibo_connector.field_res_users__xibo_display_nickname
+msgid "Display Nickname"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_form
+msgid "Display name in Xibo Library"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__is_display_specific
+msgid "Display-Specific Group"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_server.py:0
+#: model:ir.actions.act_window,name:xibo_connector.action_xibo_display
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__display_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__display_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_quick_display_wizard__display_ids
+#: model:ir.ui.menu,name:xibo_connector.menu_xibo_display
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_display_list
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Displays"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_display_group_form
+msgid "Displays in this group"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_server.py:0
+msgid "Displays, groups, layouts, datasets and media metadata refreshed."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_media.py:0
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_broadcast__state__done
+msgid "Done"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__dow_fri
+msgid "Dow Fri"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__dow_mon
+msgid "Dow Mon"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__dow_sat
+msgid "Dow Sat"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__dow_sun
+msgid "Dow Sun"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__dow_thu
+msgid "Dow Thu"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__dow_tue
+msgid "Dow Tue"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__dow_wed
+msgid "Dow Wed"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_broadcast__state__draft
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_media__state__draft
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_server__state__draft
+msgid "Draft"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_event_log__duration_ms
+msgid "Duration (ms)"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__duration
+msgid "Duration (seconds)"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_broadcast.py:0
+msgid "End date must be after start date."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_event_log__endpoint
+msgid "Endpoint"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_event_log__error_message
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_broadcast__state__error
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_media__state__error
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_server__state__error
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_event_log_form
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_kanban
+msgid "Error"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_event_log_form
+msgid "Event"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_server.py:0
+#: model:ir.actions.act_window,name:xibo_connector.action_xibo_event_log
+#: model:ir.ui.menu,name:xibo_connector.menu_xibo_event_log
+msgid "Event Log"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__recurrence_detail
+msgid "Every"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_broadcast__recurrence_type__hour
+msgid "Every N hours"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_broadcast__recurrence_type__minute
+msgid "Every N minutes"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_schedule_event__expires_at
+msgid "Expires At"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_dataset_column__data_type__external_image
+msgid "External Image"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__file_data
+msgid "File"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard_line__file_data
+msgid "File Data"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard_line__file_name
+msgid "File Name"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__size_bytes
+msgid "File Size (bytes)"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__file_type
+msgid "File Type"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__file_name
+msgid "Filename"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_media.py:0
+msgid "Filename is required when uploading a file."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard__line_ids
+msgid "Files"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__message_follower_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__message_follower_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__message_follower_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__message_follower_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__message_follower_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__message_follower_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__message_partner_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__message_partner_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__message_partner_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__message_partner_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__message_partner_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__message_partner_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_broadcast__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "Fri"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_res_partner__xibo_display_nickname
+#: model:ir.model.fields,help:xibo_connector.field_res_users__xibo_display_nickname
+msgid ""
+"Friendly short name (or diminutive) shown on Xibo screens instead of the "
+"full name. Example: 'Paco' for 'Francisco Pérez Cruz'. Can be auto-filled "
+"via the AI action button. Not applicable to companies."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__from_dt
+msgid "From"
+msgstr ""
+
+#. module: xibo_connector
+#: model:res.groups,comment:xibo_connector.group_xibo_manager
+msgid "Full administration: servers, credentials, deletions."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_quick_display_wizard__display_mode__fullscreen
+msgid "Full-screen"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_broadcast__display_mode__fullscreen
+msgid "Full-screen (interrupts current layout)"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Go to <b>Administration → Applications</b>."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__name
+msgid "Group Name"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__group_ids
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_display_form
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Groups"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_dataset_column__data_type__html
+msgid "HTML"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_event_log__method
+msgid "HTTP Method"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__has_message
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__has_message
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__has_message
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__has_message
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__has_message
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__has_message
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_column__heading
+msgid "Heading"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__height
+msgid "Height"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_media__duration
+msgid ""
+"How long this media is shown in a layout. Set 0 for video's actual length."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_res_partner__id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_column__id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_row__id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_event_log__id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard__id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard_line__id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_quick_display_wizard__id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_schedule_event__id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__id
+msgid "ID"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_broadcast__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_display__resolution_xibo_id
+msgid ""
+"Id of the CMS resolution that matches this screen. Used as `resolutionId` "
+"when this module creates layouts for the display, so a portrait screen gets "
+"a portrait layout."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_broadcast__message_needaction
+#: model:ir.model.fields,help:xibo_connector.field_xibo_dataset__message_needaction
+#: model:ir.model.fields,help:xibo_connector.field_xibo_display__message_needaction
+#: model:ir.model.fields,help:xibo_connector.field_xibo_display_group__message_needaction
+#: model:ir.model.fields,help:xibo_connector.field_xibo_layout__message_needaction
+#: model:ir.model.fields,help:xibo_connector.field_xibo_media__message_needaction
+#: model:ir.model.fields,help:xibo_connector.field_xibo_server__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_broadcast__message_has_error
+#: model:ir.model.fields,help:xibo_connector.field_xibo_broadcast__message_has_sms_error
+#: model:ir.model.fields,help:xibo_connector.field_xibo_dataset__message_has_error
+#: model:ir.model.fields,help:xibo_connector.field_xibo_dataset__message_has_sms_error
+#: model:ir.model.fields,help:xibo_connector.field_xibo_display__message_has_error
+#: model:ir.model.fields,help:xibo_connector.field_xibo_display__message_has_sms_error
+#: model:ir.model.fields,help:xibo_connector.field_xibo_display_group__message_has_error
+#: model:ir.model.fields,help:xibo_connector.field_xibo_display_group__message_has_sms_error
+#: model:ir.model.fields,help:xibo_connector.field_xibo_layout__message_has_error
+#: model:ir.model.fields,help:xibo_connector.field_xibo_layout__message_has_sms_error
+#: model:ir.model.fields,help:xibo_connector.field_xibo_media__message_has_error
+#: model:ir.model.fields,help:xibo_connector.field_xibo_media__message_has_sms_error
+#: model:ir.model.fields,help:xibo_connector.field_xibo_server__message_has_error
+#: model:ir.model.fields,help:xibo_connector.field_xibo_server__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_res_partner__xibo_show_in_public_screens
+#: model:ir.model.fields,help:xibo_connector.field_res_users__xibo_show_in_public_screens
+msgid ""
+"If enabled, this customer's name may appear on digital signage screens "
+"connected via the Xibo Connector add-ons (welcome, thank-you, etc.). When "
+"disabled, a generic fallback such as 'valued customer' is shown instead."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_media__file_type__image
+msgid "Image"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.actions.act_window,help:xibo_connector.action_xibo_media
+msgid "Images and videos uploaded here will be sent to your Xibo CMS Library."
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_kanban
+msgid "In Xibo"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_media__state__xibo_only
+msgid "In Xibo (no local copy)"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_layout__xibo_campaign_id
+msgid "In Xibo, layouts are scheduled via their campaign id."
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "Individual Displays"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_display__purpose__info
+msgid "Information / News"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__instant_push
+msgid "Instant Push"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_broadcast.py:0
+msgid "Invalid JSON in DataSet Values."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__message_is_follower
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__message_is_follower
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__message_is_follower
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__message_is_follower
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__message_is_follower
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__message_is_follower
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__is_priority
+msgid "Is Priority"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__last_accessed
+msgid "Last Accessed"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__last_error
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__last_error
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__last_error
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_form
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Last Error"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__write_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__write_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_column__write_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_row__write_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__write_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__write_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_event_log__write_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__write_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__write_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard__write_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard_line__write_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_quick_display_wizard__write_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_schedule_event__write_uid
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__write_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__write_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_column__write_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_row__write_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__write_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__write_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_event_log__write_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__write_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__write_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard__write_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard_line__write_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_quick_display_wizard__write_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_schedule_event__write_date
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__layout_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_schedule_event__layout_name
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_layout_form
+msgid "Layout"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__layout_count
+msgid "Layout Count"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_quick_display_wizard__layout_name
+msgid "Layout Name"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_broadcast.py:0
+msgid "Layout missing or not synced. Sync layouts first."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_server.py:0
+#: model:ir.actions.act_window,name:xibo_connector.action_xibo_layout
+#: model:ir.ui.menu,name:xibo_connector.menu_xibo_layout
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_layout_list
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Layouts"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_dataset_column__data_type__library_image
+msgid "Library Image"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__license_code
+msgid "License Code"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_column__list_content
+msgid "List Values"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__log_api_calls
+msgid "Log API Calls"
+msgstr ""
+
+#. module: xibo_connector
+#: model:res.groups,name:xibo_connector.group_xibo_manager
+msgid "Manager"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_layout__is_overlay
+msgid ""
+"Mark layouts you designed as overlays (small region with transparent "
+"background)."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_server.py:0
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_quick_display_wizard__media_id
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_form
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_list
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Media"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__media_count
+msgid "Media Count"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.actions.act_window,name:xibo_connector.action_xibo_media
+#: model:ir.ui.menu,name:xibo_connector.menu_xibo_media
+msgid "Media Library"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_layout.py:0
+msgid "Media must already be uploaded to Xibo first."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_media.py:0
+msgid "Media not yet uploaded — use 'Upload' first."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__message_has_error
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__message_has_error
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__message_has_error
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__message_has_error
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__message_has_error
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__message_has_error
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__message_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__message_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__message_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__message_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__message_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__message_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_media.py:0
+msgid "Metadata updated in Xibo."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_media.py:0
+msgid "Metadata updated."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_server__cms_utc_offset
+msgid ""
+"Minutes the CMS clock runs ahead of UTC (negative when behind). Learned from"
+" the CMS itself, so a daylight-saving change fixes itself. Note: a CMS at "
+"UTC-10:00 or further behind cannot be told apart from its UTC+14-ish "
+"counterpart by clock alone."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_display__purpose__mixed
+msgid "Mixed Use"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_broadcast.py:0
+msgid "Mode '%s' requires a Layout."
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "Mon"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_broadcast__recurrence_type__month
+msgid "Monthly"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__name
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__name
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__name
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__name
+msgid "Name"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_display__resolution
+msgid "Native resolution reported by the player, e.g. 1080x1920."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_server.py:0
+msgid ""
+"Network error talking to Xibo:\n"
+"%s"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_broadcast.py:0
+msgid "New Broadcast"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_broadcast.py:0
+msgid "No Xibo server configured."
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.actions.act_window,help:xibo_connector.action_xibo_broadcast
+msgid "No broadcasts yet"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.actions.act_window,help:xibo_connector.action_xibo_display
+msgid "No displays yet"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.actions.act_window,help:xibo_connector.action_xibo_layout
+msgid "No layouts synced yet"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_dataset.py:0
+msgid "No matching columns to write into DataSet '%s'."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_broadcast__recurrence_type__none
+msgid "No recurrence"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_dataset_column__data_type__number
+msgid "Number"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__message_needaction_counter
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__message_needaction_counter
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__message_needaction_counter
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__message_needaction_counter
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__message_needaction_counter
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__message_needaction_counter
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__message_has_error_counter
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__message_has_error_counter
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__message_has_error_counter
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__message_has_error_counter
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__message_has_error_counter
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__message_has_error_counter
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_broadcast__message_needaction_counter
+#: model:ir.model.fields,help:xibo_connector.field_xibo_dataset__message_needaction_counter
+#: model:ir.model.fields,help:xibo_connector.field_xibo_display__message_needaction_counter
+#: model:ir.model.fields,help:xibo_connector.field_xibo_display_group__message_needaction_counter
+#: model:ir.model.fields,help:xibo_connector.field_xibo_layout__message_needaction_counter
+#: model:ir.model.fields,help:xibo_connector.field_xibo_media__message_needaction_counter
+#: model:ir.model.fields,help:xibo_connector.field_xibo_server__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_broadcast__message_has_error_counter
+#: model:ir.model.fields,help:xibo_connector.field_xibo_dataset__message_has_error_counter
+#: model:ir.model.fields,help:xibo_connector.field_xibo_display__message_has_error_counter
+#: model:ir.model.fields,help:xibo_connector.field_xibo_display_group__message_has_error_counter
+#: model:ir.model.fields,help:xibo_connector.field_xibo_layout__message_has_error_counter
+#: model:ir.model.fields,help:xibo_connector.field_xibo_media__message_has_error_counter
+#: model:ir.model.fields,help:xibo_connector.field_xibo_server__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_display_form
+msgid "Online"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__logged_in
+msgid "Online in Xibo"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Open Xibo CMS"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_dataset_form
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_display_form
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_display_group_form
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_layout_form
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_form
+msgid "Open in Xibo"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Open your Xibo CMS as super-admin."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.ui.menu,name:xibo_connector.menu_xibo_operations
+msgid "Operations"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_upload_wizard_form
+msgid "Optional display name"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_dataset__code
+msgid "Optional short code used by add-on modules to find this dataset."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__orientation
+msgid "Orientation"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__origin
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "Origin"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__origin_description
+msgid "Origin Description"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__origin_model
+msgid "Origin Model"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__origin_res_id
+msgid "Origin Res"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_media__file_type__other
+msgid "Other"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_quick_display_wizard__display_mode__overlay
+msgid "Overlay popup"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_broadcast__display_mode__overlay
+msgid "Overlay popup (does not interrupt)"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__is_overlay
+msgid "Overlay-Capable"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__own_display_group_id
+msgid "Own Display Group ID"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__force_schedule
+msgid "Player Ignores Instant Changes"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__client_type
+msgid "Player Type"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_media__origin__xibo
+msgid "Pre-existing in Xibo Library"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_form
+msgid "Preview"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_res_partner_form_xibo
+msgid "Privacy & Signage"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_dataset_column__code
+msgid "Programmatic identifier. Defaults to the heading if empty."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_display__purpose__promo
+msgid "Promotions"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__purpose
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_schedule_event__purpose
+msgid "Purpose"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_quick_display_wizard__instant_push
+msgid "Push Now"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_dataset_row_list
+msgid "Pushed Rows"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_broadcast.py:0
+msgid "Pushed ticker row to DataSet '%s'."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_media.py:0
+#: code:addons/xibo_connector/wizards/xibo_quick_display_wizard.py:0
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_form
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_quick_display_wizard_form
+msgid "Quick Display"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model,name:xibo_connector.model_xibo_quick_display_wizard
+msgid "Quick Display Wizard"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/wizards/xibo_quick_display_wizard.py:0
+msgid "Quick Display of '%s'"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/wizards/xibo_quick_display_wizard.py:0
+msgid "Quick: %s"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__rating_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__rating_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__rating_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__rating_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__rating_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__rating_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_res_partner_form_xibo
+msgid "Re-run AI nickname detection"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_display__purpose__reception
+msgid "Reception / Welcome"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "Recurrence"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__recurrence_type
+msgid "Recurrence Type"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_display_form
+msgid "Refresh from Xibo"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_display.py:0
+#: code:addons/xibo_connector/models/xibo_display_group.py:0
+msgid "Refresh sent"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.ui.menu,name:xibo_connector.menu_xibo_reporting
+msgid "Reporting"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_event_log__request_summary
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_event_log_form
+msgid "Request"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "Reset to Draft"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_quick_display_wizard__resolution_id
+msgid "Resolution ID"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_event_log__response_summary
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_event_log_form
+msgid "Response"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__row_count
+msgid "Row Count"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_dataset.py:0
+msgid "Rows of %s"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__message_has_sms_error
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__message_has_sms_error
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__message_has_sms_error
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__message_has_sms_error
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__message_has_sms_error
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__message_has_sms_error
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "Sat"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Save and copy both values into the fields above."
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "Schedule"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_broadcast__state__scheduled
+msgid "Scheduled"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_broadcast.py:0
+msgid "Scheduled in Xibo as event %s."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__resolution
+msgid "Screen Resolution"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_display__orientation
+msgid "Screen orientation reported by the player (landscape / portrait)."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_broadcast.py:0
+#: code:addons/xibo_connector/wizards/xibo_quick_display_wizard.py:0
+msgid "Select at least one display or display group."
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "Send to Xibo"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_column__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__server_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__server_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_column__server_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_row__server_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__server_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__server_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_event_log__server_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__server_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__server_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard__server_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_quick_display_wizard__server_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_schedule_event__server_id
+msgid "Server"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.actions.act_window,name:xibo_connector.action_xibo_server
+#: model:ir.ui.menu,name:xibo_connector.menu_xibo_servers
+msgid "Servers"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Set the <b>Owner</b> field to your super-admin user."
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.actions.act_window,help:xibo_connector.action_xibo_server
+msgid ""
+"Set the CMS URL and OAuth2 Client ID + Secret created under\n"
+"               Administration → Applications in Xibo."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_quick_display_wizard__duration_seconds
+msgid "Show For (s)"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_res_partner__xibo_show_in_public_screens
+#: model:ir.model.fields,field_description:xibo_connector.field_res_users__xibo_show_in_public_screens
+msgid "Show on Public Screens"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__state
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__state
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__state
+msgid "State"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_event_log__status_code
+msgid "Status"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_broadcast__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_server__log_api_calls
+msgid "Store every API call in the Xibo Event Log for auditing/debugging."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_dataset_column__data_type__string
+msgid "String"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_event_log__success
+msgid "Success"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "Sun"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Sync All"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_dataset_form
+msgid "Sync Columns"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_server.py:0
+msgid "Sync complete"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__tags
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__tags
+msgid "Tags"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_quick_display_wizard_form
+msgid "Target Display Groups"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_quick_display_wizard_form
+msgid "Target Displays"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Test Connection"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_server.py:0
+msgid "The CMS URL must not end with a slash."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_server.py:0
+msgid "The CMS URL must start with http:// or https://"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/wizards/xibo_quick_display_wizard.py:0
+msgid "The selected media is not uploaded to Xibo yet."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_media.py:0
+msgid "There is no file to upload. Attach a file first."
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_quick_display_wizard_form
+msgid ""
+"This creates a new full-screen Xibo Layout containing this media and\n"
+"                    schedules it for immediate display on the selected screens.\n"
+"                    For more complex layouts, design them directly in your Xibo CMS."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_media.py:0
+msgid ""
+"This media is already linked to Xibo. Use 'Update' or 'Replace File' "
+"instead."
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_form
+msgid "This will delete the media from both Odoo and Xibo. Continue?"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "This will remove the scheduled event from Xibo. Continue?"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "Thu"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_display__force_schedule
+msgid ""
+"Tick this when the screen never reacts to content Odoo pushes in real time, "
+"even though the CMS accepts the order. Some players only ever play what is "
+"on their schedule. Odoo then schedules the content for the moment it is "
+"needed and removes the entry afterwards, instead of relying on the instant "
+"push alone."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_broadcast__display_mode__ticker
+msgid "Ticker (DataSet row)"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_broadcast.py:0
+msgid "Ticker mode requires a DataSet."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__name
+msgid "Title"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__to_dt
+msgid "To"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Token Cache"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__token_expiry
+msgid "Token Expiry"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_list
+msgid "Total"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_media__origin
+msgid "Tracks whether the binary lives in Odoo or only in Xibo."
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_display_group_form
+msgid "Trigger Refresh"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_display_form
+msgid "Trigger XMR Refresh"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "Tue"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_broadcast__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_dataset.py:0
+msgid "Unnamed dataset"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_display.py:0
+msgid "Unnamed display"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_display_group.py:0
+msgid "Unnamed group"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_layout.py:0
+msgid "Unnamed layout"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_media.py:0
+msgid "Unnamed media"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__recurrence_until
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_quick_display_wizard__show_until
+msgid "Until"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_form
+msgid "Update Metadata"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_upload_wizard_form
+msgid "Upload All"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_media.py:0
+msgid "Upload the media to Xibo first."
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_form
+msgid "Upload to Xibo"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.actions.act_window,help:xibo_connector.action_xibo_media
+msgid "Upload your first media file"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_kanban
+msgid "Uploaded"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/wizards/xibo_media_upload_wizard.py:0
+msgid "Uploaded Media"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_media__origin__odoo
+msgid "Uploaded from Odoo"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_media__state__uploaded
+msgid "Uploaded to Xibo"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_media.py:0
+msgid "Uploaded to Xibo as mediaId %s."
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.actions.act_window,help:xibo_connector.action_xibo_layout
+msgid "Use <b>Sync All</b> on a Xibo Server to import layouts."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__xmr_enabled
+msgid "Use Real-Time Refresh"
+msgstr ""
+
+#. module: xibo_connector
+#: model:res.groups,name:xibo_connector.group_xibo_user
+msgid "User"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_row__payload
+msgid "Values"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_media__file_type__video
+msgid "Video"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_dataset_form
+msgid "View Pushed Rows"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__website_message_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__website_message_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__website_message_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__website_message_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__website_message_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__website_message_ids
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_server__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_broadcast__website_message_ids
+#: model:ir.model.fields,help:xibo_connector.field_xibo_dataset__website_message_ids
+#: model:ir.model.fields,help:xibo_connector.field_xibo_display__website_message_ids
+#: model:ir.model.fields,help:xibo_connector.field_xibo_display_group__website_message_ids
+#: model:ir.model.fields,help:xibo_connector.field_xibo_layout__website_message_ids
+#: model:ir.model.fields,help:xibo_connector.field_xibo_media__website_message_ids
+#: model:ir.model.fields,help:xibo_connector.field_xibo_server__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "Wed"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_broadcast__recurrence_type__week
+msgid "Weekly"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_schedule_event__purpose
+msgid ""
+"What this entry was created for, so a leftover event can be traced back to "
+"the feature that made it."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_server__xmr_enabled
+msgid ""
+"When enabled, Odoo asks the CMS to push an XMR refresh to the affected "
+"display group(s) after data changes."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_schedule_event__expires_at
+msgid ""
+"When the scheduled window ends. The clean-up job deletes the entry from the "
+"CMS shortly after."
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "Where"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__width
+msgid "Width"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media_upload_wizard_line__wizard_id
+msgid "Wizard"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_display.py:0
+msgid "XMR collectNow dispatched to %s display(s)."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_display_group.py:0
+msgid "XMR collectNow dispatched."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model,name:xibo_connector.model_xibo_event_log
+msgid "Xibo API Event Log"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_server.py:0
+msgid ""
+"Xibo API error %s:\n"
+"%s"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model,name:xibo_connector.model_xibo_broadcast
+msgid "Xibo Broadcast (Scheduled Event)"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model,name:xibo_connector.model_xibo_server
+msgid "Xibo CMS Server"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_media.py:0
+msgid ""
+"Xibo CMS typically does not enable the .%(ext)s extension by default. Either"
+" convert the file to PNG, JPEG or WebP, or enable the matching module in "
+"your Xibo CMS (Modules section) and add '%(ext)s' to its valid extensions "
+"list."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__xibo_campaign_id
+msgid "Xibo Campaign ID"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_column__xibo_dataset_column_id
+msgid "Xibo Column ID"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.module.category,name:xibo_connector.module_category_xibo
+#: model:res.groups.privilege,name:xibo_connector.privilege_xibo
+#: model:ir.module.module,shortdesc:base.module_xibo_connector
+msgid "Xibo Connector"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model,name:xibo_connector.model_xibo_dataset
+msgid "Xibo DataSet"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model,name:xibo_connector.model_xibo_dataset_column
+msgid "Xibo DataSet Column"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset__xibo_dataset_id
+msgid "Xibo DataSet ID"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model,name:xibo_connector.model_xibo_dataset_row
+msgid "Xibo DataSet Row (local trace)"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model,name:xibo_connector.model_xibo_display
+msgid "Xibo Display / Player"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model,name:xibo_connector.model_xibo_display_group
+msgid "Xibo Display Group"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display_group__xibo_display_group_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_schedule_event__display_group_xibo_id
+msgid "Xibo Display Group ID"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__xibo_display_id
+msgid "Xibo Display ID"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_broadcast__xibo_event_id
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_schedule_event__xibo_event_id
+msgid "Xibo Event ID"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_event_log_list
+msgid "Xibo Event Log"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model,name:xibo_connector.model_xibo_layout
+msgid "Xibo Layout"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_layout__xibo_layout_id
+msgid "Xibo Layout ID"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model,name:xibo_connector.model_xibo_media
+msgid "Xibo Media (Library Item)"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_media__xibo_media_id
+msgid "Xibo Media ID"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_display__resolution_xibo_id
+msgid "Xibo Resolution ID"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,field_description:xibo_connector.field_xibo_dataset_row__xibo_row_id
+msgid "Xibo Row ID"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "Xibo Server"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_list
+msgid "Xibo Servers"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.ui.menu,name:xibo_connector.menu_xibo_root
+msgid "Xibo Signage"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model,name:xibo_connector.model_xibo_schedule_event
+msgid "Xibo Temporary Schedule Entry"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_display__own_display_group_id
+msgid ""
+"Xibo creates a display-specific group per display, used as the XMR channel."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_layout.py:0
+msgid "Xibo did not return a layoutId. Response: %s"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_media.py:0
+msgid "Xibo did not return a mediaId. Response: %s"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_server.py:0
+msgid "Xibo did not return an access token. Response: %s"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_media.py:0
+msgid "Xibo rejected the file: %s"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields,help:xibo_connector.field_xibo_quick_display_wizard__resolution_id
+msgid "Xibo resolutionId. In most installs: 1 = HD 1920x1080 landscape."
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_media.py:0
+msgid "Xibo response missing mediaId: %s"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/xibo_server.py:0
+msgid "Xibo returned a non-JSON response. Check the URL."
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.actions.server,name:xibo_connector.cron_prune_event_log_ir_actions_server
+msgid "Xibo: Prune event log (older than 30 days)"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.actions.server,name:xibo_connector.cron_gc_schedule_events_ir_actions_server
+msgid "Xibo: Remove expired temporary schedule entries"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.actions.server,name:xibo_connector.cron_sync_displays_ir_actions_server
+msgid "Xibo: Sync displays from CMS"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.model.fields.selection,name:xibo_connector.selection__xibo_broadcast__recurrence_type__year
+msgid "Yearly"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "e.g. Welcome — Reception 1"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "e.g. Xibo Production"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_server_form
+msgid "https://xibo.example.com"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/wizards/xibo_media_upload_wizard.py:0
+msgid "id"
+msgstr ""
+
+#. module: xibo_connector
+#. odoo-python
+#: code:addons/xibo_connector/models/res_partner.py:0
+msgid "valued customer"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_form
+msgid "welcome,promo2025"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_media_upload_wizard_form
+msgid "welcome,recepcion"
+msgstr ""
+
+#. module: xibo_connector
+#: model_terms:ir.ui.view,arch_db:xibo_connector.view_xibo_broadcast_form
+msgid "{\"name\": \"Alice\", \"message\": \"Welcome!\"}"
+msgstr ""
+
+#. module: xibo_connector
+#: model:ir.module.module,summary:base.module_xibo_connector
+msgid "Manage Xibo CMS digital signage from Odoo: displays, media, datasets, layouts, broadcasts."
+msgstr ""

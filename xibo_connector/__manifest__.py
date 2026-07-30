@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Xibo Connector',
-    'version': '19.0.1.6.4',
+    'version': '19.0.1.6.5',
     'category': 'Marketing/Digital Signage',
     'summary': 'Manage Xibo CMS digital signage from Odoo: displays, media, datasets, layouts, broadcasts.',
 
