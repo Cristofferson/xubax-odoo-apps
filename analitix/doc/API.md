@@ -182,7 +182,65 @@ The same uuid appearing twice **inside one batch** is also collapsed.
 
 ---
 
-## 4. `POST /analitix/api/v1/heartbeat`
+## 4. `POST /analitix/api/v1/dwell`
+
+How long tracked people have spent in zones and at displays.
+
+```json
+{
+  "dwells": [
+    {"track": "t-8841", "zone": "R",  "since": "2026-08-01T14:32:05-06:00",
+     "seconds": 214, "served": false},
+    {"track": "t-8841", "poi": "SC1", "since": "2026-08-01T14:33:10-06:00",
+     "seconds": 46}
+  ]
+}
+```
+
+| Field | Meaning |
+|---|---|
+| `track` | The tracker id the agent gave this person **at the door**. Odoo resolves it to a visit; an unknown track is skipped quietly, because someone who walked in before the agent restarted has no visit to attach to and that is not an error. |
+| `zone` / `poi` | The zone's or display's *Reference* as configured in Odoo. Send one or the other, not both. |
+| `since` | When they arrived at it. Together with the track and the zone this is the upsert key. |
+| `seconds` | Time there **so far**. |
+| `served` | A salesperson is with them. Suppresses the lost-sale nudge. |
+
+> **Send a running total, not a final one.** Report while the person is still
+> standing there and keep updating the same observation. A lost-sale nudge that
+> arrives after the customer has walked out is worthless, and Odoo upserts on
+> `(visit, zone, since)` so repeating the observation with a bigger number
+> updates one row instead of creating a dozen — and raising a dozen alerts.
+
+Evaluated **inline**, unlike everything else in this API: this is the one thing
+that is worthless late. What it can trigger — the alert, WhatsApp — is already
+non-blocking.
+
+```json
+{"ok": true, "stored": 2, "skipped": 0}
+```
+
+---
+
+## 5. `POST /analitix/api/v1/checkout`
+
+Attribute a ticket to the visit that produced it.
+
+```json
+{"pos_reference": "Order 00042-001-0003",
+ "embedding": "base64-or-json-array"}
+```
+
+The comparison is queued, so nothing here can make a cashier wait while a
+customer stands at the counter. A ticket that has not synced to Odoo yet is
+answered `{"ok": true, "queued": false}` — not an error to retry against, since
+the purchase-unit fallback already attributes it.
+
+A store with no till camera still gets group-level attribution: the ticket
+attaches to the purchase unit frozen at the door.
+
+---
+
+## 6. `POST /analitix/api/v1/heartbeat`
 
 ```json
 {"agent_version": "1.0.0", "queue_size": 0}
@@ -209,7 +267,7 @@ customer is paying for data nobody is capturing.
 
 ---
 
-## 5. `GET /analitix/api/v1/config`
+## 7. `GET /analitix/api/v1/config`
 
 Everything the agent needs, resolved server-side:
 
@@ -234,7 +292,7 @@ Poll it on start-up and periodically (hourly is plenty).
 
 ---
 
-## 6. `GET /analitix/api/v1/staff_signatures`
+## 8. `GET /analitix/api/v1/staff_signatures`
 
 ```json
 {
@@ -260,7 +318,7 @@ count from the next refresh onward.
 
 ---
 
-## 7. What happens to a crossing after it is stored
+## 9. What happens to a crossing after it is stored
 
 1. **Staff check.** If the crossing matches an enrolled employee it is kept but
    flagged `counted = false`, and it never becomes a visit.
@@ -283,7 +341,7 @@ mercy of a readable face.
 
 ---
 
-## 8. What the API deliberately does not accept
+## 10. What the API deliberately does not accept
 
 **No images. No video. Ever.** Not as a field, not as an attachment, not
 "temporarily for debugging". The edge extracts an embedding — a vector of
@@ -296,7 +354,7 @@ event are wiped as soon as the matching job has run.
 
 ---
 
-## 9. Reference agent
+## 11. Reference agent
 
 `edge/analitix_agent.py` in this repository implements this contract end to end:
 persistent uuids, an encrypted on-disk buffer that survives an outage, ordered

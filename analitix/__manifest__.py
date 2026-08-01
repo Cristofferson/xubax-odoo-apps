@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Analitix — Physical Store Intelligence",
-    "version": "19.0.2.0.0",
+    "version": "19.0.3.0.0",
     "category": "Point of Sale",
     "summary": "Store intelligence on Odoo: visitor counting across any number "
                "of doors, POS conversion (ATV, UPT, revenue per visitor, "
@@ -58,6 +58,33 @@ Phase 2
 * **Liveness plumbing** so later phases can refuse a reading that may have come
   from a photograph.
 
+Phase 3
+-------
+
+* **Zones and displays.** Divide the floor into as many zones as the shop
+  actually has, and mark the displays inside them. "Twelve minutes inside"
+  tells an owner nothing; "eleven of those twelve at the ring counter, and
+  nobody spoke to them" tells them exactly where the money went.
+* **Lost sales.** Long dwell, unserved, and no ticket — all three, because each
+  alone is ordinary. This is the number that sells the product.
+* **The discreet nudge.** Only the assigned salesperson perceives it, through
+  the Odoo mobile app and optionally WhatsApp. There is deliberately no audible
+  or on-screen option, because the customer must never know they are being
+  discussed. Routed by a per-zone, per-weekday, per-hour rota, escalated to a
+  fallback when nobody is covering, and recorded with the response time.
+* **Display performance.** Attention beside the sales of the products actually
+  on each display, surfacing the two findings worth acting on: draws a crowd
+  and sells little, or sells well from a cold corner.
+* **Ticket attribution.** Which visit produced which ticket, anonymously,
+  falling back to the purchase unit where there is no till camera.
+* **Optional customer identification.** When a customer hands over their
+  details at the till, their signature can become a named one so the shop
+  greets them properly next time. Off by default, guarded by liveness, and
+  every later read of that list is audited.
+* **Behaviour signals.** In and out repeatedly, a long unattended stop, a group
+  that scatters. Anonymous and about patterns, never about people — the named
+  watch list is a separate phase with separate controls.
+
 Privacy by design: no image or video is ever transmitted or stored — the edge
 sends only counts and irreversible numeric embeddings, and those are encrypted
 in the database.
@@ -77,6 +104,11 @@ only receives JSON.
         "mail",
         "hr",
         "point_of_sale",
+        # Named by the project brief as a module to integrate with rather than
+        # rebuild: a lost sale can open a lead. Community, so it costs the
+        # customer nothing. Odoo's WhatsApp module is deliberately NOT here —
+        # it is Enterprise, and half the market for this app does not have it.
+        "crm",
     ],
     "data": [
         "security/analitix_groups.xml",
@@ -92,6 +124,10 @@ only receives JSON.
         "views/analitix_event_views.xml",
         "views/analitix_staff_signature_views.xml",
         "views/analitix_visitor_views.xml",
+        "views/analitix_zone_views.xml",
+        "views/analitix_poi_views.xml",
+        "views/analitix_alert_views.xml",
+        "views/analitix_lost_sale_views.xml",
         "views/analitix_job_views.xml",
         "views/analitix_audit_views.xml",
         "views/analitix_hourly_views.xml",

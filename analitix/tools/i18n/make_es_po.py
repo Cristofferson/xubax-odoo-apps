@@ -20,6 +20,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from es_batch2 import BATCH2
 from es_batch3 import BATCH3
 from es_batch4 import BATCH4, BATCH4_LOOSE
+from es_batch5 import BATCH5, BATCH5_LOOSE
 
 TRANSLATIONS = {
     # ---- module, models, menus -------------------------------------
@@ -419,6 +420,7 @@ TRANSLATIONS = {
 
 TRANSLATIONS.update(BATCH2)
 TRANSLATIONS.update(BATCH4)
+TRANSLATIONS.update(BATCH5)
 
 #: Same translations, keyed on the whitespace-collapsed msgid. View strings carry
 #: the XML's line breaks and indentation inside the msgid, and transcribing that
@@ -428,11 +430,19 @@ NORMALISED = {}
 
 
 def squash(text):
-    """Collapse literal \\n escapes and runs of whitespace to single spaces."""
-    return " ".join(text.replace("\\n", " ").split())
+    """Normalise a msgid for loose matching.
+
+    Collapses literal ``\\n`` escapes and runs of whitespace, and drops the
+    backslashes the .pot puts in front of embedded quotes — otherwise a
+    translation of a sentence containing a quoted phrase never matches, and
+    Odoo drops it without a word.
+    """
+    return " ".join(
+        text.replace("\\n", " ").replace('\\"', '"').split())
 
 
-for _key, _value in list(BATCH3.items()) + list(BATCH4_LOOSE.items()):
+for _key, _value in (list(BATCH3.items()) + list(BATCH4_LOOSE.items())
+                     + list(BATCH5_LOOSE.items())):
     NORMALISED[squash(_key)] = _value
 
 HEADER = '''# Translation of Odoo Server.
@@ -503,6 +513,7 @@ def main():
     _seen = {squash(m) for m in matched}
     unknown |= {k for k in BATCH3 if squash(k) not in _seen}
     unknown |= {k for k in BATCH4_LOOSE if squash(k) not in _seen}
+    unknown |= {k for k in BATCH5_LOOSE if squash(k) not in _seen}
     print("translated %d of the .pot's entries" % len(matched))
     if unknown:
         # An entry whose msgid is not in the .pot is ignored silently by Odoo,

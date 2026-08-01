@@ -218,6 +218,23 @@ class TestJobQueue(AnalitixCase):
         self.assertEqual(good.state, "done",
                          "a poisoned job must not roll back its neighbours")
 
+    def test_a_job_enqueued_inside_the_running_transaction_is_picked_up(self):
+        """Regression: the queue is claimed with raw SQL, which sees neither the
+        ORM's unflushed rows nor a clock later than the transaction's start.
+
+        PostgreSQL's now() is the *transaction start* time, so a job enqueued
+        after the transaction began sits in that transaction's future and would
+        be skipped forever. This test failed intermittently before the fix,
+        which is exactly how it would have behaved in production: a queue that
+        mostly works.
+        """
+        job = self.env["analitix.job"].enqueue(
+            "staff_match", {"event_ids": []}, store=self.store_one)
+        self.assertEqual(job.state, "pending")
+        self.env["analitix.job"]._cron_run()
+        self.assertEqual(job.state, "done",
+                         "a job enqueued in this transaction was never claimed")
+
     def test_a_future_job_is_not_run_early(self):
         job = self.env["analitix.job"].enqueue(
             "staff_match", {"event_ids": []}, delay_s=3600)

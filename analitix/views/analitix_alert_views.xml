@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_alert_list" model="ir.ui.view">
+        <field name="name">analitix.alert.list</field>
+        <field name="model">analitix.alert</field>
+        <field name="arch" type="xml">
+            <list string="Alerts" create="false"
+                  decoration-warning="not acknowledged and outcome == 'pending'"
+                  decoration-danger="outcome == 'missed'"
+                  decoration-success="outcome == 'sold'">
+                <field name="sent_at"/>
+                <field name="store_id"/>
+                <field name="zone_id"/>
+                <field name="kind"/>
+                <field name="summary"/>
+                <field name="user_id"/>
+                <field name="was_fallback" optional="show"/>
+                <field name="channel" optional="show"/>
+                <field name="response_seconds" avg="Avg response" optional="show"/>
+                <field name="outcome" widget="badge"
+                       decoration-success="outcome == 'sold'"
+                       decoration-info="outcome == 'attended'"
+                       decoration-danger="outcome == 'missed'"/>
+                <field name="acknowledged" column_invisible="True"/>
+                <button name="action_acknowledge" type="object" string="On it"
+                        icon="fa-check" invisible="acknowledged"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_alert_form" model="ir.ui.view">
+        <field name="name">analitix.alert.form</field>
+        <field name="model">analitix.alert</field>
+        <field name="arch" type="xml">
+            <form string="Alert" create="false">
+                <header>
+                    <button name="action_acknowledge" type="object"
+                            string="On it" class="btn-primary"
+                            invisible="acknowledged"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="summary"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="store_id"/>
+                            <field name="zone_id"/>
+                            <field name="kind"/>
+                            <field name="sent_at"/>
+                            <field name="channel"/>
+                        </group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="was_fallback"/>
+                            <field name="acknowledged"/>
+                            <field name="acknowledged_at"/>
+                            <field name="response_seconds"/>
+                            <field name="outcome"/>
+                        </group>
+                    </group>
+                    <group string="Detail">
+                        <field name="body" nolabel="1"/>
+                    </group>
+                    <group string="Context">
+                        <field name="visitor_id"/>
+                        <field name="partner_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_alert_search" model="ir.ui.view">
+        <field name="name">analitix.alert.search</field>
+        <field name="model">analitix.alert</field>
+        <field name="arch" type="xml">
+            <search string="Alerts">
+                <field name="summary"/>
+                <field name="store_id"/>
+                <field name="zone_id"/>
+                <field name="user_id"/>
+                <filter name="filter_mine" string="Mine"
+                        domain="[('user_id', '=', uid)]"/>
+                <filter name="filter_open" string="Not Acknowledged"
+                        domain="[('acknowledged', '=', False)]"/>
+                <filter name="filter_missed" string="Missed"
+                        domain="[('outcome', '=', 'missed')]"/>
+                <filter name="filter_escalated" string="Escalated"
+                        domain="[('was_fallback', '=', True)]"
+                        help="Nobody was rostered on that zone. A lot of these means the shift map is wrong."/>
+                <separator/>
+                <filter name="filter_today" string="Today"
+                        domain="[('sent_at', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)))]"/>
+                <filter name="filter_7d" string="Last 7 Days"
+                        domain="[('sent_at', '&gt;=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <group name="group_by">
+                    <filter name="group_kind" string="Type" domain="[]"
+                            context="{'group_by': 'kind'}"/>
+                    <filter name="group_user" string="Salesperson" domain="[]"
+                            context="{'group_by': 'user_id'}"/>
+                    <filter name="group_zone" string="Zone" domain="[]"
+                            context="{'group_by': 'zone_id'}"/>
+                    <filter name="group_outcome" string="Outcome" domain="[]"
+                            context="{'group_by': 'outcome'}"/>
+                    <filter name="group_day" string="Day" domain="[]"
+                            context="{'group_by': 'sent_at:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_alert" model="ir.actions.act_window">
+        <field name="name">Alerts</field>
+        <field name="res_model">analitix.alert</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_filter_7d': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No alerts</p>
+            <p>
+                Discreet nudges to the salesperson covering a zone — through the
+                Odoo mobile app, and optionally WhatsApp. <b>Never anything
+                audible, and never anything the customer can see.</b>
+            </p>
+            <p>
+                Every one is recorded with who received it and whether they
+                reacted, because a nudge nobody measures is a nudge nobody
+                improves.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_alert_mine" model="ir.actions.act_window">
+        <field name="name">My Alerts</field>
+        <field name="res_model">analitix.alert</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_filter_mine': 1, 'search_default_filter_open': 1}</field>
+    </record>
+
+</odoo>

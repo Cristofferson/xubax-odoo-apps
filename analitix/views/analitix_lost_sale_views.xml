@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_lost_sale_list" model="ir.ui.view">
+        <field name="name">analitix.lost.sale.list</field>
+        <field name="model">analitix.lost.sale</field>
+        <field name="arch" type="xml">
+            <list string="Lost Sales" create="false"
+                  decoration-success="state == 'rescued'"
+                  decoration-danger="state == 'lost'">
+                <field name="detected_at"/>
+                <field name="store_id"/>
+                <field name="zone_id"/>
+                <field name="dwell_seconds" string="Dwell (s)"/>
+                <field name="was_served" optional="show"/>
+                <field name="estimated_value" sum="Estimated" widget="monetary"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'rescued'"
+                       decoration-danger="state == 'lost'"/>
+                <field name="pos_order_id" optional="show"/>
+                <field name="lead_id" optional="hide"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_lost_sale_form" model="ir.ui.view">
+        <field name="name">analitix.lost.sale.form</field>
+        <field name="model">analitix.lost.sale</field>
+        <field name="arch" type="xml">
+            <form string="Lost Sale" create="false">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="display_name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="store_id"/>
+                            <field name="zone_id"/>
+                            <field name="detected_at"/>
+                            <field name="dwell_seconds"/>
+                            <field name="was_served"/>
+                        </group>
+                        <group>
+                            <field name="state"/>
+                            <field name="alert_id"/>
+                            <field name="pos_order_id"/>
+                            <field name="lead_id"/>
+                            <field name="estimated_value"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert">
+                        The estimated value is the store's recent average
+                        ticket. It is an estimate and labelled as one: what a
+                        sale that never happened would have been worth cannot be
+                        known, and quoting it to the cent would be dishonest.
+                    </div>
+                    <group string="Visit">
+                        <field name="visitor_id"/>
+                        <field name="dwell_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_lost_sale_graph" model="ir.ui.view">
+        <field name="name">analitix.lost.sale.graph</field>
+        <field name="model">analitix.lost.sale</field>
+        <field name="arch" type="xml">
+            <graph string="Lost Sales" type="bar" stacked="1" sample="1">
+                <field name="detected_at" interval="day"/>
+                <field name="state"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_lost_sale_search" model="ir.ui.view">
+        <field name="name">analitix.lost.sale.search</field>
+        <field name="model">analitix.lost.sale</field>
+        <field name="arch" type="xml">
+            <search string="Lost Sales">
+                <field name="store_id"/>
+                <field name="zone_id"/>
+                <filter name="filter_lost" string="Lost"
+                        domain="[('state', '=', 'lost')]"/>
+                <filter name="filter_rescued" string="Rescued"
+                        domain="[('state', '=', 'rescued')]"
+                        help="The nudge worked: this visit produced a ticket afterwards. This is the figure the monthly value report is built on."/>
+                <filter name="filter_unserved" string="Nobody Went Over"
+                        domain="[('was_served', '=', False)]"/>
+                <separator/>
+                <filter name="filter_7d" string="Last 7 Days"
+                        domain="[('detected_at', '&gt;=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_30d" string="Last 30 Days"
+                        domain="[('detected_at', '&gt;=', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <group name="group_by">
+                    <filter name="group_zone" string="Zone" domain="[]"
+                            context="{'group_by': 'zone_id'}"/>
+                    <filter name="group_state" string="Status" domain="[]"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_store" string="Store" domain="[]"
+                            context="{'group_by': 'store_id'}"/>
+                    <filter name="group_day" string="Day" domain="[]"
+                            context="{'group_by': 'detected_at:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_lost_sale" model="ir.actions.act_window">
+        <field name="name">Lost Sales</field>
+        <field name="res_model">analitix.lost.sale</field>
+        <field name="view_mode">list,graph,form</field>
+        <field name="context">{'search_default_filter_30d': 1, 'search_default_group_zone': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No lost sales detected</p>
+            <p>
+                Somebody lingered past the zone's threshold, nobody served them,
+                and they left without buying. <b>All three conditions</b> — each
+                one on its own is ordinary, and together they are a specific,
+                actionable event.
+            </p>
+            <p>
+                Deliberately conservative: a false alarm costs a salesperson a
+                trip and, repeated, their trust in the whole system, after which
+                no alert works at all.
+            </p>
+        </field>
+    </record>
+
+    <!-- Ticket attribution -->
+    <record id="view_sale_match_list" model="ir.ui.view">
+        <field name="name">analitix.sale.match.list</field>
+        <field name="model">analitix.sale.match</field>
+        <field name="arch" type="xml">
+            <list string="Ticket Attribution" create="false">
+                <field name="matched_at"/>
+                <field name="store_id"/>
+                <field name="pos_order_id"/>
+                <field name="visitor_id"/>
+                <field name="visit_group_id" optional="show"/>
+                <field name="method"/>
+                <field name="confidence" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sale_match_search" model="ir.ui.view">
+        <field name="name">analitix.sale.match.search</field>
+        <field name="model">analitix.sale.match</field>
+        <field name="arch" type="xml">
+            <search string="Ticket Attribution">
+                <field name="store_id"/>
+                <field name="pos_order_id"/>
+                <filter name="filter_face" string="Matched By Face"
+                        domain="[('method', '=', 'face')]"/>
+                <filter name="filter_group" string="Through The Purchase Unit"
+                        domain="[('method', '=', 'group')]"/>
+                <group name="group_by">
+                    <filter name="group_method" string="How" domain="[]"
+                            context="{'group_by': 'method'}"/>
+                    <filter name="group_store" string="Store" domain="[]"
+                            context="{'group_by': 'store_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_sale_match" model="ir.actions.act_window">
+        <field name="name">Ticket Attribution</field>
+        <field name="res_model">analitix.sale.match</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No tickets attributed yet</p>
+            <p>
+                Which visit produced which ticket — anonymously. It answers
+                questions no aggregate can: does the profile that stops at the
+                window actually buy, does a group spend more than a lone
+                shopper. None of it needs anybody's name.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -22,15 +22,68 @@ msgstr ""
 
 #. module: analitix
 #. odoo-python
+#: code:addons/analitix/models/analitix_face_signature.py:0
+msgid "\\nLast purchase: %s"
+msgstr "\\nÚltima compra: %s"
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_zone
+msgid "\\\"Twelve minutes inside\\\" tells an owner nothing. \\\"Eleven of those\\n                twelve in front of the engagement rings, and nobody spoke to\\n                them\\\" tells them exactly where the money went."
+msgstr "\"Doce minutos adentro\" no le dice nada al dueño. \"Once de esos doce frente a los anillos de compromiso, y nadie le habló\" le dice exactamente por dónde se fue el dinero."
+
+#. module: analitix
+#. odoo-python
 #: code:addons/analitix/models/analitix_device.py:0
 msgid "%(key)s\\n\\nThis is the only time it is shown. Odoo stores only a hash of it; if it is lost, rotate again."
 msgstr "%(key)s\\n\\nEsta es la única vez que se muestra. Odoo solo guarda un hash; si se pierde, hay que rotarla otra vez."
 
 #. module: analitix
 #. odoo-python
+#: code:addons/analitix/models/analitix_anomaly.py:0
+msgid "%(mins)s minutes at %(zone)s, unattended."
+msgstr "%(mins)s minutos en %(zone)s, sin atender."
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_anomaly.py:0
+msgid "%(n)s re-entries during one visit."
+msgstr "%(n)s reingresos durante una misma visita."
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_face_signature.py:0
+msgid "%(name)s is a returning customer.%(last)s"
+msgstr "%(name)s es un cliente recurrente.%(last)s"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_face_signature.py:0
+msgid "%(name)s just came in"
+msgstr "%(name)s acaba de entrar"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_anomaly.py:0
+msgid "%(size)s people arrived together and are now in %(zones)s different zones."
+msgstr "%(size)s personas llegaron juntas y ahora están en %(zones)s zonas distintas."
+
+#. module: analitix
+#. odoo-python
 #: code:addons/analitix/models/analitix_visit_group.py:0
 msgid "%(size)s person(s) at %(door)s"
 msgstr "%(size)s persona(s) en %(door)s"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_lost_sale.py:0
+msgid "%(zone)s · %(when)s"
+msgstr "%(zone)s · %(when)s"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_lost_sale.py:0
+msgid "%(zone)s: customer unattended for %(mins)s min"
+msgstr "%(zone)s: cliente sin atender desde hace %(mins)s min"
 
 #. module: analitix
 #. odoo-python
@@ -119,6 +172,12 @@ msgid "A device that has not sent a heartbeat for this long is marked offline. R
 msgstr "Un dispositivo que no manda latido durante este tiempo se marca fuera de línea. Súbelo en tiendas con conexión inestable para que un corte de 90 segundos no despierte al técnico cada noche."
 
 #. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_anomaly.py:0
+msgid "A group came in together and split up"
+msgstr "Un grupo entró junto y se separó"
+
+#. module: analitix
 #: model:ir.model.constraint,message:analitix.constraint_analitix_store_group_size_sane
 msgid "A purchase unit holds at least one person."
 msgstr "Una unidad de compra tiene al menos una persona."
@@ -166,6 +225,16 @@ msgid "ATV"
 msgstr "Ticket promedio"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__acknowledged
+msgid "Acknowledged"
+msgstr "Con acuse"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__acknowledged_at
+msgid "Acknowledged At"
+msgstr "Acuse el"
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__action
 #: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_search
 msgid "Action"
@@ -181,8 +250,11 @@ msgstr "Requiere acción"
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__active
 #: model:ir.model.fields,field_description:analitix.field_analitix_door__active
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi__active
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__active
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__active
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone__active
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_vendor__active
 msgid "Active"
 msgstr "Activo"
 
@@ -209,6 +281,42 @@ msgstr "Confianza de la edad"
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__agent_version
 msgid "Agent Version"
 msgstr "Versión del agente"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__alert_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__alert_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__alert_id
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_form
+msgid "Alert"
+msgstr "Aviso"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__alert_channel
+msgid "Alert Channel"
+msgstr "Canal del aviso"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__alert_cooldown_minutes
+msgid "Alert Cooldown (min)"
+msgstr "Enfriamiento entre avisos (min)"
+
+#. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_alert
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__alert_ids
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_search
+msgid "Alerts"
+msgstr "Avisos"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Alerts reach <b>only</b> the assigned\\n                                salesperson, through their phone. There is\\n                                deliberately no audible or on-screen option: a\\n                                chime or a message on a shop screen tells the\\n                                customer they are being discussed."
+msgstr "Los avisos llegan <b>solo</b> al vendedor asignado, a su teléfono. A propósito no hay opción audible ni en pantalla: un timbre o un mensaje en una pantalla de la tienda le avisa al cliente que están hablando de él."
+
+#. module: analitix
+#: model:ir.ui.menu,name:analitix.menu_all_alerts
+msgid "All Alerts"
+msgstr "Todos los avisos"
 
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_visit_group__kind__single
@@ -238,6 +346,11 @@ msgid "Analitix Background Job"
 msgstr "Trabajo en segundo plano de Analitix"
 
 #. module: analitix
+#: model:ir.model,name:analitix.model_analitix_anomaly_event
+msgid "Analitix Behaviour Signal"
+msgstr "Señal de comportamiento de Analitix"
+
+#. module: analitix
 #: model:ir.model,name:analitix.model_analitix_event
 msgid "Analitix Crossing Event"
 msgstr "Evento de cruce de Analitix"
@@ -248,9 +361,29 @@ msgid "Analitix Demographic Reading"
 msgstr "Lectura demográfica de Analitix"
 
 #. module: analitix
+#: model:ir.model,name:analitix.model_analitix_alert
+msgid "Analitix Discreet Alert"
+msgstr "Aviso discreto de Analitix"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_poi
+msgid "Analitix Display / Point of Interest"
+msgstr "Exhibidor / punto de interés de Analitix"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_poi_attention
+msgid "Analitix Display Attention"
+msgstr "Atención al exhibidor de Analitix"
+
+#. module: analitix
 #: model:ir.model,name:analitix.model_analitix_device
 msgid "Analitix Edge Device"
 msgstr "Dispositivo edge de Analitix"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_lost_sale
+msgid "Analitix Lost Sale"
+msgstr "Venta perdida de Analitix"
 
 #. module: analitix
 #: model:ir.model,name:analitix.model_analitix_visit_group
@@ -273,14 +406,40 @@ msgid "Analitix Store Door"
 msgstr "Puerta de tienda de Analitix"
 
 #. module: analitix
+#: model:ir.model,name:analitix.model_analitix_zone
+msgid "Analitix Store Zone"
+msgstr "Zona de tienda de Analitix"
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_res_users__analitix_store_ids
 msgid "Analitix Stores"
 msgstr "Tiendas de Analitix"
 
 #. module: analitix
 #: model:ir.model,name:analitix.model_analitix_visitor
+#: model:ir.model.fields,field_description:analitix.field_pos_order__analitix_match_id
 msgid "Analitix Visit"
 msgstr "Visita de Analitix"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_sale_match
+msgid "Analitix Visit ↔ Ticket"
+msgstr "Visita ↔ ticket de Analitix"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_zone_vendor
+msgid "Analitix Zone Coverage"
+msgstr "Cobertura de zona de Analitix"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_zone_dwell
+msgid "Analitix Zone Dwell"
+msgstr "Permanencia por zona de Analitix"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_poi_performance
+msgid "Analitix — Display Attention vs Sales"
+msgstr "Analitix — Atención al exhibidor contra ventas"
 
 #. module: analitix
 #: model:ir.model,name:analitix.model_analitix_crypto
@@ -345,6 +504,11 @@ msgid "Analitix: expire anonymous face signatures"
 msgstr "Analitix: caducar firmas faciales anónimas"
 
 #. module: analitix
+#: model:ir.actions.server,name:analitix.cron_alerts_missed_ir_actions_server
+msgid "Analitix: mark unacknowledged alerts as missed"
+msgstr "Analitix: marcar como no atendidos los avisos sin acuse"
+
+#. module: analitix
 #: model:ir.actions.server,name:analitix.cron_ingest_baselines_ir_actions_server
 msgid "Analitix: refresh ingest baselines and flag anomalies"
 msgstr "Analitix: recalcular líneas base de ingesta y marcar anomalías"
@@ -353,6 +517,16 @@ msgstr "Analitix: recalcular líneas base de ingesta y marcar anomalías"
 #: model:ir.actions.server,name:analitix.cron_run_jobs_ir_actions_server
 msgid "Analitix: run background jobs"
 msgstr "Analitix: ejecutar trabajos en segundo plano"
+
+#. module: analitix
+#: model:ir.actions.server,name:analitix.cron_anomaly_scan_ir_actions_server
+msgid "Analitix: scan for unusual behaviour"
+msgstr "Analitix: buscar comportamientos inusuales"
+
+#. module: analitix
+#: model:ir.actions.server,name:analitix.cron_settle_lost_sales_ir_actions_server
+msgid "Analitix: settle open lost sales"
+msgstr "Analitix: cerrar las ventas perdidas abiertas"
 
 #. module: analitix
 #: model:ir.ui.menu,name:analitix.menu_analysis
@@ -375,6 +549,11 @@ msgid "Anonymous, expiring handles that let the same person be counted\\n       
 msgstr "Identificadores anónimos y con caducidad que permiten contar una sola vez a la misma persona durante una visita. No llevan nombre ni imagen, están cifrados en reposo, y un trabajo programado los borra según la ventana de retención de la tienda."
 
 #. module: analitix
+#: model:ir.model.constraint,message:analitix.constraint_analitix_poi_code_store_uniq
+msgid "Another display of this store already uses that reference."
+msgstr "Otro exhibidor de esta tienda ya usa esa referencia."
+
+#. module: analitix
 #: model:ir.model.constraint,message:analitix.constraint_analitix_door_code_store_uniq
 msgid "Another door of this store already uses that reference."
 msgstr "Otra puerta de esta tienda ya usa esa referencia."
@@ -383,6 +562,11 @@ msgstr "Otra puerta de esta tienda ya usa esa referencia."
 #: model:ir.model.constraint,message:analitix.constraint_analitix_store_code_company_uniq
 msgid "Another store of this company already uses that reference."
 msgstr "Otra tienda de esta compañía ya usa esa referencia."
+
+#. module: analitix
+#: model:ir.model.constraint,message:analitix.constraint_analitix_zone_code_store_uniq
+msgid "Another zone of this store already uses that reference."
+msgstr "Otra zona de esta tienda ya usa esa referencia."
 
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_form
@@ -403,9 +587,50 @@ msgid "Archived"
 msgstr "Archivado"
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_anomaly_event__kind__group_dispersal
+msgid "Arrived together, scattered"
+msgstr "Llegaron juntos y se dispersaron"
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_job__attempts
 msgid "Attempts"
 msgstr "Intentos"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_alert__outcome__attended
+msgid "Attended"
+msgstr "Atendido"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi__attention_ids
+msgid "Attention"
+msgstr "Atención"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi_performance__attention_seconds
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_performance_list
+msgid "Attention (s)"
+msgstr "Atención (s)"
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_poi_performance
+msgid "Attention beside the sales of the products on each display. A\\n                product sitting on two displays counts on both — honest, because\\n                the data genuinely cannot say which one closed the sale, and\\n                splitting it would invent a precision that does not exist."
+msgstr "La atención junto a las ventas de los productos de cada exhibidor. Un producto que está en dos exhibidores cuenta en ambos, y eso es honesto: los datos genuinamente no pueden decir cuál cerró la venta, y repartirla inventaría una precisión que no existe."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_search
+msgid "Attention here cannot be compared against sales until somebody says what is on the display."
+msgstr "La atención aquí no se puede comparar contra las ventas hasta que alguien diga qué tiene encima el exhibidor."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_form
+msgid "Attention on its own is a vanity metric. Attention\\n                        crossed with the sales of the products actually on this\\n                        display is what produces the two findings worth acting\\n                        on: <b>lots of attention and few sales</b> (price, or\\n                        nobody closing) and <b>few visitors but good sales</b>\\n                        (it converts everyone who finds it — move it somewhere\\n                        warmer). Only the shop knows what is on it, so this list\\n                        is configuration."
+msgstr "La atención por sí sola es una métrica de vanidad. La atención cruzada con las ventas de los productos que de verdad están en este exhibidor es lo que produce los dos hallazgos que valen: <b>mucha atención y pocas ventas</b> (precio, o que nadie cierra) y <b>pocos visitantes pero buenas ventas</b> (convierte a todo el que lo encuentra: muévelo a un lugar más concurrido). Solo la tienda sabe qué tiene encima, así que esta lista es configuración."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__checkout_match_enabled
+msgid "Attribute Tickets To Visits"
+msgstr "Atribuir tickets a visitas"
 
 #. module: analitix
 #: model:ir.actions.act_window,name:analitix.action_audit_log
@@ -428,9 +653,34 @@ msgid "Audit entries cannot be modified. A trail that can be edited by the peopl
 msgstr "Las entradas de auditoría no se pueden modificar. Una bitácora que pueden editar las personas a las que registra no es una bitácora."
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone__avg_dwell_today
+msgid "Avg Dwell (s)"
+msgstr "Permanencia prom. (s)"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi__avg_seconds_today
+msgid "Avg Stop (s)"
+msgstr "Parada prom. (s)"
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_hourly__atv
 msgid "Avg Ticket (ATV)"
 msgstr "Ticket promedio (ATV)"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_list
+msgid "Avg dwell"
+msgstr "Permanencia prom."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_list
+msgid "Avg response"
+msgstr "Respuesta prom."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_list
+msgid "Avg stop"
+msgstr "Parada prom."
 
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_job_form
@@ -444,6 +694,34 @@ msgstr "Trabajo en segundo plano"
 #: model_terms:ir.ui.view,arch_db:analitix.view_job_search
 msgid "Background Jobs"
 msgstr "Trabajos en segundo plano"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_anomaly_form
+msgid "Behaviour Signal"
+msgstr "Señal de comportamiento"
+
+#. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_anomaly
+#: model:ir.ui.menu,name:analitix.menu_anomalies
+#: model_terms:ir.ui.view,arch_db:analitix.view_anomaly_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_anomaly_search
+msgid "Behaviour Signals"
+msgstr "Señales de comportamiento"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__anomaly_window_minutes
+msgid "Behaviour Window (min)"
+msgstr "Ventana de comportamiento (min)"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Behaviour signals"
+msgstr "Señales de comportamiento"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__alert_channel__both
+msgid "Both"
+msgstr "Ambos"
 
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_device__kind__cctv_dahua
@@ -470,6 +748,12 @@ msgstr "Llegaron juntos"
 #: model_terms:ir.ui.view,arch_db:analitix.view_visitor_search
 msgid "Came With Others"
 msgstr "Vino acompañado"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone__device_ids
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_form
+msgid "Cameras"
+msgstr "Cámaras"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__demographics_enabled
@@ -510,6 +794,16 @@ msgid "Captured"
 msgstr "Capturada"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__channel
+msgid "Channel"
+msgstr "Canal"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_zone__kind__checkout
+msgid "Checkout"
+msgstr "Caja"
+
+#. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_device__role__checkout
 msgid "Checkout camera"
 msgstr "Cámara de caja"
@@ -540,6 +834,8 @@ msgid "Code"
 msgstr "Código"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_demographic__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__company_id
@@ -549,14 +845,27 @@ msgstr "Código"
 #: model:ir.model.fields,field_description:analitix.field_analitix_face_signature__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_hourly__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_job__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi_attention__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi_performance__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_sale_match__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_visit_group__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_vendor__company_id
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_search
 msgid "Company"
 msgstr "Compañía"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_sale_match__confidence
+msgid "Confidence"
+msgstr "Confianza"
 
 #. module: analitix
 #: model:ir.ui.menu,name:analitix.menu_configuration
@@ -573,6 +882,11 @@ msgstr "Configurar tiendas, puertas y dispositivos, registrar firmas de empleado
 #: code:addons/analitix/models/analitix_audit.py:0
 msgid "Consulted %s record(s)"
 msgstr "Consultó %s registro(s)"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_form
+msgid "Context"
+msgstr "Contexto"
 
 #. module: analitix
 #: model:ir.actions.act_window,name:analitix.action_hourly
@@ -601,9 +915,19 @@ msgid "Cosine similarity of the staff match, kept so a threshold can be re-tuned
 msgstr "Similitud coseno de la coincidencia con el empleado. Se guarda para poder reajustar el umbral con datos reales y no a ojo."
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__alert_missed_after_minutes
+msgid "Count As Missed After (min)"
+msgstr "Contar como no atendido tras (min)"
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_event_search
 msgid "Counted as Visitors"
 msgstr "Contados como visitantes"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi__stop_seconds
+msgid "Counts As A Stop After (s)"
+msgstr "Cuenta como parada tras (s)"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_event__counted
@@ -616,6 +940,11 @@ msgstr "Cuenta como visitante"
 #: model_terms:ir.ui.view,arch_db:analitix.view_door_search
 msgid "Counts Visitors"
 msgstr "Cuenta visitantes"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__lost_sale_create_lead
+msgid "Create CRM Leads"
+msgstr "Crear iniciativas de CRM"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup_door__create_device
@@ -676,8 +1005,31 @@ msgstr "Cruces"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_hourly__currency_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__currency_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi_performance__currency_id
 msgid "Currency"
 msgstr "Moneda"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__partner_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_face_signature__partner_id
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Customer identification is on. Face signatures\\n                                of customers who hand over their details at the\\n                                till become persistent and named. Every later\\n                                <b>read</b> of that list is written to the audit\\n                                log, and the signatures still expire on the\\n                                retention above."
+msgstr "La identificación de clientes está activa. Las firmas faciales de los clientes que entregan sus datos en la caja se vuelven persistentes y con nombre. Cada <b>consulta</b> posterior de esa lista queda escrita en la bitácora de auditoría, y las firmas siguen caducando según la retención de arriba."
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_anomaly_event__outcome__served
+msgid "Customer just needed help"
+msgstr "El cliente solo necesitaba ayuda"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_alert__kind__emotion
+msgid "Customer looks unhappy"
+msgstr "El cliente se ve molesto"
 
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_device_form
@@ -703,12 +1055,18 @@ msgid "Data capture RESUMED by %s."
 msgstr "Captura de datos REANUDADA por %s."
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi_performance__day
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_vendor__weekday
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_event_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_performance_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_visit_group_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_visitor_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_dwell_search
 msgid "Day"
 msgstr "Día"
 
@@ -721,6 +1079,11 @@ msgstr "Degradada"
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__degraded_threshold_min
 msgid "Degraded After (min)"
 msgstr "Degradado tras (min)"
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_lost_sale
+msgid "Deliberately conservative: a false alarm costs a salesperson a\\n                trip and, repeated, their trust in the whole system, after which\\n                no alert works at all."
+msgstr "Conservador a propósito: una falsa alarma le cuesta al vendedor un viaje y, si se repite, su confianza en todo el sistema, después de lo cual ningún aviso sirve."
 
 #. module: analitix
 #: model:ir.actions.act_window,name:analitix.action_demographic
@@ -748,14 +1111,29 @@ msgid "Depth camera + edge PC (Orbbec / RealSense)"
 msgstr "Cámara de profundidad + mini-PC (Orbbec / RealSense)"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__body
+#: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__detail
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__note
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_anomaly_form
 msgid "Detail"
 msgstr "Detalle"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__lost_sale_enabled
+msgid "Detect Lost Sales"
+msgstr "Detectar ventas perdidas"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__group_detection_enabled
 msgid "Detect Purchase Units"
 msgstr "Detectar unidades de compra"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__detected_at
+#: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__detected_at
+msgid "Detected"
+msgstr "Detectada"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_event__device_id
@@ -768,6 +1146,12 @@ msgstr "Dispositivo"
 #: code:addons/analitix/models/analitix_device.py:0
 msgid "Device '%(dev)s' points at a door of another store. A device belongs to exactly one store."
 msgstr "El dispositivo '%(dev)s' apunta a la puerta de otra tienda. Un dispositivo pertenece a exactamente una tienda."
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
+msgid "Device '%(dev)s' points at a zone of another store."
+msgstr "El dispositivo '%(dev)s' apunta a una zona de otra tienda."
 
 #. module: analitix
 #. odoo-python
@@ -864,9 +1248,56 @@ msgid "Disabled"
 msgstr "Deshabilitado"
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Discreet alerts"
+msgstr "Avisos discretos"
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_alert
+msgid "Discreet nudges to the salesperson covering a zone — through the\\n                Odoo mobile app, and optionally WhatsApp. <b>Never anything\\n                audible, and never anything the customer can see.</b>"
+msgstr "Avisos discretos al vendedor que cubre una zona, por la app móvil de Odoo y opcionalmente por WhatsApp. <b>Nunca nada audible, y nunca nada que el cliente pueda ver.</b>"
+
+#. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_demographic__emotion__disgusted
 msgid "Disgusted"
 msgstr "Disgustado"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi_attention__poi_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi_performance__poi_id
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_performance_search
+msgid "Display"
+msgstr "Exhibidor"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_zone__kind__display
+msgid "Display / counter"
+msgstr "Exhibidor / mostrador"
+
+#. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_poi_performance
+#: model:ir.ui.menu,name:analitix.menu_poi_performance
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_performance_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_performance_pivot
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_performance_search
+msgid "Display Performance"
+msgstr "Desempeño del exhibidor"
+
+#. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_poi
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone__poi_ids
+#: model:ir.ui.menu,name:analitix.menu_config_pois
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_form
+msgid "Displays"
+msgstr "Exhibidores"
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_zone
+msgid "Divide the floor"
+msgstr "Divide el piso"
 
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_job__state__done
@@ -949,6 +1380,11 @@ msgid "Down"
 msgstr "Caída"
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_performance_search
+msgid "Draws A Crowd, Sells Little"
+msgstr "Atrae gente, vende poco"
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__duration_min
 msgid "Duration (min)"
 msgstr "Duración (min)"
@@ -957,6 +1393,22 @@ msgstr "Duración (min)"
 #: model:ir.model.fields,field_description:analitix.field_analitix_job__duration_ms
 msgid "Duration (ms)"
 msgstr "Duración (ms)"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__dwell_id
+msgid "Dwell"
+msgstr "Permanencia"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__dwell_seconds
+#: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_list
+msgid "Dwell (s)"
+msgstr "Permanencia (s)"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone__dwell_ids
+msgid "Dwell Records"
+msgstr "Registros de permanencia"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__edge_queue_size
@@ -1041,6 +1493,22 @@ msgid "Encrypted embedding awaiting asynchronous matching. Cleared once the job 
 msgstr "Firma cifrada en espera de comparación asíncrona. Se borra en cuanto corre el trabajo, para que la tabla de mayor volumen no se convierta en un almacén biométrico."
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_alert__outcome__sold
+msgid "Ended in a sale"
+msgstr "Terminó en venta"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__engaged
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_dwell_search
+msgid "Engaged"
+msgstr "Interesado"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone__engaged_seconds
+msgid "Engaged After (s)"
+msgstr "Interesado tras (s)"
+
+#. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_staff_signature
 msgid "Enrol your team from the edge enrolment tool. Their crossings then\\n                stop counting as visitors, whichever door they use — without it,\\n                a small store's conversion rate reads far lower than the truth."
 msgstr "Registra a tu equipo desde la herramienta de registro del edge. Sus cruces dejan de contar como visitantes, sin importar por qué puerta pasen: sin esto, la conversión de una tienda pequeña se lee muy por debajo de la real."
@@ -1063,6 +1531,7 @@ msgstr "Registrado pero nunca reconocido. Casi siempre significa que el registro
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_visit_group__entered_at
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__entered_at
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__entered_at
 msgid "Entered"
 msgstr "Entró"
 
@@ -1070,6 +1539,11 @@ msgstr "Entró"
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_event__direction__in
 msgid "Entrance"
 msgstr "Entrada"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_zone__kind__entrance
+msgid "Entrance area"
+msgstr "Zona de entrada"
 
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_event_search
@@ -1092,6 +1566,22 @@ msgstr "Puerta de entrada"
 #: model_terms:ir.ui.view,arch_db:analitix.view_job_form
 msgid "Error"
 msgstr "Error"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__was_fallback
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_search
+msgid "Escalated"
+msgstr "Escalado"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_list
+msgid "Estimated"
+msgstr "Estimado"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__estimated_value
+msgid "Estimated Value"
+msgstr "Valor estimado"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_event__uuid
@@ -1120,9 +1610,19 @@ msgid "Every confidence clears the store's floor. Leave the rest out rather than
 msgstr "Todas las confianzas superan el piso de la tienda. Deja fuera el resto en vez de promediar un volado dentro de los números."
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_zone_vendor__weekday__all
+msgid "Every day"
+msgstr "Todos los días"
+
+#. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_device_health
 msgid "Every device is reporting"
 msgstr "Todos los dispositivos están reportando"
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_alert
+msgid "Every one is recorded with who received it and whether they\\n                reacted, because a nudge nobody measures is a nudge nobody\\n                improves."
+msgstr "Cada uno queda registrado con quién lo recibió y si reaccionó, porque un aviso que nadie mide es un aviso que nadie mejora."
 
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
@@ -1143,6 +1643,11 @@ msgstr "Salida"
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__exit_door_id
 msgid "Exit Door"
 msgstr "Puerta de salida"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_zone__kind__exit
+msgid "Exit area"
+msgstr "Zona de salida"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__exited_at
@@ -1174,9 +1679,20 @@ msgid "Face Signatures"
 msgstr "Firmas faciales"
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_sale_match__method__face
+msgid "Face at the till"
+msgstr "Cara en la caja"
+
+#. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_job
 msgid "Face matching, signage triggers and CRM writes run here instead of\\n                on the ingest request, so a slow integration can never hold up a\\n                store's counting. A growing backlog here means the Odoo scheduler\\n                is not running."
 msgstr "La comparación facial, los disparos a pantallas y las escrituras al CRM corren aquí y no en la petición de ingesta, para que una integración lenta nunca detenga el conteo de una tienda. Una cola que crece aquí significa que el planificador de Odoo no está corriendo."
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_sale_match.py:0
+msgid "Face signature linked to customer %s"
+msgstr "Firma facial ligada al cliente %s"
 
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_form
@@ -1193,6 +1709,11 @@ msgstr "Las firmas faciales tienen que caducar: la ventana de retención debe se
 #: model_terms:ir.ui.view,arch_db:analitix.view_job_search
 msgid "Failed"
 msgstr "Falló"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__alert_fallback_user_id
+msgid "Fallback Recipient"
+msgstr "Destinatario de respaldo"
 
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_demographic__emotion__fearful
@@ -1215,6 +1736,21 @@ msgid "First Seen"
 msgstr "Primera vez visto"
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_zone__kind__fitting
+msgid "Fitting rooms"
+msgstr "Probadores"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__anomaly_detection_enabled
+msgid "Flag Unusual Behaviour"
+msgstr "Marcar comportamientos inusuales"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Floor & Alerts"
+msgstr "Piso y avisos"
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_form
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
 msgid "Floor Area"
@@ -1231,6 +1767,16 @@ msgid "Free-form name the staff of this store would use: 'North Entrance', 'Mall
 msgstr "Nombre libre, el que usaría el personal de esta tienda: 'Entrada Norte', 'Puerta de la Plaza', 'Puerta de Servicio'."
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_zone_vendor__weekday__4
+msgid "Friday"
+msgstr "Viernes"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_vendor__hour_from
+msgid "From"
+msgstr "Desde"
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_demographic__gender
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__gender
 #: model_terms:ir.ui.view,arch_db:analitix.view_demographic_search
@@ -1242,6 +1788,11 @@ msgstr "Género"
 #: model:ir.model.fields,field_description:analitix.field_analitix_demographic__gender_confidence
 msgid "Gender Confidence"
 msgstr "Confianza del género"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_zone__kind__general
+msgid "General floor"
+msgstr "Piso general"
 
 #. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_store__degraded_threshold_min
@@ -1307,6 +1858,12 @@ msgid "Hour of Day"
 msgstr "Hora del día"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_sale_match__method
+#: model_terms:ir.ui.view,arch_db:analitix.view_sale_match_search
+msgid "How"
+msgstr "Cómo"
+
+#. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_store__match_mode
 msgid "How POS sales are attributed to this store for conversion:\\n• Specific POS registers: only orders from the registers below. Use this when several stores share one company.\\n• Whole company: every POS order of the company. Use this when the company runs a single store."
 msgstr "Cómo se atribuyen las ventas de TPV a esta tienda para calcular la conversión:\\n• Cajas de TPV específicas: solo los pedidos de las cajas de abajo. Úsalo cuando varias tiendas comparten una misma compañía.\\n• Toda la compañía: todos los pedidos de TPV de la compañía. Úsalo cuando la compañía tiene una sola tienda."
@@ -1348,9 +1905,34 @@ msgid "IR beam counter"
 msgstr "Contador de barrera infrarroja"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_face_signature__identified
+msgid "Identified"
+msgstr "Identificado"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_face_signature__identified_on
+msgid "Identified On"
+msgstr "Identificado el"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__identified_ttl_days
+msgid "Identified Retention (days)"
+msgstr "Retención de identificados (días)"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__identify_customers
+msgid "Identify Returning Customers"
+msgstr "Identificar clientes recurrentes"
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_list
 msgid "In"
 msgstr "Entrada"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_anomaly_event__kind__repeat_entry
+msgid "In and out repeatedly"
+msgstr "Entra y sale repetidamente"
 
 #. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_door__counts_visitors
@@ -1393,6 +1975,11 @@ msgstr "Dentro ahora"
 #: model_terms:ir.ui.view,arch_db:analitix.view_device_form
 msgid "Issue a new key? The current one stops working immediately, and the new one is shown only once."
 msgstr "¿Emitir una llave nueva? La actual deja de funcionar de inmediato, y la nueva se muestra una sola vez."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_performance_search
+msgid "It converts everyone who finds it and it is in a cold corner. Move it."
+msgstr "Convierte a todo el que lo encuentra y está en un rincón frío. Muévelo."
 
 #. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_job__payload
@@ -1438,19 +2025,30 @@ msgid "Kind"
 msgstr "Tipo"
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_alert__kind__known_customer
+msgid "Known customer arrived"
+msgstr "Llegó un cliente conocido"
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_performance_search
 msgid "Last 30 Days"
 msgstr "Últimos 30 días"
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_anomaly_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_demographic_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_event_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_visit_group_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_visitor_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_dwell_search
 msgid "Last 7 Days"
 msgstr "Últimos 7 días"
 
@@ -1487,11 +2085,17 @@ msgid "Late"
 msgstr "Retrasado"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__lead_id
+msgid "Lead"
+msgstr "Iniciativa"
+
+#. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_store_setup_door__device_uid
 msgid "Leave empty to derive it from the store and door codes."
 msgstr "Déjalo vacío para derivarlo de los códigos de tienda y puerta."
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__left_at
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_visitor__state__left
 msgid "Left"
 msgstr "Salió"
@@ -1502,6 +2106,47 @@ msgstr "Salió"
 #: model:ir.model.fields,field_description:analitix.field_analitix_face_signature__liveness_score
 msgid "Liveness"
 msgstr "Detección de vida"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_form
+msgid "Long dwell here raises no nudge. Right for a fitting\\n                        room or a checkout queue, where lingering is the shape\\n                        of the activity rather than a sign that somebody is\\n                        being ignored."
+msgstr "Aquí una permanencia larga no genera aviso. Es lo correcto en un probador o en la fila de la caja, donde quedarse es la forma normal de la actividad y no señal de que alguien está siendo ignorado."
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_anomaly.py:0
+msgid "Long stop at %(zone)s with nobody nearby"
+msgstr "Parada larga en %(zone)s sin nadie cerca"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_anomaly_event__kind__long_unattended
+msgid "Long stop, nobody nearby"
+msgstr "Parada larga, nadie cerca"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_lost_sale__state__lost
+#: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_search
+msgid "Lost"
+msgstr "Perdida"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_form
+msgid "Lost Sale"
+msgstr "Venta perdida"
+
+#. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_lost_sale
+#: model:ir.ui.menu,name:analitix.menu_lost_sales
+#: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_graph
+#: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_search
+msgid "Lost Sales"
+msgstr "Ventas perdidas"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Lost sales"
+msgstr "Ventas perdidas"
 
 #. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_job__priority
@@ -1537,6 +2182,11 @@ msgid "Manager"
 msgstr "Gerente"
 
 #. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_poi
+msgid "Map your displays"
+msgstr "Mapea tus exhibidores"
+
+#. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_store__capture_enabled
 msgid "Master switch for this store's data capture. Turning it off stops the ingest endpoint from accepting anything at all — no code deployment, no trip to the store. Use it for an incident, a malfunction, or when the customer asks to pause the system."
 msgstr "Interruptor maestro de la captura de datos de esta tienda. Apagarlo hace que el endpoint de ingesta deje de aceptar absolutamente todo: sin desplegar código y sin ir a la tienda. Úsalo ante un incidente, una falla grave, o cuando el cliente pida pausar el sistema."
@@ -1551,6 +2201,16 @@ msgstr "Puntaje de coincidencia"
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__match_mode
 msgid "Match sales by"
 msgstr "Atribuir ventas por"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_sale_match__matched_at
+msgid "Matched"
+msgstr "Emparejado"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_sale_match_search
+msgid "Matched By Face"
+msgstr "Emparejado por cara"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__match_count
@@ -1579,6 +2239,16 @@ msgid "Members"
 msgstr "Integrantes"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__summary
+msgid "Message"
+msgstr "Mensaje"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_search
+msgid "Mine"
+msgstr "Míos"
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__demographic_min_confidence
 msgid "Minimum Confidence"
 msgstr "Confianza mínima"
@@ -1594,11 +2264,31 @@ msgid "Minutes"
 msgstr "Minutos"
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_search
+msgid "Missed"
+msgstr "No atendido"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_alert__channel__bus
+msgid "Mobile app"
+msgstr "App móvil"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_alert__channel__both
+msgid "Mobile app + WhatsApp"
+msgstr "App móvil + WhatsApp"
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__model_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_face_signature__model_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__model_name
 msgid "Model"
 msgstr "Modelo"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_zone_vendor__weekday__0
+msgid "Monday"
+msgstr "Lunes"
 
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_form
@@ -1612,9 +2302,17 @@ msgid "Month"
 msgstr "Mes"
 
 #. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_alert_mine
+#: model:ir.ui.menu,name:analitix.menu_my_alerts
+msgid "My Alerts"
+msgstr "Mis avisos"
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__name
 #: model:ir.model.fields,field_description:analitix.field_analitix_door__name
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi__name
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__name
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone__name
 msgid "Name"
 msgstr "Nombre"
 
@@ -1652,6 +2350,16 @@ msgid "New Store Setup"
 msgstr "Alta de tienda nueva"
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_search
+msgid "No Products Attached"
+msgstr "Sin productos asignados"
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_alert
+msgid "No alerts"
+msgstr "No hay avisos"
+
+#. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_hourly
 msgid "No data yet"
 msgstr "Todavía no hay datos"
@@ -1661,6 +2369,11 @@ msgstr "Todavía no hay datos"
 #: code:addons/analitix/wizards/store_setup.py:0
 msgid "No devices were created. Add them from the store's Devices tab when the hardware is on site."
 msgstr "No se creó ningún dispositivo. Agrégalos desde la pestaña Dispositivos de la tienda cuando el equipo esté en el sitio."
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_poi_performance
+msgid "No display data yet"
+msgstr "Todavía no hay datos de exhibidores"
 
 #. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_door_hourly
@@ -1679,6 +2392,11 @@ msgid "No live signatures"
 msgstr "No hay firmas vigentes"
 
 #. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_lost_sale
+msgid "No lost sales detected"
+msgstr "No se han detectado ventas perdidas"
+
+#. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_visit_group
 msgid "No purchase units yet"
 msgstr "Todavía no hay unidades de compra"
@@ -1694,9 +2412,25 @@ msgid "No staff enrolled yet"
 msgstr "Todavía no hay empleados registrados"
 
 #. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_sale_match
+msgid "No tickets attributed yet"
+msgstr "Todavía no hay tickets atribuidos"
+
+#. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_visitor
 msgid "No visits resolved yet"
 msgstr "Todavía no se han resuelto visitas"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_dwell_search
+msgid "Nobody Went Over"
+msgstr "Nadie se acercó"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_search
+msgid "Nobody was rostered on that zone. A lot of these means the shift map is wrong."
+msgstr "No había nadie asignado a esa zona. Muchos de estos significan que el rol de turnos está mal."
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__baseline_hourly_events
@@ -1704,9 +2438,24 @@ msgid "Normal Events / Hour"
 msgstr "Eventos / hora normales"
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_search
+msgid "Not Acknowledged"
+msgstr "Sin acuse"
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_face_signature_search
 msgid "Not Expired"
 msgstr "Sin caducar"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_anomaly_search
+msgid "Not Reviewed"
+msgstr "Sin revisar"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_alert__outcome__missed
+msgid "Not attended"
+msgstr "No atendido"
 
 #. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_job__scheduled_at
@@ -1714,16 +2463,35 @@ msgid "Not before this moment. Retries push it into the future."
 msgstr "No antes de este momento. Los reintentos lo empujan hacia adelante."
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_alert__channel__none
+msgid "Not delivered"
+msgstr "No entregado"
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__note
 #: model:ir.model.fields,field_description:analitix.field_analitix_door__note
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi__note
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__note
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__note
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone__note
 #: model_terms:ir.ui.view,arch_db:analitix.view_device_form
 #: model_terms:ir.ui.view,arch_db:analitix.view_door_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_form
 #: model_terms:ir.ui.view,arch_db:analitix.view_staff_signature_form
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_form
 msgid "Notes"
 msgstr "Notas"
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_anomaly
+msgid "Nothing flagged"
+msgstr "Nada marcado"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_anomaly_event__outcome__nothing
+msgid "Nothing in it"
+msgstr "No era nada"
 
 #. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_audit_log
@@ -1731,9 +2499,29 @@ msgid "Nothing logged yet"
 msgstr "Todavía no hay nada registrado"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__greet_known_customers
+msgid "Nudge On Known Customer"
+msgstr "Avisar cuando llegue un cliente conocido"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone__alert_on_dwell
+msgid "Nudge On Long Dwell"
+msgstr "Avisar por permanencia larga"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_search
+msgid "Nudges On Long Dwell"
+msgstr "Avisa por permanencia larga"
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__live_occupancy
 msgid "Occupancy"
 msgstr "Aforo"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__alert_channel__bus
+msgid "Odoo mobile app"
+msgstr "App móvil de Odoo"
 
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_device_form
@@ -1768,6 +2556,12 @@ msgid "On a shared instance hosting several customers, fill this\\n             
 msgstr "En una instancia compartida con varios clientes, llena este campo. En cuanto tiene algún valor, el usuario ve <b>solo</b> esas tiendas: ningún grupo, cambio de compañía ni rol de gerente lo amplía."
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_list
+msgid "On it"
+msgstr "Voy"
+
+#. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_hourly
 msgid "Once a store's devices start reporting and POS orders exist, this\\n                is where visitors meet sales: conversion, average ticket, units per\\n                ticket, revenue per visitor and density per m²."
 msgstr "En cuanto los dispositivos de una tienda empiezan a reportar y hay pedidos de TPV, aquí es donde los visitantes se cruzan con las ventas: conversión, ticket promedio, unidades por ticket, ingreso por visitante y densidad por m²."
@@ -1783,6 +2577,11 @@ msgid "Online"
 msgstr "En línea"
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_lost_sale__state__open
+msgid "Open"
+msgstr "Abierta"
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
 msgid "Open Store"
 msgstr "Abrir tienda"
@@ -1793,6 +2592,7 @@ msgid "Operations"
 msgstr "Operación"
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_alert__kind__other
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_device__kind__other
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_device__role__other
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup_door__hardware__other
@@ -1803,6 +2603,14 @@ msgstr "Otro"
 #: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_list
 msgid "Out"
 msgstr "Salida"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__outcome
+#: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__outcome
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_anomaly_search
+msgid "Outcome"
+msgstr "Resultado"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__register_ids
@@ -1819,6 +2627,11 @@ msgstr "Tickets de TPV"
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_visit_group__kind__pair
 msgid "Pair"
 msgstr "Pareja"
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_anomaly
+msgid "Patterns worth a second look — in and out repeatedly, a long stop\\n                at an expensive case with nobody nearby, a group that arrives\\n                together and scatters. <b>Anonymous, and about behaviour rather\\n                than people.</b> The named watch list is a separate feature with\\n                its own controls."
+msgstr "Patrones que ameritan una segunda mirada: entrar y salir varias veces, una parada larga frente a una vitrina cara sin nadie cerca, un grupo que entra junto y se dispersa. <b>Anónimo, y sobre comportamiento, no sobre personas.</b> La lista de vigilancia con nombres es una función aparte, con sus propios controles."
 
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_form
@@ -1852,6 +2665,8 @@ msgid "Payload"
 msgstr "Contenido"
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_alert__outcome__pending
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_anomaly_event__outcome__pending
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_job__state__pending
 #: model_terms:ir.ui.view,arch_db:analitix.view_job_search
 msgid "Pending"
@@ -1875,6 +2690,11 @@ msgid "People"
 msgstr "Personas"
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_performance_search
+msgid "People stop and walk away. Almost always price, or nobody closing."
+msgstr "La gente se detiene y se va. Casi siempre es precio, o que nadie cierra."
+
+#. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_store__visitors_in
 msgid "People who entered during the selected period (default: today, in the store's timezone). Staff crossings excluded."
 msgstr "Personas que entraron durante el periodo seleccionado (por omisión hoy, en la zona horaria de la tienda). Se excluyen los cruces de empleados."
@@ -1891,9 +2711,24 @@ msgid "Placement"
 msgstr "Ubicación"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone__lost_sale_seconds
+msgid "Possible Lost Sale After (s)"
+msgstr "Posible venta perdida tras (s)"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_alert__kind__lost_sale
+msgid "Possible lost sale"
+msgstr "Posible venta perdida"
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_job__priority
 msgid "Priority"
 msgstr "Prioridad"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi__product_ids
+msgid "Products On It"
+msgstr "Productos que tiene encima"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__demographic_id
@@ -1901,6 +2736,8 @@ msgid "Profile"
 msgstr "Perfil"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__visit_group_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_sale_match__visit_group_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__visit_group_id
 msgid "Purchase Unit"
 msgstr "Unidad de compra"
@@ -1934,6 +2771,11 @@ msgid "Re-entries"
 msgstr "Reingresos"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__anomaly_reentry_count
+msgid "Re-entries Before Flagging"
+msgstr "Reingresos antes de marcar"
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__reid_threshold
 msgid "Re-identification Threshold"
 msgstr "Umbral de reidentificación"
@@ -1947,6 +2789,11 @@ msgstr "Consultó datos sensibles"
 #: model:ir.model.fields,field_description:analitix.field_analitix_event__received_at
 msgid "Received"
 msgstr "Recibido"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__user_id
+msgid "Recipient"
+msgstr "Destinatario"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__reid_enabled
@@ -1967,8 +2814,10 @@ msgstr "Registros"
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_door__code
 #: model:ir.model.fields,field_description:analitix.field_analitix_face_signature__reference
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi__code
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__code
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__code
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone__code
 msgid "Reference"
 msgstr "Referencia"
 
@@ -2015,6 +2864,22 @@ msgid "Require Liveness"
 msgstr "Exigir detección de vida"
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_lost_sale__state__rescued
+#: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_search
+msgid "Rescued"
+msgstr "Rescatada"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__pos_order_id
+msgid "Rescued By"
+msgstr "Rescatada por"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__response_seconds
+msgid "Response (s)"
+msgstr "Respuesta (s)"
+
+#. module: analitix
 #: model:ir.model.fields,help:analitix.field_res_users__analitix_store_ids
 msgid "Restrict this user to these stores. Leave empty to give access to every store of the companies they already belong to — right for a single-store customer, wrong for a shared instance."
 msgstr "Limitar a este usuario a estas tiendas. Déjalo vacío para darle acceso a todas las tiendas de las compañías a las que ya pertenece: correcto para un cliente de una sola tienda, incorrecto en una instancia compartida."
@@ -2043,7 +2908,9 @@ msgstr "Ingreso / visitante"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_hourly__revenue
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi_performance__revenue
 #: model_terms:ir.ui.view,arch_db:analitix.view_hourly_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_performance_list
 msgid "Revenue"
 msgstr "Ingresos"
 
@@ -2137,9 +3004,20 @@ msgid "Sales-floor m²"
 msgstr "m² de piso de venta"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_vendor__user_id
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_search
+msgid "Salesperson"
+msgstr "Vendedor"
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__visit_gap_minutes
 msgid "Same-visit Gap (min)"
 msgstr "Hueco de la misma visita (min)"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_zone_vendor__weekday__5
+msgid "Saturday"
+msgstr "Sábado"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_job__scheduled_at
@@ -2151,6 +3029,13 @@ msgstr "Programado para"
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup_door__kind__secondary
 msgid "Secondary entrance"
 msgstr "Entrada secundaria"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi_attention__seconds
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__seconds
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_dwell_list
+msgid "Seconds"
+msgstr "Segundos"
 
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_search
@@ -2173,20 +3058,42 @@ msgid "Selling area only, excluding storage and offices. Optional: use it when d
 msgstr "Solo el área de venta, sin bodega ni oficinas. Opcional: úsalo cuando la densidad deba medirse sobre el piso vendible."
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_performance_search
+msgid "Sells Well, Few Visitors"
+msgstr "Vende bien, pocos visitantes"
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_search
 msgid "Sensitive Reads"
 msgstr "Consultas sensibles"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__sent_at
+msgid "Sent"
+msgstr "Enviado"
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_door__sequence
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi__sequence
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone__sequence
 msgid "Sequence"
 msgstr "Secuencia"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__served
+msgid "Served"
+msgstr "Atendido"
 
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_door__kind__service
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup_door__kind__service
 msgid "Service / staff entrance"
 msgstr "Entrada de servicio / personal"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_sale_match__method__manual
+msgid "Set by hand"
+msgstr "Puesto a mano"
 
 #. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_store
@@ -2214,6 +3121,18 @@ msgid "Share of Store %"
 msgstr "Participación de la tienda %"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone__vendor_ids
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_form
+msgid "Shift Coverage"
+msgstr "Cobertura por turno"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_zone.py:0
+msgid "Shift hours are a 24-hour clock: 'From' between 0 and 24, 'To' above it."
+msgstr "Las horas del turno son reloj de 24 horas: 'Desde' entre 0 y 24, 'Hasta' por encima."
+
+#. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_door__code
 msgid "Short code used in device UIDs, e.g. 'N' for the north door."
 msgstr "Código corto usado en los UID de dispositivo, p. ej. 'N' para la puerta norte."
@@ -2232,6 +3151,12 @@ msgstr "Código interno corto de esta tienda (p. ej. 'MOR-01'). Se usa en los UI
 #: model:ir.model.fields,field_description:analitix.field_analitix_face_signature__match_count
 msgid "Sightings"
 msgstr "Avistamientos"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__kind
+#: model_terms:ir.ui.view,arch_db:analitix.view_anomaly_search
+msgid "Signal"
+msgstr "Señal"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_event__signature_id
@@ -2253,6 +3178,17 @@ msgstr "Las firmas están acotadas a una tienda: un empleado de la tienda A no q
 #: model:ir.model.fields,field_description:analitix.field_analitix_visit_group__size
 msgid "Size"
 msgstr "Tamaño"
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_lost_sale
+msgid "Somebody lingered past the zone's threshold, nobody served them,\\n                and they left without buying. <b>All three conditions</b> — each\\n                one on its own is ordinary, and together they are a specific,\\n                actionable event."
+msgstr "Alguien se quedó más allá del umbral de la zona, nadie lo atendió, y se fue sin comprar. <b>Las tres condiciones</b>: cada una por separado es de lo más común, y juntas son un hecho concreto sobre el que se puede actuar."
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_anomaly.py:0
+msgid "Someone has come in and out several times"
+msgstr "Alguien ha entrado y salido varias veces"
 
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_store__match_mode__registers
@@ -2307,6 +3243,11 @@ msgid "Staff Signatures"
 msgstr "Firmas de empleados"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi_attention__started_at
+msgid "Started"
+msgstr "Inició"
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_job__started_at
 msgid "Started At"
 msgstr "Iniciado el"
@@ -2321,7 +3262,9 @@ msgstr "Estado"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__status
+#: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__state
 #: model_terms:ir.ui.view,arch_db:analitix.view_device_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_search
 msgid "Status"
 msgstr "Estado"
 
@@ -2331,6 +3274,20 @@ msgid "Stop capturing data for this store right now? Devices will be refused unt
 msgstr "¿Dejar de capturar datos de esta tienda ahora mismo? Los dispositivos serán rechazados hasta que reanudes. Sus búferes locales conservan los eventos, así que no se pierde nada mientras está en pausa."
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi_performance__stops
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_performance_list
+msgid "Stops"
+msgstr "Paradas"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi__stops_today
+msgid "Stops Today"
+msgstr "Paradas hoy"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_demographic__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__store_id
@@ -2340,10 +3297,19 @@ msgstr "¿Dejar de capturar datos de esta tienda ahora mismo? Los dispositivos s
 #: model:ir.model.fields,field_description:analitix.field_analitix_face_signature__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_hourly__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_job__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi_attention__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi_performance__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_sale_match__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_visit_group__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_vendor__store_id
+#: model_terms:ir.ui.view,arch_db:analitix.view_anomaly_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_device_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_search
@@ -2352,11 +3318,16 @@ msgstr "¿Dejar de capturar datos de esta tienda ahora mismo? Los dispositivos s
 #: model_terms:ir.ui.view,arch_db:analitix.view_face_signature_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_job_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_sale_match_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_staff_signature_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_form
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
 #: model_terms:ir.ui.view,arch_db:analitix.view_visit_group_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_visitor_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_dwell_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_search
 msgid "Store"
 msgstr "Tienda"
 
@@ -2372,6 +3343,11 @@ msgid "Store created by %(user)s with %(doors)s door(s)."
 msgstr "Tienda creada por %(user)s con %(doors)s puerta(s)."
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_zone_vendor__hour_from
+msgid "Store local time. 0 to 24 covers the whole day."
+msgstr "Hora local de la tienda. De 0 a 24 cubre todo el día."
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_hourly__area_sqm
 msgid "Store m²"
 msgstr "m² de la tienda"
@@ -2384,6 +3360,11 @@ msgstr "m² de la tienda"
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_search
 msgid "Stores"
 msgstr "Tiendas"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_zone_vendor__weekday__6
+msgid "Sunday"
+msgstr "Domingo"
 
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_demographic__emotion__surprised
@@ -2423,14 +3404,34 @@ msgid "The enrolment payload carried no vector."
 msgstr "El registro no traía ningún vector."
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_form
+msgid "The estimated value is the store's recent average\\n                        ticket. It is an estimate and labelled as one: what a\\n                        sale that never happened would have been worth cannot be\\n                        known, and quoting it to the cent would be dishonest."
+msgstr "El valor estimado es el ticket promedio reciente de la tienda. Es una estimación y se etiqueta como tal: cuánto habría valido una venta que nunca ocurrió no se puede saber, y darlo al centavo sería deshonesto."
+
+#. module: analitix
 #: model:ir.model.constraint,message:analitix.constraint_analitix_store_positive_heartbeat
 msgid "The heartbeat interval must be a positive number of seconds."
 msgstr "El intervalo de latido debe ser un número positivo de segundos."
 
 #. module: analitix
+#: model:ir.model.constraint,message:analitix.constraint_analitix_zone_thresholds_ordered
+msgid "The lost-sale threshold cannot be shorter than the engagement one."
+msgstr "El umbral de venta perdida no puede ser menor que el de interés."
+
+#. module: analitix
 #: model:ir.model.constraint,message:analitix.constraint_analitix_store_visit_gap_under_max
 msgid "The maximum visit length cannot be shorter than the same-visit gap."
 msgstr "La duración máxima de una visita no puede ser menor que el hueco de la misma visita."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_zone_dwell__alert_id
+msgid "The nudge this dwell produced, if it produced one."
+msgstr "El aviso que produjo esta permanencia, si produjo alguno."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_search
+msgid "The nudge worked: this visit produced a ticket afterwards. This is the figure the monthly value report is built on."
+msgstr "El aviso funcionó: esta visita produjo un ticket después. Es la cifra sobre la que se construye el reporte mensual de valor."
 
 #. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_device__store_id
@@ -2441,6 +3442,11 @@ msgstr "La única tienda para la que este dispositivo puede enviar datos."
 #: model_terms:ir.actions.act_window,help:analitix.action_job
 msgid "The queue is empty"
 msgstr "La cola está vacía"
+
+#. module: analitix
+#: model:ir.model.constraint,message:analitix.constraint_analitix_zone_vendor_hours_ordered
+msgid "The shift must end after it starts."
+msgstr "El turno debe terminar después de empezar."
 
 #. module: analitix
 #. odoo-python
@@ -2484,6 +3490,11 @@ msgid "This event was already received (duplicate UUID)."
 msgstr "Este evento ya se había recibido (UUID duplicado)."
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_anomaly_form
+msgid "This is a <b>behaviour</b> signal, not an accusation and\\n                        not a person. It carries no identity, it expires with the\\n                        visit it came from, and most of the time the honest\\n                        outcome is \\\"nothing in it\\\" or \\\"they just needed help\\\" —\\n                        recording those is what lets a store see whether its\\n                        thresholds are set sensibly."
+msgstr "Esta es una señal de <b>comportamiento</b>, no una acusación ni una persona. No lleva identidad, caduca con la visita de la que salió, y la mayor parte de las veces el resultado honesto es \"no era nada\" o \"solo necesitaba ayuda\": registrar esos es lo que le permite a una tienda ver si sus umbrales están bien puestos."
+
+#. module: analitix
 #. odoo-python
 #: code:addons/analitix/models/analitix_staff_signature.py:0
 msgid "This signature carries no usable vector. Re-enrol the employee from the edge enrolment tool."
@@ -2495,14 +3506,58 @@ msgid "This signature reference already exists."
 msgstr "Esta referencia de firma ya existe."
 
 #. module: analitix
+#: model:ir.model.constraint,message:analitix.constraint_analitix_sale_match_order_uniq
+msgid "This ticket is already attributed to a visit."
+msgstr "Este ticket ya está atribuido a una visita."
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_form
 msgid "Thresholds"
 msgstr "Umbrales"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_sale_match_search
+msgid "Through The Purchase Unit"
+msgstr "Por la unidad de compra"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_sale_match__method__partner
+msgid "Through the customer record"
+msgstr "Por la ficha del cliente"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_sale_match__method__group
+msgid "Through the purchase unit"
+msgstr "Por la unidad de compra"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_zone_vendor__weekday__3
+msgid "Thursday"
+msgstr "Jueves"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_sale_match__pos_order_id
+msgid "Ticket"
+msgstr "Ticket"
+
+#. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_sale_match
+#: model:ir.ui.menu,name:analitix.menu_sale_match
+#: model_terms:ir.ui.view,arch_db:analitix.view_sale_match_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_sale_match_search
+msgid "Ticket Attribution"
+msgstr "Atribución de tickets"
 
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_hourly_list
 msgid "Tickets"
 msgstr "Tickets"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Tickets and customers"
+msgstr "Tickets y clientes"
 
 #. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_hourly__conversion_rate
@@ -2515,6 +3570,11 @@ msgid "Tickets in an hour with no crossings: almost always a counter that was do
 msgstr "Tickets en una hora sin ningún cruce: casi siempre es un contador que estaba caído. Conviene revisarlo antes de confiar en el día."
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__checkout_match_threshold
+msgid "Till Match Threshold"
+msgstr "Umbral de coincidencia en caja"
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_event__event_time
 msgid "Time"
 msgstr "Hora"
@@ -2523,6 +3583,11 @@ msgstr "Hora"
 #: model:ir.model.fields,help:analitix.field_analitix_visitor__duration_min
 msgid "Time between entering and the last exit seen. Empty while the visit is still open."
 msgstr "Tiempo entre la entrada y la última salida vista. Vacío mientras la visita sigue abierta."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_zone_dwell__seconds
+msgid "Time in the zone. Grows while the visitor is still there."
+msgstr "Tiempo en la zona. Crece mientras el visitante sigue ahí."
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__tz
@@ -2536,6 +3601,12 @@ msgid "Timezone of the physical store. Opening hours, daily resets and the owner
 msgstr "Zona horaria de la tienda física. El horario, los cortes diarios y los reportes del dueño siguen esta zona, no la de quien mira: un corporativo en otra zona horaria sigue viendo el día real de cada tienda."
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_vendor__hour_to
+msgid "To"
+msgstr "Hasta"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_event_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_search
@@ -2565,9 +3636,19 @@ msgid "Traffic broken down per entrance, with each door's share of the\\n       
 msgstr "Tráfico desglosado por entrada, con la participación de cada puerta en el total de la tienda. La conversión no aparece aquí a propósito: un ticket pertenece a la tienda, no a la puerta por la que entró el cliente, así que una conversión por puerta sería una ficción."
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_zone_vendor__weekday__1
+msgid "Tuesday"
+msgstr "Martes"
+
+#. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_demographic
 msgid "Turn on <b>Capture Demographics</b> on the store and point a\\n                front-facing camera at the entrance. What is stored is a coarse\\n                age <i>band</i> and a presented-appearance estimate — never an\\n                identity, and never an image."
 msgstr "Activa <b>Capturar demografía</b> en la tienda y apunta una cámara frontal a la entrada. Lo que se guarda es un <i>rango</i> de edad amplio y una estimación de apariencia: nunca una identidad, y nunca una imagen."
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_anomaly_event__outcome__incident
+msgid "Turned out to matter"
+msgstr "Sí resultó ser algo"
 
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_form
@@ -2575,10 +3656,13 @@ msgid "Turning crossings into visits"
 msgstr "Convertir cruces en visitas"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__kind
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup_door__kind
 #: model:ir.model.fields,field_description:analitix.field_analitix_visit_group__kind
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_door_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_visit_group_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_search
 msgid "Type"
 msgstr "Tipo"
 
@@ -2588,14 +3672,31 @@ msgid "UPT"
 msgstr "Unidades por ticket"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__anomaly_dwell_seconds
+msgid "Unattended Stop (s)"
+msgstr "Parada sin atender (s)"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_lost_sale.py:0
+msgid "Unattended at %(zone)s — %(store)s"
+msgstr "Sin atender en %(zone)s — %(store)s"
+
+#. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_event__uuid
 msgid "Unique identifier minted by the edge agent before sending. It is what makes a network retry safe: the same crossing arriving twice is stored once."
 msgstr "Identificador único que el agente edge genera antes de enviar. Es lo que hace seguro un reintento de red: el mismo cruce que llega dos veces se guarda una sola vez."
 
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_hourly_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_performance_list
 msgid "Units"
 msgstr "Unidades"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi_performance__units_per_stop
+msgid "Units / Stop"
+msgstr "Unidades / parada"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_hourly__upt
@@ -2603,7 +3704,13 @@ msgid "Units / Ticket (UPT)"
 msgstr "Unidades / ticket (UPT)"
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_performance_list
+msgid "Units / stop"
+msgstr "Unidades / parada"
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_hourly__units
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi_performance__units_sold
 msgid "Units Sold"
 msgstr "Unidades vendidas"
 
@@ -2616,6 +3723,11 @@ msgstr "Unidades por ticket: tamaño de la canasta."
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_demographic__gender__unknown
 msgid "Unknown"
 msgstr "Desconocido"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_alert__kind__anomaly
+msgid "Unusual behaviour"
+msgstr "Comportamiento inusual"
 
 #. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_store
@@ -2641,8 +3753,15 @@ msgid "User who gets the Odoo activity for device incidents in this store. Leave
 msgstr "Usuario que recibe la actividad de Odoo por incidentes de dispositivo en esta tienda. Déjalo vacío para que recaiga en quien creó la tienda."
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__visitor_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__visitor_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_event__visitor_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__visitor_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi_attention__visitor_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_sale_match__visitor_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__display_reference
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__visitor_id
+#: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_form
 #: model_terms:ir.ui.view,arch_db:analitix.view_visitor_form
 msgid "Visit"
 msgstr "Visita"
@@ -2711,6 +3830,7 @@ msgstr "Visitantes hoy"
 #: model_terms:ir.ui.view,arch_db:analitix.view_visitor_list
 #: model_terms:ir.ui.view,arch_db:analitix.view_visitor_pivot
 #: model_terms:ir.ui.view,arch_db:analitix.view_visitor_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_list
 msgid "Visits"
 msgstr "Visitas"
 
@@ -2720,10 +3840,20 @@ msgid "Visits & Profiling"
 msgstr "Visitas y perfilamiento"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone__visitors_today
+msgid "Visits Today"
+msgstr "Visitas hoy"
+
+#. module: analitix
 #. odoo-python
 #: code:addons/analitix/models/analitix_device.py:0
 msgid "Volume anomaly: %(c)s vs baseline %(b).1f/h"
 msgstr "Anomalía de volumen: %(c)s contra una base de %(b).1f/h"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__was_served
+msgid "Was Served"
+msgstr "Fue atendido"
 
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_audit_log__action__watchlist_confirm
@@ -2736,9 +3866,24 @@ msgid "Watch-list entry created"
 msgstr "Alta en la lista de vigilancia"
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_alert__kind__watchlist
+msgid "Watch-list match"
+msgstr "Coincidencia con la lista de vigilancia"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_zone_vendor__weekday__2
+msgid "Wednesday"
+msgstr "Miércoles"
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
 msgid "Week"
 msgstr "Semana"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_form
+msgid "What is physically on it"
+msgstr "Qué tiene encima físicamente"
 
 #. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_door_hourly__door_share
@@ -2749,6 +3894,17 @@ msgstr "Qué porcentaje de las entradas de la tienda en esa hora pasó por esta 
 #: model:ir.model.fields,help:analitix.field_analitix_device__role
 msgid "What this device is for. Later phases route zone dwell, demographics and purchase attribution by role."
 msgstr "Para qué sirve este dispositivo. Las fases siguientes enrutan la permanencia por zona, la demografía y la atribución de compra según esta función."
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_alert__channel__whatsapp
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__alert_channel__whatsapp
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__alert_whatsapp_template_id
+msgid "WhatsApp Template ID"
+msgstr "ID de la plantilla de WhatsApp"
 
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_list
@@ -2781,6 +3937,11 @@ msgid "Which face model produced this vector. Embeddings from different models a
 msgstr "Qué modelo facial produjo este vector. Las firmas de modelos distintos no son comparables, así que la comparación solo se hace entre firmas que comparten este valor."
 
 #. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_sale_match
+msgid "Which visit produced which ticket — anonymously. It answers\\n                questions no aggregate can: does the profile that stops at the\\n                window actually buy, does a group spend more than a lone\\n                shopper. None of it needs anybody's name."
+msgstr "Qué visita produjo qué ticket, de forma anónima. Responde preguntas que ningún agregado puede: ¿el perfil que se detiene en el aparador de verdad compra?, ¿un grupo gasta más que alguien que viene solo? Nada de eso necesita el nombre de nadie."
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_visitor_form
 msgid "Who (anonymously)"
 msgstr "Quién (de forma anónima)"
@@ -2789,6 +3950,11 @@ msgstr "Quién (de forma anónima)"
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_form
 msgid "Who Gets Told"
 msgstr "A quién se avisa"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_form
+msgid "Who gets the discreet nudge for this zone, and when.\\n                                Whoever covers the counter at 11:00 is not whoever\\n                                covers it at 19:00 — if nobody is rostered at the\\n                                moment an alert fires, it escalates to the store's\\n                                fallback rather than evaporating."
+msgstr "Quién recibe el aviso discreto de esta zona, y cuándo. Quien cubre el mostrador a las 11:00 no es quien lo cubre a las 19:00: si no hay nadie asignado en el momento en que salta un aviso, escala al responsable de respaldo de la tienda en vez de evaporarse."
 
 #. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_store__alert_partner_ids
@@ -2812,9 +3978,53 @@ msgid "Wizard"
 msgstr "Asistente"
 
 #. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_anomaly.py:0
+msgid "Worth a look"
+msgstr "Vale la pena echar un ojo"
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_search
 msgid "Yesterday"
 msgstr "Ayer"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__zone_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__zone_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__zone_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__zone_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi__zone_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi_attention__zone_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_poi_performance__zone_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__zone_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_vendor__zone_id
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_performance_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_dwell_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_form
+msgid "Zone"
+msgstr "Zona"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__zone_count
+msgid "Zone Count"
+msgstr "Número de zonas"
+
+#. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_zone_dwell
+#: model:ir.ui.menu,name:analitix.menu_zone_dwell
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_dwell_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_dwell_pivot
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_dwell_search
+msgid "Zone Dwell"
+msgstr "Permanencia por zona"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone__kind
+msgid "Zone Type"
+msgstr "Tipo de zona"
 
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_device__role__zone
@@ -2822,9 +4032,37 @@ msgid "Zone camera"
 msgstr "Cámara de zona"
 
 #. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_store.py:0
+#: model:ir.actions.act_window,name:analitix.action_zone
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__zone_ids
+#: model:ir.ui.menu,name:analitix.menu_config_zones
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_search
+msgid "Zones"
+msgstr "Zonas"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__anomaly_dispersal_zones
+msgid "Zones Before Dispersal"
+msgstr "Zonas antes de considerar dispersión"
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_poi
+msgid "Zones answer \\\"where do people go\\\". Displays answer \\\"what do they\\n                stop at\\\", which is finer and more commercially useful. Attach\\n                the products that sit on each one and the ranking becomes\\n                actionable rather than merely interesting."
+msgstr "Las zonas responden \"a dónde va la gente\". Los exhibidores responden \"en qué se detienen\", que es más fino y más útil comercialmente. Asigna los productos que tiene encima cada uno y el ranking pasa de interesante a accionable."
+
+#. module: analitix
 #: model:mail.template,subject:analitix.mail_template_device_offline
 msgid "[Analitix] {{ object.store_id.name }} — {{ object.name }} is offline"
 msgstr "[Analitix] {{ object.store_id.name }} — {{ object.name }} está fuera de línea"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_anomaly.py:0
+msgid "a display"
+msgstr "un exhibidor"
 
 #. module: analitix
 #. odoo-python
@@ -2854,6 +4092,11 @@ msgid "e.g. Anello Morelia Centro"
 msgstr "p. ej. Anello Morelia Centro"
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_zone_form
+msgid "e.g. Engagement Rings"
+msgstr "p. ej. Anillos de compromiso"
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
 msgid "e.g. MOR-01"
 msgstr "p. ej. MOR-01"
@@ -2867,6 +4110,28 @@ msgstr "p. ej. Entrada Norte"
 #: model_terms:ir.ui.view,arch_db:analitix.view_device_form
 msgid "e.g. North door counter"
 msgstr "p. ej. Contador de la puerta norte"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_poi_form
+msgid "e.g. Window Showcase"
+msgstr "p. ej. Vitrina del aparador"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone__area_sqm
+msgid "m²"
+msgstr "m²"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_lost_sale.py:0
+msgid "store"
+msgstr "tienda"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_lost_sale.py:0
+msgid "the store"
+msgstr "la tienda"
 
 #. module: analitix
 #. odoo-python

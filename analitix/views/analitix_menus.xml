@@ -17,14 +17,30 @@
               action="action_demographic" sequence="27"/>
     <menuitem id="menu_visit_groups" name="Purchase Units" parent="menu_analysis"
               action="action_visit_group" sequence="28"/>
+    <menuitem id="menu_lost_sales" name="Lost Sales" parent="menu_analysis"
+              action="action_lost_sale" sequence="15"/>
+    <menuitem id="menu_zone_dwell" name="Zone Dwell" parent="menu_analysis"
+              action="action_zone_dwell" sequence="21"/>
+    <menuitem id="menu_poi_performance" name="Display Performance" parent="menu_analysis"
+              action="action_poi_performance" sequence="22"/>
     <menuitem id="menu_stores_overview" name="Stores" parent="menu_analysis"
               action="action_store" sequence="30"/>
+
+    <!-- The salesperson's own list, first thing under the app. -->
+    <menuitem id="menu_my_alerts" name="My Alerts" parent="menu_root"
+              action="action_alert_mine" sequence="5"/>
 
     <!-- What the implementer opens when something looks wrong. -->
     <menuitem id="menu_operations" name="Operations" parent="menu_root" sequence="20"
               groups="analitix.group_manager,analitix.group_technician"/>
     <menuitem id="menu_device_health" name="Device Health" parent="menu_operations"
               action="action_device_health" sequence="10"/>
+    <menuitem id="menu_all_alerts" name="All Alerts" parent="menu_operations"
+              action="action_alert" sequence="15"/>
+    <menuitem id="menu_anomalies" name="Behaviour Signals" parent="menu_operations"
+              action="action_anomaly" sequence="17"/>
+    <menuitem id="menu_sale_match" name="Ticket Attribution" parent="menu_operations"
+              action="action_sale_match" sequence="18"/>
     <menuitem id="menu_events" name="Crossing Events" parent="menu_operations"
               action="action_event" sequence="20"/>
     <menuitem id="menu_jobs" name="Background Jobs" parent="menu_operations"
@@ -45,6 +61,10 @@
               action="action_door" sequence="20"/>
     <menuitem id="menu_config_devices" name="Devices" parent="menu_configuration"
               action="action_device" sequence="30"/>
+    <menuitem id="menu_config_zones" name="Zones" parent="menu_configuration"
+              action="action_zone" sequence="35"/>
+    <menuitem id="menu_config_pois" name="Displays" parent="menu_configuration"
+              action="action_poi" sequence="37"/>
     <menuitem id="menu_config_staff" name="Staff Signatures" parent="menu_configuration"
               action="action_staff_signature" sequence="40"/>
 

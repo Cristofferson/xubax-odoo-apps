@@ -30,7 +30,7 @@ nothing else, because there is nothing else to correlate.
 import logging
 from datetime import timedelta
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 
 from .analitix_job import register_handler
 
@@ -40,6 +40,12 @@ _logger = logging.getLogger(__name__)
 class AnalitixFaceSignature(models.Model):
     _name = "analitix.face.signature"
     _description = "Analitix Anonymous Face Signature"
+    # The audit mixin logs *reads*, not only writes (task 984, point 6). Once a
+    # signature can carry a customer's name, going through this list is itself
+    # an act worth recording — Odoo's chatter would only ever show who changed
+    # something, never who looked.
+    _inherit = ["analitix.audited.mixin"]
+    _audit_action = "read_sensitive"
     _order = "last_seen desc, id desc"
     _rec_name = "reference"
 
@@ -92,6 +98,20 @@ class AnalitixFaceSignature(models.Model):
         help="Confidence from the edge that this was a live face rather than a "
              "photograph held up to the camera. Recorded here so the phases "
              "that make consequential decisions can require a floor.")
+
+    # --- phase 3: the optional bridge to a named customer ---
+    partner_id = fields.Many2one(
+        "res.partner", string="Customer", index=True, ondelete="set null",
+        help="Set only when the customer handed over their details at the till "
+             "and the store has customer identification switched on. Most "
+             "signatures never get one and are deleted anonymous.")
+    identified = fields.Boolean(
+        string="Identified", index=True,
+        help="This signature belongs to a customer the shop can name. It "
+             "outlives the anonymous retention window — that is the point of "
+             "it — but not forever: the store sets how long, and the same "
+             "expiry job enforces it.")
+    identified_on = fields.Datetime(string="Identified On", readonly=True)
 
     _reference_uniq = models.Constraint(
         "unique(reference)", "This signature reference already exists.")
@@ -180,6 +200,33 @@ class AnalitixFaceSignature(models.Model):
         return signature, True
 
     @api.model
+    def _greet_if_known(self, store, signature, visitor):
+        """Tell the salesperson a customer they know has walked in.
+
+        The whole value of identification from the shop's side: being able to
+        say "good morning Gustavo" instead of "can I help you". The nudge goes
+        to the person, never to a screen the customer can see — phase 4 handles
+        the screens, and it applies its own rule about greeting somebody by
+        name in front of the company they arrived with.
+        """
+        if not store.greet_known_customers or not signature.identified:
+            return False
+        partner = signature.partner_id
+        if not partner:
+            return False
+        entrance = self.env["analitix.zone"].sudo().search([
+            ("store_id", "=", store.id), ("kind", "=", "entrance")], limit=1)
+        summary = _last_purchase_summary(self.env, partner)
+        self.env["analitix.alert"].raise_alert(
+            store, "known_customer",
+            _("%(name)s just came in", name=partner.name),
+            body=_("%(name)s is a returning customer.%(last)s",
+                   name=partner.display_name,
+                   last=(_("\nLast purchase: %s", summary) if summary else "")),
+            zone=entrance or False, visitor=visitor, partner=partner)
+        return True
+
+    @api.model
     def _next_reference(self, store):
         """A handle that reads like an id and carries no identity."""
         sequence = self.env["ir.sequence"].sudo().next_by_code(
@@ -266,6 +313,8 @@ class AnalitixFaceSignature(models.Model):
                 "signature_id": signature.id,
                 "visitor_id": visitor.id if visitor else False,
             }
+            if visitor and event.direction == "in":
+                self._greet_if_known(store, signature, visitor)
             if visitor:
                 if event.pending_demographic_id and not visitor.demographic_id:
                     visitor.demographic_id = event.pending_demographic_id.id
@@ -279,3 +328,21 @@ class AnalitixFaceSignature(models.Model):
 
 register_handler("visitor_resolve", "analitix.face.signature",
                  "_run_visitor_resolve")
+
+
+def _last_purchase_summary(env, partner):
+    """One short line about what this customer last bought.
+
+    Short on purpose: it is read on a phone, by someone walking across a shop
+    floor towards the person it describes.
+    """
+    order = env["pos.order"].sudo().search(
+        [("partner_id", "=", partner.id),
+         ("state", "in", ("paid", "done", "invoiced"))],
+        order="date_order desc", limit=1)
+    if not order:
+        return ""
+    line = order.lines[:1]
+    product = line.product_id.display_name if line else ""
+    return "%s · %s" % (
+        fields.Date.to_string(order.date_order.date()), product or order.name)

@@ -218,6 +218,110 @@ class AnalitixStore(models.Model):
         "analitix.face.signature", "store_id", string="Face Signatures")
 
     # ------------------------------------------------------------------
+    # Phase 3 — zones, lost sales, displays, identification, alerts
+    # ------------------------------------------------------------------
+    zone_ids = fields.One2many("analitix.zone", "store_id", string="Zones")
+    zone_count = fields.Integer(compute="_compute_counts")
+
+    lost_sale_enabled = fields.Boolean(
+        string="Detect Lost Sales", default=True,
+        help="Nudge a salesperson when somebody lingers unserved and then "
+             "leaves without buying. This is the number that sells the "
+             "product: not 'you had 400 visitors' but 'eleven people waited at "
+             "the counter and nine were never spoken to'.")
+    lost_sale_create_lead = fields.Boolean(
+        string="Create CRM Leads", default=False,
+        help="Open a lead for a lost sale. Only ever fires for a customer the "
+             "shop can actually contact — a lead with no name and no phone is "
+             "filing clutter that buries the real ones.")
+
+    # --- the discreet alert channel ---
+    alert_channel = fields.Selection(
+        selection=[
+            ("bus", "Odoo mobile app"),
+            ("whatsapp", "WhatsApp"),
+            ("both", "Both"),
+        ],
+        string="Alert Channel", default="bus", required=True,
+        help="How the assigned salesperson is nudged. There is deliberately no "
+             "audible or on-screen option: the customer must never perceive "
+             "that they are being discussed.")
+    alert_fallback_user_id = fields.Many2one(
+        "res.users", string="Fallback Recipient",
+        help="Where an alert goes when nobody is rostered on that zone. "
+             "Without one, alerts for uncovered zones are recorded but never "
+             "reach a person.")
+    alert_cooldown_minutes = fields.Integer(
+        string="Alert Cooldown (min)", default=5, required=True,
+        help="Minimum gap between alerts of the same kind to the same person. "
+             "A salesperson buzzed every ninety seconds stops reading them, "
+             "which is worse than not sending them at all.")
+    alert_missed_after_minutes = fields.Integer(
+        string="Count As Missed After (min)", default=15, required=True,
+        help="An unacknowledged alert becomes 'missed' after this long. Kept "
+             "honest on purpose: a report that only counted the alerts that "
+             "went well would be the most flattering and least useful version "
+             "of the truth.")
+    # Deliberately an Integer rather than a Many2one to whatsapp.template.
+    # Analitix does not depend on Odoo's WhatsApp module — this is sold to
+    # stores that will not have it, and a relational field to a model that may
+    # not exist makes the addon refuse to load at all. The id is resolved
+    # defensively at send time. The cost is a plain number instead of a picker;
+    # the alternative is an app half the market cannot install.
+    alert_whatsapp_template_id = fields.Integer(
+        string="WhatsApp Template ID",
+        help="Numeric id of the WhatsApp template to send. Find it in "
+             "WhatsApp → Templates: it is the last number in the URL when the "
+             "template is open. Only used when the WhatsApp channel is "
+             "selected and Odoo's WhatsApp module is installed.")
+    alert_ids = fields.One2many("analitix.alert", "store_id", string="Alerts")
+
+    # --- checkout attribution and identification ---
+    checkout_match_enabled = fields.Boolean(
+        string="Attribute Tickets To Visits", default=True,
+        help="Tie each ticket to the visit that produced it. Anonymous: it "
+             "answers 'does the profile that stops at the window actually buy' "
+             "without anybody's name. Falls back to the purchase unit when "
+             "there is no till camera.")
+    checkout_match_threshold = fields.Float(
+        string="Till Match Threshold", default=0.66, required=True,
+        help="Stricter than the door threshold: attributing a ticket to the "
+             "wrong visit corrupts the conversion analysis rather than merely "
+             "splitting a visit in two.")
+    identify_customers = fields.Boolean(
+        string="Identify Returning Customers", default=False,
+        help="Link a face signature to a res.partner when the customer hands "
+             "over their details at the till, so the shop recognises them at "
+             "the door next time. OFF by default and deliberately so: a store "
+             "that only bought the analytics should never acquire a biometric "
+             "customer index by accident.")
+    identified_ttl_days = fields.Integer(
+        string="Identified Retention (days)", default=365, required=True,
+        help="How long an identified signature is kept. It outlives the "
+             "anonymous window — that is what makes recognition possible — but "
+             "not forever, and the same expiry job enforces it.")
+    greet_known_customers = fields.Boolean(
+        string="Nudge On Known Customer", default=True,
+        help="Tell the salesperson when a customer they know walks in, with "
+             "their name and last purchase, so they can greet them properly.")
+
+    # --- behaviour signals ---
+    anomaly_detection_enabled = fields.Boolean(
+        string="Flag Unusual Behaviour", default=False,
+        help="Notice patterns worth a second look: in and out repeatedly, a "
+             "long stop at an expensive case with nobody nearby, a group that "
+             "arrives together and scatters. Anonymous and about behaviour, "
+             "never about people — the named watch list is a separate feature.")
+    anomaly_window_minutes = fields.Integer(
+        string="Behaviour Window (min)", default=60, required=True)
+    anomaly_reentry_count = fields.Integer(
+        string="Re-entries Before Flagging", default=3, required=True)
+    anomaly_dwell_seconds = fields.Integer(
+        string="Unattended Stop (s)", default=300, required=True)
+    anomaly_dispersal_zones = fields.Integer(
+        string="Zones Before Dispersal", default=3, required=True)
+
+    # ------------------------------------------------------------------
     # Live occupancy over the selected period
     # ------------------------------------------------------------------
     visitors_in = fields.Integer(
@@ -274,12 +378,57 @@ class AnalitixStore(models.Model):
     # ------------------------------------------------------------------
     # Computes
     # ------------------------------------------------------------------
-    @api.depends("door_ids", "device_ids", "register_ids")
+    @api.depends("door_ids", "device_ids", "register_ids", "zone_ids")
     def _compute_counts(self):
         for store in self:
             store.door_count = len(store.door_ids)
             store.device_count = len(store.device_ids)
             store.register_count = len(store.register_ids)
+            store.zone_count = len(store.zone_ids)
+
+    # ------------------------------------------------------------------
+    # Lookups the rest of the addon needs
+    # ------------------------------------------------------------------
+    @api.model
+    def _for_pos_config(self, config):
+        """Which store a POS register's tickets belong to, if any.
+
+        Mirrors the two attribution modes: an explicit register list, or the
+        whole company. Returns an empty recordset for a register nobody has
+        wired to a store, which is the normal state on an instance where only
+        some shops bought Analitix.
+        """
+        if not config:
+            return self.browse()
+        store = self.sudo().search([
+            ("match_mode", "=", "registers"),
+            ("register_ids", "in", config.id),
+        ], limit=1)
+        if store:
+            return store
+        return self.sudo().search([
+            ("match_mode", "=", "company"),
+            ("company_id", "=", config.company_id.id),
+        ], limit=1)
+
+    def _average_ticket(self, days=30):
+        """This store's recent average ticket.
+
+        Used to put a number on a lost sale. It is an estimate and is labelled
+        as one everywhere it surfaces: what a sale that never happened would
+        have been worth cannot be known, and quoting it to the cent would be
+        dishonest.
+        """
+        self.ensure_one()
+        since = fields.Datetime.now() - timedelta(days=days)
+        rows = self.env["analitix.hourly"].sudo().search([
+            ("store_id", "=", self.id), ("hour", ">=", since),
+            ("tickets", ">", 0),
+        ])
+        tickets = sum(rows.mapped("tickets"))
+        if not tickets:
+            return 0.0
+        return sum(rows.mapped("revenue")) / tickets
 
     @api.depends("device_ids.status", "device_ids.active", "device_ids.critical",
                  "capture_enabled")
@@ -630,6 +779,17 @@ class AnalitixStore(models.Model):
             "type": "ir.actions.act_window",
             "name": _("Doors"),
             "res_model": "analitix.door",
+            "view_mode": "list,form",
+            "domain": [("store_id", "=", self.id)],
+            "context": {"default_store_id": self.id},
+        }
+
+    def action_view_zones(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Zones"),
+            "res_model": "analitix.zone",
             "view_mode": "list,form",
             "domain": [("store_id", "=", self.id)],
             "context": {"default_store_id": self.id},

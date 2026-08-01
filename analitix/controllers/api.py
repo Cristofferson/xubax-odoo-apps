@@ -3,11 +3,13 @@
 
 Contract lives in ``doc/API.md``; this file is its implementation.
 
-Four endpoints, all authenticated by a per-device API key and all scoped to
+Six endpoints, all authenticated by a per-device API key and all scoped to
 that device's own store:
 
 ===============================================  ==================================
 ``POST /analitix/api/v1/events``                 crossings, idempotent by uuid
+``POST /analitix/api/v1/dwell``                  time in zones and at displays
+``POST /analitix/api/v1/checkout``               the face at the till
 ``POST /analitix/api/v1/heartbeat``              "I am alive", plus agent health
 ``GET  /analitix/api/v1/config``                 the device's own configuration
 ``GET  /analitix/api/v1/staff_signatures``       staff vectors for local matching
@@ -326,6 +328,151 @@ class AnalitixAPI(http.Controller):
             vals["pending_embedding"] = crypto.encrypt_vector(
                 crypto.normalize(vector))
             vals["match_score"] = score
+
+    # ------------------------------------------------------------------
+    # POST /dwell — time spent in zones and at displays
+    # ------------------------------------------------------------------
+    @http.route("%s/dwell" % API_ROOT, type="http", auth="public",
+                methods=["POST"], csrf=False, save_session=False)
+    def ingest_dwell(self, **kw):
+        """Report how long tracked people have spent in zones and at displays.
+
+        Sent as a *running total* while the person is still standing there, not
+        once at the end: a lost-sale nudge is worthless if it arrives after the
+        customer has walked out. Odoo upserts on
+        ``(visit, zone, entered_at)``, so repeating the same observation with a
+        bigger number updates one row rather than creating a dozen.
+
+        The agent identifies people by the ``track`` it assigned them at the
+        door. Odoo resolves that to a visit; an unknown track is skipped
+        quietly, because a person who walked in before the agent restarted has
+        no visit to attach to and that is not an error.
+        """
+        device, error = self._authenticate()
+        if error:
+            return error
+        body, error = self._body()
+        if error:
+            return error
+
+        store = device.store_id
+        observations = body.get("dwells")
+        if not isinstance(observations, list):
+            return self._json({"error": "dwells_must_be_a_list"}, status=400)
+        if len(observations) > MAX_BATCH:
+            return self._json({"error": "batch_too_large"}, status=413)
+
+        Zone = request.env["analitix.zone"].sudo()
+        Poi = request.env["analitix.poi"].sudo()
+        Dwell = request.env["analitix.zone.dwell"].sudo()
+        Attention = request.env["analitix.poi.attention"].sudo()
+        LostSale = request.env["analitix.lost.sale"].sudo()
+
+        stored, skipped = 0, 0
+        for raw in observations:
+            if not isinstance(raw, dict):
+                skipped += 1
+                continue
+            visitor = self._resolve_visit(store, raw)
+            if not visitor:
+                skipped += 1
+                continue
+            started = _parse_ts(raw.get("since"))
+            try:
+                seconds = int(raw.get("seconds") or 0)
+            except (TypeError, ValueError):
+                skipped += 1
+                continue
+            if not started or seconds < 0:
+                skipped += 1
+                continue
+
+            if raw.get("poi"):
+                poi = Poi.search([
+                    ("store_id", "=", store.id),
+                    ("code", "=", raw["poi"]),
+                ], limit=1)
+                if poi:
+                    Attention.record(visitor, poi, started, seconds)
+                    stored += 1
+                    continue
+                skipped += 1
+                continue
+
+            zone = Zone.search([
+                ("store_id", "=", store.id),
+                ("code", "=", raw.get("zone") or ""),
+            ], limit=1) or device.zone_id
+            if not zone:
+                skipped += 1
+                continue
+
+            dwell = Dwell.record(
+                visitor, zone, started, seconds, served=bool(raw.get("served")))
+            stored += 1
+            # Evaluated inline rather than queued: this is the one thing in the
+            # whole pipeline that is worthless late. Everything it can trigger
+            # (the alert itself, WhatsApp) is already non-blocking.
+            LostSale._evaluate_dwell(dwell)
+
+        device._mark_seen(
+            agent_version=body.get("agent_version"),
+            queue_size=body.get("queue_size"))
+        return self._json({"ok": True, "stored": stored, "skipped": skipped})
+
+    def _resolve_visit(self, store, raw):
+        """Find the visit an observation belongs to, by edge track id."""
+        track = raw.get("track")
+        if not track:
+            return request.env["analitix.visitor"]
+        event = request.env["analitix.event"].sudo().search([
+            ("store_id", "=", store.id),
+            ("track_ref", "=", str(track)),
+            ("visitor_id", "!=", False),
+        ], order="event_time desc", limit=1)
+        return event.visitor_id
+
+    # ------------------------------------------------------------------
+    # POST /checkout — the face at the till
+    # ------------------------------------------------------------------
+    @http.route("%s/checkout" % API_ROOT, type="http", auth="public",
+                methods=["POST"], csrf=False, save_session=False)
+    def ingest_checkout(self, **kw):
+        """Attribute a ticket to the visit that produced it.
+
+        The till camera posts the payer's embedding with the POS reference. The
+        heavy part — comparing it against everyone who came in — is queued, so
+        nothing here can ever make a cashier wait while a customer stands at the
+        counter.
+        """
+        device, error = self._authenticate()
+        if error:
+            return error
+        body, error = self._body()
+        if error:
+            return error
+
+        store = device.store_id
+        reference = body.get("pos_reference") or body.get("order_ref")
+        if not reference:
+            return self._json({"error": "missing_pos_reference"}, status=400)
+
+        order = request.env["pos.order"].sudo().search([
+            ("pos_reference", "=", reference)], limit=1)
+        if not order:
+            # The ticket may not have synced yet. Not an error the agent should
+            # retry against: the group-level fallback already attributes it.
+            return self._json({"ok": True, "queued": False,
+                               "detail": "order_not_found_yet"})
+
+        request.env["analitix.job"].sudo().enqueue(
+            "match_checkout", {
+                "order_id": order.id,
+                "store_id": store.id,
+                "embedding": body.get("embedding"),
+            }, store=store, priority=3)
+        device._mark_seen()
+        return self._json({"ok": True, "queued": True})
 
     # ------------------------------------------------------------------
     # POST /heartbeat

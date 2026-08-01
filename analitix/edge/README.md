@@ -86,6 +86,23 @@ sudo systemctl enable --now analitix-agent
 | Counts look far too high | The line crosses a waiting area, so people drift back and forth over it | Move the line into the doorway itself. |
 | Counts look far too low | Camera too low, people occluding each other | Mount overhead, use a depth camera in a busy doorway. |
 
+## Reporting zones and the till
+
+Phase 3 adds two more endpoints the agent can use, both documented in
+`../doc/API.md`:
+
+* **`/dwell`** — how long a tracked person has been in a zone or at a display.
+  Send a **running total while they are still standing there**, keyed on the
+  `track` id you gave them at the door. A lost-sale nudge that arrives after
+  the customer has walked out is worthless.
+* **`/checkout`** — the payer's face at the till, with the POS reference, so
+  the ticket can be attributed to the visit that produced it. A store without a
+  till camera skips this entirely and still gets attribution through the
+  purchase unit frozen at the door.
+
+Zone and display references (`zone`, `poi`) are the *Reference* codes set in
+Odoo, so the floor plan can be re-cut without touching any agent.
+
 ## Contract
 
 `../doc/API.md`. Read it before writing your own agent — every rule in it

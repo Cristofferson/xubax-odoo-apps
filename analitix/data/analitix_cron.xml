@@ -82,5 +82,40 @@
             <field name="active" eval="True"/>
         </record>
 
+        <!-- An unacknowledged nudge becomes evidence rather than noise: a
+             coaching report that only ever saw the alerts that went well would
+             be the most flattering and least useful version of the truth. -->
+        <record id="cron_alerts_missed" model="ir.cron">
+            <field name="name">Analitix: mark unacknowledged alerts as missed</field>
+            <field name="model_id" ref="model_analitix_alert"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_mark_missed()</field>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="cron_settle_lost_sales" model="ir.cron">
+            <field name="name">Analitix: settle open lost sales</field>
+            <field name="model_id" ref="model_analitix_lost_sale"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_settle_open()</field>
+            <field name="interval_number">30</field>
+            <field name="interval_type">minutes</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Two of the three behaviour signals only exist over a window of
+             time, so they are swept rather than evaluated on every crossing. -->
+        <record id="cron_anomaly_scan" model="ir.cron">
+            <field name="name">Analitix: scan for unusual behaviour</field>
+            <field name="model_id" ref="model_analitix_anomaly_event"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_scan()</field>
+            <field name="interval_number">5</field>
+            <field name="interval_type">minutes</field>
+            <field name="active" eval="True"/>
+        </record>
+
     </data>
 </odoo>

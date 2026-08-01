@@ -82,6 +82,12 @@ class AnalitixDevice(models.Model):
         domain="[('store_id', '=', store_id)]",
         help="Which entrance this device watches. Required for counters; left "
              "empty for devices that watch a zone or the checkout instead.")
+    zone_id = fields.Many2one(
+        "analitix.zone", string="Zone", index=True, ondelete="set null",
+        domain="[('store_id', '=', store_id)]",
+        help="Which internal zone this camera watches. Set for zone and "
+             "checkout cameras; left empty for a door counter, which reports "
+             "against its door instead.")
     company_id = fields.Many2one(
         "res.company", related="store_id.company_id", store=True, index=True,
         readonly=True)
@@ -201,13 +207,17 @@ class AnalitixDevice(models.Model):
                 device._issue_key()
         return devices
 
-    @api.constrains("door_id", "store_id")
+    @api.constrains("door_id", "zone_id", "store_id")
     def _check_door_store(self):
         for device in self:
             if device.door_id and device.door_id.store_id != device.store_id:
                 raise UserError(_(
                     "Device '%(dev)s' points at a door of another store. A "
                     "device belongs to exactly one store.", dev=device.name))
+            if device.zone_id and device.zone_id.store_id != device.store_id:
+                raise UserError(_(
+                    "Device '%(dev)s' points at a zone of another store.",
+                    dev=device.name))
 
     @api.onchange("store_id")
     def _onchange_store_clear_door(self):

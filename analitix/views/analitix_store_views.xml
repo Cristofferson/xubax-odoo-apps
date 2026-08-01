@@ -58,6 +58,10 @@
                                 class="oe_stat_button" icon="fa-exchange">
                             <field name="visitors_in" widget="statinfo" string="Visitors Today"/>
                         </button>
+                        <button name="action_view_zones" type="object"
+                                class="oe_stat_button" icon="fa-map-o">
+                            <field name="zone_count" widget="statinfo" string="Zones"/>
+                        </button>
                     </div>
                     <div class="oe_title">
                         <label for="name" string="Store"/>
@@ -195,6 +199,74 @@
                                 rest, and deleted on the retention window above.
                                 Matching never crosses store boundaries.
                             </div>
+                        </page>
+                        <page string="Floor &amp; Alerts" name="phase3">
+                            <group>
+                                <group string="Lost sales">
+                                    <field name="lost_sale_enabled"/>
+                                    <field name="lost_sale_create_lead"
+                                           invisible="not lost_sale_enabled"/>
+                                </group>
+                                <group string="Discreet alerts">
+                                    <field name="alert_channel"/>
+                                    <field name="alert_fallback_user_id"/>
+                                    <field name="alert_cooldown_minutes"/>
+                                    <field name="alert_missed_after_minutes"/>
+                                    <field name="alert_whatsapp_template_id"
+                                           invisible="alert_channel == 'bus'"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-info" role="alert">
+                                Alerts reach <b>only</b> the assigned
+                                salesperson, through their phone. There is
+                                deliberately no audible or on-screen option: a
+                                chime or a message on a shop screen tells the
+                                customer they are being discussed.
+                            </div>
+                            <group>
+                                <group string="Tickets and customers">
+                                    <field name="checkout_match_enabled"/>
+                                    <field name="checkout_match_threshold"
+                                           invisible="not checkout_match_enabled"/>
+                                    <field name="identify_customers"/>
+                                    <field name="identified_ttl_days"
+                                           invisible="not identify_customers"/>
+                                    <field name="greet_known_customers"
+                                           invisible="not identify_customers"/>
+                                </group>
+                                <group string="Behaviour signals">
+                                    <field name="anomaly_detection_enabled"/>
+                                    <field name="anomaly_window_minutes"
+                                           invisible="not anomaly_detection_enabled"/>
+                                    <field name="anomaly_reentry_count"
+                                           invisible="not anomaly_detection_enabled"/>
+                                    <field name="anomaly_dwell_seconds"
+                                           invisible="not anomaly_detection_enabled"/>
+                                    <field name="anomaly_dispersal_zones"
+                                           invisible="not anomaly_detection_enabled"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-warning" role="alert"
+                                 invisible="not identify_customers">
+                                Customer identification is on. Face signatures
+                                of customers who hand over their details at the
+                                till become persistent and named. Every later
+                                <b>read</b> of that list is written to the audit
+                                log, and the signatures still expire on the
+                                retention above.
+                            </div>
+                            <separator string="Zones"/>
+                            <field name="zone_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="kind"/>
+                                    <field name="engaged_seconds"/>
+                                    <field name="lost_sale_seconds"/>
+                                    <field name="alert_on_dwell"/>
+                                </list>
+                            </field>
                         </page>
                         <page string="Monitoring" name="monitoring"
                               groups="analitix.group_manager,analitix.group_technician">

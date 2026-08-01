@@ -113,9 +113,18 @@ class AnalitixJob(models.Model):
         side by side and simply never see the same row, with no window in
         which a crash leaves a job stuck in ``running`` forever.
         """
+        # Raw SQL does not see what the ORM is still holding in memory, so a job
+        # enqueued earlier in this same transaction would be invisible and sit
+        # there forever.
+        self.env.flush_all()
+        # clock_timestamp(), NOT now(): PostgreSQL's now() is the *transaction
+        # start* time. A job enqueued after the transaction began has a
+        # scheduled_at in that transaction's future, so now() would skip it —
+        # every time, not occasionally.
         self.env.cr.execute("""
             SELECT id FROM analitix_job
-            WHERE state = 'pending' AND scheduled_at <= now() AT TIME ZONE 'UTC'
+            WHERE state = 'pending'
+              AND scheduled_at <= (clock_timestamp() AT TIME ZONE 'UTC')
             ORDER BY priority, scheduled_at, id
             LIMIT %s
             FOR UPDATE SKIP LOCKED
