@@ -6,3 +6,4 @@ from . import test_security
 from . import test_isolation
 from . import test_health
 from . import test_analytics
+from . import test_visits

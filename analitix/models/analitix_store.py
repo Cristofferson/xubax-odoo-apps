@@ -141,6 +141,83 @@ class AnalitixStore(models.Model):
              "in and out all day reads a conversion rate far below the truth.")
 
     # ------------------------------------------------------------------
+    # Phase 2 — visits, re-identification, demographics, purchase units
+    # ------------------------------------------------------------------
+    reid_enabled = fields.Boolean(
+        string="Recognise Repeat Faces", default=True,
+        help="Turn crossings into visits by matching the same anonymous face. "
+             "Without it a customer who steps out for a phone call and comes "
+             "back counts as three visitors, and the conversion rate reads a "
+             "third of the truth.")
+    reid_threshold = fields.Float(
+        string="Re-identification Threshold", default=0.62, required=True,
+        help="Cosine similarity above which two sightings are the same person. "
+             "Stricter than the staff threshold on purpose: a wrong staff match "
+             "drops one crossing, a wrong visitor match merges two strangers "
+             "into one visit and corrupts every metric downstream.")
+    reid_ttl_minutes = fields.Integer(
+        string="Signature Retention (min)", default=180, required=True,
+        help="How long an anonymous face signature is kept before it is "
+             "deleted. This is the retention promise, and it is also what keeps "
+             "matching fast — a store only ever compares against the people who "
+             "were there recently, never against its whole history.")
+    visit_gap_minutes = fields.Integer(
+        string="Same-visit Gap (min)", default=30, required=True,
+        help="Leaving and returning inside this gap continues the same visit. "
+             "A jewellery boutique where people browse for forty minutes and a "
+             "convenience store where they are in and out in ninety seconds "
+             "cannot share one number.")
+    max_visit_minutes = fields.Integer(
+        string="Maximum Visit (min)", default=240, required=True,
+        help="A visit still open after this long is closed by the nightly "
+             "cron. Exits do get missed, and a visit left open forever quietly "
+             "inflates the occupancy figure until it is nonsense.")
+
+    demographics_enabled = fields.Boolean(
+        string="Capture Demographics", default=False,
+        help="Estimate age band, gender and expression at the entrance. Off by "
+             "default: it needs a second, front-facing camera per door, and a "
+             "store that has not installed one should not see empty charts "
+             "suggesting the system is broken.")
+    demographic_min_confidence = fields.Float(
+        string="Minimum Confidence", default=0.60, required=True,
+        help="Readings below this are stored but flagged unreliable, so a "
+             "dashboard can leave them out explicitly rather than quietly "
+             "average a coin flip into the customer's numbers.")
+
+    group_detection_enabled = fields.Boolean(
+        string="Detect Purchase Units", default=True,
+        help="Treat people who cross the same door together as one buying "
+             "decision. A store that counts a family of four as four visitors "
+             "and one ticket reads a 25% conversion rate when the real figure "
+             "was 100%.")
+    group_window_seconds = fields.Integer(
+        string="Together Within (s)", default=3, required=True,
+        help="How close in time counts as arriving together. A wide automatic "
+             "door lets a couple through side by side in under a second; a "
+             "narrow one makes them file through three seconds apart.")
+    group_max_size = fields.Integer(
+        string="Maximum Unit Size", default=8, required=True,
+        help="Ceiling on one purchase unit. Without it, a school group filing "
+             "through the door becomes a single 'customer' and distorts the "
+             "day's basket statistics.")
+
+    require_liveness = fields.Boolean(
+        string="Require Liveness", default=False,
+        help="Reject face readings that the edge could not confirm came from a "
+             "live person rather than a photograph. Meaningful from phase 3 "
+             "onward, where recognition starts driving real decisions; in "
+             "phase 2 the only consequence of a match is being counted once "
+             "instead of twice.")
+    liveness_min_score = fields.Float(
+        string="Minimum Liveness", default=0.50, required=True)
+
+    # --- phase 2 rollups ---
+    visitor_ids = fields.One2many("analitix.visitor", "store_id", string="Visits")
+    signature_ids = fields.One2many(
+        "analitix.face.signature", "store_id", string="Face Signatures")
+
+    # ------------------------------------------------------------------
     # Live occupancy over the selected period
     # ------------------------------------------------------------------
     visitors_in = fields.Integer(
@@ -184,6 +261,15 @@ class AnalitixStore(models.Model):
     _positive_heartbeat = models.Constraint(
         "CHECK(heartbeat_interval_s > 0)",
         "The heartbeat interval must be a positive number of seconds.")
+    _positive_reid_ttl = models.Constraint(
+        "CHECK(reid_ttl_minutes > 0)",
+        "Face signatures must expire: the retention window has to be positive.")
+    _visit_gap_under_max = models.Constraint(
+        "CHECK(max_visit_minutes >= visit_gap_minutes)",
+        "The maximum visit length cannot be shorter than the same-visit gap.")
+    _group_size_sane = models.Constraint(
+        "CHECK(group_max_size >= 1)",
+        "A purchase unit holds at least one person.")
 
     # ------------------------------------------------------------------
     # Computes
@@ -420,6 +506,119 @@ class AnalitixStore(models.Model):
                         })
         if vals_list:
             Event.create(vals_list)
+        self.browse(stores.ids)._generate_demo_visits()
+        return True
+
+    def _generate_demo_visits(self, days=3):
+        """Build visits, profiles and purchase units over the recent demo days.
+
+        Only the last few days, not the whole fortnight: the point is to show
+        what phase 2 produces, and a signature per visitor for two weeks would
+        be tens of thousands of rows that make the demo database slow to open
+        for no extra insight.
+
+        The one store with demographics on is the multi-door one, so a reviewer
+        can see both configurations side by side — a store that has not bought
+        the front-facing cameras and one that has.
+        """
+        Visitor = self.env["analitix.visitor"].sudo()
+        Group = self.env["analitix.visit.group"].sudo()
+        Demographic = self.env["analitix.demographic"].sudo()
+        Signature = self.env["analitix.face.signature"].sudo()
+        crypto = self.env["analitix.crypto"]
+
+        bands = ["18-24", "25-34", "25-34", "35-44", "35-44", "45-54", "55-64"]
+        genders = ["female", "male", "female", "male", "unknown"]
+        moods = ["neutral", "neutral", "happy", "neutral", "sad"]
+
+        now = fields.Datetime.now().replace(minute=0, second=0, microsecond=0)
+        for store in self:
+            if Visitor.search_count([("store_id", "=", store.id)]):
+                continue
+            doors = store.door_ids.filtered("counts_visitors")
+            if not doors:
+                continue
+            if len(store.door_ids) > 1:
+                store.demographics_enabled = True
+            counter = 0
+            for day_offset in range(days, 0, -1):
+                for hour in range(11, 20, 2):
+                    slot = now - timedelta(days=day_offset)
+                    slot = slot.replace(hour=hour)
+                    for index in range(6):
+                        counter += 1
+                        door = doors[counter % len(doors)]
+                        entered = slot + timedelta(minutes=index * 7)
+                        # A deterministic pseudo-vector, so the demo is
+                        # reproducible for phase 6's screenshots.
+                        vector = crypto.normalize([
+                            ((counter * 37 + i * 13) % 100) / 100.0 - 0.5
+                            for i in range(32)])
+                        signature = Signature.create({
+                            "reference": "DEMO-%s-%05d" % (store.code, counter),
+                            "store_id": store.id,
+                            "embedding": crypto.encrypt_vector(vector),
+                            "embedding_dim": len(vector),
+                            "first_seen": entered,
+                            "last_seen": entered,
+                            "expires_at": entered + timedelta(
+                                minutes=store.reid_ttl_minutes),
+                            "door_ids": [(6, 0, door.ids)],
+                        })
+                        reading = False
+                        if store.demographics_enabled:
+                            reading = Demographic.create({
+                                "store_id": store.id,
+                                "door_id": door.id,
+                                "captured_at": entered,
+                                "age_band": bands[counter % len(bands)],
+                                "age_confidence": 0.72 + (counter % 5) / 50.0,
+                                "gender": genders[counter % len(genders)],
+                                "gender_confidence": 0.70 + (counter % 7) / 50.0,
+                                "emotion": moods[counter % len(moods)],
+                                "emotion_confidence": 0.60 + (counter % 4) / 50.0,
+                                "liveness_score": 0.9,
+                            })
+                        visit = Visitor.create({
+                            "store_id": store.id,
+                            "door_id": door.id,
+                            "signature_id": signature.id,
+                            "entered_at": entered,
+                            "exited_at": entered + timedelta(
+                                minutes=6 + (counter % 23)),
+                            "state": "left",
+                            "demographic_id": reading.id if reading else False,
+                            "is_returning": counter % 5 == 0,
+                        })
+                        # Every third arrival brings someone with them, which is
+                        # roughly what a real store sees and enough to make the
+                        # purchase-unit charts say something.
+                        if counter % 3 == 0:
+                            group = Group.create({
+                                "store_id": store.id,
+                                "door_id": door.id,
+                                "entered_at": entered,
+                                "visitor_ids": [(6, 0, visit.ids)],
+                                "size": 1,
+                            })
+                            companion = Visitor.create({
+                                "store_id": store.id,
+                                "door_id": door.id,
+                                "entered_at": entered,
+                                "exited_at": visit.exited_at,
+                                "state": "left",
+                                "visit_group_id": group.id,
+                            })
+                            group.write({"size": 2})
+                            companion.write({"visit_group_id": group.id})
+                        else:
+                            Group.create({
+                                "store_id": store.id,
+                                "door_id": door.id,
+                                "entered_at": entered,
+                                "visitor_ids": [(6, 0, visit.ids)],
+                                "size": 1,
+                            })
         return True
 
     # ------------------------------------------------------------------

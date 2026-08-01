@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_visitor_list" model="ir.ui.view">
+        <field name="name">analitix.visitor.list</field>
+        <field name="model">analitix.visitor</field>
+        <field name="arch" type="xml">
+            <list string="Visits" create="false" decoration-info="state == 'inside'">
+                <field name="entered_at"/>
+                <field name="store_id"/>
+                <field name="door_id"/>
+                <field name="exit_door_id" optional="show"/>
+                <field name="duration_min" sum="Minutes" optional="show"/>
+                <field name="age_band" optional="show"/>
+                <field name="gender" optional="show"/>
+                <field name="visit_group_id" optional="show"/>
+                <field name="re_entry_count" optional="hide"/>
+                <field name="is_returning" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'inside'"
+                       decoration-muted="state == 'left'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_visitor_form" model="ir.ui.view">
+        <field name="name">analitix.visitor.form</field>
+        <field name="model">analitix.visitor</field>
+        <field name="arch" type="xml">
+            <form string="Visit" create="false" edit="false">
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        A visit is pseudonymous. It points at an anonymous face
+                        signature that expires on the store's retention schedule,
+                        and carries no name and no image.
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="display_reference"/></h1>
+                    </div>
+                    <group>
+                        <group string="Where and when">
+                            <field name="store_id"/>
+                            <field name="door_id"/>
+                            <field name="exit_door_id"/>
+                            <field name="entered_at"/>
+                            <field name="exited_at"/>
+                            <field name="duration_min"/>
+                            <field name="state"/>
+                        </group>
+                        <group string="Who (anonymously)">
+                            <field name="signature_id"/>
+                            <field name="is_returning"/>
+                            <field name="re_entry_count"/>
+                            <field name="visit_group_id"/>
+                            <field name="demographic_id"/>
+                            <field name="age_band"/>
+                            <field name="gender"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Crossings" name="crossings">
+                            <field name="crossing_ids">
+                                <list>
+                                    <field name="event_time"/>
+                                    <field name="door_id"/>
+                                    <field name="direction"/>
+                                    <field name="counted"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_visitor_graph" model="ir.ui.view">
+        <field name="name">analitix.visitor.graph</field>
+        <field name="model">analitix.visitor</field>
+        <field name="arch" type="xml">
+            <graph string="Visits" type="line" sample="1">
+                <field name="entered_at" interval="hour"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_visitor_pivot" model="ir.ui.view">
+        <field name="name">analitix.visitor.pivot</field>
+        <field name="model">analitix.visitor</field>
+        <field name="arch" type="xml">
+            <pivot string="Visits" sample="1">
+                <field name="age_band" type="row"/>
+                <field name="gender" type="col"/>
+                <field name="duration_min" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_visitor_search" model="ir.ui.view">
+        <field name="name">analitix.visitor.search</field>
+        <field name="model">analitix.visitor</field>
+        <field name="arch" type="xml">
+            <search string="Visits">
+                <field name="store_id"/>
+                <field name="door_id"/>
+                <field name="signature_id"/>
+                <filter name="filter_inside" string="Inside Now"
+                        domain="[('state', '=', 'inside')]"/>
+                <filter name="filter_returning" string="Returning"
+                        domain="[('is_returning', '=', True)]"/>
+                <filter name="filter_grouped" string="Came With Others"
+                        domain="[('visit_group_id.size', '&gt;', 1)]"/>
+                <separator/>
+                <filter name="filter_today" string="Today"
+                        domain="[('entered_at', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)))]"/>
+                <filter name="filter_7d" string="Last 7 Days"
+                        domain="[('entered_at', '&gt;=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <group name="group_by">
+                    <filter name="group_store" string="Store" domain="[]"
+                            context="{'group_by': 'store_id'}"/>
+                    <filter name="group_door" string="Entry Door" domain="[]"
+                            context="{'group_by': 'door_id'}"/>
+                    <filter name="group_age" string="Age Band" domain="[]"
+                            context="{'group_by': 'age_band'}"/>
+                    <filter name="group_gender" string="Gender" domain="[]"
+                            context="{'group_by': 'gender'}"/>
+                    <filter name="group_day" string="Day" domain="[]"
+                            context="{'group_by': 'entered_at:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_visitor" model="ir.actions.act_window">
+        <field name="name">Visits</field>
+        <field name="res_model">analitix.visitor</field>
+        <field name="view_mode">list,graph,pivot,form</field>
+        <field name="context">{'search_default_filter_7d': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No visits resolved yet</p>
+            <p>
+                A crossing is what the camera sees; a visit is what the owner is
+                asking about. Someone who steps out for a phone call and comes
+                back is <b>one</b> visit — counting it as three would report a
+                conversion rate a third of the truth.
+            </p>
+        </field>
+    </record>
+
+    <!-- Purchase units -->
+    <record id="view_visit_group_list" model="ir.ui.view">
+        <field name="name">analitix.visit.group.list</field>
+        <field name="model">analitix.visit.group</field>
+        <field name="arch" type="xml">
+            <list string="Purchase Units" create="false">
+                <field name="entered_at"/>
+                <field name="store_id"/>
+                <field name="door_id"/>
+                <field name="size" sum="People"/>
+                <field name="kind" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_visit_group_search" model="ir.ui.view">
+        <field name="name">analitix.visit.group.search</field>
+        <field name="model">analitix.visit.group</field>
+        <field name="arch" type="xml">
+            <search string="Purchase Units">
+                <field name="store_id"/>
+                <field name="door_id"/>
+                <filter name="filter_groups" string="Came Together"
+                        domain="[('size', '&gt;', 1)]"/>
+                <filter name="filter_7d" string="Last 7 Days"
+                        domain="[('entered_at', '&gt;=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <group name="group_by">
+                    <filter name="group_kind" string="Type" domain="[]"
+                            context="{'group_by': 'kind'}"/>
+                    <filter name="group_store" string="Store" domain="[]"
+                            context="{'group_by': 'store_id'}"/>
+                    <filter name="group_day" string="Day" domain="[]"
+                            context="{'group_by': 'entered_at:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_visit_group" model="ir.actions.act_window">
+        <field name="name">Purchase Units</field>
+        <field name="res_model">analitix.visit.group</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_filter_7d': 1, 'search_default_group_kind': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No purchase units yet</p>
+            <p>
+                A couple, a family, three friends — one buying decision. A store
+                that counts a family of four as four visitors and one ticket
+                reads a 25% conversion rate when the real figure was 100%.
+            </p>
+        </field>
+    </record>
+
+    <!-- Demographics -->
+    <record id="view_demographic_list" model="ir.ui.view">
+        <field name="name">analitix.demographic.list</field>
+        <field name="model">analitix.demographic</field>
+        <field name="arch" type="xml">
+            <list string="Demographics" create="false"
+                  decoration-muted="not reliable">
+                <field name="captured_at"/>
+                <field name="store_id"/>
+                <field name="door_id"/>
+                <field name="age_band"/>
+                <field name="gender"/>
+                <field name="emotion"/>
+                <field name="reliable"/>
+                <field name="age_confidence" optional="hide"/>
+                <field name="gender_confidence" optional="hide"/>
+                <field name="liveness_score" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_demographic_pivot" model="ir.ui.view">
+        <field name="name">analitix.demographic.pivot</field>
+        <field name="model">analitix.demographic</field>
+        <field name="arch" type="xml">
+            <pivot string="Demographics" sample="1">
+                <field name="age_band" type="row"/>
+                <field name="captured_at" interval="hour" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_demographic_search" model="ir.ui.view">
+        <field name="name">analitix.demographic.search</field>
+        <field name="model">analitix.demographic</field>
+        <field name="arch" type="xml">
+            <search string="Demographics">
+                <field name="store_id"/>
+                <field name="door_id"/>
+                <filter name="filter_reliable" string="Reliable Only"
+                        domain="[('reliable', '=', True)]"
+                        help="Every confidence clears the store's floor. Leave the rest out rather than averaging a coin flip into the numbers."/>
+                <filter name="filter_7d" string="Last 7 Days"
+                        domain="[('captured_at', '&gt;=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <group name="group_by">
+                    <filter name="group_age" string="Age Band" domain="[]"
+                            context="{'group_by': 'age_band'}"/>
+                    <filter name="group_gender" string="Gender" domain="[]"
+                            context="{'group_by': 'gender'}"/>
+                    <filter name="group_emotion" string="Emotion" domain="[]"
+                            context="{'group_by': 'emotion'}"/>
+                    <filter name="group_door" string="Door" domain="[]"
+                            context="{'group_by': 'door_id'}"/>
+                    <filter name="group_hour" string="Hour" domain="[]"
+                            context="{'group_by': 'captured_at:hour'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_demographic" model="ir.actions.act_window">
+        <field name="name">Demographics</field>
+        <field name="res_model">analitix.demographic</field>
+        <field name="view_mode">pivot,list</field>
+        <field name="context">{'search_default_filter_7d': 1, 'search_default_filter_reliable': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No readings yet</p>
+            <p>
+                Turn on <b>Capture Demographics</b> on the store and point a
+                front-facing camera at the entrance. What is stored is a coarse
+                age <i>band</i> and a presented-appearance estimate — never an
+                identity, and never an image.
+            </p>
+        </field>
+    </record>
+
+    <!-- Signatures: manager-only, and deliberately austere. -->
+    <record id="view_face_signature_list" model="ir.ui.view">
+        <field name="name">analitix.face.signature.list</field>
+        <field name="model">analitix.face.signature</field>
+        <field name="arch" type="xml">
+            <list string="Face Signatures" create="false" edit="false">
+                <field name="reference"/>
+                <field name="store_id"/>
+                <field name="first_seen"/>
+                <field name="last_seen"/>
+                <field name="expires_at"/>
+                <field name="match_count"/>
+                <field name="visit_count"/>
+                <field name="door_ids" widget="many2many_tags" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_face_signature_search" model="ir.ui.view">
+        <field name="name">analitix.face.signature.search</field>
+        <field name="model">analitix.face.signature</field>
+        <field name="arch" type="xml">
+            <search string="Face Signatures">
+                <field name="reference"/>
+                <field name="store_id"/>
+                <filter name="filter_live" string="Not Expired"
+                        domain="[('expires_at', '&gt;', datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))]"/>
+                <filter name="filter_multi_door" string="Seen At Several Doors"
+                        domain="[('door_ids.id', '!=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_store" string="Store" domain="[]"
+                            context="{'group_by': 'store_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_face_signature" model="ir.actions.act_window">
+        <field name="name">Face Signatures</field>
+        <field name="res_model">analitix.face.signature</field>
+        <field name="view_mode">list</field>
+        <field name="context">{'search_default_filter_live': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No live signatures</p>
+            <p>
+                Anonymous, expiring handles that let the same person be counted
+                once across a visit. They carry no name and no image, they are
+                encrypted at rest, and a scheduled job deletes them on the
+                store's retention window.
+            </p>
+        </field>
+    </record>
+
+</odoo>

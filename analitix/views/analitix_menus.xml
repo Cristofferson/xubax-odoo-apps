@@ -11,6 +11,12 @@
               action="action_hourly" sequence="10"/>
     <menuitem id="menu_door_traffic" name="Door Traffic" parent="menu_analysis"
               action="action_door_hourly" sequence="20"/>
+    <menuitem id="menu_visitors" name="Visits" parent="menu_analysis"
+              action="action_visitor" sequence="25"/>
+    <menuitem id="menu_demographics" name="Demographics" parent="menu_analysis"
+              action="action_demographic" sequence="27"/>
+    <menuitem id="menu_visit_groups" name="Purchase Units" parent="menu_analysis"
+              action="action_visit_group" sequence="28"/>
     <menuitem id="menu_stores_overview" name="Stores" parent="menu_analysis"
               action="action_store" sequence="30"/>
 
@@ -23,6 +29,9 @@
               action="action_event" sequence="20"/>
     <menuitem id="menu_jobs" name="Background Jobs" parent="menu_operations"
               action="action_job" sequence="30"/>
+    <menuitem id="menu_face_signatures" name="Face Signatures" parent="menu_operations"
+              action="action_face_signature" sequence="35"
+              groups="analitix.group_manager"/>
     <menuitem id="menu_audit" name="Audit Log" parent="menu_operations"
               action="action_audit_log" sequence="40"/>
 

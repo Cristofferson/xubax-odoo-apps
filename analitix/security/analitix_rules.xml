@@ -100,4 +100,32 @@
         <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
     </record>
 
+    <record id="rule_visitor_scope" model="ir.rule">
+        <field name="name">Analitix Visit: company and store scope</field>
+        <field name="model_id" ref="model_analitix_visitor"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+    </record>
+
+    <record id="rule_face_signature_scope" model="ir.rule">
+        <field name="name">Analitix Face Signature: company and store scope</field>
+        <field name="model_id" ref="model_analitix_face_signature"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+    </record>
+
+    <record id="rule_demographic_scope" model="ir.rule">
+        <field name="name">Analitix Demographic Reading: company and store scope</field>
+        <field name="model_id" ref="model_analitix_demographic"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+    </record>
+
+    <record id="rule_visit_group_scope" model="ir.rule">
+        <field name="name">Analitix Purchase Unit: company and store scope</field>
+        <field name="model_id" ref="model_analitix_visit_group"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+    </record>
+
 </odoo>

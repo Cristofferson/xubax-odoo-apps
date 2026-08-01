@@ -58,5 +58,29 @@
             <field name="active" eval="True"/>
         </record>
 
+        <!-- Retention is a promise, not housekeeping: an anonymous face vector
+             that is never deleted stops being short-lived data and becomes a
+             biometric database nobody agreed to. Every 15 minutes so a store
+             with a 30-minute window is honoured to the minute it claims. -->
+        <record id="cron_expire_signatures" model="ir.cron">
+            <field name="name">Analitix: expire anonymous face signatures</field>
+            <field name="model_id" ref="model_analitix_face_signature"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_expire()</field>
+            <field name="interval_number">15</field>
+            <field name="interval_type">minutes</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="cron_close_stale_visits" model="ir.cron">
+            <field name="name">Analitix: close visits whose exit was missed</field>
+            <field name="model_id" ref="model_analitix_visitor"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_close_stale()</field>
+            <field name="interval_number">30</field>
+            <field name="interval_type">minutes</field>
+            <field name="active" eval="True"/>
+        </record>
+
     </data>
 </odoo>

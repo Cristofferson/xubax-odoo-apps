@@ -25,7 +25,8 @@ unit both work through the same code.
 
 ```
 analitix/
-  models/        store, door, device, event, staff signatures, job queue, audit
+  models/        store, door, device, event, visits, signatures, demographics,
+                 purchase units, staff signatures, job queue, audit
   controllers/   the v1 ingest API — the only way in from outside Odoo
   wizards/       new-store setup: N doors and their API keys in one screen
   security/      groups, ACLs, and the record rules that isolate tenants
@@ -74,6 +75,7 @@ The suite covers, in order of how much it would cost to get wrong:
 | `test_configurability.py` | 1 door and 7 doors, per-store thresholds |
 | `test_health.py` | Offline detection, alerting, the job queue, anomalies |
 | `test_analytics.py` | Every conversion ratio, against hand-computed values |
+| `test_visits.py` | Re-identification, visit boundaries, retention, purchase units |
 
 ## Deploying an edge device
 
@@ -92,8 +94,8 @@ mounted.
 
 | Phase | Scope | State |
 |---|---|---|
-| 1 | Counting, conversion, doors, devices, staff exclusion | **This release** |
-| 2 | Demographics, purchase unit, anonymous re-identification | Planned |
+| 1 | Counting, conversion, doors, devices, staff exclusion | **Done** |
+| 2 | Visits, anonymous re-identification, demographics, purchase units | **Done** |
 | 3 | Zones, lost sales, POI attention, face↔ticket↔partner | Planned |
 | 4 | Xibo triggers, CRM, loyalty, attendance, subscription, ROI report | Planned |
 | 5 | Watch list | Planned |

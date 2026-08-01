@@ -73,16 +73,38 @@ class AnalitixEvent(models.Model):
         help="Cosine similarity of the staff match, kept so a threshold can be "
              "re-tuned against real data instead of guesswork.")
 
-    # --- hooks for the later phases ---
     track_ref = fields.Char(
         string="Edge Track", index=True,
         help="The tracker id the edge assigned to this person while they were "
-             "in frame. Phase 2 uses it to tie the crossing to a visitor.")
+             "in frame. Used to tie the crossing to a visit.")
     pending_embedding = fields.Text(
         string="Pending Embedding", copy=False, groups="analitix.group_manager",
         help="Encrypted embedding awaiting asynchronous matching. Cleared once "
              "the job has run, so the high-volume table does not become a "
              "biometric store.")
+    embedding_model = fields.Char(
+        string="Embedding Model",
+        help="Which face model produced the pending vector. Vectors from "
+             "different models are never compared.")
+    liveness_score = fields.Float(
+        string="Liveness", digits=(3, 3),
+        help="Edge confidence that a live person crossed, rather than a "
+             "photograph held up to the camera.")
+
+    # --- phase 2: the crossing resolved into a visit ---
+    visitor_id = fields.Many2one(
+        "analitix.visitor", string="Visit", index=True, ondelete="set null",
+        help="The visit this crossing belongs to. Empty until the asynchronous "
+             "resolution job has run, or permanently when the edge sent no "
+             "face — a counted crossing never depends on a face being readable.")
+    signature_id = fields.Many2one(
+        "analitix.face.signature", string="Signature", index=True,
+        ondelete="set null")
+    pending_demographic_id = fields.Many2one(
+        "analitix.demographic", string="Pending Profile", ondelete="set null",
+        help="A reading captured before the visit was resolved. The resolution "
+             "job moves it onto the visit; it is held here in the meantime so "
+             "the reading is never orphaned from the crossing that produced it.")
 
     _uuid_uniq = models.Constraint(
         "unique(uuid)", "This event was already received (duplicate UUID).")

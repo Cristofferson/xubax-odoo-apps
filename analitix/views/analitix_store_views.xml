@@ -156,6 +156,46 @@
                                 </list>
                             </field>
                         </page>
+                        <page string="Visits &amp; Profiling" name="phase2">
+                            <group>
+                                <group string="Turning crossings into visits">
+                                    <field name="reid_enabled"/>
+                                    <field name="reid_threshold"
+                                           invisible="not reid_enabled"/>
+                                    <field name="reid_ttl_minutes"
+                                           invisible="not reid_enabled"/>
+                                    <field name="visit_gap_minutes"
+                                           invisible="not reid_enabled"/>
+                                    <field name="max_visit_minutes"
+                                           invisible="not reid_enabled"/>
+                                </group>
+                                <group string="Purchase units">
+                                    <field name="group_detection_enabled"/>
+                                    <field name="group_window_seconds"
+                                           invisible="not group_detection_enabled"/>
+                                    <field name="group_max_size"
+                                           invisible="not group_detection_enabled"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Demographics">
+                                    <field name="demographics_enabled"/>
+                                    <field name="demographic_min_confidence"
+                                           invisible="not demographics_enabled"/>
+                                </group>
+                                <group string="Anti-spoofing">
+                                    <field name="require_liveness"/>
+                                    <field name="liveness_min_score"
+                                           invisible="not require_liveness"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-info" role="alert">
+                                Face signatures here are <b>anonymous and
+                                expiring</b>: no name, no image, encrypted at
+                                rest, and deleted on the retention window above.
+                                Matching never crosses store boundaries.
+                            </div>
+                        </page>
                         <page string="Monitoring" name="monitoring"
                               groups="analitix.group_manager,analitix.group_technician">
                             <group>

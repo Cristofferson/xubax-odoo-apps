@@ -424,6 +424,16 @@ class Agent:
             }
             if crossing.get("track"):
                 event["track"] = crossing["track"]
+            if crossing.get("liveness") is not None:
+                event["liveness"] = round(float(crossing["liveness"]), 4)
+            if crossing.get("demographics") and self.config.get(
+                    "send_demographics", True):
+                # Age band, gender and expression — aggregate attributes only.
+                # There is nothing identifying here and no image; it is what
+                # makes "is my evening crowd younger than my morning crowd"
+                # answerable.
+                event["demographics"] = crossing["demographics"]
+
             vector = crossing.get("embedding")
             if vector:
                 employee_ref, score = self.matcher.match(vector)

@@ -169,7 +169,7 @@ class AnalitixAPI(http.Controller):
                     if isinstance(e, dict) and e.get("uuid")]
         already = Event.existing_uuids(incoming)
 
-        to_create, rejected, duplicates = [], [], []
+        to_create, rejected, duplicates, payloads = [], [], [], []
         seen_in_batch = set()
         for index, raw in enumerate(events):
             if not isinstance(raw, dict):
@@ -209,19 +209,35 @@ class AnalitixAPI(http.Controller):
                 "event_time": event_time,
                 "track_ref": raw.get("track") or False,
                 "counted": True,
+                "liveness_score": self._float(raw.get("liveness")),
+                "embedding_model": raw.get("embedding_model") or False,
             }
             self._apply_staff_rules(vals, raw, device, store, door)
             to_create.append(vals)
+            payloads.append(raw)
             seen_in_batch.add(uuid)
 
         created = Event.create(to_create) if to_create else Event.browse()
 
-        # Queue the embeddings the edge could not resolve itself.
+        # Demographics are attached synchronously: it is a plain insert with no
+        # matching involved, and deferring it would leave the reading orphaned
+        # from the crossing that produced it if the job queue fell behind.
+        self._record_demographics(created, payloads, store)
+
+        # Anything needing a face comparison goes to the queue, so the edge is
+        # never held waiting while a vector is matched against everyone seen in
+        # the last few hours.
         pending = created.filtered("pending_embedding")
         if pending:
-            request.env["analitix.job"].sudo().enqueue(
-                "staff_match", {"event_ids": pending.ids}, store=store,
-                priority=5)
+            staff_pending = pending.filtered(lambda e: e.counted)
+            if staff_pending and store.reid_enabled:
+                request.env["analitix.job"].sudo().enqueue(
+                    "visitor_resolve", {"event_ids": staff_pending.ids},
+                    store=store, priority=5)
+            elif staff_pending:
+                request.env["analitix.job"].sudo().enqueue(
+                    "staff_match", {"event_ids": staff_pending.ids},
+                    store=store, priority=5)
 
         device._mark_seen(
             agent_version=body.get("agent_version"),
@@ -238,6 +254,29 @@ class AnalitixAPI(http.Controller):
             # as acknowledged — we already have them.
             "acknowledged": [v["uuid"] for v in to_create] + duplicates,
         })
+
+    @staticmethod
+    def _float(value):
+        try:
+            return float(value or 0.0)
+        except (TypeError, ValueError):
+            return 0.0
+
+    def _record_demographics(self, events, payloads, store):
+        """Attach an age/gender/emotion reading to each crossing that carried one."""
+        if not store.demographics_enabled or not events:
+            return
+        Demographic = request.env["analitix.demographic"].sudo()
+        for event, raw in zip(events, payloads):
+            reading = Demographic.record(
+                store, event.door_id, raw.get("demographics"),
+                liveness=event.liveness_score, when=event.event_time)
+            if reading and event.visitor_id:
+                # Only when the visit is already known; otherwise the resolution
+                # job links it, which is the usual path.
+                event.visitor_id.sudo().demographic_id = reading.id
+            elif reading:
+                event.sudo().pending_demographic_id = reading.id
 
     def _apply_staff_rules(self, vals, raw, device, store, door):
         """Decide whether this crossing counts as a visitor.

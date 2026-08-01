@@ -313,10 +313,8 @@ BATCH2 = {
         "La firma facial del empleado, cifrada en reposo. Es un vector de números del "
         "que no se puede reconstruir ninguna imagen.",
 
-    "The tracker id the edge assigned to this person while they were in frame. Phase 2 "
-    "uses it to tie the crossing to a visitor.":
-        "El id de seguimiento que el edge le asignó a esta persona mientras estuvo en "
-        "cuadro. La Fase 2 lo usa para ligar el cruce con un visitante.",
+    # (the tracker-id help text was reworded in phase 2; its translation now
+    # lives in es_batch4.py, keyed on the current wording)
 
     "This signature carries no usable vector. Re-enrol the employee from the edge "
     "enrolment tool.":

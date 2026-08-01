@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Analitix — Physical Store Intelligence",
-    "version": "19.0.1.0.0",
+    "version": "19.0.2.0.0",
     "category": "Point of Sale",
     "summary": "Store intelligence on Odoo: visitor counting across any number "
                "of doors, POS conversion (ATV, UPT, revenue per visitor, "
@@ -36,6 +36,28 @@ Phase 1 (this release)
 * **Technical dashboard** for the implementer, separate from the owner's
   commercial dashboard.
 
+Phase 2
+-------
+
+* **Visits, not just crossings.** The same anonymous face is recognised across
+  a visit, so a customer who steps out for a phone call and comes back counts
+  once. Counting them three times would report a conversion rate a third of
+  the truth.
+* **Re-identification across every door** the store has, and only where there
+  is more than one door to correlate. Matching never crosses store boundaries.
+* **Short-lived by design.** Face signatures are anonymous, encrypted at rest
+  and deleted on a retention window the store sets. No name, no image, and a
+  scheduled job that enforces it.
+* **Purchase units.** People who cross the same door together are one buying
+  decision, frozen at the door and never revisited. A store that counts a
+  family of four as four visitors and one ticket reads a 25% conversion rate
+  when the real figure was 100%.
+* **Demographics** (optional, off by default): coarse age band, presented
+  gender and expression, with a confidence floor. Low-confidence readings are
+  kept and flagged rather than silently averaged into the customer's numbers.
+* **Liveness plumbing** so later phases can refuse a reading that may have come
+  from a photograph.
+
 Privacy by design: no image or video is ever transmitted or stored — the edge
 sends only counts and irreversible numeric embeddings, and those are encrypted
 in the database.
@@ -61,6 +83,7 @@ only receives JSON.
         "security/ir.model.access.csv",
         "security/analitix_rules.xml",
         "data/analitix_params.xml",
+        "data/analitix_sequence.xml",
         "data/analitix_cron.xml",
         "data/mail_data.xml",
         "views/analitix_store_views.xml",
@@ -68,6 +91,7 @@ only receives JSON.
         "views/analitix_device_views.xml",
         "views/analitix_event_views.xml",
         "views/analitix_staff_signature_views.xml",
+        "views/analitix_visitor_views.xml",
         "views/analitix_job_views.xml",
         "views/analitix_audit_views.xml",
         "views/analitix_hourly_views.xml",

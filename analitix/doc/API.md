@@ -92,6 +92,27 @@ Submit a batch of crossings.
 | `employee_ref` | string | no | `hr.employee.barcode` of the matched employee. |
 | `embedding` | array\|base64 | no | Face vector for **server-side** matching when the agent cannot match locally. Either a JSON array of floats or base64 little-endian float32. |
 | `embedding_model` | string | no | Default `buffalo_l`. Vectors from different models are never compared. |
+| `liveness` | float 0-1 | no | Edge confidence that a live person crossed rather than a photograph held to the camera. Stores that set *Require Liveness* discard readings below their floor — **the crossing still counts**, only the face is not trusted with a decision. |
+| `demographics` | object | no | Age, gender and expression estimate. See below. |
+
+#### `demographics`
+
+```json
+{"age": 31, "age_confidence": 0.91,
+ "gender": "female", "gender_confidence": 0.88,
+ "emotion": "neutral", "emotion_confidence": 0.62}
+```
+
+| Field | Meaning |
+|---|---|
+| `age` | Estimated age. Odoo stores the **band** it falls in, never the number — reporting a model's estimate to the year would present a guess as a measurement. Send `age_band` directly if the edge already banded it. |
+| `gender` | `female`, `male` or `unknown`. An estimate of presented appearance, not a statement about anyone's identity; `unknown` is a legitimate and common answer. |
+| `emotion` | `neutral`, `happy`, `sad`, `angry`, `surprised`, `fearful`, `disgusted`. |
+| `*_confidence` | 0-1. Readings below the store's floor are **stored and flagged unreliable**, not dropped, so a dashboard can exclude them explicitly instead of averaging a coin flip into the customer's numbers. |
+
+Ignored entirely unless the store has *Capture Demographics* switched on. It is
+off by default: it needs a second, front-facing camera per door, and a store
+without one should not see empty charts suggesting the system is broken.
 
 > **`ts` is the store's clock, not Odoo's.** After an outage an agent replays
 > hours of buffered events; they must land on the hour they actually happened.
@@ -239,7 +260,30 @@ count from the next refresh onward.
 
 ---
 
-## 7. What the API deliberately does not accept
+## 7. What happens to a crossing after it is stored
+
+1. **Staff check.** If the crossing matches an enrolled employee it is kept but
+   flagged `counted = false`, and it never becomes a visit.
+2. **Visit resolution** (queued, never on the request). The face is matched
+   against the store's *live* signatures — those seen inside the retention
+   window, never the store's whole history and never another store's. A match
+   continues the existing visit; no match mints a new anonymous handle.
+3. **Purchase unit.** People crossing the *same door* within the store's
+   *Together Within* window become one buying decision. The decision is frozen
+   at the door and never revisited: a store that counts a family of four as
+   four visitors and one ticket reads a 25% conversion rate when the truth was
+   100%.
+4. **Retention.** A scheduled job deletes expired signatures. The visit
+   survives; the route back to a face does not.
+
+Nothing in steps 2-4 is required for a crossing to be counted. A face that is
+turned away, badly lit or absent costs you the visit-level detail and nothing
+else — the visitor total, and therefore the conversion rate, is never at the
+mercy of a readable face.
+
+---
+
+## 8. What the API deliberately does not accept
 
 **No images. No video. Ever.** Not as a field, not as an attachment, not
 "temporarily for debugging". The edge extracts an embedding — a vector of
@@ -252,7 +296,7 @@ event are wiped as soon as the matching job has run.
 
 ---
 
-## 8. Reference agent
+## 9. Reference agent
 
 `edge/analitix_agent.py` in this repository implements this contract end to end:
 persistent uuids, an encrypted on-disk buffer that survives an outage, ordered

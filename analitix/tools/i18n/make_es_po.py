@@ -12,9 +12,14 @@ failure mode for a translation.
 import re
 import sys
 
-sys.path.insert(0, "/tmp/claude-1000/-home-ubuntu/5131ccf7-0bb4-4903-85ec-fe3a29194939/scratchpad")
+# Import the batches from this script's own directory, not from wherever it
+# happens to be invoked: a stale copy elsewhere on sys.path would silently
+# win and translate against msgids that no longer exist.
+import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from es_batch2 import BATCH2
 from es_batch3 import BATCH3
+from es_batch4 import BATCH4, BATCH4_LOOSE
 
 TRANSLATIONS = {
     # ---- module, models, menus -------------------------------------
@@ -413,6 +418,7 @@ TRANSLATIONS = {
 }
 
 TRANSLATIONS.update(BATCH2)
+TRANSLATIONS.update(BATCH4)
 
 #: Same translations, keyed on the whitespace-collapsed msgid. View strings carry
 #: the XML's line breaks and indentation inside the msgid, and transcribing that
@@ -426,7 +432,7 @@ def squash(text):
     return " ".join(text.replace("\\n", " ").split())
 
 
-for _key, _value in BATCH3.items():
+for _key, _value in list(BATCH3.items()) + list(BATCH4_LOOSE.items()):
     NORMALISED[squash(_key)] = _value
 
 HEADER = '''# Translation of Odoo Server.
@@ -494,7 +500,9 @@ def main():
             handle.write(body.replace('"Language: es\\n"', '"Language: %s\\n"' % locale))
 
     unknown = {k for k in TRANSLATIONS if k not in matched}
-    unknown |= {k for k in BATCH3 if squash(k) not in {squash(m) for m in matched}}
+    _seen = {squash(m) for m in matched}
+    unknown |= {k for k in BATCH3 if squash(k) not in _seen}
+    unknown |= {k for k in BATCH4_LOOSE if squash(k) not in _seen}
     print("translated %d of the .pot's entries" % len(matched))
     if unknown:
         # An entry whose msgid is not in the .pot is ignored silently by Odoo,

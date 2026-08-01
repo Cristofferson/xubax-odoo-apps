@@ -52,6 +52,14 @@ state_dir: "/var/lib/analitix"
 send_embeddings: false
 embedding_model: "buffalo_l"
 
+# Send the age band / gender / expression estimate, when the vision back-end
+# produces one. These are aggregate attributes with nothing identifying in
+# them, so unlike embeddings they default to ON — but Odoo ignores them
+# entirely unless the store also has "Capture Demographics" switched on, so
+# leaving this true costs a store that has not bought the front-facing cameras
+# precisely nothing.
+send_demographics: true
+
 # ---------------------------------------------------------------- health
 # Starting value only. The server hands back the store's configured interval on
 # every heartbeat, so a whole fleet is retuned from Odoo.

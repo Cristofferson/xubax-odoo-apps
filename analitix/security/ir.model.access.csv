@@ -20,3 +20,10 @@ access_hourly_user,analitix.hourly user,model_analitix_hourly,analitix.group_use
 access_door_hourly_user,analitix.door.hourly user,model_analitix_door_hourly,analitix.group_user,1,0,0,0
 access_store_setup_manager,analitix.store.setup manager,model_analitix_store_setup,analitix.group_manager,1,1,1,1
 access_store_setup_door_manager,analitix.store.setup.door manager,model_analitix_store_setup_door,analitix.group_manager,1,1,1,1
+access_visitor_user,analitix.visitor user,model_analitix_visitor,analitix.group_user,1,0,0,0
+access_visitor_manager,analitix.visitor manager,model_analitix_visitor,analitix.group_manager,1,1,0,1
+access_face_signature_manager,analitix.face.signature manager,model_analitix_face_signature,analitix.group_manager,1,1,0,1
+access_demographic_user,analitix.demographic user,model_analitix_demographic,analitix.group_user,1,0,0,0
+access_demographic_manager,analitix.demographic manager,model_analitix_demographic,analitix.group_manager,1,1,0,1
+access_visit_group_user,analitix.visit.group user,model_analitix_visit_group,analitix.group_user,1,0,0,0
+access_visit_group_manager,analitix.visit.group manager,model_analitix_visit_group,analitix.group_manager,1,1,0,1
