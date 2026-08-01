@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_staff_signature_list" model="ir.ui.view">
+        <field name="name">analitix.staff.signature.list</field>
+        <field name="model">analitix.staff.signature</field>
+        <field name="arch" type="xml">
+            <list string="Staff Signatures">
+                <field name="store_id"/>
+                <field name="employee_id"/>
+                <field name="model_name"/>
+                <field name="embedding_dim" string="Dim"/>
+                <field name="enrolled_on"/>
+                <field name="enrolled_by_id" optional="show"/>
+                <field name="match_count" string="Matches"/>
+                <field name="last_match"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_staff_signature_form" model="ir.ui.view">
+        <field name="name">analitix.staff.signature.form</field>
+        <field name="model">analitix.staff.signature</field>
+        <field name="arch" type="xml">
+            <form string="Staff Signature">
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        A signature is a list of numbers produced from a face by
+                        the enrolment tool. No photograph is stored here or
+                        anywhere else in Analitix, and no image can be rebuilt
+                        from it. It is encrypted in the database and its only
+                        use is to keep this employee out of the visitor count.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="store_id"/>
+                            <field name="model_name"/>
+                            <field name="embedding_dim"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="enrolled_on"/>
+                            <field name="enrolled_by_id"/>
+                            <field name="match_count"/>
+                            <field name="last_match"/>
+                        </group>
+                    </group>
+                    <group string="Notes">
+                        <field name="note" nolabel="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_staff_signature_search" model="ir.ui.view">
+        <field name="name">analitix.staff.signature.search</field>
+        <field name="model">analitix.staff.signature</field>
+        <field name="arch" type="xml">
+            <search string="Staff Signatures">
+                <field name="employee_id"/>
+                <field name="store_id"/>
+                <filter name="filter_never_matched" string="Never Matched"
+                        domain="[('match_count', '=', 0)]"
+                        help="Enrolled but never recognised. Usually means the enrolment was poor or the employee changed appearance."/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_store" string="Store" domain="[]"
+                            context="{'group_by': 'store_id'}"/>
+                    <filter name="group_employee" string="Employee" domain="[]"
+                            context="{'group_by': 'employee_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_staff_signature" model="ir.actions.act_window">
+        <field name="name">Staff Signatures</field>
+        <field name="res_model">analitix.staff.signature</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_group_store': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No staff enrolled yet</p>
+            <p>
+                Enrol your team from the edge enrolment tool. Their crossings then
+                stop counting as visitors, whichever door they use — without it,
+                a small store's conversion rate reads far lower than the truth.
+            </p>
+        </field>
+    </record>
+
+</odoo>

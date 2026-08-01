@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_root" name="Analitix"
+              web_icon="analitix,static/description/icon.png"
+              sequence="85" groups="analitix.group_user"/>
+
+    <!-- What the owner opens every morning. -->
+    <menuitem id="menu_analysis" name="Analysis" parent="menu_root" sequence="10"/>
+    <menuitem id="menu_conversion" name="Conversion" parent="menu_analysis"
+              action="action_hourly" sequence="10"/>
+    <menuitem id="menu_door_traffic" name="Door Traffic" parent="menu_analysis"
+              action="action_door_hourly" sequence="20"/>
+    <menuitem id="menu_stores_overview" name="Stores" parent="menu_analysis"
+              action="action_store" sequence="30"/>
+
+    <!-- What the implementer opens when something looks wrong. -->
+    <menuitem id="menu_operations" name="Operations" parent="menu_root" sequence="20"
+              groups="analitix.group_manager,analitix.group_technician"/>
+    <menuitem id="menu_device_health" name="Device Health" parent="menu_operations"
+              action="action_device_health" sequence="10"/>
+    <menuitem id="menu_events" name="Crossing Events" parent="menu_operations"
+              action="action_event" sequence="20"/>
+    <menuitem id="menu_jobs" name="Background Jobs" parent="menu_operations"
+              action="action_job" sequence="30"/>
+    <menuitem id="menu_audit" name="Audit Log" parent="menu_operations"
+              action="action_audit_log" sequence="40"/>
+
+    <menuitem id="menu_configuration" name="Configuration" parent="menu_root"
+              sequence="90" groups="analitix.group_manager"/>
+    <menuitem id="menu_store_setup" name="New Store Setup" parent="menu_configuration"
+              action="action_store_setup" sequence="5"/>
+    <menuitem id="menu_config_stores" name="Stores" parent="menu_configuration"
+              action="action_store" sequence="10"/>
+    <menuitem id="menu_config_doors" name="Doors" parent="menu_configuration"
+              action="action_door" sequence="20"/>
+    <menuitem id="menu_config_devices" name="Devices" parent="menu_configuration"
+              action="action_device" sequence="30"/>
+    <menuitem id="menu_config_staff" name="Staff Signatures" parent="menu_configuration"
+              action="action_staff_signature" sequence="40"/>
+
+</odoo>

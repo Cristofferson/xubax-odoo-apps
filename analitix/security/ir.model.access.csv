@@ -1,0 +1,22 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_store_user,analitix.store user,model_analitix_store,analitix.group_user,1,0,0,0
+access_store_manager,analitix.store manager,model_analitix_store,analitix.group_manager,1,1,1,1
+access_store_tech,analitix.store technician,model_analitix_store,analitix.group_technician,1,1,0,0
+access_door_user,analitix.door user,model_analitix_door,analitix.group_user,1,0,0,0
+access_door_manager,analitix.door manager,model_analitix_door,analitix.group_manager,1,1,1,1
+access_door_tech,analitix.door technician,model_analitix_door,analitix.group_technician,1,1,1,1
+access_device_user,analitix.device user,model_analitix_device,analitix.group_user,1,0,0,0
+access_device_manager,analitix.device manager,model_analitix_device,analitix.group_manager,1,1,1,1
+access_device_tech,analitix.device technician,model_analitix_device,analitix.group_technician,1,1,1,1
+access_event_user,analitix.event user,model_analitix_event,analitix.group_user,1,0,0,0
+access_event_manager,analitix.event manager,model_analitix_event,analitix.group_manager,1,0,0,1
+access_event_tech,analitix.event technician,model_analitix_event,analitix.group_technician,1,0,0,0
+access_staff_signature_manager,analitix.staff.signature manager,model_analitix_staff_signature,analitix.group_manager,1,1,1,1
+access_job_tech,analitix.job technician,model_analitix_job,analitix.group_technician,1,1,0,1
+access_job_manager,analitix.job manager,model_analitix_job,analitix.group_manager,1,1,0,1
+access_audit_manager,analitix.audit.log manager,model_analitix_audit_log,analitix.group_manager,1,0,0,0
+access_audit_tech,analitix.audit.log technician,model_analitix_audit_log,analitix.group_technician,1,0,0,0
+access_hourly_user,analitix.hourly user,model_analitix_hourly,analitix.group_user,1,0,0,0
+access_door_hourly_user,analitix.door.hourly user,model_analitix_door_hourly,analitix.group_user,1,0,0,0
+access_store_setup_manager,analitix.store.setup manager,model_analitix_store_setup,analitix.group_manager,1,1,1,1
+access_store_setup_door_manager,analitix.store.setup.door manager,model_analitix_store_setup_door,analitix.group_manager,1,1,1,1

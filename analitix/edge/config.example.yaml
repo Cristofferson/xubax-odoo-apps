@@ -1,0 +1,62 @@
+# Analitix edge agent — one file per device.
+#
+# Copy to /etc/analitix/agent.yaml, fill in the two values the implementer gets
+# from Odoo, and start the service. Everything else has a working default.
+
+# ---------------------------------------------------------------- required
+# HTTPS only. Plain http:// is refused by the server, by design: this link
+# carries a store's traffic data and, in some deployments, face vectors.
+odoo_url: "https://odoo.example.com"
+
+# Shown ONCE in Odoo, when the device is created or its key is rotated.
+# Odoo stores only a hash, so it cannot be looked up later — if you lose it,
+# rotate the key from the device form and paste the new one here.
+# This key is worth exactly one store: it can post that store's events and read
+# that store's configuration, nothing else.
+api_key: "alx_PASTE_THE_KEY_FROM_ODOO_HERE"
+
+# ---------------------------------------------------------------- counting
+# demo — synthetic crossings, no camera. Use it to prove the link to Odoo works
+#        before the hardware is mounted, and for training and screencasts.
+# line — YOLO + ByteTrack over a virtual line (needs ultralytics + opencv).
+source: line
+
+camera: 0
+
+# Virtual line in pixel coordinates, [[x1, y1], [x2, y2]]. Someone crossing it
+# one way counts as an entrance and the other way as an exit. Odoo can push
+# this down instead: set it on the device's Edge Configuration field and the
+# agent picks it up on its hourly refresh, no site visit needed.
+line: [[0, 540], [1920, 540]]
+
+model: "yolov8n.pt"
+confidence: 0.35
+
+# ---------------------------------------------------------------- state
+# Holds the encrypted queue and its key. Must survive reboots — this directory
+# is what stands between a two-hour internet outage and two hours of a paying
+# customer's visitors vanishing.
+state_dir: "/var/lib/analitix"
+
+# ---------------------------------------------------------------- privacy
+# Send face vectors to Odoo when the agent cannot match them locally.
+#
+# Leave this FALSE unless you have a reason. False means every face vector
+# stays inside the store: the agent pulls the staff signatures from Odoo,
+# compares in memory, and sends only the verdict. True is for hardware too
+# small to hold the signature set, and it puts vectors on the wire — encrypted
+# in transit and at rest, but on the wire.
+#
+# Either way no image or video is ever transmitted or stored. The frame is
+# discarded in memory the moment the detection is done.
+send_embeddings: false
+embedding_model: "buffalo_l"
+
+# ---------------------------------------------------------------- health
+# Starting value only. The server hands back the store's configured interval on
+# every heartbeat, so a whole fleet is retuned from Odoo.
+heartbeat_interval_s: 60
+
+# Set to false ONLY on a lab bench with a self-signed certificate. In a store,
+# leaving this off would let anyone on the same network impersonate Odoo.
+verify_tls: true

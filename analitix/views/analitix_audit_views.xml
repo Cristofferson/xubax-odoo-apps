@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_audit_log_list" model="ir.ui.view">
+        <field name="name">analitix.audit.log.list</field>
+        <field name="model">analitix.audit.log</field>
+        <field name="arch" type="xml">
+            <list string="Audit Log" create="false" edit="false" delete="false">
+                <field name="create_date" string="When"/>
+                <field name="user_id"/>
+                <field name="action"/>
+                <field name="store_id"/>
+                <field name="model_name" optional="show"/>
+                <field name="res_id" optional="hide"/>
+                <field name="record_count" string="Records"/>
+                <field name="note"/>
+                <field name="ip_address" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_audit_log_search" model="ir.ui.view">
+        <field name="name">analitix.audit.log.search</field>
+        <field name="model">analitix.audit.log</field>
+        <field name="arch" type="xml">
+            <search string="Audit Log">
+                <field name="user_id"/>
+                <field name="store_id"/>
+                <field name="model_name"/>
+                <filter name="filter_reads" string="Sensitive Reads"
+                        domain="[('action', 'in', ('read_sensitive', 'export'))]"/>
+                <filter name="filter_security" string="Security Events"
+                        domain="[('action', 'in', ('key_rotate', 'key_revoke', 'kill_switch', 'auth_failure', 'anomaly', 'elevated'))]"/>
+                <separator/>
+                <filter name="filter_30d" string="Last 30 Days"
+                        domain="[('create_date', '&gt;=', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <group name="group_by">
+                    <filter name="group_action" string="Action" domain="[]"
+                            context="{'group_by': 'action'}"/>
+                    <filter name="group_user" string="User" domain="[]"
+                            context="{'group_by': 'user_id'}"/>
+                    <filter name="group_store" string="Store" domain="[]"
+                            context="{'group_by': 'store_id'}"/>
+                    <filter name="group_day" string="Day" domain="[]"
+                            context="{'group_by': 'create_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_audit_log" model="ir.actions.act_window">
+        <field name="name">Audit Log</field>
+        <field name="res_model">analitix.audit.log</field>
+        <field name="view_mode">list</field>
+        <field name="context">{'search_default_filter_30d': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nothing logged yet</p>
+            <p>
+                Odoo's chatter records who <i>changed</i> something. This records
+                who <i>looked</i>: reads of sensitive data, report exports, key
+                rotations, use of the kill switch and rejected credentials.
+                Entries can never be edited or deleted, by anybody.
+            </p>
+        </field>
+    </record>
+
+</odoo>

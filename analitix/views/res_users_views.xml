@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_users_form_analitix" model="ir.ui.view">
+        <field name="name">res.users.form.analitix</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Analitix" name="analitix"
+                      groups="analitix.group_user"
+                      invisible="not id">
+                    <group>
+                        <field name="analitix_store_ids" widget="many2many_tags"
+                               options="{'no_create': True}"/>
+                    </group>
+                    <div class="alert alert-info" role="alert">
+                        <p class="mb-1">
+                            <b>Empty means every store</b> of the companies this user
+                            already belongs to. That is the right setting for a
+                            customer who runs one store, and it needs no configuration.
+                        </p>
+                        <p class="mb-0">
+                            On a shared instance hosting several customers, fill this
+                            in. Once it has any value the user sees <b>only</b> those
+                            stores — no group, company switch or manager role widens it.
+                        </p>
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

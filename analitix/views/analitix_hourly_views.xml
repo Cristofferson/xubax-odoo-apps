@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hourly_list" model="ir.ui.view">
+        <field name="name">analitix.hourly.list</field>
+        <field name="model">analitix.hourly</field>
+        <field name="arch" type="xml">
+            <list string="Conversion" create="false" edit="false">
+                <field name="hour"/>
+                <field name="store_id"/>
+                <field name="visitors_in" sum="Visitors"/>
+                <field name="tickets" sum="Tickets"/>
+                <field name="conversion_rate" avg="Conversion %"/>
+                <field name="revenue" sum="Revenue" widget="monetary"/>
+                <field name="atv" avg="ATV" widget="monetary"/>
+                <field name="upt" avg="UPT"/>
+                <field name="revenue_per_visitor" avg="Rev / Visitor" widget="monetary"/>
+                <field name="units" sum="Units" optional="hide"/>
+                <field name="staff_crossings" sum="Staff" optional="hide"/>
+                <field name="visitors_per_ticket" optional="hide"/>
+                <field name="revenue_per_sqm" optional="hide" widget="monetary"/>
+                <field name="visitors_per_sqm" optional="hide"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hourly_graph" model="ir.ui.view">
+        <field name="name">analitix.hourly.graph</field>
+        <field name="model">analitix.hourly</field>
+        <field name="arch" type="xml">
+            <graph string="Conversion" type="line" sample="1">
+                <field name="hour" interval="hour"/>
+                <field name="visitors_in" type="measure"/>
+                <field name="tickets" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_hourly_pivot" model="ir.ui.view">
+        <field name="name">analitix.hourly.pivot</field>
+        <field name="model">analitix.hourly</field>
+        <field name="arch" type="xml">
+            <pivot string="Conversion" sample="1">
+                <field name="store_id" type="row"/>
+                <field name="hour" interval="day" type="col"/>
+                <field name="visitors_in" type="measure"/>
+                <field name="tickets" type="measure"/>
+                <field name="conversion_rate" type="measure"/>
+                <field name="revenue" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_hourly_search" model="ir.ui.view">
+        <field name="name">analitix.hourly.search</field>
+        <field name="model">analitix.hourly</field>
+        <field name="arch" type="xml">
+            <search string="Conversion">
+                <field name="store_id"/>
+                <filter name="filter_today" string="Today"
+                        domain="[('hour', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)))]"/>
+                <filter name="filter_7d" string="Last 7 Days"
+                        domain="[('hour', '&gt;=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_30d" string="Last 30 Days"
+                        domain="[('hour', '&gt;=', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter name="filter_traffic" string="Had Traffic"
+                        domain="[('visitors_in', '&gt;', 0)]"
+                        help="Hides closed hours, which would otherwise drag every average toward zero."/>
+                <filter name="filter_blind" string="Sales Without Visitors"
+                        domain="[('tickets', '&gt;', 0), ('visitors_in', '=', 0)]"
+                        help="Tickets in an hour with no crossings: almost always a counter that was down. Worth checking before trusting the day."/>
+                <group name="group_by">
+                    <filter name="group_store" string="Store" domain="[]"
+                            context="{'group_by': 'store_id'}"/>
+                    <filter name="group_hour" string="Hour" domain="[]"
+                            context="{'group_by': 'hour:hour'}"/>
+                    <filter name="group_day" string="Day" domain="[]"
+                            context="{'group_by': 'hour:day'}"/>
+                    <filter name="group_week" string="Week" domain="[]"
+                            context="{'group_by': 'hour:week'}"/>
+                    <filter name="group_month" string="Month" domain="[]"
+                            context="{'group_by': 'hour:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_hourly" model="ir.actions.act_window">
+        <field name="name">Conversion</field>
+        <field name="res_model">analitix.hourly</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="context">{'search_default_filter_7d': 1, 'search_default_filter_traffic': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No data yet</p>
+            <p>
+                Once a store's devices start reporting and POS orders exist, this
+                is where visitors meet sales: conversion, average ticket, units per
+                ticket, revenue per visitor and density per m².
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,2255 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* analitix
+#
+# One file for every Spanish locale: Odoo cascades es -> es_419 -> es_MX, so
+# es.po reaches every Spanish-speaking customer without three near-identical
+# files drifting apart.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-01 22:23+0000\n"
+"PO-Revision-Date: 2026-08-01 22:23+0000\n"
+"Last-Translator: XUBAX\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
+msgid "%(key)s\\n\\nThis is the only time it is shown. Odoo stores only a hash of it; if it is lost, rotate again."
+msgstr "%(key)s\\n\\nEsta es la única vez que se muestra. Odoo solo guarda un hash; si se pierde, hay que rotarla otra vez."
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/wizards/store_setup.py:0
+msgid "%s counter"
+msgstr "Contador de %s"
+
+#. module: analitix
+#: model:ir.model.constraint,message:analitix.constraint_analitix_store_offline_after_degraded
+msgid "'Offline After' must be at least as long as 'Degraded After'."
+msgstr "'Fuera de línea tras' debe ser al menos tan largo como 'Degradado tras'."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
+msgid "<b>Copy these keys now.</b> Odoo keeps only a hash of them, so\\n                        this screen is the one and only time they can be read. Paste\\n                        each into its device's agent configuration before you leave the\\n                        site. If one is lost, rotate it from the device form."
+msgstr "<b>Copia estas llaves ahora.</b> Odoo solo guarda un hash de ellas, así que esta pantalla es la única vez que se pueden leer. Pega cada una en la configuración del agente de su dispositivo antes de irte del sitio. Si se pierde alguna, rótala desde la ficha del dispositivo."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_users_form_analitix
+msgid "<b>Empty means every store</b> of the companies this user\\n                            already belongs to. That is the right setting for a\\n                            customer who runs one store, and it needs no configuration."
+msgstr "<b>Vacío significa todas las tiendas</b> de las compañías a las que este usuario ya pertenece. Es lo correcto para un cliente con una sola tienda, y no requiere configurar nada."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_kanban
+msgid "<span class=\\\"text-muted d-block small\\\">Inside now</span>"
+msgstr "<span class=\\\"text-muted d-block small\\\">Dentro ahora</span>"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_kanban
+msgid "<span class=\\\"text-muted d-block small\\\">Visitors today</span>"
+msgstr "<span class=\\\"text-muted d-block small\\\">Visitantes hoy</span>"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_device__critical
+msgid "A critical device is one whose silence makes this store's numbers wrong: any door counter, or the checkout camera. When it goes offline the technical contacts are alerted. Clear the flag for a spare or experimental unit so it does not page anyone at 3 a.m."
+msgstr "Un dispositivo crítico es aquel cuyo silencio deja mal los números de esta tienda: cualquier contador de puerta o la cámara de caja. Cuando se cae, se avisa a los contactos técnicos. Quita la marca en un equipo de repuesto o de pruebas para que no despierte a nadie a las 3 de la mañana."
+
+#. module: analitix
+#: model:ir.model.constraint,message:analitix.constraint_analitix_event_count_positive
+msgid "A crossing must involve at least one person."
+msgstr "Un cruce debe involucrar al menos a una persona."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__offline_threshold_min
+msgid "A device that has not sent a heartbeat for this long is marked offline. Raise it on stores with a flaky connection so a 90-second outage does not page the technician every night."
+msgstr "Un dispositivo que no manda latido durante este tiempo se marca fuera de línea. Súbelo en tiendas con conexión inestable para que un corte de 90 segundos no despierte al técnico cada noche."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_device__api_key_revoked
+msgid "A revoked device is refused by the ingest endpoint immediately, without waiting for anyone to reach the hardware."
+msgstr "Un dispositivo revocado es rechazado por el endpoint de ingesta de inmediato, sin esperar a que alguien llegue al equipo."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_staff_signature_form
+msgid "A signature is a list of numbers produced from a face by\\n                        the enrolment tool. No photograph is stored here or\\n                        anywhere else in Analitix, and no image can be rebuilt\\n                        from it. It is encrypted in the database and its only\\n                        use is to keep this employee out of the visitor count."
+msgstr "Una firma es una lista de números que la herramienta de registro produce a partir de un rostro. Aquí no se guarda ninguna fotografía, ni en ninguna otra parte de Analitix, y de la firma no se puede reconstruir ninguna imagen. Está cifrada en la base de datos y su único uso es mantener a este empleado fuera del conteo de visitantes."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__api_key_hint
+msgid "API Key"
+msgstr "Llave de API"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__api_key_hash
+msgid "API Key Hash"
+msgstr "Hash de la llave de API"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
+msgid "API key REVOKED by %s. This device can no longer send data."
+msgstr "Llave de API REVOCADA por %s. Este dispositivo ya no puede enviar datos."
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
+msgid "API key rotated by %s. The previous key stopped working immediately."
+msgstr "Llave de API rotada por %s. La anterior dejó de funcionar de inmediato."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_list
+msgid "ATV"
+msgstr "Ticket promedio"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__action
+#: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_search
+msgid "Action"
+msgstr "Acción"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__message_needaction
+#: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_needaction
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__message_needaction
+msgid "Action Needed"
+msgstr "Requiere acción"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__active
+#: model:ir.model.fields,field_description:analitix.field_analitix_door__active
+#: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__active
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/wizards/store_setup.py:0
+msgid "Add at least one door. A store with no entrance has nothing to count."
+msgstr "Agrega al menos una puerta. Una tienda sin entrada no tiene nada que contar."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__agent_version
+msgid "Agent Version"
+msgstr "Versión del agente"
+
+#. module: analitix
+#: model:ir.ui.menu,name:analitix.menu_root
+#: model:res.groups.privilege,name:analitix.res_groups_privilege_analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_users_form_analitix
+msgid "Analitix"
+msgstr "Analitix"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_audit_log
+msgid "Analitix Audit Log"
+msgstr "Bitácora de auditoría de Analitix"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_job
+msgid "Analitix Background Job"
+msgstr "Trabajo en segundo plano de Analitix"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_event
+msgid "Analitix Crossing Event"
+msgstr "Evento de cruce de Analitix"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_device
+msgid "Analitix Edge Device"
+msgstr "Dispositivo edge de Analitix"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_staff_signature
+msgid "Analitix Staff Face Signature"
+msgstr "Firma facial de empleado de Analitix"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_store
+msgid "Analitix Store"
+msgstr "Tienda de Analitix"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_door
+msgid "Analitix Store Door"
+msgstr "Puerta de tienda de Analitix"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_res_users__analitix_store_ids
+msgid "Analitix Stores"
+msgstr "Tiendas de Analitix"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_crypto
+msgid "Analitix — Embedding Encryption Service"
+msgstr "Analitix — Servicio de cifrado de firmas"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_door_hourly
+msgid "Analitix — Hourly Door Traffic"
+msgstr "Analitix — Tráfico por puerta y hora"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_hourly
+msgid "Analitix — Hourly Store Conversion"
+msgstr "Analitix — Conversión por tienda y hora"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_store_setup
+msgid "Analitix — New Store Setup"
+msgstr "Analitix — Alta de tienda nueva"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_store_setup_door
+msgid "Analitix — New Store Setup Door"
+msgstr "Analitix — Puerta del alta de tienda"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_audited_mixin
+msgid "Analitix — Read-Audited Model"
+msgstr "Analitix — Modelo con lectura auditada"
+
+#. module: analitix
+#: model:ir.actions.server,name:analitix.cron_event_retention_ir_actions_server
+msgid "Analitix: apply event retention policy"
+msgstr "Analitix: aplicar la política de retención de eventos"
+
+#. module: analitix
+#: model:ir.actions.server,name:analitix.cron_device_health_ir_actions_server
+msgid "Analitix: check device health"
+msgstr "Analitix: revisar la salud de los dispositivos"
+
+#. module: analitix
+#: model:ir.actions.server,name:analitix.cron_vacuum_jobs_ir_actions_server
+msgid "Analitix: clean finished jobs"
+msgstr "Analitix: limpiar trabajos terminados"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
+#: model:mail.template,name:analitix.mail_template_device_offline
+msgid "Analitix: critical device offline"
+msgstr "Analitix: dispositivo crítico fuera de línea"
+
+#. module: analitix
+#: model:ir.actions.server,name:analitix.cron_ingest_baselines_ir_actions_server
+msgid "Analitix: refresh ingest baselines and flag anomalies"
+msgstr "Analitix: recalcular líneas base de ingesta y marcar anomalías"
+
+#. module: analitix
+#: model:ir.actions.server,name:analitix.cron_run_jobs_ir_actions_server
+msgid "Analitix: run background jobs"
+msgstr "Analitix: ejecutar trabajos en segundo plano"
+
+#. module: analitix
+#: model:ir.ui.menu,name:analitix.menu_analysis
+msgid "Analysis"
+msgstr "Análisis"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__anomaly_factor
+msgid "Anomaly Factor"
+msgstr "Factor de anomalía"
+
+#. module: analitix
+#: model:ir.model.constraint,message:analitix.constraint_analitix_door_code_store_uniq
+msgid "Another door of this store already uses that reference."
+msgstr "Otra puerta de esta tienda ya usa esa referencia."
+
+#. module: analitix
+#: model:ir.model.constraint,message:analitix.constraint_analitix_store_code_company_uniq
+msgid "Another store of this company already uses that reference."
+msgstr "Otra tienda de esta compañía ya usa esa referencia."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Anything the next implementer should know about this site…"
+msgstr "Lo que el siguiente implementador deba saber de este sitio…"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_staff_signature_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_search
+msgid "Archived"
+msgstr "Archivado"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_job__attempts
+msgid "Attempts"
+msgstr "Intentos"
+
+#. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_audit_log
+#: model:ir.ui.menu,name:analitix.menu_audit
+#: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_search
+msgid "Audit Log"
+msgstr "Bitácora de auditoría"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_audit.py:0
+msgid "Audit entries cannot be deleted. Use the retention cron if the trail has to be pruned on a documented schedule."
+msgstr "Las entradas de auditoría no se pueden borrar. Usa el cron de retención si la bitácora debe podarse con un calendario documentado."
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_audit.py:0
+msgid "Audit entries cannot be modified. A trail that can be edited by the people it records is not a trail."
+msgstr "Las entradas de auditoría no se pueden modificar. Una bitácora que pueden editar las personas a las que registra no es una bitácora."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_hourly__atv
+msgid "Avg Ticket (ATV)"
+msgstr "Ticket promedio (ATV)"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_job_form
+msgid "Background Job"
+msgstr "Trabajo en segundo plano"
+
+#. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_job
+#: model:ir.ui.menu,name:analitix.menu_jobs
+#: model_terms:ir.ui.view,arch_db:analitix.view_job_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_job_search
+msgid "Background Jobs"
+msgstr "Trabajos en segundo plano"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_device__kind__cctv_dahua
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup_door__hardware__cctv_dahua
+msgid "CCTV — Dahua"
+msgstr "CCTV — Dahua"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup_door__hardware__cctv_hik
+msgid "CCTV — Hikvision"
+msgstr "CCTV — Hikvision"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_device__kind__cctv_hik
+msgid "CCTV — Hikvision (ISAPI people counting)"
+msgstr "CCTV — Hikvision (conteo de personas ISAPI)"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__capture_enabled
+msgid "Capture Enabled"
+msgstr "Captura activa"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_search
+msgid "Capture Paused"
+msgstr "Captura pausada"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Capture is paused. Nothing is being recorded for this store."
+msgstr "La captura está pausada. No se está registrando nada de esta tienda."
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_store.py:0
+msgid "Capture paused: %s"
+msgstr "Captura pausada: %s"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_store.py:0
+msgid "Capture resumed"
+msgstr "Captura reanudada"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_device__role__checkout
+msgid "Checkout camera"
+msgstr "Cámara de caja"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store_setup_door__counts_visitors
+msgid "Clear this for a staff or service door: it stays measured, but its traffic stops distorting the conversion rate."
+msgstr "Desmárcalo en una puerta de personal o de servicio: se sigue midiendo, pero su tráfico deja de distorsionar la tasa de conversión."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_event__counted
+msgid "Cleared when the crossing was matched to an employee, or when it came through a door configured not to count visitors. The row is kept either way — excluded traffic is still traffic, and hiding it would make an audit impossible."
+msgstr "Se desmarca cuando el cruce se asoció a un empleado, o cuando entró por una puerta configurada para no contar visitantes. El registro se conserva en ambos casos: el tráfico excluido sigue siendo tráfico, y esconderlo haría imposible una auditoría."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
+msgid "Close"
+msgstr "Cerrar"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup_door__code
+msgid "Code"
+msgstr "Código"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_door__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_door_hourly__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_event__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_hourly__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_job__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__company_id
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_search
+msgid "Company"
+msgstr "Compañía"
+
+#. module: analitix
+#: model:ir.ui.menu,name:analitix.menu_configuration
+msgid "Configuration"
+msgstr "Configuración"
+
+#. module: analitix
+#: model:res.groups,comment:analitix.group_manager
+msgid "Configure stores, doors and devices, enrol staff signatures and use the capture kill switch."
+msgstr "Configurar tiendas, puertas y dispositivos, registrar firmas de empleados y usar el interruptor de emergencia de la captura."
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_audit.py:0
+msgid "Consulted %s record(s)"
+msgstr "Consultó %s registro(s)"
+
+#. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_hourly
+#: model:ir.ui.menu,name:analitix.menu_conversion
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_graph
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_pivot
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
+msgid "Conversion"
+msgstr "Conversión"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_hourly__conversion_rate
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_list
+msgid "Conversion %"
+msgstr "Conversión %"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__staff_match_threshold
+msgid "Cosine similarity above which a crossing is attributed to a known employee and excluded from the visitor count. Higher is stricter: fewer customers wrongly dropped, more staff wrongly counted."
+msgstr "Similitud coseno a partir de la cual un cruce se atribuye a un empleado conocido y se excluye del conteo. Más alto es más estricto: se descartan menos clientes por error, pero se cuentan más empleados por error."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_event__match_score
+msgid "Cosine similarity of the staff match, kept so a threshold can be re-tuned against real data instead of guesswork."
+msgstr "Similitud coseno de la coincidencia con el empleado. Se guarda para poder reajustar el umbral con datos reales y no a ojo."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_event_search
+msgid "Counted as Visitors"
+msgstr "Contados como visitantes"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_event__counted
+msgid "Counts As Visitor"
+msgstr "Cuenta como visitante"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_door__counts_visitors
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup_door__counts_visitors
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_search
+msgid "Counts Visitors"
+msgstr "Cuenta visitantes"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup_door__create_device
+msgid "Create Device"
+msgstr "Crear dispositivo"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
+msgid "Create Store"
+msgstr "Crear tienda"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store_setup_door__create_device
+msgid "Create the counting device and issue its API key now. Clear it for a door whose hardware is not installed yet."
+msgstr "Crea el dispositivo de conteo y emite su llave de API ahora. Desmárcalo si el equipo de esa puerta todavía no está instalado."
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup__state__done
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_form
+msgid "Credentials"
+msgstr "Credenciales"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__critical
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_search
+msgid "Critical"
+msgstr "Crítico"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_event_form
+msgid "Crossing Event"
+msgstr "Evento de cruce"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
+#: code:addons/analitix/models/analitix_door.py:0
+#: code:addons/analitix/models/analitix_store.py:0
+#: model:ir.actions.act_window,name:analitix.action_event
+#: model:ir.ui.menu,name:analitix.menu_events
+#: model_terms:ir.ui.view,arch_db:analitix.view_event_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_event_search
+msgid "Crossing Events"
+msgstr "Eventos de cruce"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_event_graph
+#: model_terms:ir.ui.view,arch_db:analitix.view_event_pivot
+msgid "Crossings"
+msgstr "Cruces"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_hourly__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_form
+msgid "Cut this device off now? It will be refused by the ingest endpoint until a new key is issued. Use this for stolen or decommissioned hardware."
+msgstr "¿Cortar este dispositivo ahora? El endpoint de ingesta lo rechazará hasta que se emita una llave nueva. Úsalo con equipo robado o dado de baja."
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_device__kind__diy_cv
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup_door__hardware__diy_cv
+msgid "DIY edge (YOLO + ByteTrack)"
+msgstr "Edge propio (YOLO + ByteTrack)"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_store.py:0
+msgid "Data capture PAUSED by %(user)s. The ingest endpoint will reject this store's devices until capture is resumed."
+msgstr "Captura de datos PAUSADA por %(user)s. El endpoint de ingesta rechazará los dispositivos de esta tienda hasta que se reanude."
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_store.py:0
+msgid "Data capture RESUMED by %s."
+msgstr "Captura de datos REANUDADA por %s."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_event_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
+msgid "Day"
+msgstr "Día"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__health_state__degraded
+msgid "Degraded"
+msgstr "Degradada"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__degraded_threshold_min
+msgid "Degraded After (min)"
+msgstr "Degradado tras (min)"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_device__role__demographics
+msgid "Demographics (frontal camera)"
+msgstr "Demografía (cámara frontal)"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup_door__hardware__depth_cam
+msgid "Depth camera + edge PC"
+msgstr "Cámara de profundidad + mini-PC"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_device__kind__depth_cam
+msgid "Depth camera + edge PC (Orbbec / RealSense)"
+msgstr "Cámara de profundidad + mini-PC (Orbbec / RealSense)"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__note
+msgid "Detail"
+msgstr "Detalle"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_event__device_id
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_form
+msgid "Device"
+msgstr "Dispositivo"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
+msgid "Device '%(dev)s' points at a door of another store. A device belongs to exactly one store."
+msgstr "El dispositivo '%(dev)s' apunta a la puerta de otra tienda. Un dispositivo pertenece a exactamente una tienda."
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
+msgid "Device <b>%(dev)s</b> of store <b>%(store)s</b> stopped reporting. While it is down, this store's visitor count and conversion are incomplete."
+msgstr "El dispositivo <b>%(dev)s</b> de la tienda <b>%(store)s</b> dejó de reportar. Mientras esté caído, el conteo de visitantes y la conversión de esta tienda están incompletos."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_door__device_count
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__device_count
+msgid "Device Count"
+msgstr "Número de dispositivos"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__credentials
+msgid "Device Credentials"
+msgstr "Credenciales del dispositivo"
+
+#. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_device_health
+#: model:ir.ui.menu,name:analitix.menu_device_health
+msgid "Device Health"
+msgstr "Salud de dispositivos"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
+msgid "Device OFFLINE — no heartbeat for %(min)s minutes (threshold %(limit)s)."
+msgstr "Dispositivo FUERA DE LÍNEA — sin latido durante %(min)s minutos (umbral %(limit)s)."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__device_uid
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup_door__device_uid
+msgid "Device UID"
+msgstr "UID del dispositivo"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
+msgid "Device back online."
+msgstr "El dispositivo volvió a estar en línea."
+
+#. module: analitix
+#: model:res.groups,comment:analitix.group_technician
+msgid "Device health, ingest diagnostics and the job queue, without access to sales figures."
+msgstr "Salud de dispositivos, diagnóstico de ingesta y cola de trabajos, sin acceso a las cifras de venta."
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_store.py:0
+#: model:ir.actions.act_window,name:analitix.action_device
+#: model:ir.model.fields,field_description:analitix.field_analitix_door__device_ids
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__device_ids
+#: model:ir.ui.menu,name:analitix.menu_config_devices
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_list
+msgid "Devices"
+msgstr "Dispositivos"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__device_offline_count
+msgid "Devices Offline"
+msgstr "Dispositivos fuera de línea"
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_device_health
+msgid "Devices appear here grouped by status. A critical device that\\n                stops sending heartbeats raises an activity and an e-mail to the\\n                store's technical contacts, because while it is down that store's\\n                conversion figures are incomplete."
+msgstr "Los dispositivos aparecen aquí agrupados por estado. Un dispositivo crítico que deja de mandar latidos genera una actividad y un correo a los contactos técnicos de la tienda, porque mientras esté caído las cifras de conversión de esa tienda están incompletas."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_staff_signature_list
+msgid "Dim"
+msgstr "Dim"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__embedding_dim
+msgid "Dimensions"
+msgstr "Dimensiones"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_event__direction
+#: model_terms:ir.ui.view,arch_db:analitix.view_event_search
+msgid "Direction"
+msgstr "Dirección"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_device__status__disabled
+msgid "Disabled"
+msgstr "Deshabilitado"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_job__state__done
+msgid "Done"
+msgstr "Hecho"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__door_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_door_hourly__door_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_event__door_id
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_event_search
+msgid "Door"
+msgstr "Puerta"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__door_count
+msgid "Door Count"
+msgstr "Número de puertas"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup_door__name
+msgid "Door Name"
+msgstr "Nombre de la puerta"
+
+#. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_door_hourly
+#: model:ir.ui.menu,name:analitix.menu_door_traffic
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_graph
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_pivot
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_search
+msgid "Door Traffic"
+msgstr "Tráfico por puerta"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_door__kind
+msgid "Door Type"
+msgstr "Tipo de puerta"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_device__role__door_counter
+msgid "Door counter (in/out line)"
+msgstr "Contador de puerta (línea entrada/salida)"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/wizards/store_setup.py:0
+msgid "Door: %(door)s\\n  Device UID : %(uid)s\\n  API key    : %(key)s\\n"
+msgstr "Puerta: %(door)s\\n  UID del dispositivo : %(uid)s\\n  Llave de API        : %(key)s\\n"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_store.py:0
+#: model:ir.actions.act_window,name:analitix.action_door
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__door_ids
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__door_ids
+#: model:ir.ui.menu,name:analitix.menu_config_doors
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
+msgid "Doors"
+msgstr "Puertas"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__health_state__down
+msgid "Down"
+msgstr "Caída"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_job__duration_ms
+msgid "Duration (ms)"
+msgstr "Duración (ms)"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__edge_queue_size
+msgid "Edge Backlog"
+msgstr "Cola en el dispositivo"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__config_json
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_form
+msgid "Edge Configuration"
+msgstr "Configuración del edge"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_event__track_ref
+msgid "Edge Track"
+msgstr "Rastro del edge"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/controllers/api.py:0
+msgid "Edge device %s pulled staff signatures"
+msgstr "El dispositivo edge %s descargó las firmas de empleados"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_audit_log__action__elevated
+msgid "Elevated-control decision"
+msgstr "Decisión de control elevado"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_door__kind__emergency
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup_door__kind__emergency
+msgid "Emergency exit"
+msgstr "Salida de emergencia"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_event__staff_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__employee_id
+#: model_terms:ir.ui.view,arch_db:analitix.view_staff_signature_search
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_hourly__staff_crossings
+msgid "Employee crossings that were identified and kept out of the visitor count. Shown so the exclusion is auditable rather than invisible."
+msgstr "Cruces de empleados que se identificaron y se dejaron fuera del conteo de visitantes. Se muestran para que la exclusión sea auditable y no invisible."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Employees cross the door all day. Left in the count they\\n                                can be a third of the \\\"visitors\\\", which drags the\\n                                conversion rate down and keeps it there."
+msgstr "Los empleados cruzan la puerta todo el día. Si se dejan en el conteo pueden ser un tercio de los \\\"visitantes\\\", lo que jala la tasa de conversión hacia abajo y la deja ahí."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__embedding
+msgid "Encrypted Signature"
+msgstr "Firma cifrada"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_event__pending_embedding
+msgid "Encrypted embedding awaiting asynchronous matching. Cleared once the job has run, so the high-volume table does not become a biometric store."
+msgstr "Firma cifrada en espera de comparación asíncrona. Se borra en cuanto corre el trabajo, para que la tabla de mayor volumen no se convierta en un almacén biométrico."
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_staff_signature
+msgid "Enrol your team from the edge enrolment tool. Their crossings then\\n                stop counting as visitors, whichever door they use — without it,\\n                a small store's conversion rate reads far lower than the truth."
+msgstr "Registra a tu equipo desde la herramienta de registro del edge. Sus cruces dejan de contar como visitantes, sin importar por qué puerta pasen: sin esto, la conversión de una tienda pequeña se lee muy por debajo de la real."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__enrolled_on
+msgid "Enrolled"
+msgstr "Registrada"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__enrolled_by_id
+msgid "Enrolled By"
+msgstr "Registrada por"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_staff_signature_search
+msgid "Enrolled but never recognised. Usually means the enrolment was poor or the employee changed appearance."
+msgstr "Registrado pero nunca reconocido. Casi siempre significa que el registro quedó mal o que el empleado cambió de aspecto."
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_event__direction__in
+msgid "Entrance"
+msgstr "Entrada"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_event_search
+msgid "Entrances"
+msgstr "Entradas"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__live_occupancy
+msgid "Entrances minus exits over the period, never negative. On the default 'today' period this estimates who is inside right now."
+msgstr "Entradas menos salidas del periodo, nunca negativo. Con el periodo por omisión ('hoy') estima cuánta gente hay dentro en este momento."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_job__error
+#: model_terms:ir.ui.view,arch_db:analitix.view_job_form
+msgid "Error"
+msgstr "Error"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_event__uuid
+msgid "Event UUID"
+msgstr "UUID del evento"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__event_count
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_form
+msgid "Events"
+msgstr "Eventos"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__events_last_hour
+msgid "Events / Hour"
+msgstr "Eventos / hora"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_device__edge_queue_size
+msgid "Events still queued on the device itself, reported in its heartbeat. A backlog that keeps growing means the store's link is down or Odoo is refusing the data — the count is not lost yet, but it will be if the buffer overflows."
+msgstr "Eventos que siguen en cola dentro del propio dispositivo, reportados en su latido. Una cola que no deja de crecer significa que el enlace de la tienda está caído o que Odoo está rechazando los datos: el conteo todavía no se pierde, pero se perderá si se desborda el búfer."
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_device_health
+msgid "Every device is reporting"
+msgstr "Todos los dispositivos están reportando"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
+msgid "Everything that differs between customer stores lives on this\\n                        screen. Add one line per entrance — one, three, seven — and\\n                        Analitix creates the store, its doors, a counting device for\\n                        each and their API keys in a single pass."
+msgstr "Todo lo que cambia de una tienda cliente a otra vive en esta pantalla. Agrega una línea por entrada (una, tres, siete) y Analitix crea la tienda, sus puertas, un dispositivo de conteo para cada una y sus llaves de API de una sola pasada."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__exclude_staff
+msgid "Exclude Staff From Counts"
+msgstr "Excluir empleados del conteo"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_event__direction__out
+msgid "Exit"
+msgstr "Salida"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_event_search
+msgid "Exits"
+msgstr "Salidas"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_audit_log__action__export
+msgid "Exported a report"
+msgstr "Exportó un reporte"
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_job
+msgid "Face matching, signage triggers and CRM writes run here instead of\\n                on the ingest request, so a slow integration can never hold up a\\n                store's counting. A growing backlog here means the Odoo scheduler\\n                is not running."
+msgstr "La comparación facial, los disparos a pantallas y las escrituras al CRM corren aquí y no en la petición de ingesta, para que una integración lenta nunca detenga el conteo de una tienda. Una cola que crece aquí significa que el planificador de Odoo no está corriendo."
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_job__state__failed
+#: model_terms:ir.ui.view,arch_db:analitix.view_job_search
+msgid "Failed"
+msgstr "Falló"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_job__finished_at
+msgid "Finished At"
+msgstr "Terminado el"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
+msgid "Floor Area"
+msgstr "Superficie"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_device__config_json
+msgid "Free-form JSON handed to the agent by the config endpoint: line coordinates, camera index, zone polygons. Kept here so an implementer can retune a camera from Odoo instead of going back to the store with a laptop."
+msgstr "JSON libre que el endpoint de configuración le entrega al agente: coordenadas de la línea, índice de cámara, polígonos de zona. Vive aquí para que el implementador reajuste una cámara desde Odoo en vez de volver a la tienda con una laptop."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_door__name
+msgid "Free-form name the staff of this store would use: 'North Entrance', 'Mall Door', 'Service Door'."
+msgstr "Nombre libre, el que usaría el personal de esta tienda: 'Entrada Norte', 'Puerta de la Plaza', 'Puerta de Servicio'."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__degraded_threshold_min
+msgid "Grace band before 'offline': the device is late but not yet presumed down. Shown amber on the technical dashboard."
+msgstr "Margen antes de 'fuera de línea': el dispositivo va retrasado pero todavía no se da por caído. Aparece en ámbar en el tablero técnico."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
+msgid "Had Traffic"
+msgstr "Con tráfico"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__kind
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup_door__hardware
+msgid "Hardware"
+msgstr "Hardware"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__health_state
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_search
+msgid "Health"
+msgstr "Salud"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__health_state__ok
+msgid "Healthy"
+msgstr "Sana"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__heartbeat_interval_s
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__heartbeat_interval_s
+msgid "Heartbeat Interval (s)"
+msgstr "Intervalo de latido (s)"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
+msgid "Hides closed hours, which would otherwise drag every average toward zero."
+msgstr "Oculta las horas cerradas, que si no arrastran todos los promedios hacia cero."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_door_hourly__hour
+#: model:ir.model.fields,field_description:analitix.field_analitix_hourly__hour
+#: model_terms:ir.ui.view,arch_db:analitix.view_event_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
+msgid "Hour"
+msgstr "Hora"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_search
+msgid "Hour of Day"
+msgstr "Hora del día"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__match_mode
+msgid "How POS sales are attributed to this store for conversion:\\n• Specific POS registers: only orders from the registers below. Use this when several stores share one company.\\n• Whole company: every POS order of the company. Use this when the company runs a single store."
+msgstr "Cómo se atribuyen las ventas de TPV a esta tienda para calcular la conversión:\\n• Cajas de TPV específicas: solo los pedidos de las cajas de abajo. Úsalo cuando varias tiendas comparten una misma compañía.\\n• Toda la compañía: todos los pedidos de TPV de la compañía. Úsalo cuando la compañía tiene una sola tienda."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_device__anomaly_factor
+msgid "How far from its own baseline a device may drift before it is flagged. 5.0 means 'five times the usual hourly volume'."
+msgstr "Cuánto puede alejarse un dispositivo de su propia línea base antes de que se marque. 5.0 significa 'cinco veces el volumen normal por hora'."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_audit_log__record_count
+msgid "How many records the action touched. A single read of one entry and a bulk export of the whole list are very different events."
+msgstr "Cuántos registros tocó la acción. Consultar una sola entrada y exportar la lista completa son cosas muy distintas."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__heartbeat_interval_s
+msgid "How often each edge agent of this store reports it is alive. The agent reads this value from the config endpoint, so changing it here re-tunes the fleet without touching any device."
+msgstr "Cada cuánto reporta cada agente edge de esta tienda que sigue vivo. El agente lee este valor del endpoint de configuración, así que cambiarlo aquí reajusta toda la flota sin tocar ningún equipo."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__ip_address
+msgid "IP"
+msgstr "IP"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_device__kind__ir_beam
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup_door__hardware__ir_beam
+msgid "IR beam counter"
+msgstr "Contador de barrera infrarroja"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_list
+msgid "In"
+msgstr "Entrada"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_door__counts_visitors
+msgid "Include this door's crossings in the store's visitor total. Turn it off for a staff-only or emergency door whose traffic is not customers — it stays measured, it just stops distorting the conversion rate."
+msgstr "Incluir los cruces de esta puerta en el total de visitantes de la tienda. Desactívalo en una puerta de solo personal o de emergencia cuyo tráfico no son clientes: se sigue midiendo, simplemente deja de distorsionar la tasa de conversión."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_door__kind
+msgid "Informational, but it drives sensible defaults: a service door is where staff traffic concentrates, an emergency exit normally produces exits only."
+msgstr "Es informativo, pero define valores por omisión razonables: en una puerta de servicio se concentra el tráfico del personal, y una salida de emergencia normalmente solo produce salidas."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_form
+msgid "Ingest Volume"
+msgstr "Volumen de ingesta"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_audit_log__action__anomaly
+msgid "Ingest anomaly detected"
+msgstr "Anomalía de ingesta detectada"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
+msgid "Ingest anomaly: %(count)s events in the last hour against a usual %(base).1f. Check the device for a fault or tampering — its data is suspect until reviewed."
+msgstr "Anomalía de ingesta: %(count)s eventos en la última hora contra un valor normal de %(base).1f. Revisa el dispositivo por falla o manipulación: sus datos son sospechosos hasta que alguien los revise."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_list
+msgid "Inside Now"
+msgstr "Dentro ahora"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_form
+msgid "Issue a new key? The current one stops working immediately, and the new one is shown only once."
+msgstr "¿Emitir una llave nueva? La actual deja de funcionar de inmediato, y la nueva se muestra una sola vez."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_job__payload
+msgid "JSON arguments for the handler. Kept as text so a job survives a module upgrade that changes the models it refers to."
+msgstr "Argumentos JSON para el manejador. Se guardan como texto para que un trabajo sobreviva a una actualización del módulo que cambie los modelos a los que hace referencia."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_form
+msgid "JSON handed to the agent when it calls\\n                                <code>/analitix/api/v1/config</code>: line coordinates,\\n                                camera index, zone polygons. Retune a camera from here\\n                                instead of going back to the store with a laptop."
+msgstr "JSON que se le entrega al agente cuando llama a <code>/analitix/api/v1/config</code>: coordenadas de la línea, índice de cámara, polígonos de zona. Reajusta una cámara desde aquí en vez de volver a la tienda con una laptop."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__exclude_staff
+msgid "Keep employee crossings out of visitors and conversion. Turn it off only while calibrating: with it off, a store whose team walks in and out all day reads a conversion rate far below the truth."
+msgstr "Mantener los cruces de empleados fuera de los visitantes y de la conversión. Desactívalo solo mientras calibras: apagado, una tienda cuyo equipo entra y sale todo el día marca una conversión muy por debajo de la real."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__api_key_generated_at
+msgid "Key Issued On"
+msgstr "Llave emitida el"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__api_key_revoked
+msgid "Key Revoked"
+msgstr "Llave revocada"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
+msgid "Key revoked for device %s"
+msgstr "Llave revocada del dispositivo %s"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
+msgid "Key rotated for device %s"
+msgstr "Llave rotada del dispositivo %s"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_job__kind
+#: model_terms:ir.ui.view,arch_db:analitix.view_job_search
+msgid "Kind"
+msgstr "Tipo"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
+msgid "Last 30 Days"
+msgstr "Últimos 30 días"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_event_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
+msgid "Last 7 Days"
+msgstr "Últimos 7 días"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__last_event_at
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__last_event_time
+msgid "Last Event"
+msgstr "Último evento"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__last_heartbeat
+msgid "Last Heartbeat"
+msgstr "Último latido"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__last_match
+msgid "Last Match"
+msgstr "Última coincidencia"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_device__api_key_hint
+msgid "Last characters of the active key, so a technician can tell which credential a device is carrying without being able to use it."
+msgstr "Últimos caracteres de la llave activa, para que un técnico sepa qué credencial trae un dispositivo sin poder usarla."
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_device__status__degraded
+#: model_terms:ir.ui.view,arch_db:analitix.view_job_search
+msgid "Late"
+msgstr "Retrasado"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store_setup_door__device_uid
+msgid "Leave empty to derive it from the store and door codes."
+msgstr "Déjalo vacío para derivarlo de los códigos de tienda y puerta."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_job__priority
+msgid "Lower runs first. Time-sensitive work — a welcome message that is worthless if it arrives after the customer has walked past the screen — belongs below 10."
+msgstr "Lo más bajo corre primero. El trabajo sensible al tiempo (una bienvenida que no sirve de nada si llega después de que el cliente ya pasó frente a la pantalla) va por debajo de 10."
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/wizards/store_setup.py:0
+msgid "Main Entrance"
+msgstr "Entrada principal"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_door__kind__main
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup_door__kind__main
+msgid "Main entrance"
+msgstr "Entrada principal"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_door__kind__mall
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup_door__kind__mall
+msgid "Mall / gallery entrance"
+msgstr "Entrada a plaza / galería"
+
+#. module: analitix
+#: model:res.groups,name:analitix.group_manager
+msgid "Manager"
+msgstr "Gerente"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__capture_enabled
+msgid "Master switch for this store's data capture. Turning it off stops the ingest endpoint from accepting anything at all — no code deployment, no trip to the store. Use it for an incident, a malfunction, or when the customer asks to pause the system."
+msgstr "Interruptor maestro de la captura de datos de esta tienda. Apagarlo hace que el endpoint de ingesta deje de aceptar absolutamente todo: sin desplegar código y sin ir a la tienda. Úsalo ante un incidente, una falla grave, o cuando el cliente pida pausar el sistema."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_event__match_score
+msgid "Match Score"
+msgstr "Puntaje de coincidencia"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__match_mode
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__match_mode
+msgid "Match sales by"
+msgstr "Atribuir ventas por"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__match_count
+#: model_terms:ir.ui.view,arch_db:analitix.view_staff_signature_list
+msgid "Matches"
+msgstr "Coincidencias"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_job__max_attempts
+msgid "Max Attempts"
+msgstr "Intentos máximos"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__model_name
+#: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__model_name
+msgid "Model"
+msgstr "Modelo"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
+msgid "Monitoring"
+msgstr "Monitoreo"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
+msgid "Month"
+msgstr "Mes"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__name
+#: model:ir.model.fields,field_description:analitix.field_analitix_door__name
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_search
+msgid "Needs Attention"
+msgstr "Requiere atención"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_staff_signature_search
+msgid "Never Matched"
+msgstr "Nunca coincidió"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_device__status__never_seen
+msgid "Never seen"
+msgstr "Nunca visto"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
+msgid "New API key — copy it now"
+msgstr "Nueva llave de API — cópiala ahora"
+
+#. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_store_setup
+#: model:ir.ui.menu,name:analitix.menu_store_setup
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
+msgid "New Store Setup"
+msgstr "Alta de tienda nueva"
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_hourly
+msgid "No data yet"
+msgstr "Todavía no hay datos"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/wizards/store_setup.py:0
+msgid "No devices were created. Add them from the store's Devices tab when the hardware is on site."
+msgstr "No se creó ningún dispositivo. Agrégalos desde la pestaña Dispositivos de la tienda cuando el equipo esté en el sitio."
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_door_hourly
+msgid "No door traffic yet"
+msgstr "Todavía no hay tráfico por puerta"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_job.py:0
+msgid "No handler is registered for job kind '%s'."
+msgstr "No hay ningún manejador registrado para el tipo de trabajo '%s'."
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_staff_signature
+msgid "No staff enrolled yet"
+msgstr "Todavía no hay empleados registrados"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__baseline_hourly_events
+msgid "Normal Events / Hour"
+msgstr "Eventos / hora normales"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_job__scheduled_at
+msgid "Not before this moment. Retries push it into the future."
+msgstr "No antes de este momento. Los reintentos lo empujan hacia adelante."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__note
+#: model:ir.model.fields,field_description:analitix.field_analitix_door__note
+#: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__note
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__note
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_staff_signature_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Notes"
+msgstr "Notas"
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_audit_log
+msgid "Nothing logged yet"
+msgstr "Todavía no hay nada registrado"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__live_occupancy
+msgid "Occupancy"
+msgstr "Aforo"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_form
+msgid "Odoo stores only a hash of the API key, so it cannot be\\n                        read back — it is shown once when issued or rotated. If a\\n                        key is lost, rotate it and reconfigure the device."
+msgstr "Odoo solo guarda un hash de la llave de API, así que no se puede volver a leer: se muestra una vez al emitirla o rotarla. Si se pierde una llave, rótala y reconfigura el dispositivo."
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_audit_log
+msgid "Odoo's chatter records who <i>changed</i> something. This records\\n                who <i>looked</i>: reads of sensitive data, report exports, key\\n                rotations, use of the kill switch and rejected credentials.\\n                Entries can never be edited or deleted, by anybody."
+msgstr "El chatter de Odoo registra quién <i>cambió</i> algo. Esto registra quién <i>miró</i>: consultas de datos sensibles, exportaciones de reportes, rotaciones de llaves, uso del interruptor de emergencia y credenciales rechazadas. Las entradas no las puede editar ni borrar nadie, nunca."
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_device__status__offline
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_search
+msgid "Offline"
+msgstr "Fuera de línea"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__offline_threshold_min
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__offline_threshold_min
+msgid "Offline After (min)"
+msgstr "Fuera de línea tras (min)"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__offline_since
+msgid "Offline Since"
+msgstr "Fuera de línea desde"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_users_form_analitix
+msgid "On a shared instance hosting several customers, fill this\\n                            in. Once it has any value the user sees <b>only</b> those\\n                            stores — no group, company switch or manager role widens it."
+msgstr "En una instancia compartida con varios clientes, llena este campo. En cuanto tiene algún valor, el usuario ve <b>solo</b> esas tiendas: ningún grupo, cambio de compañía ni rol de gerente lo amplía."
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_hourly
+msgid "Once a store's devices start reporting and POS orders exist, this\\n                is where visitors meet sales: conversion, average ticket, units per\\n                ticket, revenue per visitor and density per m²."
+msgstr "En cuanto los dispositivos de una tienda empiezan a reportar y hay pedidos de TPV, aquí es donde los visitantes se cruzan con las ventas: conversión, ticket promedio, unidades por ticket, ingreso por visitante y densidad por m²."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "One line per entrance. A store may have as many as it\\n                                actually has — the rest of Analitix follows this list."
+msgstr "Una línea por entrada. Una tienda puede tener tantas como realmente tenga: todo lo demás en Analitix sigue esta lista."
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_device__status__online
+msgid "Online"
+msgstr "En línea"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
+msgid "Open Store"
+msgstr "Abrir tienda"
+
+#. module: analitix
+#: model:ir.ui.menu,name:analitix.menu_operations
+msgid "Operations"
+msgstr "Operación"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_device__kind__other
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_device__role__other
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup_door__hardware__other
+msgid "Other"
+msgstr "Otro"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_list
+msgid "Out"
+msgstr "Salida"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__register_ids
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__register_ids
+msgid "POS Registers"
+msgstr "Cajas de TPV"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_hourly__tickets
+msgid "POS Tickets"
+msgstr "Tickets de TPV"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Pause Capture"
+msgstr "Pausar captura"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__capture_paused_reason
+msgid "Pause Reason"
+msgstr "Motivo de la pausa"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__health_state__paused
+msgid "Paused"
+msgstr "Pausada"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__capture_paused_by_id
+msgid "Paused By"
+msgstr "Pausada por"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__capture_paused_at
+msgid "Paused On"
+msgstr "Pausada el"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_job__payload
+#: model_terms:ir.ui.view,arch_db:analitix.view_job_form
+msgid "Payload"
+msgstr "Contenido"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_job__state__pending
+#: model_terms:ir.ui.view,arch_db:analitix.view_job_search
+msgid "Pending"
+msgstr "Pendiente"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_event__pending_embedding
+msgid "Pending Embedding"
+msgstr "Firma pendiente"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_event__count
+#: model_terms:ir.ui.view,arch_db:analitix.view_event_list
+msgid "People"
+msgstr "Personas"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__visitors_in
+msgid "People who entered during the selected period (default: today, in the store's timezone). Staff crossings excluded."
+msgstr "Personas que entraron durante el periodo seleccionado (por omisión hoy, en la zona horaria de la tienda). Se excluyen los cruces de empleados."
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/wizards/store_setup.py:0
+msgid "Pick the POS registers whose tickets belong to this store, or switch to 'Whole company'. Without either, conversion has no sales side and every hour will read 0%."
+msgstr "Elige las cajas de TPV cuyos tickets pertenecen a esta tienda, o cambia a 'Toda la compañía'. Sin una de las dos, la conversión no tiene lado de ventas y todas las horas marcarán 0%."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_form
+msgid "Placement"
+msgstr "Ubicación"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_job__priority
+msgid "Priority"
+msgstr "Prioridad"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_job_list
+msgid "Queued"
+msgstr "En cola"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_job_search
+msgid "Queued more than fifteen minutes ago and still not run. Usually means the Odoo cron is not running."
+msgstr "En cola desde hace más de quince minutos y todavía sin ejecutarse. Casi siempre significa que el cron de Odoo no está corriendo."
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_audit_log__action__read_sensitive
+msgid "Read sensitive data"
+msgstr "Consultó datos sensibles"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_event__received_at
+msgid "Received"
+msgstr "Recibido"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__res_id
+msgid "Record ID"
+msgstr "ID del registro"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__record_count
+#: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_list
+msgid "Records"
+msgstr "Registros"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_door__code
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__code
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__code
+msgid "Reference"
+msgstr "Referencia"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_store.py:0
+msgid "Register '%(reg)s' already belongs to store '%(store)s'. A register can feed only one store, otherwise its tickets would be counted twice."
+msgstr "La caja '%(reg)s' ya pertenece a la tienda '%(store)s'. Una caja solo puede alimentar a una tienda; si no, sus tickets se contarían dos veces."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__register_count
+msgid "Register Count"
+msgstr "Número de cajas"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__register_ids
+msgid "Registers whose tickets count toward this store's conversion. Only used when 'Match sales by' is 'Specific POS registers'."
+msgstr "Cajas cuyos tickets cuentan para la conversión de esta tienda. Solo se usan cuando 'Atribuir ventas por' es 'Cajas de TPV específicas'."
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_audit_log__action__auth_failure
+msgid "Rejected API credential"
+msgstr "Credencial de API rechazada"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/controllers/api.py:0
+msgid "Rejected API key from %s"
+msgstr "Llave de API rechazada desde %s"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_res_users__analitix_store_ids
+msgid "Restrict this user to these stores. Leave empty to give access to every store of the companies they already belong to — right for a single-store customer, wrong for a shared instance."
+msgstr "Limitar a este usuario a estas tiendas. Déjalo vacío para darle acceso a todas las tiendas de las compañías a las que ya pertenece: correcto para un cliente de una sola tienda, incorrecto en una instancia compartida."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Resume Capture"
+msgstr "Reanudar captura"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_job_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_job_list
+msgid "Retry"
+msgstr "Reintentar"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_list
+msgid "Rev / Visitor"
+msgstr "Ingreso / visitante"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_hourly__revenue
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_list
+msgid "Revenue"
+msgstr "Ingresos"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_hourly__revenue_per_visitor
+msgid "Revenue / Visitor"
+msgstr "Ingreso / visitante"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_hourly__revenue_per_sqm
+msgid "Revenue / m²"
+msgstr "Ingreso / m²"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_hourly__revenue_per_visitor
+msgid "Revenue divided by visitors: what each walk-in is worth. Moves when either conversion or ticket value moves, so it is the single number to watch if you only watch one."
+msgstr "Ingresos divididos entre visitantes: cuánto vale cada persona que entra. Se mueve cuando se mueve la conversión o el valor del ticket, así que es el número a vigilar si solo vas a vigilar uno."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_hourly__atv
+msgid "Revenue per ticket: what an average sale is worth."
+msgstr "Ingreso por ticket: cuánto vale una venta promedio."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_form
+msgid "Revoke"
+msgstr "Revocar"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_search
+msgid "Revoked"
+msgstr "Revocada"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_audit_log__action__key_revoke
+msgid "Revoked a device key"
+msgstr "Revocó la llave de un dispositivo"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__role
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_search
+msgid "Role"
+msgstr "Función"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_device__baseline_hourly_events
+msgid "Rolling average of this device's hourly volume, learned from its own history. Used to notice that a device suddenly reports ten times its usual traffic — a fault or a tampered agent."
+msgstr "Promedio móvil del volumen por hora de este dispositivo, aprendido de su propio historial. Sirve para notar que un dispositivo de pronto reporta diez veces su tráfico normal: una falla o un agente manipulado."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_form
+msgid "Rotate API Key"
+msgstr "Rotar la llave de API"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_audit_log__action__key_rotate
+msgid "Rotated a device key"
+msgstr "Rotó la llave de un dispositivo"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_job__state__running
+msgid "Running"
+msgstr "Ejecutándose"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_device__api_key_hash
+msgid "SHA-256 of the device key. The key itself is never stored."
+msgstr "SHA-256 de la llave del dispositivo. La llave misma nunca se almacena."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
+msgid "Sales Matching"
+msgstr "Atribución de ventas"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
+msgid "Sales Without Visitors"
+msgstr "Ventas sin visitantes"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__sales_area_sqm
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__sales_area_sqm
+msgid "Sales-floor m²"
+msgstr "m² de piso de venta"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_job__scheduled_at
+msgid "Scheduled At"
+msgstr "Programado para"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_door__kind__secondary
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup_door__kind__secondary
+msgid "Secondary entrance"
+msgstr "Entrada secundaria"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_search
+msgid "Security Events"
+msgstr "Eventos de seguridad"
+
+#. module: analitix
+#: model:res.groups,comment:analitix.group_user
+msgid "See this store's traffic and conversion dashboards."
+msgstr "Ver los tableros de tráfico y conversión de esta tienda."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__sales_area_sqm
+msgid "Selling area only, excluding storage and offices. Optional: use it when density should be measured over the sellable floor."
+msgstr "Solo el área de venta, sin bodega ni oficinas. Opcional: úsalo cuando la densidad deba medirse sobre el piso vendible."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_search
+msgid "Sensitive Reads"
+msgstr "Consultas sensibles"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_door__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_door__kind__service
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup_door__kind__service
+msgid "Service / staff entrance"
+msgstr "Entrada de servicio / personal"
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_store
+msgid "Set up your first store"
+msgstr "Da de alta tu primera tienda"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_event__staff_id
+msgid "Set when this crossing was attributed to a known employee."
+msgstr "Se llena cuando el cruce se atribuyó a un empleado conocido."
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup__state__draft
+msgid "Setup"
+msgstr "Configuración"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_list
+msgid "Share %"
+msgstr "Participación %"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_door_hourly__door_share
+msgid "Share of Store %"
+msgstr "Participación de la tienda %"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_door__code
+msgid "Short code used in device UIDs, e.g. 'N' for the north door."
+msgstr "Código corto usado en los UID de dispositivo, p. ej. 'N' para la puerta norte."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store_setup__code
+msgid "Short code, e.g. 'MOR-01'. Device UIDs are derived from it."
+msgstr "Código corto, p. ej. 'MOR-01'. Los UID de dispositivo se derivan de él."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__code
+msgid "Short internal code for this store (e.g. 'MOR-01'). Used in device UIDs and in chain-wide reports."
+msgstr "Código interno corto de esta tienda (p. ej. 'MOR-01'). Se usa en los UID de dispositivo y en los reportes de toda la cadena."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_staff_signature__store_id
+msgid "Signatures are scoped to a store: an employee of store A is not silently excluded from store B's counts. Enrol them in both if they genuinely work in both."
+msgstr "Las firmas están acotadas a una tienda: un empleado de la tienda A no queda excluido en silencio del conteo de la tienda B. Regístralo en ambas si realmente trabaja en las dos."
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__match_mode__registers
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup__match_mode__registers
+msgid "Specific POS registers"
+msgstr "Cajas de TPV específicas"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_device__device_uid
+msgid "Stable identifier the agent sends in every payload, e.g. 'mor01-north-counter'. It identifies the device in logs; it does not authenticate it — the API key does."
+msgstr "Identificador estable que el agente manda en cada envío, p. ej. 'mor01-north-counter'. Identifica al dispositivo en las bitácoras; no lo autentica: eso lo hace la llave de API."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_list
+msgid "Staff"
+msgstr "Empleados"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_event_search
+msgid "Staff (Excluded)"
+msgstr "Empleados (excluidos)"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_door_hourly__staff_crossings
+#: model:ir.model.fields,field_description:analitix.field_analitix_hourly__staff_crossings
+msgid "Staff Crossings"
+msgstr "Cruces de empleados"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Staff Exclusion"
+msgstr "Exclusión de empleados"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__staff_match_threshold
+msgid "Staff Match Threshold"
+msgstr "Umbral de coincidencia de empleado"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_staff_signature_form
+msgid "Staff Signature"
+msgstr "Firma de empleado"
+
+#. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_staff_signature
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__staff_signature_ids
+#: model:ir.ui.menu,name:analitix.menu_config_staff
+#: model_terms:ir.ui.view,arch_db:analitix.view_staff_signature_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_staff_signature_search
+msgid "Staff Signatures"
+msgstr "Firmas de empleados"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_job__started_at
+msgid "Started At"
+msgstr "Iniciado el"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_job__state
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__state
+#: model_terms:ir.ui.view,arch_db:analitix.view_job_search
+msgid "State"
+msgstr "Estado"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__status
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_search
+msgid "Status"
+msgstr "Estado"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Stop capturing data for this store right now? Devices will be refused until you resume. Their local buffers keep the events, so nothing is lost while it is paused."
+msgstr "¿Dejar de capturar datos de esta tienda ahora mismo? Los dispositivos serán rechazados hasta que reanudes. Sus búferes locales conservan los eventos, así que no se pierde nada mientras está en pausa."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_door__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_door_hourly__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_event__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_hourly__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_job__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__store_id
+#: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_event_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_job_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_staff_signature_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
+msgid "Store"
+msgstr "Tienda"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__name
+msgid "Store Name"
+msgstr "Nombre de la tienda"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/wizards/store_setup.py:0
+msgid "Store created by %(user)s with %(doors)s door(s)."
+msgstr "Tienda creada por %(user)s con %(doors)s puerta(s)."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_hourly__area_sqm
+msgid "Store m²"
+msgstr "m² de la tienda"
+
+#. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_store
+#: model:ir.ui.menu,name:analitix.menu_config_stores
+#: model:ir.ui.menu,name:analitix.menu_stores_overview
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_search
+msgid "Stores"
+msgstr "Tiendas"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__alert_partner_ids
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__alert_partner_ids
+msgid "Technical Contacts"
+msgstr "Contactos técnicos"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__alert_user_id
+msgid "Technical Owner"
+msgstr "Responsable técnico"
+
+#. module: analitix
+#: model:res.groups,name:analitix.group_technician
+msgid "Technician / Implementer"
+msgstr "Técnico / Implementador"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_staff_signature__embedding
+msgid "The employee's face embedding, encrypted at rest. It is a vector of numbers from which no image can be reconstructed."
+msgstr "La firma facial del empleado, cifrada en reposo. Es un vector de números del que no se puede reconstruir ninguna imagen."
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_staff_signature.py:0
+msgid "The enrolment payload carried no vector."
+msgstr "El registro no traía ningún vector."
+
+#. module: analitix
+#: model:ir.model.constraint,message:analitix.constraint_analitix_store_positive_heartbeat
+msgid "The heartbeat interval must be a positive number of seconds."
+msgstr "El intervalo de latido debe ser un número positivo de segundos."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_device__store_id
+msgid "The only store this device may ever post data for."
+msgstr "La única tienda para la que este dispositivo puede enviar datos."
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_job
+msgid "The queue is empty"
+msgstr "La cola está vacía"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_store.py:0
+msgid "The staff match threshold is a cosine similarity: it must sit strictly between 0 and 1."
+msgstr "El umbral de coincidencia de empleado es una similitud coseno: debe estar estrictamente entre 0 y 1."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_event__track_ref
+msgid "The tracker id the edge assigned to this person while they were in frame. Phase 2 uses it to tie the crossing to a visitor."
+msgstr "El id de seguimiento que el edge le asignó a esta persona mientras estuvo en cuadro. La Fase 2 lo usa para ligar el cruce con un visitante."
+
+#. module: analitix
+#: model:ir.model.constraint,message:analitix.constraint_analitix_device_api_key_hash_uniq
+msgid "This API key is already assigned to another device."
+msgstr "Esta llave de API ya está asignada a otro dispositivo."
+
+#. module: analitix
+#: model:ir.model.constraint,message:analitix.constraint_analitix_device_device_uid_uniq
+msgid "This Device UID is already in use."
+msgstr "Este UID de dispositivo ya está en uso."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_search
+msgid "This Month"
+msgstr "Este mes"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_search
+msgid "This Week"
+msgstr "Esta semana"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_form
+msgid "This door's crossings are recorded but do not count as\\n                        visitors. Traffic here still shows on the door report; it\\n                        simply stays out of the store's conversion rate."
+msgstr "Los cruces de esta puerta se registran pero no cuentan como visitantes. El tráfico sigue apareciendo en el reporte por puerta; simplemente se queda fuera de la tasa de conversión de la tienda."
+
+#. module: analitix
+#: model:ir.model.constraint,message:analitix.constraint_analitix_event_uuid_uniq
+msgid "This event was already received (duplicate UUID)."
+msgstr "Este evento ya se había recibido (UUID duplicado)."
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_staff_signature.py:0
+msgid "This signature carries no usable vector. Re-enrol the employee from the edge enrolment tool."
+msgstr "Esta firma no trae ningún vector utilizable. Vuelve a registrar al empleado desde la herramienta de registro del edge."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Thresholds"
+msgstr "Umbrales"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_list
+msgid "Tickets"
+msgstr "Tickets"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_hourly__conversion_rate
+msgid "Tickets divided by visitors entering. The headline number: out of everyone who walked in, how many bought."
+msgstr "Tickets divididos entre los visitantes que entraron. El número principal: de toda la gente que entró, cuánta compró."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
+msgid "Tickets in an hour with no crossings: almost always a counter that was down. Worth checking before trusting the day."
+msgstr "Tickets en una hora sin ningún cruce: casi siempre es un contador que estaba caído. Conviene revisarlo antes de confiar en el día."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_event__event_time
+msgid "Time"
+msgstr "Hora"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__tz
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__tz
+msgid "Timezone"
+msgstr "Zona horaria"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__tz
+msgid "Timezone of the physical store. Opening hours, daily resets and the owner's reports follow this, not the reader's timezone — a chain's HQ in another timezone still sees each store's real day."
+msgstr "Zona horaria de la tienda física. El horario, los cortes diarios y los reportes del dueño siguen esta zona, no la de quien mira: un corporativo en otra zona horaria sigue viendo el día real de cada tienda."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_event_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_search
+msgid "Today"
+msgstr "Hoy"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__area_sqm
+msgid "Total floor area in square meters. Enables the density KPIs (revenue and visitors per m²)."
+msgstr "Superficie total en metros cuadrados. Habilita los KPI de densidad (ingresos y visitantes por m²)."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__area_sqm
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__area_sqm
+msgid "Total m²"
+msgstr "m² totales"
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_door_hourly
+msgid "Traffic broken down per entrance, with each door's share of the\\n                store's total. Conversion is deliberately absent here: a ticket\\n                belongs to the store, not to the door the customer walked through,\\n                so a per-door conversion rate would be a fiction."
+msgstr "Tráfico desglosado por entrada, con la participación de cada puerta en el total de la tienda. La conversión no aparece aquí a propósito: un ticket pertenece a la tienda, no a la puerta por la que entró el cliente, así que una conversión por puerta sería una ficción."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup_door__kind
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_search
+msgid "Type"
+msgstr "Tipo"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_list
+msgid "UPT"
+msgstr "Unidades por ticket"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_event__uuid
+msgid "Unique identifier minted by the edge agent before sending. It is what makes a network retry safe: the same crossing arriving twice is stored once."
+msgstr "Identificador único que el agente edge genera antes de enviar. Es lo que hace seguro un reintento de red: el mismo cruce que llega dos veces se guarda una sola vez."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_list
+msgid "Units"
+msgstr "Unidades"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_hourly__upt
+msgid "Units / Ticket (UPT)"
+msgstr "Unidades / ticket (UPT)"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_hourly__units
+msgid "Units Sold"
+msgstr "Unidades vendidas"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_hourly__upt
+msgid "Units per ticket: basket size."
+msgstr "Unidades por ticket: tamaño de la canasta."
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_store
+msgid "Use <b>Configuration → New Store Setup</b> to create a store with\\n                all its doors and their device keys in one pass."
+msgstr "Usa <b>Configuración → Alta de tienda nueva</b> para crear una tienda con todas sus puertas y las llaves de sus dispositivos de una sola pasada."
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_audit_log__action__kill_switch
+msgid "Used the capture kill switch"
+msgstr "Usó el interruptor de emergencia"
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_res_users
+#: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__user_id
+#: model:res.groups,name:analitix.group_user
+#: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_search
+msgid "User"
+msgstr "Usuario"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__alert_user_id
+msgid "User who gets the Odoo activity for device incidents in this store. Leave empty to fall back to the store's creator."
+msgstr "Usuario que recibe la actividad de Odoo por incidentes de dispositivo en esta tienda. Déjalo vacío para que recaiga en quien creó la tienda."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_event_form
+msgid "Visitor Counting"
+msgstr "Conteo de visitantes"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_list
+msgid "Visitors"
+msgstr "Visitantes"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_hourly__visitors_per_ticket
+msgid "Visitors / Ticket"
+msgstr "Visitantes / ticket"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_hourly__visitors_per_unit
+msgid "Visitors / Unit"
+msgstr "Visitantes / unidad"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_hourly__visitors_per_sqm
+msgid "Visitors / m²"
+msgstr "Visitantes / m²"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_door_hourly__visitors_in
+#: model:ir.model.fields,field_description:analitix.field_analitix_hourly__visitors_in
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__visitors_in
+msgid "Visitors In"
+msgstr "Visitantes que entraron"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_door_hourly__visitors_out
+#: model:ir.model.fields,field_description:analitix.field_analitix_hourly__visitors_out
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__visitors_out
+msgid "Visitors Out"
+msgstr "Visitantes que salieron"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_door__visitors_today
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_list
+msgid "Visitors Today"
+msgstr "Visitantes hoy"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
+msgid "Volume anomaly: %(c)s vs baseline %(b).1f/h"
+msgstr "Anomalía de volumen: %(c)s contra una base de %(b).1f/h"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_audit_log__action__watchlist_confirm
+msgid "Watch-list entry confirmed"
+msgstr "Alta confirmada en la lista de vigilancia"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_audit_log__action__watchlist_add
+msgid "Watch-list entry created"
+msgstr "Alta en la lista de vigilancia"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
+msgid "Week"
+msgstr "Semana"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_door_hourly__door_share
+msgid "What percentage of the store's entrances that hour came through this door. Tells the owner which entrance actually carries the traffic — often not the one they assumed."
+msgstr "Qué porcentaje de las entradas de la tienda en esa hora pasó por esta puerta. Le dice al dueño qué entrada carga de verdad con el tráfico, que muchas veces no es la que suponía."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_device__role
+msgid "What this device is for. Later phases route zone dwell, demographics and purchase attribution by role."
+msgstr "Para qué sirve este dispositivo. Las fases siguientes enrutan la permanencia por zona, la demografía y la atribución de compra según esta función."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_list
+msgid "When"
+msgstr "Cuándo"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_event__received_at
+msgid "When Odoo stored it. Compared against 'Time' it shows how far behind a store's link is running."
+msgstr "Cuándo lo guardó Odoo. Comparado con 'Hora' muestra qué tan atrasado va el enlace de la tienda."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_event__event_time
+msgid "When the crossing happened at the store, as reported by the edge — not when Odoo received it. After an outage a device replays hours of buffered events, and they must land on the hour they actually belong to or the day's curve is wrong."
+msgstr "Cuándo ocurrió el cruce en la tienda, según lo reporta el edge, no cuándo lo recibió Odoo. Tras un corte, un dispositivo reenvía horas de eventos en búfer y tienen que caer en la hora a la que de verdad pertenecen o la curva del día queda mal."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_device__door_id
+msgid "Which entrance this device watches. Required for counters; left empty for devices that watch a zone or the checkout instead."
+msgstr "Qué entrada vigila este dispositivo. Obligatorio en los contadores; se deja vacío en los dispositivos que vigilan una zona o la caja."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_staff_signature__model_name
+msgid "Which face model produced this vector. Embeddings from different models are not comparable, so matching only ever compares signatures sharing this value."
+msgstr "Qué modelo facial produjo este vector. Las firmas de modelos distintos no son comparables, así que la comparación solo se hace entre firmas que comparten este valor."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Who Gets Told"
+msgstr "A quién se avisa"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__alert_partner_ids
+msgid "Who is warned when a critical device of this store goes offline. While it is down the store's counting and conversion are not trustworthy and the customer is paying for data nobody captures."
+msgstr "A quién se le avisa cuando un dispositivo crítico de esta tienda se cae. Mientras esté caído, el conteo y la conversión de la tienda no son confiables y el cliente está pagando por datos que nadie está capturando."
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__match_mode__company
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup__match_mode__company
+msgid "Whole company"
+msgstr "Toda la compañía"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Why it is paused…"
+msgstr "Por qué está pausada…"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_setup_door__wizard_id
+msgid "Wizard"
+msgstr "Asistente"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_search
+msgid "Yesterday"
+msgstr "Ayer"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_device__role__zone
+msgid "Zone camera"
+msgstr "Cámara de zona"
+
+#. module: analitix
+#: model:mail.template,subject:analitix.mail_template_device_offline
+msgid "[Analitix] {{ object.store_id.name }} — {{ object.name }} is offline"
+msgstr "[Analitix] {{ object.store_id.name }} — {{ object.name }} está fuera de línea"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
+msgid "auto"
+msgstr "automático"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_kanban
+msgid "device(s)"
+msgstr "dispositivo(s)"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_kanban
+msgid "door(s) ·"
+msgstr "puerta(s) ·"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
+msgid "e.g. Anello Morelia Centro"
+msgstr "p. ej. Anello Morelia Centro"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
+msgid "e.g. MOR-01"
+msgstr "p. ej. MOR-01"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_door_form
+msgid "e.g. North Entrance"
+msgstr "p. ej. Entrada Norte"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_form
+msgid "e.g. North door counter"
+msgstr "p. ej. Contador de la puerta norte"

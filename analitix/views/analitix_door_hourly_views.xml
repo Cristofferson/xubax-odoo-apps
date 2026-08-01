@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_door_hourly_list" model="ir.ui.view">
+        <field name="name">analitix.door.hourly.list</field>
+        <field name="model">analitix.door.hourly</field>
+        <field name="arch" type="xml">
+            <list string="Door Traffic" create="false" edit="false">
+                <field name="hour"/>
+                <field name="store_id"/>
+                <field name="door_id"/>
+                <field name="visitors_in" sum="In"/>
+                <field name="visitors_out" sum="Out"/>
+                <field name="door_share" avg="Share %"/>
+                <field name="staff_crossings" sum="Staff" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_door_hourly_graph" model="ir.ui.view">
+        <field name="name">analitix.door.hourly.graph</field>
+        <field name="model">analitix.door.hourly</field>
+        <field name="arch" type="xml">
+            <graph string="Door Traffic" type="bar" stacked="1" sample="1">
+                <field name="hour" interval="day"/>
+                <field name="door_id"/>
+                <field name="visitors_in" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_door_hourly_pivot" model="ir.ui.view">
+        <field name="name">analitix.door.hourly.pivot</field>
+        <field name="model">analitix.door.hourly</field>
+        <field name="arch" type="xml">
+            <pivot string="Door Traffic" sample="1">
+                <field name="door_id" type="row"/>
+                <field name="hour" interval="day" type="col"/>
+                <field name="visitors_in" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_door_hourly_search" model="ir.ui.view">
+        <field name="name">analitix.door.hourly.search</field>
+        <field name="model">analitix.door.hourly</field>
+        <field name="arch" type="xml">
+            <search string="Door Traffic">
+                <field name="store_id"/>
+                <field name="door_id"/>
+                <filter name="filter_7d" string="Last 7 Days"
+                        domain="[('hour', '&gt;=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_30d" string="Last 30 Days"
+                        domain="[('hour', '&gt;=', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <group name="group_by">
+                    <filter name="group_store" string="Store" domain="[]"
+                            context="{'group_by': 'store_id'}"/>
+                    <filter name="group_door" string="Door" domain="[]"
+                            context="{'group_by': 'door_id'}"/>
+                    <filter name="group_day" string="Day" domain="[]"
+                            context="{'group_by': 'hour:day'}"/>
+                    <filter name="group_hour" string="Hour of Day" domain="[]"
+                            context="{'group_by': 'hour:hour'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_door_hourly" model="ir.actions.act_window">
+        <field name="name">Door Traffic</field>
+        <field name="res_model">analitix.door.hourly</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="context">{'search_default_filter_7d': 1, 'search_default_group_door': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No door traffic yet</p>
+            <p>
+                Traffic broken down per entrance, with each door's share of the
+                store's total. Conversion is deliberately absent here: a ticket
+                belongs to the store, not to the door the customer walked through,
+                so a per-door conversion rate would be a fiction.
+            </p>
+        </field>
+    </record>
+
+</odoo>

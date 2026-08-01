@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_store_setup_form" model="ir.ui.view">
+        <field name="name">analitix.store.setup.form</field>
+        <field name="model">analitix.store.setup</field>
+        <field name="arch" type="xml">
+            <form string="New Store Setup">
+                <field name="state" invisible="1"/>
+
+                <!-- Step 1 -->
+                <div invisible="state != 'draft'">
+                    <div class="alert alert-info" role="alert">
+                        Everything that differs between customer stores lives on this
+                        screen. Add one line per entrance — one, three, seven — and
+                        Analitix creates the store, its doors, a counting device for
+                        each and their API keys in a single pass.
+                    </div>
+                    <group>
+                        <group string="Store">
+                            <field name="name" placeholder="e.g. Anello Morelia Centro"/>
+                            <field name="code" placeholder="e.g. MOR-01"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="tz"/>
+                        </group>
+                        <group string="Floor Area">
+                            <field name="area_sqm"/>
+                            <field name="sales_area_sqm"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Sales Matching">
+                            <field name="match_mode" widget="radio"/>
+                            <field name="register_ids" widget="many2many_tags"
+                                   invisible="match_mode != 'registers'"
+                                   required="match_mode == 'registers'"/>
+                        </group>
+                        <group string="Monitoring">
+                            <field name="heartbeat_interval_s"/>
+                            <field name="offline_threshold_min"/>
+                            <field name="alert_partner_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <separator string="Doors"/>
+                    <field name="door_ids">
+                        <list editable="bottom">
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="kind"/>
+                            <field name="counts_visitors"/>
+                            <field name="create_device"/>
+                            <field name="hardware" invisible="not create_device"/>
+                            <field name="device_uid" invisible="not create_device"
+                                   placeholder="auto"/>
+                        </list>
+                    </field>
+                </div>
+
+                <!-- Step 2 -->
+                <div invisible="state != 'done'">
+                    <div class="alert alert-warning" role="alert">
+                        <b>Copy these keys now.</b> Odoo keeps only a hash of them, so
+                        this screen is the one and only time they can be read. Paste
+                        each into its device's agent configuration before you leave the
+                        site. If one is lost, rotate it from the device form.
+                    </div>
+                    <group>
+                        <field name="store_id" readonly="1"/>
+                    </group>
+                    <field name="credentials" nolabel="1" readonly="1"
+                           widget="text" class="font-monospace"/>
+                </div>
+
+                <footer>
+                    <button name="action_create_store" type="object" string="Create Store"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_open_store" type="object" string="Open Store"
+                            class="btn-primary" invisible="state != 'done'"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_store_setup" model="ir.actions.act_window">
+        <field name="name">New Store Setup</field>
+        <field name="res_model">analitix.store.setup</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

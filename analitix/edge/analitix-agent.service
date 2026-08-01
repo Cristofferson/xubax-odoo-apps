@@ -1,0 +1,42 @@
+[Unit]
+Description=Analitix edge counting agent
+Documentation=https://www.xubax.com
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=analitix
+Group=analitix
+ExecStart=/opt/analitix/venv/bin/python3 /opt/analitix/analitix_agent.py --config /etc/analitix/agent.yaml
+
+# Always come back. A store's mini-PC is unattended: nobody is going to notice
+# a crashed agent for days, and every minute it is down is a minute of the
+# customer's traffic that no longer exists.
+Restart=always
+RestartSec=10
+
+# The queue and its key live here and must outlive a reboot.
+StateDirectory=analitix
+StateDirectoryMode=0700
+
+# Hardening: this process only needs to read a camera, write one directory and
+# talk HTTPS. Everything else is closed, so a compromised agent is a poor
+# foothold into the store's network.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+ReadWritePaths=/var/lib/analitix
+# Cameras only; drop this line on a demo-source install.
+DeviceAllow=char-video4linux rw
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=analitix-agent
+
+[Install]
+WantedBy=multi-user.target

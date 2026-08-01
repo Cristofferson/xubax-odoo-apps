@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_event_list" model="ir.ui.view">
+        <field name="name">analitix.event.list</field>
+        <field name="model">analitix.event</field>
+        <field name="arch" type="xml">
+            <list string="Crossing Events" create="false" decoration-muted="not counted">
+                <field name="event_time"/>
+                <field name="store_id"/>
+                <field name="door_id"/>
+                <field name="device_id" optional="hide"/>
+                <field name="direction"/>
+                <field name="count" sum="People"/>
+                <field name="counted"/>
+                <field name="staff_id" optional="show"/>
+                <field name="match_score" optional="hide"/>
+                <field name="received_at" optional="hide"/>
+                <field name="uuid" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_event_form" model="ir.ui.view">
+        <field name="name">analitix.event.form</field>
+        <field name="model">analitix.event</field>
+        <field name="arch" type="xml">
+            <form string="Crossing Event" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="event_time"/>
+                            <field name="received_at"/>
+                            <field name="direction"/>
+                            <field name="count"/>
+                        </group>
+                        <group>
+                            <field name="store_id"/>
+                            <field name="door_id"/>
+                            <field name="device_id"/>
+                            <field name="uuid"/>
+                        </group>
+                    </group>
+                    <group string="Visitor Counting">
+                        <field name="counted"/>
+                        <field name="staff_id"/>
+                        <field name="match_score"/>
+                        <field name="track_ref"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_event_graph" model="ir.ui.view">
+        <field name="name">analitix.event.graph</field>
+        <field name="model">analitix.event</field>
+        <field name="arch" type="xml">
+            <graph string="Crossings" type="line" sample="1">
+                <field name="event_time" interval="hour"/>
+                <field name="count" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_event_pivot" model="ir.ui.view">
+        <field name="name">analitix.event.pivot</field>
+        <field name="model">analitix.event</field>
+        <field name="arch" type="xml">
+            <pivot string="Crossings" sample="1">
+                <field name="door_id" type="row"/>
+                <field name="event_time" interval="day" type="col"/>
+                <field name="count" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_event_search" model="ir.ui.view">
+        <field name="name">analitix.event.search</field>
+        <field name="model">analitix.event</field>
+        <field name="arch" type="xml">
+            <search string="Crossing Events">
+                <field name="store_id"/>
+                <field name="door_id"/>
+                <field name="device_id"/>
+                <field name="uuid"/>
+                <filter name="filter_in" string="Entrances"
+                        domain="[('direction', '=', 'in')]"/>
+                <filter name="filter_out" string="Exits"
+                        domain="[('direction', '=', 'out')]"/>
+                <separator/>
+                <filter name="filter_counted" string="Counted as Visitors"
+                        domain="[('counted', '=', True)]"/>
+                <filter name="filter_staff" string="Staff (Excluded)"
+                        domain="[('counted', '=', False)]"/>
+                <separator/>
+                <filter name="filter_today" string="Today"
+                        domain="[('event_time', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)))]"/>
+                <filter name="filter_7d" string="Last 7 Days"
+                        domain="[('event_time', '&gt;=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <group name="group_by">
+                    <filter name="group_store" string="Store" domain="[]"
+                            context="{'group_by': 'store_id'}"/>
+                    <filter name="group_door" string="Door" domain="[]"
+                            context="{'group_by': 'door_id'}"/>
+                    <filter name="group_direction" string="Direction" domain="[]"
+                            context="{'group_by': 'direction'}"/>
+                    <filter name="group_hour" string="Hour" domain="[]"
+                            context="{'group_by': 'event_time:hour'}"/>
+                    <filter name="group_day" string="Day" domain="[]"
+                            context="{'group_by': 'event_time:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_event" model="ir.actions.act_window">
+        <field name="name">Crossing Events</field>
+        <field name="res_model">analitix.event</field>
+        <field name="view_mode">list,graph,pivot,form</field>
+        <field name="context">{'search_default_filter_7d': 1}</field>
+    </record>
+
+</odoo>

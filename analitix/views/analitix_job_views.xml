@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_job_list" model="ir.ui.view">
+        <field name="name">analitix.job.list</field>
+        <field name="model">analitix.job</field>
+        <field name="arch" type="xml">
+            <list string="Background Jobs" create="false"
+                  decoration-danger="state == 'failed'"
+                  decoration-warning="state == 'running'"
+                  decoration-muted="state == 'done'">
+                <field name="create_date" string="Queued"/>
+                <field name="kind"/>
+                <field name="store_id"/>
+                <field name="priority" optional="hide"/>
+                <field name="scheduled_at"/>
+                <field name="attempts"/>
+                <field name="duration_ms" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'done'"
+                       decoration-warning="state == 'running'"
+                       decoration-danger="state == 'failed'"/>
+                <button name="action_retry" type="object" string="Retry"
+                        icon="fa-refresh" invisible="state != 'failed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_job_form" model="ir.ui.view">
+        <field name="name">analitix.job.form</field>
+        <field name="model">analitix.job</field>
+        <field name="arch" type="xml">
+            <form string="Background Job" create="false">
+                <header>
+                    <button name="action_retry" type="object" string="Retry"
+                            class="btn-primary" invisible="state != 'failed'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="pending,running,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="kind"/>
+                            <field name="store_id"/>
+                            <field name="priority"/>
+                            <field name="scheduled_at"/>
+                        </group>
+                        <group>
+                            <field name="attempts"/>
+                            <field name="max_attempts"/>
+                            <field name="started_at"/>
+                            <field name="finished_at"/>
+                            <field name="duration_ms"/>
+                        </group>
+                    </group>
+                    <group string="Payload">
+                        <field name="payload" nolabel="1" widget="ace"
+                               options="{'mode': 'json'}"/>
+                    </group>
+                    <group string="Error" invisible="not error">
+                        <field name="error" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_job_search" model="ir.ui.view">
+        <field name="name">analitix.job.search</field>
+        <field name="model">analitix.job</field>
+        <field name="arch" type="xml">
+            <search string="Background Jobs">
+                <field name="kind"/>
+                <field name="store_id"/>
+                <filter name="filter_pending" string="Pending"
+                        domain="[('state', '=', 'pending')]"/>
+                <filter name="filter_failed" string="Failed"
+                        domain="[('state', '=', 'failed')]"/>
+                <filter name="filter_late" string="Late"
+                        domain="[('state', '=', 'pending'), ('scheduled_at', '&lt;', (datetime.datetime.now() - datetime.timedelta(minutes=15)).strftime('%Y-%m-%d %H:%M:%S'))]"
+                        help="Queued more than fifteen minutes ago and still not run. Usually means the Odoo cron is not running."/>
+                <group name="group_by">
+                    <filter name="group_kind" string="Kind" domain="[]"
+                            context="{'group_by': 'kind'}"/>
+                    <filter name="group_state" string="State" domain="[]"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_store" string="Store" domain="[]"
+                            context="{'group_by': 'store_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_job" model="ir.actions.act_window">
+        <field name="name">Background Jobs</field>
+        <field name="res_model">analitix.job</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_group_state': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">The queue is empty</p>
+            <p>
+                Face matching, signage triggers and CRM writes run here instead of
+                on the ingest request, so a slow integration can never hold up a
+                store's counting. A growing backlog here means the Odoo scheduler
+                is not running.
+            </p>
+        </field>
+    </record>
+
+</odoo>

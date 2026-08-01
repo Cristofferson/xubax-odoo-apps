@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  noupdate is deliberately OFF here, unlike most Odoo security files.
+
+  These rules are the tenant boundary. If one of them ever turns out to be
+  wrong, the fix has to reach every existing installation on upgrade — and
+  with noupdate="1" it would not: the flawed rule would sit in each customer's
+  database forever while the repository looked correct.
+
+  The trade is that a customer who hand-edited a rule loses that edit on
+  upgrade. For an isolation rule that is the right way round: a local edit
+  must not be able to outlive a security fix.
+-->
+<odoo>
+
+    <!--
+      Tenant isolation (task 984, point 5).
+
+      Every rule below is GLOBAL — no groups attached — so it binds managers and
+      technicians exactly as it binds a salesperson. A permission group must
+      never be a way around it: on a shared SaaS instance, "manager of store A"
+      and "may read store B" are unrelated statements.
+
+      Each rule is two conditions AND-ed together:
+
+        1. the record's company is one the user may see (Odoo's own switcher);
+        2. the record's store is one the user is scoped to.
+
+      Condition 2 uses the pattern
+          '|', ('store_id', 'in', user.analitix_store_ids.ids),
+               ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))
+      which reads as: *either the store is in my list, or I have no list at
+      all.* No list means a single-store customer who should not have to
+      configure anything; the moment an implementer assigns stores, the second
+      branch turns false and the user is locked to exactly what they were
+      given. tests/test_isolation.py proves the locked case with two customers
+      sharing one instance.
+    -->
+
+    <record id="rule_store_scope" model="ir.rule">
+        <field name="name">Analitix Store: company and store scope</field>
+        <field name="model_id" ref="model_analitix_store"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+    </record>
+
+    <record id="rule_door_scope" model="ir.rule">
+        <field name="name">Analitix Door: company and store scope</field>
+        <field name="model_id" ref="model_analitix_door"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+    </record>
+
+    <record id="rule_device_scope" model="ir.rule">
+        <field name="name">Analitix Device: company and store scope</field>
+        <field name="model_id" ref="model_analitix_device"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+    </record>
+
+    <record id="rule_event_scope" model="ir.rule">
+        <field name="name">Analitix Event: company and store scope</field>
+        <field name="model_id" ref="model_analitix_event"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+    </record>
+
+    <record id="rule_staff_signature_scope" model="ir.rule">
+        <field name="name">Analitix Staff Signature: company and store scope</field>
+        <field name="model_id" ref="model_analitix_staff_signature"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+    </record>
+
+    <record id="rule_job_scope" model="ir.rule">
+        <field name="name">Analitix Job: company and store scope</field>
+        <field name="model_id" ref="model_analitix_job"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('store_id', '=', False), '&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+    </record>
+
+    <record id="rule_audit_scope" model="ir.rule">
+        <field name="name">Analitix Audit Log: company scope</field>
+        <field name="model_id" ref="model_analitix_audit_log"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_hourly_scope" model="ir.rule">
+        <field name="name">Analitix Hourly: company and store scope</field>
+        <field name="model_id" ref="model_analitix_hourly"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+    </record>
+
+    <record id="rule_door_hourly_scope" model="ir.rule">
+        <field name="name">Analitix Door Traffic: company and store scope</field>
+        <field name="model_id" ref="model_analitix_door_hourly"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+    </record>
+
+</odoo>

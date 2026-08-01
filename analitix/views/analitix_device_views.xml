@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_device_list" model="ir.ui.view">
+        <field name="name">analitix.device.list</field>
+        <field name="model">analitix.device</field>
+        <field name="arch" type="xml">
+            <list string="Devices"
+                  decoration-danger="status in ('offline', 'never_seen') and critical"
+                  decoration-warning="status == 'degraded'"
+                  decoration-muted="not active or api_key_revoked">
+                <field name="store_id"/>
+                <field name="door_id"/>
+                <field name="name"/>
+                <field name="device_uid"/>
+                <field name="role"/>
+                <field name="critical" optional="show"/>
+                <field name="status" widget="badge"
+                       decoration-success="status == 'online'"
+                       decoration-warning="status == 'degraded'"
+                       decoration-danger="status in ('offline', 'never_seen')"/>
+                <field name="last_heartbeat"/>
+                <field name="events_last_hour" optional="show"/>
+                <field name="edge_queue_size" optional="hide"/>
+                <field name="agent_version" optional="hide"/>
+                <field name="api_key_revoked" column_invisible="True"/>
+                <field name="active" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_device_form" model="ir.ui.view">
+        <field name="name">analitix.device.form</field>
+        <field name="model">analitix.device</field>
+        <field name="arch" type="xml">
+            <form string="Device">
+                <header>
+                    <button name="action_rotate_key" type="object"
+                            string="Rotate API Key" class="btn-primary"
+                            groups="analitix.group_manager,analitix.group_technician"
+                            confirm="Issue a new key? The current one stops working immediately, and the new one is shown only once."/>
+                    <button name="action_revoke_key" type="object"
+                            string="Revoke" class="btn-danger"
+                            invisible="api_key_revoked"
+                            groups="analitix.group_manager"
+                            confirm="Cut this device off now? It will be refused by the ingest endpoint until a new key is issued. Use this for stolen or decommissioned hardware."/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Revoked" bg_color="text-bg-danger"
+                            invisible="not api_key_revoked"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_events" type="object"
+                                class="oe_stat_button" icon="fa-exchange">
+                            <field name="event_count" widget="statinfo" string="Events"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" string="Device"/>
+                        <h1><field name="name" placeholder="e.g. North door counter"/></h1>
+                    </div>
+                    <group>
+                        <group string="Placement">
+                            <field name="store_id"/>
+                            <field name="door_id"/>
+                            <field name="role"/>
+                            <field name="kind"/>
+                            <field name="critical"/>
+                            <field name="active"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Health">
+                            <field name="status" widget="badge"
+                                   decoration-success="status == 'online'"
+                                   decoration-warning="status == 'degraded'"
+                                   decoration-danger="status in ('offline', 'never_seen')"/>
+                            <field name="last_heartbeat"/>
+                            <field name="last_event_at"/>
+                            <field name="offline_since" invisible="not offline_since"/>
+                            <field name="agent_version"/>
+                            <field name="edge_queue_size"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Credentials">
+                            <field name="device_uid"/>
+                            <field name="api_key_hint"/>
+                            <field name="api_key_generated_at"/>
+                            <field name="api_key_revoked"/>
+                        </group>
+                        <group string="Ingest Volume">
+                            <field name="events_last_hour"/>
+                            <field name="baseline_hourly_events"/>
+                            <field name="anomaly_factor"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert">
+                        Odoo stores only a hash of the API key, so it cannot be
+                        read back — it is shown once when issued or rotated. If a
+                        key is lost, rotate it and reconfigure the device.
+                    </div>
+                    <notebook>
+                        <page string="Edge Configuration" name="config">
+                            <p class="text-muted">
+                                JSON handed to the agent when it calls
+                                <code>/analitix/api/v1/config</code>: line coordinates,
+                                camera index, zone polygons. Retune a camera from here
+                                instead of going back to the store with a laptop.
+                            </p>
+                            <field name="config_json" widget="ace" options="{'mode': 'json'}"/>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_device_search" model="ir.ui.view">
+        <field name="name">analitix.device.search</field>
+        <field name="model">analitix.device</field>
+        <field name="arch" type="xml">
+            <search string="Devices">
+                <field name="name"/>
+                <field name="device_uid"/>
+                <field name="store_id"/>
+                <filter name="filter_offline" string="Offline"
+                        domain="[('status', 'in', ('offline', 'never_seen'))]"/>
+                <filter name="filter_critical" string="Critical"
+                        domain="[('critical', '=', True)]"/>
+                <filter name="filter_revoked" string="Revoked"
+                        domain="[('api_key_revoked', '=', True)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_store" string="Store" domain="[]"
+                            context="{'group_by': 'store_id'}"/>
+                    <filter name="group_door" string="Door" domain="[]"
+                            context="{'group_by': 'door_id'}"/>
+                    <filter name="group_status" string="Status" domain="[]"
+                            context="{'group_by': 'status'}"/>
+                    <filter name="group_role" string="Role" domain="[]"
+                            context="{'group_by': 'role'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_device" model="ir.actions.act_window">
+        <field name="name">Devices</field>
+        <field name="res_model">analitix.device</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_group_store': 1}</field>
+    </record>
+
+    <!-- The technical dashboard of task 982: device health, not sales. -->
+    <record id="action_device_health" model="ir.actions.act_window">
+        <field name="name">Device Health</field>
+        <field name="res_model">analitix.device</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_group_status': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Every device is reporting</p>
+            <p>
+                Devices appear here grouped by status. A critical device that
+                stops sending heartbeats raises an activity and an e-mail to the
+                store's technical contacts, because while it is down that store's
+                conversion figures are incomplete.
+            </p>
+        </field>
+    </record>
+
+</odoo>

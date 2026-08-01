@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_store_list" model="ir.ui.view">
+        <field name="name">analitix.store.list</field>
+        <field name="model">analitix.store</field>
+        <field name="arch" type="xml">
+            <list string="Stores" decoration-danger="health_state == 'down'"
+                  decoration-warning="health_state == 'degraded'"
+                  decoration-muted="health_state == 'paused'">
+                <field name="name"/>
+                <field name="code" optional="show"/>
+                <field name="door_count" string="Doors"/>
+                <field name="device_count" string="Devices"/>
+                <field name="visitors_in" string="Visitors Today" sum="Visitors"/>
+                <field name="live_occupancy" string="Inside Now"/>
+                <field name="health_state" widget="badge"
+                       decoration-success="health_state == 'ok'"
+                       decoration-warning="health_state == 'degraded'"
+                       decoration-danger="health_state == 'down'"/>
+                <field name="last_event_time" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_store_form" model="ir.ui.view">
+        <field name="name">analitix.store.form</field>
+        <field name="model">analitix.store</field>
+        <field name="arch" type="xml">
+            <form string="Store">
+                <header>
+                    <button name="action_pause_capture" type="object"
+                            string="Pause Capture" class="btn-danger"
+                            invisible="not capture_enabled"
+                            groups="analitix.group_manager"
+                            confirm="Stop capturing data for this store right now? Devices will be refused until you resume. Their local buffers keep the events, so nothing is lost while it is paused."/>
+                    <button name="action_resume_capture" type="object"
+                            string="Resume Capture" class="btn-primary"
+                            invisible="capture_enabled"
+                            groups="analitix.group_manager"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <widget name="web_ribbon" title="Capture Paused" bg_color="text-bg-warning"
+                            invisible="capture_enabled"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_doors" type="object"
+                                class="oe_stat_button" icon="fa-sign-in">
+                            <field name="door_count" widget="statinfo" string="Doors"/>
+                        </button>
+                        <button name="action_view_devices" type="object"
+                                class="oe_stat_button" icon="fa-video-camera">
+                            <field name="device_count" widget="statinfo" string="Devices"/>
+                        </button>
+                        <button name="action_view_events" type="object"
+                                class="oe_stat_button" icon="fa-exchange">
+                            <field name="visitors_in" widget="statinfo" string="Visitors Today"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" string="Store"/>
+                        <h1><field name="name" placeholder="e.g. Anello Morelia Centro"/></h1>
+                        <field name="active" invisible="1"/>
+                    </div>
+                    <group>
+                        <group name="identity">
+                            <field name="code"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="tz"/>
+                            <field name="health_state" widget="badge"
+                                   decoration-success="health_state == 'ok'"
+                                   decoration-warning="health_state == 'degraded'"
+                                   decoration-danger="health_state == 'down'"/>
+                        </group>
+                        <group name="live">
+                            <field name="live_occupancy"/>
+                            <field name="visitors_in"/>
+                            <field name="visitors_out"/>
+                            <field name="last_event_time"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-warning" role="alert" invisible="capture_enabled">
+                        Capture is paused. Nothing is being recorded for this store.
+                        <field name="capture_paused_reason" placeholder="Why it is paused…"
+                               class="oe_inline"/>
+                        <field name="capture_paused_by_id" readonly="1" class="oe_inline"/>
+                        <field name="capture_paused_at" readonly="1" class="oe_inline"/>
+                    </div>
+                    <notebook>
+                        <page string="Doors" name="doors">
+                            <p class="text-muted">
+                                One line per entrance. A store may have as many as it
+                                actually has — the rest of Analitix follows this list.
+                            </p>
+                            <field name="door_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="kind"/>
+                                    <field name="counts_visitors"/>
+                                    <field name="device_count" string="Devices"/>
+                                    <field name="visitors_today"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Devices" name="devices">
+                            <field name="device_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="device_uid"/>
+                                    <field name="door_id"/>
+                                    <field name="role"/>
+                                    <field name="critical"/>
+                                    <field name="status" widget="badge"
+                                           decoration-success="status == 'online'"
+                                           decoration-warning="status == 'degraded'"
+                                           decoration-danger="status in ('offline', 'never_seen')"/>
+                                    <field name="last_heartbeat"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Sales Matching" name="sales">
+                            <group>
+                                <field name="match_mode" widget="radio"/>
+                                <field name="register_ids" widget="many2many_tags"
+                                       invisible="match_mode != 'registers'"
+                                       required="match_mode == 'registers'"/>
+                            </group>
+                            <group string="Floor Area">
+                                <field name="area_sqm"/>
+                                <field name="sales_area_sqm"/>
+                            </group>
+                        </page>
+                        <page string="Staff Exclusion" name="staff">
+                            <group>
+                                <field name="exclude_staff"/>
+                                <field name="staff_match_threshold"
+                                       invisible="not exclude_staff"/>
+                            </group>
+                            <p class="text-muted">
+                                Employees cross the door all day. Left in the count they
+                                can be a third of the "visitors", which drags the
+                                conversion rate down and keeps it there.
+                            </p>
+                            <field name="staff_signature_ids" invisible="not exclude_staff">
+                                <list>
+                                    <field name="employee_id"/>
+                                    <field name="model_name"/>
+                                    <field name="embedding_dim"/>
+                                    <field name="enrolled_on"/>
+                                    <field name="match_count"/>
+                                    <field name="last_match"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Monitoring" name="monitoring"
+                              groups="analitix.group_manager,analitix.group_technician">
+                            <group>
+                                <group string="Thresholds">
+                                    <field name="heartbeat_interval_s"/>
+                                    <field name="degraded_threshold_min"/>
+                                    <field name="offline_threshold_min"/>
+                                </group>
+                                <group string="Who Gets Told">
+                                    <field name="alert_user_id"/>
+                                    <field name="alert_partner_ids" widget="many2many_tags"/>
+                                    <field name="device_offline_count"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note" placeholder="Anything the next implementer should know about this site…"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_store_kanban" model="ir.ui.view">
+        <field name="name">analitix.store.kanban</field>
+        <field name="model">analitix.store</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_dashboard">
+                <field name="health_state"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="o_kanban_card_header">
+                            <strong class="fs-5"><field name="name"/></strong>
+                            <field name="health_state" widget="badge"
+                                   class="float-end"
+                                   decoration-success="health_state == 'ok'"
+                                   decoration-warning="health_state == 'degraded'"
+                                   decoration-danger="health_state == 'down'"/>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-6">
+                                <span class="text-muted d-block small">Inside now</span>
+                                <span class="fs-4"><field name="live_occupancy"/></span>
+                            </div>
+                            <div class="col-6">
+                                <span class="text-muted d-block small">Visitors today</span>
+                                <span class="fs-4"><field name="visitors_in"/></span>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-muted small">
+                            <field name="door_count"/> door(s) ·
+                            <field name="device_count"/> device(s)
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_store_search" model="ir.ui.view">
+        <field name="name">analitix.store.search</field>
+        <field name="model">analitix.store</field>
+        <field name="arch" type="xml">
+            <search string="Stores">
+                <field name="name"/>
+                <field name="code"/>
+                <filter name="filter_paused" string="Capture Paused"
+                        domain="[('capture_enabled', '=', False)]"/>
+                <filter name="filter_unhealthy" string="Needs Attention"
+                        domain="[('device_offline_count', '&gt;', 0)]"/>
+                <separator/>
+                <!-- These re-scope the live occupancy cards; see
+                     analitix.store._period_window. -->
+                <filter name="period_today" string="Today"
+                        context="{'analitix_period': 'today'}"/>
+                <filter name="period_yesterday" string="Yesterday"
+                        context="{'analitix_period': 'yesterday'}"/>
+                <filter name="period_week" string="This Week"
+                        context="{'analitix_period': 'week'}"/>
+                <filter name="period_month" string="This Month"
+                        context="{'analitix_period': 'month'}"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_company" string="Company" domain="[]"
+                            context="{'group_by': 'company_id'}"
+                            groups="base.group_multi_company"/>
+                    <filter name="group_health" string="Health" domain="[]"
+                            context="{'group_by': 'health_state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_store" model="ir.actions.act_window">
+        <field name="name">Stores</field>
+        <field name="res_model">analitix.store</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Set up your first store</p>
+            <p>
+                Use <b>Configuration → New Store Setup</b> to create a store with
+                all its doors and their device keys in one pass.
+            </p>
+        </field>
+    </record>
+
+</odoo>

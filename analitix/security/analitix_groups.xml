@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Odoo 19 groups hang off a res.groups.privilege, which is what
+             renders the three-way selector on the user form. -->
+        <record id="res_groups_privilege_analitix" model="res.groups.privilege">
+            <field name="name">Analitix</field>
+            <field name="sequence">30</field>
+            <field name="category_id" ref="base.module_category_sales_point_of_sale"/>
+        </record>
+
+        <!-- Reads the store's numbers: the salesperson, and the owner who only
+             wants the dashboard. No configuration, no credentials, no biometrics. -->
+        <record id="group_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="sequence">10</field>
+            <field name="privilege_id" ref="res_groups_privilege_analitix"/>
+            <field name="comment">See this store's traffic and conversion dashboards.</field>
+        </record>
+
+        <!-- The implementer. Task 982 asks for a technical dashboard separate
+             from the owner's commercial one, and task 983 lists this role
+             explicitly; defining it now means the person who keeps the cameras
+             alive does not have to be handed the customer's sales figures to do
+             that job. Phase 7 extends the hierarchy above these three, it does
+             not replace this split. -->
+        <record id="group_technician" model="res.groups">
+            <field name="name">Technician / Implementer</field>
+            <field name="sequence">20</field>
+            <field name="privilege_id" ref="res_groups_privilege_analitix"/>
+            <field name="implied_ids" eval="[(4, ref('group_user'))]"/>
+            <field name="comment">Device health, ingest diagnostics and the job queue, without access to sales figures.</field>
+        </record>
+
+        <!-- Configures the store: doors, thresholds, staff enrolment, kill switch. -->
+        <record id="group_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="sequence">30</field>
+            <field name="privilege_id" ref="res_groups_privilege_analitix"/>
+            <field name="implied_ids" eval="[(4, ref('group_user')), (4, ref('group_technician'))]"/>
+            <field name="comment">Configure stores, doors and devices, enrol staff signatures and use the capture kill switch.</field>
+            <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+
+    </data>
+</odoo>

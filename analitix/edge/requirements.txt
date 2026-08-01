@@ -1,0 +1,14 @@
+# Always required by the agent.
+requests>=2.25
+cryptography>=3.4
+PyYAML>=5.4
+
+# Only for `source: line` (a real camera). A demo-source install, and any
+# deployment fed by CCTV people-counting, needs none of this — which is also
+# why none of it is ever a dependency of the Odoo addon.
+# ultralytics>=8.1
+# opencv-python-headless>=4.8
+
+# Only if this device also does demographics or face matching (phases 2-3).
+# insightface>=0.7
+# onnxruntime>=1.16

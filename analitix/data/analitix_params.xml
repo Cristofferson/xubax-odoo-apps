@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Escape hatch for a lab bench or a first-boot install with no
+             certificate yet. Left OFF: the ingest endpoint refuses plaintext
+             HTTP by default (task 984, point 1), and a deployment that turns
+             this on is making a conscious, reversible choice rather than
+             discovering months later that a store has been posting in the
+             clear. -->
+        <record id="param_allow_insecure_ingest" model="ir.config_parameter">
+            <field name="key">analitix.allow_insecure_ingest</field>
+            <field name="value">0</field>
+        </record>
+
+        <!-- How long raw crossings are kept before the retention cron prunes
+             them. The hourly aggregates are views over this table, so shrinking
+             it shortens the history the dashboards can reach — which is why it
+             is a parameter the customer's data-retention policy sets, not a
+             constant. 0 disables pruning. -->
+        <record id="param_event_retention_days" model="ir.config_parameter">
+            <field name="key">analitix.event_retention_days</field>
+            <field name="value">0</field>
+        </record>
+
+    </data>
+</odoo>

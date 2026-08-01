@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Silence is the failure mode that no inbound request can report,
+             so it has to be polled. Every minute: a store paying for live
+             conversion should not learn at closing time that its counter died
+             at ten in the morning. -->
+        <record id="cron_device_health" model="ir.cron">
+            <field name="name">Analitix: check device health</field>
+            <field name="model_id" ref="model_analitix_device"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_check_health()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="cron_run_jobs" model="ir.cron">
+            <field name="name">Analitix: run background jobs</field>
+            <field name="model_id" ref="model_analitix_job"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_run()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="cron_vacuum_jobs" model="ir.cron">
+            <field name="name">Analitix: clean finished jobs</field>
+            <field name="model_id" ref="model_analitix_job"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_vacuum()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Hourly, because the baseline it maintains is an hourly rate and
+             sampling it faster would just add noise. -->
+        <record id="cron_ingest_baselines" model="ir.cron">
+            <field name="name">Analitix: refresh ingest baselines and flag anomalies</field>
+            <field name="model_id" ref="model_analitix_device"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_update_baselines()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="cron_event_retention" model="ir.cron">
+            <field name="name">Analitix: apply event retention policy</field>
+            <field name="model_id" ref="model_analitix_event"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_apply_retention()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

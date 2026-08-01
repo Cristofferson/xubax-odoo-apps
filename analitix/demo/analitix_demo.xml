@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+          Two stores on purpose, and deliberately different shapes:
+
+            * "Boutique Centro" has ONE door — the ordinary small retailer.
+            * "Galería Plaza" has THREE, one of which is a staff door that does
+              not count visitors — the mall unit.
+
+          Anyone reviewing this addon can open both and see that nothing is
+          pinned to a fixed number of entrances, which is the product's whole
+          selling premise. The demo also makes every screenshot and video in
+          phase 6 reproducible without a single camera.
+        -->
+
+        <record id="demo_store_boutique" model="analitix.store">
+            <field name="name">Boutique Centro (demo)</field>
+            <field name="code">DEMO-01</field>
+            <field name="match_mode">company</field>
+            <field name="area_sqm">85</field>
+            <field name="sales_area_sqm">70</field>
+            <field name="heartbeat_interval_s">60</field>
+            <field name="offline_threshold_min">5</field>
+            <field name="exclude_staff" eval="True"/>
+        </record>
+
+        <record id="demo_door_boutique_main" model="analitix.door">
+            <field name="store_id" ref="demo_store_boutique"/>
+            <field name="name">Main Entrance</field>
+            <field name="code">M</field>
+            <field name="kind">main</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="demo_device_boutique_main" model="analitix.device">
+            <field name="name">Main entrance counter</field>
+            <field name="device_uid">demo01-main-counter</field>
+            <field name="store_id" ref="demo_store_boutique"/>
+            <field name="door_id" ref="demo_door_boutique_main"/>
+            <field name="role">door_counter</field>
+            <field name="kind">depth_cam</field>
+            <field name="critical" eval="True"/>
+        </record>
+
+        <!-- Three doors, to prove the point. -->
+        <record id="demo_store_mall" model="analitix.store">
+            <field name="name">Galería Plaza (demo)</field>
+            <field name="code">DEMO-02</field>
+            <field name="match_mode">company</field>
+            <field name="area_sqm">240</field>
+            <field name="sales_area_sqm">195</field>
+            <field name="heartbeat_interval_s">60</field>
+            <field name="offline_threshold_min">10</field>
+            <field name="exclude_staff" eval="True"/>
+        </record>
+
+        <record id="demo_door_mall_street" model="analitix.door">
+            <field name="store_id" ref="demo_store_mall"/>
+            <field name="name">Street Entrance</field>
+            <field name="code">S</field>
+            <field name="kind">main</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="demo_door_mall_gallery" model="analitix.door">
+            <field name="store_id" ref="demo_store_mall"/>
+            <field name="name">Gallery Entrance</field>
+            <field name="code">G</field>
+            <field name="kind">mall</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- Measured, but kept out of the conversion denominator. -->
+        <record id="demo_door_mall_service" model="analitix.door">
+            <field name="store_id" ref="demo_store_mall"/>
+            <field name="name">Service Door</field>
+            <field name="code">V</field>
+            <field name="kind">service</field>
+            <field name="counts_visitors" eval="False"/>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="demo_device_mall_street" model="analitix.device">
+            <field name="name">Street counter</field>
+            <field name="device_uid">demo02-street-counter</field>
+            <field name="store_id" ref="demo_store_mall"/>
+            <field name="door_id" ref="demo_door_mall_street"/>
+            <field name="role">door_counter</field>
+            <field name="kind">depth_cam</field>
+        </record>
+
+        <record id="demo_device_mall_gallery" model="analitix.device">
+            <field name="name">Gallery counter</field>
+            <field name="device_uid">demo02-gallery-counter</field>
+            <field name="store_id" ref="demo_store_mall"/>
+            <field name="door_id" ref="demo_door_mall_gallery"/>
+            <field name="role">door_counter</field>
+            <field name="kind">depth_cam</field>
+        </record>
+
+        <record id="demo_device_mall_service" model="analitix.device">
+            <field name="name">Service door counter</field>
+            <field name="device_uid">demo02-service-counter</field>
+            <field name="store_id" ref="demo_store_mall"/>
+            <field name="door_id" ref="demo_door_mall_service"/>
+            <field name="role">door_counter</field>
+            <field name="kind">ir_beam</field>
+            <field name="critical" eval="False"/>
+        </record>
+
+        <!-- Two weeks of plausible traffic, generated in Python because a
+             realistic day curve is not something to hand-write in XML. -->
+        <function model="analitix.store" name="_generate_demo_traffic">
+            <value eval="[ref('demo_store_boutique'), ref('demo_store_mall')]"/>
+        </function>
+
+    </data>
+</odoo>
