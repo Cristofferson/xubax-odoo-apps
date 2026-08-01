@@ -16,7 +16,8 @@
                 <field name="summary"/>
                 <field name="user_id"/>
                 <field name="was_fallback" optional="show"/>
-                <field name="channel" optional="show"/>
+                <field name="channel_summary" optional="show"/>
+                <field name="delivered" optional="hide"/>
                 <field name="response_seconds" avg="Avg response" optional="show"/>
                 <field name="outcome" widget="badge"
                        decoration-success="outcome == 'sold'"
@@ -49,7 +50,8 @@
                             <field name="zone_id"/>
                             <field name="kind"/>
                             <field name="sent_at"/>
-                            <field name="channel"/>
+                            <field name="channel_summary"/>
+                            <field name="delivered"/>
                         </group>
                         <group>
                             <field name="user_id"/>
@@ -87,6 +89,9 @@
                         domain="[('acknowledged', '=', False)]"/>
                 <filter name="filter_missed" string="Missed"
                         domain="[('outcome', '=', 'missed')]"/>
+                <filter name="filter_undelivered" string="Never Reached Anybody"
+                        domain="[('delivered', '=', False)]"
+                        help="Recorded but delivered on no channel — usually no recipient, or a channel switched on but not configured."/>
                 <filter name="filter_escalated" string="Escalated"
                         domain="[('was_fallback', '=', True)]"
                         help="Nobody was rostered on that zone. A lot of these means the shift map is wrong."/>
@@ -104,6 +109,8 @@
                             context="{'group_by': 'zone_id'}"/>
                     <filter name="group_outcome" string="Outcome" domain="[]"
                             context="{'group_by': 'outcome'}"/>
+                    <filter name="group_channel" string="Channels" domain="[]"
+                            context="{'group_by': 'channel_summary'}"/>
                     <filter name="group_day" string="Day" domain="[]"
                             context="{'group_by': 'sent_at:day'}"/>
                 </group>
@@ -119,9 +126,15 @@
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">No alerts</p>
             <p>
-                Discreet nudges to the salesperson covering a zone — through the
-                Odoo mobile app, and optionally WhatsApp. <b>Never anything
-                audible, and never anything the customer can see.</b>
+                Nudges to the salesperson covering a zone. Three channels are
+                <b>discreet</b> — only they notice: the Odoo mobile app, Odoo's
+                internal chat, and WhatsApp.
+            </p>
+            <p>
+                Two more are available and <b>off by default</b> because the
+                customer may perceive them: an audible chime, and a message on
+                the signage screen. Switch them on knowingly — the store form
+                spells out what each one costs in discretion.
             </p>
             <p>
                 Every one is recorded with who received it and whether they

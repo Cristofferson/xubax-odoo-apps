@@ -235,17 +235,49 @@ class AnalitixStore(models.Model):
              "shop can actually contact — a lead with no name and no phone is "
              "filing clutter that buries the real ones.")
 
-    # --- the discreet alert channel ---
-    alert_channel = fields.Selection(
-        selection=[
-            ("bus", "Odoo mobile app"),
-            ("whatsapp", "WhatsApp"),
-            ("both", "Both"),
-        ],
-        string="Alert Channel", default="bus", required=True,
-        help="How the assigned salesperson is nudged. There is deliberately no "
-             "audible or on-screen option: the customer must never perceive "
-             "that they are being discussed.")
+    # --- alert channels ---
+    #
+    # Independent switches rather than one selection: a store may well want the
+    # app push *and* Discuss, or Discuss for the floor and WhatsApp for the
+    # manager. Any combination is legitimate, and forcing a single choice made
+    # the common ones impossible.
+    #
+    # The first three are discreet — only the assigned salesperson perceives
+    # them. The last two are not, and are labelled as such rather than hidden:
+    # the shop owner decides how their own floor works, and a checkbox that
+    # tells the truth about its consequence is more useful than one that is
+    # absent because a developer disapproved.
+    alert_use_app = fields.Boolean(
+        string="Odoo Mobile App", default=True,
+        help="Push notification and activity on the salesperson's phone. "
+             "Discreet: only they see it.")
+    alert_use_discuss = fields.Boolean(
+        string="Odoo Chat (Discuss)", default=False,
+        help="Direct message in Odoo's internal chat. Discreet, and it lands "
+             "in the same place the team already talks to each other — which "
+             "on a floor where everyone keeps Discuss open is often read "
+             "faster than a push notification. Odoo's own client chimes for a "
+             "new message, so this is audible on the salesperson's device "
+             "without being audible in the shop.")
+    alert_use_whatsapp = fields.Boolean(
+        string="WhatsApp", default=False,
+        help="For staff who do not keep the Odoo app open on the floor. Needs "
+             "Odoo's WhatsApp module and a template.")
+    alert_use_sound = fields.Boolean(
+        string="Audible Chime", default=False,
+        help="Ask the receiving device to play a sound. NOT DISCREET: if the "
+             "salesperson's phone is not on silent, or the alert lands on a "
+             "back-office computer, the customer may hear it and understand "
+             "that they are being discussed. Off by default for that reason, "
+             "and worth testing on the actual devices before enabling.")
+    alert_use_screen = fields.Boolean(
+        string="Signage Screen", default=False,
+        help="Show the alert on the Xibo screen mapped to the zone. NOT "
+             "DISCREET AT ALL: whatever appears there is visible to the "
+             "customer standing in front of it. Use it for a message written "
+             "for the customer to read, never for one about them — 'ask about "
+             "our finance options', not 'unattended for three minutes'. "
+             "Requires the Xibo connector.")
     alert_fallback_user_id = fields.Many2one(
         "res.users", string="Fallback Recipient",
         help="Where an alert goes when nobody is rostered on that zone. "
@@ -274,6 +306,9 @@ class AnalitixStore(models.Model):
              "WhatsApp → Templates: it is the last number in the URL when the "
              "template is open. Only used when the WhatsApp channel is "
              "selected and Odoo's WhatsApp module is installed.")
+    alert_screen_seconds = fields.Integer(
+        string="Screen Duration (s)", default=20, required=True,
+        help="How long an alert stays on the signage screen.")
     alert_ids = fields.One2many("analitix.alert", "store_id", string="Alerts")
 
     # --- checkout attribution and identification ---

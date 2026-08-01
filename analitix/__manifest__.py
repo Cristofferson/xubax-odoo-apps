@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Analitix — Physical Store Intelligence",
-    "version": "19.0.3.0.0",
+    "version": "19.0.3.1.0",
     "category": "Point of Sale",
     "summary": "Store intelligence on Odoo: visitor counting across any number "
                "of doors, POS conversion (ATV, UPT, revenue per visitor, "
@@ -67,11 +67,14 @@ Phase 3
   nobody spoke to them" tells them exactly where the money went.
 * **Lost sales.** Long dwell, unserved, and no ticket — all three, because each
   alone is ordinary. This is the number that sells the product.
-* **The discreet nudge.** Only the assigned salesperson perceives it, through
-  the Odoo mobile app and optionally WhatsApp. There is deliberately no audible
-  or on-screen option, because the customer must never know they are being
-  discussed. Routed by a per-zone, per-weekday, per-hour rota, escalated to a
-  fallback when nobody is covering, and recorded with the response time.
+* **The nudge, on the channels the shop chooses.** Three discreet ones that
+  only the assigned salesperson perceives — the Odoo mobile app, Odoo's
+  internal chat (Discuss), and WhatsApp — plus two that the customer may
+  notice, an audible chime and a message on the signage screen. The last two
+  are off by default and each says in its own help text exactly what it costs
+  in discretion. Routed by a per-zone, per-weekday, per-hour rota, escalated to
+  a fallback when nobody is covering, and recorded with the response time and
+  the channels that actually delivered.
 * **Display performance.** Attention beside the sales of the products actually
   on each display, surfacing the two findings worth acting on: draws a crowd
   and sells little, or sells well from a cold corner.

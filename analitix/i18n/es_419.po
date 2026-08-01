@@ -137,6 +137,11 @@ msgid "<b>Empty means every store</b> of the companies this user\\n             
 msgstr "<b>Vacío significa todas las tiendas</b> de las compañías a las que este usuario ya pertenece. Es lo correcto para un cliente con una sola tienda, y no requiere configurar nada."
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "<b>These two can be perceived by the customer.</b>"
+msgstr "<b>Estos dos los puede percibir el cliente.</b>"
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_kanban
 msgid "<span class=\\\"text-muted d-block small\\\">Inside now</span>"
 msgstr "<span class=\\\"text-muted d-block small\\\">Dentro ahora</span>"
@@ -145,6 +150,16 @@ msgstr "<span class=\\\"text-muted d-block small\\\">Dentro ahora</span>"
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_kanban
 msgid "<span class=\\\"text-muted d-block small\\\">Visitors today</span>"
 msgstr "<span class=\\\"text-muted d-block small\\\">Visitantes hoy</span>"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "A <b>chime</b> is heard by whoever is nearby if the\\n                                    phone is not on silent, or if the alert lands on a\\n                                    back-office computer. Test it on the actual devices\\n                                    before you rely on it."
+msgstr "Un timbre lo oye quien esté cerca si el teléfono no está en silencio, o si el aviso cae en una computadora de trastienda. Pruébalo en los equipos reales antes de confiarte."
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "A <b>screen</b> message is read by the customer\\n                                    standing in front of it. Use it for something\\n                                    written <i>for</i> them — \\\"ask about our finance\\n                                    options\\\" — never for something <i>about</i> them."
+msgstr "Un mensaje en pantalla lo lee el cliente que está parado enfrente. Úsalo para algo escrito para él —«pregunta por nuestros planes de financiamiento»— nunca para algo sobre él."
 
 #. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_visit_group
@@ -291,14 +306,19 @@ msgid "Alert"
 msgstr "Aviso"
 
 #. module: analitix
-#: model:ir.model.fields,field_description:analitix.field_analitix_store__alert_channel
-msgid "Alert Channel"
-msgstr "Canal del aviso"
-
-#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__alert_cooldown_minutes
 msgid "Alert Cooldown (min)"
 msgstr "Enfriamiento entre avisos (min)"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Alert channels"
+msgstr "Canales de aviso"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Alert routing"
+msgstr "Enrutamiento de avisos"
 
 #. module: analitix
 #: model:ir.actions.act_window,name:analitix.action_alert
@@ -307,11 +327,6 @@ msgstr "Enfriamiento entre avisos (min)"
 #: model_terms:ir.ui.view,arch_db:analitix.view_alert_search
 msgid "Alerts"
 msgstr "Avisos"
-
-#. module: analitix
-#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
-msgid "Alerts reach <b>only</b> the assigned\\n                                salesperson, through their phone. There is\\n                                deliberately no audible or on-screen option: a\\n                                chime or a message on a shop screen tells the\\n                                customer they are being discussed."
-msgstr "Los avisos llegan <b>solo</b> al vendedor asignado, a su teléfono. A propósito no hay opción audible ni en pantalla: un timbre o un mensaje en una pantalla de la tienda le avisa al cliente que están hablando de él."
 
 #. module: analitix
 #: model:ir.ui.menu,name:analitix.menu_all_alerts
@@ -592,6 +607,16 @@ msgid "Arrived together, scattered"
 msgstr "Llegaron juntos y se dispersaron"
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__alert_use_sound
+msgid "Ask the receiving device to play a sound. NOT DISCREET: if the salesperson's phone is not on silent, or the alert lands on a back-office computer, the customer may hear it and understand that they are being discussed. Off by default for that reason, and worth testing on the actual devices before enabling."
+msgstr "Pide al dispositivo que reciba el aviso que reproduzca un sonido. NO ES DISCRETO: si el teléfono del vendedor no está en silencio, o si el aviso cae en una computadora de trastienda, el cliente puede oírlo y entender que están hablando de él. Por eso viene apagado, y conviene probarlo en los equipos reales antes de encenderlo."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_alert__delivered
+msgid "At least one channel accepted it. False means the alert was recorded but never reached anybody — usually no recipient, or a channel that is switched on but not configured."
+msgstr "Al menos un canal lo aceptó. Falso significa que el aviso quedó registrado pero no llegó a nadie: normalmente porque no hay destinatario, o porque un canal está encendido pero sin configurar."
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_job__attempts
 msgid "Attempts"
 msgstr "Intentos"
@@ -631,6 +656,11 @@ msgstr "La atención por sí sola es una métrica de vanidad. La atención cruza
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__checkout_match_enabled
 msgid "Attribute Tickets To Visits"
 msgstr "Atribuir tickets a visitas"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__alert_use_sound
+msgid "Audible Chime"
+msgstr "Timbre audible"
 
 #. module: analitix
 #: model:ir.actions.act_window,name:analitix.action_audit_log
@@ -719,11 +749,6 @@ msgid "Behaviour signals"
 msgstr "Señales de comportamiento"
 
 #. module: analitix
-#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__alert_channel__both
-msgid "Both"
-msgstr "Ambos"
-
-#. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_device__kind__cctv_dahua
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup_door__hardware__cctv_dahua
 msgid "CCTV — Dahua"
@@ -794,9 +819,10 @@ msgid "Captured"
 msgstr "Capturada"
 
 #. module: analitix
-#: model:ir.model.fields,field_description:analitix.field_analitix_alert__channel
-msgid "Channel"
-msgstr "Canal"
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__channel_summary
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_search
+msgid "Channels"
+msgstr "Canales"
 
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_zone__kind__checkout
@@ -812,6 +838,11 @@ msgstr "Cámara de caja"
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_demographic__age_band__0-12
 msgid "Child (0-12)"
 msgstr "Niño (0-12)"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__sent_sound
+msgid "Chimed"
+msgstr "Sonó"
 
 #. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_store_setup_door__counts_visitors
@@ -1086,6 +1117,11 @@ msgid "Deliberately conservative: a false alarm costs a salesperson a\\n        
 msgstr "Conservador a propósito: una falsa alarma le cuesta al vendedor un viaje y, si se repite, su confianza en todo el sistema, después de lo cual ningún aviso sirve."
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__delivered
+msgid "Delivered"
+msgstr "Entregado"
+
+#. module: analitix
 #: model:ir.actions.act_window,name:analitix.action_demographic
 #: model:ir.ui.menu,name:analitix.menu_demographics
 #: model_terms:ir.ui.view,arch_db:analitix.view_demographic_list
@@ -1237,6 +1273,11 @@ msgid "Dimensions"
 msgstr "Dimensiones"
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__alert_use_discuss
+msgid "Direct message in Odoo's internal chat. Discreet, and it lands in the same place the team already talks to each other — which on a floor where everyone keeps Discuss open is often read faster than a push notification. Odoo's own client chimes for a new message, so this is audible on the salesperson's device without being audible in the shop."
+msgstr "Mensaje directo en el chat interno de Odoo. Es discreto, y cae en el mismo lugar donde el equipo ya se habla — que en un piso donde todos traen Discuss abierto muchas veces se lee más rápido que una notificación push. El propio cliente de Odoo suena al llegar un mensaje, así que esto es audible en el dispositivo del vendedor sin ser audible en la tienda."
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_event__direction
 #: model_terms:ir.ui.view,arch_db:analitix.view_event_search
 msgid "Direction"
@@ -1249,13 +1290,8 @@ msgstr "Deshabilitado"
 
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_form
-msgid "Discreet alerts"
-msgstr "Avisos discretos"
-
-#. module: analitix
-#: model_terms:ir.actions.act_window,help:analitix.action_alert
-msgid "Discreet nudges to the salesperson covering a zone — through the\\n                Odoo mobile app, and optionally WhatsApp. <b>Never anything\\n                audible, and never anything the customer can see.</b>"
-msgstr "Avisos discretos al vendedor que cubre una zona, por la app móvil de Odoo y opcionalmente por WhatsApp. <b>Nunca nada audible, y nunca nada que el cliente pueda ver.</b>"
+msgid "Discreet — only the salesperson notices"
+msgstr "Discretos — solo lo nota el vendedor"
 
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_demographic__emotion__disgusted
@@ -1757,6 +1793,11 @@ msgid "Floor Area"
 msgstr "Superficie"
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__alert_use_whatsapp
+msgid "For staff who do not keep the Odoo app open on the floor. Needs Odoo's WhatsApp module and a template."
+msgstr "Para el personal que no trae abierta la app de Odoo en el piso. Requiere el módulo de WhatsApp de Odoo y una plantilla."
+
+#. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_device__config_json
 msgid "Free-form JSON handed to the agent by the config endpoint: line coordinates, camera index, zone polygons. Kept here so an implementer can retune a camera from Odoo instead of going back to the store with a laptop."
 msgstr "JSON libre que el endpoint de configuración le entrega al agente: coordenadas de la línea, índice de cámara, polígonos de zona. Vive aquí para que el implementador reajuste una cámara desde Odoo en vez de volver a la tienda con una laptop."
@@ -1872,6 +1913,11 @@ msgstr "Cómo se atribuyen las ventas de TPV a esta tienda para calcular la conv
 #: model:ir.model.fields,help:analitix.field_analitix_device__anomaly_factor
 msgid "How far from its own baseline a device may drift before it is flagged. 5.0 means 'five times the usual hourly volume'."
 msgstr "Cuánto puede alejarse un dispositivo de su propia línea base antes de que se marque. 5.0 significa 'cinco veces el volumen normal por hora'."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__alert_screen_seconds
+msgid "How long an alert stays on the signage screen."
+msgstr "Cuánto tiempo permanece un aviso en la pantalla de señalización."
 
 #. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_face_signature__match_count
@@ -2269,16 +2315,6 @@ msgid "Missed"
 msgstr "No atendido"
 
 #. module: analitix
-#: model:ir.model.fields.selection,name:analitix.selection__analitix_alert__channel__bus
-msgid "Mobile app"
-msgstr "App móvil"
-
-#. module: analitix
-#: model:ir.model.fields.selection,name:analitix.selection__analitix_alert__channel__both
-msgid "Mobile app + WhatsApp"
-msgstr "App móvil + WhatsApp"
-
-#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__model_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_face_signature__model_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__model_name
@@ -2317,6 +2353,11 @@ msgid "Name"
 msgstr "Nombre"
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_zone__screen_group_ref
+msgid "Name of the Xibo display group covering this zone. Only used when the store has the signage channel switched on. Remember that anything sent here is visible to the customer standing in front of it."
+msgstr "Nombre del grupo de pantallas de Xibo que cubre esta zona. Solo se usa cuando la tienda tiene encendido el canal de señalización. Recuerda que todo lo que se manda aquí lo ve el cliente que está enfrente."
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_search
 msgid "Needs Attention"
 msgstr "Requiere atención"
@@ -2330,6 +2371,11 @@ msgstr "Neutral"
 #: model_terms:ir.ui.view,arch_db:analitix.view_staff_signature_search
 msgid "Never Matched"
 msgstr "Nunca coincidió"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_search
+msgid "Never Reached Anybody"
+msgstr "Nunca llegó a nadie"
 
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_device__status__never_seen
@@ -2463,9 +2509,9 @@ msgid "Not before this moment. Retries push it into the future."
 msgstr "No antes de este momento. Los reintentos lo empujan hacia adelante."
 
 #. module: analitix
-#: model:ir.model.fields.selection,name:analitix.selection__analitix_alert__channel__none
-msgid "Not delivered"
-msgstr "No entregado"
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Not discreet — the customer may notice"
+msgstr "No discretos — el cliente puede notarlo"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__note
@@ -2514,13 +2560,23 @@ msgid "Nudges On Long Dwell"
 msgstr "Avisa por permanencia larga"
 
 #. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_alert
+msgid "Nudges to the salesperson covering a zone. Three channels are\\n                <b>discreet</b> — only they notice: the Odoo mobile app, Odoo's\\n                internal chat, and WhatsApp."
+msgstr "Avisos al vendedor que cubre una zona. Tres canales son discretos —solo los nota él—: la app móvil de Odoo, el chat interno de Odoo y WhatsApp."
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__live_occupancy
 msgid "Occupancy"
 msgstr "Aforo"
 
 #. module: analitix
-#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__alert_channel__bus
-msgid "Odoo mobile app"
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__alert_use_discuss
+msgid "Odoo Chat (Discuss)"
+msgstr "Chat interno de Odoo (Discuss)"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__alert_use_app
+msgid "Odoo Mobile App"
 msgstr "App móvil de Odoo"
 
 #. module: analitix
@@ -2756,6 +2812,11 @@ msgid "Purchase units"
 msgstr "Unidades de compra"
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__alert_use_app
+msgid "Push notification and activity on the salesperson's phone. Discreet: only they see it."
+msgstr "Notificación push y actividad en el teléfono del vendedor. Discreto: solo lo ve él."
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_job_list
 msgid "Queued"
 msgstr "En cola"
@@ -2804,6 +2865,11 @@ msgstr "Reconocer caras repetidas"
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__res_id
 msgid "Record ID"
 msgstr "ID del registro"
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_alert_search
+msgid "Recorded but delivered on no channel — usually no recipient, or a channel switched on but not configured."
+msgstr "Registrado pero sin entregar por ningún canal: normalmente porque no hay destinatario, o porque un canal está encendido pero sin configurar."
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__record_count
@@ -3025,6 +3091,11 @@ msgid "Scheduled At"
 msgstr "Programado para"
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__alert_screen_seconds
+msgid "Screen Duration (s)"
+msgstr "Duración en pantalla (s)"
+
+#. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_door__kind__secondary
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup_door__kind__secondary
 msgid "Secondary entrance"
@@ -3071,6 +3142,21 @@ msgstr "Consultas sensibles"
 #: model:ir.model.fields,field_description:analitix.field_analitix_alert__sent_at
 msgid "Sent"
 msgstr "Enviado"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__sent_app
+msgid "Sent To App"
+msgstr "Enviado a la app"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__sent_discuss
+msgid "Sent To Chat"
+msgstr "Enviado al chat"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__sent_whatsapp
+msgid "Sent To WhatsApp"
+msgstr "Enviado a WhatsApp"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_door__sequence
@@ -3148,9 +3234,29 @@ msgid "Short internal code for this store (e.g. 'MOR-01'). Used in device UIDs a
 msgstr "Código interno corto de esta tienda (p. ej. 'MOR-01'). Se usa en los UID de dispositivo y en los reportes de toda la cadena."
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__alert_use_screen
+msgid "Show the alert on the Xibo screen mapped to the zone. NOT DISCREET AT ALL: whatever appears there is visible to the customer standing in front of it. Use it for a message written for the customer to read, never for one about them — 'ask about our finance options', not 'unattended for three minutes'. Requires the Xibo connector."
+msgstr "Muestra el aviso en la pantalla Xibo asignada a la zona. NO ES NADA DISCRETO: lo que aparezca ahí lo ve el cliente que está parado enfrente. Úsalo para un mensaje escrito para que el cliente lo lea, nunca para uno sobre él: «pregunta por nuestros planes de financiamiento», no «sin atender desde hace tres minutos». Requiere el conector de Xibo."
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_alert__sent_screen
+msgid "Shown On Screen"
+msgstr "Mostrado en pantalla"
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_face_signature__match_count
 msgid "Sightings"
 msgstr "Avistamientos"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone__screen_group_ref
+msgid "Signage Display Group"
+msgstr "Grupo de pantallas de señalización"
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__alert_use_screen
+msgid "Signage Screen"
+msgstr "Pantalla de señalización"
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__kind
@@ -3656,6 +3762,11 @@ msgid "Turning crossings into visits"
 msgstr "Convertir cruces en visitas"
 
 #. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_alert
+msgid "Two more are available and <b>off by default</b> because the\\n                customer may perceive them: an audible chime, and a message on\\n                the signage screen. Switch them on knowingly — the store form\\n                spells out what each one costs in discretion."
+msgstr "Hay dos más, apagados por omisión porque el cliente puede percibirlos: un timbre audible y un mensaje en la pantalla de señalización. Enciéndelos a sabiendas: la ficha de la tienda explica lo que cuesta cada uno en discreción."
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_alert__kind
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup_door__kind
 #: model:ir.model.fields,field_description:analitix.field_analitix_visit_group__kind
@@ -3896,8 +4007,9 @@ msgid "What this device is for. Later phases route zone dwell, demographics and 
 msgstr "Para qué sirve este dispositivo. Las fases siguientes enrutan la permanencia por zona, la demografía y la atribución de compra según esta función."
 
 #. module: analitix
-#: model:ir.model.fields.selection,name:analitix.selection__analitix_alert__channel__whatsapp
-#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__alert_channel__whatsapp
+#. odoo-python
+#: code:addons/analitix/models/analitix_alert.py:0
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__alert_use_whatsapp
 msgid "WhatsApp"
 msgstr "WhatsApp"
 
@@ -3925,6 +4037,11 @@ msgstr "Cuándo ocurrió el cruce en la tienda, según lo reporta el edge, no cu
 #: model_terms:ir.ui.view,arch_db:analitix.view_visitor_form
 msgid "Where and when"
 msgstr "Dónde y cuándo"
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_alert__channel_summary
+msgid "Which channels actually delivered this alert."
+msgstr "Por qué canales se entregó realmente este aviso."
 
 #. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_device__door_id
@@ -4071,9 +4188,27 @@ msgid "anonymous"
 msgstr "anónimo"
 
 #. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_alert.py:0
+msgid "app"
+msgstr "app"
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_setup_form
 msgid "auto"
 msgstr "automático"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_alert.py:0
+msgid "chat"
+msgstr "chat"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_alert.py:0
+msgid "chime"
+msgstr "timbre"
 
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_kanban
@@ -4120,6 +4255,18 @@ msgstr "p. ej. Vitrina del aparador"
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone__area_sqm
 msgid "m²"
 msgstr "m²"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_alert.py:0
+msgid "not delivered"
+msgstr "no entregado"
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_alert.py:0
+msgid "screen"
+msgstr "pantalla"
 
 #. module: analitix
 #. odoo-python

@@ -43,6 +43,8 @@
                             <field name="engaged_seconds"/>
                             <field name="lost_sale_seconds"/>
                             <field name="alert_on_dwell"/>
+                            <field name="screen_group_ref"
+                                   placeholder="Xibo display group"/>
                         </group>
                     </group>
                     <div class="alert alert-info" role="alert"

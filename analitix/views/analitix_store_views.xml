@@ -207,21 +207,45 @@
                                     <field name="lost_sale_create_lead"
                                            invisible="not lost_sale_enabled"/>
                                 </group>
-                                <group string="Discreet alerts">
-                                    <field name="alert_channel"/>
+                                <group string="Alert routing">
                                     <field name="alert_fallback_user_id"/>
                                     <field name="alert_cooldown_minutes"/>
                                     <field name="alert_missed_after_minutes"/>
-                                    <field name="alert_whatsapp_template_id"
-                                           invisible="alert_channel == 'bus'"/>
                                 </group>
                             </group>
-                            <div class="alert alert-info" role="alert">
-                                Alerts reach <b>only</b> the assigned
-                                salesperson, through their phone. There is
-                                deliberately no audible or on-screen option: a
-                                chime or a message on a shop screen tells the
-                                customer they are being discussed.
+                            <separator string="Alert channels"/>
+                            <group>
+                                <group string="Discreet — only the salesperson notices">
+                                    <field name="alert_use_app"/>
+                                    <field name="alert_use_discuss"/>
+                                    <field name="alert_use_whatsapp"/>
+                                    <field name="alert_whatsapp_template_id"
+                                           invisible="not alert_use_whatsapp"/>
+                                </group>
+                                <group string="Not discreet — the customer may notice">
+                                    <field name="alert_use_sound"/>
+                                    <field name="alert_use_screen"/>
+                                    <field name="alert_screen_seconds"
+                                           invisible="not alert_use_screen"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-warning" role="alert"
+                                 invisible="not alert_use_sound and not alert_use_screen">
+                                <p class="mb-1">
+                                    <b>These two can be perceived by the customer.</b>
+                                </p>
+                                <p class="mb-1">
+                                    A <b>chime</b> is heard by whoever is nearby if the
+                                    phone is not on silent, or if the alert lands on a
+                                    back-office computer. Test it on the actual devices
+                                    before you rely on it.
+                                </p>
+                                <p class="mb-0">
+                                    A <b>screen</b> message is read by the customer
+                                    standing in front of it. Use it for something
+                                    written <i>for</i> them — "ask about our finance
+                                    options" — never for something <i>about</i> them.
+                                </p>
                             </div>
                             <group>
                                 <group string="Tickets and customers">

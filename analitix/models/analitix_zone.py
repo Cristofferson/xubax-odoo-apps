@@ -83,6 +83,19 @@ class AnalitixZone(models.Model):
              "it off in a fitting room or a waiting area, where lingering is "
              "the point rather than a problem.")
 
+    # Screens are per zone because a store has several and they are not
+    # interchangeable: the one over the ring counter and the one facing the
+    # street do different jobs. Stored as the Xibo display-group name rather
+    # than a Many2one, for the same reason the WhatsApp template is an id —
+    # Analitix must load on an instance that has no Xibo connector at all.
+    # Phase 4 builds the full trigger engine on top of this mapping.
+    screen_group_ref = fields.Char(
+        string="Signage Display Group",
+        help="Name of the Xibo display group covering this zone. Only used "
+             "when the store has the signage channel switched on. Remember "
+             "that anything sent here is visible to the customer standing in "
+             "front of it.")
+
     dwell_ids = fields.One2many(
         "analitix.zone.dwell", "zone_id", string="Dwell Records")
     visitors_today = fields.Integer(

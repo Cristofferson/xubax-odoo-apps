@@ -29,13 +29,17 @@ class FloorCase(AnalitixCase):
             no_reset_password=True).create({
                 "name": "Rosa (floor)",
                 "login": "analitix_seller@example.com",
-                "group_ids": [(4, cls.env.ref("analitix.group_user").id)],
+                # Internal user, because a salesperson with an Odoo login is
+                # one — and Discuss only reaches internal users.
+                "group_ids": [(4, cls.env.ref("base.group_user").id),
+                              (4, cls.env.ref("analitix.group_user").id)],
             })
         cls.manager = cls.env["res.users"].with_context(
             no_reset_password=True).create({
                 "name": "Store manager",
                 "login": "analitix_fallback@example.com",
-                "group_ids": [(4, cls.env.ref("analitix.group_manager").id)],
+                "group_ids": [(4, cls.env.ref("base.group_user").id),
+                              (4, cls.env.ref("analitix.group_manager").id)],
             })
         cls.store_one.alert_fallback_user_id = cls.manager.id
 
@@ -100,16 +104,69 @@ class TestDiscreetAlert(FloorCase):
         self.assertIn(morning, Coverage._covering(self.rings, at_ten))
         self.assertNotIn(morning, Coverage._covering(self.rings, at_twenty))
 
-    def test_the_channel_offers_nothing_the_customer_can_perceive(self):
-        """The promise is to the customer, so it is enforced in the schema.
+    def test_the_non_discreet_channels_are_off_by_default(self):
+        """The shop owner may switch them on; nobody gets them by accident.
 
-        No audible option, no on-screen option. A later implementer cannot
-        switch one on, because there is no value to switch it to.
+        The original brief excluded a chime and a screen outright. The owner
+        asked for the choice, so the choice exists — but a store that never
+        opens this screen keeps the discreet behaviour, which is the part that
+        must not depend on anyone reading the documentation.
         """
-        options = dict(self.store_one._fields["alert_channel"].selection)
-        self.assertEqual(set(options), {"bus", "whatsapp", "both"})
-        for forbidden in ("sound", "chime", "buzzer", "screen", "xibo", "light"):
-            self.assertNotIn(forbidden, options)
+        fresh = self.env["analitix.store"].create({
+            "name": "Defaults check", "code": "DEF", "tz": "UTC",
+            "company_id": self.env.company.id, "match_mode": "company",
+        })
+        self.assertTrue(fresh.alert_use_app)
+        self.assertFalse(fresh.alert_use_sound)
+        self.assertFalse(fresh.alert_use_screen)
+        self.assertFalse(fresh.alert_use_discuss)
+        self.assertFalse(fresh.alert_use_whatsapp)
+
+    def test_channels_combine_rather_than_exclude_each_other(self):
+        """A store may want the app and the chat at once, which the old single
+        selector made impossible."""
+        self.store_one.write({
+            "alert_use_app": True, "alert_use_discuss": True})
+        alert = self.Alert.raise_alert(
+            self.store_one, "lost_sale", "Someone is waiting", zone=self.rings)
+        self.assertTrue(alert.sent_app)
+        self.assertTrue(alert.sent_discuss)
+        self.assertTrue(alert.delivered)
+        self.assertIn("app", alert.channel_summary)
+        self.assertIn("chat", alert.channel_summary)
+
+    def test_discuss_delivers_a_private_message(self):
+        """One-to-one, so the rest of the floor never sees it."""
+        self.store_one.write({
+            "alert_use_app": False, "alert_use_discuss": True})
+        alert = self.Alert.raise_alert(
+            self.store_one, "lost_sale", "Ring counter waiting", zone=self.rings)
+
+        self.assertTrue(alert.sent_discuss)
+        message = self.env["mail.message"].search([
+            ("model", "=", "discuss.channel"),
+            ("body", "ilike", "Ring counter waiting"),
+        ], limit=1)
+        self.assertTrue(message, "no Discuss message was posted")
+        channel = self.env["discuss.channel"].browse(message.res_id)
+        self.assertIn(self.seller.partner_id, channel.channel_partner_ids)
+
+    def test_the_chime_flag_is_recorded_so_it_can_be_audited_later(self):
+        self.store_one.write({"alert_use_app": True, "alert_use_sound": True})
+        alert = self.Alert.raise_alert(
+            self.store_one, "lost_sale", "Waiting", zone=self.rings)
+        self.assertTrue(alert.sent_sound)
+        self.assertIn("chime", alert.channel_summary)
+
+    def test_the_screen_channel_needs_a_display_group_on_the_zone(self):
+        """Switched on but unmapped delivers nothing, and says so."""
+        self.store_one.write({"alert_use_app": False, "alert_use_screen": True})
+        self.assertFalse(self.rings.screen_group_ref)
+        alert = self.Alert.raise_alert(
+            self.store_one, "lost_sale", "Waiting", zone=self.rings)
+        self.assertFalse(alert.sent_screen)
+        self.assertFalse(alert.delivered,
+                         "an undelivered alert must not claim it was delivered")
 
     def test_a_second_nudge_inside_the_cooldown_is_suppressed(self):
         """Buzz someone every ninety seconds and they stop reading the alerts."""
@@ -158,7 +215,7 @@ class TestDiscreetAlert(FloorCase):
                                        zone=self.rings)
         self.assertTrue(alert, "the alert must still be recorded")
         self.assertFalse(alert.user_id)
-        self.assertEqual(alert.channel, "none")
+        self.assertFalse(alert.delivered)
 
 
 @tagged("post_install", "-at_install")

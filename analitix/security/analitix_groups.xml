@@ -16,6 +16,11 @@
             <field name="name">User</field>
             <field name="sequence">10</field>
             <field name="privilege_id" ref="res_groups_privilege_analitix"/>
+            <!-- Implies the internal-user group, as most Odoo app groups do.
+                 Without it a "salesperson" could exist who has no access to
+                 Discuss, and the chat channel would fail with a confusing
+                 permissions error at the moment an alert fired. -->
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
             <field name="comment">See this store's traffic and conversion dashboards.</field>
         </record>
 

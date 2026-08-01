@@ -354,7 +354,25 @@ event are wiped as soon as the matching job has run.
 
 ---
 
-## 11. Reference agent
+## 11. Alert channels
+
+Alerts are raised inside Odoo, not through this API, but an integrator should
+know what a store can switch on:
+
+| Channel | Discreet? | Notes |
+|---|---|---|
+| Odoo mobile app | yes | `bus.bus` push plus an activity. Default. |
+| Odoo chat (Discuss) | yes | One-to-one message. Odoo's client chimes for it on the salesperson's own device. |
+| WhatsApp | yes | Needs Odoo's `whatsapp` module; detected at runtime. |
+| Audible chime | **no** | The customer may hear it if the phone is not on silent. |
+| Signage screen | **no** | The customer reads whatever appears there. Needs the Xibo connector and a display group on the zone. |
+
+The last two are off by default. Each alert records which channels actually
+delivered it, so a delivery report never claims more than happened.
+
+---
+
+## 12. Reference agent
 
 `edge/analitix_agent.py` in this repository implements this contract end to end:
 persistent uuids, an encrypted on-disk buffer that survives an outage, ordered

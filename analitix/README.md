@@ -98,7 +98,7 @@ mounted.
 |---|---|---|
 | 1 | Counting, conversion, doors, devices, staff exclusion | **Done** |
 | 2 | Visits, anonymous re-identification, demographics, purchase units | **Done** |
-| 3 | Zones, lost sales, display attention, face↔ticket↔partner, discreet alerts | **Done** |
+| 3 | Zones, lost sales, display attention, face↔ticket↔partner, alerts on five channels | **Done** |
 | 4 | Xibo triggers, CRM, loyalty, attendance, subscription, ROI report | Planned |
 | 5 | Watch list | Planned |
 | 6 | Packaging, manuals, videos, apps.odoo.com | Planned |

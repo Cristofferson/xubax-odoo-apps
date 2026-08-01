@@ -5,24 +5,36 @@
 implementation rather than a description of it: **only the assigned salesperson
 perceives the alert. Never the customer, never the rest of the floor.**
 
-What that rules out, permanently
---------------------------------
-* Anything audible — a chime, a buzzer, a bell. The customer hears it, knows
-  they are being discussed, and the shop feels like a surveillance operation.
-* Anything the customer can see: a message on a Xibo screen, a light on the
-  floor. Phase 4 sends plenty to the screens, but never *this*.
+Channels
+--------
+Five independent switches, because a store may well want two or three at once
+and forcing a single choice made the common combinations impossible.
 
-Those are not configuration options. There is no channel field value for them,
-so a well-meaning implementer cannot switch one on later.
+**Discreet** — only the assigned salesperson perceives them:
 
-What it allows
---------------
-* **The Odoo mobile app** (default): a ``bus.bus`` push for the banner and
-  buzz in the salesperson's pocket, plus an activity so it survives a locked
-  screen and is still there when they check.
-* **WhatsApp** (optional), through the same native ``whatsapp`` module the
-  special-dates addon already uses. Detected at runtime — Analitix does not
-  depend on it, so a store without WhatsApp simply never sees the option.
+* **Odoo mobile app** (default): a ``bus.bus`` push for the banner and buzz in
+  their pocket, plus an activity so it survives a locked screen.
+* **Odoo chat (Discuss)**: a one-to-one message, which on a floor where the
+  team keeps Discuss open all day is often read faster than a push. Odoo's own
+  client chimes for it — audible on their device, not in the shop.
+* **WhatsApp**: for staff who do not keep the Odoo app open. Through the native
+  ``whatsapp`` module, detected at runtime, so Analitix does not depend on it.
+
+**Not discreet** — off by default, and labelled with the consequence rather
+than hidden:
+
+* **Audible chime**: if the phone is not on silent, or the alert lands on a
+  back-office machine, the customer may hear it and understand that they are
+  being discussed.
+* **Signage screen**: whatever appears there is read by the customer standing
+  in front of it. Fine for a message written *for* them ("ask about our finance
+  options"), wrong for one *about* them.
+
+The original brief excluded those last two outright. The shop owner asked for
+them, and it is their floor: what this code owes them is that the consequence
+is stated in the field's own help text rather than discovered in front of a
+customer. Phase 4 builds the full per-player signage engine on the same zone
+mapping.
 
 Routing
 -------
@@ -88,14 +100,22 @@ class AnalitixAlert(models.Model):
         string="Escalated",
         help="Nobody was on duty in that zone, so this went to the store's "
              "fallback. A lot of these means the shift map is wrong.")
-    channel = fields.Selection(
-        selection=[
-            ("bus", "Mobile app"),
-            ("whatsapp", "WhatsApp"),
-            ("both", "Mobile app + WhatsApp"),
-            ("none", "Not delivered"),
-        ],
-        string="Channel", default="bus", required=True)
+    # One flag per channel rather than a single field: an alert genuinely can go
+    # out on three at once, and recording only "the" channel would make the
+    # delivery report a guess. Filterable, unlike a comma-separated string.
+    sent_app = fields.Boolean(string="Sent To App", readonly=True)
+    sent_discuss = fields.Boolean(string="Sent To Chat", readonly=True)
+    sent_whatsapp = fields.Boolean(string="Sent To WhatsApp", readonly=True)
+    sent_sound = fields.Boolean(string="Chimed", readonly=True)
+    sent_screen = fields.Boolean(string="Shown On Screen", readonly=True)
+    delivered = fields.Boolean(
+        string="Delivered", compute="_compute_channel", store=True, index=True,
+        help="At least one channel accepted it. False means the alert was "
+             "recorded but never reached anybody — usually no recipient, or a "
+             "channel that is switched on but not configured.")
+    channel_summary = fields.Char(
+        string="Channels", compute="_compute_channel", store=True,
+        help="Which channels actually delivered this alert.")
     sent_at = fields.Datetime(
         string="Sent", required=True, index=True,
         default=lambda self: fields.Datetime.now())
@@ -118,6 +138,22 @@ class AnalitixAlert(models.Model):
              "matched to the same visit shortly afterwards.")
 
     _store_sent_idx = models.Index("(store_id, sent_at DESC)")
+
+    @api.depends("sent_app", "sent_discuss", "sent_whatsapp", "sent_sound",
+                 "sent_screen")
+    def _compute_channel(self):
+        labels = [
+            ("sent_app", _("app")),
+            ("sent_discuss", _("chat")),
+            ("sent_whatsapp", _("WhatsApp")),
+            ("sent_sound", _("chime")),
+            ("sent_screen", _("screen")),
+        ]
+        for alert in self:
+            used = [label for field, label in labels if alert[field]]
+            alert.channel_summary = (
+                ", ".join(used) if used else _("not delivered"))
+            alert.delivered = bool(used)
 
     @api.depends("sent_at", "acknowledged_at")
     def _compute_response(self):
@@ -164,7 +200,6 @@ class AnalitixAlert(models.Model):
                 "body": body,
                 "user_id": recipient.id if recipient else False,
                 "was_fallback": was_fallback,
-                "channel": "none",
             })
             if recipient:
                 alert._deliver(store, recipient)
@@ -203,27 +238,34 @@ class AnalitixAlert(models.Model):
         return bool(self.sudo().search_count(domain))
 
     def _deliver(self, store, recipient):
-        """Push to the app, and to WhatsApp when the store asked for it."""
+        """Send on every channel the store has switched on.
+
+        Each channel is attempted independently and failures are isolated: a
+        store with no WhatsApp template still gets the app push, and the alert
+        records exactly what reached anybody rather than claiming a delivery it
+        did not make.
+        """
         self.ensure_one()
-        delivered = []
+        vals = {}
+        if store.alert_use_app:
+            vals["sent_app"] = self._push_to_app(recipient, store)
+        if store.alert_use_discuss:
+            vals["sent_discuss"] = self._push_to_discuss(recipient)
+        if store.alert_use_whatsapp:
+            vals["sent_whatsapp"] = self._push_to_whatsapp(recipient)
+        if store.alert_use_sound:
+            # Recorded as its own channel because it is a real change in what
+            # the shop sounds like, and someone reviewing the alert log later
+            # should be able to see when it was on.
+            vals["sent_sound"] = bool(vals.get("sent_app")
+                                      or vals.get("sent_discuss"))
+        if store.alert_use_screen:
+            vals["sent_screen"] = self._push_to_screen(store)
 
-        if store.alert_channel in ("bus", "both"):
-            if self._push_to_app(recipient):
-                delivered.append("bus")
+        self.sudo().write(vals)
+        return any(vals.values())
 
-        if store.alert_channel in ("whatsapp", "both"):
-            if self._push_to_whatsapp(recipient):
-                delivered.append("whatsapp")
-
-        channel = "none"
-        if len(delivered) == 2:
-            channel = "both"
-        elif delivered:
-            channel = delivered[0]
-        self.sudo().channel = channel
-        return channel != "none"
-
-    def _push_to_app(self, recipient):
+    def _push_to_app(self, recipient, store=None):
         """bus.bus for the buzz, an activity so it survives a locked screen."""
         self.ensure_one()
         ok = False
@@ -235,6 +277,10 @@ class AnalitixAlert(models.Model):
                     "summary": self.summary,
                     "zone": self.zone_id.name or "",
                     "store": self.store_id.name,
+                    # The client decides whether to make a noise. Carried in the
+                    # payload rather than assumed, so the store's setting is
+                    # what governs it rather than the device's defaults.
+                    "sound": bool(store and store.alert_use_sound),
                 })
             ok = True
         except Exception:  # noqa: BLE001
@@ -245,6 +291,105 @@ class AnalitixAlert(models.Model):
         except Exception:  # noqa: BLE001
             _logger.warning("Analitix: activity failed for alert %s.", self.id)
         return ok
+
+    def _push_to_discuss(self, recipient):
+        """A direct message in Odoo's own chat.
+
+        Often the fastest channel in practice: on a floor where the team keeps
+        Discuss open all day, a message lands where they are already looking,
+        and Odoo's client chimes for it natively — audible on the salesperson's
+        device without being audible in the shop.
+
+        Uses a one-to-one chat rather than a group so it stays discreet: the
+        rest of the floor never sees it.
+        """
+        self.ensure_one()
+        if not recipient._is_internal():
+            # Discuss is for internal users. A portal or shared recipient
+            # cannot be reached this way, and saying so plainly beats an
+            # access-rights traceback that looks like a bug in Analitix.
+            _logger.info(
+                "Analitix: %s is not an internal user, so the Discuss channel "
+                "cannot reach them.", recipient.display_name)
+            return False
+        try:
+            # _get_or_create_chat puts the *calling* user in the chat, so the
+            # conversation has to be opened as OdooBot: the message comes from
+            # the system, not from whichever cashier happened to trigger it.
+            #
+            # Order matters — with_user() forces su=False even for the
+            # superuser, so sudo() has to come after it or the channel lookup
+            # is refused.
+            Channel = self.env["discuss.channel"].with_user(
+                self.env.ref("base.user_root")).sudo()
+            chat = Channel._get_or_create_chat(
+                partners_to=[recipient.partner_id.id])
+            if not chat:
+                return False
+            body = self.summary
+            if self.body:
+                body = "%s\n%s" % (self.summary, self.body)
+            chat.sudo().message_post(
+                body=body.replace("\n", "<br/>"),
+                message_type="comment",
+                subtype_xmlid="mail.mt_comment")
+            return True
+        except Exception as error:  # noqa: BLE001
+            _logger.warning(
+                "Analitix: Discuss alert %s failed: %s", self.id, error)
+            return False
+
+    def _push_to_screen(self, store):
+        """Put the alert on the signage screen covering the zone.
+
+        **This channel is not discreet and the UI says so.** Whatever appears
+        here is read by the customer standing in front of it, so it is off by
+        default and its help text spells out the consequence. The store owner
+        decides how their own floor works; what this code owes them is that the
+        consequence is stated plainly rather than discovered.
+
+        Delivered through the existing Xibo connector, detected at runtime —
+        Analitix does not depend on it. Phase 4 builds the full per-player
+        trigger engine on the same zone mapping.
+        """
+        self.ensure_one()
+        zone = self.zone_id
+        if not zone or not zone.screen_group_ref:
+            return False
+        installed = self.env["ir.module.module"].sudo().search_count(
+            [("name", "=", "xibo_connector"), ("state", "=", "installed")])
+        if not installed:
+            _logger.info(
+                "Analitix: store %s asks for signage alerts but the Xibo "
+                "connector is not installed.", store.display_name)
+            return False
+        try:
+            group = self.env["xibo.display.group"].sudo().search(
+                [("name", "=", zone.screen_group_ref)], limit=1)
+            if not group:
+                _logger.warning(
+                    "Analitix: no Xibo display group named %r for zone %s.",
+                    zone.screen_group_ref, zone.display_name)
+                return False
+            server = self.env["xibo.server"].sudo().search([], limit=1)
+            if not server:
+                return False
+            now = fields.Datetime.now()
+            broadcast = self.env["xibo.broadcast"].sudo().create({
+                "name": self.summary[:60],
+                "server_id": server.id,
+                "display_mode": "overlay",
+                "display_group_ids": [(6, 0, group.ids)],
+                "from_dt": now,
+                "to_dt": now + timedelta(seconds=store.alert_screen_seconds),
+                "duration_seconds": store.alert_screen_seconds,
+            })
+            broadcast.action_send()
+            return True
+        except Exception as error:  # noqa: BLE001
+            _logger.warning(
+                "Analitix: signage alert %s failed: %s", self.id, error)
+            return False
 
     def activity_schedule_alert(self, recipient):
         """A to-do on the store, not on the alert.

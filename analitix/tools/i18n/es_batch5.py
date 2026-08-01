@@ -35,7 +35,6 @@ BATCH5 = {
     "Shift Coverage": "Cobertura por turno",
     "Cameras": "Cámaras",
     "Floor & Alerts": "Piso y avisos",
-    "Discreet alerts": "Avisos discretos",
     "Tickets and customers": "Tickets y clientes",
     "Context": "Contexto",
 
@@ -48,14 +47,12 @@ BATCH5 = {
         "Analitix: cerrar las ventas perdidas abiertas",
 
     # ---- alert -----------------------------------------------------
-    "Alert Channel": "Canal del aviso",
     "Alert Cooldown (min)": "Enfriamiento entre avisos (min)",
     "Count As Missed After (min)": "Contar como no atendido tras (min)",
     "Fallback Recipient": "Destinatario de respaldo",
     "WhatsApp Template ID": "ID de la plantilla de WhatsApp",
     "Recipient": "Destinatario",
     "Salesperson": "Vendedor",
-    "Channel": "Canal",
     "Message": "Mensaje",
     "Sent": "Enviado",
     "Escalated": "Escalado",
@@ -70,12 +67,7 @@ BATCH5 = {
     "Attended": "Atendido",
     "Ended in a sale": "Terminó en venta",
     "Not attended": "No atendido",
-    "Not delivered": "No entregado",
-    "Mobile app": "App móvil",
-    "Odoo mobile app": "App móvil de Odoo",
-    "Mobile app + WhatsApp": "App móvil + WhatsApp",
     "WhatsApp": "WhatsApp",
-    "Both": "Ambos",
     "No alerts": "No hay avisos",
     "Avg response": "Respuesta prom.",
     "Possible lost sale": "Posible venta perdida",
@@ -256,20 +248,6 @@ BATCH5 = {
 
 #: Matched on the whitespace-collapsed msgid.
 BATCH5_LOOSE = {
-    "Alerts reach <b>only</b> the assigned salesperson, through their phone. "
-    "There is deliberately no audible or on-screen option: a chime or a message "
-    "on a shop screen tells the customer they are being discussed.":
-        "Los avisos llegan <b>solo</b> al vendedor asignado, a su teléfono. A "
-        "propósito no hay opción audible ni en pantalla: un timbre o un mensaje "
-        "en una pantalla de la tienda le avisa al cliente que están hablando de "
-        "él.",
-
-    "Discreet nudges to the salesperson covering a zone — through the Odoo "
-    "mobile app, and optionally WhatsApp. <b>Never anything audible, and never "
-    "anything the customer can see.</b>":
-        "Avisos discretos al vendedor que cubre una zona, por la app móvil de "
-        "Odoo y opcionalmente por WhatsApp. <b>Nunca nada audible, y nunca nada "
-        "que el cliente pueda ver.</b>",
 
     "Every one is recorded with who received it and whether they reacted, "
     "because a nudge nobody measures is a nudge nobody improves.":
