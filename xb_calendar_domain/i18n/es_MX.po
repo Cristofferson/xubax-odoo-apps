@@ -1,0 +1,627 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_calendar_domain
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-01 23:05+0000\n"
+"PO-Revision-Date: 2026-08-01 23:05+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_MX\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"%(menu)s. The section appears inside the Calendar settings, next to the "
+"Outlook and Google options."
+msgstr ""
+"%(menu)s. La sección aparece dentro de los ajustes de Calendario, junto a "
+"las opciones de Outlook y Google."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"%(q)s No. The system base URL is left untouched, which is the whole point: "
+"the portal, the website and your other modules keep reading the same value "
+"as before."
+msgstr ""
+"%(q)s No. La URL base del sistema no se toca, que es justo el punto: el "
+"portal, el sitio web y sus demás módulos siguen leyendo el mismo valor de "
+"antes."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"%(q)s The address is empty or malformed, or the meeting comes from an online"
+" appointment, which keeps its own website."
+msgstr ""
+"%(q)s La dirección está vacía o mal escrita, o la reunión viene de una cita "
+"en línea, que conserva su propio sitio web."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"%(q)s Yes. Set the option back to Odoo default and press the button to "
+"rebuild the upcoming links, or simply uninstall it."
+msgstr ""
+"%(q)s Sí. Regrese la opción a «Como Odoo por defecto» y presione el botón "
+"para reconstruir las ligas futuras, o simplemente desinstálelo."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/models/res_config_settings.py:0
+msgid ""
+"%(updated)s of the %(total)s upcoming meetings with a videocall link were "
+"pointing somewhere else and now use the configured domain."
+msgstr ""
+"%(updated)s de las %(total)s reuniones futuras con liga de videollamada "
+"apuntaban a otro dominio y ahora usan el configurado."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/models/res_company.py:0
+msgid ""
+"%(url)s is not a valid meeting links domain. Write the full address, for "
+"example https://meet.mycompany.com"
+msgstr ""
+"%(url)s no es un dominio válido para las ligas de reunión. Escriba la "
+"dirección completa, por ejemplo https://meet.miempresa.com"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "A meeting still shows the old domain."
+msgstr "Una reunión sigue mostrando el dominio viejo."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"A meeting stores its link when it is created, so changing the setting only "
+"reaches new ones. The %(button)s button rebuilds the videocall link of the "
+"meetings that have not happened yet."
+msgstr ""
+"Una reunión guarda su liga cuando se crea, así que cambiar el ajuste solo "
+"alcanza a las nuevas. El botón %(button)s reconstruye la liga de "
+"videollamada de las reuniones que aún no ocurren."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "A meeting with its videocall link"
+msgstr "Una reunión con su liga de videollamada"
+
+#. module: xb_calendar_domain
+#: model:ir.model,name:xb_calendar_domain.model_calendar_attendee
+msgid "Calendar Attendee Information"
+msgstr ""
+
+#. module: xb_calendar_domain
+#: model:ir.model,name:xb_calendar_domain.model_calendar_event
+msgid "Calendar Event"
+msgstr ""
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "Can I undo it?"
+msgstr "¿Se puede deshacer?"
+
+#. module: xb_calendar_domain
+#: model:ir.model,name:xb_calendar_domain.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: xb_calendar_domain
+#: model:ir.model,name:xb_calendar_domain.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: xb_calendar_domain
+#: model_terms:ir.ui.view,arch_db:xb_calendar_domain.res_config_settings_view_form_xb_calendar_domain
+msgid "Default domain"
+msgstr "Dominio predeterminado"
+
+#. module: xb_calendar_domain
+#: model:ir.model,name:xb_calendar_domain.model_discuss_channel
+msgid "Discussion Channel"
+msgstr ""
+
+#. module: xb_calendar_domain
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_calendar_attendee__display_name
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_calendar_event__display_name
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_discuss_channel__display_name
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_res_company__display_name
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "Does it change my base URL?"
+msgstr "¿Cambia mi URL base?"
+
+#. module: xb_calendar_domain
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_res_config_settings__xb_calendar_link_url
+msgid "Domain"
+msgstr "Dominio"
+
+#. module: xb_calendar_domain
+#: model_terms:ir.ui.view,arch_db:xb_calendar_domain.res_config_settings_view_form_xb_calendar_domain
+msgid ""
+"Domain of the company selected at the top of this page. Switch company to set the\n"
+"                                    other ones, or fill them in from each company's own form. The ones left empty use\n"
+"                                    the domain above."
+msgstr ""
+"Dominio de la compañía seleccionada arriba en esta página. Cambie de "
+"compañía para definir las demás, o captúrelas desde la ficha de cada "
+"compañía. Las que se dejen vacías usan el dominio de arriba."
+
+#. module: xb_calendar_domain
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_res_config_settings__xb_calendar_link_company_url
+msgid "Domain of this company"
+msgstr "Dominio de esta compañía"
+
+#. module: xb_calendar_domain
+#: model:ir.model.fields,help:xb_calendar_domain.field_res_company__xb_calendar_link_url
+#: model:ir.model.fields,help:xb_calendar_domain.field_res_config_settings__xb_calendar_link_company_url
+msgid ""
+"Domain used in the meeting links of this company: the videocall link, the invitation, reminder and update emails, and the accept / decline / view pages.\n"
+"Only used when the calendar setting is set to one domain per company. Leave it empty to fall back to the general domain."
+msgstr ""
+"Dominio que se usa en las ligas de reunión de esta compañía: la liga de la videollamada, los correos de invitación, recordatorio y actualización, y las páginas de aceptar / rechazar / ver.\n"
+"Solo se usa cuando el ajuste del calendario está en un dominio por compañía. Déjelo vacío para usar el dominio general."
+
+#. module: xb_calendar_domain
+#: model:ir.model.fields,help:xb_calendar_domain.field_res_config_settings__xb_calendar_link_url
+msgid ""
+"Domain used in the meeting links. It has to be served by this same Odoo, "
+"otherwise the links will not open."
+msgstr ""
+"Dominio que se usa en las ligas de reunión. Tiene que estar servido por este"
+" mismo Odoo, si no las ligas no abrirán."
+
+#. module: xb_calendar_domain
+#: model_terms:ir.ui.view,arch_db:xb_calendar_domain.res_config_settings_view_form_xb_calendar_domain
+msgid ""
+"Domain used in the videocall link, in the invitation, reminder, update and "
+"cancellation emails, and in the accept / decline / view pages."
+msgstr ""
+"Dominio que se usa en la liga de la videollamada, en los correos de "
+"invitación, recordatorio, actualización y cancelación, y en las páginas de "
+"aceptar / rechazar / ver."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"Each company gets its own address. The one at the top is the general "
+"fallback: companies left empty use it."
+msgstr ""
+"Cada compañía tiene su propia dirección. La de arriba es el respaldo "
+"general: las compañías que se dejen vacías la usan."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "Each meeting follows the domain of the company that organises it."
+msgstr "Cada reunión sigue el dominio de la compañía que la organiza."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "Every link that points back at a meeting, not only the videocall:"
+msgstr ""
+"Cada liga que apunta de regreso a la reunión, no solo la videollamada:"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "Every meeting in the database uses the domain you type."
+msgstr "Todas las reuniones de la base usan el dominio que escriba."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "How it looks on the meeting"
+msgstr "Cómo se ve en la reunión"
+
+#. module: xb_calendar_domain
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_calendar_attendee__id
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_calendar_event__id
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_discuss_channel__id
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_res_company__id
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_res_config_settings__id
+msgid "ID"
+msgstr ""
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"If you use Odoo's Online Appointments, a booking keeps the domain of the "
+"website it was booked on -- the one the attendee recognises, and the one "
+"Odoo already resolves for that kind of meeting. Only the meetings your team "
+"creates follow the domain configured here."
+msgstr ""
+"Si usa las Citas en Línea de Odoo, una reserva conserva el dominio del sitio"
+" donde se reservó: el que el asistente reconoce, y el que Odoo ya resuelve "
+"para ese tipo de reunión. Solo las reuniones que crea su equipo siguen el "
+"dominio configurado aquí."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"It does not change their access token, so the invitations you already sent "
+"keep working: only the domain in front of them changes."
+msgstr ""
+"No cambia su token de acceso, así que las invitaciones que ya envió siguen "
+"sirviendo: solo cambia el dominio que va enfrente."
+
+#. module: xb_calendar_domain
+#: model_terms:ir.ui.view,arch_db:xb_calendar_domain.res_config_settings_view_form_xb_calendar_domain
+msgid ""
+"It has to be a domain served by this same Odoo, otherwise the links will not"
+" open."
+msgstr ""
+"Tiene que ser un dominio servido por este mismo Odoo, si no las ligas no "
+"abrirán."
+
+#. module: xb_calendar_domain
+#: model_terms:ir.ui.view,arch_db:xb_calendar_domain.res_config_settings_view_form_xb_calendar_domain
+msgid "Meeting Links"
+msgstr "Ligas de las reuniones"
+
+#. module: xb_calendar_domain
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_res_company__xb_calendar_link_url
+msgid "Meeting Links Domain"
+msgstr "Dominio de las ligas de reunión"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_res_config_settings__xb_calendar_link_mode
+#: model_terms:ir.ui.view,arch_db:xb_calendar_domain.res_config_settings_view_form_xb_calendar_domain
+msgid "Meeting links domain"
+msgstr "Dominio de las ligas de reunión"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/models/res_config_settings.py:0
+msgid "Meeting links updated"
+msgstr "Ligas de reunión actualizadas"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "Meetings that already exist"
+msgstr "Las reuniones que ya existen"
+
+#. module: xb_calendar_domain
+#: model_terms:ir.ui.view,arch_db:xb_calendar_domain.res_config_settings_view_form_xb_calendar_domain
+msgid ""
+"Meetings that are already scheduled keep the domain they were created with.\n"
+"                                This rebuilds the videocall link of the ones that have not happened yet\n"
+"                                without touching their access token, so the links already sent keep working."
+msgstr ""
+"Las reuniones ya agendadas conservan el dominio con el que se crearon. Esto "
+"reconstruye la liga de videollamada de las que aún no ocurren, sin tocar su "
+"token de acceso, así que las ligas ya enviadas siguen sirviendo."
+
+#. module: xb_calendar_domain
+#: model:ir.model.fields,help:xb_calendar_domain.field_res_company__xb_calendar_link_title
+#: model:ir.model.fields,help:xb_calendar_domain.field_res_config_settings__xb_calendar_link_company_title
+msgid ""
+"Name announced by the videocall page, which is what WhatsApp, Telegram or Slack show when the link is pasted into a chat, and what the browser tab reads.\n"
+"Leave it empty to use the name of the company."
+msgstr "Nombre que anuncia la página de la videollamada: es lo que muestran WhatsApp, Telegram o Slack cuando la liga se pega en un chat, y lo que dice la pestaña del navegador.\nDéjelo vacío para usar el nombre de la compañía."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "Nothing changes. The module is inert."
+msgstr "No cambia nada. El módulo queda inerte."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"Odoo builds every link of a meeting from one system-wide address, the base "
+"URL. This module gives meeting links a domain of their own, without touching"
+" that parameter -- so the portal, your website links and any custom "
+"development keep working exactly as before."
+msgstr ""
+"Odoo arma todas las ligas de una reunión a partir de una sola dirección "
+"global, la URL base. Este módulo le da a las ligas de reunión un dominio "
+"propio, sin tocar ese parámetro: el portal, las ligas de su sitio web y "
+"cualquier desarrollo a la medida siguen funcionando igual que antes."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+#: model:ir.model.fields.selection,name:xb_calendar_domain.selection__res_config_settings__xb_calendar_link_mode__default
+msgid "Odoo default (system base URL)"
+msgstr "Como Odoo por defecto (URL base del sistema)"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "One company, or one brand in front of customers."
+msgstr "Una sola compañía, o una sola marca de cara al cliente."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+#: model:ir.model.fields.selection,name:xb_calendar_domain.selection__res_config_settings__xb_calendar_link_mode__fixed
+msgid "One domain for every meeting"
+msgstr "Un solo dominio para todas las reuniones"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+#: model:ir.model.fields.selection,name:xb_calendar_domain.selection__res_config_settings__xb_calendar_link_mode__company
+msgid "One domain per company"
+msgstr "Un dominio por compañía"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "Online Appointments"
+msgstr "Citas en Línea"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "Option"
+msgstr "Opción"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "Organiser"
+msgstr "Organizador"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"Pick the option and write the full address, for example %(url)s. Then press "
+"Save."
+msgstr ""
+"Elija la opción y escriba la dirección completa, por ejemplo %(url)s. Luego "
+"presione Guardar."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"Press the videocall button on the meeting as always. The link is built with "
+"the domain you configured."
+msgstr ""
+"Presione el botón de videollamada en la reunión como siempre. La liga se "
+"arma con el dominio que configuró."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "Questions"
+msgstr "Preguntas"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+#: model_terms:ir.ui.view,arch_db:xb_calendar_domain.res_config_settings_view_form_xb_calendar_domain
+msgid "Save and update upcoming meetings"
+msgstr "Guardar y actualizar las reuniones futuras"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "Settings > Calendar > Meeting Links"
+msgstr "Ajustes > Calendario > Ligas de las reuniones"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "Settings > Users & Companies > Companies"
+msgstr "Ajustes > Usuarios y compañías > Compañías"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "Several companies or brands in the same database."
+msgstr "Varias compañías o marcas en la misma base de datos."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "The Meeting Links section in the Calendar settings"
+msgstr "La sección Ligas de las reuniones en los ajustes de Calendario"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"The company that decides is the one of the meeting %(organiser)s, not the "
+"company active in the top bar. If a meeting has to go out under another "
+"brand, change its Organiser."
+msgstr ""
+"La compañía que manda es la del %(organiser)s de la reunión, no la compañía "
+"activa en la barra de arriba. Si una reunión tiene que salir con otra marca,"
+" cambie su Organizador."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "The date change, update and cancellation emails."
+msgstr "Los correos de cambio de fecha, actualización y cancelación."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"The domain has to be served by this same Odoo. The module decides which name"
+" is written into the link; it does not publish a new site, nor set up DNS or"
+" a certificate. If the address is empty or is not a valid http(s) address, "
+"it is ignored and the meeting falls back to the address Odoo would have used"
+" on its own."
+msgstr ""
+"El dominio tiene que estar servido por este mismo Odoo. El módulo decide qué"
+" nombre se escribe en la liga; no publica un sitio nuevo, ni configura DNS "
+"ni un certificado. Si la dirección está vacía o no es una dirección http(s) "
+"válida, se ignora y la reunión regresa a la dirección que Odoo habría usado "
+"por su cuenta."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"The field also lives on the company itself, right under its website, which "
+"is handier when there are several: %(menu)s."
+msgstr ""
+"El campo también vive en la ficha de la compañía, justo debajo de su sitio "
+"web, que es más cómodo cuando hay varias: %(menu)s."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "The field on the company form"
+msgstr "El campo en la ficha de la compañía"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "The invitation email, and its Accept, Decline and View buttons."
+msgstr "El correo de invitación, con sus botones Aceptar, Rechazar y Ver."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "The name on the videocall page"
+msgstr "El nombre en la página de la videollamada"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"The name the videocall page announces, which is what a messaging app shows "
+"when the link is pasted into a chat."
+msgstr "El nombre que anuncia la página de la videollamada, que es lo que muestra una app de mensajería cuando la liga se pega en un chat."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "The portal pages those buttons open."
+msgstr "Las páginas del portal que abren esos botones."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "The reminder email sent before the meeting."
+msgstr "El correo de recordatorio que se manda antes de la reunión."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "The three options"
+msgstr "Las tres opciones"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "The videocall link of the meeting (Odoo Discuss)."
+msgstr "La liga de videollamada de la reunión (Odoo Discuss)."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"To announce a different name -- the brand your customers know rather than "
+"the legal name of the company -- fill in %(field)s, right under the domain, "
+"either in the settings or on the company itself."
+msgstr "Para anunciar otro nombre -- la marca que conocen sus clientes en vez de la razón social -- capture %(field)s, justo debajo del dominio, en los ajustes o en la ficha de la compañía."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "To go back, or before you have decided on a domain."
+msgstr "Para regresar atrás, o antes de haber decidido un dominio."
+
+#. module: xb_calendar_domain
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_res_company__xb_calendar_link_title
+msgid "Videocall Page Title"
+msgstr "Título de la página de la videollamada"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_res_config_settings__xb_calendar_link_company_title
+msgid "Videocall page title"
+msgstr "Título de la página de la videollamada"
+
+#. module: xb_calendar_domain
+#: model_terms:ir.ui.view,arch_db:xb_calendar_domain.res_config_settings_view_form_xb_calendar_domain
+msgid ""
+"What WhatsApp, Telegram or Slack show when the videocall link is pasted into a\n"
+"                                    chat, instead of “Odoo”. Leave it empty to use the name of the company that\n"
+"                                    organises the meeting."
+msgstr "Lo que muestran WhatsApp, Telegram o Slack cuando la liga de la videollamada se pega en un chat, en vez de «Odoo». Déjelo vacío para usar el nombre de la compañía que organiza la reunión."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "What it changes"
+msgstr "Qué cambia"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "What it does"
+msgstr "Qué hace"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"When the videocall link is pasted into WhatsApp, Telegram or Slack, the "
+"preview those apps build reads the title of the page it opens, and Odoo "
+"leaves that title as a bare %(odoo)s. The module writes the name of the "
+"company that organises the meeting instead."
+msgstr "Cuando la liga de la videollamada se pega en WhatsApp, Telegram o Slack, la vista previa que arman esas apps lee el título de la página que abre, y Odoo deja ahí un simple %(odoo)s. El módulo escribe en su lugar el nombre de la compañía que organiza la reunión."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "When to use it"
+msgstr "Cuándo usarla"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "Where it is configured"
+msgstr "Dónde se configura"
+
+#. module: xb_calendar_domain
+#: model_terms:ir.ui.view,arch_db:xb_calendar_domain.res_config_settings_view_form_xb_calendar_domain
+#: model_terms:ir.ui.view,arch_db:xb_calendar_domain.view_company_form_xb_calendar_domain
+msgid "e.g. My Company"
+msgstr "p. ej. Mi Compañía"
+
+#. module: xb_calendar_domain
+#: model_terms:ir.ui.view,arch_db:xb_calendar_domain.res_config_settings_view_form_xb_calendar_domain
+#: model_terms:ir.ui.view,arch_db:xb_calendar_domain.view_company_form_xb_calendar_domain
+msgid "e.g. https://meet.mycompany.com"
+msgstr "p. ej. https://meet.miempresa.com"

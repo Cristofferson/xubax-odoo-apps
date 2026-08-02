@@ -1,0 +1,136 @@
+<section style="font-family:Arial,Helvetica,sans-serif;color:#2b2b2b;">
+
+  <div style="text-align:center;margin-bottom:24px;">
+    <img src="banner.png" style="max-width:100%;border-radius:12px;"/>
+  </div>
+
+  <div style="max-width:920px;margin:0 auto;">
+
+    <h1 style="color:#1F6F8B;font-size:30px;margin:0 0 6px;">
+      Meeting Links Domain
+    </h1>
+    <p style="font-size:17px;color:#666;margin:0 0 28px;">
+      Choose the domain Odoo writes into your meeting links &mdash; the videocall
+      URL, the invitation, the reminder and the accept / decline pages &mdash;
+      <b>without touching the system base URL</b> the rest of Odoo depends on.
+    </p>
+
+    <div style="background:#eef6f9;border-left:5px solid #1F6F8B;padding:16px 20px;border-radius:6px;margin-bottom:28px;">
+      <h3 style="margin:0 0 8px;color:#1F6F8B;">The problem</h3>
+      <p style="margin:0;font-size:15px;line-height:1.5;">
+        Odoo builds every link of a meeting from a single system-wide parameter.
+        If your database serves several brands, or if the domain your staff uses
+        is not the one a customer should see, the invitation you send out carries
+        the wrong name: the videocall link, the <i>Accept</i> and <i>Decline</i>
+        buttons and the reminder all point at a domain that has nothing to do
+        with the meeting.
+      </p>
+      <p style="margin:10px 0 0;font-size:15px;line-height:1.5;">
+        Moving that parameter is not a real option &mdash; the portal, your
+        website links and any custom development read the very same one, so
+        fixing the meetings breaks everything else.
+      </p>
+    </div>
+
+    <h3 style="color:#1F6F8B;margin:0 0 10px;">What it covers</h3>
+    <p style="font-size:15px;color:#666;margin:0 0 10px;">
+      Every link that points back at a meeting, not only the videocall:
+    </p>
+    <ul style="font-size:15px;line-height:1.7;margin:0 0 28px;padding-left:20px;">
+      <li>The <b>videocall link</b> of the meeting (Odoo Discuss).</li>
+      <li>The <b>invitation email</b>, and its <i>Accept</i>, <i>Decline</i> and
+          <i>View</i> buttons.</li>
+      <li>The <b>reminder email</b> sent before the meeting.</li>
+      <li>The <b>date change</b>, <b>update</b> and <b>cancellation</b> emails.</li>
+      <li>The <b>portal pages</b> those buttons open.</li>
+      <li>The <b>name the videocall page announces</b> — your company instead of
+          a bare <i>Odoo</i>, which is what WhatsApp, Telegram or Slack show
+          when someone pastes the link into a chat.</li>
+    </ul>
+
+    <h3 style="color:#1F6F8B;margin:0 0 10px;">Two ways to set it</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:15px;margin:0 0 28px;">
+      <tr>
+        <td style="border:1px solid #d9e6ec;padding:12px 14px;width:34%;background:#f7fbfc;">
+          <b>One domain for every meeting</b>
+        </td>
+        <td style="border:1px solid #d9e6ec;padding:12px 14px;">
+          The simplest case: type the domain and every meeting in the database
+          uses it.
+        </td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #d9e6ec;padding:12px 14px;background:#f7fbfc;">
+          <b>One domain per company</b>
+        </td>
+        <td style="border:1px solid #d9e6ec;padding:12px 14px;">
+          Each company gets its own field, and its meetings follow the domain of
+          the company that organises them. Companies left empty fall back to the
+          general one.
+        </td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #d9e6ec;padding:12px 14px;background:#f7fbfc;">
+          <b>Odoo default</b>
+        </td>
+        <td style="border:1px solid #d9e6ec;padding:12px 14px;">
+          Leaves the module inert: the database behaves exactly as it did before
+          installing it, which also makes it safe to uninstall.
+        </td>
+      </tr>
+    </table>
+
+    <div style="background:#fbf7ee;border-left:5px solid #C8A44D;padding:16px 20px;border-radius:6px;margin-bottom:28px;">
+      <h3 style="margin:0 0 8px;color:#8a6d24;">Meetings that already exist</h3>
+      <p style="margin:0;font-size:15px;line-height:1.5;">
+        A meeting stores its link when it is created, so a change of setting only
+        reaches new ones. The settings page has a button that rebuilds the
+        videocall link of the meetings that have not happened yet. It does
+        <b>not</b> change their access token, so <b>the links you already sent
+        keep working</b> &mdash; only the domain in front of them changes.
+      </p>
+    </div>
+
+    <h3 style="color:#1F6F8B;margin:0 0 10px;">Online Appointments</h3>
+    <p style="font-size:15px;line-height:1.6;margin:0 0 28px;">
+      If you use Odoo's Online Appointments, a booking keeps the domain of the
+      website it was booked on &mdash; the one the attendee recognises, and the
+      one Odoo already resolves for that kind of meeting. Only the meetings your
+      team creates follow the domain configured here.
+    </p>
+
+    <h3 style="color:#1F6F8B;margin:0 0 10px;">Technical notes</h3>
+    <ul style="font-size:15px;line-height:1.7;margin:0 0 28px;padding-left:20px;">
+      <li>The domain is resolved through <code>get_base_url()</code> on
+          <code>calendar.event</code> and <code>calendar.attendee</code>, the
+          single point Odoo itself uses to turn the relative links of the mail
+          templates into absolute ones. <b>No mail template is modified</b> and
+          no field is duplicated, so the module keeps working after an Odoo
+          update.</li>
+      <li>A domain that is empty or not a valid <code>http(s)</code> address is
+          ignored rather than patched up: the meeting falls back to the base URL
+          Odoo would have used on its own.</li>
+      <li>The domain has to be served by this same Odoo instance. The module
+          decides which name is written into the link; it does not publish a new
+          site nor set up DNS or certificates.</li>
+    </ul>
+
+    <h3 style="color:#1F6F8B;margin:0 0 10px;">Compatibility</h3>
+    <ul style="font-size:15px;line-height:1.7;margin:0 0 28px;padding-left:20px;">
+      <li><b>Odoo 19.0</b>, Community and Enterprise.</li>
+      <li>Requires <b>Calendar</b> (<code>calendar</code>). Online Appointments is
+          supported when installed, but not required.</li>
+      <li>English and Spanish included.</li>
+    </ul>
+
+    <div style="border-top:1px solid #e3ebee;padding-top:18px;color:#777;font-size:14px;">
+      <p style="margin:0 0 4px;"><b>XUBAX</b> &mdash; Cristofferson Reyes</p>
+      <p style="margin:0;">
+        Support: <a href="mailto:soporte@xubax.com" style="color:#1F6F8B;">soporte@xubax.com</a>
+        &nbsp;&middot;&nbsp;
+        <a href="https://www.xubax.com" style="color:#1F6F8B;">www.xubax.com</a>
+      </p>
+    </div>
+
+  </div>
+</section>

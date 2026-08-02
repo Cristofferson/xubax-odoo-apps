@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_xb_calendar_domain" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.xb.calendar.domain</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="calendar.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <!--
+              Its own block inside the native Calendar app, so the option is
+              found where meetings are already configured and not in a section
+              of its own that nobody opens.
+            -->
+            <xpath expr="//app[@name='calendar']" position="inside">
+                <block title="Meeting Links" name="xb_calendar_domain_block">
+                    <!--
+                      Full width (col-lg-12): settings are laid out in two
+                      columns, and at half width the radio options break into
+                      two lines each and the domain field is cut off.
+                    -->
+                    <setting id="xb_calendar_domain_setting"
+                             class="col-12 col-lg-12"
+                             string="Meeting links domain"
+                             help="Domain used in the videocall link, in the invitation, reminder, update and cancellation emails, and in the accept / decline / view pages.">
+                        <field name="xb_calendar_link_mode" widget="radio"/>
+
+                        <div class="content-group" invisible="xb_calendar_link_mode == 'default'">
+                            <!--
+                              Same field, two labels: with one domain per
+                              company it is the fallback of the companies left
+                              empty, and calling it the default one keeps it
+                              apart from the company's own domain below.
+                            -->
+                            <div class="row mt16">
+                                <label for="xb_calendar_link_url" class="col-lg-3 o_light_label"
+                                       invisible="xb_calendar_link_mode != 'fixed'"/>
+                                <label for="xb_calendar_link_url" string="Default domain"
+                                       class="col-lg-3 o_light_label"
+                                       invisible="xb_calendar_link_mode != 'company'"/>
+                                <field name="xb_calendar_link_url"
+                                       placeholder="e.g. https://meet.mycompany.com"/>
+                            </div>
+                            <div class="row" invisible="xb_calendar_link_mode != 'fixed'">
+                                <div class="col-lg-3"/>
+                                <div class="col text-muted">
+                                    It has to be a domain served by this same Odoo, otherwise the links will not open.
+                                </div>
+                            </div>
+
+                            <div class="row mt16" invisible="xb_calendar_link_mode != 'company'">
+                                <label for="xb_calendar_link_company_url" class="col-lg-3 o_light_label"/>
+                                <field name="xb_calendar_link_company_url"
+                                       placeholder="e.g. https://meet.mycompany.com"/>
+                            </div>
+                            <div class="row" invisible="xb_calendar_link_mode != 'company'">
+                                <div class="col-lg-3"/>
+                                <div class="col text-muted">
+                                    Domain of the company selected at the top of this page. Switch company to set the
+                                    other ones, or fill them in from each company's own form. The ones left empty use
+                                    the domain above.
+                                </div>
+                            </div>
+
+                            <!--
+                              The title of the videocall page: what a messaging
+                              app shows when the link is pasted into a chat.
+                            -->
+                            <div class="row mt16">
+                                <label for="xb_calendar_link_company_title" class="col-lg-3 o_light_label"/>
+                                <field name="xb_calendar_link_company_title"
+                                       placeholder="e.g. My Company"/>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3"/>
+                                <div class="col text-muted">
+                                    What WhatsApp, Telegram or Slack show when the videocall link is pasted into a
+                                    chat, instead of “Odoo”. Leave it empty to use the name of the company that
+                                    organises the meeting.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt16">
+                            <button name="action_xb_calendar_update_links" type="object"
+                                    icon="fa-refresh" class="btn-link ps-0"
+                                    string="Save and update upcoming meetings"/>
+                            <div class="text-muted">
+                                Meetings that are already scheduled keep the domain they were created with.
+                                This rebuilds the videocall link of the ones that have not happened yet
+                                without touching their access token, so the links already sent keep working.
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_company_form_xb_calendar_domain" model="ir.ui.view">
+        <field name="name">res.company.form.inherit.xb.calendar.domain</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <!-- Right under the company website, which is the field it is most
+                 often confused with: this one is only about meeting links. -->
+            <field name="website" position="after">
+                <field name="xb_calendar_link_url" widget="url"
+                       placeholder="e.g. https://meet.mycompany.com"/>
+                <field name="xb_calendar_link_title"
+                       placeholder="e.g. My Company"/>
+            </field>
+        </field>
+    </record>
+</odoo>
