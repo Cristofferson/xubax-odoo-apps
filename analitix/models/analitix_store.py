@@ -465,8 +465,14 @@ class AnalitixStore(models.Model):
         help="Hard ceiling: no entry can be set to run longer than this "
              "without somebody looking at it again.")
     watch_person_ids = fields.One2many(
-        "analitix.watch.person", "store_id", string="Watch List")
-    watch_person_count = fields.Integer(compute="_compute_counts")
+        "analitix.watch.person", "store_id", string="Watch List",
+        groups="analitix.group_security",
+        help="Restricted at the field, not only at the tab. A group on a "
+             "<page> hides the tab; the ORM still resolves the field for "
+             "anybody reading the record, which is how a manager reading their "
+             "own store touched the watch list.")
+    watch_person_count = fields.Integer(
+        compute="_compute_watch_person_count", groups="analitix.group_security")
 
     # ------------------------------------------------------------------
     # Live occupancy over the selected period
@@ -528,12 +534,32 @@ class AnalitixStore(models.Model):
     @api.depends("door_ids", "device_ids", "register_ids", "zone_ids",
                  "signage_rule_ids")
     def _compute_counts(self):
-        for store in self:
+        """Count the store's parts, without inheriting their access rules.
+
+        A compute that walks a restricted relation hands that restriction to
+        everybody who reads it. ``register_ids`` points at ``pos.config``, which
+        a salesperson cannot read — and because these counts share one method,
+        that made the *store kanban* fail for a salesperson over a figure they
+        were not even shown. Found by opening every screen as every role;
+        invisible to every test that ran as a privileged user.
+
+        ``sudo`` is the right answer here and not a shortcut: how many registers
+        feed a store is not the registers. The records themselves stay behind
+        their own rules — this discloses a number, and only the number.
+        """
+        for store in self.sudo():
             store.door_count = len(store.door_ids)
             store.device_count = len(store.device_ids)
             store.register_count = len(store.register_ids)
             store.zone_count = len(store.zone_ids)
             store.signage_rule_count = len(store.signage_rule_ids)
+
+    @api.depends("watch_person_ids")
+    def _compute_watch_person_count(self):
+        """Separate on purpose: unlike the counts above, how many people a shop
+        has put on its watch list IS sensitive, so it stays with the role that
+        owns the list rather than being counted for anybody who opens a store."""
+        for store in self:
             store.watch_person_count = len(store.watch_person_ids)
 
     def _visitors_this_hour(self):

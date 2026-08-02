@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-02 14:41+0000\n"
-"PO-Revision-Date: 2026-08-02 14:41+0000\n"
+"POT-Creation-Date: 2026-08-02 16:23+0000\n"
+"PO-Revision-Date: 2026-08-02 16:23+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -4616,6 +4616,16 @@ msgid "No readings yet"
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid ""
+"No register is mapped to this store, so its\n"
+"                                conversion rate will read zero sales however\n"
+"                                many people walk in. Pick the registers whose\n"
+"                                tickets belong to this shop — or switch to\n"
+"                                \"Whole company\" if it is the company's only one."
+msgstr ""
+
+#. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_value_report
 msgid "No reports yet"
 msgstr ""
@@ -5603,6 +5613,14 @@ msgid ""
 "Restrict this user to these stores. Leave empty to give access to every "
 "store of the companies they already belong to — right for a single-store "
 "customer, wrong for a shared instance."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__watch_person_ids
+msgid ""
+"Restricted at the field, not only at the tab. A group on a <page> hides the "
+"tab; the ORM still resolves the field for anybody reading the record, which "
+"is how a manager reading their own store touched the watch list."
 msgstr ""
 
 #. module: analitix

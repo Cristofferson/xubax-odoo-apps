@@ -48,7 +48,7 @@
                             <field name="state"/>
                         </group>
                         <group string="Who (anonymously)">
-                            <field name="signature_id"/>
+                            <field name="signature_id" groups="analitix.group_manager"/>
                             <field name="is_returning"/>
                             <field name="re_entry_count"/>
                             <field name="visit_group_id"/>
@@ -103,7 +103,7 @@
             <search string="Visits">
                 <field name="store_id"/>
                 <field name="door_id"/>
-                <field name="signature_id"/>
+                <field name="signature_id" groups="analitix.group_manager"/>
                 <filter name="filter_inside" string="Inside Now"
                         domain="[('state', '=', 'inside')]"/>
                 <filter name="filter_returning" string="Returning"

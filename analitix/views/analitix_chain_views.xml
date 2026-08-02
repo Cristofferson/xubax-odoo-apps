@@ -242,8 +242,12 @@
                 <field name="store_id"/>
                 <field name="region_id"/>
                 <field name="brand_id"/>
+                <!-- relativedelta(day=1), not .replace(day=1): the client
+                     evaluates these domains in JavaScript and does not
+                     implement date.replace, so the filter that ships as the
+                     action's default took the whole console down. -->
                 <filter name="filter_month" string="This Month"
-                        domain="[('day', '&gt;=', (context_today().replace(day=1)).strftime('%Y-%m-%d'))]"/>
+                        domain="[('day', '&gt;=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d'))]"/>
                 <filter name="filter_90" string="Last 90 Days"
                         domain="[('day', '&gt;=', (context_today() - datetime.timedelta(days=90)).strftime('%Y-%m-%d'))]"/>
                 <separator/>

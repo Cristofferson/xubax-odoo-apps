@@ -94,8 +94,16 @@
                         <field name="capture_paused_by_id" readonly="1" class="oe_inline"/>
                         <field name="capture_paused_at" readonly="1" class="oe_inline"/>
                     </div>
+                    <!-- The configuration tabs are restricted to the roles that
+                         configure. A salesperson opening a store should see its
+                         live state, not its wiring — and several of these tabs
+                         point at models (pos.config, hr.employee, sale.order,
+                         staff signatures) that a floor user cannot read at all,
+                         which turned the page into an Access Error rather than
+                         a tidy read-only view. -->
                     <notebook>
-                        <page string="Doors" name="doors">
+                        <page string="Doors" name="doors"
+                              groups="analitix.group_manager,analitix.group_technician">
                             <p class="text-muted">
                                 One line per entrance. A store may have as many as it
                                 actually has — the rest of Analitix follows this list.
@@ -112,7 +120,8 @@
                                 </list>
                             </field>
                         </page>
-                        <page string="Devices" name="devices">
+                        <page string="Devices" name="devices"
+                              groups="analitix.group_manager,analitix.group_technician">
                             <field name="device_ids">
                                 <list>
                                     <field name="name"/>
@@ -128,19 +137,40 @@
                                 </list>
                             </field>
                         </page>
-                        <page string="Sales Matching" name="sales">
+                        <page string="Sales Matching" name="sales"
+                              groups="analitix.group_manager">
                             <group>
                                 <field name="match_mode" widget="radio"/>
+                                <!-- NOT required, deliberately.
+                                     It was, and that made a store with no
+                                     register yet unsaveable — including from
+                                     the Pause Capture button, which saves the
+                                     form first. An emergency control that a
+                                     half-finished configuration can block is
+                                     not an emergency control. A store with no
+                                     registers simply reports no tickets, which
+                                     is visible, diagnosable and warned about
+                                     below. -->
                                 <field name="register_ids" widget="many2many_tags"
-                                       invisible="match_mode != 'registers'"
-                                       required="match_mode == 'registers'"/>
+                                       groups="analitix.group_manager"
+                                       invisible="match_mode != 'registers'"/>
                             </group>
+                            <div class="alert alert-warning" role="alert"
+                                 groups="analitix.group_manager"
+                                 invisible="match_mode != 'registers' or register_ids">
+                                No register is mapped to this store, so its
+                                conversion rate will read zero sales however
+                                many people walk in. Pick the registers whose
+                                tickets belong to this shop — or switch to
+                                "Whole company" if it is the company's only one.
+                            </div>
                             <group string="Floor Area">
                                 <field name="area_sqm"/>
                                 <field name="sales_area_sqm"/>
                             </group>
                         </page>
-                        <page string="Staff Exclusion" name="staff">
+                        <page string="Staff Exclusion" name="staff"
+                              groups="analitix.group_manager">
                             <group>
                                 <field name="exclude_staff"/>
                                 <field name="staff_match_threshold"
@@ -162,7 +192,8 @@
                                 </list>
                             </field>
                         </page>
-                        <page string="Visits &amp; Profiling" name="phase2">
+                        <page string="Visits &amp; Profiling" name="phase2"
+                              groups="analitix.group_manager">
                             <group>
                                 <group string="Turning crossings into visits">
                                     <field name="reid_enabled"/>
@@ -202,7 +233,8 @@
                                 Matching never crosses store boundaries.
                             </div>
                         </page>
-                        <page string="Floor &amp; Alerts" name="phase3">
+                        <page string="Floor &amp; Alerts" name="phase3"
+                              groups="analitix.group_manager">
                             <group>
                                 <group string="Lost sales">
                                     <field name="lost_sale_enabled"/>
@@ -294,7 +326,8 @@
                                 </list>
                             </field>
                         </page>
-                        <page string="Action &amp; Billing" name="phase4">
+                        <page string="Action &amp; Billing" name="phase4"
+                              groups="analitix.group_manager">
                             <group>
                                 <group string="Screens">
                                     <field name="signage_enabled"/>
@@ -333,7 +366,14 @@
                                 is switched on.
                             </div>
                             <group>
-                                <group string="Subscription">
+                                <!-- What the shop pays is not floor
+                                     information: the salesperson who reads the
+                                     store's dashboard has no business seeing
+                                     the contract, and the subscription order
+                                     lives in Sales, which they cannot read
+                                     either. -->
+                                <group string="Subscription"
+                                       groups="analitix.group_manager">
                                     <field name="plan"/>
                                     <field name="subscription_state"/>
                                     <field name="subscription_order_id"/>

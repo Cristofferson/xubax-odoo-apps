@@ -64,3 +64,8 @@ access_store_daily_user,analitix.store.daily user,model_analitix_store_daily,ana
 access_store_daily_manager,analitix.store.daily manager,model_analitix_store_daily,analitix.group_manager,1,1,1,1
 access_chain_report_regional,analitix.chain.report regional,model_analitix_chain_report,analitix.group_regional,1,0,0,0
 access_chain_report_manager,analitix.chain.report manager,model_analitix_chain_report,analitix.group_manager,1,0,0,0
+access_pos_config_analitix_manager,pos.config read for analitix managers,point_of_sale.model_pos_config,analitix.group_manager,1,0,0,0
+access_pos_order_analitix_user,pos.order read for analitix users,point_of_sale.model_pos_order,analitix.group_user,1,0,0,0
+access_hr_employee_analitix_user,hr.employee read for analitix users,hr.model_hr_employee,analitix.group_user,1,0,0,0
+access_sale_order_analitix_manager,sale.order read for analitix managers,sale.model_sale_order,analitix.group_manager,1,0,0,0
+access_crm_lead_analitix_user,crm.lead read for analitix users,crm.model_crm_lead,analitix.group_user,1,0,0,0

@@ -87,6 +87,7 @@ The suite covers, in order of how much it would cost to get wrong:
 | `test_watchlist.py` | Manual-only entry, double control, expiry, what a match must NOT do |
 | `test_manual.py` | The in-app manuals resolve, in the reader's own language |
 | `test_chain.py` | Regional scope, the elevated decisions, the console, safe pruning |
+| `test_screens.py` | Every screen opens for its own role, with only that role's rights |
 
 ## Building the published archive
 
@@ -109,6 +110,23 @@ on Odoo's asset bundle and add nothing to the translation catalogue.
 Screenshots and screencasts under `static/description/` are captured from the
 real UI over the module's own demo data, so they can be regenerated whenever the
 product moves rather than drifting quietly out of date.
+
+## End-to-end
+
+`tools/e2e/` drives the product the way a customer does — over HTTP, with the
+real edge agent as a subprocess, and through a real browser — against a running
+server. It is not part of the in-process suite and does not ship in the package.
+
+```bash
+tools/e2e/run.sh          # brings a server up, prepares a database, runs all three
+```
+
+It exists because the in-process suite has a blind spot it cannot see past: its
+tests run as a user far more privileged than a customer's. The first browser run
+found an **Access Error on the store form for every Analitix Manager who was not
+also a Point of Sale user** — the product's main configuration screen, unusable
+for the role it was built for, invisible to 263 passing tests.
+`tests/test_screens.py` is the regression guard that came out of it.
 
 ## Deploying an edge device
 

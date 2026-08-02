@@ -4075,6 +4075,11 @@ msgid "No readings yet"
 msgstr "Todavía no hay lecturas"
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "No register is mapped to this store, so its\\n                                conversion rate will read zero sales however\\n                                many people walk in. Pick the registers whose\\n                                tickets belong to this shop — or switch to\\n                                \\\"Whole company\\\" if it is the company's only one."
+msgstr "Esta tienda no tiene ninguna caja asociada, así que su\\n                                tasa de conversión leerá cero ventas por mucha\\n                                gente que entre. Elige las cajas cuyos tickets\\n                                pertenecen a esta tienda, o cambia a «Toda la\\n                                compañía» si es la única de la compañía."
+
+#. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_value_report
 msgid "No reports yet"
 msgstr "Todavía no hay reportes"
@@ -4948,6 +4953,11 @@ msgstr "Usuario responsable"
 #: model:ir.model.fields,help:analitix.field_res_users__analitix_store_ids
 msgid "Restrict this user to these stores. Leave empty to give access to every store of the companies they already belong to — right for a single-store customer, wrong for a shared instance."
 msgstr "Limitar a este usuario a estas tiendas. Déjalo vacío para darle acceso a todas las tiendas de las compañías a las que ya pertenece: correcto para un cliente de una sola tienda, incorrecto en una instancia compartida."
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__watch_person_ids
+msgid "Restricted at the field, not only at the tab. A group on a <page> hides the tab; the ORM still resolves the field for anybody reading the record, which is how a manager reading their own store touched the watch list."
+msgstr "Restringido en el campo, no solo en la pestaña. Un grupo en un <page> esconde la pestaña; el ORM sigue resolviendo el campo para cualquiera que lea el registro, que es como un gerente leyendo su propia tienda acabó tocando la lista de vigilancia."
 
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_form

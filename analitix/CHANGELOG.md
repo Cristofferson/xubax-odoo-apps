@@ -3,6 +3,46 @@
 All notable changes to Analitix. Versions follow Odoo's convention:
 `19.0.<phase>.<minor>.<patch>`.
 
+## 19.0.7.1.0 — What the end-to-end run found
+
+An end-to-end suite was added (`tools/e2e/`) that drives the product the way a
+customer does: over HTTP, with the real edge agent as a subprocess, and through
+a real browser. It found five defects that 263 in-process tests could not see,
+because those run in the same process as the server, without a browser, as a
+user far more privileged than any customer's.
+
+**Fixed**
+
+* **The store form was unusable for the role it was built for.** An Analitix
+  Manager who was not also a Point of Sale user got an Access Error opening
+  their own store: the form shows `register_ids`, and reading `pos.config`
+  needs the POS group. The same trap applied to staff enrolment
+  (`hr.employee`), ticket attribution (`pos.order`), the subscription
+  (`sale.order`) and leads from lost sales (`crm.lead`). Read-only access is
+  now granted to the narrowest Analitix group that can reach each screen.
+* **The emergency kill switch could be blocked by a validation rule.**
+  `register_ids` was required whenever sales matched by register, so a store
+  with no register mapped yet could not be saved — and *Pause Capture* saves
+  the form first. An emergency control a half-finished configuration can block
+  is not an emergency control. The field is no longer required; an unmapped
+  store gets a plain warning instead.
+* **A computed count inherited another model's access rules.** The store
+  counters shared one method, so counting registers — which nobody on the floor
+  is shown — made the store kanban fail for a salesperson.
+* **The chain console crashed for everybody.** Its default filter used
+  `date.replace(day=1)`, which the client evaluates in JavaScript and does not
+  implement.
+* Configuration tabs, biometric handles and the subscription are now restricted
+  to the roles that own them rather than merely hidden.
+
+**Added**
+
+* `tests/test_screens.py` — opens every action as every role, with only that
+  role's rights, and resolves the comodel behind every relational field on the
+  view. The regression guard for the whole class of bug above.
+* `tools/e2e/` — the API contract, the real agent (including an outage and its
+  recovery), and six browser journeys. 61 checks.
+
 ## 19.0.7.0.0 — Chain scale (optional)
 
 Everything before this works for one shop and needs none of it.
