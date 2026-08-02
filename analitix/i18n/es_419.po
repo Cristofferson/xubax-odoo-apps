@@ -4669,16 +4669,6 @@ msgid "Quiet hour / peak hour"
 msgstr "Hora valle / hora pico"
 
 #. module: analitix
-#: model:ir.model.fields,field_description:analitix.field_analitix_brand__rating_ids
-#: model:ir.model.fields,field_description:analitix.field_analitix_device__rating_ids
-#: model:ir.model.fields,field_description:analitix.field_analitix_region__rating_ids
-#: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__rating_ids
-#: model:ir.model.fields,field_description:analitix.field_analitix_store__rating_ids
-#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__rating_ids
-msgid "Ratings"
-msgstr "Valoraciones"
-
-#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__re_entry_count
 msgid "Re-entries"
 msgstr "Reingresos"

@@ -43,28 +43,38 @@ class AnalitixChainReport(models.Model):
     revenue = fields.Monetary(
         string="Revenue", currency_field="currency_id", readonly=True)
 
-    conversion_rate = fields.Float(string="Conversion %", readonly=True, digits=(5, 2))
+#: A ratio summed across rows is nonsense — grouping a week of daily
+#: conversion rates by region produced "750%". Every ratio here carries
+#: aggregator="avg", the same as the hourly views have since phase 1;
+#: the phase 7 models were the ones that forgot.
+    conversion_rate = fields.Float(
+        string="Conversion %", readonly=True, digits=(5, 2), aggregator="avg")
     atv = fields.Monetary(
-        string="Average Ticket", currency_field="currency_id", readonly=True)
-    upt = fields.Float(string="Units / Ticket", readonly=True, digits=(5, 2))
+        string="Average Ticket", currency_field="currency_id", readonly=True,
+        aggregator="avg")
+    upt = fields.Float(
+        string="Units / Ticket", readonly=True, digits=(5, 2), aggregator="avg")
     revenue_per_visitor = fields.Monetary(
-        string="Revenue / Visitor", currency_field="currency_id", readonly=True)
+        string="Revenue / Visitor", currency_field="currency_id", readonly=True,
+        aggregator="avg")
 
     lost_detected = fields.Integer(string="Walk-outs Spotted", readonly=True)
     lost_rescued = fields.Integer(string="Walk-outs Rescued", readonly=True)
-    rescue_rate = fields.Float(string="Rescue %", readonly=True, digits=(5, 2))
+    rescue_rate = fields.Float(
+        string="Rescue %", readonly=True, digits=(5, 2), aggregator="avg")
     alerts_sent = fields.Integer(string="Alerts Sent", readonly=True)
     alerts_missed = fields.Integer(string="Alerts Missed", readonly=True)
 
     area_sqm = fields.Float(string="Total m²", readonly=True)
     revenue_per_sqm = fields.Monetary(
         string="Revenue / m²", currency_field="currency_id", readonly=True,
+        aggregator="avg",
         help="The only fair way to compare a 60 m² kiosk against a 400 m² "
              "flagship. Ranking branches by revenue alone just ranks them by "
              "size, which head office already knows.")
 
     conversion_vs_region = fields.Float(
-        string="Δ vs Region", readonly=True, digits=(5, 2),
+        string="Δ vs Region", readonly=True, digits=(5, 2), aggregator="avg",
         help="This store's conversion minus its region's average for the same "
              "day. The number a regional manager actually acts on: it removes "
              "the week, the weather and the season, which move every branch "

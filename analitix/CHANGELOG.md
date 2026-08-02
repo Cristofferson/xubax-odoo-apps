@@ -3,6 +3,27 @@
 All notable changes to Analitix. Versions follow Odoo's convention:
 `19.0.<phase>.<minor>.<patch>`.
 
+## 19.0.7.2.0 — Listing regenerated, and a figure that was wrong on screen
+
+* **Screenshots and screencasts regenerated** against the current product. The
+  ones on the listing predated phases 5 and 7, so the page showed neither the
+  watch list nor the chain console and its store form was two rounds of
+  permission changes out of date. A sixth screencast covers the console and the
+  two elevated decisions.
+* **The store page now describes what the product actually is**: sections on
+  the watch list and on chain scale, phase 7 in the feature table, and an FAQ
+  entry for the shop that will never own a second branch.
+* **Ratios were summed instead of averaged.** Grouping the chain console by
+  region reported a conversion rate of **750%**. The hourly views have declared
+  `aggregator="avg"` since phase 1; the phase 7 models forgot — and the check
+  written to catch that found four more in the monthly value report and two in
+  the hourly dashboard, all shipping since their own phase.
+  `tests/test_screens.py` now asserts the rule for every ratio in the addon.
+* In the demo database the administrator also gets the corporate role, so a
+  reviewer can find the chain console at all. A real installation still grants
+  it to nobody.
+* Unused screenshots dropped from the package.
+
 ## 19.0.7.1.0 — What the end-to-end run found
 
 An end-to-end suite was added (`tools/e2e/`) that drives the product the way a

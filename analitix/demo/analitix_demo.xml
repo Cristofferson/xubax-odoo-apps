@@ -138,15 +138,17 @@
             <field name="incident_date" eval="(DateTime.now() - relativedelta(days=20)).strftime('%Y-%m-%d')"/>
         </record>
 
-        <!-- In the DEMO database only, the administrator gets the security
-             role, so a reviewer can actually open the watch list and see what
-             it does and what it refuses to do.
+        <!-- In the DEMO database only, the administrator gets the security and
+             corporate roles, so a reviewer can actually open the watch list and
+             the chain console and see what they do — and what they refuse to
+             do. Without this the two most consequential features of the product
+             are behind menus nobody exploring the demo can find.
 
              This does not change what a real installation grants: the module's
-             own data gives that group to nobody, and that stays true on any
+             own data gives both groups to nobody, and that stays true on any
              database installed without demo data. -->
         <record id="base.user_admin" model="res.users">
-            <field name="group_ids" eval="[(4, ref('analitix.group_security'))]"/>
+            <field name="group_ids" eval="[(4, ref('analitix.group_security')), (4, ref('analitix.group_corporate'))]"/>
         </record>
 
         <!-- Two weeks of plausible traffic, generated in Python because a

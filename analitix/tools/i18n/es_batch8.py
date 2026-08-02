@@ -460,9 +460,6 @@ BATCH8 = {
     'Point of Sale Orders':
         'Pedidos del punto de venta',
 
-    'Ratings':
-        'Valoraciones',
-
     'Readings below this are never checked against the list at all. A photograph held up to a camera must not be able to put a real person under suspicion.\\nNote that cameras which do not report a liveness score at all send zero, so with any value above zero here the list matches nothing. That is the safe way round — but if your edge agents do not do liveness, lowering this is a decision to make knowingly rather than a number to nudge until matches appear.':
         'Las lecturas por debajo de esto nunca se comparan contra la lista. Una fotografía puesta frente a una cámara no debe poder poner bajo sospecha a una persona real.\\nOjo: las cámaras que no reportan vitalidad mandan cero, así que con cualquier valor mayor que cero aquí la lista no coincide con nada. Ese es el lado seguro; pero si tus agentes edge no hacen vitalidad, bajarlo es una decisión que hay que tomar a conciencia y no un número que se mueve hasta que aparezcan coincidencias.',
 

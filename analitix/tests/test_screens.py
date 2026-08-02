@@ -187,3 +187,44 @@ class TestEveryScreenOpens(TransactionCase):
                         AccessError,
                         msg="%s may %s %s" % (who.login, operation, model)):
                     self.env[model].with_user(who).check_access(operation)
+
+
+@tagged("post_install", "-at_install")
+class TestGroupedFiguresAreNotNonsense(TransactionCase):
+    """A ratio must never be summed when rows are grouped.
+
+    Grouping a week of daily conversion rates by region produced a group total
+    of **750%**, because Odoo sums Floats by default and a percentage is not a
+    quantity. The hourly views have declared ``aggregator="avg"`` since phase 1;
+    the models added in phase 7 forgot, and nothing failed — the number was
+    simply wrong on the screen a chain is sold on.
+
+    So the rule is asserted directly rather than trusted to review: any field
+    whose name says it is a rate, an average or a per-something either averages
+    or does not aggregate at all.
+    """
+
+    #: Name fragments that mean "this is a ratio, not a quantity".
+    RATIO_HINTS = ("_rate", "rate_", "atv", "upt", "_per_", "_vs_", "average")
+
+    def test_no_ratio_field_is_summed(self):
+        offenders = []
+        for name, model in self.env.registry.items():
+            if not name.startswith("analitix."):
+                continue
+            records = self.env[name]
+            if not records._auto and not records._table:
+                continue
+            for field_name, field in records._fields.items():
+                if field.type not in ("float", "monetary"):
+                    continue
+                if not any(hint in field_name for hint in self.RATIO_HINTS):
+                    continue
+                if field.aggregator in ("avg", None, False):
+                    continue
+                offenders.append("%s.%s aggregates as %r" % (
+                    name, field_name, field.aggregator))
+        self.assertFalse(
+            offenders,
+            "ratios that would be summed into a meaningless group total:\n  " +
+            "\n  ".join(offenders))

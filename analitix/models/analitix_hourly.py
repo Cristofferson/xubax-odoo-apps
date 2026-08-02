@@ -71,8 +71,8 @@ class AnalitixHourly(models.Model):
 
     # --- density ---
     revenue_per_sqm = fields.Monetary(
-        string="Revenue / m²", readonly=True, currency_field="currency_id")
-    visitors_per_sqm = fields.Float(string="Visitors / m²", readonly=True)
+        string="Revenue / m²", readonly=True, currency_field="currency_id", aggregator="avg")
+    visitors_per_sqm = fields.Float(string="Visitors / m²", readonly=True, aggregator="avg")
 
     def init(self):
         tools.drop_view_if_exists(self.env.cr, self._table)

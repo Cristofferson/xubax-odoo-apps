@@ -75,21 +75,25 @@ class AnalitixStoreDaily(models.Model):
     alerts_sent = fields.Integer(string="Alerts Sent")
     alerts_missed = fields.Integer(string="Alerts Missed")
 
+#: A ratio summed across rows is nonsense — grouping a week of daily
+#: conversion rates by region produced "750%". Every ratio here carries
+#: aggregator="avg", the same as the hourly views have since phase 1;
+#: the phase 7 models were the ones that forgot.
     conversion_rate = fields.Float(
         string="Conversion %", compute="_compute_ratios", store=True,
-        digits=(5, 2))
+        digits=(5, 2), aggregator="avg")
     atv = fields.Monetary(
         string="Average Ticket", compute="_compute_ratios", store=True,
-        currency_field="currency_id")
+        currency_field="currency_id", aggregator="avg")
     upt = fields.Float(
         string="Units / Ticket", compute="_compute_ratios", store=True,
-        digits=(5, 2))
+        digits=(5, 2), aggregator="avg")
     revenue_per_visitor = fields.Monetary(
         string="Revenue / Visitor", compute="_compute_ratios", store=True,
-        currency_field="currency_id")
+        currency_field="currency_id", aggregator="avg")
     rescue_rate = fields.Float(
         string="Rescue %", compute="_compute_ratios", store=True,
-        digits=(5, 2),
+        digits=(5, 2), aggregator="avg",
         help="Of the walk-outs spotted, how many the team reached in time. The "
              "figure that separates a store with a traffic problem from one "
              "with a floor problem.")

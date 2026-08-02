@@ -51,9 +51,9 @@ class AnalitixValueReport(models.Model):
     visitors = fields.Integer(string="Visitors")
     tickets = fields.Integer(string="Sales")
     revenue = fields.Monetary(string="Revenue", currency_field="currency_id")
-    conversion_rate = fields.Float(string="Conversion %")
+    conversion_rate = fields.Float(string="Conversion %", aggregator="avg")
     average_ticket = fields.Monetary(
-        string="Average Sale", currency_field="currency_id")
+        string="Average Sale", currency_field="currency_id", aggregator="avg")
 
     # --- what the system did about it ---
     alerts_sent = fields.Integer(string="Alerts Sent")
@@ -61,7 +61,7 @@ class AnalitixValueReport(models.Model):
     alerts_missed = fields.Integer(string="Alerts Missed")
     lost_sales_detected = fields.Integer(string="Walk-outs Spotted")
     lost_sales_rescued = fields.Integer(string="Walk-outs Rescued")
-    rescue_rate = fields.Float(string="Rescue %")
+    rescue_rate = fields.Float(string="Rescue %", aggregator="avg")
     estimated_recovered = fields.Monetary(
         string="Estimated Recovered", currency_field="currency_id",
         help="Rescued walk-outs times the store's own average sale. An "
@@ -76,7 +76,7 @@ class AnalitixValueReport(models.Model):
              "single number the owner is actually asking about.")
 
     # --- comparison ---
-    prev_conversion_rate = fields.Float(string="Previous Conversion %")
+    prev_conversion_rate = fields.Float(string="Previous Conversion %", aggregator="avg")
     conversion_delta = fields.Float(string="Change")
 
     sent_on = fields.Datetime(string="Sent", readonly=True)
