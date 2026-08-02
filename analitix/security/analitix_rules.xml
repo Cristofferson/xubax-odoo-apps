@@ -27,8 +27,8 @@
         2. the record's store is one the user is scoped to.
 
       Condition 2 uses the pattern
-          '|', ('store_id', 'in', user.analitix_store_ids.ids),
-               ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))
+          '|', ('store_id', 'in', user.analitix_scope_store_ids.ids),
+               ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))
       which reads as: *either the store is in my list, or I have no list at
       all.* No list means a single-store customer who should not have to
       configure anything; the moment an implementer assigns stores, the second
@@ -41,42 +41,42 @@
         <field name="name">Analitix Store: company and store scope</field>
         <field name="model_id" ref="model_analitix_store"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_door_scope" model="ir.rule">
         <field name="name">Analitix Door: company and store scope</field>
         <field name="model_id" ref="model_analitix_door"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_device_scope" model="ir.rule">
         <field name="name">Analitix Device: company and store scope</field>
         <field name="model_id" ref="model_analitix_device"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_event_scope" model="ir.rule">
         <field name="name">Analitix Event: company and store scope</field>
         <field name="model_id" ref="model_analitix_event"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_staff_signature_scope" model="ir.rule">
         <field name="name">Analitix Staff Signature: company and store scope</field>
         <field name="model_id" ref="model_analitix_staff_signature"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_job_scope" model="ir.rule">
         <field name="name">Analitix Job: company and store scope</field>
         <field name="model_id" ref="model_analitix_job"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['|', ('store_id', '=', False), '&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['|', ('store_id', '=', False), '&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_audit_scope" model="ir.rule">
@@ -90,112 +90,112 @@
         <field name="name">Analitix Hourly: company and store scope</field>
         <field name="model_id" ref="model_analitix_hourly"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_door_hourly_scope" model="ir.rule">
         <field name="name">Analitix Door Traffic: company and store scope</field>
         <field name="model_id" ref="model_analitix_door_hourly"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_visitor_scope" model="ir.rule">
         <field name="name">Analitix Visit: company and store scope</field>
         <field name="model_id" ref="model_analitix_visitor"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_face_signature_scope" model="ir.rule">
         <field name="name">Analitix Face Signature: company and store scope</field>
         <field name="model_id" ref="model_analitix_face_signature"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_demographic_scope" model="ir.rule">
         <field name="name">Analitix Demographic Reading: company and store scope</field>
         <field name="model_id" ref="model_analitix_demographic"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_visit_group_scope" model="ir.rule">
         <field name="name">Analitix Purchase Unit: company and store scope</field>
         <field name="model_id" ref="model_analitix_visit_group"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_alert_scope" model="ir.rule">
         <field name="name">Analitix Alert: company and store scope</field>
         <field name="model_id" ref="model_analitix_alert"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_zone_scope" model="ir.rule">
         <field name="name">Analitix Zone: company and store scope</field>
         <field name="model_id" ref="model_analitix_zone"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_zone_vendor_scope" model="ir.rule">
         <field name="name">Analitix Zone Coverage: company and store scope</field>
         <field name="model_id" ref="model_analitix_zone_vendor"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_zone_dwell_scope" model="ir.rule">
         <field name="name">Analitix Zone Dwell: company and store scope</field>
         <field name="model_id" ref="model_analitix_zone_dwell"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_poi_scope" model="ir.rule">
         <field name="name">Analitix Display: company and store scope</field>
         <field name="model_id" ref="model_analitix_poi"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_poi_attention_scope" model="ir.rule">
         <field name="name">Analitix Display Attention: company and store scope</field>
         <field name="model_id" ref="model_analitix_poi_attention"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_poi_performance_scope" model="ir.rule">
         <field name="name">Analitix Display Performance: company and store scope</field>
         <field name="model_id" ref="model_analitix_poi_performance"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_lost_sale_scope" model="ir.rule">
         <field name="name">Analitix Lost Sale: company and store scope</field>
         <field name="model_id" ref="model_analitix_lost_sale"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_sale_match_scope" model="ir.rule">
         <field name="name">Analitix Ticket Attribution: company and store scope</field>
         <field name="model_id" ref="model_analitix_sale_match"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_anomaly_event_scope" model="ir.rule">
         <field name="name">Analitix Behaviour Signal: company and store scope</field>
         <field name="model_id" ref="model_analitix_anomaly_event"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_alert_own" model="ir.rule">
@@ -216,35 +216,35 @@
         <field name="name">Analitix Signage Rule: company and store scope</field>
         <field name="model_id" ref="model_analitix_signage_rule"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_signage_event_scope" model="ir.rule">
         <field name="name">Analitix Signage Firing: company and store scope</field>
         <field name="model_id" ref="model_analitix_signage_event"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_value_report_scope" model="ir.rule">
         <field name="name">Analitix Value Report: company and store scope</field>
         <field name="model_id" ref="model_analitix_value_report"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_coaching_report_scope" model="ir.rule">
         <field name="name">Analitix Floor Coaching: company and store scope</field>
         <field name="model_id" ref="model_analitix_coaching_report"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_recurrence_report_scope" model="ir.rule">
         <field name="name">Analitix Visit Frequency: company and store scope</field>
         <field name="model_id" ref="model_analitix_recurrence_report"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_coaching_own" model="ir.rule">
@@ -252,6 +252,42 @@
         <field name="model_id" ref="model_analitix_coaching_report"/>
         <field name="groups" eval="[(4, ref('analitix.group_user'))]"/>
         <field name="domain_force">[('user_id', '=', user.id)]</field>
+    </record>
+
+    <!--
+      Phase 7: chains, regions and the rollups.
+
+      A brand or a region is visible when the user can see at least one store
+      inside it. Written as a store-scoped subquery rather than as its own
+      user-assignment list, so there is exactly one definition of "what this
+      user may see" and the two can never drift apart.
+    -->
+    <record id="rule_brand_scope" model="ir.rule">
+        <field name="name">Analitix Chain: company and store scope</field>
+        <field name="model_id" ref="model_analitix_brand"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_ids', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
+    </record>
+
+    <record id="rule_region_scope" model="ir.rule">
+        <field name="name">Analitix Region: company and store scope</field>
+        <field name="model_id" ref="model_analitix_region"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_ids', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
+    </record>
+
+    <record id="rule_store_daily_scope" model="ir.rule">
+        <field name="name">Analitix Daily Rollup: company and store scope</field>
+        <field name="model_id" ref="model_analitix_store_daily"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
+    </record>
+
+    <record id="rule_chain_report_scope" model="ir.rule">
+        <field name="name">Analitix Chain Console: company and store scope</field>
+        <field name="model_id" ref="model_analitix_chain_report"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <!--
@@ -266,14 +302,14 @@
         <field name="name">Analitix Watch-list Entry: company and store scope</field>
         <field name="model_id" ref="model_analitix_watch_person"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_watch_match_scope" model="ir.rule">
         <field name="name">Analitix Watch-list Match: company and store scope</field>
         <field name="model_id" ref="model_analitix_watch_match"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_scope_store_ids.ids), ((0, '=', 1) if user.analitix_scoped else (1, '=', 1))]</field>
     </record>
 
     <record id="rule_coaching_manager" model="ir.rule">

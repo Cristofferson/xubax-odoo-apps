@@ -3,6 +3,34 @@
 All notable changes to Analitix. Versions follow Odoo's convention:
 `19.0.<phase>.<minor>.<patch>`.
 
+## 19.0.7.0.0 — Chain scale (optional)
+
+Everything before this works for one shop and needs none of it.
+
+* **Chains and regions.** `analitix.brand` → `analitix.region` →
+  `analitix.store`, with no fixed limit on branches. A single-store customer
+  creates neither and nothing about their installation changes.
+* **Hierarchical scope.** A regional manager is given a *region*, which already
+  includes the branches that open next year — a hand-written list of stores is
+  one nobody remembers to extend, and stale access outlives the person it was
+  written for. Stores and regions resolve into one effective scope that the
+  record rules read, so the two can never disagree.
+* **New roles**: Regional Manager (compares their region, configures nothing)
+  and Corporate / Head Office (the whole chain, plus the elevated decisions).
+* **The corporate console.** Every branch on the same yardstick, and each one
+  measured against its own region on the same day — which removes the week, the
+  weather and the season, and leaves what is particular to that shop.
+* **Two elevated decisions**, guarded in code rather than only in the UI, and
+  both audited: whether recognition correlates a person across branches (off by
+  default) and whether the watch list is shared between them (on by default).
+* **Daily rollup and safe pruning.** One row per store per day is what every
+  long-horizon report reads, so crossing events become deletable on the
+  customer's own policy without losing a reported figure. Pruning refuses to
+  run ahead of the summary, and the two retention mechanisms that used to
+  exist are now one.
+* Face matching is always bounded by store — or by one chain, never by the
+  whole database.
+
 ## 19.0.6.0.0 — Packaging, manuals and publication
 
 * **Manuals inside the app**, in Spanish and English, chosen automatically from

@@ -73,6 +73,8 @@
                             <field name="code"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                             <field name="tz"/>
+                            <field name="region_id" options="{'no_create_edit': True}"/>
+                            <field name="brand_id" readonly="1" invisible="not brand_id"/>
                             <field name="health_state" widget="badge"
                                    decoration-success="health_state == 'ok'"
                                    decoration-warning="health_state == 'degraded'"

@@ -361,9 +361,6 @@ BATCH8 = {
     'Match Count':
         'Coincidencias',
 
-    'Matching happens within this store only. Sharing a watch list across a chain is a decision with far wider consequences and belongs to the corporate phase, behind its own control.':
-        'La comparación ocurre solo dentro de esta tienda. Compartir una lista de vigilancia entre sucursales es una decisión de consecuencias mucho más amplias y pertenece a la fase corporativa, tras su propio control.',
-
     'Maximum Without Review (days)':
         'Máximo sin revisión (días)',
 

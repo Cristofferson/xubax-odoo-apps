@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- =========================== CHAIN =========================== -->
+
+    <record id="view_brand_list" model="ir.ui.view">
+        <field name="name">analitix.brand.list</field>
+        <field name="model">analitix.brand</field>
+        <field name="arch" type="xml">
+            <list string="Chains">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="region_count" string="Regions"/>
+                <field name="store_count" string="Stores"/>
+                <field name="reid_scope" widget="badge"
+                       decoration-warning="reid_scope == 'chain'"/>
+                <field name="watchlist_scope" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_brand_form" model="ir.ui.view">
+        <field name="name">analitix.brand.form</field>
+        <field name="model">analitix.brand</field>
+        <field name="arch" type="xml">
+            <form string="Chain">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_stores" type="object"
+                                class="oe_stat_button" icon="fa-building-o">
+                            <field name="store_count" widget="statinfo" string="Stores"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Chain name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="region_count"/>
+                            <field name="scope_changed_by_id"/>
+                            <field name="scope_changed_on"/>
+                        </group>
+                    </group>
+
+                    <separator string="How far recognition reaches"/>
+                    <div class="alert alert-warning" role="alert">
+                        <strong>These two settings decide the reach of a
+                        person's data across your branches</strong>, so only the
+                        corporate role can change them and every change is
+                        written to the audit log. A store or regional manager
+                        cannot move them, by design.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="reid_scope"
+                                   groups="analitix.group_corporate"/>
+                        </group>
+                        <group>
+                            <field name="watchlist_scope"
+                                   groups="analitix.group_corporate"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-danger" role="alert"
+                         invisible="reid_scope != 'chain'">
+                        Chain-wide recognition is <strong>on</strong>. A customer
+                        identified in one branch is now recognised in all of
+                        them, which builds a picture of one person's movements
+                        between your properties. Make sure that is what your
+                        privacy notice tells them.
+                    </div>
+
+                    <notebook>
+                        <page string="Regions" name="regions">
+                            <field name="region_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="manager_id"/>
+                                    <field name="store_count"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Stores" name="stores">
+                            <field name="store_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="region_id"/>
+                                    <field name="tz"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_brand" model="ir.actions.act_window">
+        <field name="name">Chains</field>
+        <field name="res_model">analitix.brand</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No chains yet.</p>
+            <p>
+                A single-store customer never needs one. Create a chain when
+                there are branches to group, compare and report on together.
+            </p>
+        </field>
+    </record>
+
+    <!-- =========================== REGION ========================== -->
+
+    <record id="view_region_list" model="ir.ui.view">
+        <field name="name">analitix.region.list</field>
+        <field name="model">analitix.region</field>
+        <field name="arch" type="xml">
+            <list string="Regions">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="brand_id"/>
+                <field name="manager_id"/>
+                <field name="store_count"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_region_form" model="ir.ui.view">
+        <field name="name">analitix.region.form</field>
+        <field name="model">analitix.region</field>
+        <field name="arch" type="xml">
+            <form string="Region">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Bajío"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="brand_id"/>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="manager_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert">
+                        Naming a manager here documents who is responsible; it
+                        grants nothing on its own. Access comes from the region
+                        on that person's own Analitix scope, so the two can be
+                        audited separately.
+                    </div>
+                    <separator string="Stores"/>
+                    <field name="store_ids">
+                        <list>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="tz"/>
+                            <field name="area_sqm"/>
+                        </list>
+                    </field>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_region" model="ir.actions.act_window">
+        <field name="name">Regions</field>
+        <field name="res_model">analitix.region</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ====================== CORPORATE CONSOLE ==================== -->
+
+    <record id="view_chain_report_list" model="ir.ui.view">
+        <field name="name">analitix.chain.report.list</field>
+        <field name="model">analitix.chain.report</field>
+        <field name="arch" type="xml">
+            <list string="Chain Console" create="false"
+                  decoration-success="conversion_vs_region &gt; 2"
+                  decoration-danger="conversion_vs_region &lt; -2">
+                <field name="day"/>
+                <field name="store_id"/>
+                <field name="region_id" optional="show"/>
+                <field name="visitors" sum="Visitors"/>
+                <field name="tickets" sum="Sales"/>
+                <field name="conversion_rate" string="Conv. %" avg="Average"/>
+                <field name="conversion_vs_region" string="Δ vs Region"/>
+                <field name="atv" widget="monetary" optional="show"/>
+                <field name="upt" optional="hide"/>
+                <field name="revenue" widget="monetary" sum="Revenue" optional="show"/>
+                <field name="revenue_per_sqm" widget="monetary" optional="hide"/>
+                <field name="lost_detected" sum="Spotted" optional="show"/>
+                <field name="lost_rescued" sum="Rescued" optional="show"/>
+                <field name="rescue_rate" string="Rescue %" avg="Average" optional="show"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_chain_report_pivot" model="ir.ui.view">
+        <field name="name">analitix.chain.report.pivot</field>
+        <field name="model">analitix.chain.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Chain Console" sample="1">
+                <field name="region_id" type="row"/>
+                <field name="store_id" type="row"/>
+                <field name="visitors" type="measure"/>
+                <field name="tickets" type="measure"/>
+                <field name="conversion_rate" type="measure"/>
+                <field name="rescue_rate" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_chain_report_graph" model="ir.ui.view">
+        <field name="name">analitix.chain.report.graph</field>
+        <field name="model">analitix.chain.report</field>
+        <field name="arch" type="xml">
+            <graph string="Chain Console" type="bar" sample="1">
+                <field name="store_id"/>
+                <field name="conversion_rate" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_chain_report_search" model="ir.ui.view">
+        <field name="name">analitix.chain.report.search</field>
+        <field name="model">analitix.chain.report</field>
+        <field name="arch" type="xml">
+            <search string="Chain Console">
+                <field name="store_id"/>
+                <field name="region_id"/>
+                <field name="brand_id"/>
+                <filter name="filter_month" string="This Month"
+                        domain="[('day', '&gt;=', (context_today().replace(day=1)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_90" string="Last 90 Days"
+                        domain="[('day', '&gt;=', (context_today() - datetime.timedelta(days=90)).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter name="filter_behind" string="Behind Their Region"
+                        domain="[('conversion_vs_region', '&lt;', -2)]"
+                        help="Converting more than two points below the average of their own region on the same day — the branches worth a visit."/>
+                <filter name="filter_unrescued" string="Walk-outs Not Rescued"
+                        domain="[('lost_detected', '&gt;', 0), ('rescue_rate', '&lt;', 50)]"/>
+                <group>
+                    <filter name="group_region" context="{'group_by': 'region_id'}"/>
+                    <filter name="group_store" context="{'group_by': 'store_id'}"/>
+                    <filter name="group_brand" context="{'group_by': 'brand_id'}"/>
+                    <filter name="group_day" context="{'group_by': 'day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_chain_report" model="ir.actions.act_window">
+        <field name="name">Chain Console</field>
+        <field name="res_model">analitix.chain.report</field>
+        <field name="view_mode">list,pivot,graph</field>
+        <field name="context">{'search_default_filter_month': 1, 'search_default_group_region': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nothing rolled up yet.</p>
+            <p>
+                The console reads the nightly daily rollup rather than raw
+                crossing events, so it keeps working after old events are
+                pruned. A brand-new installation fills in after the first night.
+            </p>
+        </field>
+    </record>
+
+    <!-- ========================= DAILY ROLLUP ======================= -->
+
+    <record id="view_store_daily_list" model="ir.ui.view">
+        <field name="name">analitix.store.daily.list</field>
+        <field name="model">analitix.store.daily</field>
+        <field name="arch" type="xml">
+            <list string="Daily Rollup" create="false">
+                <field name="day"/>
+                <field name="store_id"/>
+                <field name="visitors" sum="Visitors"/>
+                <field name="tickets" sum="Sales"/>
+                <field name="conversion_rate" string="Conv. %" avg="Average"/>
+                <field name="revenue" widget="monetary" sum="Revenue"/>
+                <field name="lost_detected" sum="Spotted"/>
+                <field name="lost_rescued" sum="Rescued"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_store_daily" model="ir.actions.act_window">
+        <field name="name">Daily Rollup</field>
+        <field name="res_model">analitix.store.daily</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No rollups yet.</p>
+            <p>
+                One row per store per day, written by the nightly job. This is
+                what every long-horizon report reads, so that crossing events
+                can be pruned without losing a figure anybody looks at.
+            </p>
+        </field>
+    </record>
+
+</odoo>

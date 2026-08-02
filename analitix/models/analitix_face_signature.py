@@ -17,10 +17,15 @@ It is deliberately *anonymous and short-lived*:
 
 Scope of matching, and why it is what it is
 -------------------------------------------
-Matching is always **within one store**. A person recognised in branch A is not
-silently joined to their visit in branch B: that is a decision about the reach
-of a customer's data, and task 983 puts it behind the highest corporate role
-for good reason. Here it is not even possible.
+Matching is **within one store by default**, and for most installations that is
+all it ever is. A person recognised in branch A is not silently joined to their
+visit in branch B: that is a decision about the reach of a customer's data, and
+phase 7 puts it behind the highest corporate role, with an audit entry, rather
+than behind a checkbox a branch manager can find.
+
+The search is bounded by ``store._reid_scope_store_ids()`` — never unbounded.
+Even with the chain-wide option deliberately switched on, one arriving face is
+compared against one chain and not against every signature in the database.
 
 Within the store, re-identification across doors happens only when the store
 *has* more than one door — which is read from the configuration, never assumed.
@@ -139,8 +144,13 @@ class AnalitixFaceSignature(models.Model):
         """
         crypto = self.env["analitix.crypto"]
         now = fields.Datetime.now()
+        # ALWAYS bounded by store (task 983, point 5), and widened to the chain
+        # only when a corporate user deliberately said so. Unbounded matching
+        # would compare one arriving face against every signature the chain
+        # holds, which is both slow and a far larger claim about a person than
+        # any single shop agreed to.
         rows = self.sudo().search([
-            ("store_id", "=", store.id),
+            ("store_id", "in", store._reid_scope_store_ids()),
             ("model_name", "=", model_name),
             ("expires_at", ">", now),
         ])

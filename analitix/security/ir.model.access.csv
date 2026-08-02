@@ -56,3 +56,11 @@ access_coaching_report_user,analitix.coaching.report user,model_analitix_coachin
 access_recurrence_report_user,analitix.recurrence.report user,model_analitix_recurrence_report,analitix.group_user,1,0,0,0
 access_watch_person_security,analitix.watch.person security,model_analitix_watch_person,analitix.group_security,1,1,1,0
 access_watch_match_security,analitix.watch.match security,model_analitix_watch_match,analitix.group_security,1,1,1,0
+access_brand_user,analitix.brand user,model_analitix_brand,analitix.group_user,1,0,0,0
+access_brand_corporate,analitix.brand corporate,model_analitix_brand,analitix.group_corporate,1,1,1,1
+access_region_user,analitix.region user,model_analitix_region,analitix.group_user,1,0,0,0
+access_region_corporate,analitix.region corporate,model_analitix_region,analitix.group_corporate,1,1,1,1
+access_store_daily_user,analitix.store.daily user,model_analitix_store_daily,analitix.group_user,1,0,0,0
+access_store_daily_manager,analitix.store.daily manager,model_analitix_store_daily,analitix.group_manager,1,1,1,1
+access_chain_report_regional,analitix.chain.report regional,model_analitix_chain_report,analitix.group_regional,1,0,0,0
+access_chain_report_manager,analitix.chain.report manager,model_analitix_chain_report,analitix.group_manager,1,0,0,0

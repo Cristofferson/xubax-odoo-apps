@@ -123,28 +123,19 @@ class AnalitixEvent(models.Model):
 
     @api.model
     def _cron_apply_retention(self):
-        """Delete crossings older than the configured retention window.
+        """Apply the customer's retention policy to crossing events.
 
-        Off by default (``analitix.event_retention_days = 0``) because the
-        hourly views read straight from this table: pruning here shortens the
-        history every dashboard and year-on-year comparison can reach. It
-        exists so a customer whose data policy says "ninety days" can hold to
-        it, and it is their policy that sets the number, not us.
+        Delegates to ``analitix.store.daily.prune_events`` rather than deleting
+        here, because pruning is only safe once the day has been summarised —
+        and that guard belongs next to the summary, not duplicated beside it.
+        A second implementation with a weaker check is how a year of history
+        eventually disappears.
+
+        Off by default (``analitix.event_retention_days = 0``). It exists so a
+        customer whose data policy says "ninety days" can hold to it, and it is
+        their policy that sets the number, not us.
         """
-        days = int(self.env["ir.config_parameter"].sudo().get_param(
-            "analitix.event_retention_days", "0") or 0)
-        if days <= 0:
-            return True
-        cutoff = fields.Datetime.now() - timedelta(days=days)
-        # Chunked: a year of chain traffic is millions of rows, and handing
-        # PostgreSQL one unbounded DELETE would build a lock set big enough to
-        # stall live ingest while it runs.
-        while True:
-            batch = self.sudo().search([("event_time", "<", cutoff)], limit=5000)
-            if not batch:
-                break
-            batch.unlink()
-        return True
+        return self.env["analitix.store.daily"].sudo().prune_events()
 
     @api.model
     def existing_uuids(self, uuids):

@@ -28,6 +28,12 @@ changed something, never who looked.
 can see conversion figures does not get this by default; a compliance role
 does. Someone's presence on a watch list is not sales data.
 
+**Chain scope is the chain's decision, not a branch's** (phase 7). Where a chain
+exists, its entries are shared across branches by default — somebody who caused
+an incident at one shop is worth the others knowing about — but widening or
+narrowing that takes the corporate role and is audited. A store with no chain
+behaves exactly as it did before: its list is its own.
+
 Match confidence is deliberately stricter than anywhere else in the product,
 and liveness is required: a photograph held to a camera must not be able to put
 a real person under suspicion.
@@ -69,9 +75,11 @@ class AnalitixWatchPerson(models.Model):
     store_id = fields.Many2one(
         "analitix.store", string="Store", required=True, index=True,
         ondelete="cascade", tracking=True,
-        help="Matching happens within this store only. Sharing a watch list "
-             "across a chain is a decision with far wider consequences and "
-             "belongs to the corporate phase, behind its own control.")
+        help="The store this entry was raised at. On a single store, matching "
+             "happens here and nowhere else. In a chain, the chain's own "
+             "watch-list scope decides whether the other branches see it — "
+             "shared by default, because an incident at one branch is worth the "
+             "others knowing, and changeable only by the corporate role.")
     company_id = fields.Many2one(
         "res.company", related="store_id.company_id", store=True, index=True,
         readonly=True)
@@ -303,8 +311,12 @@ class AnalitixWatchPerson(models.Model):
         crypto = self.env["analitix.crypto"]
         probe = crypto.normalize(vector)
         today = fields.Date.context_today(self)
+        # Shared across the chain by default from phase 7 onward — an incident
+        # at one branch is worth the others knowing — but only within the same
+        # chain, and a corporate user can narrow it back to this store alone.
+        # A store with no chain sees exactly its own list, as before.
         candidates = self.sudo().search([
-            ("store_id", "=", store.id),
+            ("store_id", "in", store._watchlist_scope_store_ids()),
             ("state", "=", "active"),
             ("expires_on", ">=", today),
             ("model_name", "=", model_name),

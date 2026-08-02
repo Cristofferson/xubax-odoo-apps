@@ -86,6 +86,7 @@ The suite covers, in order of how much it would cost to get wrong:
 | `test_action.py` | Screen routing, the social privacy rule, attendance, billing, ROI |
 | `test_watchlist.py` | Manual-only entry, double control, expiry, what a match must NOT do |
 | `test_manual.py` | The in-app manuals resolve, in the reader's own language |
+| `test_chain.py` | Regional scope, the elevated decisions, the console, safe pruning |
 
 ## Building the published archive
 
@@ -132,7 +133,7 @@ mounted.
 | 4 | Signage routing, welcome context, coaching, attendance, subscription, ROI report | **Done** |
 | 5 | Watch list | **Done** |
 | 6 | Packaging, manuals, videos, apps.odoo.com | **Done** |
-| 7 | Chain scale, role hierarchy, HQ console | Optional |
+| 7 | Chain scale, role hierarchy, HQ console | **Done** (optional to sell) |
 
 Each phase leaves the addon installable and useful on its own, because each is
 sold on its own.

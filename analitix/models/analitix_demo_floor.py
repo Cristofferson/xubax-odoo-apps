@@ -54,6 +54,41 @@ class AnalitixStore(models.Model):
         for store in stores:
             store._demo_report()
         stores._demo_heartbeats()
+        stores._demo_chain()
+        return True
+
+    def _demo_chain(self, days=14):
+        """Put the demo stores in a chain, and close their days.
+
+        The chain console is the screen this phase is sold on, and an empty one
+        teaches a prospective buyer nothing except that the feature might not
+        work. Two regions with one store each is the smallest arrangement that
+        still shows what the console is for: the same yardstick applied to
+        branches that are not equal.
+
+        Recognition scope is left at its default — each store on its own. The
+        demo should show the safe state, not the widened one; somebody
+        exploring it can switch it and see the warning that comes with it.
+        """
+        Brand = self.env["analitix.brand"].sudo()
+        if not self or Brand.search_count([]):
+            return True
+        company = self[0].company_id
+        brand = Brand.create({
+            "name": "Grupo Demo", "code": "DEMO", "company_id": company.id})
+        Region = self.env["analitix.region"].sudo()
+        centro, _planned = Region.create([
+            {"name": "Centro", "code": "C", "brand_id": brand.id},
+            {"name": "Norte (planned)", "code": "N", "brand_id": brand.id},
+        ])
+        self.write({"brand_id": brand.id, "region_id": centro.id})
+
+        # Close the same fortnight the traffic covers, so the console opens with
+        # something in it rather than waiting for tonight's cron.
+        Daily = self.env["analitix.store.daily"].sudo()
+        today = fields.Date.context_today(self)
+        for offset in range(days, 0, -1):
+            Daily.roll_up(self, fields.Date.subtract(today, days=offset))
         return True
 
     def _demo_heartbeats(self):

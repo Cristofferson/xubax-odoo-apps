@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Analitix — Physical Store Intelligence",
-    "version": "19.0.6.0.0",
+    "version": "19.0.7.0.0",
     "category": "Point of Sale",
     "summary": "Store intelligence on Odoo: visitor counting across any number "
                "of doors, POS conversion (ATV, UPT, revenue per visitor, "
@@ -156,6 +156,37 @@ Phase 6
   published archive must not contain — the edge agent, build tooling, or any
   computer-vision dependency.
 
+Phase 7 — chain scale (optional)
+--------------------------------
+
+Everything above works for one shop and needs none of this. Phase 7 is for the
+company that owns two hundred of them.
+
+* **Chains and regions**, with no fixed limit on branches. A single-store
+  customer creates neither and nothing about their installation changes.
+* **A hierarchy that is scoped, not just grouped.** A regional manager is given
+  a *region* — including the branches that open next year — rather than a list
+  of stores that goes stale the first time the chain grows. Record rules resolve
+  stores and regions into one effective scope, so the two ways of granting
+  access can never disagree.
+* **The corporate console**: every branch measured with the same stick —
+  conversion, average ticket, units per ticket, walk-outs spotted and rescued —
+  and each one compared against *its own region on the same day*, which removes
+  the week, the weather and the season and leaves what is particular to that
+  shop. Head office already knows which branch sells most; this is the first
+  time it can see which one converts worst.
+* **Two decisions only head office may take.** Whether face recognition
+  correlates a person across branches (off by default: it is a categorically
+  larger claim than store-level recognition), and whether the watch list is
+  shared between them (on by default: an incident at one branch is worth the
+  others knowing). Both are guarded in code, not just in the interface, and
+  both are written to the audit log.
+* **Built to be pruned.** A nightly rollup per store per day is what every
+  long-horizon report reads, so crossing events can be deleted on the
+  customer's own retention policy without losing a figure anybody looks at —
+  and pruning refuses to run ahead of the summary. Face matching is always
+  bounded by store, or by one chain, never by the whole database.
+
 Privacy by design: no image or video is ever transmitted or stored — the edge
 sends only counts and irreversible numeric embeddings, and those are encrypted
 in the database.
@@ -197,6 +228,7 @@ only receives JSON.
         "data/analitix_sequence.xml",
         "data/analitix_cron.xml",
         "data/mail_data.xml",
+        "views/analitix_chain_views.xml",
         "views/analitix_store_views.xml",
         "views/analitix_door_views.xml",
         "views/analitix_device_views.xml",

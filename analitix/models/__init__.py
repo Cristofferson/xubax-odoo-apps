@@ -27,7 +27,10 @@ from . import analitix_customer_context
 from . import analitix_attendance
 from . import analitix_subscription
 from . import analitix_value_report
+from . import analitix_chain
+from . import analitix_daily
 from . import analitix_hourly
 from . import analitix_reports
+from . import analitix_chain_report
 from . import analitix_demo_floor
 from . import res_users

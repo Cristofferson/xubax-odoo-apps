@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-02 02:09+0000\n"
-"PO-Revision-Date: 2026-08-02 02:09+0000\n"
+"POT-Creation-Date: 2026-08-02 14:41+0000\n"
+"PO-Revision-Date: 2026-08-02 14:41+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -93,6 +93,14 @@ msgstr ""
 msgid ""
 "%(tickets)s of them bought something — that is %(rate).1f%% of everyone who "
 "walked in."
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_chain.py:0
+msgid ""
+"%(user)s changed the %(what)s scope from <b>%(old)s</b> to <b>%(new)s</b> "
+"for the whole chain."
 msgstr ""
 
 #. module: analitix
@@ -322,6 +330,16 @@ msgid "<span class=\"text-muted d-block small\">Visitors today</span>"
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_brand_form
+msgid ""
+"<strong>These two settings decide the reach of a\n"
+"                        person's data across your branches</strong>, so only the\n"
+"                        corporate role can change them and every change is\n"
+"                        written to the audit log. A store or regional manager\n"
+"                        cannot move them, by design."
+msgstr ""
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_form
 msgid ""
 "<strong>This entry does nothing yet.</strong> It matches\n"
@@ -526,6 +544,13 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_brand
+msgid ""
+"A single-store customer never needs one. Create a chain when\n"
+"                there are branches to group, compare and report on together."
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_signage_rule__target__fixed
 msgid "A specific screen"
 msgstr ""
@@ -593,6 +618,11 @@ msgid "Acknowledged At"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_brand__reid_scope__chain
+msgid "Across the whole chain"
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__action
 #: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_search
 msgid "Action"
@@ -604,7 +634,9 @@ msgid "Action & Billing"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__message_needaction
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_needaction
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__message_needaction
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_needaction
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_needaction
 #: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_needaction
@@ -612,9 +644,11 @@ msgid "Action Needed"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__active
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__active
 #: model:ir.model.fields,field_description:analitix.field_analitix_door__active
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi__active
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__active
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_rule__active
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__active
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__active
@@ -744,11 +778,15 @@ msgid "Alerts Acted On"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__alerts_missed
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__alerts_missed
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__alerts_missed
 msgid "Alerts Missed"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__alerts_sent
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__alerts_sent
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__alerts_sent
 msgid "Alerts Sent"
 msgstr ""
@@ -818,8 +856,23 @@ msgid "Analitix Behaviour Signal"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model,name:analitix.model_analitix_brand
+msgid "Analitix Chain"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_chain_report
+msgid "Analitix Chain Console"
+msgstr ""
+
+#. module: analitix
 #: model:ir.model,name:analitix.model_analitix_event
 msgid "Analitix Crossing Event"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_store_daily
+msgid "Analitix Daily Store Rollup"
 msgstr ""
 
 #. module: analitix
@@ -860,6 +913,21 @@ msgstr ""
 #. module: analitix
 #: model:ir.model,name:analitix.model_analitix_visit_group
 msgid "Analitix Purchase Unit"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_region
+msgid "Analitix Region"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_res_users__analitix_region_ids
+msgid "Analitix Regions"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_res_users__analitix_scoped
+msgid "Analitix Scope Restricted"
 msgstr ""
 
 #. module: analitix
@@ -1032,6 +1100,11 @@ msgid "Analitix: close visits whose exit was missed"
 msgstr ""
 
 #. module: analitix
+#: model:ir.actions.server,name:analitix.cron_daily_rollup_ir_actions_server
+msgid "Analitix: close yesterday's figures per store"
+msgstr ""
+
+#. module: analitix
 #. odoo-python
 #: code:addons/analitix/models/analitix_device.py:0
 #: model:mail.template,name:analitix.mail_template_device_offline
@@ -1200,7 +1273,9 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__message_attachment_count
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_attachment_count
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__message_attachment_count
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_attachment_count
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_attachment_count
 #: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_attachment_count
@@ -1297,8 +1372,20 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_chain_report_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_daily_list
+msgid "Average"
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__average_ticket
 msgid "Average Sale"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__atv
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__atv
+msgid "Average Ticket"
 msgstr ""
 
 #. module: analitix
@@ -1381,6 +1468,11 @@ msgstr ""
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_form
 msgid "Behaviour signals"
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_chain_report_search
+msgid "Behind Their Region"
 msgstr ""
 
 #. module: analitix
@@ -1478,6 +1570,53 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__brand_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__brand_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__brand_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__brand_id
+#: model_terms:ir.ui.view,arch_db:analitix.view_brand_form
+msgid "Chain"
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_chain.py:0
+msgid "Chain %(brand)s: %(what)s scope changed from %(old)s to %(new)s"
+msgstr ""
+
+#. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_chain_report
+#: model:ir.ui.menu,name:analitix.menu_chain_console
+#: model_terms:ir.ui.view,arch_db:analitix.view_chain_report_graph
+#: model_terms:ir.ui.view,arch_db:analitix.view_chain_report_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_chain_report_pivot
+#: model_terms:ir.ui.view,arch_db:analitix.view_chain_report_search
+msgid "Chain Console"
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_brand_form
+msgid "Chain name"
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_brand_form
+msgid ""
+"Chain-wide recognition is <strong>on</strong>. A customer\n"
+"                        identified in one branch is now recognised in all of\n"
+"                        them, which builds a picture of one person's movements\n"
+"                        between your properties. Make sure that is what your\n"
+"                        privacy notice tells them."
+msgstr ""
+
+#. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_brand
+#: model:ir.ui.menu,name:analitix.menu_config_brands
+#: model_terms:ir.ui.view,arch_db:analitix.view_brand_list
+msgid "Chains"
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__conversion_delta
 msgid "Change"
 msgstr ""
@@ -1545,6 +1684,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_alert__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_coaching_report__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_demographic__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__company_id
@@ -1559,11 +1700,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi_attention__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi_performance__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_recurrence_report__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_sale_match__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_event__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_rule__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_visit_group__company_id
@@ -1575,6 +1718,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_vendor__company_id
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_search
 msgid "Company"
+msgstr ""
+
+#. module: analitix
+#: model:res.groups,comment:analitix.group_regional
+msgid ""
+"Compare the stores of their regions side by side. No store configuration."
 msgstr ""
 
 #. module: analitix
@@ -1671,6 +1820,12 @@ msgid "Control"
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_chain_report_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_daily_list
+msgid "Conv. %"
+msgstr ""
+
+#. module: analitix
 #: model:ir.actions.act_window,name:analitix.action_hourly
 #: model:ir.ui.menu,name:analitix.menu_conversion
 #: model_terms:ir.ui.view,arch_db:analitix.view_hourly_graph
@@ -1682,7 +1837,9 @@ msgid "Conversion"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__conversion_rate
 #: model:ir.model.fields,field_description:analitix.field_analitix_hourly__conversion_rate
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__conversion_rate
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__conversion_rate
 #: model_terms:ir.ui.view,arch_db:analitix.view_hourly_list
 msgid "Conversion %"
@@ -1703,8 +1860,20 @@ msgid "Converted %"
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_chain_report_search
+msgid ""
+"Converting more than two points below the average of their own region on the"
+" same day — the branches worth a visit."
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_rule__cooldown_minutes
 msgid "Cooldown (min)"
+msgstr ""
+
+#. module: analitix
+#: model:res.groups,name:analitix.group_corporate
+msgid "Corporate / Head Office"
 msgstr ""
 
 #. module: analitix
@@ -1804,6 +1973,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_alert__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__create_uid
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_demographic__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_door__create_uid
@@ -1813,11 +1983,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi_attention__create_uid
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_sale_match__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_event__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_rule__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__create_uid
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup_door__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__create_uid
@@ -1835,6 +2007,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_alert__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__create_date
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_demographic__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_door__create_date
@@ -1844,11 +2017,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi_attention__create_date
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_sale_match__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_event__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_rule__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__create_date
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup_door__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__create_date
@@ -1905,10 +2080,12 @@ msgid "Crossings"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__currency_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_hourly__currency_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__currency_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi_performance__currency_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__currency_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__currency_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__currency_id
 msgid "Currency"
 msgstr ""
@@ -1955,6 +2132,13 @@ msgid "DIY edge (YOLO + ByteTrack)"
 msgstr ""
 
 #. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_store_daily
+#: model:ir.ui.menu,name:analitix.menu_daily_rollup
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_daily_list
+msgid "Daily Rollup"
+msgstr ""
+
+#. module: analitix
 #. odoo-python
 #: code:addons/analitix/models/analitix_store.py:0
 msgid ""
@@ -1969,9 +2153,11 @@ msgid "Data capture RESUMED by %s."
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__day
 #: model:ir.model.fields,field_description:analitix.field_analitix_coaching_report__day
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi_performance__day
 #: model:ir.model.fields,field_description:analitix.field_analitix_recurrence_report__day
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__day
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_vendor__weekday
 #: model_terms:ir.ui.view,arch_db:analitix.view_alert_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_search
@@ -2245,6 +2431,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_attendance__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_audited_mixin__display_name
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__display_name
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_coaching_report__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_crypto__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_customer_context__display_name
@@ -2261,11 +2449,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi_attention__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi_performance__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_recurrence_report__display_name
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_sale_match__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_event__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_rule__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__display_name
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup_door__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__display_name
@@ -2456,6 +2646,12 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_brand__reid_scope__store
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_brand__watchlist_scope__store
+msgid "Each store on its own"
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__edge_queue_size
 msgid "Edge Backlog"
 msgstr ""
@@ -2482,6 +2678,16 @@ msgstr ""
 #. odoo-python
 #: code:addons/analitix/controllers/api.py:0
 msgid "Edge device %s pulled staff signatures"
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_users_form_analitix
+msgid "Effective Scope"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_res_users__analitix_scope_store_ids
+msgid "Effective Store Scope"
 msgstr ""
 
 #. module: analitix
@@ -2998,7 +3204,9 @@ msgid "Floor Coaching"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__message_follower_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_follower_ids
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__message_follower_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_follower_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_follower_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_follower_ids
@@ -3006,7 +3214,9 @@ msgid "Followers"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__message_partner_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_partner_ids
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__message_partner_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_partner_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_partner_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_partner_ids
@@ -3018,6 +3228,17 @@ msgstr ""
 #: model:ir.model.fields,help:analitix.field_analitix_store__activity_type_icon
 #: model:ir.model.fields,help:analitix.field_analitix_watch_person__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_users_form_analitix
+msgid ""
+"For a chain, give a <b>region</b> rather than a list of\n"
+"                            stores: it already includes the branches that open next\n"
+"                            year. A hand-written list of twenty stores is one nobody\n"
+"                            remembers to extend, and stale access outlives the person\n"
+"                            it was written for. <b>Effective scope</b> shows what the\n"
+"                            two settings actually resolve to."
 msgstr ""
 
 #. module: analitix
@@ -3133,7 +3354,9 @@ msgid "Hardware"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__has_message
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__has_message
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__has_message
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__has_message
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__has_message
 #: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__has_message
@@ -3224,6 +3447,11 @@ msgstr ""
 msgid ""
 "How far from its own baseline a device may drift before it is flagged. 5.0 "
 "means 'five times the usual hourly volume'."
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_brand_form
+msgid "How far recognition reaches"
 msgstr ""
 
 #. module: analitix
@@ -3331,6 +3559,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_attendance__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_audited_mixin__id
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__id
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_coaching_report__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_crypto__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_customer_context__id
@@ -3347,11 +3577,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi_attention__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi_performance__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_recurrence_report__id
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_sale_match__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_event__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_rule__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__id
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup_door__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__id
@@ -3414,7 +3646,9 @@ msgid "Identify Returning Customers"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_brand__message_needaction
 #: model:ir.model.fields,help:analitix.field_analitix_device__message_needaction
+#: model:ir.model.fields,help:analitix.field_analitix_region__message_needaction
 #: model:ir.model.fields,help:analitix.field_analitix_staff_signature__message_needaction
 #: model:ir.model.fields,help:analitix.field_analitix_store__message_needaction
 #: model:ir.model.fields,help:analitix.field_analitix_watch_person__message_needaction
@@ -3422,8 +3656,12 @@ msgid "If checked, new messages require your attention."
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_brand__message_has_error
+#: model:ir.model.fields,help:analitix.field_analitix_brand__message_has_sms_error
 #: model:ir.model.fields,help:analitix.field_analitix_device__message_has_error
 #: model:ir.model.fields,help:analitix.field_analitix_device__message_has_sms_error
+#: model:ir.model.fields,help:analitix.field_analitix_region__message_has_error
+#: model:ir.model.fields,help:analitix.field_analitix_region__message_has_sms_error
 #: model:ir.model.fields,help:analitix.field_analitix_staff_signature__message_has_error
 #: model:ir.model.fields,help:analitix.field_analitix_staff_signature__message_has_sms_error
 #: model:ir.model.fields,help:analitix.field_analitix_store__message_has_error
@@ -3475,6 +3713,13 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_region__manager_id
+msgid ""
+"Informational. What actually grants access is the region on the user's own "
+"Analitix scope — a name in this field alone opens nothing, on purpose."
+msgstr ""
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_device_form
 msgid "Ingest Volume"
 msgstr ""
@@ -3510,7 +3755,9 @@ msgid "Insight + Floor"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__message_is_follower
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_is_follower
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__message_is_follower
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_is_follower
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_is_follower
 #: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_is_follower
@@ -3635,6 +3882,11 @@ msgid "Last 7 Days"
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_chain_report_search
+msgid "Last 90 Days"
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__last_event_at
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__last_event_time
 msgid "Last Event"
@@ -3660,6 +3912,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_alert__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__write_uid
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_demographic__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_door__write_uid
@@ -3669,11 +3922,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi_attention__write_uid
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_sale_match__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_event__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_rule__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__write_uid
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup_door__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__write_uid
@@ -3691,6 +3946,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_alert__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__write_date
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_demographic__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_door__write_date
@@ -3700,11 +3956,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi_attention__write_date
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_sale_match__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_event__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_rule__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__write_date
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup_door__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__write_date
@@ -3975,14 +4233,6 @@ msgid "Matches"
 msgstr ""
 
 #. module: analitix
-#: model:ir.model.fields,help:analitix.field_analitix_watch_person__store_id
-msgid ""
-"Matching happens within this store only. Sharing a watch list across a chain"
-" is a decision with far wider consequences and belongs to the corporate "
-"phase, behind its own control."
-msgstr ""
-
-#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_job__max_attempts
 msgid "Max Attempts"
 msgstr ""
@@ -4019,7 +4269,9 @@ msgid "Message"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__message_has_error
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_has_error
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__message_has_error
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_has_error
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_has_error
 #: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_has_error
@@ -4027,7 +4279,9 @@ msgid "Message Delivery error"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__message_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_ids
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__message_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_ids
@@ -4152,9 +4406,11 @@ msgid "My Alerts"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__name
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__name
 #: model:ir.model.fields,field_description:analitix.field_analitix_door__name
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi__name
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__name
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_rule__name
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__name
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone__name
@@ -4174,6 +4430,15 @@ msgstr ""
 msgid ""
 "Name of the layout to show. Leave empty to send the message below as an "
 "overlay instead."
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_region_form
+msgid ""
+"Naming a manager here documents who is responsible; it\n"
+"                        grants nothing on its own. Access comes from the region\n"
+"                        on that person's own Analitix scope, so the two can be\n"
+"                        audited separately."
 msgstr ""
 
 #. module: analitix
@@ -4282,6 +4547,11 @@ msgid "No alerts"
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_brand
+msgid "No chains yet."
+msgstr ""
+
+#. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_hourly
 msgid "No data yet"
 msgstr ""
@@ -4348,6 +4618,11 @@ msgstr ""
 #. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_value_report
 msgid "No reports yet"
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_store_daily
+msgid "No rollups yet."
 msgstr ""
 
 #. module: analitix
@@ -4476,6 +4751,11 @@ msgid "Nothing logged yet"
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_chain_report
+msgid "Nothing rolled up yet."
+msgstr ""
+
+#. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_coaching
 msgid "Nothing to coach on yet"
 msgstr ""
@@ -4522,7 +4802,9 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__message_needaction_counter
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_needaction_counter
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__message_needaction_counter
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_needaction_counter
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_needaction_counter
 #: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_needaction_counter
@@ -4530,7 +4812,9 @@ msgid "Number of Actions"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__message_has_error_counter
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_has_error_counter
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__message_has_error_counter
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_has_error_counter
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_has_error_counter
 #: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_has_error_counter
@@ -4538,7 +4822,9 @@ msgid "Number of errors"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_brand__message_needaction_counter
 #: model:ir.model.fields,help:analitix.field_analitix_device__message_needaction_counter
+#: model:ir.model.fields,help:analitix.field_analitix_region__message_needaction_counter
 #: model:ir.model.fields,help:analitix.field_analitix_staff_signature__message_needaction_counter
 #: model:ir.model.fields,help:analitix.field_analitix_store__message_needaction_counter
 #: model:ir.model.fields,help:analitix.field_analitix_watch_person__message_needaction_counter
@@ -4546,7 +4832,9 @@ msgid "Number of messages requiring action"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_brand__message_has_error_counter
 #: model:ir.model.fields,help:analitix.field_analitix_device__message_has_error_counter
+#: model:ir.model.fields,help:analitix.field_analitix_region__message_has_error_counter
 #: model:ir.model.fields,help:analitix.field_analitix_staff_signature__message_has_error_counter
 #: model:ir.model.fields,help:analitix.field_analitix_store__message_has_error_counter
 #: model:ir.model.fields,help:analitix.field_analitix_watch_person__message_has_error_counter
@@ -4604,6 +4892,13 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store_daily__rescue_rate
+msgid ""
+"Of the walk-outs spotted, how many the team reached in time. The figure that"
+" separates a store with a traffic problem from one with a floor problem."
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_device__status__offline
 #: model_terms:ir.ui.view,arch_db:analitix.view_device_search
 msgid "Offline"
@@ -4658,6 +4953,14 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_store_daily
+msgid ""
+"One row per store per day, written by the nightly job. This is\n"
+"                what every long-horizon report reads, so that crossing events\n"
+"                can be pruned without losing a figure anybody looks at."
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_device__status__online
 msgid "Online"
 msgstr ""
@@ -4679,6 +4982,15 @@ msgid ""
 "Only for the quiet-hour trigger: fire when the store's traffic this hour is "
 "under this figure. What counts as quiet is a property of the shop, not of "
 "the software."
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_chain.py:0
+msgid ""
+"Only the corporate role can change how far recognition reaches across a "
+"chain. This decides whether one person's movements are correlated between "
+"your branches, which is not a store or regional setting."
 msgstr ""
 
 #. module: analitix
@@ -4728,6 +5040,14 @@ msgstr ""
 msgid ""
 "Optional CRM follow-up. Only created for an identified customer — a lead "
 "with no way to contact anybody is filing clutter."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__region_id
+#: model:ir.model.fields,help:analitix.field_analitix_store_daily__region_id
+msgid ""
+"Optional. A single-store customer leaves this empty and nothing about their "
+"installation changes."
 msgstr ""
 
 #. module: analitix
@@ -4963,7 +5283,9 @@ msgid "Quiet hour / peak hour"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__rating_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__rating_ids
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__rating_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__rating_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__rating_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__rating_ids
@@ -5041,6 +5363,11 @@ msgid "Recognition"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__reid_scope
+msgid "Recognition Scope"
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__res_id
 msgid "Record ID"
 msgstr ""
@@ -5080,14 +5407,45 @@ msgid "Recovered"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__code
 #: model:ir.model.fields,field_description:analitix.field_analitix_door__code
 #: model:ir.model.fields,field_description:analitix.field_analitix_face_signature__reference
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi__code
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__code
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__code
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__code
 #: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__reference
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone__code
 msgid "Reference"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__region_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__region_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__region_id
+#: model_terms:ir.ui.view,arch_db:analitix.view_region_form
+msgid "Region"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__region_count
+msgid "Region Count"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__manager_id
+#: model:res.groups,name:analitix.group_regional
+msgid "Regional Manager"
+msgstr ""
+
+#. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_region
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__region_ids
+#: model:ir.ui.menu,name:analitix.menu_config_regions
+#: model_terms:ir.ui.view,arch_db:analitix.view_brand_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_brand_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_region_list
+msgid "Regions"
 msgstr ""
 
 #. module: analitix
@@ -5182,13 +5540,18 @@ msgid "Require Liveness"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__rescue_rate
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__rescue_rate
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__rescue_rate
+#: model_terms:ir.ui.view,arch_db:analitix.view_chain_report_list
 msgid "Rescue %"
 msgstr ""
 
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_lost_sale__state__rescued
+#: model_terms:ir.ui.view,arch_db:analitix.view_chain_report_list
 #: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_search
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_daily_list
 #: model_terms:ir.ui.view,arch_db:analitix.view_value_report_list
 msgid "Rescued"
 msgstr ""
@@ -5273,20 +5636,27 @@ msgid "Rev / Visitor"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__revenue
 #: model:ir.model.fields,field_description:analitix.field_analitix_hourly__revenue
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi_performance__revenue
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__revenue
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__revenue
+#: model_terms:ir.ui.view,arch_db:analitix.view_chain_report_list
 #: model_terms:ir.ui.view,arch_db:analitix.view_hourly_list
 #: model_terms:ir.ui.view,arch_db:analitix.view_poi_performance_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_daily_list
 msgid "Revenue"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__revenue_per_visitor
 #: model:ir.model.fields,field_description:analitix.field_analitix_hourly__revenue_per_visitor
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__revenue_per_visitor
 msgid "Revenue / Visitor"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__revenue_per_sqm
 #: model:ir.model.fields,field_description:analitix.field_analitix_hourly__revenue_per_sqm
 msgid "Revenue / m²"
 msgstr ""
@@ -5389,7 +5759,9 @@ msgid "SHA-256 of the device key. The key itself is never stored."
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__message_has_sms_error
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_has_sms_error
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__message_has_sms_error
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_has_sms_error
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_has_sms_error
 #: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_has_sms_error
@@ -5402,8 +5774,12 @@ msgid "Sad"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__tickets
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__tickets
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__tickets
+#: model_terms:ir.ui.view,arch_db:analitix.view_chain_report_list
 #: model_terms:ir.ui.view,arch_db:analitix.view_coaching_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_daily_list
 #: model_terms:ir.ui.view,arch_db:analitix.view_value_report_list
 msgid "Sales"
 msgstr ""
@@ -5451,6 +5827,24 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_job__scheduled_at
 msgid "Scheduled At"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__scope_changed_on
+msgid "Scope Last Changed"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__scope_changed_by_id
+msgid "Scope Last Changed By"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_res_users__analitix_region_ids
+msgid ""
+"Scope this user to whole regions. Every store in them is included, including"
+" the ones that open next year — which is the point: a list of individual "
+"stores goes stale the first time the chain grows and nobody updates it."
 msgstr ""
 
 #. module: analitix
@@ -5595,6 +5989,14 @@ msgid "Set by hand"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__brand_id
+#: model:ir.model.fields,help:analitix.field_analitix_store_daily__brand_id
+msgid ""
+"Set directly, or filled in from the region. A store belongs to at most one "
+"chain."
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_alert__partner_id
 msgid ""
 "Set only for a recognised, identified customer. Most alerts carry no "
@@ -5652,6 +6054,20 @@ msgid ""
 "Share of the day's visits made by somebody the store had seen before, within"
 " its own retention window. A short window makes this number smaller — it "
 "measures what the store chose to remember, not everything that happened."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_brand__watchlist_scope__chain
+msgid "Shared across the chain"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_brand__watchlist_scope
+msgid ""
+"Shared by default, and for a reason: if somebody caused an incident at one "
+"branch it is reasonable that the others know. It is still a chain-wide "
+"statement about a named person, so changing this either way takes the "
+"corporate role and is audited."
 msgstr ""
 
 #. module: analitix
@@ -5864,6 +6280,8 @@ msgid "Specific Zone"
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_chain_report_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_daily_list
 #: model_terms:ir.ui.view,arch_db:analitix.view_value_report_list
 msgid "Spotted"
 msgstr ""
@@ -5890,6 +6308,7 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_door_hourly__staff_crossings
 #: model:ir.model.fields,field_description:analitix.field_analitix_hourly__staff_crossings
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__staff_crossings
 msgid "Staff Crossings"
 msgstr ""
 
@@ -5990,6 +6409,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_alert__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_coaching_report__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_demographic__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__store_id
@@ -6008,6 +6428,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_event__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_rule__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_visit_group__store_id
@@ -6043,6 +6464,20 @@ msgid "Store"
 msgstr ""
 
 #. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_chain.py:0
+msgid ""
+"Store '%(store)s' is in region '%(region)s', which belongs to chain "
+"'%(their)s', but the store is assigned to chain '%(ours)s'."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__store_count
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__store_count
+msgid "Store Count"
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__name
 msgid "Store Name"
 msgstr ""
@@ -6064,9 +6499,16 @@ msgid "Store m²"
 msgstr ""
 
 #. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_chain.py:0
 #: model:ir.actions.act_window,name:analitix.action_store
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__store_ids
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__store_ids
 #: model:ir.ui.menu,name:analitix.menu_config_stores
 #: model:ir.ui.menu,name:analitix.menu_stores_overview
+#: model_terms:ir.ui.view,arch_db:analitix.view_brand_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_brand_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_region_form
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_list
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_search
 msgid "Stores"
@@ -6151,6 +6593,11 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.constraint,message:analitix.constraint_analitix_brand_code_uniq
+msgid "That chain reference already exists in this company."
+msgstr ""
+
+#. module: analitix
 #. odoo-python
 #: code:addons/analitix/models/analitix_value_report.py:0
 msgid "That is better than last month (%(prev).1f%%)."
@@ -6172,6 +6619,11 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.constraint,message:analitix.constraint_analitix_region_code_uniq
+msgid "That region reference already exists in this chain."
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.constraint,message:analitix.constraint_analitix_watch_person_reference_uniq
 msgid "That watch-list reference already exists."
 msgstr ""
@@ -6188,6 +6640,14 @@ msgid ""
 "The anonymous handle this visit was matched to. It expires on the store's "
 "retention schedule; the visit itself survives, without any way back to a "
 "face."
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_chain_report
+msgid ""
+"The console reads the nightly daily rollup rather than raw\n"
+"                crossing events, so it keeps working after old events are\n"
+"                pruned. A brand-new installation fills in after the first night."
 msgstr ""
 
 #. module: analitix
@@ -6262,6 +6722,14 @@ msgstr ""
 msgid ""
 "The nudge worked: this visit produced a ticket afterwards. This is the "
 "figure the monthly value report is built on."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_chain_report__revenue_per_sqm
+msgid ""
+"The only fair way to compare a 60 m² kiosk against a 400 m² flagship. "
+"Ranking branches by revenue alone just ranks them by size, which head office"
+" already knows."
 msgstr ""
 
 #. module: analitix
@@ -6360,11 +6828,29 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_watch_person__store_id
+msgid ""
+"The store this entry was raised at. On a single store, matching happens here"
+" and nowhere else. In a chain, the chain's own watch-list scope decides "
+"whether the other branches see it — shared by default, because an incident "
+"at one branch is worth the others knowing, and changeable only by the "
+"corporate role."
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_lost_sale__estimated_value
 msgid ""
 "The store's average ticket at the time. An estimate, and labelled as one: "
 "the real value of a sale that never happened cannot be known, and quoting it"
 " to the cent would be dishonest."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_res_users__analitix_scope_store_ids
+msgid ""
+"The stores this user can actually reach: the ones assigned directly plus "
+"every store of their regions. The record rules read this one field, so the "
+"two ways of granting access can never disagree with each other."
 msgstr ""
 
 #. module: analitix
@@ -6414,6 +6900,18 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model:res.groups,comment:analitix.group_corporate
+msgid ""
+"The whole chain: cross-branch comparison, chain configuration, and the "
+"elevated decisions about how far recognition reaches."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.constraint,message:analitix.constraint_analitix_store_daily_store_day_uniq
+msgid "There is already a rollup for that store and day."
+msgstr ""
+
+#. module: analitix
 #. odoo-python
 #: code:addons/analitix/models/analitix_customer_context.py:0
 msgid ""
@@ -6432,6 +6930,7 @@ msgid "This Device UID is already in use."
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_chain_report_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_search
 msgid "This Month"
 msgstr ""
@@ -6551,6 +7050,15 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.constraint,message:analitix.constraint_analitix_value_report_store_period_uniq
 msgid "This store already has a report for that month."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_chain_report__conversion_vs_region
+msgid ""
+"This store's conversion minus its region's average for the same day. The "
+"number a regional manager actually acts on: it removes the week, the weather"
+" and the season, which move every branch together, and leaves what is "
+"particular to this one."
 msgstr ""
 
 #. module: analitix
@@ -6709,6 +7217,7 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__area_sqm
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__area_sqm
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__area_sqm
 msgid "Total m²"
@@ -6755,6 +7264,13 @@ msgstr ""
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_signage_rule_search
 msgid "Trigger"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_res_users__analitix_scoped
+msgid ""
+"True when this user has been given specific stores or regions, and is "
+"therefore locked to them."
 msgstr ""
 
 #. module: analitix
@@ -6853,6 +7369,8 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__units
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__units
 #: model_terms:ir.ui.view,arch_db:analitix.view_hourly_list
 #: model_terms:ir.ui.view,arch_db:analitix.view_poi_performance_list
 msgid "Units"
@@ -6861,6 +7379,12 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi_performance__units_per_stop
 msgid "Units / Stop"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__upt
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__upt
+msgid "Units / Ticket"
 msgstr ""
 
 #. module: analitix
@@ -6978,9 +7502,13 @@ msgid "Visitor profile matches"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__visitors
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__visitors
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__visitors
+#: model_terms:ir.ui.view,arch_db:analitix.view_chain_report_list
 #: model_terms:ir.ui.view,arch_db:analitix.view_door_list
 #: model_terms:ir.ui.view,arch_db:analitix.view_hourly_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_daily_list
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_list
 #: model_terms:ir.ui.view,arch_db:analitix.view_value_report_list
 msgid "Visitors"
@@ -7056,11 +7584,20 @@ msgid "Volume anomaly: %(c)s vs baseline %(b).1f/h"
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_chain_report_search
+msgid "Walk-outs Not Rescued"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__lost_rescued
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__lost_rescued
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__lost_sales_rescued
 msgid "Walk-outs Rescued"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__lost_detected
+#: model:ir.model.fields,field_description:analitix.field_analitix_store_daily__lost_detected
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__lost_sales_detected
 msgid "Walk-outs Spotted"
 msgstr ""
@@ -7106,6 +7643,11 @@ msgid "Watch-list Recipients"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__watchlist_scope
+msgid "Watch-list Scope"
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__watchlist_threshold
 msgid "Watch-list Threshold"
 msgstr ""
@@ -7146,7 +7688,9 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_brand__website_message_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__website_message_ids
+#: model:ir.model.fields,field_description:analitix.field_analitix_region__website_message_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__website_message_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__website_message_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__website_message_ids
@@ -7154,7 +7698,9 @@ msgid "Website Messages"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_brand__website_message_ids
 #: model:ir.model.fields,help:analitix.field_analitix_device__website_message_ids
+#: model:ir.model.fields,help:analitix.field_analitix_region__website_message_ids
 #: model:ir.model.fields,help:analitix.field_analitix_staff_signature__website_message_ids
 #: model:ir.model.fields,help:analitix.field_analitix_store__website_message_ids
 #: model:ir.model.fields,help:analitix.field_analitix_watch_person__website_message_ids
@@ -7352,6 +7898,14 @@ msgstr ""
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_signage_rule_form
 msgid "Where and who"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_brand__reid_scope
+msgid ""
+"Whether a recognised customer is correlated across branches.\n"
+"'Each store on its own' is the default and the smaller claim: a person seen in one branch is not linked to their visit to another.\n"
+"'Across the whole chain' builds a picture of one individual's movements between your properties. It is a categorically larger thing than store-level recognition, so only the corporate role can switch it and the change is recorded in the audit log."
 msgstr ""
 
 #. module: analitix
@@ -7624,6 +8178,12 @@ msgstr ""
 
 #. module: analitix
 #. odoo-python
+#: code:addons/analitix/models/analitix_chain.py:0
+msgid "brand_id"
+msgstr ""
+
+#. module: analitix
+#. odoo-python
 #: code:addons/analitix/models/analitix_alert.py:0
 msgid "chat"
 msgstr ""
@@ -7663,6 +8223,11 @@ msgid "e.g. Anello Morelia Centro"
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_region_form
+msgid "e.g. Bajío"
+msgstr ""
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_zone_form
 msgid "e.g. Engagement Rings"
 msgstr ""
@@ -7690,6 +8255,12 @@ msgstr ""
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_poi_form
 msgid "e.g. Window Showcase"
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_chain.py:0
+msgid "face recognition"
 msgstr ""
 
 #. module: analitix
@@ -7770,6 +8341,18 @@ msgid "unknown door"
 msgstr ""
 
 #. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_chain.py:0
+msgid "watch list"
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_chain.py:0
+msgid "watchlist_scope"
+msgstr ""
+
+#. module: analitix
 #: model:mail.template,subject:analitix.mail_template_value_report
 msgid "{{ object.store_id.name }} — how last month went"
 msgstr ""
@@ -7777,4 +8360,10 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__times_fee
 msgid "× Subscription"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_chain_report__conversion_vs_region
+#: model_terms:ir.ui.view,arch_db:analitix.view_chain_report_list
+msgid "Δ vs Region"
 msgstr ""

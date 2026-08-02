@@ -48,6 +48,41 @@
             <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
         </record>
 
+        <!-- Regional / district manager (phase 7).
+
+             Sees the consolidated picture of the stores in their regions and
+             compares them against each other. Deliberately does NOT imply
+             Manager: task 983 is explicit that a regional does not need the
+             fine operational detail of every branch, and handing them the
+             configuration of forty stores is how a threshold gets changed in
+             the wrong one at eleven at night.
+
+             What actually bounds them is not this group but the regions on
+             their user record — the group says what kind of screen they get,
+             the region says which stores are in it. -->
+        <record id="group_regional" model="res.groups">
+            <field name="name">Regional Manager</field>
+            <field name="sequence">25</field>
+            <field name="privilege_id" ref="res_groups_privilege_analitix"/>
+            <field name="implied_ids" eval="[(4, ref('group_user'))]"/>
+            <field name="comment">Compare the stores of their regions side by side. No store configuration.</field>
+        </record>
+
+        <!-- Corporate / head office (phase 7).
+
+             The whole chain, plus the two decisions nobody below may take: how
+             far face recognition reaches between branches, and how far the
+             watch list does. Those are guarded in code on analitix.brand.write,
+             not only by this group's menu visibility — a control that lives in
+             the UI is defeated by an import. -->
+        <record id="group_corporate" model="res.groups">
+            <field name="name">Corporate / Head Office</field>
+            <field name="sequence">35</field>
+            <field name="privilege_id" ref="res_groups_privilege_analitix"/>
+            <field name="implied_ids" eval="[(4, ref('group_manager')), (4, ref('group_regional'))]"/>
+            <field name="comment">The whole chain: cross-branch comparison, chain configuration, and the elevated decisions about how far recognition reaches.</field>
+        </record>
+
         <!-- Security / compliance. The watch list, and nothing else.
 
              Deliberately NOT implied by Manager, which is why it sits outside

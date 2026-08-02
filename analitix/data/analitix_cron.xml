@@ -164,5 +164,22 @@
             <field name="active" eval="True"/>
         </record>
 
+        <!-- The nightly rollup. It has to run BEFORE the retention cron above
+             ever deletes anything, which is why it is scheduled at 02:00 and
+             why the pruning refuses to touch a day that has no rollup row: a
+             prune that outran its rollup would destroy history nobody had
+             summarised, and unlike almost everything else in this addon that
+             one is not recoverable. -->
+        <record id="cron_daily_rollup" model="ir.cron">
+            <field name="name">Analitix: close yesterday's figures per store</field>
+            <field name="model_id" ref="model_analitix_store_daily"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_roll_up()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="nextcall" eval="(DateTime.now().replace(hour=2, minute=0, second=0) + relativedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="active" eval="True"/>
+        </record>
+
     </data>
 </odoo>

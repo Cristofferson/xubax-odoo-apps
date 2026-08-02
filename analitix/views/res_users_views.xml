@@ -13,6 +13,13 @@
                     <group>
                         <field name="analitix_store_ids" widget="many2many_tags"
                                options="{'no_create': True}"/>
+                        <field name="analitix_region_ids" widget="many2many_tags"
+                               options="{'no_create': True}"
+                               groups="analitix.group_corporate"/>
+                        <field name="analitix_scoped" invisible="1"/>
+                        <field name="analitix_scope_store_ids" widget="many2many_tags"
+                               readonly="1" invisible="not analitix_scoped"
+                               string="Effective Scope"/>
                     </group>
                     <div class="alert alert-info" role="alert">
                         <p class="mb-1">
@@ -20,10 +27,18 @@
                             already belongs to. That is the right setting for a
                             customer who runs one store, and it needs no configuration.
                         </p>
-                        <p class="mb-0">
+                        <p class="mb-1">
                             On a shared instance hosting several customers, fill this
                             in. Once it has any value the user sees <b>only</b> those
                             stores — no group, company switch or manager role widens it.
+                        </p>
+                        <p class="mb-0">
+                            For a chain, give a <b>region</b> rather than a list of
+                            stores: it already includes the branches that open next
+                            year. A hand-written list of twenty stores is one nobody
+                            remembers to extend, and stale access outlives the person
+                            it was written for. <b>Effective scope</b> shows what the
+                            two settings actually resolve to.
                         </p>
                     </div>
                 </page>

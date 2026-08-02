@@ -8,7 +8,7 @@ it is a constant in the source.  When adding a field anywhere in this addon the
 question to ask is the one from the master instruction: *is this different for
 each customer store?  Then it is configuration, not code.*
 """
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 import pytz
 
@@ -632,6 +632,23 @@ class AnalitixStore(models.Model):
         if period == "month":
             return to_utc(day_start.replace(day=1)), None
         return to_utc(day_start), None
+
+    def _day_bounds(self, day):
+        """``(start_utc, end_utc)`` for one calendar day in the STORE's timezone.
+
+        A chain spanning two timezones that reported on UTC days would be
+        comparing two different things and calling it a comparison. The daily
+        rollup and every chain report go through here so they cannot drift
+        apart.
+        """
+        self.ensure_one()
+        tz = pytz.timezone(self.tz or "UTC")
+        start_local = datetime.combine(
+            fields.Date.to_date(day), datetime.min.time())
+        start = tz.localize(start_local).astimezone(pytz.utc).replace(tzinfo=None)
+        end_local = start_local + timedelta(days=1)
+        end = tz.localize(end_local).astimezone(pytz.utc).replace(tzinfo=None)
+        return start, end
 
     def _compute_live(self):
         Event = self.env["analitix.event"]

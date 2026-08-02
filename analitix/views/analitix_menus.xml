@@ -32,6 +32,17 @@
     <menuitem id="menu_stores_overview" name="Stores" parent="menu_analysis"
               action="action_store" sequence="30"/>
 
+    <!-- The chain console. Above the per-store screens on purpose: a regional
+         or head-office user opens Analitix to compare branches, not to read one
+         of them. It stays hidden for the single-store customer, who has nothing
+         to compare. -->
+    <menuitem id="menu_chain_console" name="Chain Console" parent="menu_analysis"
+              action="action_chain_report" sequence="5"
+              groups="analitix.group_regional,analitix.group_corporate"/>
+    <menuitem id="menu_daily_rollup" name="Daily Rollup" parent="menu_analysis"
+              action="action_store_daily" sequence="40"
+              groups="analitix.group_manager"/>
+
     <!-- The salesperson's own list, first thing under the app. -->
     <menuitem id="menu_my_alerts" name="My Alerts" parent="menu_root"
               action="action_alert_mine" sequence="5"/>
@@ -76,6 +87,12 @@
               action="action_store_setup" sequence="5"/>
     <menuitem id="menu_config_stores" name="Stores" parent="menu_configuration"
               action="action_store" sequence="10"/>
+    <menuitem id="menu_config_brands" name="Chains" parent="menu_configuration"
+              action="action_brand" sequence="12"
+              groups="analitix.group_corporate"/>
+    <menuitem id="menu_config_regions" name="Regions" parent="menu_configuration"
+              action="action_region" sequence="14"
+              groups="analitix.group_corporate"/>
     <menuitem id="menu_config_doors" name="Doors" parent="menu_configuration"
               action="action_door" sequence="20"/>
     <menuitem id="menu_config_devices" name="Devices" parent="menu_configuration"
