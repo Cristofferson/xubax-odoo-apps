@@ -355,7 +355,80 @@ class PosConfig(models.Model):
         hour = now.hour + now.minute / 60.0
         return self.xibo_time_from <= hour <= self.xibo_time_to
 
-    # ===== ③ Customer Display Mirror layout =====
+    # ===== ③ Layout bookkeeping shared by the mirror and the Thank-You =====
+    # Xibo hands a layout a NEW id every time it is republished, while the
+    # campaignId it was born with survives. Looking a layout up by the id we
+    # stored therefore reports "gone" for a layout that is alive and well —
+    # and code that reacts to that by building a replacement quietly litters
+    # the CMS with orphans. Everything below resolves by campaign first.
+
+    def _xibo_cms_layout(self, layout):
+        """Return the live CMS record for ``layout``, or ``{}`` when it is gone.
+
+        Also repairs a drifted ``xibo_layout_id`` in passing, so the Xibo
+        menus in Odoo keep pointing at something that exists.
+        """
+        self.ensure_one()
+        server = self.xibo_server_id
+        if not (server and layout):
+            return {}
+        lookups = []
+        if layout.xibo_campaign_id:
+            lookups.append({'campaignId': layout.xibo_campaign_id})
+        if layout.xibo_layout_id:
+            lookups.append({'layoutId': layout.xibo_layout_id})
+        for params in lookups:
+            detail = server._request(
+                'GET', '/api/layout', params=params, raise_on_error=False,
+            )
+            if isinstance(detail, list) and detail:
+                found = detail[0]
+                live_id = found.get('layoutId')
+                if live_id and live_id != layout.xibo_layout_id:
+                    _logger.info(
+                        "[XIBO POS] layout %s was republished in the CMS "
+                        "(%s → %s); refreshing the stored id",
+                        layout.name, layout.xibo_layout_id, live_id,
+                    )
+                    layout.sudo().write({'xibo_layout_id': live_id})
+                return found
+        return {}
+
+    def _xibo_layout_status(self, layout, geometry):
+        """Why ``layout`` needs rebuilding, or ``''`` when it is fine.
+
+        Returns ``'missing'`` (nothing configured), ``'deleted'`` (gone from
+        the CMS), ``'resized'`` (canvas no longer matches the screen), or ``''``.
+        """
+        self.ensure_one()
+        if not (layout and layout.xibo_layout_id):
+            return 'missing'
+        detail = self._xibo_cms_layout(layout)
+        if not detail:
+            return 'deleted'
+        try:
+            actual = (int(detail.get('width')), int(detail.get('height')))
+        except (TypeError, ValueError):
+            return ''  # CMS did not report a size; leave the layout alone
+        if actual != (geometry['width'], geometry['height']):
+            return 'resized'
+        return ''
+
+    # ===== ③a Customer Display Mirror layout =====
+    def _xibo_customer_display_layout_status(self):
+        """Why the mirror layout needs rebuilding, or ``''`` when it is fine.
+
+        The mirror used to be checked for existence only, so a screen that
+        was later swapped from landscape to portrait (or to a videowall) kept
+        a layout of the old shape forever: the Thank-You screen healed itself
+        and the mirror did not.
+        """
+        self.ensure_one()
+        return self._xibo_layout_status(
+            self.xibo_customer_display_layout_id,
+            self.xibo_customer_display_display_id._layout_geometry(),
+        )
+
     def _xibo_ensure_customer_display_layout(self):
         self.ensure_one()
         if not (self.xibo_customer_display_enabled and self.xibo_server_id
@@ -363,17 +436,25 @@ class PosConfig(models.Model):
             return False
         if self.xibo_server_id.state != 'connected':
             return False
+        reason = self._xibo_customer_display_layout_status()
+        if not reason:
+            self._xibo_update_customer_display_layout()
+            return True
+        geometry = self.xibo_customer_display_display_id._layout_geometry()
+        _logger.info(
+            "[XIBO POS] rebuilding the Customer Display layout for POS %s "
+            "(reason=%s, canvas=%sx%s, resolutionId=%s)",
+            self.name, reason, geometry['width'], geometry['height'],
+            geometry['resolution_id'],
+        )
         # Include a timestamp to guarantee uniqueness in Xibo even when
         # earlier attempts left orphan layouts behind. Xibo CMS validates
         # layout name uniqueness per owner.
         layout_name = _("POS Customer Display — %s [%s]") % (
             self.name, fields.Datetime.now().strftime('%Y%m%d-%H%M%S'),
         )
-        if self.xibo_customer_display_layout_id and self.xibo_customer_display_layout_id.xibo_layout_id:
-            self._xibo_update_customer_display_layout()
-        else:
-            layout = self._xibo_create_customer_display_layout(layout_name)
-            self.sudo().write({'xibo_customer_display_layout_id': layout.id})
+        layout = self._xibo_create_customer_display_layout(layout_name)
+        self.sudo().write({'xibo_customer_display_layout_id': layout.id})
         return True
 
     def _xibo_create_customer_display_layout(self, name):
@@ -386,10 +467,11 @@ class PosConfig(models.Model):
             self.xibo_customer_display_url,
             self.xibo_customer_display_display_id._layout_geometry(),
             widget_name=_("POS Customer Display"),
+            background_color=self._XIBO_MIRROR_BACKGROUND,
         )
 
     def _xibo_build_url_layout(self, name, url, geometry, widget_name=None,
-                               duration=86400):
+                               duration=86400, background_color=None):
         """Create a published Xibo layout showing a single Webpage widget.
 
         Shared by the Customer Display mirror and the Thank-You screen: both
@@ -399,10 +481,19 @@ class PosConfig(models.Model):
                          the layout is built on THAT canvas, so a portrait
                          screen or a videowall gets the whole surface instead
                          of a centred 16:9 island.
-        :param duration: how long the widget lasts. The mirror stays up until
-                         the cart is cleared, so it keeps the 24h default;
-                         the Thank-You screen passes its own duration so the
-                         layout ends when the message does.
+        :param duration: how long the widget lasts. Both callers keep the 24h
+                         default on purpose: the layout must outlast the time
+                         it is meant to be on screen, because a layout that
+                         ends before its scheduled window is over is simply
+                         played AGAIN, and every replay reloads the web page.
+                         The mirror ends when the cart is cleared and the
+                         Thank-You ends when its schedule expires — never by
+                         the widget running out.
+        :param background_color: colour behind the web page. It shows for the
+                         second or two the page takes to load, so leaving it
+                         at the Xibo default of black makes a light page flash
+                         black on every appearance. Pass the page's own
+                         background and the load is invisible.
         """
         self.ensure_one()
         server = self.xibo_server_id
@@ -428,6 +519,20 @@ class PosConfig(models.Model):
         draft_layout_id = self._xibo_get_or_create_draft(
             server, published_layout_id,
         )
+
+        # Paint the canvas before anything is placed on it. The endpoint only
+        # accepts a Draft, and it insists on a resolutionId even when the
+        # resolution is not changing — omitting it is a 500, not a no-op.
+        if background_color:
+            server._request(
+                'PUT', f'/api/layout/background/{draft_layout_id}',
+                data={
+                    'backgroundColor': background_color,
+                    'backgroundzIndex': 0,
+                    'resolutionId': geometry['resolution_id'],
+                },
+                raise_on_error=False,
+            )
 
         # Locate or create a playlist on the draft.
         detail = server._request(
@@ -490,7 +595,10 @@ class PosConfig(models.Model):
                 'duration': duration,
                 'useDuration': 1,
                 'transparency': 0,
-                'modeId': 1,
+                # The Xibo module declares this property as "modeid", all
+                # lowercase. Sent as "modeId" it was silently discarded; the
+                # widget only kept working because 1 is also the default.
+                'modeid': 1,
             },
         )
 
@@ -524,6 +632,27 @@ class PosConfig(models.Model):
     # the POS kept pointing at a dead id, so sales stopped showing anything
     # with nothing in the log to explain it. Both are now checked and fixed.
 
+    # Background of each Thank-You preset, mirrored from the templates in
+    # controllers/xibo_thanks_controller.py. Xibo paints the layout canvas
+    # behind the web page, so these must agree or the page flashes a
+    # different colour every time the player loads it.
+    _XIBO_THANKS_BACKGROUND = {
+        'minimal': '#fafaf9',
+        'warm': '#fde4c0',
+        'bold': '#000000',
+        # 'custom' is the merchant's own HTML; the field's help text tells
+        # them to design on a dark background, so black stays the safe guess.
+        'custom': '#000000',
+    }
+    # The mirror shows Odoo's native POS Customer Display, which is light.
+    _XIBO_MIRROR_BACKGROUND = '#ffffff'
+
+    def _xibo_thanks_background_color(self):
+        self.ensure_one()
+        return self._XIBO_THANKS_BACKGROUND.get(
+            self.xibo_thanks_preset, '#000000',
+        )
+
     def _xibo_thanks_layout_geometry(self):
         """Canvas for the Thank-You layout: that of the screens it targets.
 
@@ -541,24 +670,9 @@ class PosConfig(models.Model):
         screen), or ``''``.
         """
         self.ensure_one()
-        layout = self.xibo_thanks_layout_id
-        if not (layout and layout.xibo_layout_id):
-            return 'missing'
-        detail = self.xibo_server_id._request(
-            'GET', '/api/layout',
-            params={'layoutId': layout.xibo_layout_id},
-            raise_on_error=False,
+        return self._xibo_layout_status(
+            self.xibo_thanks_layout_id, self._xibo_thanks_layout_geometry(),
         )
-        if not (isinstance(detail, list) and detail):
-            return 'deleted'
-        geometry = self._xibo_thanks_layout_geometry()
-        try:
-            actual = (int(detail[0].get('width')), int(detail[0].get('height')))
-        except (TypeError, ValueError):
-            return ''  # CMS did not report a size; leave the layout alone
-        if actual != (geometry['width'], geometry['height']):
-            return 'resized'
-        return ''
 
     def _xibo_ensure_thanks_layout(self, force=False):
         """Make sure the Thank-You layout exists and fits the target screen.
@@ -591,6 +705,7 @@ class PosConfig(models.Model):
         layout = self._xibo_build_url_layout(
             name, self.xibo_thanks_url, geometry,
             widget_name=_("POS Thank-You"),
+            background_color=self._xibo_thanks_background_color(),
         )
         self.sudo().write({'xibo_thanks_layout_id': layout.id})
         return layout
@@ -671,6 +786,11 @@ class PosConfig(models.Model):
         self.ensure_one()
         server = self.xibo_server_id
         layout = self.xibo_customer_display_layout_id
+        # Resolve by campaign first so a republished layout is recognised as
+        # its own. Looking it up by the stored id used to come back empty
+        # after any republish, and the "no widget" branch below then built a
+        # replacement on every single save.
+        self._xibo_cms_layout(layout)
         detail = server._request(
             'GET', '/api/layout',
             params={'layoutId': layout.xibo_layout_id, 'embed': 'regions,playlists,widgets'},
@@ -678,7 +798,13 @@ class PosConfig(models.Model):
         )
         widget_id = self._xibo_find_first_widget(detail)
         if not widget_id:
-            new_layout = self._xibo_create_customer_display_layout(layout.name)
+            # Rebuild under a fresh name: Xibo enforces unique layout names
+            # per owner, so reusing the old one is rejected outright.
+            new_layout = self._xibo_create_customer_display_layout(
+                _("POS Customer Display — %s [%s]") % (
+                    self.name, fields.Datetime.now().strftime('%Y%m%d-%H%M%S'),
+                )
+            )
             self.sudo().write({'xibo_customer_display_layout_id': new_layout.id})
             return
         try:
