@@ -1327,3 +1327,9 @@ msgstr "Conector Xibo — Punto de venta"
 msgid "AI thank-you with audio, dynamic customer display mirror, and contextual product recommendations on Xibo from your POS."
 msgstr "Agradecimiento con IA y audio, espejo dinámico de la pantalla del cliente y recomendaciones contextuales de productos en Xibo, desde su punto de venta."
 
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/controllers/xibo_thanks_controller.py:0
+msgid "Served by %(name)s"
+msgstr "Te atendió %(name)s"

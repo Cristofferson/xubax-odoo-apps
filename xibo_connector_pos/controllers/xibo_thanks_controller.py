@@ -70,6 +70,19 @@ PRESET_MINIMAL = """<!DOCTYPE html>
     opacity:0;animation:fadeIn 1s ease-out 2.2s forwards;letter-spacing:0.05em}
   @keyframes draw{to{stroke-dashoffset:0}}
   @keyframes fadeIn{to{opacity:1}}
+  /* Video walls. Every size above is a share of the viewport HEIGHT, which
+     on a 5760x1080 wall leaves a small block marooned in the middle panel
+     while the side screens show nothing but background. Past 2:1 we size
+     by WIDTH instead, so the message spans the whole wall. A 16:9 or
+     portrait screen never matches this query and is left untouched. */
+  @media (min-aspect-ratio:2/1){
+    .wrap{padding:6vh 3vw}
+    .check{width:min(22vh,3.4vw);height:min(22vh,3.4vw);margin-bottom:3vh}
+    .message{font-size:3.6vw;font-size:min(17vh,3.6vw);max-width:94vw;line-height:1.15}
+    .customer{font-size:min(11vh,2.2vw);margin-top:2vh}
+    .product-img{width:min(34vh,6vw);height:min(34vh,6vw);margin-top:3vh}
+    .footer{font-size:min(5vh,1.1vw);bottom:3vh}
+  }
 </style></head>
 <body><div class="wrap">
   <svg class="check" viewBox="0 0 60 60">
@@ -109,6 +122,16 @@ PRESET_WARM = """<!DOCTYPE html>
   @keyframes bloom{to{opacity:1;transform:scale(1)}}
   @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
   @keyframes fadeIn{to{opacity:1}}
+  /* Video walls — see the note in the minimal preset. */
+  @media (min-aspect-ratio:2/1){
+    .wrap{padding:6vh 3vw}
+    .ornament{font-size:min(13vh,2.6vw)}
+    .message{font-size:3.4vw;font-size:min(16vh,3.4vw);max-width:94vw;margin-top:2vh}
+    .customer{font-size:min(11vh,2.2vw);margin-top:2vh}
+    .product-img{width:min(34vh,6vw);height:min(34vh,6vw);margin-top:3vh}
+    .divider{width:min(20vh,4vw);margin:2vh 0}
+    .footer{font-size:min(5vh,1.1vw);bottom:3vh}
+  }
 </style></head>
 <body><div class="wrap">
   <div class="ornament">❦</div>
@@ -154,6 +177,15 @@ PRESET_BOLD = """<!DOCTYPE html>
   @keyframes zoomIn{to{opacity:1;transform:scale(1)}}
   @keyframes fadeIn{to{opacity:1}}
   @keyframes slowPulse{0%,100%{opacity:.5}50%{opacity:1}}
+  /* Video walls — see the note in the minimal preset. */
+  @media (min-aspect-ratio:2/1){
+    .wrap{padding:5vh 3vw}
+    .badge{font-size:min(6vh,1.3vw);padding:1.2vh 3vh}
+    .message{font-size:4vw;font-size:min(19vh,4vw);max-width:96vw;margin-top:3vh}
+    .customer{font-size:min(12vh,2.4vw);margin-top:2vh}
+    .product-img{width:min(32vh,5.6vw);height:min(32vh,5.6vw);margin-top:3vh}
+    .footer{font-size:min(5vh,1.1vw);bottom:2vh}
+  }
 </style></head>
 <body><div class="wrap">
   <div class="badge">★ THANK YOU ★</div>
@@ -173,6 +205,10 @@ FALLBACK_HTML = """<!DOCTYPE html>
     font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
     display:flex;align-items:center;justify-content:center}
   .msg{font-size:5vh;font-weight:300;letter-spacing:0.02em;text-align:center}
+  /* Video walls — see the note in the minimal preset. */
+  @media (min-aspect-ratio:2/1){
+    .msg{font-size:3vw;font-size:min(15vh,3vw)}
+  }
 </style></head>
 <body><div class="msg">Gracias por su visita</div></body></html>"""
 
@@ -187,6 +223,66 @@ def _escape(value):
     if value is None:
         return ''
     return html.escape(str(value), quote=True)
+
+
+def _first_name(full_name):
+    """The part of a name a screen should greet somebody by."""
+    parts = (full_name or '').split()
+    return parts[0] if parts else ''
+
+
+def _cashier_name(order):
+    """Who served this sale.
+
+    ``employee_id`` is only filled when the POS has the Cashiers feature
+    (``module_pos_hr``) switched on. Every other shop identifies the
+    cashier by the user who opened the session, so fall back to that
+    instead of showing nothing.
+    """
+    if not order:
+        return ''
+    name = ''
+    if 'employee_id' in order._fields:
+        name = order.employee_id.name or ''
+    if not name:
+        name = order.user_id.name or order.session_id.user_id.name or ''
+    return (name or '').strip()
+
+
+def _signature_html(render, company, cashier=None):
+    """The line printed under the message.
+
+    The AI is asked to greet the customer by name, so signing the message
+    with that same name repeats it twice in a row. When the message
+    already says it, we credit the person who served the sale instead —
+    the screen thanks the customer, the signature says who attended them.
+    When the message does NOT name the customer (no customer on the
+    ticket, or the AI fell back to the generic text) the customer's name
+    stays, so the greeting is not left impersonal.
+
+    :param cashier: name to credit; derived from the order when omitted.
+        The preview passes one explicitly because it has no order.
+    """
+    customer = (getattr(render, 'customer_name', '') or '').strip()
+    first = _first_name(customer)
+    message = (getattr(render, 'message', '') or '').casefold()
+
+    if first and first.casefold() not in message:
+        return _CUSTOMER_TPL.format(customer=_escape(customer))
+
+    if cashier is None:
+        cashier = _cashier_name(getattr(render, 'order_id', False))
+    cashier = _first_name(cashier)
+    if not cashier:
+        return ''
+    # Pin the language to the shop's own. This page is served to a player
+    # that carries no session and no Accept-Language, so whatever the
+    # request defaults to is not what the shop floor reads. `company` is a
+    # real recordset on both the live and the preview path, so it is the
+    # dependable place to borrow an environment from.
+    lang = (company.partner_id.lang or company.env.lang) if company else 'en_US'
+    label = company.with_context(lang=lang).env._('Served by %(name)s', name=cashier)
+    return _CUSTOMER_TPL.format(customer=_escape(label))
 
 
 def _no_cache_headers():
@@ -255,7 +351,7 @@ def _inject_before_body_close(html_body, snippet):
     return html_body[:idx] + snippet + html_body[idx:]
 
 
-def _build_html(render, company):
+def _build_html(render, company, cashier=None):
     """Render the chosen preset (or custom HTML) with the data on ``render``.
 
     All user-controlled values are HTML-escaped (the only exception is the
@@ -263,8 +359,7 @@ def _build_html(render, company):
     to author themselves — same trust level as Website snippets).
     """
     message_html = _escape(render.message)
-    customer_html = (_CUSTOMER_TPL.format(customer=_escape(render.customer_name))
-                     if render.customer_name else '')
+    customer_html = _signature_html(render, company, cashier=cashier)
 
     if render.show_product_image and render.top_product_image_url:
         product_image_html = _PRODUCT_IMG_TPL.format(
@@ -456,6 +551,7 @@ class XiboThanksController(http.Controller):
         dummy.custom_html = config.xibo_thanks_custom_html or ''
         dummy.show_product_image = False  # no sample image in preview
         dummy.config_id = config
+        dummy.order_id = False  # the preview has no sale behind it
         # Audio (since v1.5.31)
         try:
             dummy.audio_url = config._xibo_resolve_audio_url()
@@ -465,7 +561,8 @@ class XiboThanksController(http.Controller):
             dummy.audio_volume = 0.8
 
         try:
-            html_body = _build_html(dummy, company)
+            # No sale behind a preview, so stand in the person looking at it.
+            html_body = _build_html(dummy, company, cashier=env.user.name)
         except Exception as e:
             _logger.exception("[XIBO POS THANKS] preview render failed: %s", e)
             return Response(FALLBACK_HTML, headers=_no_cache_headers())
