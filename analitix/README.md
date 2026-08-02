@@ -31,13 +31,18 @@ analitix/
   controllers/   the v1 ingest API — the only way in from outside Odoo
   wizards/       new-store setup: N doors and their API keys in one screen
   security/      groups, ACLs, and the record rules that isolate tenants
-  tests/         configurability, ingest, security, isolation, health, analytics
+  tests/         configurability, ingest, security, isolation, health, analytics,
+                 visits, floor, action, watch list, manuals
+  static/manual/ the user manual and implementation guide, es + en
+  static/description/  store page, screenshots and screencasts
   doc/API.md     the ingest contract, for anyone writing their own agent
   edge/          the reference camera agent — NOT part of the published addon
+  tools/         packaging and translation generators — NOT part of the addon
 ```
 
-`edge/` ships with the repository and is deliberately excluded from the
-apps.odoo.com zip. The addon has **no** computer-vision dependency: it receives
+`edge/` and `tools/` ship with the repository and are deliberately excluded from
+the apps.odoo.com archive. `tools/package.sh` builds that archive and *asserts*
+the exclusions rather than trusting them. The addon has **no** computer-vision dependency: it receives
 JSON and nothing else. That is what keeps `insightface` and `torch` out of the
 customer's Odoo server.
 
@@ -79,6 +84,30 @@ The suite covers, in order of how much it would cost to get wrong:
 | `test_visits.py` | Re-identification, visit boundaries, retention, purchase units |
 | `test_floor.py` | Alert routing and discretion, lost sales, identification, behaviour |
 | `test_action.py` | Screen routing, the social privacy rule, attendance, billing, ROI |
+| `test_watchlist.py` | Manual-only entry, double control, expiry, what a match must NOT do |
+| `test_manual.py` | The in-app manuals resolve, in the reader's own language |
+
+## Building the published archive
+
+```bash
+tools/package.sh /tmp        # writes analitix-<version>.zip and checks it
+```
+
+It fails loudly if the edge agent, the build tooling or compiled Python made it
+into the archive, if a required file is missing, or if the manifest ever
+declares a computer-vision dependency.
+
+## Documentation
+
+The manuals live in the product, not in a PDF somebody e-mailed during the
+rollout: **Analitix → Help**. Each is written separately in Spanish and English
+rather than machine-translated, and the controller picks the reader's language.
+They are plain static files under `static/manual/`, so they carry no dependency
+on Odoo's asset bundle and add nothing to the translation catalogue.
+
+Screenshots and screencasts under `static/description/` are captured from the
+real UI over the module's own demo data, so they can be regenerated whenever the
+product moves rather than drifting quietly out of date.
 
 ## Deploying an edge device
 
@@ -101,8 +130,8 @@ mounted.
 | 2 | Visits, anonymous re-identification, demographics, purchase units | **Done** |
 | 3 | Zones, lost sales, display attention, face↔ticket↔partner, alerts on five channels | **Done** |
 | 4 | Signage routing, welcome context, coaching, attendance, subscription, ROI report | **Done** |
-| 5 | Watch list | Planned |
-| 6 | Packaging, manuals, videos, apps.odoo.com | Planned |
+| 5 | Watch list | **Done** |
+| 6 | Packaging, manuals, videos, apps.odoo.com | **Done** |
 | 7 | Chain scale, role hierarchy, HQ console | Optional |
 
 Each phase leaves the addon installable and useful on its own, because each is

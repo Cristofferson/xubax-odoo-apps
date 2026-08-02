@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Analitix — Physical Store Intelligence",
-    "version": "19.0.5.0.0",
+    "version": "19.0.6.0.0",
     "category": "Point of Sale",
     "summary": "Store intelligence on Odoo: visitor counting across any number "
                "of doors, POS conversion (ATV, UPT, revenue per visitor, "
@@ -12,8 +12,8 @@ Analitix — Physical Store Intelligence
 ======================================
 Not a people counter: a configurable retail-intelligence platform.
 
-Phase 1 (this release)
-----------------------
+Phase 1
+-------
 
 * **Stores with any number of doors.** 1, 2, 3 or more entrances per store,
   defined in configuration and never in code. A setup wizard creates the
@@ -139,6 +139,23 @@ Phase 5
   commercial hierarchy and granted to nobody on install — a store manager who
   reads conversion figures does not get this with it.
 
+Phase 6
+-------
+
+* **Manuals inside the app**, in Spanish and English, chosen automatically from
+  the reader's own Odoo language: a user manual for the shop and an
+  implementation guide for whoever mounts the cameras. Documentation that lives
+  in the product rather than in an e-mail nobody can find six months later.
+* **Screencasts of every main flow**, in both languages, recorded from the real
+  interface over the module's own demo data — reproducible, not staged.
+* **Demo data complete enough to judge the product without hardware**: two
+  stores of different shapes, a fortnight of traffic, tickets that follow the
+  same curve, zones and displays, walk-outs (some caught, some not) and a closed
+  monthly report.
+* Store page, changelog, and a packaging script that *asserts* what the
+  published archive must not contain — the edge agent, build tooling, or any
+  computer-vision dependency.
+
 Privacy by design: no image or video is ever transmitted or stored — the edge
 sends only counts and irreversible numeric embeddings, and those are encrypted
 in the database.
@@ -198,6 +215,7 @@ only receives JSON.
         "views/analitix_hourly_views.xml",
         "views/analitix_door_hourly_views.xml",
         "views/res_users_views.xml",
+        "views/analitix_manual_views.xml",
         "wizards/store_setup_views.xml",
         "views/analitix_menus.xml",
     ],

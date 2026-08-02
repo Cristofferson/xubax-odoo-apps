@@ -127,6 +127,21 @@ class TestDeviceHealth(AnalitixCase):
 @tagged("post_install", "-at_install")
 class TestJobQueue(AnalitixCase):
 
+    def setUp(self):
+        super().setUp()
+        # Start from an empty queue.
+        #
+        # _cron_run claims the OLDEST 200 pending jobs, which is right for
+        # production and wrong for a test that enqueues one job and expects it
+        # to run: on a database installed with demo data the demo shop leaves
+        # several hundred jobs queued ahead of it, and the test's own job is
+        # never reached. These tests are about the queue's mechanics, not about
+        # what happens to be in it, so the ambient backlog is cleared rather
+        # than worked around with a bigger limit — a limit large enough today
+        # is a limit that breaks again when the demo data grows.
+        self.env["analitix.job"].sudo().search(
+            [("state", "=", "pending")]).write({"state": "done"})
+
     def test_a_job_runs_and_is_marked_done(self):
         employee = self.env["hr.employee"].create({"name": "Gaby"})
         self.Signature.enrol(self.store_one, employee, self.fake_vector(21))
@@ -277,9 +292,14 @@ class TestAnomalyDetection(AnalitixCase):
         for _ in range(50):
             self.make_event(device, "in", when=now - timedelta(minutes=5))
 
-        before = self.env["analitix.audit.log"].search_count(
-            [("action", "=", "anomaly")])
+        # Counted for THIS device, not across the whole audit log: the cron
+        # sweeps every active device, and on a database installed with demo data
+        # the demo fleet legitimately raises its own entries. A global count
+        # would make this test pass or fail on what else happens to be
+        # installed, which is not what it is about.
+        domain = [("action", "=", "anomaly"), ("model_name", "=", "analitix.device"),
+                  ("res_id", "=", device.id)]
+        before = self.env["analitix.audit.log"].search_count(domain)
         self.Device._cron_update_baselines()
-        after = self.env["analitix.audit.log"].search_count(
-            [("action", "=", "anomaly")])
+        after = self.env["analitix.audit.log"].search_count(domain)
         self.assertEqual(before, after)

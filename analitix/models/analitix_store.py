@@ -777,19 +777,39 @@ class AnalitixStore(models.Model):
         if not stores or Event.search_count([("store_id", "in", stores.ids)]):
             return True  # already generated; never double up
 
-        now = fields.Datetime.now().replace(minute=0, second=0, microsecond=0)
         vals_list = []
         for store in stores:
             doors = store.door_ids
             if not doors:
                 continue
             counting = doors.filtered("counts_visitors") or doors
-            for day_offset in range(days, 0, -1):
-                day = now - timedelta(days=day_offset)
+            # Built in the STORE's timezone, not the server's.
+            #
+            # A trading day runs 10:00–20:00 local. Generating those hours as if
+            # they were UTC puts a Mexican shop's evening peak at four in the
+            # morning, and — worse — means that when the server clock is past
+            # midnight UTC but the shop is still open, "today" comes out empty
+            # and every store card reads zero visitors.
+            tz = pytz.timezone(store.tz or "UTC")
+            local_now = pytz.utc.localize(
+                fields.Datetime.now()).astimezone(tz).replace(
+                    minute=0, second=0, microsecond=0, tzinfo=None)
+
+            def to_utc(stamp, _tz=tz):
+                return _tz.localize(stamp).astimezone(pytz.utc).replace(
+                    tzinfo=None)
+
+            # Down to and including today: a demo whose newest traffic is from
+            # yesterday opens on a store card reading "0 visitors today", which
+            # is exactly what a broken installation looks like.
+            for day_offset in range(days, -1, -1):
+                day = local_now - timedelta(days=day_offset)
                 weekday = day.weekday()
                 # Sat/Sun carry roughly half again the weekday traffic.
                 day_weight = 1.5 if weekday >= 5 else 1.0
-                for hour in range(10, 21):  # a 10:00–20:00 trading day
+                # Today stops at the hour the shop has actually reached.
+                last_hour = local_now.hour if day_offset == 0 else 20
+                for hour in range(10, min(last_hour, 20) + 1):
                     # Two humps: late morning and early evening.
                     shape = 1.0 + 0.6 * (1 - abs(hour - 13) / 4.0) \
                             + 0.9 * (1 - abs(hour - 19) / 4.0)
@@ -815,7 +835,7 @@ class AnalitixStore(models.Model):
                                 "store_id": store.id,
                                 "direction": "in",
                                 "count": 1,
-                                "event_time": stamp,
+                                "event_time": to_utc(stamp),
                                 "counted": True,
                             })
                             vals_list.append({
@@ -826,7 +846,8 @@ class AnalitixStore(models.Model):
                                 "store_id": store.id,
                                 "direction": "out",
                                 "count": 1,
-                                "event_time": stamp + timedelta(minutes=17),
+                                "event_time": to_utc(
+                                    stamp + timedelta(minutes=17)),
                                 "counted": True,
                             })
             # Staff traffic through the service door, if there is one: excluded
@@ -837,7 +858,7 @@ class AnalitixStore(models.Model):
                 if not device:
                     continue
                 for day_offset in range(days, 0, -1):
-                    day = now - timedelta(days=day_offset)
+                    day = local_now - timedelta(days=day_offset)
                     for hour in (9, 14, 20):
                         vals_list.append({
                             "uuid": "demo-staff-%s-%s-%s" % (
@@ -847,7 +868,7 @@ class AnalitixStore(models.Model):
                             "store_id": store.id,
                             "direction": "in" if hour != 20 else "out",
                             "count": 2,
-                            "event_time": day.replace(hour=hour),
+                            "event_time": to_utc(day.replace(hour=hour)),
                             "counted": False,
                         })
         if vals_list:

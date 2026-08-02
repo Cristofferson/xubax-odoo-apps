@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Analitix — Guía de implementación</title>
+<link rel="stylesheet" href="/analitix/static/manual/manual.css"/>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc">
+  <p class="kicker">Analitix · Guía de implementación</p>
+  <h1>Montaje, cámaras y agente edge</h1>
+  <p class="lede">Para quien instala. Cubre dónde va cada cámara, cómo se
+  instala el agente en el equipo de la tienda, cómo se dan de alta las llaves y
+  cómo se mapea una zona a una pantalla.</p>
+</header>
+
+<nav class="toc">
+  <p>Contenido</p>
+  <ol>
+    <li><a href="#arquitectura">Arquitectura: qué corre dónde</a></li>
+    <li><a href="#hardware">Hardware por tipo de cámara</a></li>
+    <li><a href="#montaje">Montaje de cámaras</a></li>
+    <li><a href="#odoo">Alta en Odoo y llaves por dispositivo</a></li>
+    <li><a href="#agente">Instalar el agente edge</a></li>
+    <li><a href="#calibrar">Calibrar la línea virtual</a></li>
+    <li><a href="#zonas">Zonas, exhibidores y turnos</a></li>
+    <li><a href="#pantallas">Mapeo zona ↔ player de Xibo</a></li>
+    <li><a href="#vitalidad">Vitalidad: el detalle que se olvida</a></li>
+    <li><a href="#red">Red, proxy y TLS</a></li>
+    <li><a href="#entrega">Lista de verificación de entrega</a></li>
+    <li><a href="#diagnostico">Diagnóstico</a></li>
+  </ol>
+</nav>
+
+<h2 id="arquitectura">1. Arquitectura: qué corre dónde</h2>
+
+<p>La visión corre en la tienda. Odoo solo recibe JSON.</p>
+
+<pre><code>Cámara ──► mini-PC en la tienda (agente edge)
+              │  detecta, sigue, cruza la línea, compara caras localmente
+              │  descarta el cuadro en memoria
+              ▼
+          HTTPS  POST /analitix/api/v1/events
+              ▼
+            Odoo (este addon)  ──► conteos, visitas, conversión, avisos</code></pre>
+
+<div class="note">
+  <p>El addon <strong>no tiene ninguna dependencia de visión</strong>: ni
+  <code>torch</code>, ni <code>insightface</code>, ni <code>opencv</code>. Eso
+  vive en el agente, que se distribuye aparte con su propio instalador. Un
+  tercero puede escribir su propio agente contra
+  <code>doc/API.md</code> sin leer el código de este addon.</p>
+</div>
+
+<h2 id="hardware">2. Hardware por tipo de cámara</h2>
+
+<div class="scroll">
+<table>
+  <tr><th>Puesto</th><th>Cámara</th><th>Cómputo</th><th>Para qué</th></tr>
+  <tr>
+    <td><strong>Puerta</strong> (obligatoria)</td>
+    <td>Cenital de profundidad (Orbbec / RealSense) o cámara IP con vista cenital</td>
+    <td>Mini-PC x86 o Jetson Orin Nano, uno por tienda si alcanza</td>
+    <td>Conteo entradas/salidas. Es el cimiento: sin esto no hay conversión.</td>
+  </tr>
+  <tr>
+    <td><strong>Frontal</strong> (opcional)</td>
+    <td>Cámara IP a la altura de la cara, junto a la entrada</td>
+    <td>Comparte el mini-PC de la puerta</td>
+    <td>Demografía, exclusión de personal, reidentificación entre puertas.</td>
+  </tr>
+  <tr>
+    <td><strong>Zona</strong> (opcional)</td>
+    <td>Cámara IP cubriendo la zona completa</td>
+    <td>Una GPU modesta a partir de 3–4 zonas</td>
+    <td>Permanencia, interés, venta perdida, atención por exhibidor.</td>
+  </tr>
+  <tr>
+    <td><strong>Caja</strong> (opcional)</td>
+    <td>Cámara IP apuntando a quien paga</td>
+    <td>Comparte el equipo de zonas</td>
+    <td>Atribución de ticket a visita, e identificación de clientes si la tienda la activa.</td>
+  </tr>
+</table>
+</div>
+
+<p>Alternativas soportadas sin agente propio: <strong>Hikvision</strong> (ISAPI
+people counting), <strong>Dahua</strong> y <strong>barrera infrarroja</strong>.
+Cuentan, pero no dan cara: sin cara no hay exclusión de personal, ni visitas, ni
+unidades de compra. Sirven para arrancar barato y migrar después.</p>
+
+<h2 id="montaje">3. Montaje de cámaras</h2>
+
+<h3>La puerta</h3>
+<ol class="steps">
+  <li><strong>Cenital, no inclinada.</strong> Directamente sobre el vano, mirando al piso. Una cámara inclinada duplica a la gente que camina en fila.</li>
+  <li><strong>Altura 2.6–3.2 m.</strong> Más abajo recorta a la gente alta; más arriba pierde resolución de profundidad.</li>
+  <li><strong>La línea virtual va en el vano</strong>, no dos metros adentro. Este es el error más caro de todos: una línea atravesada en una sala de espera reporta a la misma persona entrando seis veces.</li>
+  <li><strong>Cuida el contraluz.</strong> Una puerta de cristal a mediodía satura el sensor. Si no puedes moverla, usa profundidad en vez de RGB.</li>
+</ol>
+
+<h3>Frontal, zona y caja</h3>
+<ul>
+  <li><strong>Frontal</strong>: a 1.6–1.8 m, ligeramente por encima de la línea de ojos, mirando a quien entra. Nunca contra una ventana.</li>
+  <li><strong>Zona</strong>: alta y de esquina, que cubra toda la zona con el menor solape posible con otra.</li>
+  <li><strong>Caja</strong>: enfocando a quien paga, no al cajero. Si sale el cajero en cuadro, sus firmas de personal se vuelven imprescindibles.</li>
+</ul>
+
+<div class="warn">
+  <p><strong>Señalización.</strong> En muchas jurisdicciones el aviso visible en
+  la entrada es obligatorio, y en todas es lo correcto. Analitix no guarda
+  imágenes, pero sí hace tratamiento biométrico en el equipo de la tienda:
+  acuérdalo con el cliente por escrito antes de encender nada, y déjalo por
+  escrito en la ficha de la tienda.</p>
+</div>
+
+<h2 id="odoo">4. Alta en Odoo y llaves por dispositivo</h2>
+
+<ol class="steps">
+  <li>
+    <strong>Crea la tienda.</strong> <code>Analitix → Configuración → Alta de
+    tienda nueva</code>. El asistente crea tienda, puertas y dispositivos de un
+    tirón. Fija la zona horaria correcta: de ella dependen los cortes por hora y
+    el rol de turnos.
+  </li>
+  <li>
+    <strong>Una llave por dispositivo.</strong> En la ficha del dispositivo,
+    <em>Generar llave</em>. Formato <code>alx_&lt;43 caracteres&gt;</code>.
+    <div class="warn">
+      <p>Se muestra <strong>una sola vez</strong>. Odoo guarda solo un hash
+      SHA-256: si se pierde, no se recupera — se rota. Nunca compartas una llave
+      entre cámaras: una llave compartida no se puede revocar para una sin matar
+      a todas las demás.</p>
+    </div>
+  </li>
+  <li>
+    <strong>Marca lo crítico.</strong> Un dispositivo «crítico» es aquel cuyo
+    silencio deja mal los números. Los contadores de puerta y la cámara de caja
+    lo son; un equipo de repuesto no, y desmarcarlo evita despertar al técnico a
+    las 3 de la mañana.
+  </li>
+  <li>
+    <strong>Configuración edge desde Odoo.</strong> El campo
+    <em>Configuración del dispositivo</em> es JSON libre (coordenadas de línea,
+    índice de cámara, polígonos de zona). El agente lo recoge en su refresco
+    horario, así que se retunea una cámara <strong>sin volver a la tienda</strong>.
+  </li>
+</ol>
+
+<h2 id="agente">5. Instalar el agente edge</h2>
+
+<p>El agente viaja en la carpeta <code>edge/</code> del repositorio, fuera del
+paquete que se publica en apps.odoo.com.</p>
+
+<pre><code># En el mini-PC de la tienda
+sudo mkdir -p /etc/analitix /var/lib/analitix
+sudo cp analitix_agent.py /usr/local/bin/
+sudo cp config.example.yaml /etc/analitix/agent.yaml
+sudo pip3 install -r requirements.txt
+
+sudo nano /etc/analitix/agent.yaml     # odoo_url + api_key
+sudo cp analitix-agent.service /etc/systemd/system/
+sudo systemctl enable --now analitix-agent
+journalctl -u analitix-agent -f</code></pre>
+
+<p>Solo hay <strong>dos valores obligatorios</strong>:
+<code>odoo_url</code> (https, sin excepción) y <code>api_key</code>. Todo lo
+demás trae valores por omisión que funcionan.</p>
+
+<h3>Ajustes que importan</h3>
+<div class="scroll">
+<table>
+  <tr><th>Clave</th><th>Por omisión</th><th>Cuándo tocarla</th></tr>
+  <tr><td><code>source</code></td><td><code>line</code></td><td><code>demo</code> genera cruces sintéticos sin cámara: úsalo para probar el enlace con Odoo <em>antes</em> de montar el hardware.</td></tr>
+  <tr><td><code>line</code></td><td>—</td><td>Coordenadas en píxeles del vano. Mejor empújala desde Odoo.</td></tr>
+  <tr><td><code>send_embeddings</code></td><td><code>false</code></td><td>En falso los vectores faciales <strong>no salen de la tienda</strong>: el agente baja las firmas de personal y compara en memoria. Ponlo en verdadero solo si el equipo no aguanta el conjunto de firmas.</td></tr>
+  <tr><td><code>state_dir</code></td><td><code>/var/lib/analitix</code></td><td>Guarda la cola cifrada. Tiene que sobrevivir a un reinicio: es lo único entre un corte de internet de dos horas y dos horas de visitantes perdidos.</td></tr>
+  <tr><td><code>verify_tls</code></td><td><code>true</code></td><td>Ponlo en falso <strong>solo</strong> en un banco de pruebas con certificado autofirmado.</td></tr>
+</table>
+</div>
+
+<div class="note">
+  <p>Ninguna imagen ni video se transmite ni se guarda, en ningún modo. El
+  cuadro se descarta en memoria en cuanto termina la detección.</p>
+</div>
+
+<h2 id="calibrar">6. Calibrar la línea virtual</h2>
+
+<ol class="steps">
+  <li>Arranca con <code>source: demo</code> y confirma que llegan cruces en <code>Analitix → Operación → Eventos de cruce</code>.</li>
+  <li>Cambia a <code>source: line</code> y ajusta <code>line</code> hasta que atraviese el vano de lado a lado.</li>
+  <li><strong>Cuenta a mano durante quince minutos</strong> en la hora pico y compara contra el tablero. Es el único método que sirve. Un ±5 % es normal; un ±30 % significa que la línea está mal puesta.</li>
+  <li>Cuando quede, súbela al campo de configuración del dispositivo en Odoo, para que sobreviva a una reinstalación del agente.</li>
+</ol>
+
+<h2 id="zonas">7. Zonas, exhibidores y turnos</h2>
+
+<ul>
+  <li><strong>Zonas</strong>: usa los nombres que el personal ya usa, no los tuyos. Ajusta los umbrales por zona: un probador y un mostrador no comparten número.</li>
+  <li><strong>Exhibidores</strong>: captura qué productos hay encima. Sin eso, la atención medida no se puede cruzar contra ventas, y ahí es donde está el valor.</li>
+  <li><strong>Rol de turnos</strong>: por zona, día de la semana y hora. <strong>Sin esto, los avisos no llegan a nadie</strong> — o llegan todos al usuario de respaldo, que es la señal de que falta capturarlo.</li>
+  <li><strong>Usuario de respaldo</strong>: configúralo siempre. Es lo que evita que un aviso de una zona sin cubrir se registre y no lo lea nadie.</li>
+</ul>
+
+<h2 id="pantallas">8. Mapeo zona ↔ player de Xibo</h2>
+
+<p>Analitix no habla directo con las pantallas: delega en el conector de Xibo
+cuando está instalado, y lo detecta en tiempo de ejecución. Sin conector, las
+reglas de cartelería quedan registradas pero no muestran nada, y eso se ve
+explícitamente en el registro de disparos.</p>
+
+<ol class="steps">
+  <li>En Xibo, agrupa los players por zona («Display group» por zona: vitrina, caja, fachada).</li>
+  <li>En Odoo, en cada <em>zona</em>, captura el <strong>identificador del grupo de pantallas</strong> en el campo correspondiente. Ese es todo el mapeo.</li>
+  <li>Crea las reglas de cartelería en la ficha de la tienda. El destino se resuelve <em>dónde antes que qué</em>: «donde pasó» manda la pieza a la pantalla de la zona del evento.</li>
+  <li>Prueba con una regla de hora valle antes que con una de fuga: se dispara sola y no hay que fingir un cliente.</li>
+</ol>
+
+<div class="note">
+  <p>Comprueba el mapeo en <code>Operación → Disparos de cartelería</code>. Un
+  disparo registrado y <em>no</em> mostrado casi siempre es un identificador de
+  grupo mal escrito.</p>
+</div>
+
+<h2 id="vitalidad">9. Vitalidad: el detalle que se olvida</h2>
+
+<div class="warn">
+  <p>Las cámaras que <strong>no</strong> reportan vitalidad mandan cero. Como la
+  lista de vigilancia exige un mínimo de vitalidad mayor que cero, en una tienda
+  cuyos agentes no hacen vitalidad la lista <strong>no coincide con nadie
+  jamás</strong>, en silencio.</p>
+  <p>Ese es el lado seguro de fallar, y es a propósito. Pero si el cliente
+  contrató la lista de vigilancia, o habilitas vitalidad en el agente, o bajas
+  el mínimo <em>a conciencia</em> y lo dejas asentado. Lo que no se vale es
+  moverlo hasta que aparezcan coincidencias.</p>
+</div>
+
+<h2 id="red">10. Red, proxy y TLS</h2>
+
+<ul>
+  <li>La ingesta es <strong>HTTPS obligatorio</strong>. Una petición en claro se contesta <code>403 tls_required</code>.</li>
+  <li>Odoo detrás de nginx escucha en HTTP plano, así que la verificación lee <code>X-Forwarded-Proto</code>. Eso <strong>solo es seguro con <code>proxy_mode = True</code></strong> y con el proxy como única vía de entrada. Una instalación que expone Odoo directo no debe activar <code>proxy_mode</code>.</li>
+  <li>Para un banco de pruebas sin certificado existe el parámetro de sistema <code>analitix.allow_insecure_ingest = 1</code>. Sale de fábrica en <code>0</code>: relajarlo tiene que ser una decisión consciente y reversible, no un hallazgo de dentro de seis meses.</li>
+  <li>La ingesta es <strong>idempotente por uuid</strong> generado en el cliente: un reintento por corte de red nunca duplica un cruce.</li>
+</ul>
+
+<h2 id="entrega">11. Lista de verificación de entrega</h2>
+
+<ul>
+  <li>☐ Todas las puertas dadas de alta, con «Cuenta visitantes» correcto en las de personal y servicio.</li>
+  <li>☐ Modo de asociación de ventas elegido y cajas seleccionadas si aplica.</li>
+  <li>☐ Zona horaria de la tienda correcta.</li>
+  <li>☐ Una llave por dispositivo, ninguna compartida, y las críticas marcadas.</li>
+  <li>☐ Conteo manual de quince minutos contra el tablero, dentro de ±5 %.</li>
+  <li>☐ Firmas faciales del personal dadas de alta y probadas.</li>
+  <li>☐ Zonas con sus umbrales, exhibidores con sus productos.</li>
+  <li>☐ Rol de turnos capturado y usuario de respaldo configurado.</li>
+  <li>☐ Prueba de aviso extremo a extremo por cada canal encendido.</li>
+  <li>☐ Latidos llegando; <code>Operación → Salud de dispositivos</code> en verde.</li>
+  <li>☐ Contactos técnicos capturados para el correo de caída.</li>
+  <li>☐ Ventana de retención acordada con el cliente y capturada.</li>
+  <li>☐ Señalización visible en la entrada.</li>
+  <li>☐ Destinatarios del informe mensual capturados.</li>
+  <li>☐ Si contrataron lista de vigilancia: rol de seguridad asignado a dos personas distintas (hace falta el doble control) y vitalidad resuelta.</li>
+</ul>
+
+<h2 id="diagnostico">12. Diagnóstico</h2>
+
+<div class="scroll">
+<table>
+  <tr><th>Síntoma</th><th>Dónde mirar</th></tr>
+  <tr><td>No llega ningún evento</td><td><code>journalctl -u analitix-agent -f</code>. Un <code>403 tls_required</code> es http en vez de https; un <code>401</code> es llave mala o revocada.</td></tr>
+  <tr><td>Llegan eventos pero no hay visitas</td><td>El agente manda con <code>send_embeddings: false</code> y sin firmas. Sin cara no hay visitas, solo conteos.</td></tr>
+  <tr><td>Conteos duplicados</td><td>Cámara inclinada, o la línea virtual dentro del local en vez de en el vano.</td></tr>
+  <tr><td>El personal aparece como clientes</td><td>Faltan firmas, o la exclusión de personal está apagada en la ficha de la tienda.</td></tr>
+  <tr><td>Dispositivo «degradado» intermitente</td><td>Internet inestable. Sube el umbral de fuera de línea en la tienda; el agente encola y reenvía.</td></tr>
+  <tr><td>Los trabajos se acumulan</td><td><code>Operación → Trabajos en segundo plano</code>. Revisa que el cron de Odoo esté vivo.</td></tr>
+  <tr><td>Todo se ve bien y no hay datos</td><td>¿La captura está pausada? El interruptor de emergencia sigue puesto hasta que alguien lo quita.</td></tr>
+</table>
+</div>
+
+<footer class="doc">
+  <p>Analitix · XUBAX — soporte: <a href="mailto:soporte@xubax.com">soporte@xubax.com</a><br/>
+  El contrato completo de la API está en <code>doc/API.md</code> del repositorio.
+  Para el uso diario en tienda, ve al <a href="/analitix/manual/user">manual de usuario</a>.</p>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!--
+  apps.odoo.com listing page.
+
+  Self-contained on purpose: the store serves this file inside its own page, so
+  every style is inlined and scoped under .alx- to avoid colliding with the
+  surrounding markup, and every asset is a relative path inside this module.
+  No external font, no CDN, no tracking pixel.
+
+  Screenshots and screencasts are captured from the real UI over the module's
+  own demo data. They can be regenerated at any time, which is the only way a
+  listing page stays honest as the product moves.
+-->
+<section class="alx-page">
+<style>
+.alx-page { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: #1b2130; line-height: 1.62; font-size: 16px; }
+.alx-page * { box-sizing: border-box; }
+.alx-wrap { max-width: 1040px; margin: 0 auto; padding: 0 22px; }
+.alx-hero { background: #111726; color: #f2f4f8; padding: 66px 0 58px; }
+.alx-kicker { text-transform: uppercase; letter-spacing: .32em; font-size: 13px; font-weight: 700; color: #c9a227; margin: 0 0 18px; }
+.alx-hero h1 { font-size: 46px; line-height: 1.1; margin: 0 0 18px; font-weight: 800; letter-spacing: -1px; max-width: 850px; }
+.alx-hero h1 em { font-style: normal; color: #c9a227; }
+.alx-hero p { font-size: 20px; color: #a9b2c4; max-width: 760px; margin: 0; }
+.alx-badges { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 30px; }
+.alx-badge { border: 1px solid rgba(201,162,39,.55); color: #e2cf94; border-radius: 999px; padding: 7px 16px; font-size: 14px; font-weight: 600; }
+.alx-sec { padding: 54px 0; border-bottom: 1px solid #e6e3dc; }
+.alx-sec:last-child { border-bottom: 0; }
+.alx-sec h2 { font-size: 30px; line-height: 1.2; margin: 0 0 14px; font-weight: 700; letter-spacing: -.5px; }
+.alx-sec > p.alx-lede { font-size: 18px; color: #5d6577; max-width: 720px; margin: 0 0 28px; }
+.alx-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 22px; }
+.alx-card { border: 1px solid #e6e3dc; border-radius: 10px; padding: 22px 24px; background: #fff; }
+.alx-card h3 { margin: 0 0 8px; font-size: 18px; font-weight: 650; }
+.alx-card p { margin: 0; color: #4d5464; font-size: 15px; }
+.alx-quote { border-left: 4px solid #c9a227; background: #f8f5ee; padding: 20px 24px; border-radius: 0 8px 8px 0; font-size: 19px; margin: 0 0 30px; }
+.alx-quote strong { font-weight: 700; }
+.alx-shot { margin: 0 0 30px; }
+.alx-shot img { width: 100%; height: auto; display: block; border: 1px solid #e0ddd6; border-radius: 8px; }
+.alx-shot figcaption { font-size: 14.5px; color: #5d6577; margin-top: 10px; }
+.alx-video { margin: 0 0 26px; }
+.alx-video video { width: 100%; height: auto; display: block; border: 1px solid #e0ddd6; border-radius: 8px; background: #111726; }
+.alx-video figcaption { font-size: 14.5px; color: #5d6577; margin-top: 10px; }
+.alx-scroll { overflow-x: auto; }
+.alx-table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 15px; }
+.alx-table th, .alx-table td { text-align: left; padding: 11px 14px; border-bottom: 1px solid #e6e3dc; vertical-align: top; }
+.alx-table th { background: #f7f6f3; font-weight: 650; }
+.alx-faq { margin-bottom: 20px; }
+.alx-faq h3 { font-size: 17px; margin: 0 0 6px; font-weight: 650; }
+.alx-faq p { margin: 0; color: #4d5464; }
+.alx-note { background: #f7f6f3; border-radius: 8px; padding: 18px 22px; color: #4d5464; font-size: 15px; }
+.alx-foot { background: #111726; color: #a9b2c4; padding: 34px 0; font-size: 15px; }
+.alx-foot a { color: #c9a227; }
+@media (max-width: 640px) { .alx-hero h1 { font-size: 32px; } .alx-sec h2 { font-size: 24px; } }
+</style>
+
+<div class="alx-hero">
+  <div class="alx-wrap">
+    <p class="alx-kicker">Analitix</p>
+    <h1>Your POS says what you sold.<br/>This says <em>who you didn't sell to</em>.</h1>
+    <p>Physical store intelligence, inside Odoo. Visitors across any number of
+    doors, conversion against your own POS, and the walk-outs your team can
+    still catch.</p>
+    <div class="alx-badges">
+      <span class="alx-badge">Odoo 19</span>
+      <span class="alx-badge">Any number of doors</span>
+      <span class="alx-badge">No image ever stored</span>
+      <span class="alx-badge">Edge, not cloud</span>
+      <span class="alx-badge">Manuals in ES &amp; EN</span>
+    </div>
+  </div>
+</div>
+
+<div class="alx-wrap">
+
+  <section class="alx-sec">
+    <p class="alx-quote"><strong>This is not a people counter.</strong> The
+    counter is the foundation. “You had 400 visitors” helps nobody. “Eleven
+    people waited at the ring counter and nine were never spoken to” is a
+    decision somebody can act on tomorrow morning.</p>
+
+    <h2>The number your ERP does not have</h2>
+    <p class="alx-lede">Your point of sale knows every ticket. It has no idea
+    how many people walked past those tickets and left. Analitix supplies the
+    denominator, and everything after that follows from it.</p>
+
+    <figure class="alx-shot">
+      <img src="screenshots/conversion.jpg" alt="Hourly conversion dashboard: visitors, tickets, conversion rate, average ticket, units per ticket and revenue per visitor for two demo stores."/>
+      <figcaption>Hourly, per store: visitors, tickets, conversion rate, average
+      ticket, units per ticket, revenue per visitor and density per m². Real
+      screen, real demo data — it ships with the module.</figcaption>
+    </figure>
+
+    <div class="alx-grid">
+      <div class="alx-card">
+        <h3>Any number of doors</h3>
+        <p>One entrance or seven. Defined in configuration, never in code, and a
+        staff or service door is measured without distorting the conversion
+        rate.</p>
+      </div>
+      <div class="alx-card">
+        <h3>Staff never counted</h3>
+        <p>Employee crossings are excluded by encrypted face signature. Without
+        that, a salesperson who steps outside ten times a day is ten
+        customers.</p>
+      </div>
+      <div class="alx-card">
+        <h3>One customer, one visit</h3>
+        <p>Somebody who steps out for a phone call and comes back counts once —
+        not three times, which is what an ordinary counter reports.</p>
+      </div>
+      <div class="alx-card">
+        <h3>A family is one decision</h3>
+        <p>Four people and one ticket is not a 25% conversion rate. People who
+        arrive together are treated as one purchase unit.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="alx-sec">
+    <h2>The walk-outs, while there is still time</h2>
+    <p class="alx-lede">A lost sale is not somebody lingering. It is three
+    things at once: they lingered past your threshold, <em>nobody</em> served
+    them, and there was no ticket. Each alone is ordinary; together they are a
+    sale that walked out.</p>
+
+    <figure class="alx-shot">
+      <img src="screenshots/alerts.jpg" alt="Alert list showing recipient, channel, response time in seconds and outcome — ended in a sale, or not attended."/>
+      <figcaption>Every nudge is recorded: who received it, on which channel,
+      how long they took, and whether it ended in a sale. An alert nobody
+      measures is a nudge nobody improves.</figcaption>
+    </figure>
+
+    <div class="alx-grid">
+      <div class="alx-card">
+        <h3>Discreet by construction</h3>
+        <p>Odoo app, Odoo chat and WhatsApp reach only the assigned salesperson.
+        An audible chime and a signage screen are also available — off by
+        default, each labelled with exactly what it costs in discretion.</p>
+      </div>
+      <div class="alx-card">
+        <h3>Routed by shift, not by luck</h3>
+        <p>Per zone, per weekday, per hour. Whoever covers the ring counter at
+        11:00 is not whoever covers it at 19:00, and an uncovered zone escalates
+        instead of evaporating.</p>
+      </div>
+      <div class="alx-card">
+        <h3>Coaching that is fair</h3>
+        <p>Response time and close rate measured against the alerts a
+        salesperson <em>answered</em> — nobody is marked down for a nudge that
+        arrived while they were with another customer.</p>
+      </div>
+      <div class="alx-card">
+        <h3>A monthly report the owner reads</h3>
+        <p>Plain language, by e-mail: visitors, conversion, walk-outs spotted
+        and rescued, and roughly what that was worth — labelled an estimate
+        every single time.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="alx-sec">
+    <h2>See it running</h2>
+    <p class="alx-lede">Recorded from the real interface over the demo data that
+    ships with the module — nothing staged, and nothing you cannot reproduce on
+    your own database with a single click and no hardware.</p>
+
+    <figure class="alx-video">
+      <video controls preload="metadata" src="video/en/02-conversion.webm"></video>
+      <figcaption>The conversion dashboard, end to end.
+      (<a href="video/es/02-conversion.webm">versión en español</a>)</figcaption>
+    </figure>
+    <figure class="alx-video">
+      <video controls preload="metadata" src="video/en/03-lost-sale.webm"></video>
+      <figcaption>Lost sales, from detection to the alert and its outcome.
+      (<a href="video/es/03-lost-sale.webm">versión en español</a>)</figcaption>
+    </figure>
+    <figure class="alx-video">
+      <video controls preload="metadata" src="video/en/01-setup.webm"></video>
+      <figcaption>Setting a store up: one door or three, all configuration.
+      (<a href="video/es/01-setup.webm">versión en español</a>)</figcaption>
+    </figure>
+    <figure class="alx-video">
+      <video controls preload="metadata" src="video/en/04-alerts-and-screens.webm"></video>
+      <figcaption>Alert channels and the personalised welcome.
+      (<a href="video/es/04-alerts-and-screens.webm">versión en español</a>)</figcaption>
+    </figure>
+    <figure class="alx-video">
+      <video controls preload="metadata" src="video/en/05-staff-and-attendance.webm"></video>
+      <figcaption>Staff exclusion and attendance into Odoo's own hr.attendance.
+      (<a href="video/es/05-staff-and-attendance.webm">versión en español</a>)</figcaption>
+    </figure>
+  </section>
+
+  <section class="alx-sec">
+    <h2>What is in each phase</h2>
+    <div class="alx-scroll">
+      <table class="alx-table">
+        <tr><th>Included</th><th>What it gives you</th></tr>
+        <tr><td><strong>Counting &amp; conversion</strong></td><td>Any number of doors, hardened ingest API with one revocable key per device, device health with offline alerts, capture kill switch, staff exclusion, hourly conversion analytics against POS, density per m².</td></tr>
+        <tr><td><strong>Visits &amp; profiling</strong></td><td>Anonymous re-identification across every door, encrypted signatures deleted on your own retention window, purchase units, optional demographics with a confidence floor, liveness.</td></tr>
+        <tr><td><strong>Floor &amp; alerts</strong></td><td>Zones and displays, dwell and engagement, lost-sale detection, the discreet nudge on five channels with a per-zone rota, display performance against the sales of what is on it, ticket attribution, behaviour signals.</td></tr>
+        <tr><td><strong>Action</strong></td><td>Signage rule engine that resolves <em>where</em> before <em>what</em>, personalised welcome with a social privacy rule, floor coaching, visit frequency, CRM leads, staff attendance into <code>hr.attendance</code>, per-store plan, monthly value report.</td></tr>
+        <tr><td><strong>Watch list</strong></td><td>Manual entries only, double control, automatic expiry and periodic review, a match that is a prompt and never an action, false-positive tracking, read auditing, and a separate security role granted to nobody on install.</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="alx-sec">
+    <h2>Everything that varies is configuration</h2>
+    <p class="alx-lede">Analitix is sold to many stores, not built for one. The
+    number of doors, the number of zones and cameras, every threshold, every
+    alert recipient — all of it is filled in by an implementer, and the test
+    suite fails if anyone ever hardcodes a store's shape.</p>
+    <figure class="alx-shot">
+      <img src="screenshots/store_floor.jpg" alt="Store configuration form showing the alert channels split into discreet and not-discreet columns."/>
+      <figcaption>The alert channels, split into what only the salesperson
+      perceives and what the customer may notice. The second column ships
+      switched off, and each field says why.</figcaption>
+    </figure>
+  </section>
+
+  <section class="alx-sec">
+    <h2>Privacy is a design constraint, not a paragraph</h2>
+    <div class="alx-grid">
+      <div class="alx-card">
+        <h3>No image ever leaves the camera</h3>
+        <p>Recognition runs on a machine in the store. Odoo receives counts and
+        irreversible numeric vectors — never a frame, never a photograph.</p>
+      </div>
+      <div class="alx-card">
+        <h3>Encrypted, and deleted on a schedule</h3>
+        <p>Face signatures are encrypted at rest and removed on the retention
+        window the store sets, enforced by a scheduled job rather than by a
+        promise.</p>
+      </div>
+      <div class="alx-card">
+        <h3>Identification is opt-in</h3>
+        <p>A store that bought the analytics never acquires a biometric customer
+        index by accident. Naming a customer is off by default, and every read
+        of that data is audited.</p>
+      </div>
+      <div class="alx-card">
+        <h3>A kill switch that works instantly</h3>
+        <p>Pause a store's capture from the UI. No deployment, no trip to the
+        shop, no ticket to anybody.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="alx-sec">
+    <h2>What you need in the shop</h2>
+    <div class="alx-scroll">
+      <table class="alx-table">
+        <tr><th>Position</th><th>Camera</th><th>Compute</th><th>Needed for</th></tr>
+        <tr><td><strong>Door</strong> — required</td><td>Overhead depth camera (Orbbec / RealSense) or an IP camera with a top-down view</td><td>x86 mini-PC or Jetson Orin Nano</td><td>Counting. Everything else is built on it.</td></tr>
+        <tr><td><strong>Frontal</strong> — optional</td><td>IP camera at face height beside the entrance</td><td>Shares the door machine</td><td>Demographics, staff exclusion, cross-door re-identification.</td></tr>
+        <tr><td><strong>Zone</strong> — optional</td><td>IP camera covering the zone</td><td>A modest GPU from 3–4 zones up</td><td>Dwell, lost sales, display attention.</td></tr>
+        <tr><td><strong>Checkout</strong> — optional</td><td>IP camera framed on the customer</td><td>Shares the zone machine</td><td>Ticket attribution, optional identification.</td></tr>
+      </table>
+    </div>
+    <p class="alx-note">Hikvision (ISAPI people counting), Dahua and IR beam
+    counters are supported without a custom agent. They count but give no face,
+    so staff exclusion, visits and purchase units need one of the camera
+    positions above. Starting cheap and migrating later is a supported path.</p>
+  </section>
+
+  <section class="alx-sec">
+    <h2>Questions people actually ask</h2>
+
+    <div class="alx-faq">
+      <h3>Does this store video of my customers?</h3>
+      <p>No. No image or video is ever transmitted or stored. The frame is
+      discarded in memory the moment the detection is done, and what reaches
+      Odoo is a list of numbers from which no picture can be reconstructed.</p>
+    </div>
+    <div class="alx-faq">
+      <h3>Do I have to send face data to a cloud service?</h3>
+      <p>No. Recognition runs on hardware in your own shop. This module has no
+      computer-vision dependency at all — it only receives JSON over your own
+      HTTPS connection.</p>
+    </div>
+    <div class="alx-faq">
+      <h3>My store has three entrances. Does that work?</h3>
+      <p>Yes, and so does one, or seven. The number of doors is configuration.
+      The module's own test suite proves a one-door boutique and a multi-door
+      mall unit both run through the same code.</p>
+    </div>
+    <div class="alx-faq">
+      <h3>I use Odoo Community. Do I need Enterprise?</h3>
+      <p>No. Every dependency is Community. Odoo's WhatsApp module is Enterprise
+      and is detected at runtime — without it the other alert channels work
+      exactly as documented.</p>
+    </div>
+    <div class="alx-faq">
+      <h3>Can I try it before buying cameras?</h3>
+      <p>Yes. Install with demo data and you get two stores, a fortnight of
+      traffic, tickets, walk-outs and a monthly report — enough to read every
+      screen and judge the product without any hardware. The reference edge agent
+      also has a <code>demo</code> mode that posts synthetic crossings.</p>
+    </div>
+    <div class="alx-faq">
+      <h3>Does the watch list identify people automatically?</h3>
+      <p>Nothing is ever added automatically. A person writes each entry with a
+      dated reason, a <em>second</em> authorised person has to confirm it before
+      it recognises anybody, entries expire on their own, and a match is a
+      discreet prompt to a small named group — never an accusation, never a
+      screen, never an automatic action.</p>
+    </div>
+    <div class="alx-faq">
+      <h3>Where is the documentation?</h3>
+      <p>Inside the app, in Spanish and English, chosen automatically from your
+      Odoo language: a user manual for the shop and an implementation guide for
+      whoever mounts the cameras. The full ingest API contract ships with the
+      module for anyone integrating different hardware.</p>
+    </div>
+  </section>
+
+</div>
+
+<div class="alx-foot">
+  <div class="alx-wrap">
+    <strong style="color:#f2f4f8;">Analitix</strong> — XUBAX ·
+    <a href="mailto:soporte@xubax.com">soporte@xubax.com</a> ·
+    <a href="https://www.xubax.com">www.xubax.com</a><br/>
+    The edge agent is distributed separately, with its own installer. This
+    module has no computer-vision dependency and stores no images.
+  </div>
+</div>
+</section>

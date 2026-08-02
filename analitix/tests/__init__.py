@@ -10,3 +10,4 @@ from . import test_visits
 from . import test_floor
 from . import test_action
 from . import test_watchlist
+from . import test_manual

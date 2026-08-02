@@ -1,0 +1,186 @@
+/* Styling for the in-app manuals.
+ *
+ * Deliberately self-contained: these pages open inside Odoo but are plain
+ * static files, so they carry no dependency on the backend assets bundle and
+ * cannot be broken by an Odoo upgrade changing a class name. They are also not
+ * scanned for translations, which is the point — each language is written, not
+ * generated from a dictionary. */
+
+:root {
+    --ink: #1b2130;
+    --muted: #5d6577;
+    --rule: #e3e6ec;
+    --gold: #a6824c;
+    --gold-soft: #f6f0e6;
+    --warn: #8c1532;
+    --warn-soft: #fdf1f3;
+    --page: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    padding: 0 24px 80px;
+    background: var(--page);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                 "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 860px; margin: 0 auto; }
+
+header.doc {
+    border-bottom: 3px solid var(--gold);
+    padding: 40px 0 22px;
+    margin-bottom: 34px;
+}
+header.doc .kicker {
+    text-transform: uppercase;
+    letter-spacing: .16em;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gold);
+    margin: 0 0 8px;
+}
+header.doc h1 { margin: 0 0 10px; font-size: 34px; line-height: 1.2; }
+header.doc p.lede { margin: 0; color: var(--muted); font-size: 17px; }
+
+h2 {
+    margin: 48px 0 14px;
+    font-size: 24px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+}
+h3 { margin: 30px 0 8px; font-size: 18px; }
+p, li { margin: 0 0 12px; }
+ul, ol { padding-left: 22px; }
+
+code {
+    background: #f4f5f7;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 1px 5px;
+    font-size: 14px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+pre {
+    background: #1b2130;
+    color: #e8eaef;
+    padding: 14px 16px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 13.5px;
+    line-height: 1.5;
+}
+pre code { background: none; border: 0; color: inherit; padding: 0; }
+
+.note, .warn {
+    border-left: 4px solid var(--gold);
+    background: var(--gold-soft);
+    padding: 14px 18px;
+    margin: 20px 0;
+    border-radius: 0 4px 4px 0;
+}
+.warn { border-left-color: var(--warn); background: var(--warn-soft); }
+.note p:last-child, .warn p:last-child { margin-bottom: 0; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0 24px;
+    font-size: 15px;
+}
+th, td {
+    text-align: left;
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+th { background: #f7f8fa; font-weight: 600; }
+
+/* Wide tables scroll inside themselves rather than pushing the page sideways. */
+.scroll { overflow-x: auto; }
+.scroll table { min-width: 560px; }
+
+nav.toc {
+    background: #f7f8fa;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 34px;
+}
+nav.toc p { font-weight: 600; margin: 0 0 8px; }
+nav.toc ol { margin: 0; }
+nav.toc li { margin-bottom: 4px; }
+nav.toc a { color: var(--ink); }
+
+.steps { counter-reset: step; list-style: none; padding-left: 0; }
+.steps > li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 44px;
+    margin-bottom: 22px;
+}
+.steps > li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0; top: 0;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer.doc {
+    margin-top: 56px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    color: var(--muted);
+    font-size: 14px;
+}
+
+a { color: var(--gold); }
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --ink: #e7e9ee;
+        --muted: #9aa2b4;
+        --rule: #333a4a;
+        --gold: #cfa96a;
+        --gold-soft: #2a2418;
+        --warn: #e2778f;
+        --warn-soft: #2c1a20;
+        --page: #151a24;
+    }
+    code { background: #1e2431; }
+    th { background: #1e2431; }
+    nav.toc { background: #1a2029; }
+    pre { background: #0e121a; }
+}
+
+/* Screencasts embedded in the user manual. Kept to a single column: these are
+ * watched, not skimmed, and a grid of thumbnails invites neither. */
+.vids { display: flex; flex-direction: column; gap: 26px; margin: 22px 0 8px; }
+.vids figure { margin: 0; }
+.vids video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    background: #111726;
+}
+.vids figcaption {
+    font-size: 14.5px;
+    color: var(--muted);
+    margin-top: 9px;
+}

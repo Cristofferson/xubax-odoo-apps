@@ -29,4 +29,5 @@ from . import analitix_subscription
 from . import analitix_value_report
 from . import analitix_hourly
 from . import analitix_reports
+from . import analitix_demo_floor
 from . import res_users

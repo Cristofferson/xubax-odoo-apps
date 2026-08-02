@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Analitix — User Manual</title>
+<link rel="stylesheet" href="/analitix/static/manual/manual.css"/>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc">
+  <p class="kicker">Analitix · User manual</p>
+  <h1>Using Analitix in your store</h1>
+  <p class="lede">For the owner, the manager and the floor team. You do not need
+  to know anything about cameras or servers — that is the implementation
+  guide's job.</p>
+</header>
+
+<nav class="toc">
+  <p>Contents</p>
+  <ol>
+    <li><a href="#idea">The idea, in one paragraph</a></li>
+    <li><a href="#store">Setting up your store</a></li>
+    <li><a href="#dashboard">Reading the conversion dashboard</a></li>
+    <li><a href="#zones">Zones and displays</a></li>
+    <li><a href="#alerts">Lost-sale alerts</a></li>
+    <li><a href="#welcome">The personal welcome</a></li>
+    <li><a href="#screens">Screens and signage</a></li>
+    <li><a href="#attendance">Staff attendance</a></li>
+    <li><a href="#watchlist">The watch list</a></li>
+    <li><a href="#report">The monthly report</a></li>
+    <li><a href="#privacy">Privacy: what is stored and what is not</a></li>
+    <li><a href="#trouble">When a number looks wrong</a></li>
+    <li><a href="#videos">Videos</a></li>
+  </ol>
+</nav>
+
+<h2 id="idea">1. The idea, in one paragraph</h2>
+
+<p>Your point of sale tells you <em>what you sold</em>. Analitix tells you
+<em>who you did not sell to</em>, and why. It counts how many people came in,
+crosses that against your tickets, and gives you the figure no ERP holds: your
+<strong>conversion rate</strong>. Everything else is built on top — where people
+stop, how long they wait, who was never spoken to, and what that cost you.</p>
+
+<div class="note">
+  <p><strong>This is not a people counter.</strong> The counter is the
+  foundation. "You had 400 visitors" helps nobody. "Eleven people waited at the
+  ring counter and nine were never spoken to" does.</p>
+</div>
+
+<h2 id="store">2. Setting up your store</h2>
+
+<p>Everything that differs between stores is configuration. Nothing is baked
+into the code: not the number of doors, not the thresholds, not who gets the
+alerts.</p>
+
+<ol class="steps">
+  <li><strong>Quick setup.</strong> Go to <code>Analitix → Configuration → New
+  Store Setup</code>. The wizard creates the store, its doors and each door's
+  devices in one step.</li>
+
+  <li><strong>Doors.</strong> Add as many as the store actually has: one, three,
+  seven. On a staff or service door, <em>clear</em> "Counts visitors" — it stays
+  measured, but its traffic stops distorting the conversion rate.</li>
+
+  <li><strong>How sales are attributed.</strong> On the "Sales Matching" tab you
+  choose between <em>specific registers</em> (when several stores share one
+  company) and <em>the whole company</em> (when the company runs a single
+  store). Getting this wrong is the number one cause of a conversion rate that
+  does not add up.</li>
+
+  <li><strong>Square metres.</strong> Optional. With them you get the density
+  figures: revenue per m² and visitors per m².</li>
+
+  <li><strong>Staff.</strong> Under "Staff Exclusion" you enrol each employee's
+  face signature so their crossings do not inflate the visitor count. Without
+  it, a salesperson who steps outside ten times a day shows up as ten
+  customers.</li>
+</ol>
+
+<div class="warn">
+  <p><strong>The kill switch.</strong> The store form carries a <em>Pause
+  capture</em> button. It stops data ingest immediately, without anyone having
+  to reach a piece of hardware. It is there for the day you need it and do not
+  want to go looking for someone.</p>
+</div>
+
+<h2 id="dashboard">3. Reading the conversion dashboard</h2>
+
+<p>Under <code>Analitix → Analysis → Conversion</code>. Each row is one hour of
+one store.</p>
+
+<div class="scroll">
+<table>
+  <tr><th>Figure</th><th>What it is</th><th>What to do with it</th></tr>
+  <tr><td>Visitors</td><td>People who came in, excluding staff and non-counting doors.</td><td>Your real traffic.</td></tr>
+  <tr><td>Conversion</td><td>Tickets ÷ visitors.</td><td>The headline number. If it drops and traffic does not, the problem is inside, not outside.</td></tr>
+  <tr><td>Average ticket</td><td>Revenue ÷ tickets.</td><td>Moves with cross-selling and range, not with more footfall.</td></tr>
+  <tr><td>Units per ticket</td><td>Units ÷ tickets.</td><td>Tells you whether the team is adding to the sale.</td></tr>
+  <tr><td>Revenue per visitor</td><td>Revenue ÷ visitors.</td><td>Conversion and ticket size in one number.</td></tr>
+  <tr><td>Visitors per ticket</td><td>How many people it takes to make one sale.</td><td>Easy to explain in a meeting.</td></tr>
+  <tr><td>Revenue per m²</td><td>Sales density.</td><td>Compares sites of different sizes.</td></tr>
+</table>
+</div>
+
+<div class="note">
+  <p><strong>An hour with sales and zero visitors still appears.</strong> That
+  is deliberate: a dead counter has to look like a problem, not like a quiet
+  morning.</p>
+</div>
+
+<h2 id="zones">4. Zones and displays</h2>
+
+<p>A zone is a named part of the floor: "Engagement Rings", "Fitting Rooms",
+"Checkout". A display is a case or table inside a zone.</p>
+
+<p>With those, "twelve minutes inside" becomes "eleven of those twelve at the
+ring counter, and nobody went over". Each zone carries its own thresholds,
+because a fitting room and a till are not the same thing: lingering in a fitting
+room is the point; lingering at a till is being ignored.</p>
+
+<p>On each display you can record <strong>what is physically on it</strong>.
+Only you know, and without it the attention figures cannot be compared against
+sales — which is where the finding lives: <em>draws a crowd and sells little</em>
+(price, or nobody closing) versus <em>sells well from a cold corner</em> (move
+it to the window).</p>
+
+<h2 id="alerts">5. Lost-sale alerts</h2>
+
+<p>An alert fires when <strong>all three</strong> happen together: somebody
+lingers past the zone's threshold, <em>nobody</em> served them, and there was no
+ticket. Each one alone is completely ordinary; the three together are a sale
+that walked out.</p>
+
+<h3>How the alert arrives</h3>
+<p>You pick the channels, and you can have several at once. Three are
+<strong>discreet</strong> — only the assigned salesperson perceives them:</p>
+<ul>
+  <li><strong>Odoo app</strong>: a push on their phone plus an activity, so it survives a locked screen.</li>
+  <li><strong>Odoo chat (Discuss)</strong>: a direct message. On a floor where the team keeps Discuss open all day, this is often the fastest channel.</li>
+  <li><strong>WhatsApp</strong>: for staff who do not keep the Odoo app open. Requires Odoo's WhatsApp module.</li>
+</ul>
+<p>Two are <strong>not</strong> discreet and ship switched off:</p>
+<ul>
+  <li><strong>Audible chime</strong>: if the phone is not on silent, or the alert lands on a back-office machine, the customer may hear it and understand they are being discussed.</li>
+  <li><strong>Signage screen</strong>: whatever appears there is read by the customer standing in front of it. Right for a message written <em>for</em> them, wrong for one <em>about</em> them.</li>
+</ul>
+
+<h3>Who receives it</h3>
+<p>The salesperson covering that zone <em>at that moment</em>, from the
+per-zone, per-weekday, per-hour rota. Whoever covers the ring counter at 11:00
+is not whoever covers it at 19:00. If nobody is on duty, the alert escalates to
+the store's fallback user rather than evaporating.</p>
+
+<div class="note">
+  <p><strong>A lot of escalations to the fallback</strong> does not mean the
+  system is broken: it means the shift map is wrong.</p>
+</div>
+
+<h3>What to do when one arrives</h3>
+<p>Go over, and acknowledge the alert from your phone. That acknowledgement is
+what feeds the floor coaching report: how many alerts each person received, how
+long they took to respond, and how many of the ones they <em>did</em> answer
+ended in a sale. It is measured against what they answered, not what they were
+sent, because nobody should be marked down for a nudge that arrived while they
+were with another customer.</p>
+
+<h2 id="welcome">6. The personal welcome</h2>
+
+<p>If the store has customer identification switched on, when somebody you
+already know walks in, the salesperson gets their name, their last purchase and
+whatever context exists in CRM or in special dates.</p>
+
+<div class="warn">
+  <p><strong>The social rule.</strong> A screen that says "Welcome back,
+  Gustavo" while Gustavo is standing there with somebody has just told that
+  person something about him. So when he is <em>not</em> alone, the screen stays
+  neutral and the personal greeting goes to the salesperson instead. You can
+  switch this rule off, but it is on by default and for a reason.</p>
+</div>
+
+<h2 id="screens">7. Screens and signage</h2>
+
+<p>If you have screens connected, signage rules let measured events change what
+they show. Each rule has a trigger (walk-out, group, profile, quiet hour,
+welcome), conditions you define, and a target.</p>
+
+<p>The target resolves <strong>where before what</strong>: a bundle offer
+belongs on the screen the group is standing near, not on the one by the door.
+Every rule also carries a minimum gap between firings, because without it a busy
+hour turns your signage into a flicker.</p>
+
+<h2 id="attendance">8. Staff attendance</h2>
+
+<p>Off by default. If you switch it on, employee crossings at the staff door
+become check-ins and check-outs in Odoo's native attendance
+(<code>hr.attendance</code>) — the one payroll, leave and all your existing
+reports already read.</p>
+
+<ul>
+  <li><strong>It never overwrites a manual correction.</strong> If someone fixed a check-in by hand, the camera does not argue.</li>
+  <li><strong>Stepping out does not end the day.</strong> Repeat crossings inside a configurable gap are ignored.</li>
+  <li><strong>Forgotten shifts are closed overnight</strong> at the store's maximum shift length, and the record says it was a guess rather than an observation. Correct it if the real time matters.</li>
+</ul>
+
+<div class="warn">
+  <p>This records your team's working hours. A store that has not agreed it with
+  its people should not switch it on because a camera was installed. The
+  decision belongs to the employer, and it is deliberate.</p>
+</div>
+
+<h2 id="watchlist">9. The watch list</h2>
+
+<p>This is the only feature in Analitix that names a specific person, and it is
+built with more friction than any other <em>on purpose</em>.</p>
+
+<ul>
+  <li><strong>Nobody is added automatically.</strong> Ever. A person writes the entry, with a reason and a date.</li>
+  <li><strong>It takes two people.</strong> A new entry recognises nobody until a <em>second</em> authorised person confirms it, and the person who added it cannot be the one who confirms.</li>
+  <li><strong>It expires.</strong> Every entry carries a review date and an expiry. Letting it lapse is the normal outcome; extending it is a decision, and it is recorded.</li>
+  <li><strong>A match is a prompt to pay attention</strong>, never an accusation and never an automatic action. It appears on no screen and never reaches the sales floor at large. It goes quietly to a small group you name yourself.</li>
+  <li><strong>Record the mistakes.</strong> When a match was the wrong person, mark it. A list whose false positives nobody writes down is a list nobody can fix.</li>
+</ul>
+
+<p>Only the <strong>Security / Compliance</strong> role can see it, and that
+role is deliberately <em>not</em> given to the store manager by default: somebody
+being on a watch list is not commercial information. Who <em>reads</em> the list
+is logged too, not only who changes it.</p>
+
+<h2 id="report">10. The monthly report</h2>
+
+<p>Each month the owner receives a plain-language e-mail: visitors, conversion,
+walk-outs spotted, how many the team managed to rescue, and roughly what that
+was worth.</p>
+
+<div class="note">
+  <p><strong>The recovered figure is an estimate and is labelled as one</strong>
+  everywhere it appears. It is "rescued walk-outs × your own average sale". A
+  rescued walk-out is one where an alert fired and that same visit later bought
+  something: correlation, honestly stated, not proof. Inflating that number is
+  the fastest way to lose the customer who eventually checks it.</p>
+</div>
+
+<h2 id="privacy">11. Privacy: what is stored and what is not</h2>
+
+<table>
+  <tr><th>Never</th><th>Yes, and for how long</th></tr>
+  <tr>
+    <td>Images. Video. Photographs. None of it leaves the camera or reaches Odoo.</td>
+    <td>Irreversible numeric vectors ("signatures"), <strong>encrypted</strong> in the database.</td>
+  </tr>
+  <tr>
+    <td>Names of anonymous customers.</td>
+    <td>Anonymous signatures under an opaque handle, deleted automatically at the retention window you set (3 hours by default).</td>
+  </tr>
+  <tr>
+    <td>A biometric customer index acquired by accident.</td>
+    <td>Identified signatures <em>only</em> if you switch customer identification on and the customer handed over their details at the till. Off by default, with its own expiry, and every read audited.</td>
+  </tr>
+</table>
+
+<p>Recognition runs on the machine in your store (the "edge"). Odoo receives
+numbers and counts, never pixels.</p>
+
+<h2 id="trouble">12. When a number looks wrong</h2>
+
+<div class="scroll">
+<table>
+  <tr><th>Symptom</th><th>Most common cause</th></tr>
+  <tr><td>Conversion looks far too high</td><td>Doors missing from the configuration, or a counting door marked as non-counting.</td></tr>
+  <tr><td>Conversion looks far too low</td><td>Sales are not being attributed: check "Sales Matching" and the selected registers.</td></tr>
+  <tr><td>Too many visitors</td><td>Missing staff signatures, or the virtual line sits across a waiting area rather than in the doorway.</td></tr>
+  <tr><td>"Hour with sales and no visitors" appears</td><td>A counter went down. Check <code>Operations → Device Health</code>.</td></tr>
+  <tr><td>Alerts reach nobody</td><td>Nobody rostered on that zone and no fallback user configured.</td></tr>
+  <tr><td>The watch list never matches anybody</td><td>Almost always liveness: cameras that do not report it send zero, and the list refuses to compare. Covered in the implementation guide.</td></tr>
+</table>
+</div>
+
+
+<h2 id="videos">13. Videos</h2>
+
+<p>Recorded over the demo data that ships with the module. You can reproduce
+any of these flows on your own database, with no hardware.</p>
+
+<div class="vids">
+  <figure>
+    <video controls preload="metadata" src="/analitix/static/description/video/en/01-setup.webm"></video>
+    <figcaption>Setting a store up: one door or three, all configuration.</figcaption>
+  </figure>
+  <figure>
+    <video controls preload="metadata" src="/analitix/static/description/video/en/02-conversion.webm"></video>
+    <figcaption>The conversion dashboard, end to end.</figcaption>
+  </figure>
+  <figure>
+    <video controls preload="metadata" src="/analitix/static/description/video/en/03-lost-sale.webm"></video>
+    <figcaption>Lost sales: from detection to the alert and its outcome.</figcaption>
+  </figure>
+  <figure>
+    <video controls preload="metadata" src="/analitix/static/description/video/en/04-alerts-and-screens.webm"></video>
+    <figcaption>Alert channels and the personalised welcome.</figcaption>
+  </figure>
+  <figure>
+    <video controls preload="metadata" src="/analitix/static/description/video/en/05-staff-and-attendance.webm"></video>
+    <figcaption>Staff exclusion and attendance into hr.attendance.</figcaption>
+  </figure>
+</div>
+
+<footer class="doc">
+  <p>Analitix · XUBAX — support: <a href="mailto:soporte@xubax.com">soporte@xubax.com</a><br/>
+  Mounting the cameras or the edge agent? That is in the
+  <a href="/analitix/manual/implementer">implementation guide</a>.</p>
+</footer>
+
+</div>
+</body>
+</html>

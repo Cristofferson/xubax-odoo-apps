@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Analitix — Manual de usuario</title>
+<link rel="stylesheet" href="/analitix/static/manual/manual.css"/>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc">
+  <p class="kicker">Analitix · Manual de usuario</p>
+  <h1>Cómo usar Analitix en tu tienda</h1>
+  <p class="lede">Para el dueño, el gerente y el equipo de piso. No necesitas
+  saber nada de cámaras ni de servidores: eso lo cubre la guía de
+  implementación.</p>
+</header>
+
+<nav class="toc">
+  <p>Contenido</p>
+  <ol>
+    <li><a href="#idea">La idea en un párrafo</a></li>
+    <li><a href="#tienda">Configurar tu tienda</a></li>
+    <li><a href="#tablero">Leer el tablero de conversión</a></li>
+    <li><a href="#zonas">Zonas y exhibidores</a></li>
+    <li><a href="#avisos">Avisos de venta perdida</a></li>
+    <li><a href="#bienvenida">Bienvenida personalizada</a></li>
+    <li><a href="#pantallas">Pantallas y cartelería</a></li>
+    <li><a href="#asistencia">Asistencia del personal</a></li>
+    <li><a href="#vigilancia">Lista de vigilancia</a></li>
+    <li><a href="#informe">El informe mensual</a></li>
+    <li><a href="#privacidad">Privacidad: qué guarda y qué no</a></li>
+    <li><a href="#problemas">Cuando algo no cuadra</a></li>
+    <li><a href="#videos">Videos</a></li>
+  </ol>
+</nav>
+
+<h2 id="idea">1. La idea en un párrafo</h2>
+
+<p>Tu punto de venta te dice <em>qué vendiste</em>. Analitix te dice
+<em>a cuánta gente no le vendiste</em>, y por qué. Cuenta cuántas personas
+entraron, cruza ese número con tus tickets y te da la cifra que ningún ERP
+tiene: tu <strong>tasa de conversión</strong>. A partir de ahí construye lo
+demás — dónde se paran, cuánto esperan, a quién nadie atendió, y cuánto te
+costó eso.</p>
+
+<div class="note">
+  <p><strong>No es un contador de personas.</strong> El contador es el cimiento.
+  «Tuviste 400 visitantes» no le sirve a nadie. «Once personas esperaron en el
+  mostrador de anillos y con nueve nadie habló» sí.</p>
+</div>
+
+<h2 id="tienda">2. Configurar tu tienda</h2>
+
+<p>Todo lo que cambia de una tienda a otra es configuración. No hay nada
+codificado: ni el número de puertas, ni los umbrales, ni quién recibe los
+avisos.</p>
+
+<ol class="steps">
+  <li><strong>Alta rápida.</strong> Ve a <code>Analitix → Configuración → Alta
+  de tienda nueva</code>. El asistente crea la tienda, sus puertas y los
+  dispositivos de cada puerta en un solo paso.</li>
+
+  <li><strong>Puertas.</strong> Da de alta tantas como tenga la tienda: una,
+  tres, siete. En una puerta de personal o de servicio, <em>desmarca</em>
+  «Cuenta visitantes»: se sigue midiendo, pero su tráfico deja de distorsionar
+  la conversión.</li>
+
+  <li><strong>Cómo se asocian las ventas.</strong> En la pestaña «Asociación de
+  ventas» eliges entre <em>cajas específicas</em> (cuando varias tiendas
+  comparten una compañía) o <em>toda la compañía</em> (cuando la compañía es una
+  sola tienda). Elegir mal aquí es la causa número uno de una conversión que no
+  cuadra.</li>
+
+  <li><strong>Metros cuadrados.</strong> Opcional. Con ellos aparecen los
+  indicadores de densidad: ingreso por m² y visitantes por m².</li>
+
+  <li><strong>Personal.</strong> En «Exclusión de personal» das de alta la firma
+  facial de cada empleado, para que sus cruces no inflen el conteo de
+  visitantes. Sin esto, un vendedor que sale a la calle diez veces al día
+  aparece como diez clientes.</li>
+</ol>
+
+<div class="warn">
+  <p><strong>El interruptor de emergencia.</strong> En la ficha de la tienda hay
+  un botón <em>Pausar captura</em>. Detiene la ingesta de datos al instante, sin
+  tener que llegar físicamente a ningún equipo. Está ahí para el día que lo
+  necesites y no quieras buscar a nadie.</p>
+</div>
+
+<h2 id="tablero">3. Leer el tablero de conversión</h2>
+
+<p>En <code>Analitix → Análisis → Conversión</code>. Cada renglón es una hora de
+una tienda.</p>
+
+<div class="scroll">
+<table>
+  <tr><th>Indicador</th><th>Qué es</th><th>Qué hacer con él</th></tr>
+  <tr><td>Visitantes</td><td>Personas que entraron, sin contar al personal ni las puertas que no cuentan.</td><td>Tu tráfico real.</td></tr>
+  <tr><td>Conversión</td><td>Tickets ÷ visitantes.</td><td>La cifra principal. Si cae y el tráfico no, el problema está adentro, no afuera.</td></tr>
+  <tr><td>Ticket promedio</td><td>Ingreso ÷ tickets.</td><td>Sube con venta cruzada y con surtido, no con más gente.</td></tr>
+  <tr><td>Piezas por ticket</td><td>Unidades ÷ tickets.</td><td>Mide si el equipo está sumando a la venta.</td></tr>
+  <tr><td>Ingreso por visitante</td><td>Ingreso ÷ visitantes.</td><td>Junta conversión y ticket en un solo número.</td></tr>
+  <tr><td>Visitantes por ticket</td><td>Cuánta gente hace falta para una venta.</td><td>Fácil de explicar en una junta.</td></tr>
+  <tr><td>Ingreso por m²</td><td>Densidad de venta.</td><td>Compara locales de tamaños distintos.</td></tr>
+</table>
+</div>
+
+<div class="note">
+  <p><strong>Una hora con ventas y cero visitantes sí aparece.</strong> Es a
+  propósito: un contador muerto tiene que verse como un problema, no como una
+  mañana tranquila.</p>
+</div>
+
+<h2 id="zonas">4. Zonas y exhibidores</h2>
+
+<p>Una zona es una parte del piso con nombre propio: «Anillos de compromiso»,
+«Probadores», «Caja». Un exhibidor es una vitrina o mesa dentro de una zona.</p>
+
+<p>Con eso, «doce minutos adentro» se convierte en «once de esos doce en el
+mostrador de anillos, y nadie se acercó». Cada zona tiene sus propios umbrales,
+porque un probador y una caja no son lo mismo: demorarse en el probador es el
+punto; demorarse en la caja es sentirse ignorado.</p>
+
+<p>En cada exhibidor puedes indicar <strong>qué productos hay físicamente
+encima</strong>. Solo tú lo sabes, y sin eso las cifras de atención no se pueden
+comparar contra ventas, que es donde está el hallazgo: <em>llama la atención y
+vende poco</em> (precio, o nadie que cierre) frente a <em>vende bien desde un
+rincón frío</em> (súbelo al aparador).</p>
+
+<h2 id="avisos">5. Avisos de venta perdida</h2>
+
+<p>Un aviso se dispara cuando ocurren <strong>las tres cosas a la vez</strong>:
+alguien se demora más del umbral de la zona, <em>nadie</em> lo atendió, y no
+hubo ticket. Cada una por separado es completamente normal; las tres juntas son
+una venta que se fue caminando.</p>
+
+<h3>Cómo llega el aviso</h3>
+<p>Tú eliges los canales, y puedes encender varios a la vez. Tres son
+<strong>discretos</strong> (solo los percibe el vendedor asignado):</p>
+<ul>
+  <li><strong>App de Odoo</strong>: un aviso en el teléfono y una actividad, para que sobreviva a la pantalla bloqueada.</li>
+  <li><strong>Chat de Odoo (Discuss)</strong>: un mensaje directo. En un piso donde el equipo tiene Discuss abierto todo el día, suele ser el canal más rápido.</li>
+  <li><strong>WhatsApp</strong>: para quien no trae la app de Odoo abierta. Requiere el módulo WhatsApp de Odoo.</li>
+</ul>
+<p>Dos <strong>no</strong> son discretos y vienen apagados:</p>
+<ul>
+  <li><strong>Timbre audible</strong>: si el teléfono no está en silencio, o el aviso cae en una máquina de trastienda, el cliente puede oírlo y entender que están hablando de él.</li>
+  <li><strong>Pantalla</strong>: lo que aparezca ahí lo lee el cliente que está parado enfrente. Perfecto para un mensaje escrito <em>para</em> él, equivocado para uno <em>sobre</em> él.</li>
+</ul>
+
+<h3>A quién le llega</h3>
+<p>Al vendedor que cubre esa zona <em>en ese momento</em>, según el rol de
+turnos por zona, día y hora. Quien cubre el mostrador de anillos a las 11:00 no
+es quien lo cubre a las 19:00. Si no hay nadie de turno, el aviso escala al
+usuario de respaldo de la tienda en vez de evaporarse.</p>
+
+<div class="note">
+  <p><strong>Muchos avisos escalados al respaldo</strong> no significan que el
+  sistema falle: significan que el rol de turnos está mal capturado.</p>
+</div>
+
+<h3>Qué hacer al recibirlo</h3>
+<p>Acércate y da por enterado el aviso desde el teléfono. Ese acuse es lo que
+alimenta el informe de acompañamiento del piso: cuántos avisos recibió cada
+persona, cuánto tardó en responder, y cuántos de los que <em>sí</em> atendió
+terminaron en venta. Se mide contra lo que atendió, no contra lo que le
+mandaron, porque a nadie hay que bajarle la calificación por un aviso que llegó
+mientras estaba con otro cliente.</p>
+
+<h2 id="bienvenida">6. Bienvenida personalizada</h2>
+
+<p>Si la tienda tiene activada la identificación de clientes, cuando entra
+alguien que ya conoces el vendedor recibe su nombre, su última compra y el
+contexto que haya en CRM o en fechas especiales.</p>
+
+<div class="warn">
+  <p><strong>La regla social.</strong> Una pantalla que dice «Bienvenido de
+  vuelta, Gustavo» mientras Gustavo está ahí parado con alguien acaba de
+  contarle algo a esa persona sobre él. Por eso, cuando <em>no</em> viene solo,
+  la pantalla se queda neutral y el saludo personal se va al vendedor. Puedes
+  apagar esta regla, pero está encendida por omisión y por una razón.</p>
+</div>
+
+<h2 id="pantallas">7. Pantallas y cartelería</h2>
+
+<p>Si tienes pantallas conectadas, las reglas de cartelería dejan que lo medido
+cambie lo que muestran. Cada regla tiene un disparo (fuga, grupo, perfil, hora
+valle, bienvenida), condiciones que tú defines, y un destino.</p>
+
+<p>El destino se resuelve <strong>dónde antes que qué</strong>: una oferta de
+paquete va en la pantalla junto a la que está el grupo, no en la de la puerta.
+Y cada regla tiene una pausa mínima entre disparos, porque sin ella una hora
+concurrida convierte la cartelería en un parpadeo.</p>
+
+<h2 id="asistencia">8. Asistencia del personal</h2>
+
+<p>Apagado por omisión. Si lo enciendes, los cruces de empleados en la puerta de
+personal se convierten en entradas y salidas de la asistencia nativa de Odoo
+(<code>hr.attendance</code>), que es la que ya leen nómina, ausencias y todos
+tus informes.</p>
+
+<ul>
+  <li><strong>Nunca pisa una corrección manual.</strong> Si alguien ajustó una entrada a mano, la cámara no discute.</li>
+  <li><strong>Salir un momento no cierra la jornada.</strong> Los cruces repetidos dentro de un margen configurable se ignoran.</li>
+  <li><strong>Los turnos olvidados se cierran de noche</strong> a la jornada máxima de la tienda, y el registro dice que fue una estimación y no una observación. Corrígelo si la hora real importa.</li>
+</ul>
+
+<div class="warn">
+  <p>Esto registra las horas de trabajo de tu equipo. Una tienda que no lo
+  acordó con su gente no debería encenderlo porque se instaló una cámara.
+  La decisión es del patrón, y es deliberada.</p>
+</div>
+
+<h2 id="vigilancia">9. Lista de vigilancia</h2>
+
+<p>Es la única función de Analitix que señala a una persona concreta, y está
+construida con más fricción que ninguna otra <em>a propósito</em>.</p>
+
+<ul>
+  <li><strong>Nadie entra automáticamente.</strong> Nunca. Una persona escribe la entrada, con un motivo y una fecha.</li>
+  <li><strong>Hacen falta dos personas.</strong> Una entrada nueva no reconoce a nadie hasta que la confirma una <em>segunda</em> persona autorizada, y quien la dio de alta no puede ser quien la confirma.</li>
+  <li><strong>Vence sola.</strong> Cada entrada trae fecha de revisión y de vencimiento. Dejarla vencer es lo normal; prorrogarla es una decisión que queda registrada.</li>
+  <li><strong>Una coincidencia es una señal para poner atención</strong>, nunca una acusación y nunca una acción automática. No aparece en ninguna pantalla ni le llega al piso de venta. Le llega, en corto, a un grupo pequeño y nombrado por ti.</li>
+  <li><strong>Anota los errores.</strong> Cuando una coincidencia sea la persona equivocada, márcalo. Una lista cuyos falsos positivos nadie anota es una lista que nadie puede corregir.</li>
+</ul>
+
+<p>Solo la ve el rol <strong>Seguridad / Cumplimiento</strong>, que
+deliberadamente <em>no</em> se le da al gerente de tienda por omisión: que
+alguien esté en una lista de vigilancia no es información comercial. Además,
+quién <em>consulta</em> la lista queda registrado, no solo quién la modifica.</p>
+
+<h2 id="informe">10. El informe mensual</h2>
+
+<p>Cada mes le llega al dueño un correo en lenguaje llano: visitantes,
+conversión, fugas detectadas, cuántas alcanzó a rescatar el equipo, y
+aproximadamente cuánto valió eso.</p>
+
+<div class="note">
+  <p><strong>La cifra recuperada es una estimación y viene etiquetada como
+  tal</strong> en todos lados. Es «fugas rescatadas × tu venta promedio». Una
+  fuga rescatada es aquella en la que se disparó un aviso y esa misma visita
+  después compró algo: correlación dicha con honestidad, no prueba. Inflar ese
+  número es la forma más rápida de perder al cliente que un día lo revise.</p>
+</div>
+
+<h2 id="privacidad">11. Privacidad: qué guarda y qué no</h2>
+
+<table>
+  <tr><th>Nunca</th><th>Sí, y por cuánto tiempo</th></tr>
+  <tr>
+    <td>Imágenes. Video. Fotografías. Nada de eso sale de la cámara ni llega a Odoo.</td>
+    <td>Vectores numéricos irreversibles («firmas»), <strong>cifrados</strong> en la base de datos.</td>
+  </tr>
+  <tr>
+    <td>Nombres de clientes anónimos.</td>
+    <td>Firmas anónimas con un identificador opaco, borradas automáticamente al cumplirse la ventana de retención que tú fijas (por omisión, 3 horas).</td>
+  </tr>
+  <tr>
+    <td>Un índice biométrico de clientes por accidente.</td>
+    <td>Firmas identificadas <em>solo</em> si enciendes la identificación de clientes y el cliente entregó sus datos en caja. Apagado por omisión, con su propia caducidad y con toda lectura auditada.</td>
+  </tr>
+</table>
+
+<p>El reconocimiento corre en el equipo de la tienda (el «edge»). Odoo recibe
+números y conteos, nunca píxeles.</p>
+
+<h2 id="problemas">12. Cuando algo no cuadra</h2>
+
+<div class="scroll">
+<table>
+  <tr><th>Síntoma</th><th>Causa más frecuente</th></tr>
+  <tr><td>La conversión se ve altísima</td><td>Faltan puertas dadas de alta, o una puerta que sí cuenta está marcada como que no cuenta.</td></tr>
+  <tr><td>La conversión se ve bajísima</td><td>Las ventas no se están asociando: revisa «Asociación de ventas» y las cajas seleccionadas.</td></tr>
+  <tr><td>Demasiados visitantes</td><td>Faltan firmas de personal, o la línea virtual está atravesada en una sala de espera en vez de en el vano de la puerta.</td></tr>
+  <tr><td>Aparece «hora con ventas y sin visitantes»</td><td>Un contador se cayó. Míralo en <code>Operación → Salud de dispositivos</code>.</td></tr>
+  <tr><td>Los avisos no llegan a nadie</td><td>Ninguna persona de turno en esa zona y sin usuario de respaldo configurado.</td></tr>
+  <tr><td>La lista de vigilancia no coincide con nadie</td><td>Casi siempre la vitalidad: si tus cámaras no reportan vitalidad mandan cero, y la lista no compara. Lo cubre la guía de implementación.</td></tr>
+</table>
+</div>
+
+
+<h2 id="videos">13. Videos</h2>
+
+<p>Grabados sobre los datos de demostración que trae el módulo. Puedes
+reproducir cualquiera de estos flujos en tu propia base, sin hardware.</p>
+
+<div class="vids">
+  <figure>
+    <video controls preload="metadata" src="/analitix/static/description/video/es/01-setup.webm"></video>
+    <figcaption>Configurar una tienda: una puerta o tres, todo configuración.</figcaption>
+  </figure>
+  <figure>
+    <video controls preload="metadata" src="/analitix/static/description/video/es/02-conversion.webm"></video>
+    <figcaption>El tablero de conversión, de principio a fin.</figcaption>
+  </figure>
+  <figure>
+    <video controls preload="metadata" src="/analitix/static/description/video/es/03-lost-sale.webm"></video>
+    <figcaption>Venta perdida: de la detección al aviso y su desenlace.</figcaption>
+  </figure>
+  <figure>
+    <video controls preload="metadata" src="/analitix/static/description/video/es/04-alerts-and-screens.webm"></video>
+    <figcaption>Canales del aviso y bienvenida personalizada.</figcaption>
+  </figure>
+  <figure>
+    <video controls preload="metadata" src="/analitix/static/description/video/es/05-staff-and-attendance.webm"></video>
+    <figcaption>Exclusión de personal y asistencia en hr.attendance.</figcaption>
+  </figure>
+</div>
+
+<footer class="doc">
+  <p>Analitix · XUBAX — soporte: <a href="mailto:soporte@xubax.com">soporte@xubax.com</a><br/>
+  ¿Vas a montar las cámaras o el agente edge? Eso está en la
+  <a href="/analitix/manual/implementer">guía de implementación</a>.</p>
+</footer>
+
+</div>
+</body>
+</html>

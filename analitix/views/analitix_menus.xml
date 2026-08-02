@@ -89,4 +89,14 @@
     <menuitem id="menu_config_staff" name="Staff Signatures" parent="menu_configuration"
               action="action_staff_signature" sequence="40"/>
 
+    <!-- Last in the app, where people look for help. The user manual is for
+         everybody; the implementation guide is only useful to somebody who can
+         actually change the configuration, so it sits behind that group. -->
+    <menuitem id="menu_help" name="Help" parent="menu_root" sequence="95"/>
+    <menuitem id="menu_help_user" name="User Manual" parent="menu_help"
+              action="action_manual_user" sequence="10"/>
+    <menuitem id="menu_help_implementer" name="Implementation Guide" parent="menu_help"
+              action="action_manual_implementer" sequence="20"
+              groups="analitix.group_manager,analitix.group_technician"/>
+
 </odoo>

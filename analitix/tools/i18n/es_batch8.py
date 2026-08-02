@@ -10,6 +10,15 @@ Keys reproduce the .pot msgid byte for byte; make_es_po.py reports any that
 miss, because Odoo drops a mismatch without a word.
 """
 BATCH8 = {
+    'Help':
+        'Ayuda',
+
+    'Implementation Guide':
+        'Guía de implementación',
+
+    'User Manual':
+        'Manual de usuario',
+
     '%(detail)s\\n\\nWorth going over. This is a behaviour pattern, not an accusation — most of the time the person simply wants help.':
         '%(detail)s\\n\\nVale la pena echar un ojo. Esto es un patrón de conducta, no una acusación: la mayoría de las veces la persona solo quiere que la atiendan.',
 

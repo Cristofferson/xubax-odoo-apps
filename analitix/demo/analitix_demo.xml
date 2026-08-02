@@ -18,12 +18,18 @@
         <record id="demo_store_boutique" model="analitix.store">
             <field name="name">Boutique Centro (demo)</field>
             <field name="code">DEMO-01</field>
+            <field name="tz">America/Mexico_City</field>
             <field name="match_mode">company</field>
             <field name="area_sqm">85</field>
             <field name="sales_area_sqm">70</field>
             <field name="heartbeat_interval_s">60</field>
             <field name="offline_threshold_min">5</field>
             <field name="exclude_staff" eval="True"/>
+            <!-- What the shop pays. The monthly report compares the revenue it
+                 helped recover against this figure, and with a zero here that
+                 comparison says nothing. -->
+            <field name="monthly_fee">1490</field>
+            <field name="plan">floor</field>
         </record>
 
         <record id="demo_door_boutique_main" model="analitix.door">
@@ -48,12 +54,15 @@
         <record id="demo_store_mall" model="analitix.store">
             <field name="name">Galería Plaza (demo)</field>
             <field name="code">DEMO-02</field>
+            <field name="tz">America/Mexico_City</field>
             <field name="match_mode">company</field>
             <field name="area_sqm">240</field>
             <field name="sales_area_sqm">195</field>
             <field name="heartbeat_interval_s">60</field>
             <field name="offline_threshold_min">10</field>
             <field name="exclude_staff" eval="True"/>
+            <field name="monthly_fee">2490</field>
+            <field name="plan">full</field>
         </record>
 
         <record id="demo_door_mall_street" model="analitix.door">
@@ -128,9 +137,31 @@
             <field name="incident_date" eval="(DateTime.now() - relativedelta(days=20)).strftime('%Y-%m-%d')"/>
         </record>
 
+        <!-- In the DEMO database only, the administrator gets the security
+             role, so a reviewer can actually open the watch list and see what
+             it does and what it refuses to do.
+
+             This does not change what a real installation grants: the module's
+             own data gives that group to nobody, and that stays true on any
+             database installed without demo data. -->
+        <record id="base.user_admin" model="res.users">
+            <field name="group_ids" eval="[(4, ref('analitix.group_security'))]"/>
+        </record>
+
         <!-- Two weeks of plausible traffic, generated in Python because a
              realistic day curve is not something to hand-write in XML. -->
         <function model="analitix.store" name="_generate_demo_traffic">
+            <value eval="[ref('demo_store_boutique'), ref('demo_store_mall')]"/>
+        </function>
+
+        <!-- The rest of a plausible shop: zones and displays, a salesperson on
+             a rota, POS orders shaped like the traffic, walk-outs (some caught,
+             some not) and one closed monthly report.
+
+             Phase 6 needs a demo database complete enough to reproduce every
+             screenshot and every screencast without hardware, and a conversion
+             dashboard with traffic but no tickets is a flat line at zero. -->
+        <function model="analitix.store" name="_generate_demo_floor">
             <value eval="[ref('demo_store_boutique'), ref('demo_store_mall')]"/>
         </function>
 

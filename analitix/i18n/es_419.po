@@ -2757,6 +2757,11 @@ msgid "Heartbeat Interval (s)"
 msgstr "Intervalo de latido (s)"
 
 #. module: analitix
+#: model:ir.ui.menu,name:analitix.menu_help
+msgid "Help"
+msgstr "Ayuda"
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
 msgid "Hides closed hours, which would otherwise drag every average toward zero."
 msgstr "Oculta las horas cerradas, que si no arrastran todos los promedios hacia cero."
@@ -2988,6 +2993,12 @@ msgstr "Si está marcado, algunos mensajes tienen un error de entrega."
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__attendance_min_gap_minutes
 msgid "Ignore Repeats Within (min)"
 msgstr "Ignorar repeticiones dentro de (min)"
+
+#. module: analitix
+#: model:ir.actions.act_url,name:analitix.action_manual_implementer
+#: model:ir.ui.menu,name:analitix.menu_help_implementer
+msgid "Implementation Guide"
+msgstr "Guía de implementación"
 
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_list
@@ -6089,6 +6100,12 @@ msgstr "Se usa cuando el destino es una pantalla específica."
 #: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_search
 msgid "User"
 msgstr "Usuario"
+
+#. module: analitix
+#: model:ir.actions.act_url,name:analitix.action_manual_user
+#: model:ir.ui.menu,name:analitix.menu_help_user
+msgid "User Manual"
+msgstr "Manual de usuario"
 
 #. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_store__alert_user_id

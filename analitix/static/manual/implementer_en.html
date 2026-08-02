@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Analitix — Implementation Guide</title>
+<link rel="stylesheet" href="/analitix/static/manual/manual.css"/>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc">
+  <p class="kicker">Analitix · Implementation guide</p>
+  <h1>Mounting, cameras and the edge agent</h1>
+  <p class="lede">For whoever installs it. Where each camera goes, how the agent
+  is installed on the store's machine, how per-device keys are issued, and how a
+  zone is mapped to a screen.</p>
+</header>
+
+<nav class="toc">
+  <p>Contents</p>
+  <ol>
+    <li><a href="#architecture">Architecture: what runs where</a></li>
+    <li><a href="#hardware">Hardware by camera role</a></li>
+    <li><a href="#mounting">Mounting the cameras</a></li>
+    <li><a href="#odoo">Odoo setup and per-device keys</a></li>
+    <li><a href="#agent">Installing the edge agent</a></li>
+    <li><a href="#calibrate">Calibrating the virtual line</a></li>
+    <li><a href="#zones">Zones, displays and the rota</a></li>
+    <li><a href="#screens">Zone ↔ Xibo player mapping</a></li>
+    <li><a href="#liveness">Liveness: the detail people forget</a></li>
+    <li><a href="#network">Network, proxy and TLS</a></li>
+    <li><a href="#handover">Handover checklist</a></li>
+    <li><a href="#trouble">Troubleshooting</a></li>
+  </ol>
+</nav>
+
+<h2 id="architecture">1. Architecture: what runs where</h2>
+
+<p>Vision runs in the store. Odoo only ever receives JSON.</p>
+
+<pre><code>Camera ──► mini-PC in the store (edge agent)
+              │  detects, tracks, crosses the line, matches faces locally
+              │  discards the frame in memory
+              ▼
+          HTTPS  POST /analitix/api/v1/events
+              ▼
+            Odoo (this addon)  ──► counts, visits, conversion, alerts</code></pre>
+
+<div class="note">
+  <p>The addon has <strong>no computer-vision dependency</strong> — no
+  <code>torch</code>, no <code>insightface</code>, no <code>opencv</code>. That
+  lives in the agent, which ships separately with its own installer. A third
+  party can write their own agent against <code>doc/API.md</code> without
+  reading this addon's source.</p>
+</div>
+
+<h2 id="hardware">2. Hardware by camera role</h2>
+
+<div class="scroll">
+<table>
+  <tr><th>Position</th><th>Camera</th><th>Compute</th><th>What it buys</th></tr>
+  <tr>
+    <td><strong>Door</strong> (required)</td>
+    <td>Overhead depth camera (Orbbec / RealSense) or an IP camera with a top-down view</td>
+    <td>x86 mini-PC or Jetson Orin Nano, one per store where it stretches</td>
+    <td>In/out counting. The foundation: without it there is no conversion rate.</td>
+  </tr>
+  <tr>
+    <td><strong>Frontal</strong> (optional)</td>
+    <td>IP camera at face height, beside the entrance</td>
+    <td>Shares the door mini-PC</td>
+    <td>Demographics, staff exclusion, cross-door re-identification.</td>
+  </tr>
+  <tr>
+    <td><strong>Zone</strong> (optional)</td>
+    <td>IP camera covering the whole zone</td>
+    <td>A modest GPU from 3–4 zones up</td>
+    <td>Dwell, engagement, lost sales, per-display attention.</td>
+  </tr>
+  <tr>
+    <td><strong>Checkout</strong> (optional)</td>
+    <td>IP camera pointed at whoever is paying</td>
+    <td>Shares the zone machine</td>
+    <td>Ticket-to-visit attribution, and customer identification if the store enables it.</td>
+  </tr>
+</table>
+</div>
+
+<p>Supported without a custom agent: <strong>Hikvision</strong> (ISAPI people
+counting), <strong>Dahua</strong> and <strong>IR beam</strong> counters. They
+count, but they give no face — and without a face there is no staff exclusion,
+no visits and no purchase units. Fine to start cheap and migrate later.</p>
+
+<h2 id="mounting">3. Mounting the cameras</h2>
+
+<h3>The door</h3>
+<ol class="steps">
+  <li><strong>Overhead, not angled.</strong> Directly above the doorway, looking down. An angled camera double-counts people walking in single file.</li>
+  <li><strong>Height 2.6–3.2 m.</strong> Lower crops tall people; higher loses depth resolution.</li>
+  <li><strong>The virtual line goes in the doorway</strong>, not two metres inside. This is the single most expensive mistake: a line across a waiting area reports the same person entering six times.</li>
+  <li><strong>Mind the backlight.</strong> A glass front at midday saturates the sensor. If you cannot move the camera, use depth rather than RGB.</li>
+</ol>
+
+<h3>Frontal, zone and checkout</h3>
+<ul>
+  <li><strong>Frontal</strong>: 1.6–1.8 m, slightly above eye line, facing whoever enters. Never against a window.</li>
+  <li><strong>Zone</strong>: high and cornered, covering the whole zone with as little overlap into the next as possible.</li>
+  <li><strong>Checkout</strong>: framed on the customer, not the cashier. If the cashier is in frame, their staff signature stops being optional.</li>
+</ul>
+
+<div class="warn">
+  <p><strong>Signage.</strong> In many jurisdictions a visible notice at the
+  entrance is a legal requirement, and everywhere it is the right thing to do.
+  Analitix stores no images, but it does perform biometric processing on the
+  store's own machine: agree it with the customer in writing before switching
+  anything on, and record it on the store form.</p>
+</div>
+
+<h2 id="odoo">4. Odoo setup and per-device keys</h2>
+
+<ol class="steps">
+  <li>
+    <strong>Create the store.</strong> <code>Analitix → Configuration → New
+    Store Setup</code>. The wizard creates store, doors and devices in one pass.
+    Set the right time zone: hourly buckets and the rota both depend on it.
+  </li>
+  <li>
+    <strong>One key per device.</strong> On the device form, <em>Issue key</em>.
+    Format <code>alx_&lt;43 characters&gt;</code>.
+    <div class="warn">
+      <p>It is shown <strong>once</strong>. Odoo keeps only a SHA-256 digest, so
+      a lost key cannot be recovered — rotate instead. Never share a key across
+      cameras: a shared key cannot be revoked for one without killing every
+      other.</p>
+    </div>
+  </li>
+  <li>
+    <strong>Mark what is critical.</strong> A critical device is one whose
+    silence makes the numbers wrong. Door counters and the checkout camera are;
+    a spare unit is not, and clearing the flag keeps it from paging the
+    technician at 3 a.m.
+  </li>
+  <li>
+    <strong>Edge configuration from Odoo.</strong> The device's <em>Edge
+    Configuration</em> field is free-form JSON — line coordinates, camera index,
+    zone polygons. The agent picks it up on its hourly refresh, so a camera is
+    retuned <strong>without going back to the store</strong>.
+  </li>
+</ol>
+
+<h2 id="agent">5. Installing the edge agent</h2>
+
+<p>The agent lives in the repository's <code>edge/</code> folder, outside the
+package published to apps.odoo.com.</p>
+
+<pre><code># On the store's mini-PC
+sudo mkdir -p /etc/analitix /var/lib/analitix
+sudo cp analitix_agent.py /usr/local/bin/
+sudo cp config.example.yaml /etc/analitix/agent.yaml
+sudo pip3 install -r requirements.txt
+
+sudo nano /etc/analitix/agent.yaml     # odoo_url + api_key
+sudo cp analitix-agent.service /etc/systemd/system/
+sudo systemctl enable --now analitix-agent
+journalctl -u analitix-agent -f</code></pre>
+
+<p>There are only <strong>two required values</strong>: <code>odoo_url</code>
+(https, no exceptions) and <code>api_key</code>. Everything else has a working
+default.</p>
+
+<h3>The settings that matter</h3>
+<div class="scroll">
+<table>
+  <tr><th>Key</th><th>Default</th><th>When to touch it</th></tr>
+  <tr><td><code>source</code></td><td><code>line</code></td><td><code>demo</code> generates synthetic crossings with no camera: use it to prove the link to Odoo works <em>before</em> the hardware is mounted.</td></tr>
+  <tr><td><code>line</code></td><td>—</td><td>Pixel coordinates of the doorway. Better pushed down from Odoo.</td></tr>
+  <tr><td><code>send_embeddings</code></td><td><code>false</code></td><td>False means face vectors <strong>never leave the store</strong>: the agent pulls staff signatures and compares in memory. Set true only if the hardware cannot hold the signature set.</td></tr>
+  <tr><td><code>state_dir</code></td><td><code>/var/lib/analitix</code></td><td>Holds the encrypted queue. It must survive a reboot: it is the only thing between a two-hour outage and two hours of lost visitors.</td></tr>
+  <tr><td><code>verify_tls</code></td><td><code>true</code></td><td>Set false <strong>only</strong> on a lab bench with a self-signed certificate.</td></tr>
+</table>
+</div>
+
+<div class="note">
+  <p>No image or video is transmitted or stored, in any mode. The frame is
+  discarded in memory the moment the detection is done.</p>
+</div>
+
+<h2 id="calibrate">6. Calibrating the virtual line</h2>
+
+<ol class="steps">
+  <li>Start with <code>source: demo</code> and confirm crossings arrive under <code>Analitix → Operations → Crossing Events</code>.</li>
+  <li>Switch to <code>source: line</code> and adjust <code>line</code> until it spans the doorway.</li>
+  <li><strong>Hand-count for fifteen minutes</strong> at a busy hour and compare against the dashboard. It is the only method that works. ±5 % is normal; ±30 % means the line is in the wrong place.</li>
+  <li>Once it is right, push it to the device's edge configuration in Odoo so it survives a reinstall of the agent.</li>
+</ol>
+
+<h2 id="zones">7. Zones, displays and the rota</h2>
+
+<ul>
+  <li><strong>Zones</strong>: use the names the staff already use, not yours. Tune the thresholds per zone — a fitting room and a counter do not share a number.</li>
+  <li><strong>Displays</strong>: record what is physically on each one. Without it, measured attention cannot be crossed against sales, and that is where the value is.</li>
+  <li><strong>The rota</strong>: per zone, per weekday, per hour. <strong>Without it alerts reach nobody</strong> — or they all land on the fallback user, which is the signal that it has not been filled in.</li>
+  <li><strong>Fallback user</strong>: always set one. It is what stops an alert for an uncovered zone from being recorded and read by nobody.</li>
+</ul>
+
+<h2 id="screens">8. Zone ↔ Xibo player mapping</h2>
+
+<p>Analitix does not talk to screens directly: it delegates to the Xibo
+connector when it is installed, detected at runtime. Without the connector,
+signage rules are still recorded but display nothing — and that shows explicitly
+in the firing log.</p>
+
+<ol class="steps">
+  <li>In Xibo, group the players by zone (one display group per zone: window, till, façade).</li>
+  <li>In Odoo, on each <em>zone</em>, fill in the <strong>screen group reference</strong>. That is the whole mapping.</li>
+  <li>Create the signage rules on the store form. The target resolves <em>where before what</em>: "where it happened" sends the piece to the screen of the event's zone.</li>
+  <li>Test with a quiet-hour rule before a walk-out rule: it fires on its own and nobody has to impersonate a customer.</li>
+</ol>
+
+<div class="note">
+  <p>Check the mapping under <code>Operations → Signage Firings</code>. A firing
+  recorded and <em>not</em> shown is almost always a mistyped group reference.</p>
+</div>
+
+<h2 id="liveness">9. Liveness: the detail people forget</h2>
+
+<div class="warn">
+  <p>Cameras that do <strong>not</strong> report liveness send zero. Since the
+  watch list requires a liveness floor above zero, in a store whose agents do no
+  liveness the list <strong>never matches anybody</strong>, silently.</p>
+  <p>That is the safe way to fail, and it is deliberate. But if the customer
+  bought the watch list, either enable liveness in the agent or lower the floor
+  <em>knowingly</em> and write it down. What is not acceptable is nudging it
+  until matches start appearing.</p>
+</div>
+
+<h2 id="network">10. Network, proxy and TLS</h2>
+
+<ul>
+  <li>Ingest is <strong>HTTPS only</strong>. A plaintext request is answered <code>403 tls_required</code>.</li>
+  <li>Odoo behind nginx listens on plain HTTP, so the check reads <code>X-Forwarded-Proto</code>. That is <strong>only safe with <code>proxy_mode = True</code></strong> and the proxy as the sole route in. A deployment exposing Odoo directly must not set <code>proxy_mode</code>.</li>
+  <li>For a lab bench with no certificate there is the system parameter <code>analitix.allow_insecure_ingest = 1</code>. It ships as <code>0</code>: relaxing it must be a conscious, reversible choice rather than a discovery six months later.</li>
+  <li>Ingest is <strong>idempotent by client-generated uuid</strong>: a network retry never double-counts a crossing.</li>
+</ul>
+
+<h2 id="handover">11. Handover checklist</h2>
+
+<ul>
+  <li>☐ Every door created, with "Counts visitors" correct on staff and service doors.</li>
+  <li>☐ Sales matching mode chosen, and registers selected where relevant.</li>
+  <li>☐ Store time zone correct.</li>
+  <li>☐ One key per device, none shared, critical devices flagged.</li>
+  <li>☐ Fifteen-minute hand count against the dashboard, within ±5 %.</li>
+  <li>☐ Staff face signatures enrolled and tested.</li>
+  <li>☐ Zones with their thresholds, displays with their products.</li>
+  <li>☐ Rota filled in and fallback user configured.</li>
+  <li>☐ End-to-end alert test on every channel that is switched on.</li>
+  <li>☐ Heartbeats arriving; <code>Operations → Device Health</code> all green.</li>
+  <li>☐ Technical contacts recorded for the offline e-mail.</li>
+  <li>☐ Retention window agreed with the customer and set.</li>
+  <li>☐ Visible signage at the entrance.</li>
+  <li>☐ Monthly report recipients set.</li>
+  <li>☐ If they bought the watch list: the security role assigned to two different people (the double control needs them) and liveness resolved.</li>
+</ul>
+
+<h2 id="trouble">12. Troubleshooting</h2>
+
+<div class="scroll">
+<table>
+  <tr><th>Symptom</th><th>Where to look</th></tr>
+  <tr><td>No events at all</td><td><code>journalctl -u analitix-agent -f</code>. A <code>403 tls_required</code> is http instead of https; a <code>401</code> is a bad or revoked key.</td></tr>
+  <tr><td>Events arrive but no visits</td><td>The agent is sending with <code>send_embeddings: false</code> and no signatures. No face means counts only, no visits.</td></tr>
+  <tr><td>Double counting</td><td>Angled camera, or the virtual line inside the shop rather than in the doorway.</td></tr>
+  <tr><td>Staff appear as customers</td><td>Missing signatures, or staff exclusion switched off on the store form.</td></tr>
+  <tr><td>Device flapping to "degraded"</td><td>Unstable internet. Raise the store's offline threshold; the agent queues and resends.</td></tr>
+  <tr><td>Jobs piling up</td><td><code>Operations → Background Jobs</code>. Check Odoo's cron is alive.</td></tr>
+  <tr><td>Everything looks fine and there is no data</td><td>Is capture paused? The kill switch stays on until somebody clears it.</td></tr>
+</table>
+</div>
+
+<footer class="doc">
+  <p>Analitix · XUBAX — support: <a href="mailto:soporte@xubax.com">soporte@xubax.com</a><br/>
+  The full API contract is in <code>doc/API.md</code> in the repository. For
+  day-to-day use in the shop, see the
+  <a href="/analitix/manual/user">user manual</a>.</p>
+</footer>
+
+</div>
+</body>
+</html>

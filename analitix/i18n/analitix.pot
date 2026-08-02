@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-02 00:37+0000\n"
-"PO-Revision-Date: 2026-08-02 00:37+0000\n"
+"POT-Creation-Date: 2026-08-02 02:09+0000\n"
+"PO-Revision-Date: 2026-08-02 02:09+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -3159,6 +3159,11 @@ msgid "Heartbeat Interval (s)"
 msgstr ""
 
 #. module: analitix
+#: model:ir.ui.menu,name:analitix.menu_help
+msgid "Help"
+msgstr ""
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_hourly_search
 msgid ""
 "Hides closed hours, which would otherwise drag every average toward zero."
@@ -3431,6 +3436,12 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__attendance_min_gap_minutes
 msgid "Ignore Repeats Within (min)"
+msgstr ""
+
+#. module: analitix
+#: model:ir.actions.act_url,name:analitix.action_manual_implementer
+#: model:ir.ui.menu,name:analitix.menu_help_implementer
+msgid "Implementation Guide"
 msgstr ""
 
 #. module: analitix
@@ -6911,6 +6922,12 @@ msgstr ""
 #: model:res.groups,name:analitix.group_user
 #: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_search
 msgid "User"
+msgstr ""
+
+#. module: analitix
+#: model:ir.actions.act_url,name:analitix.action_manual_user
+#: model:ir.ui.menu,name:analitix.menu_help_user
+msgid "User Manual"
 msgstr ""
 
 #. module: analitix

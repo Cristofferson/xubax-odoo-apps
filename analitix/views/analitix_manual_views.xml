@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+      The manuals, reachable from inside the app.
+
+      Every XUBAX app ships with its documentation in the product rather than in
+      a PDF attached to an e-mail somebody sent during the rollout — six months
+      later that e-mail is unfindable and the person who received it has left.
+
+      target="new" so the manual opens beside Odoo rather than replacing it: the
+      whole point is to read a step and do it.
+    -->
+
+    <record id="action_manual_user" model="ir.actions.act_url">
+        <field name="name">User Manual</field>
+        <field name="url">/analitix/manual/user</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_manual_implementer" model="ir.actions.act_url">
+        <field name="name">Implementation Guide</field>
+        <field name="url">/analitix/manual/implementer</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
