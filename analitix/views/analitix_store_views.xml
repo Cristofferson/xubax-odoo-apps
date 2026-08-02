@@ -367,6 +367,63 @@
                                 </list>
                             </field>
                         </page>
+                        <!-- Only the security role, not the manager. A store
+                             manager configuring conversion thresholds has no
+                             reason to be shown a page about naming people. -->
+                        <page string="Watch List" name="phase5"
+                              groups="analitix.group_security">
+                            <div class="alert alert-warning" role="alert">
+                                <strong>This is the only feature in Analitix
+                                that names a specific person.</strong> Switching
+                                it on does not create a list — entries are added
+                                by hand after a documented incident, and each
+                                needs a second authorised person to confirm it.
+                                Nothing here ever reaches a screen or the sales
+                                floor at large.
+                            </div>
+                            <group>
+                                <group string="Recognition">
+                                    <field name="watchlist_enabled"/>
+                                    <field name="watchlist_threshold"
+                                           invisible="not watchlist_enabled"/>
+                                    <field name="watchlist_min_liveness"
+                                           invisible="not watchlist_enabled"/>
+                                </group>
+                                <group string="Expiry">
+                                    <field name="watchlist_review_days"
+                                           invisible="not watchlist_enabled"/>
+                                    <field name="watchlist_expiry_days"
+                                           invisible="not watchlist_enabled"/>
+                                    <field name="watchlist_max_days"
+                                           invisible="not watchlist_enabled"/>
+                                </group>
+                            </group>
+                            <group string="Who Is Told About A Match"
+                                   invisible="not watchlist_enabled">
+                                <field name="watchlist_user_ids" nolabel="1"
+                                       widget="many2many_tags"/>
+                            </group>
+                            <div class="alert alert-info" role="alert"
+                                 invisible="not watchlist_enabled">
+                                Leave this empty and matches are recorded but
+                                nobody hears about them. That is a defensible
+                                state — it is silently telling nobody that is
+                                not.
+                            </div>
+                            <separator string="Entries"
+                                       invisible="not watchlist_enabled"/>
+                            <field name="watch_person_ids" readonly="1"
+                                   invisible="not watchlist_enabled">
+                                <list>
+                                    <field name="reference"/>
+                                    <field name="display_label"/>
+                                    <field name="incident_date"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="expires_on"/>
+                                    <field name="match_count"/>
+                                </list>
+                            </field>
+                        </page>
                         <page string="Monitoring" name="monitoring"
                               groups="analitix.group_manager,analitix.group_technician">
                             <group>

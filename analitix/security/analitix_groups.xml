@@ -48,5 +48,28 @@
             <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
         </record>
 
+        <!-- Security / compliance. The watch list, and nothing else.
+
+             Deliberately NOT implied by Manager, which is why it sits outside
+             the ladder the three groups above form. Someone's presence on a
+             watch list is not commercial information, and a store manager who
+             can read conversion figures has no business reading it by default.
+             Task 983 names this role as the only one with access to phase 5;
+             granting it is a separate, deliberate act by whoever runs the
+             instance.
+
+             It implies Analitix User only so the holder can navigate to a
+             store at all — not so they can be handed the sales numbers with
+             it. Nobody is in this group on install, including the
+             administrator: an empty watch list with nobody able to open it is
+             the correct state for a shop that has never asked for one. -->
+        <record id="group_security" model="res.groups">
+            <field name="name">Security / Compliance</field>
+            <field name="sequence">40</field>
+            <field name="privilege_id" ref="res_groups_privilege_analitix"/>
+            <field name="implied_ids" eval="[(4, ref('group_user'))]"/>
+            <field name="comment">Manage the watch list: add, confirm, review and remove entries, and receive match alerts. Not granted to anybody by default.</field>
+        </record>
+
     </data>
 </odoo>

@@ -23,6 +23,7 @@ from es_batch4 import BATCH4, BATCH4_LOOSE
 from es_batch5 import BATCH5, BATCH5_LOOSE
 from es_batch6 import BATCH6, BATCH6_LOOSE
 from es_batch7 import BATCH7, BATCH7_LOOSE
+from es_batch8 import BATCH8
 
 TRANSLATIONS = {
     # ---- module, models, menus -------------------------------------
@@ -425,6 +426,7 @@ TRANSLATIONS.update(BATCH4)
 TRANSLATIONS.update(BATCH5)
 TRANSLATIONS.update(BATCH6)
 TRANSLATIONS.update(BATCH7)
+TRANSLATIONS.update(BATCH8)
 
 #: Same translations, keyed on the whitespace-collapsed msgid. View strings carry
 #: the XML's line breaks and indentation inside the msgid, and transcribing that

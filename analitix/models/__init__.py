@@ -22,6 +22,7 @@ from . import analitix_lost_sale
 from . import analitix_sale_match
 from . import analitix_anomaly
 from . import analitix_signage
+from . import analitix_watchlist
 from . import analitix_customer_context
 from . import analitix_attendance
 from . import analitix_subscription

@@ -415,6 +415,60 @@ class AnalitixStore(models.Model):
         string="Zones Before Dispersal", default=3, required=True)
 
     # ------------------------------------------------------------------
+    # Phase 5 — the watch list
+    #
+    # The only feature in Analitix that names a specific person, so every
+    # setting here is tuned toward doing nothing rather than doing something
+    # wrong. Off by default, stricter than any other threshold, liveness
+    # required, and the recipients are named explicitly instead of inherited
+    # from the store's ordinary alert routing.
+    # ------------------------------------------------------------------
+    watchlist_enabled = fields.Boolean(
+        string="Use A Watch List", default=False,
+        help="Recognise people a manager has deliberately added after a "
+             "documented incident, and tell a named, restricted group when one "
+             "of them comes in. Off by default, and it should stay off unless "
+             "the store has a real reason and a person accountable for it.")
+    watchlist_threshold = fields.Float(
+        string="Watch-list Threshold", default=0.80, required=True,
+        help="Deliberately far stricter than ordinary re-identification. A "
+             "wrong re-identification merges two visits; a wrong match here "
+             "puts an innocent person under suspicion, so this errs heavily "
+             "towards missing a real match rather than inventing one.")
+    watchlist_min_liveness = fields.Float(
+        string="Watch-list Liveness", default=0.70, required=True,
+        help="Readings below this are never checked against the list at all. "
+             "A photograph held up to a camera must not be able to put a real "
+             "person under suspicion.\n"
+             "Note that cameras which do not report a liveness score at all "
+             "send zero, so with any value above zero here the list matches "
+             "nothing. That is the safe way round — but if your edge agents do "
+             "not do liveness, lowering this is a decision to make knowingly "
+             "rather than a number to nudge until matches appear.")
+    watchlist_user_ids = fields.Many2many(
+        "res.users", relation="analitix_store_watchlist_user_rel",
+        column1="store_id", column2="user_id", string="Watch-list Recipients",
+        domain="[('share', '=', False)]",
+        help="The only people told about a match. Named one by one on purpose: "
+             "a match is not commercial information and does not follow the "
+             "ordinary zone rota to whoever happens to be on the floor.")
+    watchlist_review_days = fields.Integer(
+        string="Review Every (days)", default=90, required=True,
+        help="How long before a new entry is put back in front of a human to "
+             "confirm it still belongs on the list.")
+    watchlist_expiry_days = fields.Integer(
+        string="Entries Expire After (days)", default=365, required=True,
+        help="An entry stops matching automatically after this. A list that "
+             "only ever grows is a list nobody trusts and nobody prunes.")
+    watchlist_max_days = fields.Integer(
+        string="Maximum Without Review (days)", default=730, required=True,
+        help="Hard ceiling: no entry can be set to run longer than this "
+             "without somebody looking at it again.")
+    watch_person_ids = fields.One2many(
+        "analitix.watch.person", "store_id", string="Watch List")
+    watch_person_count = fields.Integer(compute="_compute_counts")
+
+    # ------------------------------------------------------------------
     # Live occupancy over the selected period
     # ------------------------------------------------------------------
     visitors_in = fields.Integer(
@@ -480,6 +534,7 @@ class AnalitixStore(models.Model):
             store.register_count = len(store.register_ids)
             store.zone_count = len(store.zone_ids)
             store.signage_rule_count = len(store.signage_rule_ids)
+            store.watch_person_count = len(store.watch_person_ids)
 
     def _visitors_this_hour(self):
         """Counted visitors in the hour so far — the quiet/peak signal."""
@@ -628,6 +683,42 @@ class AnalitixStore(models.Model):
                 raise ValidationError(_(
                     "The staff match threshold is a cosine similarity: it must "
                     "sit strictly between 0 and 1."))
+
+    @api.constrains("watchlist_user_ids")
+    def _check_watchlist_recipients(self):
+        """Everyone told about a match must be able to open the entry.
+
+        Alerting somebody who cannot read the record is worse than not alerting
+        them: they are told a person in the shop is 'worth a look' and given no
+        way to see why, which is exactly how a discreet prompt turns into a
+        rumour.
+        """
+        group = self.env.ref("analitix.group_security", raise_if_not_found=False)
+        if not group:
+            return
+        for store in self:
+            outsiders = store.watchlist_user_ids.filtered(
+                lambda user: group not in user.group_ids)
+            if outsiders:
+                raise ValidationError(_(
+                    "%(names)s cannot open watch-list entries, so telling them "
+                    "about a match would be a warning with no explanation "
+                    "attached. Give them the Analitix security role first, or "
+                    "leave them off this list.",
+                    names=", ".join(outsiders.mapped("display_name"))))
+
+    @api.constrains("watchlist_threshold", "watchlist_min_liveness")
+    def _check_watchlist_thresholds(self):
+        for store in self:
+            if not 0.0 < store.watchlist_threshold < 1.0:
+                raise ValidationError(_(
+                    "The watch-list threshold is a cosine similarity: it must "
+                    "sit strictly between 0 and 1."))
+            if store.watchlist_threshold < store.reid_threshold:
+                raise ValidationError(_(
+                    "The watch-list threshold cannot be looser than ordinary "
+                    "re-identification. Naming a person has to be harder than "
+                    "counting one, not easier."))
 
     # ------------------------------------------------------------------
     # Kill switch

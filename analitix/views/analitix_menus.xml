@@ -59,6 +59,17 @@
     <menuitem id="menu_audit" name="Audit Log" parent="menu_operations"
               action="action_audit_log" sequence="40"/>
 
+    <!-- Its own top-level section, visible only to the security role. Not under
+         Operations and not under Configuration: it is neither a technical
+         health screen nor a store setting, and burying it in either would
+         suggest it belongs to whoever already opens those. -->
+    <menuitem id="menu_security" name="Security" parent="menu_root" sequence="60"
+              groups="analitix.group_security"/>
+    <menuitem id="menu_watch_person" name="Watch List" parent="menu_security"
+              action="action_watch_person" sequence="10"/>
+    <menuitem id="menu_watch_match" name="Matches" parent="menu_security"
+              action="action_watch_match" sequence="20"/>
+
     <menuitem id="menu_configuration" name="Configuration" parent="menu_root"
               sequence="90" groups="analitix.group_manager"/>
     <menuitem id="menu_store_setup" name="New Store Setup" parent="menu_configuration"

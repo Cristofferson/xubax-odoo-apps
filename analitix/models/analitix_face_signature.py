@@ -325,6 +325,17 @@ class AnalitixFaceSignature(models.Model):
             }
             if visitor and event.direction == "in":
                 self._greet_if_known(store, signature, visitor)
+                # The watch list, if the store has one. Checked against the raw
+                # vector rather than the anonymous signature: watch-list entries
+                # are permanent and the signature above expires within hours, so
+                # there is nothing to match them to. Passes the reading's own
+                # liveness score along — the check refuses to decide on a face
+                # the edge could not vouch for, independently of whatever the
+                # store's ordinary liveness setting says.
+                self.env["analitix.watch.person"].check(
+                    store, vector, visitor=visitor,
+                    liveness=event.liveness_score,
+                    model_name=event.embedding_model or "buffalo_l")
             if visitor:
                 if event.pending_demographic_id and not visitor.demographic_id:
                     visitor.demographic_id = event.pending_demographic_id.id

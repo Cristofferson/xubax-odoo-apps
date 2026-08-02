@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-02 00:03+0000\n"
-"PO-Revision-Date: 2026-08-02 00:03+0000\n"
+"POT-Creation-Date: 2026-08-02 00:37+0000\n"
+"PO-Revision-Date: 2026-08-02 00:37+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -67,6 +67,15 @@ msgstr ""
 
 #. module: analitix
 #. odoo-python
+#: code:addons/analitix/models/analitix_store.py:0
+msgid ""
+"%(names)s cannot open watch-list entries, so telling them about a match "
+"would be a warning with no explanation attached. Give them the Analitix "
+"security role first, or leave them off this list."
+msgstr ""
+
+#. module: analitix
+#. odoo-python
 #: code:addons/analitix/models/analitix_anomaly.py:0
 msgid ""
 "%(size)s people arrived together and are now in %(zones)s different zones."
@@ -84,6 +93,15 @@ msgstr ""
 msgid ""
 "%(tickets)s of them bought something — that is %(rate).1f%% of everyone who "
 "walked in."
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_watchlist.py:0
+msgid ""
+"%(user)s reviewed a match on %(date)s and reported it as the WRONG PERSON. "
+"If this keeps happening, the entry's signature is poor and it should be "
+"removed rather than re-enrolled."
 msgstr ""
 
 #. module: analitix
@@ -304,6 +322,28 @@ msgid "<span class=\"text-muted d-block small\">Visitors today</span>"
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_form
+msgid ""
+"<strong>This entry does nothing yet.</strong> It matches\n"
+"                        nobody until a second authorised person confirms it —\n"
+"                        and the person who added it cannot be the one who\n"
+"                        confirms. One bad afternoon should not be enough to mark\n"
+"                        somebody."
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid ""
+"<strong>This is the only feature in Analitix\n"
+"                                that names a specific person.</strong> Switching\n"
+"                                it on does not create a list — entries are added\n"
+"                                by hand after a documented incident, and each\n"
+"                                needs a second authorised person to confirm it.\n"
+"                                Nothing here ever reaches a screen or the sales\n"
+"                                floor at large."
+msgstr ""
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_form
 msgid ""
 "A <b>chime</b> is heard by whoever is nearby if the\n"
@@ -369,6 +409,13 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_watch_person__state
+msgid ""
+"A draft entry matches nothing at all. It becomes active only when a second "
+"authorised person confirms it."
+msgstr ""
+
+#. module: analitix
 #. odoo-python
 #: code:addons/analitix/models/analitix_anomaly.py:0
 msgid "A group came in together and split up"
@@ -382,6 +429,27 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_signage_rule__trigger__welcome
 msgid "A known customer arrived"
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_form
+msgid ""
+"A match is a prompt to pay attention. It is never an\n"
+"                        accusation, it never appears on a screen, it never\n"
+"                        reaches the sales floor at large, and it never triggers\n"
+"                        an automatic action. A person is told, quietly, and a\n"
+"                        person decides what to do."
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_watchlist.py:0
+msgid ""
+"A person matching watch-list entry %(ref)s (%(label)s) has come in.\n"
+"\n"
+"%(reason)s\n"
+"\n"
+"This is a prompt to pay attention, not an accusation and not an instruction. Confidence %(score).0f%%. Somebody should look, and somebody should decide."
 msgstr ""
 
 #. module: analitix
@@ -539,6 +607,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_needaction
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_needaction
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_needaction
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_needaction
 msgid "Action Needed"
 msgstr ""
 
@@ -552,30 +621,36 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone__active
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_vendor__active
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_store__subscription_state__active
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_watch_person__state__active
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_search
 msgid "Active"
 msgstr ""
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__activity_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__activity_ids
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__activity_ids
 msgid "Activities"
 msgstr ""
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__activity_exception_decoration
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__activity_exception_decoration
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__activity_exception_decoration
 msgid "Activity Exception Decoration"
 msgstr ""
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__activity_state
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__activity_state
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__activity_state
 msgid "Activity State"
 msgstr ""
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__activity_type_icon
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__activity_type_icon
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__activity_type_icon
 msgid "Activity Type Icon"
 msgstr ""
 
@@ -583,6 +658,18 @@ msgstr ""
 #. odoo-python
 #: code:addons/analitix/wizards/store_setup.py:0
 msgid "Add at least one door. A store with no entrance has nothing to count."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__created_by_id
+msgid "Added By"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_watch_person__expires_on
+msgid ""
+"After this the entry stops matching, automatically. A list that only grows "
+"is a list nobody trusts."
 msgstr ""
 
 #. module: analitix
@@ -620,6 +707,7 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__alert_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__alert_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_match__alert_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__alert_id
 #: model_terms:ir.ui.view,arch_db:analitix.view_alert_form
 msgid "Alert"
@@ -673,6 +761,25 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_visit_group__kind__single
 msgid "Alone"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.constraint,message:analitix.constraint_analitix_watch_person_dates_ordered
+msgid "An entry cannot expire before the date it is due for review."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__watchlist_expiry_days
+msgid ""
+"An entry stops matching automatically after this. A list that only ever "
+"grows is a list nobody trusts and nobody prunes."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_watch_person__reference
+msgid ""
+"An opaque handle. Deliberately not a name: staff acting on an alert need to "
+"know somebody is worth a second look, not to circulate an identity."
 msgstr ""
 
 #. module: analitix
@@ -802,6 +909,16 @@ msgid "Analitix Visit ↔ Ticket"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model,name:analitix.model_analitix_watch_person
+msgid "Analitix Watch-list Entry"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model,name:analitix.model_analitix_watch_match
+msgid "Analitix Watch-list Match"
+msgstr ""
+
+#. module: analitix
 #: model:ir.model,name:analitix.model_analitix_zone_vendor
 msgid "Analitix Zone Coverage"
 msgstr ""
@@ -919,6 +1036,11 @@ msgstr ""
 #: code:addons/analitix/models/analitix_device.py:0
 #: model:mail.template,name:analitix.mail_template_device_offline
 msgid "Analitix: critical device offline"
+msgstr ""
+
+#. module: analitix
+#: model:ir.actions.server,name:analitix.cron_watchlist_expire_ir_actions_server
+msgid "Analitix: expire and review watch-list entries"
 msgstr ""
 
 #. module: analitix
@@ -1081,6 +1203,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_attachment_count
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_attachment_count
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_attachment_count
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_attachment_count
 msgid "Attachment Count"
 msgstr ""
 
@@ -1212,6 +1335,16 @@ msgstr ""
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_poi_list
 msgid "Avg stop"
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_search
+msgid "Awaiting Confirmation"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_watch_person__state__draft
+msgid "Awaiting confirmation"
 msgstr ""
 
 #. module: analitix
@@ -1435,6 +1568,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_visit_group__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_match__company_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__company_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_vendor__company_id
@@ -1449,6 +1584,7 @@ msgstr ""
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_sale_match__confidence
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_match__score
 msgid "Confidence"
 msgstr ""
 
@@ -1480,6 +1616,40 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_form
+msgid "Confirm"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__confirmed_by_id
+msgid "Confirmed By"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__confirmed_on
+msgid "Confirmed On"
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_watchlist.py:0
+msgid "Confirmed by %(user)s. This entry is now active until %(date)s."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_watch_person__severity__incident
+msgid "Confirmed incident"
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_form
+msgid ""
+"Confirming makes this entry live: the person will be recognised on arrival "
+"and a small, named group will be told. Is the reason written down, factual "
+"and dated?"
+msgstr ""
+
+#. module: analitix
 #. odoo-python
 #: code:addons/analitix/models/analitix_audit.py:0
 msgid "Consulted %s record(s)"
@@ -1493,6 +1663,11 @@ msgstr ""
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_alert_form
 msgid "Context"
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_form
+msgid "Control"
 msgstr ""
 
 #. module: analitix
@@ -1530,6 +1705,16 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_rule__cooldown_minutes
 msgid "Cooldown (min)"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_watch_match__outcome__incident
+msgid "Correct match, incident"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_watch_match__outcome__uneventful
+msgid "Correct match, nothing happened"
 msgstr ""
 
 #. module: analitix
@@ -1638,6 +1823,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_visit_group__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__create_uid
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_match__create_uid
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__create_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_vendor__create_uid
@@ -1667,6 +1854,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_visit_group__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__create_date
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_match__create_date
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__create_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_vendor__create_date
@@ -1821,6 +2010,15 @@ msgid ""
 "Deliberately conservative: a false alarm costs a salesperson a\n"
 "                trip and, repeated, their trust in the whole system, after which\n"
 "                no alert works at all."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__watchlist_threshold
+msgid ""
+"Deliberately far stricter than ordinary re-identification. A wrong re-"
+"identification merges two visits; a wrong match here puts an innocent person"
+" under suspicion, so this errs heavily towards missing a real match rather "
+"than inventing one."
 msgstr ""
 
 #. module: analitix
@@ -1993,6 +2191,7 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_face_signature__embedding_dim
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__embedding_dim
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__embedding_dim
 msgid "Dimensions"
 msgstr ""
 
@@ -2072,6 +2271,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_visit_group__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__display_name
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_match__display_name
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__display_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_vendor__display_name
@@ -2211,6 +2412,11 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_search
+msgid "Due For Review"
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__duration_min
 msgid "Duration (min)"
 msgstr ""
@@ -2330,6 +2536,7 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_face_signature__embedding
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__embedding
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__embedding
 msgid "Encrypted Signature"
 msgstr ""
 
@@ -2416,6 +2623,33 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Entries"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__watchlist_expiry_days
+msgid "Entries Expire After (days)"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_match__person_id
+msgid "Entry"
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_watchlist.py:0
+msgid "Entry %(ref)s confirmed by %(user)s"
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_watchlist.py:0
+msgid "Entry %s removed from the watch list"
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__door_id
 #: model_terms:ir.ui.view,arch_db:analitix.view_visitor_search
 msgid "Entry Door"
@@ -2497,6 +2731,11 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_search
+msgid "Ever Matched"
+msgstr ""
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_signage_rule_form
 msgid ""
 "Every condition is optional and they are all\n"
@@ -2535,6 +2774,12 @@ msgid ""
 "Every one is recorded with who received it and whether they\n"
 "                reacted, because a nudge nobody measures is a nudge nobody\n"
 "                improves."
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_watch_match
+msgid ""
+"Every sighting lands here, along with what the person who looked made of it."
 msgstr ""
 
 #. module: analitix
@@ -2577,8 +2822,32 @@ msgid "Exits"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_watch_person__state__expired
+msgid "Expired"
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_watchlist.py:0
+msgid ""
+"Expired automatically. It no longer matches anything; a person has to review"
+" and extend it for that to change."
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_face_signature__expires_at
 msgid "Expires"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__expires_on
+msgid "Expires On"
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_form
+msgid "Expiry"
 msgstr ""
 
 #. module: analitix
@@ -2630,6 +2899,13 @@ msgid "Face signatures must expire: the retention window has to be positive."
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_watch_person__embedding
+msgid ""
+"Face vector, encrypted at rest. No photograph is stored here or anywhere "
+"else in Analitix."
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_job__state__failed
 #: model_terms:ir.ui.view,arch_db:analitix.view_job_search
 msgid "Failed"
@@ -2664,6 +2940,13 @@ msgstr ""
 msgid ""
 "Filled in by the salesperson, or by phase 4 when a sale is matched to the "
 "same visit shortly afterwards."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_watch_match__outcome
+msgid ""
+"Filled in by whoever looked. 'Wrong person' is the most important value "
+"here: a list with false positives nobody records is a list nobody can fix."
 msgstr ""
 
 #. module: analitix
@@ -2718,6 +3001,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_follower_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_follower_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_follower_ids
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_follower_ids
 msgid "Followers"
 msgstr ""
 
@@ -2725,12 +3009,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_partner_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_partner_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_partner_ids
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_partner_ids
 msgid "Followers (Partners)"
 msgstr ""
 
 #. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_device__activity_type_icon
 #: model:ir.model.fields,help:analitix.field_analitix_store__activity_type_icon
+#: model:ir.model.fields,help:analitix.field_analitix_watch_person__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
 msgstr ""
 
@@ -2834,6 +3120,13 @@ msgid "Happy"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__watchlist_max_days
+msgid ""
+"Hard ceiling: no entry can be set to run longer than this without somebody "
+"looking at it again."
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__kind
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup_door__hardware
 msgid "Hardware"
@@ -2843,6 +3136,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__has_message
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__has_message
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__has_message
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__has_message
 msgid "Has Message"
 msgstr ""
 
@@ -2950,6 +3244,13 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__watchlist_review_days
+msgid ""
+"How long before a new entry is put back in front of a human to confirm it "
+"still belongs on the list."
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_alert__response_seconds
 msgid ""
 "How long the salesperson took to acknowledge. The number that tells an owner"
@@ -3008,6 +3309,18 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_form
+msgid "How this entry is described internally"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_watch_person__display_label
+msgid ""
+"How this entry is described internally — 'the man from the March 4th "
+"incident'. Keep it factual: this is read by people who were not there."
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_alert__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_attendance__id
@@ -3039,6 +3352,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_visit_group__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__id
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_match__id
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__id
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_vendor__id
@@ -3062,12 +3377,14 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__activity_exception_icon
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__activity_exception_icon
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__activity_exception_icon
 msgid "Icon"
 msgstr ""
 
 #. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_device__activity_exception_icon
 #: model:ir.model.fields,help:analitix.field_analitix_store__activity_exception_icon
+#: model:ir.model.fields,help:analitix.field_analitix_watch_person__activity_exception_icon
 msgid "Icon to indicate an exception activity."
 msgstr ""
 
@@ -3095,6 +3412,7 @@ msgstr ""
 #: model:ir.model.fields,help:analitix.field_analitix_device__message_needaction
 #: model:ir.model.fields,help:analitix.field_analitix_staff_signature__message_needaction
 #: model:ir.model.fields,help:analitix.field_analitix_store__message_needaction
+#: model:ir.model.fields,help:analitix.field_analitix_watch_person__message_needaction
 msgid "If checked, new messages require your attention."
 msgstr ""
 
@@ -3105,6 +3423,8 @@ msgstr ""
 #: model:ir.model.fields,help:analitix.field_analitix_staff_signature__message_has_sms_error
 #: model:ir.model.fields,help:analitix.field_analitix_store__message_has_error
 #: model:ir.model.fields,help:analitix.field_analitix_store__message_has_sms_error
+#: model:ir.model.fields,help:analitix.field_analitix_watch_person__message_has_error
+#: model:ir.model.fields,help:analitix.field_analitix_watch_person__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -3121,6 +3441,11 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_anomaly_event__kind__repeat_entry
 msgid "In and out repeatedly"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__incident_date
+msgid "Incident Date"
 msgstr ""
 
 #. module: analitix
@@ -3177,6 +3502,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_is_follower
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_is_follower
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_is_follower
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_is_follower
 msgid "Is Follower"
 msgstr ""
 
@@ -3267,6 +3593,11 @@ msgid "Known customer arrived"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__display_label
+msgid "Label"
+msgstr ""
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_coaching_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_door_hourly_search
@@ -3305,6 +3636,7 @@ msgstr ""
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__last_match
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__last_match
 msgid "Last Match"
 msgstr ""
 
@@ -3336,6 +3668,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_visit_group__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__write_uid
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_match__write_uid
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__write_uid
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_vendor__write_uid
@@ -3365,6 +3699,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_visit_group__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__write_date
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_match__write_date
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__write_date
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_vendor__write_date
@@ -3411,6 +3747,15 @@ msgid "Leave empty to derive it from the store and door codes."
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid ""
+"Leave this empty and matches are recorded but\n"
+"                                nobody hears about them. That is a defensible\n"
+"                                state — it is silently telling nobody that is\n"
+"                                not."
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_store__visit_gap_minutes
 msgid ""
 "Leaving and returning inside this gap continues the same visit. A jewellery "
@@ -3450,6 +3795,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_demographic__liveness_score
 #: model:ir.model.fields,field_description:analitix.field_analitix_event__liveness_score
 #: model:ir.model.fields,field_description:analitix.field_analitix_face_signature__liveness_score
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_match__liveness
 msgid "Liveness"
 msgstr ""
 
@@ -3549,6 +3895,13 @@ msgid "Mall / gallery entrance"
 msgstr ""
 
 #. module: analitix
+#: model:res.groups,comment:analitix.group_security
+msgid ""
+"Manage the watch list: add, confirm, review and remove entries, and receive "
+"match alerts. Not granted to anybody by default."
+msgstr ""
+
+#. module: analitix
 #: model:res.groups,name:analitix.group_manager
 msgid "Manager"
 msgstr ""
@@ -3568,6 +3921,16 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_match_form
+msgid "Match"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__match_count
+msgid "Match Count"
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_event__match_score
 msgid "Match Score"
 msgstr ""
@@ -3580,6 +3943,7 @@ msgstr ""
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_sale_match__matched_at
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_match__matched_at
 msgid "Matched"
 msgstr ""
 
@@ -3590,8 +3954,21 @@ msgstr ""
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__match_count
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__match_ids
+#: model:ir.ui.menu,name:analitix.menu_watch_match
 #: model_terms:ir.ui.view,arch_db:analitix.view_staff_signature_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_match_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_list
 msgid "Matches"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_watch_person__store_id
+msgid ""
+"Matching happens within this store only. Sharing a watch list across a chain"
+" is a decision with far wider consequences and belongs to the corporate "
+"phase, behind its own control."
 msgstr ""
 
 #. module: analitix
@@ -3615,6 +3992,11 @@ msgid "Maximum Visit (min)"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__watchlist_max_days
+msgid "Maximum Without Review (days)"
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_visit_group__visitor_ids
 msgid "Members"
 msgstr ""
@@ -3629,6 +4011,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_has_error
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_has_error
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_has_error
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_has_error
 msgid "Message Delivery error"
 msgstr ""
 
@@ -3636,6 +4019,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_ids
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_ids
 msgid "Messages"
 msgstr ""
 
@@ -3685,6 +4069,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__model_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_face_signature__model_name
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__model_name
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__model_name
 msgid "Model"
 msgstr ""
 
@@ -3745,6 +4130,7 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__my_activity_date_deadline
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__my_activity_date_deadline
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__my_activity_date_deadline
 msgid "My Activity Deadline"
 msgstr ""
 
@@ -3811,6 +4197,12 @@ msgstr ""
 
 #. module: analitix
 #. odoo-python
+#: code:addons/analitix/models/analitix_watchlist.py:0
+msgid "New"
+msgstr ""
+
+#. module: analitix
+#. odoo-python
 #: code:addons/analitix/models/analitix_device.py:0
 msgid "New API key — copy it now"
 msgstr ""
@@ -3825,24 +4217,28 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__activity_calendar_event_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__activity_calendar_event_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
 msgstr ""
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__activity_date_deadline
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__activity_date_deadline
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__activity_date_deadline
 msgid "Next Activity Deadline"
 msgstr ""
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__activity_summary
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__activity_summary
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__activity_summary
 msgid "Next Activity Summary"
 msgstr ""
 
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__activity_type_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__activity_type_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__activity_type_id
 msgid "Next Activity Type"
 msgstr ""
 
@@ -3916,6 +4312,16 @@ msgstr ""
 #. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_lost_sale
 msgid "No lost sales detected"
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_watch_match
+msgid "No matches recorded."
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_watch_person
+msgid "No one is on the watch list."
 msgstr ""
 
 #. module: analitix
@@ -4015,6 +4421,17 @@ msgid "Not discreet — the customer may notice"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_watch_match__outcome__pending
+msgid "Not reviewed"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_match__note
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_match_form
+msgid "Note"
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__note
 #: model:ir.model.fields,field_description:analitix.field_analitix_door__note
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi__note
@@ -4097,6 +4514,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_needaction_counter
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_needaction_counter
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_needaction_counter
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_needaction_counter
 msgid "Number of Actions"
 msgstr ""
 
@@ -4104,6 +4522,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_has_error_counter
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_has_error_counter
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_has_error_counter
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_has_error_counter
 msgid "Number of errors"
 msgstr ""
 
@@ -4111,6 +4530,7 @@ msgstr ""
 #: model:ir.model.fields,help:analitix.field_analitix_device__message_needaction_counter
 #: model:ir.model.fields,help:analitix.field_analitix_staff_signature__message_needaction_counter
 #: model:ir.model.fields,help:analitix.field_analitix_store__message_needaction_counter
+#: model:ir.model.fields,help:analitix.field_analitix_watch_person__message_needaction_counter
 msgid "Number of messages requiring action"
 msgstr ""
 
@@ -4118,6 +4538,7 @@ msgstr ""
 #: model:ir.model.fields,help:analitix.field_analitix_device__message_has_error_counter
 #: model:ir.model.fields,help:analitix.field_analitix_staff_signature__message_has_error_counter
 #: model:ir.model.fields,help:analitix.field_analitix_store__message_has_error_counter
+#: model:ir.model.fields,help:analitix.field_analitix_watch_person__message_has_error_counter
 msgid "Number of messages with delivery error"
 msgstr ""
 
@@ -4236,6 +4657,12 @@ msgid "Only In Zones"
 msgstr ""
 
 #. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_watchlist.py:0
+msgid "Only a draft entry can be confirmed."
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_signage_rule__quiet_below_visitors
 msgid ""
 "Only for the quiet-hour trigger: fire when the store's traffic this hour is "
@@ -4308,6 +4735,7 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_alert__outcome
 #: model:ir.model.fields,field_description:analitix.field_analitix_anomaly_event__outcome
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_match__outcome
 #: model_terms:ir.ui.view,arch_db:analitix.view_alert_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_anomaly_search
 msgid "Outcome"
@@ -4527,6 +4955,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__rating_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__rating_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__rating_ids
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__rating_ids
 msgid "Ratings"
 msgstr ""
 
@@ -4551,11 +4980,23 @@ msgid "Read sensitive data"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__watchlist_min_liveness
+msgid ""
+"Readings below this are never checked against the list at all. A photograph held up to a camera must not be able to put a real person under suspicion.\n"
+"Note that cameras which do not report a liveness score at all send zero, so with any value above zero here the list matches nothing. That is the safe way round — but if your edge agents do not do liveness, lowering this is a decision to make knowingly rather than a number to nudge until matches appear."
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_store__demographic_min_confidence
 msgid ""
 "Readings below this are stored but flagged unreliable, so a dashboard can "
 "leave them out explicitly rather than quietly average a coin flip into the "
 "customer's numbers."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__reason
+msgid "Reason"
 msgstr ""
 
 #. module: analitix
@@ -4571,6 +5012,21 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__reid_enabled
 msgid "Recognise Repeat Faces"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__watchlist_enabled
+msgid ""
+"Recognise people a manager has deliberately added after a documented "
+"incident, and tell a named, restricted group when one of them comes in. Off "
+"by default, and it should stay off unless the store has a real reason and a "
+"person accountable for it."
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_form
+msgid "Recognition"
 msgstr ""
 
 #. module: analitix
@@ -4593,6 +5049,15 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_match_form
+msgid ""
+"Recording what actually happened is what keeps this list\n"
+"                        honest. <strong>Wrong person</strong> is the most\n"
+"                        important outcome here: a list whose false positives\n"
+"                        nobody writes down is a list nobody can fix."
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_audit_log__record_count
 #: model_terms:ir.ui.view,arch_db:analitix.view_audit_log_list
 msgid "Records"
@@ -4609,6 +5074,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_poi__code
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__code
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__code
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__reference
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone__code
 msgid "Reference"
 msgstr ""
@@ -4661,6 +5127,37 @@ msgstr ""
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_demographic_search
 msgid "Reliable Only"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__revoke_reason
+msgid "Removal Reason"
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_form
+msgid "Remove From List"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_watch_person__state__revoked
+msgid "Removed"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__revoked_by_id
+msgid "Removed By"
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_watchlist.py:0
+msgid "Removed from the watch list by %s."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_watch_person__severity__repeat
+msgid "Repeated incidents"
 msgstr ""
 
 #. module: analitix
@@ -4722,6 +5219,7 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__activity_user_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__activity_user_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__activity_user_id
 msgid "Responsible User"
 msgstr ""
 
@@ -4796,6 +5294,33 @@ msgid "Revenue per ticket: what an average sale is worth."
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__watchlist_review_days
+msgid "Review Every (days)"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__review_on
+msgid "Review On"
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_watchlist.py:0
+msgid "Review watch-list entry %s"
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_watchlist.py:0
+msgid "Reviewed and extended by %(user)s to %(date)s."
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_form
+msgid "Reviewed — Extend"
+msgstr ""
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_device_form
 msgid "Revoke"
 msgstr ""
@@ -4856,6 +5381,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_has_sms_error
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__message_has_sms_error
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__message_has_sms_error
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__message_has_sms_error
 msgid "SMS Delivery error"
 msgstr ""
 
@@ -4948,6 +5474,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__seconds
 #: model_terms:ir.ui.view,arch_db:analitix.view_zone_dwell_list
 msgid "Seconds"
+msgstr ""
+
+#. module: analitix
+#: model:ir.ui.menu,name:analitix.menu_security
+msgid "Security"
+msgstr ""
+
+#. module: analitix
+#: model:res.groups,name:analitix.group_security
+msgid "Security / Compliance"
 msgstr ""
 
 #. module: analitix
@@ -5082,6 +5618,11 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup__state__draft
 msgid "Setup"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__severity
+msgid "Severity"
 msgstr ""
 
 #. module: analitix
@@ -5228,6 +5769,7 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_event__signature_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__signature_id
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_form
 msgid "Signature"
 msgstr ""
 
@@ -5396,6 +5938,7 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__status
 #: model:ir.model.fields,field_description:analitix.field_analitix_lost_sale__state
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__state
 #: model_terms:ir.ui.view,arch_db:analitix.view_device_search
 #: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_search
 msgid "Status"
@@ -5404,6 +5947,7 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_device__activity_state
 #: model:ir.model.fields,help:analitix.field_analitix_store__activity_state
+#: model:ir.model.fields,help:analitix.field_analitix_watch_person__activity_state
 msgid ""
 "Status based on activities\n"
 "Overdue: Due date is already passed\n"
@@ -5457,6 +6001,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_value_report__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_visit_group__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_match__store_id
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__store_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_vendor__store_id
@@ -5606,6 +6152,20 @@ msgid "That is down from last month (%(prev).1f%%)."
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.actions.act_window,help:analitix.action_watch_person
+msgid ""
+"That is the right state for most shops. Entries are added by\n"
+"                hand after a documented incident, never automatically, and each\n"
+"                one has to be confirmed by a second authorised person before it\n"
+"                recognises anybody."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.constraint,message:analitix.constraint_analitix_watch_person_reference_uniq
+msgid "That watch-list reference already exists."
+msgstr ""
+
+#. module: analitix
 #. odoo-python
 #: code:addons/analitix/models/analitix_zone.py:0
 msgid "The Xibo connector is not installed."
@@ -5629,6 +6189,7 @@ msgstr ""
 #. module: analitix
 #. odoo-python
 #: code:addons/analitix/models/analitix_staff_signature.py:0
+#: code:addons/analitix/models/analitix_watchlist.py:0
 msgid "The enrolment payload carried no vector."
 msgstr ""
 
@@ -5693,8 +6254,24 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__watchlist_user_ids
+msgid ""
+"The only people told about a match. Named one by one on purpose: a match is "
+"not commercial information and does not follow the ordinary zone rota to "
+"whoever happens to be on the floor."
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_device__store_id
 msgid "The only store this device may ever post data for."
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_watchlist.py:0
+msgid ""
+"The person who added an entry cannot confirm it. A second authorised person "
+"has to agree — that is what makes this a control rather than a formality."
 msgstr ""
 
 #. module: analitix
@@ -5811,6 +6388,22 @@ msgstr ""
 
 #. module: analitix
 #. odoo-python
+#: code:addons/analitix/models/analitix_store.py:0
+msgid ""
+"The watch-list threshold cannot be looser than ordinary re-identification. "
+"Naming a person has to be harder than counting one, not easier."
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_store.py:0
+msgid ""
+"The watch-list threshold is a cosine similarity: it must sit strictly "
+"between 0 and 1."
+msgstr ""
+
+#. module: analitix
+#. odoo-python
 #: code:addons/analitix/models/analitix_customer_context.py:0
 msgid ""
 "They are not alone — greet them in person rather than letting the screen "
@@ -5833,6 +6426,11 @@ msgid "This Month"
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_match_form
+msgid "This Was The Wrong Person"
+msgstr ""
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_search
 msgid "This Week"
 msgstr ""
@@ -5843,6 +6441,37 @@ msgid ""
 "This door's crossings are recorded but do not count as\n"
 "                        visitors. Traffic here still shows on the door report; it\n"
 "                        simply stays out of the store's conversion rate."
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_watchlist.py:0
+msgid ""
+"This entry has no face signature, so it could never match anything. Enrol it"
+" from the edge tool first."
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_watchlist.py:0
+msgid ""
+"This entry is due for review. Does it still belong on the list? Extending is"
+" a decision — the default is to let it lapse."
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_form
+msgid ""
+"This entry will stop matching. It stays visible, because the record of why "
+"somebody was listed is part of the audit trail."
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_watchlist.py:0
+msgid ""
+"This entry would stay active beyond the store's maximum of %(days)s days. "
+"Somebody has to look at it again before then."
 msgstr ""
 
 #. module: analitix
@@ -6185,6 +6814,7 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_device__activity_exception_decoration
 #: model:ir.model.fields,help:analitix.field_analitix_store__activity_exception_decoration
+#: model:ir.model.fields,help:analitix.field_analitix_watch_person__activity_exception_decoration
 msgid "Type of the exception activity on record."
 msgstr ""
 
@@ -6261,6 +6891,11 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__watchlist_enabled
+msgid "Use A Watch List"
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_audit_log__action__kill_switch
 msgid "Used the capture kill switch"
 msgstr ""
@@ -6294,6 +6929,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_sale_match__visitor_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_event__visitor_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__display_reference
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_match__visitor_id
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__visitor_id
 #: model_terms:ir.ui.view,arch_db:analitix.view_lost_sale_form
 #: model_terms:ir.ui.view,arch_db:analitix.view_visitor_form
@@ -6418,6 +7054,52 @@ msgid "Was Served"
 msgstr ""
 
 #. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_watch_person
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__watch_person_ids
+#: model:ir.ui.menu,name:analitix.menu_watch_person
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_list
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_search
+msgid "Watch List"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__watch_person_count
+msgid "Watch Person Count"
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_form
+msgid "Watch-list Entry"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__watchlist_min_liveness
+msgid "Watch-list Liveness"
+msgstr ""
+
+#. module: analitix
+#: model:ir.actions.act_window,name:analitix.action_watch_match
+msgid "Watch-list Matches"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__watchlist_user_ids
+msgid "Watch-list Recipients"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__watchlist_threshold
+msgid "Watch-list Threshold"
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_watchlist.py:0
+msgid "Watch-list entry %s created (awaiting confirmation)"
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_audit_log__action__watchlist_confirm
 msgid "Watch-list entry confirmed"
 msgstr ""
@@ -6434,6 +7116,12 @@ msgstr ""
 
 #. module: analitix
 #. odoo-python
+#: code:addons/analitix/models/analitix_watchlist.py:0
+msgid "Watch-list match on %(ref)s at %(score).2f"
+msgstr ""
+
+#. module: analitix
+#. odoo-python
 #: code:addons/analitix/models/analitix_value_report.py:0
 msgid ""
 "We spotted %(detected)s people who were about to leave without being served."
@@ -6444,6 +7132,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__website_message_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_staff_signature__website_message_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__website_message_ids
+#: model:ir.model.fields,field_description:analitix.field_analitix_watch_person__website_message_ids
 msgid "Website Messages"
 msgstr ""
 
@@ -6451,6 +7140,7 @@ msgstr ""
 #: model:ir.model.fields,help:analitix.field_analitix_device__website_message_ids
 #: model:ir.model.fields,help:analitix.field_analitix_staff_signature__website_message_ids
 #: model:ir.model.fields,help:analitix.field_analitix_store__website_message_ids
+#: model:ir.model.fields,help:analitix.field_analitix_watch_person__website_message_ids
 msgid "Website communication history"
 msgstr ""
 
@@ -6484,6 +7174,20 @@ msgstr ""
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_signage_rule_form
 msgid "Welcome back, {customer}"
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_form
+msgid ""
+"What happened, factually and dated. Somebody will read this in a year to "
+"decide whether the entry still belongs here."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_watch_person__reason
+msgid ""
+"What happened, factually and dated. This is the record somebody will read in"
+" a year when deciding whether the entry still belongs here."
 msgstr ""
 
 #. module: analitix
@@ -6588,6 +7292,13 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_watch_person__review_on
+msgid ""
+"When somebody should look at this again and decide whether it still belongs "
+"on the list."
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_event__event_time
 msgid ""
 "When the crossing happened at the store, as reported by the edge — not when "
@@ -6602,6 +7313,11 @@ msgid ""
 "When this signature is deleted. Set from the store's retention window on "
 "every sighting, so an active visitor's handle lives as long as their visit "
 "and not a minute longer."
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_form
+msgid "Where"
 msgstr ""
 
 #. module: analitix
@@ -6697,6 +7413,11 @@ msgid "Who Gets Told"
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Who Is Told About A Match"
+msgstr ""
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_zone_form
 msgid ""
 "Who gets the discreet nudge for this zone, and when.\n"
@@ -6728,6 +7449,11 @@ msgid "Whole company"
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_person_form
+msgid "Why"
+msgstr ""
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_form
 msgid "Why it is paused…"
 msgstr ""
@@ -6741,6 +7467,23 @@ msgstr ""
 #. odoo-python
 #: code:addons/analitix/models/analitix_anomaly.py:0
 msgid "Worth a look"
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_watchlist.py:0
+msgid "Worth a look near the entrance"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_watch_person__severity__watch
+msgid "Worth a second look"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_watch_match__outcome__wrong_person
+#: model_terms:ir.ui.view,arch_db:analitix.view_watch_match_list
+msgid "Wrong person"
 msgstr ""
 
 #. module: analitix

@@ -54,3 +54,5 @@ access_value_report_user,analitix.value.report user,model_analitix_value_report,
 access_value_report_manager,analitix.value.report manager,model_analitix_value_report,analitix.group_manager,1,1,1,1
 access_coaching_report_user,analitix.coaching.report user,model_analitix_coaching_report,analitix.group_user,1,0,0,0
 access_recurrence_report_user,analitix.recurrence.report user,model_analitix_recurrence_report,analitix.group_user,1,0,0,0
+access_watch_person_security,analitix.watch.person security,model_analitix_watch_person,analitix.group_security,1,1,1,0
+access_watch_match_security,analitix.watch.match security,model_analitix_watch_match,analitix.group_security,1,1,1,0

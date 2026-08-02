@@ -150,5 +150,19 @@
             <field name="active" eval="True"/>
         </record>
 
+        <!-- Expiry is the promise that makes a watch list defensible: entries
+             lapse on their own, and staying on it is what takes a deliberate
+             act. Daily rather than hourly because the unit here is days and a
+             person's standing should not change at 03:17. -->
+        <record id="cron_watchlist_expire" model="ir.cron">
+            <field name="name">Analitix: expire and review watch-list entries</field>
+            <field name="model_id" ref="model_analitix_watch_person"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_expire()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
     </data>
 </odoo>

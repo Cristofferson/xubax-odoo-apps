@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+      The watch list.
+
+      The screens carry more warning text than anything else in this addon, and
+      that is deliberate: the person filling this form in is usually annoyed
+      about something that just happened in their shop, and the interface is the
+      last place where the consequences can be spelled out before a real
+      person's face is stored under a suspicion.
+    -->
+
+    <record id="view_watch_person_list" model="ir.ui.view">
+        <field name="name">analitix.watch.person.list</field>
+        <field name="model">analitix.watch.person</field>
+        <field name="arch" type="xml">
+            <list string="Watch List"
+                  decoration-muted="state in ('expired', 'revoked')"
+                  decoration-warning="state == 'draft'">
+                <field name="reference"/>
+                <field name="display_label"/>
+                <field name="store_id"/>
+                <field name="incident_date"/>
+                <field name="severity" widget="badge"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-warning="state == 'draft'"
+                       decoration-muted="state in ('expired', 'revoked')"/>
+                <field name="review_on"/>
+                <field name="expires_on"/>
+                <field name="match_count" string="Matches"/>
+                <field name="last_match" optional="hide"/>
+                <field name="created_by_id" optional="hide"/>
+                <field name="confirmed_by_id" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_watch_person_form" model="ir.ui.view">
+        <field name="name">analitix.watch.person.form</field>
+        <field name="model">analitix.watch.person</field>
+        <field name="arch" type="xml">
+            <form string="Watch-list Entry">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm"
+                            class="btn-primary" invisible="state != 'draft'"
+                            confirm="Confirming makes this entry live: the person will be recognised on arrival and a small, named group will be told. Is the reason written down, factual and dated?"/>
+                    <button name="action_extend" type="object" string="Reviewed — Extend"
+                            invisible="state not in ('active', 'expired')"/>
+                    <button name="action_revoke" type="object" string="Remove From List"
+                            invisible="state in ('revoked',)"
+                            confirm="This entry will stop matching. It stays visible, because the record of why somebody was listed is part of the audit trail."/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,active,expired"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="reference"/>
+                        <h1><field name="reference" readonly="1"/></h1>
+                        <h2><field name="display_label"
+                                   placeholder="How this entry is described internally"/></h2>
+                    </div>
+
+                    <div class="alert alert-warning" role="alert"
+                         invisible="state != 'draft'">
+                        <strong>This entry does nothing yet.</strong> It matches
+                        nobody until a second authorised person confirms it —
+                        and the person who added it cannot be the one who
+                        confirms. One bad afternoon should not be enough to mark
+                        somebody.
+                    </div>
+
+                    <group>
+                        <group string="Where">
+                            <field name="store_id"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="severity"/>
+                            <field name="incident_date"/>
+                        </group>
+                        <group string="Control">
+                            <field name="created_by_id"/>
+                            <field name="confirmed_by_id"/>
+                            <field name="confirmed_on"/>
+                            <field name="revoked_by_id" invisible="state != 'revoked'"/>
+                            <field name="revoke_reason" invisible="state != 'revoked'"/>
+                        </group>
+                    </group>
+
+                    <group string="Why">
+                        <field name="reason" nolabel="1" colspan="2"
+                               placeholder="What happened, factually and dated. Somebody will read this in a year to decide whether the entry still belongs here."/>
+                    </group>
+
+                    <group>
+                        <group string="Expiry">
+                            <field name="review_on"/>
+                            <field name="expires_on"/>
+                        </group>
+                        <group string="Recognition">
+                            <field name="model_name"/>
+                            <field name="embedding_dim" string="Signature"/>
+                            <field name="last_match"/>
+                            <field name="match_count"/>
+                        </group>
+                    </group>
+
+                    <div class="alert alert-info" role="alert">
+                        A match is a prompt to pay attention. It is never an
+                        accusation, it never appears on a screen, it never
+                        reaches the sales floor at large, and it never triggers
+                        an automatic action. A person is told, quietly, and a
+                        person decides what to do.
+                    </div>
+
+                    <notebook>
+                        <page string="Matches" name="matches">
+                            <field name="match_ids" readonly="1">
+                                <list decoration-danger="outcome == 'wrong_person'"
+                                      decoration-muted="outcome == 'uneventful'">
+                                    <field name="matched_at"/>
+                                    <field name="score"/>
+                                    <field name="liveness"/>
+                                    <field name="outcome" widget="badge"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_watch_person_search" model="ir.ui.view">
+        <field name="name">analitix.watch.person.search</field>
+        <field name="model">analitix.watch.person</field>
+        <field name="arch" type="xml">
+            <search string="Watch List">
+                <field name="reference"/>
+                <field name="display_label"/>
+                <field name="store_id"/>
+                <filter name="filter_active" string="Active"
+                        domain="[('state', '=', 'active')]"/>
+                <filter name="filter_draft" string="Awaiting Confirmation"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_due" string="Due For Review"
+                        domain="[('state', '=', 'active'), ('review_on', '&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter name="filter_matched" string="Ever Matched"
+                        domain="[('last_match', '!=', False)]"/>
+                <group>
+                    <filter name="group_store" context="{'group_by': 'store_id'}"/>
+                    <filter name="group_state" context="{'group_by': 'state'}"/>
+                    <filter name="group_severity" context="{'group_by': 'severity'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_watch_match_list" model="ir.ui.view">
+        <field name="name">analitix.watch.match.list</field>
+        <field name="model">analitix.watch.match</field>
+        <field name="arch" type="xml">
+            <list string="Matches" create="false"
+                  decoration-danger="outcome == 'wrong_person'"
+                  decoration-warning="outcome == 'pending'">
+                <field name="matched_at"/>
+                <field name="person_id"/>
+                <field name="store_id"/>
+                <field name="score"/>
+                <field name="liveness" optional="show"/>
+                <field name="outcome" widget="badge"/>
+                <field name="note" optional="show"/>
+                <button name="action_wrong_person" type="object" icon="fa-times-circle"
+                        string="Wrong person" invisible="outcome != 'pending'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_watch_match_form" model="ir.ui.view">
+        <field name="name">analitix.watch.match.form</field>
+        <field name="model">analitix.watch.match</field>
+        <field name="arch" type="xml">
+            <form string="Match" create="false">
+                <header>
+                    <button name="action_wrong_person" type="object"
+                            string="This Was The Wrong Person"
+                            invisible="outcome != 'pending'"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="person_id"/>
+                            <field name="store_id"/>
+                            <field name="matched_at"/>
+                            <field name="visitor_id"/>
+                        </group>
+                        <group>
+                            <field name="score"/>
+                            <field name="liveness"/>
+                            <field name="outcome"/>
+                            <field name="alert_id"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert">
+                        Recording what actually happened is what keeps this list
+                        honest. <strong>Wrong person</strong> is the most
+                        important outcome here: a list whose false positives
+                        nobody writes down is a list nobody can fix.
+                    </div>
+                    <group string="Note">
+                        <field name="note" nolabel="1" colspan="2"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_watch_person" model="ir.actions.act_window">
+        <field name="name">Watch List</field>
+        <field name="res_model">analitix.watch.person</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_filter_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No one is on the watch list.</p>
+            <p>
+                That is the right state for most shops. Entries are added by
+                hand after a documented incident, never automatically, and each
+                one has to be confirmed by a second authorised person before it
+                recognises anybody.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_watch_match" model="ir.actions.act_window">
+        <field name="name">Watch-list Matches</field>
+        <field name="res_model">analitix.watch.match</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No matches recorded.</p>
+            <p>Every sighting lands here, along with what the person who looked made of it.</p>
+        </field>
+    </record>
+
+</odoo>

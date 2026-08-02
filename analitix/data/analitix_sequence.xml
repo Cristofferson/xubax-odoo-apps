@@ -14,5 +14,16 @@
             <field name="company_id" eval="False"/>
         </record>
 
+        <!-- Watch-list handles. Opaque on purpose: staff acting on an alert
+             need to know that somebody is worth a second look, not to have a
+             name to circulate. -->
+        <record id="seq_watch_person" model="ir.sequence">
+            <field name="name">Analitix Watch-list Entry</field>
+            <field name="code">analitix.watch.person</field>
+            <field name="prefix">W</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
     </data>
 </odoo>

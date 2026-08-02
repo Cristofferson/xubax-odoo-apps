@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Analitix — Physical Store Intelligence",
-    "version": "19.0.4.0.0",
+    "version": "19.0.5.0.0",
     "category": "Point of Sale",
     "summary": "Store intelligence on Odoo: visitor counting across any number "
                "of doors, POS conversion (ATV, UPT, revenue per visitor, "
@@ -115,6 +115,30 @@ Phase 4
   labelled an estimate every time, because inflating it is the fastest way to
   lose the customer who eventually checks.
 
+Phase 5
+-------
+
+* **The watch list** — the only feature here that names a specific person, and
+  the one built with the most friction on purpose. Nobody is ever added
+  automatically: an entry is written by hand, with a dated reason, and does
+  nothing at all until a *second* authorised person confirms it. The person who
+  added it cannot be the one who confirms.
+* **It expires.** Every entry carries a review date and a hard expiry, with a
+  ceiling nobody can set an entry past. Lapsing is the default; staying on the
+  list is what takes a deliberate act.
+* **A match is a prompt to pay attention** — never an accusation, never an
+  automatic action, never on a screen, never to the sales floor at large. It
+  goes quietly to a named, restricted group, at a confidence threshold far
+  stricter than ordinary re-identification and only for a reading the edge
+  could vouch for as a live person.
+* **False positives are recorded**, because a list whose mistakes nobody writes
+  down is a list nobody can fix.
+* **Reads are audited, not only writes**: going through the list is itself
+  logged, which Odoo's chatter would never show.
+* A separate **Security / Compliance** role, deliberately outside the
+  commercial hierarchy and granted to nobody on install — a store manager who
+  reads conversion figures does not get this with it.
+
 Privacy by design: no image or video is ever transmitted or stored — the edge
 sends only counts and irreversible numeric embeddings, and those are encrypted
 in the database.
@@ -168,6 +192,7 @@ only receives JSON.
         "views/analitix_lost_sale_views.xml",
         "views/analitix_signage_views.xml",
         "views/analitix_value_views.xml",
+        "views/analitix_watchlist_views.xml",
         "views/analitix_job_views.xml",
         "views/analitix_audit_views.xml",
         "views/analitix_hourly_views.xml",

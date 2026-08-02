@@ -110,6 +110,24 @@
             <field name="critical" eval="False"/>
         </record>
 
+        <!-- One watch-list entry, left in draft on purpose.
+
+             It carries no face signature and the demo stores have the feature
+             switched off, so it recognises nobody — which is exactly what it is
+             here to show. Somebody exploring the demo sees the state that
+             matters: an entry that has been written down and still does
+             nothing, because a second authorised person has not agreed to it.
+
+             Demo data that shipped a *confirmed* entry would be teaching the
+             wrong lesson about how this feature is meant to be used. -->
+        <record id="demo_watch_person" model="analitix.watch.person">
+            <field name="store_id" ref="demo_store_boutique"/>
+            <field name="display_label">Example entry — not confirmed</field>
+            <field name="severity">watch</field>
+            <field name="reason">Sample record for the demo database. A real entry states what happened, on what date, and who witnessed it — factually, because somebody will read it in a year to decide whether it still belongs on the list. This one recognises nobody: it has no face signature and it has never been confirmed.</field>
+            <field name="incident_date" eval="(DateTime.now() - relativedelta(days=20)).strftime('%Y-%m-%d')"/>
+        </record>
+
         <!-- Two weeks of plausible traffic, generated in Python because a
              realistic day curve is not something to hand-write in XML. -->
         <function model="analitix.store" name="_generate_demo_traffic">

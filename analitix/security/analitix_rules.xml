@@ -254,6 +254,28 @@
         <field name="domain_force">[('user_id', '=', user.id)]</field>
     </record>
 
+    <!--
+      The watch list.
+
+      Store scope applies here exactly as everywhere else — being in the
+      security group does not mean seeing every customer's watch list on a
+      shared instance. The ACL is what restricts this to the security role;
+      these rules are what keep one tenant out of another's.
+    -->
+    <record id="rule_watch_person_scope" model="ir.rule">
+        <field name="name">Analitix Watch-list Entry: company and store scope</field>
+        <field name="model_id" ref="model_analitix_watch_person"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+    </record>
+
+    <record id="rule_watch_match_scope" model="ir.rule">
+        <field name="name">Analitix Watch-list Match: company and store scope</field>
+        <field name="model_id" ref="model_analitix_watch_match"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+    </record>
+
     <record id="rule_coaching_manager" model="ir.rule">
         <field name="name">Analitix Coaching: managers see the whole floor</field>
         <field name="model_id" ref="model_analitix_coaching_report"/>
