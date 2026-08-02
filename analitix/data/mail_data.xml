@@ -51,5 +51,72 @@
             <field name="lang">{{ object.company_id.partner_id.lang }}</field>
         </record>
 
+        <!-- The monthly value report. Written for a shop owner reading it on a
+             phone, in their language, with nothing to interpret. Every figure
+             that is an estimate says so. -->
+        <record id="mail_template_value_report" model="mail.template">
+            <field name="name">Analitix: monthly value report</field>
+            <field name="model_id" ref="model_analitix_value_report"/>
+            <field name="subject">{{ object.store_id.name }} — how last month went</field>
+            <field name="email_from">{{ (object.company_id.email or user.email_formatted) }}</field>
+            <field name="partner_to">{{ ','.join(str(pid) for pid in ctx.get('report_partner_ids', [])) }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#2b2b2b;max-width:620px;">
+                    <p style="font-size:18px;margin:0 0 4px 0;">
+                        <strong t-out="object.store_id.name">Store</strong>
+                    </p>
+                    <p style="margin:0 0 20px 0;color:#777;font-size:13px;">
+                        <t t-out="object.period_start">from</t> – <t t-out="object.period_end">to</t>
+                    </p>
+
+                    <t t-foreach="object.summary_lines()" t-as="line">
+                        <p style="margin:0 0 10px 0;line-height:1.5;" t-out="line">Line</p>
+                    </t>
+
+                    <table style="border-collapse:collapse;margin:22px 0;width:100%;">
+                        <tr>
+                            <td style="padding:8px 12px 8px 0;color:#777;">Visitors</td>
+                            <td style="padding:8px 0;text-align:right;"><t t-out="object.visitors">0</t></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:8px 12px 8px 0;color:#777;">Sales</td>
+                            <td style="padding:8px 0;text-align:right;"><t t-out="object.tickets">0</t></td>
+                        </tr>
+                        <tr style="background:#fafafa;">
+                            <td style="padding:8px 12px 8px 0;color:#777;"><strong>Conversion</strong></td>
+                            <td style="padding:8px 0;text-align:right;"><strong><t t-out="'%.1f' % object.conversion_rate">0</t>%</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:8px 12px 8px 0;color:#777;">Walk-outs spotted</td>
+                            <td style="padding:8px 0;text-align:right;"><t t-out="object.lost_sales_detected">0</t></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:8px 12px 8px 0;color:#777;">Of those, rescued</td>
+                            <td style="padding:8px 0;text-align:right;"><t t-out="object.lost_sales_rescued">0</t></td>
+                        </tr>
+                    </table>
+
+                    <div t-if="object.estimated_recovered" style="background:#f4f8f4;border-left:3px solid #6aa84f;padding:14px 16px;margin:0 0 18px 0;">
+                        <p style="margin:0 0 6px 0;font-size:17px;">
+                            <strong>≈ <t t-out="object.currency_id.symbol"></t><t t-out="'%.2f' % object.estimated_recovered">0</t></strong>
+                            recovered
+                        </p>
+                        <p style="margin:0;color:#666;font-size:13px;">
+                            This is an <strong>estimate</strong>, not a measurement: rescued
+                            walk-outs multiplied by your own average sale. A rescued walk-out
+                            is one where we nudged your team and that same visit then bought
+                            something.
+                        </p>
+                    </div>
+
+                    <p style="margin:0;color:#777;font-size:12px;">
+                        Questions about any of these numbers? Reply to this e-mail.
+                    </p>
+                </div>
+            </field>
+            <field name="lang">{{ object.company_id.partner_id.lang }}</field>
+        </record>
+
     </data>
 </odoo>

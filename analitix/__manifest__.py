@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Analitix — Physical Store Intelligence",
-    "version": "19.0.3.1.0",
+    "version": "19.0.4.0.0",
     "category": "Point of Sale",
     "summary": "Store intelligence on Odoo: visitor counting across any number "
                "of doors, POS conversion (ATV, UPT, revenue per visitor, "
@@ -88,6 +88,33 @@ Phase 3
   that scatters. Anonymous and about patterns, never about people — the named
   watch list is a separate phase with separate controls.
 
+Phase 4
+-------
+
+* **The screens react, and to the right screen.** A configurable rule engine
+  resolves *where* before *what*: a bundle offer belongs on the screen the
+  group is standing near, not on the one by the door. Triggers ship for
+  walk-outs, groups, profiles, quiet hours and known customers, and every shop
+  edits its own without calling anybody.
+* **Personal welcome, with a social rule.** A recognised customer is greeted by
+  name, with context assembled from CRM, their POS history and the special
+  dates addon. Only when they arrived alone: naming somebody on a screen in
+  front of the person they came with tells that person something about them.
+  With company, the screen stays neutral and the greeting goes to the
+  salesperson.
+* **Floor coaching.** Per salesperson: alerts received, response time, and how
+  many of the ones they answered ended in a sale — measured against what they
+  answered, so nobody is marked down for a nudge that arrived mid-customer.
+* **Visit frequency**, **CRM leads from lost sales**, and **staff attendance**
+  written into Odoo's own hr.attendance, never overwriting a manual correction.
+* **Subscription per store**: a plan that governs what the customer's users can
+  switch on — a configuration control, never a licence check that could turn a
+  paying shop's cameras off over a billing hiccup.
+* **The monthly value report**: plain language, e-mailed to the owner. Visitors,
+  conversion, walk-outs spotted and rescued, and roughly what that was worth —
+  labelled an estimate every time, because inflating it is the fastest way to
+  lose the customer who eventually checks.
+
 Privacy by design: no image or video is ever transmitted or stored — the edge
 sends only counts and irreversible numeric embeddings, and those are encrypted
 in the database.
@@ -106,7 +133,15 @@ only receives JSON.
         "base",
         "mail",
         "hr",
+        # Named by the brief: staff attendance feeds Odoo's own hr.attendance
+        # rather than a parallel table only this addon understands. Community,
+        # so it costs the customer nothing.
+        "hr_attendance",
         "point_of_sale",
+        # sale.order is Community and is what an Odoo 17+ subscription IS: the
+        # recurring machinery is Enterprise, but the link works everywhere and
+        # the recurring fields are read defensively.
+        "sale",
         # Named by the project brief as a module to integrate with rather than
         # rebuild: a lost sale can open a lead. Community, so it costs the
         # customer nothing. Odoo's WhatsApp module is deliberately NOT here —
@@ -131,6 +166,8 @@ only receives JSON.
         "views/analitix_poi_views.xml",
         "views/analitix_alert_views.xml",
         "views/analitix_lost_sale_views.xml",
+        "views/analitix_signage_views.xml",
+        "views/analitix_value_views.xml",
         "views/analitix_job_views.xml",
         "views/analitix_audit_views.xml",
         "views/analitix_hourly_views.xml",

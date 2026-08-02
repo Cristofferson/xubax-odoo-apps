@@ -212,4 +212,53 @@
         <field name="domain_force">[(1, '=', 1)]</field>
     </record>
 
+    <record id="rule_signage_rule_scope" model="ir.rule">
+        <field name="name">Analitix Signage Rule: company and store scope</field>
+        <field name="model_id" ref="model_analitix_signage_rule"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+    </record>
+
+    <record id="rule_signage_event_scope" model="ir.rule">
+        <field name="name">Analitix Signage Firing: company and store scope</field>
+        <field name="model_id" ref="model_analitix_signage_event"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+    </record>
+
+    <record id="rule_value_report_scope" model="ir.rule">
+        <field name="name">Analitix Value Report: company and store scope</field>
+        <field name="model_id" ref="model_analitix_value_report"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+    </record>
+
+    <record id="rule_coaching_report_scope" model="ir.rule">
+        <field name="name">Analitix Floor Coaching: company and store scope</field>
+        <field name="model_id" ref="model_analitix_coaching_report"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+    </record>
+
+    <record id="rule_recurrence_report_scope" model="ir.rule">
+        <field name="name">Analitix Visit Frequency: company and store scope</field>
+        <field name="model_id" ref="model_analitix_recurrence_report"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('store_id', 'in', user.analitix_store_ids.ids), ((0, '=', 1) if user.analitix_store_ids else (1, '=', 1))]</field>
+    </record>
+
+    <record id="rule_coaching_own" model="ir.rule">
+        <field name="name">Analitix Coaching: a salesperson sees their own line</field>
+        <field name="model_id" ref="model_analitix_coaching_report"/>
+        <field name="groups" eval="[(4, ref('analitix.group_user'))]"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+    </record>
+
+    <record id="rule_coaching_manager" model="ir.rule">
+        <field name="name">Analitix Coaching: managers see the whole floor</field>
+        <field name="model_id" ref="model_analitix_coaching_report"/>
+        <field name="groups" eval="[(4, ref('analitix.group_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
 </odoo>

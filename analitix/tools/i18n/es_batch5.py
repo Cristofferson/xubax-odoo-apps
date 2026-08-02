@@ -205,9 +205,6 @@ BATCH5 = {
     "Identified On": "Identificado el",
     "Customer": "Cliente",
     "%(name)s just came in": "%(name)s acaba de entrar",
-    "%(name)s is a returning customer.%(last)s":
-        "%(name)s es un cliente recurrente.%(last)s",
-    "\\nLast purchase: %s": "\\nÚltima compra: %s",
     "Face signature linked to customer %s":
         "Firma facial ligada al cliente %s",
 

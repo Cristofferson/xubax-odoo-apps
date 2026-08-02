@@ -78,6 +78,7 @@ The suite covers, in order of how much it would cost to get wrong:
 | `test_analytics.py` | Every conversion ratio, against hand-computed values |
 | `test_visits.py` | Re-identification, visit boundaries, retention, purchase units |
 | `test_floor.py` | Alert routing and discretion, lost sales, identification, behaviour |
+| `test_action.py` | Screen routing, the social privacy rule, attendance, billing, ROI |
 
 ## Deploying an edge device
 
@@ -99,7 +100,7 @@ mounted.
 | 1 | Counting, conversion, doors, devices, staff exclusion | **Done** |
 | 2 | Visits, anonymous re-identification, demographics, purchase units | **Done** |
 | 3 | Zones, lost sales, display attention, face↔ticket↔partner, alerts on five channels | **Done** |
-| 4 | Xibo triggers, CRM, loyalty, attendance, subscription, ROI report | Planned |
+| 4 | Signage routing, welcome context, coaching, attendance, subscription, ROI report | **Done** |
 | 5 | Watch list | Planned |
 | 6 | Packaging, manuals, videos, apps.odoo.com | Planned |
 | 7 | Chain scale, role hierarchy, HQ console | Optional |

@@ -348,106 +348,16 @@ class AnalitixAlert(models.Model):
         decides how their own floor works; what this code owes them is that the
         consequence is stated plainly rather than discovered.
 
-        Delivered through the existing Xibo connector, detected at runtime —
-        Analitix does not depend on it. Phase 4 builds the full per-player
-        trigger engine on the same zone mapping.
+        The delivery itself lives on ``analitix.zone`` because the signage rule
+        engine needs exactly the same thing — one implementation, two callers.
         """
         self.ensure_one()
-        zone = self.zone_id
-        if not zone or not zone.screen_group_ref:
-            return False
-        installed = self.env["ir.module.module"].sudo().search_count(
-            [("name", "=", "xibo_connector"), ("state", "=", "installed")])
-        if not installed:
-            _logger.info(
-                "Analitix: store %s asks for signage alerts but the Xibo "
-                "connector is not installed.", store.display_name)
-            return False
-        try:
-            group = self.env["xibo.display.group"].sudo().search(
-                [("name", "=", zone.screen_group_ref)], limit=1)
-            if not group:
-                _logger.warning(
-                    "Analitix: no Xibo display group named %r for zone %s.",
-                    zone.screen_group_ref, zone.display_name)
-                return False
-            server = self.env["xibo.server"].sudo().search([], limit=1)
-            if not server:
-                return False
-            now = fields.Datetime.now()
-            broadcast = self.env["xibo.broadcast"].sudo().create({
-                "name": self.summary[:60],
-                "server_id": server.id,
-                "display_mode": "overlay",
-                "display_group_ids": [(6, 0, group.ids)],
-                "from_dt": now,
-                "to_dt": now + timedelta(seconds=store.alert_screen_seconds),
-                "duration_seconds": store.alert_screen_seconds,
-            })
-            broadcast.action_send()
-            return True
-        except Exception as error:  # noqa: BLE001
-            _logger.warning(
-                "Analitix: signage alert %s failed: %s", self.id, error)
-            return False
-
-    def activity_schedule_alert(self, recipient):
-        """A to-do on the store, not on the alert.
-
-        Deliberate: a salesperson's Odoo activity list should read like their
-        shop's work, not like a stream of technical records they have never
-        heard of.
-        """
-        self.ensure_one()
-        self.env["mail.activity"].sudo().create({
-            "res_model_id": self.env["ir.model"]._get_id("analitix.store"),
-            "res_id": self.store_id.id,
-            "activity_type_id": self.env.ref("mail.mail_activity_data_todo").id,
-            "summary": self.summary,
-            "note": self.body or self.summary,
-            "user_id": recipient.id,
-            "date_deadline": fields.Date.context_today(self),
-        })
-
-    def _push_to_whatsapp(self, recipient):
-        """Optional channel, detected at runtime.
-
-        Analitix does not depend on the ``whatsapp`` module: this is sold to
-        stores that may not have it, and a hard dependency would make the app
-        uninstallable for them. Absent the module, the option simply does
-        nothing and the app push has already carried the message.
-        """
-        self.ensure_one()
-        installed = self.env["ir.module.module"].sudo().search_count(
-            [("name", "=", "whatsapp"), ("state", "=", "installed")])
-        if not installed:
-            return False
-        number = recipient.partner_id.mobile or recipient.partner_id.phone
-        if not number:
-            return False
-        template_id = self.store_id.alert_whatsapp_template_id
-        if not template_id:
-            return False
-        template = self.env["whatsapp.template"].sudo().browse(
-            template_id).exists()
-        if not template:
-            _logger.warning(
-                "Analitix: store %s points at WhatsApp template %s, which does "
-                "not exist.", self.store_id.display_name, template_id)
-            return False
-        try:
-            composer = self.env["whatsapp.composer"].sudo().create({
-                "wa_template_id": template.id,
-                "res_model": "analitix.alert",
-                "res_ids": str(self.id),
-                "phone": number,
-            })
-            composer._send_whatsapp_template()
-            return True
-        except Exception as error:  # noqa: BLE001
-            _logger.warning(
-                "Analitix: WhatsApp alert %s failed: %s", self.id, error)
-            return False
+        ok, error = self.env["analitix.zone"]._send_to_screen(
+            self.zone_id, self.summary, seconds=store.alert_screen_seconds)
+        if error and not ok:
+            _logger.info("Analitix: alert %s not shown on screen: %s",
+                         self.id, error)
+        return ok
 
     # ------------------------------------------------------------------
     def action_acknowledge(self):

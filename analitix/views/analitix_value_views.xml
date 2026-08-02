@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_value_report_list" model="ir.ui.view">
+        <field name="name">analitix.value.report.list</field>
+        <field name="model">analitix.value.report</field>
+        <field name="arch" type="xml">
+            <list string="Monthly Value" create="false">
+                <field name="period_start"/>
+                <field name="store_id"/>
+                <field name="visitors" sum="Visitors"/>
+                <field name="tickets" sum="Sales"/>
+                <field name="conversion_rate" avg="Conversion"/>
+                <field name="conversion_delta" optional="show"/>
+                <field name="lost_sales_detected" sum="Spotted"/>
+                <field name="lost_sales_rescued" sum="Rescued"/>
+                <field name="estimated_recovered" sum="Recovered" widget="monetary"/>
+                <field name="monthly_fee" optional="hide" widget="monetary"/>
+                <field name="times_fee" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'sent'"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_value_report_form" model="ir.ui.view">
+        <field name="name">analitix.value.report.form</field>
+        <field name="model">analitix.value.report</field>
+        <field name="arch" type="xml">
+            <form string="Monthly Value" create="false">
+                <header>
+                    <button name="action_send" type="object"
+                            string="Send To The Owner" class="btn-primary"
+                            invisible="state == 'sent'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="display_name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Traffic and sales">
+                            <field name="store_id"/>
+                            <field name="period_start"/>
+                            <field name="period_end"/>
+                            <field name="visitors"/>
+                            <field name="tickets"/>
+                            <field name="revenue"/>
+                            <field name="conversion_rate"/>
+                            <field name="prev_conversion_rate"/>
+                            <field name="conversion_delta"/>
+                            <field name="average_ticket"/>
+                        </group>
+                        <group string="What the system did">
+                            <field name="alerts_sent"/>
+                            <field name="alerts_acknowledged"/>
+                            <field name="alerts_missed"/>
+                            <field name="lost_sales_detected"/>
+                            <field name="lost_sales_rescued"/>
+                            <field name="rescue_rate"/>
+                            <field name="estimated_recovered"/>
+                            <field name="monthly_fee"/>
+                            <field name="times_fee"/>
+                            <field name="sent_on"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert">
+                        <b>Recovered revenue is an estimate.</b> It is rescued
+                        walk-outs multiplied by this store's own average sale,
+                        and a rescued walk-out is one where an alert fired and
+                        that same visit later produced a ticket — correlation,
+                        stated honestly, not proof that the nudge caused the
+                        sale. Inflating this figure is the fastest way to lose
+                        the customer who eventually checks it.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_value_report_search" model="ir.ui.view">
+        <field name="name">analitix.value.report.search</field>
+        <field name="model">analitix.value.report</field>
+        <field name="arch" type="xml">
+            <search string="Monthly Value">
+                <field name="store_id"/>
+                <filter name="filter_draft" string="Not Sent"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_paid_for_itself" string="Paid For Itself"
+                        domain="[('times_fee', '&gt;=', 1)]"
+                        help="Estimated recovered revenue at or above the subscription. The number the owner is actually asking about."/>
+                <group name="group_by">
+                    <filter name="group_store" string="Store" domain="[]"
+                            context="{'group_by': 'store_id'}"/>
+                    <filter name="group_month" string="Month" domain="[]"
+                            context="{'group_by': 'period_start'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_value_report" model="ir.actions.act_window">
+        <field name="name">Monthly Value</field>
+        <field name="res_model">analitix.value.report</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_group_store': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No reports yet</p>
+            <p>
+                Once a month, in plain language: how many people came in, how
+                many bought, how many were about to walk out unserved, how many
+                your team caught, and roughly what that was worth.
+            </p>
+            <p>
+                This is what an owner reads instead of a dashboard, and it is
+                what makes the subscription obviously worth keeping — or
+                obviously not, which is information too.
+            </p>
+        </field>
+    </record>
+
+    <!-- Floor coaching -->
+    <record id="view_coaching_list" model="ir.ui.view">
+        <field name="name">analitix.coaching.report.list</field>
+        <field name="model">analitix.coaching.report</field>
+        <field name="arch" type="xml">
+            <list string="Floor Coaching" create="false" edit="false">
+                <field name="day"/>
+                <field name="user_id"/>
+                <field name="store_id"/>
+                <field name="zone_id" optional="show"/>
+                <field name="alerts" sum="Alerts"/>
+                <field name="acknowledged" sum="Answered"/>
+                <field name="missed" sum="Missed"/>
+                <field name="sold" sum="Sales"/>
+                <field name="answer_rate" avg="Answered %"/>
+                <field name="conversion_rate" avg="Converted %"/>
+                <field name="avg_response_seconds" avg="Avg response"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_coaching_pivot" model="ir.ui.view">
+        <field name="name">analitix.coaching.report.pivot</field>
+        <field name="model">analitix.coaching.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Floor Coaching" sample="1">
+                <field name="user_id" type="row"/>
+                <field name="alerts" type="measure"/>
+                <field name="acknowledged" type="measure"/>
+                <field name="sold" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_coaching_search" model="ir.ui.view">
+        <field name="name">analitix.coaching.report.search</field>
+        <field name="model">analitix.coaching.report</field>
+        <field name="arch" type="xml">
+            <search string="Floor Coaching">
+                <field name="user_id"/>
+                <field name="store_id"/>
+                <filter name="filter_30d" string="Last 30 Days"
+                        domain="[('day', '&gt;=', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <group name="group_by">
+                    <filter name="group_user" string="Salesperson" domain="[]"
+                            context="{'group_by': 'user_id'}"/>
+                    <filter name="group_zone" string="Zone" domain="[]"
+                            context="{'group_by': 'zone_id'}"/>
+                    <filter name="group_day" string="Day" domain="[]"
+                            context="{'group_by': 'day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_coaching" model="ir.actions.act_window">
+        <field name="name">Floor Coaching</field>
+        <field name="res_model">analitix.coaching.report</field>
+        <field name="view_mode">pivot,list</field>
+        <field name="context">{'search_default_filter_30d': 1, 'search_default_group_user': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nothing to coach on yet</p>
+            <p>
+                How many nudges each salesperson received, how fast they
+                answered, and how many of the ones they answered ended in a
+                sale.
+            </p>
+            <p>
+                Conversion is measured against what they <b>answered</b>, not
+                what they were sent: nobody should be marked down for a nudge
+                that arrived while they were serving another customer.
+            </p>
+        </field>
+    </record>
+
+    <!-- Visit frequency -->
+    <record id="view_recurrence_list" model="ir.ui.view">
+        <field name="name">analitix.recurrence.report.list</field>
+        <field name="model">analitix.recurrence.report</field>
+        <field name="arch" type="xml">
+            <list string="Visit Frequency" create="false" edit="false">
+                <field name="day"/>
+                <field name="store_id"/>
+                <field name="visits" sum="Visits"/>
+                <field name="returning_visits" sum="Returning"/>
+                <field name="identified_visits" sum="Known"/>
+                <field name="return_rate" avg="Returning %"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_recurrence_graph" model="ir.ui.view">
+        <field name="name">analitix.recurrence.report.graph</field>
+        <field name="model">analitix.recurrence.report</field>
+        <field name="arch" type="xml">
+            <graph string="Visit Frequency" type="line" sample="1">
+                <field name="day"/>
+                <field name="return_rate" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_recurrence_search" model="ir.ui.view">
+        <field name="name">analitix.recurrence.report.search</field>
+        <field name="model">analitix.recurrence.report</field>
+        <field name="arch" type="xml">
+            <search string="Visit Frequency">
+                <field name="store_id"/>
+                <filter name="filter_30d" string="Last 30 Days"
+                        domain="[('day', '&gt;=', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <group name="group_by">
+                    <filter name="group_store" string="Store" domain="[]"
+                            context="{'group_by': 'store_id'}"/>
+                    <filter name="group_day" string="Day" domain="[]"
+                            context="{'group_by': 'day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_recurrence" model="ir.actions.act_window">
+        <field name="name">Visit Frequency</field>
+        <field name="res_model">analitix.recurrence.report</field>
+        <field name="view_mode">graph,list</field>
+        <field name="context">{'search_default_filter_30d': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No frequency data yet</p>
+            <p>
+                How much of your traffic is people coming back. Bounded by the
+                store's own retention window — it measures what the shop chose
+                to remember, not everything that happened.
+            </p>
+        </field>
+    </record>
+
+</odoo>

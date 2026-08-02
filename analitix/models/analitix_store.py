@@ -340,6 +340,64 @@ class AnalitixStore(models.Model):
         help="Tell the salesperson when a customer they know walks in, with "
              "their name and last purchase, so they can greet them properly.")
 
+    # ------------------------------------------------------------------
+    # Phase 4 — the action layer
+    # ------------------------------------------------------------------
+    signage_enabled = fields.Boolean(
+        string="Drive The Screens", default=False,
+        help="Let measured events change what the shop's screens are showing. "
+             "Off until the store has mapped a screen to at least one zone — "
+             "rules that resolve to nowhere are worse than no rules.")
+    signage_rule_ids = fields.One2many(
+        "analitix.signage.rule", "store_id", string="Signage Rules")
+    signage_rule_count = fields.Integer(compute="_compute_counts")
+
+    welcome_alone_only = fields.Boolean(
+        string="Greet By Name Only If Alone", default=True,
+        help="A screen that says 'Welcome back, Gustavo' while Gustavo is "
+             "standing there with somebody has just told that person something "
+             "about him. When he is not alone the screen stays neutral and the "
+             "personal greeting goes to the salesperson instead.")
+    welcome_group_seconds = fields.Integer(
+        string="Arrived-together Window (s)", default=5, required=True,
+        help="How close behind a known customer another arrival counts as "
+             "'with them' for the greeting rule above.")
+
+    attendance_enabled = fields.Boolean(
+        string="Log Staff Attendance", default=False,
+        help="Turn employee crossings at the staff door into hr.attendance "
+             "check-ins and check-outs. Off by default: a store that has not "
+             "agreed this with its team should not start recording their hours "
+             "because a camera was installed.")
+    attendance_door_id = fields.Many2one(
+        "analitix.door", string="Staff Door",
+        domain="[('store_id', '=', id)]",
+        help="Which entrance counts for attendance. Leave empty to accept any "
+             "door — right for a small shop with one way in.")
+    attendance_min_gap_minutes = fields.Integer(
+        string="Ignore Repeats Within (min)", default=10, required=True,
+        help="Somebody stepping out for a moment should not close and reopen "
+             "their working day.")
+    attendance_max_hours = fields.Integer(
+        string="Maximum Shift (h)", default=12, required=True,
+        help="A shift still open after this long is closed by the nightly job. "
+             "Exits do get missed, and an employee who appears to have worked "
+             "fifty hours makes any payroll reading it wrong.")
+
+    value_report_enabled = fields.Boolean(
+        string="Send The Monthly Report", default=True,
+        help="Mail the owner a plain-language summary each month: visitors, "
+             "conversion, walk-outs spotted and rescued, and roughly what that "
+             "was worth. This is the report that shows the subscription paying "
+             "for itself.")
+    report_partner_ids = fields.Many2many(
+        "res.partner", relation="analitix_store_report_partner_rel",
+        column1="store_id", column2="partner_id", string="Report Recipients",
+        help="Who receives the monthly value report. The owner, usually — it "
+             "is written for somebody who does not open dashboards.")
+    value_report_ids = fields.One2many(
+        "analitix.value.report", "store_id", string="Monthly Reports")
+
     # --- behaviour signals ---
     anomaly_detection_enabled = fields.Boolean(
         string="Flag Unusual Behaviour", default=False,
@@ -413,13 +471,26 @@ class AnalitixStore(models.Model):
     # ------------------------------------------------------------------
     # Computes
     # ------------------------------------------------------------------
-    @api.depends("door_ids", "device_ids", "register_ids", "zone_ids")
+    @api.depends("door_ids", "device_ids", "register_ids", "zone_ids",
+                 "signage_rule_ids")
     def _compute_counts(self):
         for store in self:
             store.door_count = len(store.door_ids)
             store.device_count = len(store.device_ids)
             store.register_count = len(store.register_ids)
             store.zone_count = len(store.zone_ids)
+            store.signage_rule_count = len(store.signage_rule_ids)
+
+    def _visitors_this_hour(self):
+        """Counted visitors in the hour so far — the quiet/peak signal."""
+        self.ensure_one()
+        since = fields.Datetime.now().replace(minute=0, second=0, microsecond=0)
+        return self.env["analitix.event"].sudo().search_count([
+            ("store_id", "=", self.id),
+            ("direction", "=", "in"),
+            ("counted", "=", True),
+            ("event_time", ">=", since),
+        ])
 
     # ------------------------------------------------------------------
     # Lookups the rest of the addon needs

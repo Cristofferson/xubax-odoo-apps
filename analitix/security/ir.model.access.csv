@@ -46,3 +46,11 @@ access_sale_match_user,analitix.sale.match user,model_analitix_sale_match,analit
 access_sale_match_manager,analitix.sale.match manager,model_analitix_sale_match,analitix.group_manager,1,1,1,1
 access_anomaly_user,analitix.anomaly.event user,model_analitix_anomaly_event,analitix.group_user,1,1,0,0
 access_anomaly_manager,analitix.anomaly.event manager,model_analitix_anomaly_event,analitix.group_manager,1,1,0,1
+access_signage_rule_user,analitix.signage.rule user,model_analitix_signage_rule,analitix.group_user,1,0,0,0
+access_signage_rule_manager,analitix.signage.rule manager,model_analitix_signage_rule,analitix.group_manager,1,1,1,1
+access_signage_event_user,analitix.signage.event user,model_analitix_signage_event,analitix.group_user,1,0,0,0
+access_signage_event_manager,analitix.signage.event manager,model_analitix_signage_event,analitix.group_manager,1,1,0,1
+access_value_report_user,analitix.value.report user,model_analitix_value_report,analitix.group_user,1,0,0,0
+access_value_report_manager,analitix.value.report manager,model_analitix_value_report,analitix.group_manager,1,1,1,1
+access_coaching_report_user,analitix.coaching.report user,model_analitix_coaching_report,analitix.group_user,1,0,0,0
+access_recurrence_report_user,analitix.recurrence.report user,model_analitix_recurrence_report,analitix.group_user,1,0,0,0

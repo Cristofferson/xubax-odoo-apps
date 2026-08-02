@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_signage_rule_list" model="ir.ui.view">
+        <field name="name">analitix.signage.rule.list</field>
+        <field name="model">analitix.signage.rule</field>
+        <field name="arch" type="xml">
+            <list string="Signage Rules">
+                <field name="sequence" widget="handle"/>
+                <field name="store_id"/>
+                <field name="name"/>
+                <field name="trigger"/>
+                <field name="target"/>
+                <field name="target_zone_id" optional="show"/>
+                <field name="layout_ref" optional="show"/>
+                <field name="cooldown_minutes" optional="hide"/>
+                <field name="fire_count" string="Firings"/>
+                <field name="active" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_signage_rule_form" model="ir.ui.view">
+        <field name="name">analitix.signage.rule.form</field>
+        <field name="model">analitix.signage.rule</field>
+        <field name="arch" type="xml">
+            <form string="Signage Rule">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Rule"/>
+                        <h1><field name="name" placeholder="e.g. Finance offer at the exit"/></h1>
+                    </div>
+                    <group>
+                        <group string="When">
+                            <field name="store_id"/>
+                            <field name="trigger"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Show it on">
+                            <field name="target"/>
+                            <field name="target_zone_id"
+                                   invisible="target != 'fixed'"
+                                   required="target == 'fixed'"/>
+                            <field name="duration_seconds"/>
+                            <field name="cooldown_minutes"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-warning" role="alert">
+                        Whatever this rule shows is <b>read by the customer</b>.
+                        Write it for them — an offer, a suggestion, a welcome —
+                        never about them.
+                    </div>
+                    <group string="What to show">
+                        <field name="layout_ref" placeholder="Xibo layout name"/>
+                        <field name="message"
+                               placeholder="Welcome back, {customer}"
+                               invisible="layout_ref"/>
+                    </group>
+                    <notebook>
+                        <page string="Conditions" name="conditions">
+                            <p class="text-muted">
+                                Every condition is optional and they are all
+                                combined. Leave one empty and it stops narrowing
+                                anything.
+                            </p>
+                            <group>
+                                <group string="Where and who">
+                                    <field name="zone_ids" widget="many2many_tags"/>
+                                    <field name="age_bands"
+                                           placeholder="18-24,25-34"/>
+                                    <field name="gender"/>
+                                    <field name="group_min_size"/>
+                                </group>
+                                <group string="When">
+                                    <field name="hour_from" widget="float_time"/>
+                                    <field name="hour_to" widget="float_time"/>
+                                    <field name="quiet_below_visitors"
+                                           invisible="trigger != 'daypart'"/>
+                                </group>
+                            </group>
+                            <group string="Days">
+                                <div>
+                                    <field name="dow_mon"/><label for="dow_mon"/>
+                                    <field name="dow_tue"/><label for="dow_tue"/>
+                                    <field name="dow_wed"/><label for="dow_wed"/>
+                                    <field name="dow_thu"/><label for="dow_thu"/>
+                                    <field name="dow_fri"/><label for="dow_fri"/>
+                                    <field name="dow_sat"/><label for="dow_sat"/>
+                                    <field name="dow_sun"/><label for="dow_sun"/>
+                                </div>
+                            </group>
+                        </page>
+                        <page string="Firings" name="firings">
+                            <field name="event_ids" readonly="1">
+                                <list>
+                                    <field name="sent_at"/>
+                                    <field name="zone_id"/>
+                                    <field name="screen_ref"/>
+                                    <field name="content"/>
+                                    <field name="delivered"/>
+                                    <field name="error"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_signage_rule_search" model="ir.ui.view">
+        <field name="name">analitix.signage.rule.search</field>
+        <field name="model">analitix.signage.rule</field>
+        <field name="arch" type="xml">
+            <search string="Signage Rules">
+                <field name="name"/>
+                <field name="store_id"/>
+                <filter name="filter_never_fired" string="Never Fired"
+                        domain="[('event_ids', '=', False)]"
+                        help="Configured but never triggered. Usually the conditions are narrower than the shop realised."/>
+                <group name="group_by">
+                    <filter name="group_store" string="Store" domain="[]"
+                            context="{'group_by': 'store_id'}"/>
+                    <filter name="group_trigger" string="Trigger" domain="[]"
+                            context="{'group_by': 'trigger'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_signage_rule" model="ir.actions.act_window">
+        <field name="name">Signage Rules</field>
+        <field name="res_model">analitix.signage.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_group_store': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Make the screens react</p>
+            <p>
+                A store has several screens and they are not interchangeable.
+                Every rule resolves <b>where</b> before <b>what</b>: a bundle
+                offer belongs on the screen the group is standing near, not on
+                the one by the door.
+            </p>
+            <p>
+                The scenarios that ship are examples. Every shop wants its own,
+                and an owner who has to call us to change three minutes into five
+                will stop asking.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_signage_event_list" model="ir.ui.view">
+        <field name="name">analitix.signage.event.list</field>
+        <field name="model">analitix.signage.event</field>
+        <field name="arch" type="xml">
+            <list string="Signage Firings" create="false"
+                  decoration-danger="not delivered">
+                <field name="sent_at"/>
+                <field name="store_id"/>
+                <field name="rule_id"/>
+                <field name="zone_id"/>
+                <field name="screen_ref" optional="show"/>
+                <field name="content"/>
+                <field name="partner_id" optional="hide"/>
+                <field name="delivered"/>
+                <field name="error" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_signage_event_search" model="ir.ui.view">
+        <field name="name">analitix.signage.event.search</field>
+        <field name="model">analitix.signage.event</field>
+        <field name="arch" type="xml">
+            <search string="Signage Firings">
+                <field name="store_id"/>
+                <field name="rule_id"/>
+                <field name="zone_id"/>
+                <filter name="filter_failed" string="Did Not Reach The Screen"
+                        domain="[('delivered', '=', False)]"
+                        help="Kept on purpose: 'the screen never showed it' is exactly what a store needs to be able to see."/>
+                <filter name="filter_7d" string="Last 7 Days"
+                        domain="[('sent_at', '&gt;=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <group name="group_by">
+                    <filter name="group_rule" string="Rule" domain="[]"
+                            context="{'group_by': 'rule_id'}"/>
+                    <filter name="group_zone" string="Screen" domain="[]"
+                            context="{'group_by': 'zone_id'}"/>
+                    <filter name="group_day" string="Day" domain="[]"
+                            context="{'group_by': 'sent_at:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_signage_event" model="ir.actions.act_window">
+        <field name="name">Signage Firings</field>
+        <field name="res_model">analitix.signage.event</field>
+        <field name="view_mode">list</field>
+        <field name="context">{'search_default_filter_7d': 1}</field>
+    </record>
+
+</odoo>

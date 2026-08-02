@@ -23,6 +23,12 @@ class TestConversionAnalytics(AnalitixCase):
         # the suite happens to run at :59.
         cls.slot = fields.Datetime.now().replace(
             minute=0, second=0, microsecond=0) - timedelta(hours=2)
+        # Attribute sales by register rather than by company, so this class
+        # counts only the orders it created. In company mode it also picked up
+        # whatever POS demo data happened to sit in the chosen hour — which
+        # made these tests pass or fail depending on the time of day the suite
+        # ran, and a test that depends on the wall clock is worse than none.
+        cls.store_one.match_mode = "registers"
 
     def _hourly(self, store):
         # flush_all(), not flush_model(): analitix.hourly is a SQL view that

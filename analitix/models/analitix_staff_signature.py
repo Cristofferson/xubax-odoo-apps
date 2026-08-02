@@ -208,6 +208,8 @@ class AnalitixStaffSignature(models.Model):
                 vals.update({"counted": False, "staff_id": employee_id})
                 self.browse(sig_id)._register_match()
             event.write(vals)
+            if event.staff_id and event.store_id.attendance_enabled:
+                self.env["analitix.attendance"]._record_crossing(event)
         return True
 
 

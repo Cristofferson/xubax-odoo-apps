@@ -22,6 +22,7 @@ from es_batch3 import BATCH3
 from es_batch4 import BATCH4, BATCH4_LOOSE
 from es_batch5 import BATCH5, BATCH5_LOOSE
 from es_batch6 import BATCH6, BATCH6_LOOSE
+from es_batch7 import BATCH7, BATCH7_LOOSE
 
 TRANSLATIONS = {
     # ---- module, models, menus -------------------------------------
@@ -423,6 +424,7 @@ TRANSLATIONS.update(BATCH2)
 TRANSLATIONS.update(BATCH4)
 TRANSLATIONS.update(BATCH5)
 TRANSLATIONS.update(BATCH6)
+TRANSLATIONS.update(BATCH7)
 
 #: Same translations, keyed on the whitespace-collapsed msgid. View strings carry
 #: the XML's line breaks and indentation inside the msgid, and transcribing that
@@ -445,7 +447,8 @@ def squash(text):
 
 for _key, _value in (list(BATCH3.items()) + list(BATCH4_LOOSE.items())
                      + list(BATCH5_LOOSE.items())
-                     + list(BATCH6_LOOSE.items())):
+                     + list(BATCH6_LOOSE.items())
+                     + list(BATCH7_LOOSE.items())):
     NORMALISED[squash(_key)] = _value
 
 HEADER = '''# Translation of Odoo Server.
@@ -518,6 +521,7 @@ def main():
     unknown |= {k for k in BATCH4_LOOSE if squash(k) not in _seen}
     unknown |= {k for k in BATCH5_LOOSE if squash(k) not in _seen}
     unknown |= {k for k in BATCH6_LOOSE if squash(k) not in _seen}
+    unknown |= {k for k in BATCH7_LOOSE if squash(k) not in _seen}
     print("translated %d of the .pot's entries" % len(matched))
     if unknown:
         # An entry whose msgid is not in the .pot is ignored silently by Odoo,

@@ -292,6 +292,81 @@
                                 </list>
                             </field>
                         </page>
+                        <page string="Action &amp; Billing" name="phase4">
+                            <group>
+                                <group string="Screens">
+                                    <field name="signage_enabled"/>
+                                    <field name="signage_rule_count"
+                                           invisible="not signage_enabled"/>
+                                    <field name="welcome_alone_only"
+                                           invisible="not signage_enabled"/>
+                                    <field name="welcome_group_seconds"
+                                           invisible="not signage_enabled or not welcome_alone_only"/>
+                                </group>
+                                <group string="Staff attendance">
+                                    <field name="attendance_enabled"/>
+                                    <field name="attendance_door_id"
+                                           invisible="not attendance_enabled"/>
+                                    <field name="attendance_min_gap_minutes"
+                                           invisible="not attendance_enabled"/>
+                                    <field name="attendance_max_hours"
+                                           invisible="not attendance_enabled"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-info" role="alert"
+                                 invisible="not welcome_alone_only or not signage_enabled">
+                                A screen saying "Welcome back, Gustavo" while
+                                Gustavo is standing there with somebody has just
+                                told that person something about him. With this
+                                on, the screen stays neutral when he is not
+                                alone and the personal greeting goes to the
+                                salesperson instead.
+                            </div>
+                            <div class="alert alert-warning" role="alert"
+                                 invisible="not attendance_enabled">
+                                This records your team's working hours from the
+                                cameras. It writes into Odoo's own attendance,
+                                never overwrites a manual correction, and should
+                                be agreed with the people it measures before it
+                                is switched on.
+                            </div>
+                            <group>
+                                <group string="Subscription">
+                                    <field name="plan"/>
+                                    <field name="subscription_state"/>
+                                    <field name="subscription_order_id"/>
+                                    <field name="trial_end_date"/>
+                                    <field name="activated_on"/>
+                                    <field name="monthly_fee"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </group>
+                                <group string="Monthly value report">
+                                    <field name="value_report_enabled"/>
+                                    <field name="report_partner_ids"
+                                           widget="many2many_tags"
+                                           invisible="not value_report_enabled"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-info" role="alert">
+                                The plan governs which features this store's
+                                users <b>see and can switch on</b>. It is not a
+                                licence check in the code: a billing problem on
+                                our side must never be able to turn a customer's
+                                cameras off.
+                            </div>
+                            <separator string="Signage rules"/>
+                            <field name="signage_rule_ids"
+                                   invisible="not signage_enabled">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="trigger"/>
+                                    <field name="target"/>
+                                    <field name="message"/>
+                                    <field name="fire_count"/>
+                                </list>
+                            </field>
+                        </page>
                         <page string="Monitoring" name="monitoring"
                               groups="analitix.group_manager,analitix.group_technician">
                             <group>

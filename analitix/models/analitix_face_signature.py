@@ -216,14 +216,24 @@ class AnalitixFaceSignature(models.Model):
             return False
         entrance = self.env["analitix.zone"].sudo().search([
             ("store_id", "=", store.id), ("kind", "=", "entrance")], limit=1)
-        summary = _last_purchase_summary(self.env, partner)
+
+        # One context, two audiences. The salesperson gets the dense version;
+        # the screen gets whatever the social privacy rule allows, which is
+        # sometimes nothing personal at all.
+        context = self.env["analitix.customer.context"].build(
+            store, partner, visitor=visitor)
+
         self.env["analitix.alert"].raise_alert(
             store, "known_customer",
             _("%(name)s just came in", name=partner.name),
-            body=_("%(name)s is a returning customer.%(last)s",
-                   name=partner.display_name,
-                   last=(_("\nLast purchase: %s", summary) if summary else "")),
+            body=context.get("staff_message"),
             zone=entrance or False, visitor=visitor, partner=partner)
+
+        screen_message = context.get("screen_message")
+        if screen_message:
+            self.env["analitix.signage.rule"].fire(
+                store, "welcome", zone=entrance or False, visitor=visitor,
+                partner=partner, message=screen_message)
         return True
 
     @api.model

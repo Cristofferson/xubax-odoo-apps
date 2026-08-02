@@ -108,6 +108,10 @@ class AnalitixVisitGroup(models.Model):
                 "visitor_ids": [(4, visitor.id)],
                 "size": len(existing.visitor_ids) + 1,
             })
+            # Fires the moment a lone arrival becomes a pair, which is the
+            # earliest the store can know a group walked in.
+            self.env["analitix.signage.rule"].fire(
+                store, "group", zone=False, visitor=visitor, group=existing)
             return existing
 
         return self.sudo().create({

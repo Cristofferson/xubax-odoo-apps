@@ -129,6 +129,12 @@ class AnalitixLostSale(models.Model):
             "estimated_value": store._average_ticket(),
         })
         dwell.sudo().alert_id = alert.id if alert else False
+
+        # A last chance on the way out, if the store drives its screens. The
+        # nudge to the salesperson is the primary move; this is the backstop
+        # for when nobody is free.
+        self.env["analitix.signage.rule"].fire(
+            store, "lost_sale", zone=zone, visitor=dwell.visitor_id)
         return record
 
     # ------------------------------------------------------------------

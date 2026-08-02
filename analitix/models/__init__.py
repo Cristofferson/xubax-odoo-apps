@@ -21,5 +21,11 @@ from . import analitix_poi
 from . import analitix_lost_sale
 from . import analitix_sale_match
 from . import analitix_anomaly
+from . import analitix_signage
+from . import analitix_customer_context
+from . import analitix_attendance
+from . import analitix_subscription
+from . import analitix_value_report
 from . import analitix_hourly
+from . import analitix_reports
 from . import res_users

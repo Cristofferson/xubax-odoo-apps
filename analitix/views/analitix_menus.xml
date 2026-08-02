@@ -23,6 +23,12 @@
               action="action_zone_dwell" sequence="21"/>
     <menuitem id="menu_poi_performance" name="Display Performance" parent="menu_analysis"
               action="action_poi_performance" sequence="22"/>
+    <menuitem id="menu_value_report" name="Monthly Value" parent="menu_analysis"
+              action="action_value_report" sequence="5"/>
+    <menuitem id="menu_coaching" name="Floor Coaching" parent="menu_analysis"
+              action="action_coaching" sequence="23"/>
+    <menuitem id="menu_recurrence" name="Visit Frequency" parent="menu_analysis"
+              action="action_recurrence" sequence="24"/>
     <menuitem id="menu_stores_overview" name="Stores" parent="menu_analysis"
               action="action_store" sequence="30"/>
 
@@ -41,6 +47,8 @@
               action="action_anomaly" sequence="17"/>
     <menuitem id="menu_sale_match" name="Ticket Attribution" parent="menu_operations"
               action="action_sale_match" sequence="18"/>
+    <menuitem id="menu_signage_events" name="Signage Firings" parent="menu_operations"
+              action="action_signage_event" sequence="19"/>
     <menuitem id="menu_events" name="Crossing Events" parent="menu_operations"
               action="action_event" sequence="20"/>
     <menuitem id="menu_jobs" name="Background Jobs" parent="menu_operations"
@@ -65,6 +73,8 @@
               action="action_zone" sequence="35"/>
     <menuitem id="menu_config_pois" name="Displays" parent="menu_configuration"
               action="action_poi" sequence="37"/>
+    <menuitem id="menu_config_signage" name="Signage Rules" parent="menu_configuration"
+              action="action_signage_rule" sequence="38"/>
     <menuitem id="menu_config_staff" name="Staff Signatures" parent="menu_configuration"
               action="action_staff_signature" sequence="40"/>
 

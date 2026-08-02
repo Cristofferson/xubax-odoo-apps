@@ -19,8 +19,12 @@ from datetime import timedelta
 
 import pytz
 
+import logging
+
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
+
+_logger = logging.getLogger(__name__)
 
 WEEKDAYS = [
     ("0", "Monday"), ("1", "Tuesday"), ("2", "Wednesday"), ("3", "Thursday"),
@@ -140,6 +144,63 @@ class AnalitixZone(models.Model):
             zone.display_name = (
                 "%s / %s" % (zone.store_id.name, zone.name)
                 if zone.store_id else zone.name)
+
+    # ------------------------------------------------------------------
+    # Signage delivery — one implementation, two callers
+    # ------------------------------------------------------------------
+    @api.model
+    def _send_to_screen(self, zone, body, layout_ref=None, seconds=20):
+        """Put ``body`` (or a layout) on the screen covering ``zone``.
+
+        Returns ``(ok, error)``. Never raises: both callers — the alert channel
+        and the signage rule engine — hang off the counting pipeline, and an
+        unreachable CMS must not be able to stop a store counting.
+
+        The Xibo connector is detected at runtime rather than declared as a
+        dependency: Analitix is sold to stores that have no digital signage at
+        all, and it has to install for them.
+        """
+        if not zone or not zone.screen_group_ref:
+            return False, _("No screen is mapped to this zone.")
+        installed = self.env["ir.module.module"].sudo().search_count(
+            [("name", "=", "xibo_connector"), ("state", "=", "installed")])
+        if not installed:
+            return False, _("The Xibo connector is not installed.")
+        try:
+            group = self.env["xibo.display.group"].sudo().search(
+                [("name", "=", zone.screen_group_ref)], limit=1)
+            if not group:
+                return False, _(
+                    "No Xibo display group named '%s'.", zone.screen_group_ref)
+            server = self.env["xibo.server"].sudo().search([], limit=1)
+            if not server:
+                return False, _("No Xibo server is configured.")
+            layout = False
+            if layout_ref:
+                layout = self.env["xibo.layout"].sudo().search(
+                    [("name", "=", layout_ref)], limit=1)
+                if not layout:
+                    return False, _("No Xibo layout named '%s'.", layout_ref)
+            now = fields.Datetime.now()
+            vals = {
+                "name": (body or zone.name)[:60],
+                "server_id": server.id,
+                "display_mode": "overlay",
+                "display_group_ids": [(6, 0, group.ids)],
+                "from_dt": now,
+                "to_dt": now + timedelta(seconds=seconds),
+                "duration_seconds": seconds,
+            }
+            if layout:
+                vals["layout_id"] = layout.id
+            broadcast = self.env["xibo.broadcast"].sudo().create(vals)
+            broadcast.action_send()
+            return True, False
+        except Exception as error:  # noqa: BLE001
+            _logger.warning(
+                "Analitix: signage delivery to zone %s failed: %s",
+                zone.display_name, error)
+            return False, str(error)[:255]
 
     @api.onchange("kind")
     def _onchange_kind(self):
