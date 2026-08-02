@@ -225,7 +225,15 @@ only receives JSON.
     "images": [
         "static/description/banner.png",
     ],
-    "price": 0.00,
+    # One-time module licence on apps.odoo.com. Positioned at the top of the
+    # Point of Sale category — the largest suites there sit at 300-500 USD and
+    # none of them does this — while staying under the 500 line where a
+    # self-serve buyer stops and asks for a quote instead.
+    #
+    # The recurring business is not here: it is the per-store plan on
+    # analitix.store, which is a configuration control rather than a licence
+    # check, so a billing problem can never switch a customer's cameras off.
+    "price": 499.00,
     "currency": "USD",
     "installable": True,
     "application": True,

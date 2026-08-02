@@ -25,10 +25,11 @@
             <field name="heartbeat_interval_s">60</field>
             <field name="offline_threshold_min">5</field>
             <field name="exclude_staff" eval="True"/>
-            <!-- What the shop pays. The monthly report compares the revenue it
-                 helped recover against this figure, and with a zero here that
-                 comparison says nothing. -->
-            <field name="monthly_fee">1490</field>
+            <!-- What the shop pays, at the published list price for its plan.
+                 The monthly report compares the revenue it helped recover
+                 against this figure, and with a zero here that comparison says
+                 nothing at all. -->
+            <field name="monthly_fee">1890</field>
             <field name="plan">floor</field>
         </record>
 
@@ -61,7 +62,7 @@
             <field name="heartbeat_interval_s">60</field>
             <field name="offline_threshold_min">10</field>
             <field name="exclude_staff" eval="True"/>
-            <field name="monthly_fee">2490</field>
+            <field name="monthly_fee">2890</field>
             <field name="plan">full</field>
         </record>
 

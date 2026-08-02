@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"/>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#fff; }
+  .icon { width:512px; height:512px; position:relative; overflow:hidden;
+          font-family:"Helvetica Neue",Arial,sans-serif; }
+
+  /* ---- A: doorway + threshold line -------------------------------- */
+  #a { background:#111726; }
+  #a .arch { position:absolute; left:126px; top:104px; width:260px; height:300px;
+             border:34px solid #C9A227; border-bottom:0;
+             border-radius:130px 130px 0 0; }
+  #a .line { position:absolute; left:74px; top:372px; width:364px; height:22px;
+             background:#F2F4F8; border-radius:11px; }
+  #a .dot  { position:absolute; width:46px; height:46px; border-radius:50%;
+             background:#F2F4F8; left:233px; top:200px; }
+
+  /* ---- B: threshold with rising bars ------------------------------ */
+  #b { background:linear-gradient(160deg,#16203A 0%,#0C1120 100%); }
+  #b .bar { position:absolute; bottom:150px; width:66px; border-radius:8px 8px 0 0;
+            background:#C9A227; }
+  #b .b1 { left:118px; height:96px;  background:#7B6528; }
+  #b .b2 { left:200px; height:168px; background:#A7862F; }
+  #b .b3 { left:282px; height:242px; }
+  #b .floor { position:absolute; left:82px; bottom:132px; width:348px; height:18px;
+              background:#F2F4F8; border-radius:9px; }
+  #b .head { position:absolute; left:355px; bottom:392px; width:56px; height:56px;
+             border-radius:50%; background:#F2F4F8; }
+
+  /* ---- C: the eye that counts (aperture) -------------------------- */
+  #c { background:#0E1524; }
+  #c .ring { position:absolute; left:96px; top:96px; width:320px; height:320px;
+             border-radius:50%; border:30px solid #C9A227; }
+  #c .pupil{ position:absolute; left:196px; top:196px; width:120px; height:120px;
+             border-radius:50%; background:#F2F4F8; }
+  #c .tick { position:absolute; background:#C9A227; border-radius:4px; }
+  #c .t1 { left:246px; top:30px;  width:20px; height:48px; }
+  #c .t2 { left:246px; top:434px; width:20px; height:48px; }
+  #c .t3 { left:30px;  top:246px; width:48px; height:20px; }
+  #c .t4 { left:434px; top:246px; width:48px; height:20px; }
+
+  /* ---- D: monogram A with a counting line ------------------------- */
+  #d { background:#C9A227; }
+  #d .glyph { position:absolute; left:0; right:0; top:64px; display:flex;
+              align-items:flex-start; justify-content:center; font-size:300px;
+              font-weight:800; color:#111726; letter-spacing:-10px; line-height:1; }
+  #d .line { position:absolute; left:96px; bottom:88px; width:320px; height:26px;
+             background:#111726; border-radius:13px; }
+  #d .dot  { position:absolute; left:352px; top:92px; width:60px; height:60px;
+             border-radius:50%; background:#111726; }
+</style></head>
+<body>
+  <div class="icon" id="a"><div class="arch"></div><div class="dot"></div><div class="line"></div></div>
+  <div class="icon" id="b"><div class="bar b1"></div><div class="bar b2"></div><div class="bar b3"></div><div class="head"></div><div class="floor"></div></div>
+  <div class="icon" id="c"><div class="ring"></div><div class="pupil"></div><div class="tick t1"></div><div class="tick t2"></div><div class="tick t3"></div><div class="tick t4"></div></div>
+  <div class="icon" id="d"><div class="glyph">A</div><div class="line"></div><div class="dot"></div></div>
+</body></html>

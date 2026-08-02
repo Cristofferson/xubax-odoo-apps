@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"/>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#fff; font-family:"Helvetica Neue",Arial,sans-serif; }
+  .banner { width:1200px; height:600px; position:relative; overflow:hidden;
+            display:flex; }
+
+  .brand { font-size:19px; letter-spacing:.36em; text-transform:uppercase;
+           font-weight:700; }
+
+  /* ---------------- 1: the number that sells it ------------------- */
+  #b1 { background:#111726; color:#F2F4F8; flex-direction:column;
+        justify-content:space-between; padding:66px 80px 60px; }
+  #b1 .brand { color:#C9A227; }
+  #b1 h1 { font-size:56px; line-height:1.12; margin:24px 0 18px; font-weight:800;
+           letter-spacing:-1.4px; max-width:900px; }
+  #b1 h1 em { font-style:normal; color:#C9A227; }
+  #b1 p { font-size:23px; color:#A9B2C4; max-width:780px; line-height:1.45; }
+  #b1 .stats { display:flex; gap:70px; }
+  #b1 .stat .n { font-size:30px; font-weight:800; color:#C9A227; line-height:1.2; }
+  #b1 .stat .l { font-size:15px; color:#8A94A8; text-transform:uppercase;
+                 letter-spacing:.13em; margin-top:6px; }
+  #b1 .rule { position:absolute; right:-170px; top:-160px; width:600px; height:600px;
+              border:44px solid rgba(201,162,39,.13); border-radius:50%; }
+  #b1 .top { position:relative; z-index:2; }
+
+  /* ---------------- 2: the floor, drawn ---------------------------- */
+  #b2 { background:linear-gradient(120deg,#0F1626 0%,#1B2540 100%); color:#F2F4F8;
+        align-items:center; padding:0 66px; gap:52px; }
+  #b2 .left { flex:1; }
+  #b2 .brand { color:#C9A227; margin-bottom:22px; }
+  #b2 h1 { font-size:52px; line-height:1.12; font-weight:800; letter-spacing:-1.2px; }
+  #b2 p { font-size:20px; color:#A9B2C4; margin-top:20px; line-height:1.5;
+          max-width:460px; }
+  #b2 .planwrap { width:440px; flex:none; }
+  #b2 .plan { position:relative; height:396px;
+              border:3px solid rgba(242,244,248,.22); border-radius:14px; }
+  #b2 .zone { position:absolute; border-radius:9px; border:2px solid #C9A227;
+              background:rgba(201,162,39,.13); font-size:13px; color:#E7D7A6;
+              padding:8px 10px; letter-spacing:.08em; }
+  #b2 .z1 { left:22px; top:24px; width:172px; height:118px; }
+  #b2 .z2 { left:222px; top:24px; width:186px; height:164px; }
+  #b2 .z3 { left:22px; top:170px; width:172px; height:146px; }
+  #b2 .z4 { left:222px; top:216px; width:186px; height:100px;
+            border-color:#F2F4F8; background:rgba(242,244,248,.10); color:#F2F4F8; }
+  #b2 .door { position:absolute; left:172px; bottom:-4px; width:96px; height:7px;
+              background:#C9A227; border-radius:4px; }
+  #b2 .doorlbl { margin-top:20px; text-align:center; font-size:12px; color:#8A94A8;
+                 letter-spacing:.2em; text-transform:uppercase; }
+
+  /* ---------------- 3: quiet and typographic ----------------------- */
+  #b3 { background:#F6F3EC; color:#111726; flex-direction:column;
+        justify-content:center; padding:0 92px 16px; }
+  #b3 .brand { color:#8A6E27; }
+  #b3 h1 { font-size:56px; line-height:1.1; margin:26px 0 22px; font-weight:800;
+           letter-spacing:-1.4px; max-width:940px; }
+  #b3 p { font-size:22px; color:#4A5265; max-width:780px; line-height:1.5; }
+  #b3 .chips { display:flex; gap:13px; margin-top:38px; }
+  #b3 .chip { border:2px solid #C9A227; color:#8A6E27; border-radius:999px;
+              padding:9px 20px; font-size:15px; font-weight:600; }
+  #b3 .bar { position:absolute; left:0; bottom:0; height:16px; width:100%;
+             background:linear-gradient(90deg,#C9A227 0%,#8A6E27 100%); }
+</style></head>
+<body>
+
+<div class="banner" id="b1">
+  <div class="rule"></div>
+  <div class="top">
+    <div class="brand">Analitix</div>
+    <h1>Your POS says what you sold.<br/>This says <em>who you didn't sell to</em>.</h1>
+    <p>Store intelligence on Odoo: visitors, conversion, and walk-outs spotted
+       while there is still time to do something about them.</p>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="n">Conversion</div><div class="l">tickets ÷ visitors</div></div>
+    <div class="stat"><div class="n">Walk-outs</div><div class="l">seen, and rescued</div></div>
+    <div class="stat"><div class="n">No images</div><div class="l">ever stored</div></div>
+  </div>
+</div>
+
+<div class="banner" id="b2">
+  <div class="left">
+    <div class="brand">Analitix</div>
+    <h1>Not a people counter.</h1>
+    <p>Zones, dwell, lost sales and conversion — measured on your floor, in your
+       Odoo, with any number of doors.</p>
+  </div>
+  <div class="planwrap">
+    <div class="plan">
+      <div class="zone z1">RINGS</div>
+      <div class="zone z2">DISPLAY</div>
+      <div class="zone z3">FITTING</div>
+      <div class="zone z4">CHECKOUT</div>
+      <div class="door"></div>
+    </div>
+    <div class="doorlbl">Entrance</div>
+  </div>
+</div>
+
+<div class="banner" id="b3">
+  <div class="brand">Analitix</div>
+  <h1>Eleven people waited.<br/>Nine were never spoken to.</h1>
+  <p>Physical store intelligence for Odoo 19 — conversion against POS, lost-sale
+     alerts, and a monthly report the owner actually reads.</p>
+  <div class="chips">
+    <div class="chip">Any number of doors</div>
+    <div class="chip">No image ever stored</div>
+    <div class="chip">Edge, not cloud</div>
+  </div>
+  <div class="bar"></div>
+</div>
+
+</body></html>
