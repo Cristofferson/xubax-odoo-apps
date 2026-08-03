@@ -3,6 +3,41 @@
 All notable changes to Analitix. Versions follow Odoo's convention:
 `19.0.<phase>.<minor>.<patch>`.
 
+## 19.0.8.0.0 — Plans a shopkeeper can read, and a nudge that was only a promise
+
+**The plans are named for what they do.** `Counting → Visits → Service →
+Complete`, instead of the developer names that leaked into a price table:
+"Insight" means nothing to a jeweller, and "Floor" reads as the surface you
+walk on. The stored keys are unchanged — renaming a stored selection key
+orphans every store already on that plan.
+
+**The watch list moved to Complete.** Not for revenue: it is the one feature
+that needs the implementer involved, with a written agreement, a notice at the
+door and two authorised people for the double control. A self-serve customer on
+the cheapest plan switching on named facial recognition with nobody from our
+side aware of it is the situation worth designing out. It was previously
+available on every plan, including the listing's cheapest — and the listing
+claimed the opposite, which was simply wrong.
+
+**The expression nudge now exists.** It was declared in the alert types and in
+a field's help text, and *nothing raised it*: the help promised "a sustained
+negative reading prompts a discreet nudge" and no code did that. Either the
+promise or the feature had to go; the feature was built.
+
+* Expression now travels on the **dwell report**, not on a crossing — a face at
+  the door is read once, and one frame is somebody blinking. What means
+  something is a negative reading that persists while a person stands in a
+  zone, which is exactly what a dwell update is.
+* Consecutive negative readings above a confidence floor, reset the moment one
+  comes back neutral. Three in a row, by default, before anybody is told.
+* Only `sad`, `angry` and `fearful` count. `surprised` and `disgusted` are too
+  easily misread from a face at a counter.
+* Off by default, once per visit and zone, never for a customer already being
+  served, and gated to Service and above.
+* The message asks rather than diagnoses: it says a person may want a hand and
+  where they are standing, tells the salesperson plainly that a camera reading
+  is not a fact, and never states a mood. A test asserts that wording.
+
 ## 19.0.7.4.0 — Pricing stated honestly
 
 The module is US$499 one-time; the running service is US$49–179 per store per

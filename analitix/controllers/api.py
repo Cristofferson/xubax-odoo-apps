@@ -407,8 +407,20 @@ class AnalitixAPI(http.Controller):
                 skipped += 1
                 continue
 
+            def _confidence(value):
+                try:
+                    return float(value or 0.0)
+                except (TypeError, ValueError):
+                    return 0.0
+
             dwell = Dwell.record(
-                visitor, zone, started, seconds, served=bool(raw.get("served")))
+                visitor, zone, started, seconds,
+                served=bool(raw.get("served")),
+                # Optional, and ignored entirely unless the store asked for the
+                # sustained-expression nudge. An agent that reports it to a
+                # store that did not switch it on changes nothing.
+                emotion=raw.get("emotion") or None,
+                emotion_confidence=_confidence(raw.get("emotion_confidence")))
             stored += 1
             # Evaluated inline rather than queued: this is the one thing in the
             # whole pipeline that is worthless late. Everything it can trigger

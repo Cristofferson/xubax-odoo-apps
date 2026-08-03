@@ -190,7 +190,8 @@ How long tracked people have spent in zones and at displays.
 {
   "dwells": [
     {"track": "t-8841", "zone": "R",  "since": "2026-08-01T14:32:05-06:00",
-     "seconds": 214, "served": false},
+     "seconds": 214, "served": false,
+     "emotion": "sad", "emotion_confidence": 0.81},
     {"track": "t-8841", "poi": "SC1", "since": "2026-08-01T14:33:10-06:00",
      "seconds": 46}
   ]
@@ -204,6 +205,16 @@ How long tracked people have spent in zones and at displays.
 | `since` | When they arrived at it. Together with the track and the zone this is the upsert key. |
 | `seconds` | Time there **so far**. |
 | `served` | A salesperson is with them. Suppresses the lost-sale nudge. |
+| `emotion` | *Optional.* The expression read **now**, while they stand there: `neutral`, `happy`, `sad`, `angry`, `surprised`, `fearful`, `disgusted`. Sent on each update, not once. |
+| `emotion_confidence` | *Optional*, 0-1. Readings below the store's floor are discarded rather than counted — this is the one signal in the API that judges a mood rather than an observable fact, so it is held to a higher bar than anything else. |
+
+> **Why expression belongs here and not on a crossing.** A face at the door is
+> read once, and one frame of a person is worth nothing: they were blinking, or
+> reading a price tag. What means something is a negative reading that *persists*
+> while somebody stands in one place — which is exactly what a dwell report is.
+> Odoo counts consecutive negative readings above the store's floor and resets
+> the count the moment one comes back neutral. Stores that have not switched the
+> nudge on ignore both fields entirely.
 
 > **Send a running total, not a final one.** Report while the person is still
 > standing there and keep updating the same observation. A lost-sale nudge that

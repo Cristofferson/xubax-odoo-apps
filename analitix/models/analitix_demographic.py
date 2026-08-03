@@ -93,9 +93,11 @@ class AnalitixDemographic(models.Model):
             ("disgusted", "Disgusted"),
         ],
         string="Emotion", index=True,
-        help="Momentary expression at the moment of the reading. Phase 4 uses a "
-             "sustained negative reading to prompt a discreet nudge to a "
-             "salesperson — a single frame means nothing on its own.")
+        help="Momentary expression at the moment of the reading. A single frame "
+             "means nothing on its own, and nothing acts on this one: a face is "
+             "read at the door, once. What can raise a nudge is a negative "
+             "reading that *persists* while somebody stands in a zone, which "
+             "arrives on the dwell report and is measured there.")
     emotion_confidence = fields.Float(string="Emotion Confidence", digits=(3, 3))
 
     liveness_score = fields.Float(

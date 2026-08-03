@@ -323,10 +323,35 @@ class AnalitixZoneDwell(models.Model):
         help="The nudge this dwell produced, if it produced one.")
 
     _store_entered_idx = models.Index("(store_id, entered_at DESC)")
+    # --- the expression trend, when the edge reports one ---
+    emotion = fields.Char(
+        string="Last Expression", readonly=True,
+        help="The most recent expression the edge reported for this person "
+             "while they stood here. Kept as the latest reading only: a "
+             "history of somebody's face is not something this product needs "
+             "in order to say 'go over'.")
+    negative_readings = fields.Integer(
+        string="Negative In A Row", readonly=True,
+        help="Consecutive readings above the store's confidence floor that came "
+             "back sad, angry or fearful. Resets to zero the moment one does "
+             "not — which is the whole point: a person who frowns once and then "
+             "does not is not unhappy, they were reading a price tag.")
+    emotion_alert_id = fields.Many2one(
+        "analitix.alert", string="Expression Nudge", readonly=True,
+        ondelete="set null",
+        help="Raised at most once per visit and zone. Somebody who is having a "
+             "bad afternoon should not generate a nudge every thirty seconds.")
+
     _zone_engaged_idx = models.Index("(zone_id, engaged, entered_at)")
 
+    #: Expressions that count as negative. Deliberately short: 'surprised' and
+    #: 'disgusted' are far too easily misread from a face at a counter, and
+    #: 'neutral' is what most people look like most of the time.
+    NEGATIVE = ("sad", "angry", "fearful")
+
     @api.model
-    def record(self, visitor, zone, entered_at, seconds, served=False):
+    def record(self, visitor, zone, entered_at, seconds, served=False,
+               emotion=None, emotion_confidence=0.0):
         """Upsert the dwell for one visit in one zone.
 
         Upsert rather than append: the edge reports a running total while the
@@ -338,6 +363,7 @@ class AnalitixZoneDwell(models.Model):
             ("zone_id", "=", zone.id),
             ("entered_at", "=", entered_at),
         ], limit=1)
+        store = zone.store_id
         vals = {
             "seconds": seconds,
             "engaged": seconds >= zone.engaged_seconds,
@@ -345,8 +371,21 @@ class AnalitixZoneDwell(models.Model):
         }
         if served:
             vals["served"] = True
+
+        # The expression trend, only where the store asked for it and only for
+        # a reading the edge was confident about.
+        counts = None
+        if emotion and store.emotion_alert_enabled:
+            trusted = emotion_confidence >= store.emotion_min_confidence
+            negative = trusted and emotion in self.NEGATIVE
+            previous = existing.negative_readings if existing else 0
+            counts = (previous + 1) if negative else 0
+            vals.update({"emotion": emotion, "negative_readings": counts})
+
         if existing:
             existing.write(vals)
+            if counts:
+                existing._nudge_if_sustained()
             return existing
         vals.update({
             "store_id": zone.store_id.id,
@@ -354,4 +393,39 @@ class AnalitixZoneDwell(models.Model):
             "visitor_id": visitor.id,
             "entered_at": entered_at,
         })
-        return self.sudo().create(vals)
+        dwell = self.sudo().create(vals)
+        if counts:
+            dwell._nudge_if_sustained()
+        return dwell
+
+    def _nudge_if_sustained(self):
+        """Tell the salesperson, once, when unhappiness has actually persisted.
+
+        Everything about the wording here is deliberate. The salesperson is told
+        that somebody *may* want attention and where they are standing — never
+        that a customer is angry, and never with a confidence figure that would
+        invite them to treat a model's guess as a fact. What they do with it is
+        the same thing they would do for any customer who looks like they are
+        waiting: go over.
+        """
+        self.ensure_one()
+        store = self.store_id
+        if (self.emotion_alert_id or not store.emotion_alert_enabled
+                or self.served
+                or self.negative_readings < store.emotion_sustained_readings):
+            return False
+        alert = self.env["analitix.alert"].raise_alert(
+            store, "emotion",
+            _("Someone at %s may want a hand", self.zone_id.name),
+            body=_(
+                "Somebody has been at %(zone)s for %(mins)s minutes and has not "
+                "looked comfortable while they waited.\n\nThis is a reading of "
+                "a face, not a fact — the camera is wrong about this often "
+                "enough that it is worth saying so. Treat it the way you would "
+                "treat any customer who looks like they are waiting: go over "
+                "and ask.",
+                zone=self.zone_id.name, mins=max(self.seconds // 60, 1)),
+            zone=self.zone_id, visitor=self.visitor_id)
+        if alert:
+            self.sudo().emotion_alert_id = alert.id
+        return bool(alert)

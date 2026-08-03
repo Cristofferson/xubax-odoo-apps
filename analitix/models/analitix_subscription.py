@@ -37,11 +37,19 @@ PLAN_FEATURES = {
                 "group_detection_enabled"],
     "floor": ["reid_enabled", "demographics_enabled",
               "group_detection_enabled", "lost_sale_enabled",
-              "checkout_match_enabled", "anomaly_detection_enabled"],
+              "checkout_match_enabled", "anomaly_detection_enabled",
+              "emotion_alert_enabled"],
+    # The watch list sits here and not lower down, and the reason is not
+    # revenue: it is the one feature that needs the implementer involved —
+    # a written agreement with the shop, a notice at the door, and two
+    # authorised people for the double control. A self-serve customer on the
+    # cheapest plan switching on named facial recognition, with nobody from
+    # our side aware of it, is the situation worth designing out.
     "full": ["reid_enabled", "demographics_enabled",
              "group_detection_enabled", "lost_sale_enabled",
              "checkout_match_enabled", "anomaly_detection_enabled",
-             "signage_enabled", "identify_customers", "attendance_enabled"],
+             "emotion_alert_enabled", "signage_enabled", "identify_customers",
+             "attendance_enabled", "watchlist_enabled"],
 }
 
 
@@ -50,10 +58,13 @@ class AnalitixStoreSubscription(models.Model):
 
     plan = fields.Selection(
         selection=[
+            # The labels are what a shopkeeper reads; the keys are what the
+            # database stores and must never change — renaming a stored
+            # selection key orphans every store already on that plan.
             ("counting", "Counting"),
-            ("insight", "Counting + Insight"),
-            ("floor", "Insight + Floor"),
-            ("full", "Full"),
+            ("insight", "Visits"),
+            ("floor", "Service"),
+            ("full", "Complete"),
         ],
         string="Plan", default="counting", required=True, tracking=True,
         help="What this store has contracted. It governs which features their "

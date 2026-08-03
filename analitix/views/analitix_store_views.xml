@@ -292,6 +292,26 @@
                                     <field name="greet_known_customers"
                                            invisible="not identify_customers"/>
                                 </group>
+                                <group string="Sustained unhappiness">
+                                    <field name="emotion_alert_enabled"/>
+                                    <field name="emotion_min_confidence"
+                                           invisible="not emotion_alert_enabled"/>
+                                    <field name="emotion_sustained_readings"
+                                           invisible="not emotion_alert_enabled"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-warning" role="alert"
+                                 invisible="not emotion_alert_enabled">
+                                <strong>The only signal here that judges a mood
+                                rather than a fact.</strong> A lost sale rests on
+                                things anybody can check — they waited, nobody
+                                came, they did not buy. This rests on a face, read
+                                by a model that is wrong often. The nudge is
+                                worded as «go over and ask», never as «this
+                                customer is angry», and it says so to the
+                                salesperson. Needs the front-facing cameras.
+                            </div>
+                            <group>
                                 <group string="Behaviour signals">
                                     <field name="anomaly_detection_enabled"/>
                                     <field name="anomaly_window_minutes"

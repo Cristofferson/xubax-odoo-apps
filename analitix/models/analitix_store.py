@@ -398,6 +398,33 @@ class AnalitixStore(models.Model):
     value_report_ids = fields.One2many(
         "analitix.value.report", "store_id", string="Monthly Reports")
 
+    # --- the sustained-expression nudge ---
+    #
+    # Off by default, and stricter than every other reading in the product, for
+    # a reason worth writing down: a lost-sale alert rests on facts a person can
+    # check — they waited, nobody came, they did not buy. This one rests on a
+    # face, read by a model that is wrong often. So it needs a high confidence
+    # floor, it needs to persist rather than fire on one frame, and the message
+    # it produces says "go over", never "this customer is angry".
+    emotion_alert_enabled = fields.Boolean(
+        string="Nudge On Sustained Unhappiness", default=False,
+        help="Tell the salesperson covering a zone when somebody standing "
+             "there has looked unhappy for several readings in a row. Off by "
+             "default: it is the most easily misused signal in the product, "
+             "because it judges a person's mood rather than an observable "
+             "fact. Needs the front-facing cameras and demographics.")
+    emotion_min_confidence = fields.Float(
+        string="Expression Confidence Floor", default=0.75, required=True,
+        help="Deliberately higher than the general demographic floor. A wrong "
+             "age band skews a chart; a wrong reading here sends somebody to "
+             "manage a mood the customer never had.")
+    emotion_sustained_readings = fields.Integer(
+        string="Readings Before Nudging", default=3, required=True,
+        help="How many consecutive negative readings, in the same zone and the "
+             "same visit, before anybody is told. One frame is a person "
+             "blinking; three in a row while they stand at a counter is worth "
+             "somebody walking over.")
+
     # --- behaviour signals ---
     anomaly_detection_enabled = fields.Boolean(
         string="Flag Unusual Behaviour", default=False,

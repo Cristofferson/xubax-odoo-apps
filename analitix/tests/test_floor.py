@@ -563,3 +563,115 @@ class TestDisplaysAndBehaviour(FloorCase):
         self.assertNotIn("partner_id", Anomaly._fields)
         self.assertNotIn("name", Anomaly._fields)
         self.assertNotIn("embedding", Anomaly._fields)
+
+
+@tagged("post_install", "-at_install")
+class TestSustainedExpression(FloorCase):
+    """The nudge that judges a mood, and everything it must refuse to do.
+
+    This is the most easily misused signal in the product: a lost sale rests on
+    facts anybody can check, and this rests on a face read by a model that is
+    wrong often. So the tests are weighted towards what it will *not* do — fire
+    on one frame, fire on a reading the edge was unsure about, fire twice, or
+    fire at all in a shop that never asked for it.
+    """
+
+    def setUp(self):
+        super().setUp()
+        self.store_one.write({
+            "emotion_alert_enabled": True,
+            "emotion_min_confidence": 0.75,
+            "emotion_sustained_readings": 3,
+        })
+        self.visit = self.env["analitix.visitor"].sudo().create({
+            "store_id": self.store_one.id, "door_id": self.door_one.id,
+        })
+        self.started = fields.Datetime.now() - timedelta(minutes=4)
+
+    def _report(self, emotion, confidence=0.9, seconds=200, served=False):
+        """One dwell update, the way the edge sends them: a running total."""
+        return self.Dwell.record(
+            self.visit, self.rings, self.started, seconds, served=served,
+            emotion=emotion, emotion_confidence=confidence)
+
+    def _alerts(self):
+        return self.Alert.search([
+            ("store_id", "=", self.store_one.id), ("kind", "=", "emotion")])
+
+    def test_one_frame_never_nudges_anybody(self):
+        """A person frowning once was reading a price tag."""
+        dwell = self._report("sad")
+        self.assertEqual(dwell.negative_readings, 1)
+        self.assertFalse(self._alerts(), "a single frame raised a nudge")
+
+    def test_three_in_a_row_does(self):
+        for _ in range(3):
+            dwell = self._report("sad")
+        self.assertEqual(dwell.negative_readings, 3)
+        alerts = self._alerts()
+        self.assertEqual(len(alerts), 1)
+        self.assertEqual(alerts.zone_id, self.rings)
+        self.assertEqual(alerts.user_id, self.seller,
+                         "the nudge did not follow the zone's rota")
+
+    def test_the_count_resets_the_moment_they_look_normal_again(self):
+        """Not cumulative — consecutive. Somebody who frowns, relaxes and
+        frowns again over ten minutes is not somebody having a bad time."""
+        self._report("sad")
+        self._report("sad")
+        dwell = self._report("neutral")
+        self.assertEqual(dwell.negative_readings, 0)
+        self.assertFalse(self._alerts())
+        dwell = self._report("sad")
+        self.assertEqual(dwell.negative_readings, 1)
+        self.assertFalse(self._alerts())
+
+    def test_an_unsure_reading_does_not_count(self):
+        for _ in range(5):
+            self._report("sad", confidence=0.5)
+        self.assertFalse(
+            self._alerts(),
+            "readings the edge was not confident about were counted anyway")
+
+    def test_only_the_expressions_that_mean_something(self):
+        """'surprised' and 'disgusted' are too easily misread from a face at a
+        counter to send somebody over on them."""
+        for _ in range(5):
+            dwell = self._report("surprised")
+        self.assertEqual(dwell.negative_readings, 0)
+        self.assertFalse(self._alerts())
+
+    def test_it_nudges_once_per_visit_and_zone(self):
+        """Somebody having a bad afternoon must not buzz a salesperson every
+        thirty seconds."""
+        for _ in range(9):
+            self._report("sad")
+        self.assertEqual(len(self._alerts()), 1)
+
+    def test_nobody_is_nudged_about_a_customer_already_being_served(self):
+        for _ in range(5):
+            self._report("sad", served=True)
+        self.assertFalse(self._alerts())
+
+    def test_a_store_that_never_asked_for_it_is_untouched(self):
+        self.store_one.emotion_alert_enabled = False
+        for _ in range(6):
+            dwell = self._report("sad")
+        self.assertFalse(self._alerts())
+        self.assertEqual(dwell.negative_readings, 0,
+                         "expression was tracked for a store that did not ask")
+
+    def test_the_message_asks_rather_than_diagnoses(self):
+        """The wording is the feature. A salesperson told 'this customer is
+        angry' behaves differently from one told 'go over and ask'."""
+        for _ in range(3):
+            self._report("sad")
+        alert = self._alerts()
+        text = "%s %s" % (alert.summary, alert.body or "")
+        self.assertIn("go over", text.lower())
+        self.assertIn("not a fact", text.lower(),
+                      "the nudge does not admit the camera can be wrong")
+        for word in ("angry", "sad", "unhappy customer"):
+            self.assertNotIn(
+                word, alert.summary.lower(),
+                "the summary diagnoses a mood instead of asking for attention")

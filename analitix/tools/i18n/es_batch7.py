@@ -125,9 +125,6 @@ BATCH7 = {
     # ---- subscription ----------------------------------------------
     "Plan": "Plan",
     "Counting": "Conteo",
-    "Counting + Insight": "Conteo + Análisis",
-    "Insight + Floor": "Análisis + Piso",
-    "Full": "Completo",
     "Billing Status": "Estado de facturación",
     "Trial": "Prueba",
     "Trial Ends": "La prueba termina",

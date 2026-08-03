@@ -376,9 +376,6 @@ BATCH8 = {
     "Minimum gap between two firings of this rule on the same screen. Without it a busy hour turns the shop's signage into a flicker.":
         'Separación mínima entre dos disparos de esta regla en la misma pantalla. Sin ella, una hora concurrida convierte la cartelería de la tienda en un parpadeo.',
 
-    'Momentary expression at the moment of the reading. Phase 4 uses a sustained negative reading to prompt a discreet nudge to a salesperson — a single frame means nothing on its own.':
-        'Expresión momentánea al instante de la lectura. La fase 4 usa una lectura negativa sostenida para provocar un aviso discreto a un vendedor: un solo cuadro no significa nada por sí mismo.',
-
     'My Activity Deadline':
         'Fecha límite de mis actividades',
 

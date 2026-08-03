@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-03 15:44+0000\n"
-"PO-Revision-Date: 2026-08-03 15:44+0000\n"
+"POT-Creation-Date: 2026-08-03 20:50+0000\n"
+"PO-Revision-Date: 2026-08-03 20:50+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -327,6 +327,19 @@ msgstr ""
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_kanban
 msgid "<span class=\"text-muted d-block small\">Visitors today</span>"
+msgstr ""
+
+#. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid ""
+"<strong>The only signal here that judges a mood\n"
+"                                rather than a fact.</strong> A lost sale rests on\n"
+"                                things anybody can check — they waited, nobody\n"
+"                                came, they did not buy. This rests on a face, read\n"
+"                                by a model that is wrong often. The nudge is\n"
+"                                worded as «go over and ask», never as «this\n"
+"                                customer is angry», and it says so to the\n"
+"                                salesperson. Needs the front-facing cameras."
 msgstr ""
 
 #. module: analitix
@@ -1727,6 +1740,11 @@ msgid ""
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__plan__full
+msgid "Complete"
+msgstr ""
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_signage_rule_form
 msgid "Conditions"
 msgstr ""
@@ -1796,6 +1814,15 @@ msgid ""
 "Confirming makes this entry live: the person will be recognised on arrival "
 "and a small, named group will be told. Is the reason written down, factual "
 "and dated?"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_zone_dwell__negative_readings
+msgid ""
+"Consecutive readings above the store's confidence floor that came back sad, "
+"angry or fearful. Resets to zero the moment one does not — which is the "
+"whole point: a person who frowns once and then does not is not unhappy, they"
+" were reading a price tag."
 msgstr ""
 
 #. module: analitix
@@ -1923,11 +1950,6 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_store__plan__counting
 msgid "Counting"
-msgstr ""
-
-#. module: analitix
-#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__plan__insight
-msgid "Counting + Insight"
 msgstr ""
 
 #. module: analitix
@@ -2205,6 +2227,14 @@ msgid ""
 "identification merges two visits; a wrong match here puts an innocent person"
 " under suspicion, so this errs heavily towards missing a real match rather "
 "than inventing one."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__emotion_min_confidence
+msgid ""
+"Deliberately higher than the general demographic floor. A wrong age band "
+"skews a chart; a wrong reading here sends somebody to manage a mood the "
+"customer never had."
 msgstr ""
 
 #. module: analitix
@@ -3062,6 +3092,16 @@ msgid "Exported a report"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__emotion_min_confidence
+msgid "Expression Confidence Floor"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__emotion_alert_id
+msgid "Expression Nudge"
+msgstr ""
+
+#. module: analitix
 #: model:ir.actions.act_window,name:analitix.action_face_signature
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__signature_ids
 #: model:ir.ui.menu,name:analitix.menu_face_signatures
@@ -3285,11 +3325,6 @@ msgid "From Hour"
 msgstr ""
 
 #. module: analitix
-#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__plan__full
-msgid "Full"
-msgstr ""
-
-#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_demographic__gender
 #: model:ir.model.fields,field_description:analitix.field_analitix_signage_rule__gender
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__gender
@@ -3488,6 +3523,14 @@ msgstr ""
 msgid ""
 "How long the salesperson took to acknowledge. The number that tells an owner"
 " whether the nudges are actually being read."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__emotion_sustained_readings
+msgid ""
+"How many consecutive negative readings, in the same zone and the same visit,"
+" before anybody is told. One frame is a person blinking; three in a row "
+"while they stand at a counter is worth somebody walking over."
 msgstr ""
 
 #. module: analitix
@@ -3750,11 +3793,6 @@ msgid "Inside Now"
 msgstr ""
 
 #. module: analitix
-#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__plan__floor
-msgid "Insight + Floor"
-msgstr ""
-
-#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_brand__message_is_follower
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__message_is_follower
 #: model:ir.model.fields,field_description:analitix.field_analitix_region__message_is_follower
@@ -3890,6 +3928,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_device__last_event_at
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__last_event_time
 msgid "Last Event"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__emotion
+msgid "Last Expression"
 msgstr ""
 
 #. module: analitix
@@ -4341,9 +4384,11 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,help:analitix.field_analitix_demographic__emotion
 msgid ""
-"Momentary expression at the moment of the reading. Phase 4 uses a sustained "
-"negative reading to prompt a discreet nudge to a salesperson — a single "
-"frame means nothing on its own."
+"Momentary expression at the moment of the reading. A single frame means "
+"nothing on its own, and nothing acts on this one: a face is read at the "
+"door, once. What can raise a nudge is a negative reading that *persists* "
+"while somebody stands in a zone, which arrives on the dwell report and is "
+"measured there."
 msgstr ""
 
 #. module: analitix
@@ -4444,6 +4489,11 @@ msgstr ""
 #. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_store_search
 msgid "Needs Attention"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_zone_dwell__negative_readings
+msgid "Negative In A Row"
 msgstr ""
 
 #. module: analitix
@@ -4787,6 +4837,11 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_zone__alert_on_dwell
 msgid "Nudge On Long Dwell"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__emotion_alert_enabled
+msgid "Nudge On Sustained Unhappiness"
 msgstr ""
 
 #. module: analitix
@@ -5293,6 +5348,13 @@ msgid "Quiet hour / peak hour"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_zone_dwell__emotion_alert_id
+msgid ""
+"Raised at most once per visit and zone. Somebody who is having a bad "
+"afternoon should not generate a nudge every thirty seconds."
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_visitor__re_entry_count
 msgid "Re-entries"
 msgstr ""
@@ -5310,6 +5372,11 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_audit_log__action__read_sensitive
 msgid "Read sensitive data"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__emotion_sustained_readings
+msgid "Readings Before Nudging"
 msgstr ""
 
 #. module: analitix
@@ -5986,6 +6053,11 @@ msgid "Served"
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__plan__floor
+msgid "Service"
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_door__kind__service
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_store_setup_door__kind__service
 msgid "Service / staff entrance"
@@ -6234,6 +6306,15 @@ msgid "Size"
 msgstr ""
 
 #. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_zone.py:0
+msgid ""
+"Somebody has been at %(zone)s for %(mins)s minutes and has not looked comfortable while they waited.\n"
+"\n"
+"This is a reading of a face, not a fact — the camera is wrong about this often enough that it is worth saying so. Treat it the way you would treat any customer who looks like they are waiting: go over and ask."
+msgstr ""
+
+#. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_lost_sale
 msgid ""
 "Somebody lingered past the zone's threshold, nobody served them,\n"
@@ -6247,6 +6328,12 @@ msgstr ""
 msgid ""
 "Somebody stepping out for a moment should not close and reopen their working"
 " day."
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_zone.py:0
+msgid "Someone at %s may want a hand"
 msgstr ""
 
 #. module: analitix
@@ -6573,6 +6660,11 @@ msgid "Surprised"
 msgstr ""
 
 #. module: analitix
+#: model_terms:ir.ui.view,arch_db:analitix.view_store_form
+msgid "Sustained unhappiness"
+msgstr ""
+
+#. module: analitix
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__alert_partner_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_store_setup__alert_partner_ids
 msgid "Technical Contacts"
@@ -6591,6 +6683,16 @@ msgstr ""
 #. module: analitix
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_demographic__age_band__13-17
 msgid "Teen (13-17)"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__emotion_alert_enabled
+msgid ""
+"Tell the salesperson covering a zone when somebody standing there has looked"
+" unhappy for several readings in a row. Off by default: it is the most "
+"easily misused signal in the product, because it judges a person's mood "
+"rather than an observable fact. Needs the front-facing cameras and "
+"demographics."
 msgstr ""
 
 #. module: analitix
@@ -6718,6 +6820,14 @@ msgid ""
 "The model's estimate of presented appearance. It is not a statement about "
 "anyone's identity, and 'unknown' is a legitimate and common answer rather "
 "than a failure."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_zone_dwell__emotion
+msgid ""
+"The most recent expression the edge reported for this person while they "
+"stood here. Kept as the latest reading only: a history of somebody's face is"
+" not something this product needs in order to say 'go over'."
 msgstr ""
 
 #. module: analitix
@@ -7565,6 +7675,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:analitix.field_analitix_face_signature__visitor_ids
 #: model:ir.model.fields,field_description:analitix.field_analitix_recurrence_report__visits
 #: model:ir.model.fields,field_description:analitix.field_analitix_store__visitor_ids
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__plan__insight
 #: model:ir.ui.menu,name:analitix.menu_visitors
 #: model_terms:ir.ui.view,arch_db:analitix.view_recurrence_list
 #: model_terms:ir.ui.view,arch_db:analitix.view_visitor_graph
