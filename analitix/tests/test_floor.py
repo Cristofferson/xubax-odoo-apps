@@ -566,6 +566,48 @@ class TestDisplaysAndBehaviour(FloorCase):
 
 
 @tagged("post_install", "-at_install")
+class TestDiscussMessage(FloorCase):
+    """What the salesperson actually reads in Odoo's chat.
+
+    Found by opening Discuss as the salesperson and looking: every alert sent on
+    that channel showed a literal "<br/>" in the middle of the sentence, because
+    ``message_post`` escapes a plain string and the code handed it one with tags
+    in it. Nothing failed, no log line appeared — the message simply read badly
+    to the only person who ever sees it.
+    """
+
+    def _send(self, summary="Someone is waiting", body=None):
+        self.store_one.write({
+            "alert_use_discuss": True, "alert_use_app": False,
+            "alert_cooldown_minutes": 0,
+        })
+        return self.Alert.raise_alert(
+            self.store_one, "lost_sale", summary, body=body,
+            zone=self.rings, user=self.seller)
+
+    def _last_message(self):
+        return self.env["mail.message"].sudo().search(
+            [("model", "=", "discuss.channel")], order="id desc", limit=1)
+
+    def test_the_message_is_not_full_of_visible_tags(self):
+        alert = self._send(body="Second line.\nThird line.")
+        self.assertTrue(alert.sent_discuss)
+        text = self._last_message().body
+        self.assertNotIn("&lt;br", text,
+                         "the salesperson is reading escaped markup")
+        self.assertIn("<br>", text.replace("<br/>", "<br>"),
+                      "the lines were run together into one paragraph")
+
+    def test_a_zone_named_with_an_ampersand_cannot_inject_anything(self):
+        """The summary carries a zone name, which a customer types."""
+        self._send(summary="Someone at Rings & <b>Watches</b> is waiting")
+        text = self._last_message().body
+        self.assertIn("&amp;", text)
+        self.assertNotIn("<b>Watches</b>", text,
+                         "markup from a zone name reached the message intact")
+
+
+@tagged("post_install", "-at_install")
 class TestSustainedExpression(FloorCase):
     """The nudge that judges a mood, and everything it must refuse to do.
 

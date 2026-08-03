@@ -19,6 +19,8 @@
                        decoration-success="status == 'online'"
                        decoration-warning="status == 'degraded'"
                        decoration-danger="status in ('offline', 'never_seen')"/>
+                <field name="blind_since" optional="show"
+                       string="Seeing Nothing Since"/>
                 <field name="last_heartbeat"/>
                 <field name="events_last_hour" optional="show"/>
                 <field name="edge_queue_size" optional="hide"/>

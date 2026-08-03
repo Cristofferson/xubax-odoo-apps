@@ -97,6 +97,17 @@ class AnalitixStore(models.Model):
         string="Degraded After (min)", default=2, required=True,
         help="Grace band before 'offline': the device is late but not yet "
              "presumed down. Shown amber on the technical dashboard.")
+    blind_after_minutes = fields.Integer(
+        string="Seeing Nothing After (min)", default=120, required=True,
+        help="A device that is heartbeating normally but has counted nobody for "
+             "this long is reported as seeing nothing. Judged against the "
+             "device's own usual hourly rate, never against a clock — a counter "
+             "that reports nothing at four in the morning is working "
+             "correctly.\n"
+             "This is the failure the offline check cannot see: the agent is "
+             "up, the dashboard is green, and the shop simply stops being "
+             "counted. Raise it on a store with long quiet spells; lower it on "
+             "a busy one, where two hours of nobody is already impossible.")
     alert_partner_ids = fields.Many2many(
         "res.partner", relation="analitix_store_alert_partner_rel",
         column1="store_id", column2="partner_id", string="Technical Contacts",

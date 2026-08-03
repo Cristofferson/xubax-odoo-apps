@@ -303,3 +303,113 @@ class TestAnomalyDetection(AnalitixCase):
         self.Device._cron_update_baselines()
         after = self.env["analitix.audit.log"].search_count(domain)
         self.assertEqual(before, after)
+
+
+@tagged("post_install", "-at_install")
+class TestBlindDevice(AnalitixCase):
+    """The failure that looks exactly like health.
+
+    An offline camera is visible: the heartbeat stops and everything flags it.
+    A *blind* one is not. The agent is up, the heartbeat is punctual, the
+    dashboard is green — and the shop has simply stopped being counted. A
+    weekend can pass before anybody notices, and the figures for those days end
+    up wrong rather than missing, which is worse: the conversion rate reads high
+    because the tickets keep arriving and the visitors do not.
+    """
+
+    def setUp(self):
+        super().setUp()
+        self.store_one.write({
+            "degraded_threshold_min": 2,
+            "offline_threshold_min": 5,
+            "blind_after_minutes": 120,
+        })
+        self.device_one._mark_seen()
+        # A device with a real history, so there is something to be silent
+        # against. Below the floor it is deliberately not judged at all.
+        self.device_one.sudo().baseline_hourly_events = 25.0
+
+    def _run(self):
+        self.Device._cron_check_health()
+        self.device_one.invalidate_recordset()
+
+    def test_a_heartbeating_camera_that_sees_nothing_is_flagged(self):
+        self.device_one.sudo().last_event_at = (
+            fields.Datetime.now() - timedelta(hours=5))
+        self._run()
+        self.assertEqual(self.device_one.status, "online",
+                         "the device is not offline — that is the whole point")
+        self.assertTrue(self.device_one.blind_since,
+                        "a camera that counted nobody for five hours went unflagged")
+
+    def test_a_critical_blind_camera_reaches_a_person(self):
+        self.store_one.alert_user_id = self.env.user.id
+        self.device_one.critical = True
+        self.device_one.sudo().last_event_at = (
+            fields.Datetime.now() - timedelta(hours=5))
+        self._run()
+        activity = self.env["mail.activity"].search([
+            ("res_model", "=", "analitix.device"),
+            ("res_id", "=", self.device_one.id)])
+        self.assertTrue(activity, "nobody was told the camera stopped seeing")
+
+    def test_traffic_arriving_clears_it(self):
+        self.device_one.sudo().last_event_at = (
+            fields.Datetime.now() - timedelta(hours=5))
+        self._run()
+        self.assertTrue(self.device_one.blind_since)
+
+        self.device_one.sudo().last_event_at = fields.Datetime.now()
+        self._run()
+        self.assertFalse(self.device_one.blind_since,
+                         "it stayed flagged after crossings came back")
+
+    def test_it_alerts_once_and_not_every_minute(self):
+        """The health cron runs every minute. A camera blind since Friday must
+        not raise an activity every minute until Monday."""
+        self.store_one.alert_user_id = self.env.user.id
+        self.device_one.critical = True
+        self.device_one.sudo().last_event_at = (
+            fields.Datetime.now() - timedelta(hours=5))
+        for _ in range(4):
+            self._run()
+        self.assertEqual(
+            self.env["mail.activity"].search_count([
+                ("res_model", "=", "analitix.device"),
+                ("res_id", "=", self.device_one.id)]), 1)
+
+    def test_a_quiet_door_is_never_judged(self):
+        """A service door that sees four people a day would trip this every
+        lunchtime, and an alert that cries wolf is one nobody reads."""
+        self.device_one.sudo().baseline_hourly_events = 0.4
+        self.device_one.sudo().last_event_at = (
+            fields.Datetime.now() - timedelta(hours=9))
+        self._run()
+        self.assertFalse(self.device_one.blind_since)
+
+    def test_a_brand_new_device_is_not_called_blind(self):
+        """No history means no normal to be silent against."""
+        self.device_one.sudo().write(
+            {"baseline_hourly_events": 0.0, "last_event_at": False})
+        self._run()
+        self.assertFalse(self.device_one.blind_since)
+
+    def test_a_paused_store_is_left_alone(self):
+        """Silence during a deliberate pause is expected, not a fault."""
+        self.device_one.sudo().last_event_at = (
+            fields.Datetime.now() - timedelta(hours=5))
+        self.store_one.action_pause_capture()
+        self._run()
+        self.assertEqual(self.device_one.status, "disabled")
+        self.assertFalse(self.device_one.blind_since)
+
+    def test_an_offline_device_is_not_also_called_blind(self):
+        """It is offline. Saying both would send the technician looking at a
+        lens when the machine is simply down."""
+        self.device_one.sudo().write({
+            "last_heartbeat": fields.Datetime.now() - timedelta(minutes=60),
+            "last_event_at": fields.Datetime.now() - timedelta(hours=5),
+        })
+        self._run()
+        self.assertEqual(self.device_one.status, "offline")
+        self.assertFalse(self.device_one.blind_since)

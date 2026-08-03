@@ -44,6 +44,11 @@ MIN_HISTORY_EVENTS = 100
 #: stores from generating alerts over ordinary noise.
 MIN_ANOMALY_EVENTS = 20
 
+#: Below this hourly baseline a device is too quiet to judge as blind. A service
+#: door that sees four people a day would otherwise be reported dead every
+#: lunchtime, and an alert that cries wolf is an alert nobody reads.
+MIN_BLIND_BASELINE = 3.0
+
 
 def hash_key(raw_key):
     """Return the digest stored for ``raw_key``.
@@ -158,6 +163,11 @@ class AnalitixDevice(models.Model):
         string="Last Event", readonly=True, copy=False)
     offline_since = fields.Datetime(
         string="Offline Since", readonly=True, copy=False)
+    blind_since = fields.Datetime(
+        string="Seeing Nothing Since", readonly=True, copy=False,
+        help="Set when the device is heartbeating perfectly and has not "
+             "reported a single crossing for far longer than it normally goes "
+             "quiet. The agent is alive; the camera is not seeing.")
     agent_version = fields.Char(string="Agent Version", readonly=True, copy=False)
     edge_queue_size = fields.Integer(
         string="Edge Backlog", readonly=True, copy=False,
@@ -325,6 +335,7 @@ class AnalitixDevice(models.Model):
             ("api_key_revoked", "=", False),
         ])
         newly_down = self.browse()
+        newly_blind = self.browse()
         for device in devices:
             store = device.store_id
             if not store.capture_enabled:
@@ -351,8 +362,100 @@ class AnalitixDevice(models.Model):
                     device.write({"status": "degraded"})
             elif device.status != "online":
                 device.write({"status": "online", "offline_since": False})
+
+            if device.status == "online" and device._check_blind(now):
+                if device.critical:
+                    newly_blind |= device
         for device in newly_down:
             device._raise_offline_alert()
+        for device in newly_blind:
+            device._raise_blind_alert()
+        return True
+
+    def _check_blind(self, now):
+        """A device that heartbeats perfectly and sees nothing at all.
+
+        This is the failure the rest of the health check cannot see, and it is
+        worse than an offline camera precisely because it looks fine: the agent
+        is up, the heartbeat is punctual, the dashboard is green, and the shop
+        simply stops being counted. A weekend can pass before anybody notices,
+        and the numbers for those days are quietly wrong rather than visibly
+        missing.
+
+        Measured against the device's **own** recent normal, never against a
+        clock. A shop is shut at four in the morning and a counter that reports
+        nothing then is working correctly; the same silence at two in the
+        afternoon is not. The baseline the anomaly cron already maintains is
+        exactly the right yardstick, and a device without enough history to have
+        one is left alone rather than guessed at.
+
+        Returns True only on the transition, so the alert fires once.
+        """
+        self.ensure_one()
+        store = self.store_id
+        expected = self.baseline_hourly_events or 0.0
+        if expected < MIN_BLIND_BASELINE:
+            # Too quiet to judge. A service door that sees four people a day
+            # would trip this every lunchtime.
+            return False
+
+        window = max(store.blind_after_minutes, 1)
+        since = now - timedelta(minutes=window)
+        if self.last_event_at and self.last_event_at >= since:
+            if self.blind_since:
+                self.write({"blind_since": False})
+                self.message_post(body=_(
+                    "Seeing again — crossings are arriving from this device."))
+            return False
+
+        # Nothing seen for the whole window, and its own history says there
+        # should have been roughly %s.
+        if self.blind_since:
+            return False          # already flagged; do not alert again
+        self.write({"blind_since": now})
+        self.message_post(body=_(
+            "Device is HEARTBEATING BUT SEEING NOTHING — no crossing for "
+            "%(min)s minutes, against a usual %(rate).1f an hour. The agent is "
+            "alive, so this is not an outage: check the camera, the lens and "
+            "the virtual line. This store's numbers are wrong rather than "
+            "missing while it lasts.",
+            min=window, rate=expected))
+        return True
+
+    def _raise_blind_alert(self):
+        """Tell a human. Deliberately worded apart from an offline device: the
+        two look nothing alike to whoever has to fix them."""
+        self.ensure_one()
+        store = self.store_id
+        responsible = store.alert_user_id or self.create_uid
+        try:
+            self.activity_schedule(
+                "mail.mail_activity_data_warning",
+                summary=_("Analitix: camera alive but seeing nothing"),
+                note=_(
+                    "Device <b>%(dev)s</b> of store <b>%(store)s</b> is "
+                    "reporting in normally and has not counted a single person "
+                    "for %(min)s minutes. Its own history says it should be "
+                    "seeing about %(rate).1f an hour.<br/><br/>"
+                    "Nothing is offline, so nothing else will flag this. Look "
+                    "at the camera itself: a lens that was knocked, a view that "
+                    "something now blocks, or a virtual line that no longer "
+                    "sits across the doorway.<br/><br/>"
+                    "<b>While it lasts, this store's figures are wrong rather "
+                    "than missing</b> — the conversion rate reads high because "
+                    "the tickets keep arriving and the visitors do not.",
+                    dev=self.name, store=store.name,
+                    min=store.blind_after_minutes,
+                    rate=self.baseline_hourly_events or 0.0),
+                user_id=responsible.id)
+        except ValueError:
+            _logger.warning(
+                "Analitix: could not schedule a blind-device activity for %s",
+                self.id)
+        self.env["analitix.audit.log"].sudo().log(
+            action="anomaly", model=self._name, res_id=self.id, store=store,
+            note=_("Device %s heartbeating but reporting no crossings",
+                   self.name))
         return True
 
     def _raise_offline_alert(self):

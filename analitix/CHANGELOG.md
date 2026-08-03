@@ -3,6 +3,39 @@
 All notable changes to Analitix. Versions follow Odoo's convention:
 `19.0.<phase>.<minor>.<patch>`.
 
+## 19.0.8.2.0 — The camera that sees nothing, and showing how any of this works
+
+**A blind camera is now detected.** An offline device is visible: the heartbeat
+stops and everything flags it. A blind one is not — the agent is up, the
+heartbeat punctual, the dashboard green, and the shop has simply stopped being
+counted. A weekend could pass before anybody noticed, and the figures for those
+days ended up *wrong rather than missing*: the conversion rate reads high
+because the tickets keep arriving and the visitors do not.
+
+* Judged against the device's **own** recent hourly rate, never against a clock
+  — a counter reporting nothing at four in the morning is working correctly.
+* Left alone entirely below a minimum baseline: a service door that sees four
+  people a day would otherwise be declared dead every lunchtime.
+* Alerts once, not once a minute, and clears itself when crossings return.
+* Worded apart from an offline device, because the two look nothing alike to
+  whoever has to fix them: this one sends the technician to the lens, the view
+  and the virtual line.
+
+**The listing now shows how the product works.** Three animations — people
+crossing the line, what happens to a face, and a dwell turning into a nudge —
+plus two real screenshots of the alert reaching the salesperson. The animations
+are labelled *diagram, not camera footage* on screen: putting strangers' faces
+on a marketing page for a product whose promise is that it never keeps one would
+undercut the only claim that matters.
+
+🐞 **And a bug the screenshots caught.** Every alert delivered over Odoo's chat —
+since that channel was added in phase 3 — showed a literal `<br/>` in the middle
+of the sentence, because `message_post` escapes a plain string and the code
+handed it one with tags in it. Nothing failed and nothing logged; the message
+simply read badly to the only person who ever sees it. Now built with `Markup`,
+with each piece escaped on its own so a zone named "Rings & Watches" cannot
+inject anything.
+
 ## 19.0.8.1.0 — It was never an IP-camera product, and the docs said it was
 
 The manuals and the listing led with "IP camera" as though it were a

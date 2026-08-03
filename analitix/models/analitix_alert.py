@@ -52,6 +52,8 @@ nobody improves.
 import logging
 from datetime import timedelta
 
+from markupsafe import Markup, escape
+
 from odoo import api, fields, models, _
 
 _logger = logging.getLogger(__name__)
@@ -326,11 +328,18 @@ class AnalitixAlert(models.Model):
                 partners_to=[recipient.partner_id.id])
             if not chat:
                 return False
-            body = self.summary
+            # Markup, not a plain string with tags in it. ``message_post``
+            # escapes a plain str, so the salesperson was reading a literal
+            # "<br/>" in the middle of the sentence — every Discuss alert since
+            # this channel was added. Each piece is escaped on its own and the
+            # breaks are the only markup, so a zone somebody named
+            # "Rings & Watches" cannot inject anything.
+            lines = [self.summary]
             if self.body:
-                body = "%s\n%s" % (self.summary, self.body)
+                lines.extend(self.body.split("\n"))
+            body = Markup("<br/>").join(escape(line) for line in lines)
             chat.sudo().message_post(
-                body=body.replace("\n", "<br/>"),
+                body=body,
                 message_type="comment",
                 subtype_xmlid="mail.mt_comment")
             return True

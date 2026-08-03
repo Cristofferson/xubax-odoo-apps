@@ -493,6 +493,7 @@
                                     <field name="heartbeat_interval_s"/>
                                     <field name="degraded_threshold_min"/>
                                     <field name="offline_threshold_min"/>
+                                    <field name="blind_after_minutes"/>
                                 </group>
                                 <group string="Who Gets Told">
                                     <field name="alert_user_id"/>

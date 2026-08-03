@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-03 21:21+0000\n"
-"PO-Revision-Date: 2026-08-03 21:21+0000\n"
+"POT-Creation-Date: 2026-08-03 21:48+0000\n"
+"PO-Revision-Date: 2026-08-03 21:48+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -437,6 +437,13 @@ msgid ""
 "A device that has not sent a heartbeat for this long is marked offline. "
 "Raise it on stores with a flaky connection so a 90-second outage does not "
 "page the technician every night."
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_store__blind_after_minutes
+msgid ""
+"A device that is heartbeating normally but has counted nobody for this long is reported as seeing nothing. Judged against the device's own usual hourly rate, never against a clock — a counter that reports nothing at four in the morning is working correctly.\n"
+"This is the failure the offline check cannot see: the agent is up, the dashboard is green, and the shop simply stops being counted. Raise it on a store with long quiet spells; lower it on a busy one, where two hours of nobody is already impossible."
 msgstr ""
 
 #. module: analitix
@@ -1090,6 +1097,12 @@ msgstr ""
 #. module: analitix
 #: model:ir.actions.server,name:analitix.cron_event_retention_ir_actions_server
 msgid "Analitix: apply event retention policy"
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
+msgid "Analitix: camera alive but seeing nothing"
 msgstr ""
 
 #. module: analitix
@@ -2302,6 +2315,12 @@ msgstr ""
 #. module: analitix
 #. odoo-python
 #: code:addons/analitix/models/analitix_device.py:0
+msgid "Device %s heartbeating but reporting no crossings"
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
 msgid ""
 "Device '%(dev)s' points at a door of another store. A device belongs to "
 "exactly one store."
@@ -2311,6 +2330,20 @@ msgstr ""
 #. odoo-python
 #: code:addons/analitix/models/analitix_device.py:0
 msgid "Device '%(dev)s' points at a zone of another store."
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
+msgid ""
+"Device <b>%(dev)s</b> of store <b>%(store)s</b> is reporting in normally and"
+" has not counted a single person for %(min)s minutes. Its own history says "
+"it should be seeing about %(rate).1f an hour.<br/><br/>Nothing is offline, "
+"so nothing else will flag this. Look at the camera itself: a lens that was "
+"knocked, a view that something now blocks, or a virtual line that no longer "
+"sits across the doorway.<br/><br/><b>While it lasts, this store's figures "
+"are wrong rather than missing</b> — the conversion rate reads high because "
+"the tickets keep arriving and the visitors do not."
 msgstr ""
 
 #. module: analitix
@@ -2362,6 +2395,16 @@ msgstr ""
 msgid ""
 "Device health, ingest diagnostics and the job queue, without access to sales"
 " figures."
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
+msgid ""
+"Device is HEARTBEATING BUT SEEING NOTHING — no crossing for %(min)s minutes,"
+" against a usual %(rate).1f an hour. The agent is alive, so this is not an "
+"outage: check the camera, the lens and the virtual line. This store's "
+"numbers are wrong rather than missing while it lasts."
 msgstr ""
 
 #. module: analitix
@@ -5977,6 +6020,23 @@ msgid "See this store's traffic and conversion dashboards."
 msgstr ""
 
 #. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_store__blind_after_minutes
+msgid "Seeing Nothing After (min)"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,field_description:analitix.field_analitix_device__blind_since
+#: model_terms:ir.ui.view,arch_db:analitix.view_device_list
+msgid "Seeing Nothing Since"
+msgstr ""
+
+#. module: analitix
+#. odoo-python
+#: code:addons/analitix/models/analitix_device.py:0
+msgid "Seeing again — crossings are arriving from this device."
+msgstr ""
+
+#. module: analitix
 #: model_terms:ir.ui.view,arch_db:analitix.view_face_signature_search
 msgid "Seen At Several Doors"
 msgstr ""
@@ -6094,6 +6154,14 @@ msgstr ""
 #. module: analitix
 #: model_terms:ir.actions.act_window,help:analitix.action_store
 msgid "Set up your first store"
+msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields,help:analitix.field_analitix_device__blind_since
+msgid ""
+"Set when the device is heartbeating perfectly and has not reported a single "
+"crossing for far longer than it normally goes quiet. The agent is alive; the"
+" camera is not seeing."
 msgstr ""
 
 #. module: analitix
