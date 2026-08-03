@@ -57,37 +57,59 @@
 
 <h2 id="hardware">2. Hardware by camera role</h2>
 
+<div class="note">
+  <p><strong>They do not have to be IP cameras.</strong> The agent does not talk
+  to a camera over the network — it opens a video device on the operating
+  system. Anything the OS can see will do.</p>
+</div>
+
 <div class="scroll">
 <table>
-  <tr><th>Position</th><th>Camera</th><th>Compute</th><th>What it buys</th></tr>
+  <tr><th>What you have</th><th>How it connects</th><th>What goes in <code>camera:</code></th></tr>
+  <tr><td><strong>USB webcam</strong></td><td>Straight in. The cheapest way to start.</td><td><code>0</code> (or 1, 2… with several)</td></tr>
+  <tr><td><strong>Analogue camera</strong></td><td>Through a <strong>USB capture stick</strong>, US$20–30. The OS sees it as a webcam.</td><td><code>0</code></td></tr>
+  <tr><td><strong>Analogue DVR</strong> already installed</td><td>Nearly all of them publish RTSP. No capture stick needed.</td><td><code>"rtsp://…"</code></td></tr>
+  <tr><td><strong>IP camera</strong></td><td>Over RTSP.</td><td><code>"rtsp://…"</code></td></tr>
+  <tr><td><strong>Depth camera</strong> (Orbbec / RealSense)</td><td>USB. Counts best, costs most.</td><td><code>0</code></td></tr>
+</table>
+</div>
+
+<p>What decides counting quality is the <strong>angle, not the price</strong>: a
+cheap webcam looking straight down at the doorway counts better than an
+expensive one mounted at an angle. What the camera type <em>does</em> decide is
+what can be measured at all:</p>
+
+<div class="scroll">
+<table>
+  <tr><th>Position</th><th>Required</th><th>What it enables</th><th>Compute</th></tr>
   <tr>
-    <td><strong>Door</strong> (required)</td>
-    <td>Overhead depth camera (Orbbec / RealSense) or an IP camera with a top-down view</td>
+    <td><strong>Door</strong>, overhead in the doorway</td>
+    <td>Yes</td>
+    <td>In/out counting, and with it the conversion rate. It sees the tops of heads: it never recognises a face.</td>
     <td>x86 mini-PC or Jetson Orin Nano, one per store where it stretches</td>
-    <td>In/out counting. The foundation: without it there is no conversion rate.</td>
   </tr>
   <tr>
-    <td><strong>Frontal</strong> (optional)</td>
-    <td>IP camera at face height, beside the entrance</td>
+    <td><strong>Frontal</strong>, at face height</td>
+    <td>No</td>
+    <td>Staff exclusion, visits, purchase units, demographics and expression. A decent webcam is enough.</td>
     <td>Shares the door mini-PC</td>
-    <td>Demographics, staff exclusion, cross-door re-identification.</td>
   </tr>
   <tr>
-    <td><strong>Zone</strong> (optional)</td>
-    <td>IP camera covering the whole zone</td>
-    <td>A modest GPU from 3–4 zones up</td>
+    <td><strong>Zone</strong>, covering the area</td>
+    <td>No</td>
     <td>Dwell, engagement, lost sales, per-display attention.</td>
+    <td>A modest GPU from 3–4 zones up</td>
   </tr>
   <tr>
-    <td><strong>Checkout</strong> (optional)</td>
-    <td>IP camera pointed at whoever is paying</td>
-    <td>Shares the zone machine</td>
+    <td><strong>Checkout</strong>, framed on the customer</td>
+    <td>No</td>
     <td>Ticket-to-visit attribution, and customer identification if the store enables it.</td>
+    <td>Shares the zone machine</td>
   </tr>
 </table>
 </div>
 
-<p>Supported without a custom agent: <strong>Hikvision</strong> (ISAPI people
+<p>And without a custom agent at all: <strong>Hikvision</strong> (ISAPI people
 counting), <strong>Dahua</strong> and <strong>IR beam</strong> counters. They
 count, but they give no face — and without a face there is no staff exclusion,
 no visits and no purchase units. Fine to start cheap and migrate later.</p>

@@ -3,6 +3,37 @@
 All notable changes to Analitix. Versions follow Odoo's convention:
 `19.0.<phase>.<minor>.<patch>`.
 
+## 19.0.8.1.0 — It was never an IP-camera product, and the docs said it was
+
+The manuals and the listing led with "IP camera" as though it were a
+requirement. It never was: the agent opens a video device on the machine, so an
+index reaches a USB webcam — or an analogue camera behind a capture stick, which
+the OS presents identically — and a string reaches an RTSP URL, including the
+output of the analogue DVR a shop already owns. The documentation was turning
+away exactly the customer who is cheapest to serve.
+
+* Manuals, listing and `config.example.yaml` now lead with **what you already
+  have**: webcam, analogue + capture stick, existing DVR over RTSP, IP camera,
+  depth camera. Plus the point that matters more than any of it — for counting,
+  the **angle beats the price**: a webcam looking straight down at the doorway
+  beats an expensive camera mounted at an angle.
+* The tables now say what each camera *position* enables rather than what to
+  buy, since a top-down view never sees a face and that, not the price, is what
+  gates staff exclusion, visits and demographics.
+
+**Two agent fixes, so the claim is actually true for a network stream:**
+
+* **Frame buffering.** OpenCV queues frames from an RTSP source, so the counter
+  ran on frames seconds old and the lag grew through the day — a crossing then
+  carries the time it was processed rather than the time it happened. The
+  capture now keeps one frame.
+* **Reconnection.** A USB camera recovers from a hiccup on its own; a network
+  stream does not. When a DVR reboots or the link blips, `read()` returns False
+  forever and the agent spins quietly while the shop stops being counted —
+  heartbeats still flowing, so from Odoo the device looks perfectly healthy. It
+  now reopens the capture after sustained failure, and clears the tracker state,
+  because a reused track id after a reconnect would invent a crossing.
+
 ## 19.0.8.0.0 — Plans a shopkeeper can read, and a nudge that was only a promise
 
 **The plans are named for what they do.** `Counting → Visits → Service →

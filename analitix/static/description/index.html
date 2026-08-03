@@ -63,6 +63,7 @@
       <span class="alx-badge">Any number of doors</span>
       <span class="alx-badge">No image ever stored</span>
       <span class="alx-badge">Edge, not cloud</span>
+      <span class="alx-badge">Works with the cameras you have</span>
       <span class="alx-badge">Manuals in ES &amp; EN</span>
       <span class="alx-badge">One shop or a chain</span>
     </div>
@@ -476,17 +477,29 @@
     <h2>What you need in the shop</h2>
     <div class="alx-scroll">
       <table class="alx-table">
-        <tr><th>Position</th><th>Camera</th><th>Compute</th><th>Needed for</th></tr>
-        <tr><td><strong>Door</strong> — required</td><td>Overhead depth camera (Orbbec / RealSense) or an IP camera with a top-down view</td><td>x86 mini-PC or Jetson Orin Nano</td><td>Counting. Everything else is built on it.</td></tr>
-        <tr><td><strong>Frontal</strong> — optional</td><td>IP camera at face height beside the entrance</td><td>Shares the door machine</td><td>Demographics, staff exclusion, cross-door re-identification.</td></tr>
-        <tr><td><strong>Zone</strong> — optional</td><td>IP camera covering the zone</td><td>A modest GPU from 3–4 zones up</td><td>Dwell, lost sales, display attention.</td></tr>
-        <tr><td><strong>Checkout</strong> — optional</td><td>IP camera framed on the customer</td><td>Shares the zone machine</td><td>Ticket attribution, optional identification.</td></tr>
+        <tr><th>Position</th><th>Required</th><th>What it enables</th><th>Compute</th></tr>
+        <tr><td><strong>Door</strong>, overhead in the doorway</td><td>Yes</td><td>Counting, and with it the conversion rate. It sees the tops of heads and never a face.</td><td>x86 mini-PC or Jetson Orin Nano</td></tr>
+        <tr><td><strong>Frontal</strong>, at face height</td><td>No</td><td>Staff exclusion, visits, purchase units, demographics.</td><td>Shares the door machine</td></tr>
+        <tr><td><strong>Zone</strong>, covering the area</td><td>No</td><td>Dwell, lost sales, display attention.</td><td>A modest GPU from 3–4 zones up</td></tr>
+        <tr><td><strong>Checkout</strong>, framed on the customer</td><td>No</td><td>Ticket attribution, optional identification.</td><td>Shares the zone machine</td></tr>
       </table>
     </div>
-    <p class="alx-note">Hikvision (ISAPI people counting), Dahua and IR beam
-    counters are supported without a custom agent. They count but give no face,
-    so staff exclusion, visits and purchase units need one of the camera
-    positions above. Starting cheap and migrating later is a supported path.</p>
+    <div class="alx-scroll" style="margin-top:28px;">
+      <table class="alx-table">
+        <tr><th>Cameras — it is not an IP-camera product</th><th></th></tr>
+        <tr><td><strong>USB webcam</strong></td><td>Straight in. The cheapest way to start, and for counting the angle matters far more than the price: a webcam looking straight down at the doorway beats an expensive camera mounted at an angle.</td></tr>
+        <tr><td><strong>Analogue cameras</strong></td><td>Through a US$20–30 USB capture stick. The machine sees them as an ordinary webcam.</td></tr>
+        <tr><td><strong>The analogue DVR you already own</strong></td><td>Nearly all of them publish RTSP, so nothing else is needed. If your shops are already wired for CCTV, this is the cheap route.</td></tr>
+        <tr><td><strong>IP cameras</strong></td><td>Over RTSP.</td></tr>
+        <tr><td><strong>Depth cameras</strong> (Orbbec, RealSense)</td><td>Count best, cost most.</td></tr>
+        <tr><td><strong>Hikvision, Dahua, IR beams</strong></td><td>Supported with no agent at all. They count but give no face, so staff exclusion, visits and purchase units need one of the camera positions above.</td></tr>
+      </table>
+    </div>
+
+    <p class="alx-note">Starting cheap and migrating later is a supported path,
+    and a common one: a shop that begins with one webcam over the door gets its
+    conversion rate on day one, and adds a second camera at face height when it
+    wants to know who those visitors were.</p>
   </section>
 
   <section class="alx-sec">
@@ -503,6 +516,14 @@
       <p>No. Recognition runs on hardware in your own shop. This module has no
       computer-vision dependency at all — it only receives JSON over your own
       HTTPS connection.</p>
+    </div>
+    <div class="alx-faq">
+      <h3>Do I need IP cameras? We already have analogue CCTV.</h3>
+      <p>You do not. The agent opens a video device on the machine, so a USB
+      webcam works, an analogue camera works through a US$20–30 capture stick,
+      and most analogue DVRs already publish an RTSP stream you can point
+      straight at. What actually decides counting accuracy is the angle —
+      overhead, in the doorway — not what the camera cost.</p>
     </div>
     <div class="alx-faq">
       <h3>My store has three entrances. Does that work?</h3>

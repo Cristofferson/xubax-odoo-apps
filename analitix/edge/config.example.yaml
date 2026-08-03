@@ -21,6 +21,22 @@ api_key: "alx_PASTE_THE_KEY_FROM_ODOO_HERE"
 # line — YOLO + ByteTrack over a virtual line (needs ultralytics + opencv).
 source: line
 
+# WHAT CAN BE PLUGGED IN HERE — it is not an IP-camera product.
+#
+#   0                                   a device index: USB webcam, or an
+#                                       ANALOGUE camera behind a USB capture
+#                                       stick, which the OS presents the same
+#                                       way. Try 1, 2... if there is more than
+#                                       one video device.
+#   "rtsp://user:pass@10.0.0.9/stream"  an IP camera, or the RTSP output of the
+#                                       analogue DVR a shop already owns.
+#   "/dev/video2"                       a specific device node.
+#
+# What matters for counting is the ANGLE, not the price of the camera: a cheap
+# webcam looking straight down at the doorway counts better than an expensive
+# one mounted at an angle. What the camera type does decide is whether faces are
+# readable — a top-down view never sees one, so staff exclusion, visits and
+# demographics need a second camera at face height, which can also be a webcam.
 camera: 0
 
 # Virtual line in pixel coordinates, [[x1, y1], [x2, y2]]. Someone crossing it

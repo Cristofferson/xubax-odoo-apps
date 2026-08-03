@@ -296,7 +296,19 @@ class LineCounterSource:
     deployments do not need, and which the Odoo addon must never depend on.
     """
 
+    #: Consecutive failed reads before the capture is torn down and reopened.
+    #: A USB camera recovers on its own; a network stream does not — when a DVR
+    #: reboots or the link blips, ``read()`` returns False forever and the agent
+    #: spins quietly while the shop stops being counted. Heartbeats keep
+    #: flowing, so from Odoo the device looks perfectly healthy.
+    REOPEN_AFTER = 40
+
     def __init__(self, camera=0, line=None, model="yolov8n.pt", conf=0.35):
+        # An int is a device index — a USB webcam, or an analogue camera behind
+        # a capture stick, which the operating system presents the same way. A
+        # string is a URL: rtsp:// for an IP camera or for the RTSP output of an
+        # existing analogue DVR. Both go straight to OpenCV, which is why this
+        # takes whatever the config says without coercing it.
         self.camera = camera
         self.line = line or [[0, 540], [1920, 540]]
         self.model_path = model
@@ -313,7 +325,22 @@ class LineCounterSource:
             return
 
         model = YOLO(self.model_path)
-        capture = cv2.VideoCapture(self.camera)
+
+        def open_capture():
+            capture = cv2.VideoCapture(self.camera)
+            try:
+                # Keep one frame, not a queue. On a network stream OpenCV
+                # buffers, and the counter then runs on frames that are seconds
+                # old — the lag grows through the day, and a crossing gets
+                # stamped with the time it was *processed* rather than the time
+                # it happened. Best effort: not every backend honours it.
+                capture.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+            except Exception:  # noqa: BLE001
+                pass
+            return capture
+
+        capture = open_capture()
+        failures = 0
         side_of_line = {}
         (x1, y1), (x2, y2) = self.line
 
@@ -324,8 +351,23 @@ class LineCounterSource:
         while not self._stop.is_set():
             ok, frame = capture.read()
             if not ok:
-                time.sleep(0.5)
+                failures += 1
+                if failures >= self.REOPEN_AFTER:
+                    _log.warning(
+                        "No frames from %s for a while — reopening the capture.",
+                        self.camera)
+                    capture.release()
+                    time.sleep(2.0)
+                    capture = open_capture()
+                    failures = 0
+                    # Tracks do not survive a reconnect: the tracker starts
+                    # over, so remembering which side of the line an old id was
+                    # on would invent a crossing the moment it is reused.
+                    side_of_line.clear()
+                else:
+                    time.sleep(0.5)
                 continue
+            failures = 0
             results = model.track(frame, persist=True, classes=[0],
                                   conf=self.conf, verbose=False)
             if not results or results[0].boxes is None:

@@ -57,40 +57,61 @@
 
 <h2 id="hardware">2. Hardware por tipo de cámara</h2>
 
+<div class="note">
+  <p><strong>No hace falta que sean cámaras IP.</strong> El agente no habla con
+  la cámara por red: abre un dispositivo de video del sistema operativo. Sirve
+  cualquier cosa que el sistema pueda ver.</p>
+</div>
+
 <div class="scroll">
 <table>
-  <tr><th>Puesto</th><th>Cámara</th><th>Cómputo</th><th>Para qué</th></tr>
+  <tr><th>Qué tienes</th><th>Cómo se conecta</th><th>Qué poner en <code>camera:</code></th></tr>
+  <tr><td><strong>Webcam USB</strong></td><td>Directo. Lo más barato para arrancar.</td><td><code>0</code> (o 1, 2… si hay varias)</td></tr>
+  <tr><td><strong>Cámara analógica</strong></td><td>Con una <strong>capturadora USB</strong> de 20–30 USD. El sistema la ve como una webcam.</td><td><code>0</code></td></tr>
+  <tr><td><strong>DVR analógico</strong> ya instalado</td><td>Casi todos publican RTSP. Ni capturadora hace falta.</td><td><code>"rtsp://…"</code></td></tr>
+  <tr><td><strong>Cámara IP</strong></td><td>Por RTSP.</td><td><code>"rtsp://…"</code></td></tr>
+  <tr><td><strong>Cámara de profundidad</strong> (Orbbec / RealSense)</td><td>USB. La que mejor cuenta, y la más cara.</td><td><code>0</code></td></tr>
+</table>
+</div>
+
+<p>Lo que decide la calidad del conteo es el <strong>ángulo, no el precio</strong>:
+una webcam mirando recto hacia abajo al vano cuenta mejor que una cámara cara
+puesta de lado. Lo que sí decide el tipo de cámara es <em>qué se puede medir</em>:</p>
+
+<div class="scroll">
+<table>
+  <tr><th>Puesto</th><th>Obligatoria</th><th>Qué habilita</th><th>Cómputo</th></tr>
   <tr>
-    <td><strong>Puerta</strong> (obligatoria)</td>
-    <td>Cenital de profundidad (Orbbec / RealSense) o cámara IP con vista cenital</td>
+    <td><strong>Puerta</strong>, cenital sobre el vano</td>
+    <td>Sí</td>
+    <td>Conteo de entradas y salidas, y con eso la conversión. Ve coronillas: nunca reconoce una cara.</td>
     <td>Mini-PC x86 o Jetson Orin Nano, uno por tienda si alcanza</td>
-    <td>Conteo entradas/salidas. Es el cimiento: sin esto no hay conversión.</td>
   </tr>
   <tr>
-    <td><strong>Frontal</strong> (opcional)</td>
-    <td>Cámara IP a la altura de la cara, junto a la entrada</td>
+    <td><strong>Frontal</strong>, a la altura de la cara</td>
+    <td>No</td>
+    <td>Exclusión de personal, visitas, unidades de compra, demografía y expresión. Puede ser una webcam decente.</td>
     <td>Comparte el mini-PC de la puerta</td>
-    <td>Demografía, exclusión de personal, reidentificación entre puertas.</td>
   </tr>
   <tr>
-    <td><strong>Zona</strong> (opcional)</td>
-    <td>Cámara IP cubriendo la zona completa</td>
-    <td>Una GPU modesta a partir de 3–4 zonas</td>
+    <td><strong>Zona</strong>, cubriendo el área</td>
+    <td>No</td>
     <td>Permanencia, interés, venta perdida, atención por exhibidor.</td>
+    <td>Una GPU modesta a partir de 3–4 zonas</td>
   </tr>
   <tr>
-    <td><strong>Caja</strong> (opcional)</td>
-    <td>Cámara IP apuntando a quien paga</td>
-    <td>Comparte el equipo de zonas</td>
+    <td><strong>Caja</strong>, enfocando a quien paga</td>
+    <td>No</td>
     <td>Atribución de ticket a visita, e identificación de clientes si la tienda la activa.</td>
+    <td>Comparte el equipo de zonas</td>
   </tr>
 </table>
 </div>
 
-<p>Alternativas soportadas sin agente propio: <strong>Hikvision</strong> (ISAPI
-people counting), <strong>Dahua</strong> y <strong>barrera infrarroja</strong>.
-Cuentan, pero no dan cara: sin cara no hay exclusión de personal, ni visitas, ni
-unidades de compra. Sirven para arrancar barato y migrar después.</p>
+<p>Y sin agente propio: <strong>Hikvision</strong> (conteo por ISAPI),
+<strong>Dahua</strong> y <strong>barrera infrarroja</strong>. Cuentan, pero no
+dan cara: sin cara no hay exclusión de personal, ni visitas, ni unidades de
+compra. Sirven para arrancar barato y migrar después.</p>
 
 <h2 id="montaje">3. Montaje de cámaras</h2>
 
