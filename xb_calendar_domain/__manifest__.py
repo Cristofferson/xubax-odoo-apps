@@ -42,9 +42,16 @@ Two ways to set it
 ------------------
 * **One domain for every meeting** — the simplest case: type the domain and
   every meeting in the database uses it.
-* **One domain per company** — each company gets its own field, and its
-  meetings follow the domain of the company that organises them. Companies
-  left empty fall back to the general one.
+* **One domain per company** — each company gets its own field, and every
+  meeting carries the brand it goes out under. A new meeting starts with the
+  company selected in the top bar, so the link you are shown before saving is
+  the link that gets saved, and you can put a single meeting under a different
+  brand without changing anything about yourself. Companies left empty fall
+  back to the general domain.
+
+Change the brand of a meeting that already has a videocall link and the link
+follows on the spot, keeping its access token: the invitations already sent
+still work, only the domain in front of them changes.
 
 Leaving it on *Odoo default* makes the module inert: the database behaves
 exactly as it did before installing it, which also makes it safe to uninstall.
@@ -87,7 +94,7 @@ Compatibility
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",
     "category": "Productivity/Calendar",
-    "version": "19.0.1.2.1",
+    "version": "19.0.1.3.0",
     "license": "OPL-1",
     "price": 29.00,
     "currency": "USD",
@@ -99,6 +106,7 @@ Compatibility
     "data": [
         "views/res_company_views.xml",
         "views/res_config_settings_views.xml",
+        "views/calendar_event_views.xml",
     ],
     "images": [
         "static/description/banner.png",

@@ -81,6 +81,16 @@ msgstr ""
 #. module: xb_calendar_domain
 #. odoo-python
 #: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"A meeting created before this field has no brand of its own and keeps "
+"following the company of its %(organiser)s, so updating the module does not "
+"move a single link. The field is only shown where choosing means something: "
+"one domain per company, and more than one company."
+msgstr "Una reunión creada antes de que existiera este campo no tiene marca propia y sigue a la compañía de su %(organiser)s, así que actualizar el módulo no mueve una sola liga. El campo solo se muestra donde elegir significa algo: un dominio por compañía, y más de una compañía."
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
 msgid "A meeting still shows the old domain."
 msgstr "Una reunión sigue mostrando el dominio viejo."
 
@@ -103,6 +113,29 @@ msgid "A meeting with its videocall link"
 msgstr "Una reunión con su liga de videollamada"
 
 #. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"A new meeting starts with the company selected in the top bar, which is the "
+"one Odoo builds the link with while the meeting is still unsaved: the link "
+"you are shown before saving is the one that gets saved. To send a single "
+"meeting out under another brand, change this field -- there is no need to "
+"change the Organiser, nor the company of your own user."
+msgstr "Una reunión nueva arranca con la compañía seleccionada en la barra superior, que es con la que Odoo arma la liga mientras la reunión todavía no se guarda: la liga que ves antes de guardar es la que queda guardada. Para que una reunión suelta salga con otra marca, cambia este campo: no hace falta cambiar el Organizador ni la compañía de tu propio usuario."
+
+#. module: xb_calendar_domain
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_calendar_event__xb_calendar_brand_visible
+msgid "Brand Can Be Chosen"
+msgstr "Se puede elegir la marca"
+
+#. module: xb_calendar_domain
+#: model:ir.model.fields,help:xb_calendar_domain.field_calendar_event__xb_calendar_company_id
+msgid ""
+"Brand this meeting goes out under: its domain is the one written into the videocall link and into the invitation, reminder and update emails, and its name is the one the videocall page announces.\n"
+"A new meeting starts with the company selected in the top bar — the same one the link preview is built with. Left empty, the meeting follows the company of its Organiser, which is how meetings created before this field behave."
+msgstr "Marca con la que sale esta reunión: su dominio es el que se escribe en la liga de la videollamada y en los correos de invitación, recordatorio y actualización, y su nombre es el que anuncia la página de la videollamada.\nUna reunión nueva arranca con la compañía seleccionada en la barra superior, la misma con la que se arma la vista previa de la liga. Vacío, la reunión sigue a la compañía de su Organizador, que es como se comportan las reuniones creadas antes de este campo."
+
+#. module: xb_calendar_domain
 #: model:ir.model,name:xb_calendar_domain.model_calendar_attendee
 msgid "Calendar Attendee Information"
 msgstr ""
@@ -117,6 +150,15 @@ msgstr ""
 #: code:addons/xb_calendar_domain/manual.py:0
 msgid "Can I undo it?"
 msgstr "¿Se puede deshacer?"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"Change the brand of a meeting that already has an Odoo videocall and its "
+"link follows immediately, keeping its access token: the invitations already "
+"sent keep working and only the domain in front of them changes."
+msgstr "Cambia la marca de una reunión que ya tiene videollamada de Odoo y su liga la sigue de inmediato, conservando su token de acceso: las invitaciones ya enviadas siguen funcionando y solo cambia el dominio que llevan delante."
 
 #. module: xb_calendar_domain
 #: model:ir.model,name:xb_calendar_domain.model_res_company
@@ -216,8 +258,9 @@ msgstr ""
 #. module: xb_calendar_domain
 #. odoo-python
 #: code:addons/xb_calendar_domain/manual.py:0
-msgid "Each meeting follows the domain of the company that organises it."
-msgstr "Cada reunión sigue el dominio de la compañía que la organiza."
+msgid ""
+"Each meeting carries the brand it goes out under, and follows its domain."
+msgstr "Cada reunión lleva la marca con la que sale, y sigue su dominio."
 
 #. module: xb_calendar_domain
 #. odoo-python
@@ -225,6 +268,14 @@ msgstr "Cada reunión sigue el dominio de la compañía que la organiza."
 msgid "Every link that points back at a meeting, not only the videocall:"
 msgstr ""
 "Cada liga que apunta de regreso a la reunión, no solo la videollamada:"
+
+#. module: xb_calendar_domain
+#: model_terms:ir.ui.view,arch_db:xb_calendar_domain.res_config_settings_view_form_xb_calendar_domain
+msgid ""
+"Every meeting carries the brand it goes out under, shown right under its video\n"
+"                                    link. A new meeting starts with the company selected in the top bar, and a\n"
+"                                    meeting created before this field follows the company of its Organiser."
+msgstr "Cada reunión lleva la marca con la que sale, justo debajo de su enlace de video. Una reunión nueva arranca con la compañía seleccionada en la barra superior, y una reunión creada antes de este campo sigue a la compañía de su Organizador."
 
 #. module: xb_calendar_domain
 #. odoo-python
@@ -284,6 +335,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:xb_calendar_domain.res_config_settings_view_form_xb_calendar_domain
 msgid "Meeting Links"
 msgstr "Ligas de las reuniones"
+
+#. module: xb_calendar_domain
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_calendar_event__xb_calendar_company_id
+msgid "Meeting Brand"
+msgstr "Marca de la liga"
 
 #. module: xb_calendar_domain
 #: model:ir.model.fields,field_description:xb_calendar_domain.field_res_company__xb_calendar_link_url
@@ -446,6 +502,14 @@ msgid "Several companies or brands in the same database."
 msgstr "Varias compañías o marcas en la misma base de datos."
 
 #. module: xb_calendar_domain
+#: model:ir.model.fields,help:xb_calendar_domain.field_calendar_event__xb_calendar_brand_visible
+msgid ""
+"Technical field: a meeting only shows its brand where picking one means "
+"something, that is with one domain per company and more than one company to "
+"choose from."
+msgstr "Campo técnico: una reunión solo muestra su marca donde elegir una significa algo, es decir con un dominio por compañía y más de una compañía entre las que escoger."
+
+#. module: xb_calendar_domain
 #. odoo-python
 #: code:addons/xb_calendar_domain/manual.py:0
 msgid "The Meeting Links section in the Calendar settings"
@@ -454,14 +518,14 @@ msgstr "La sección Ligas de las reuniones en los ajustes de Calendario"
 #. module: xb_calendar_domain
 #. odoo-python
 #: code:addons/xb_calendar_domain/manual.py:0
-msgid ""
-"The company that decides is the one of the meeting %(organiser)s, not the "
-"company active in the top bar. If a meeting has to go out under another "
-"brand, change its Organiser."
-msgstr ""
-"La compañía que manda es la del %(organiser)s de la reunión, no la compañía "
-"activa en la barra de arriba. Si una reunión tiene que salir con otra marca,"
-" cambie su Organizador."
+msgid "The brand of a meeting"
+msgstr "La marca de una reunión"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "The brand of each meeting"
+msgstr "La marca de cada reunión"
 
 #. module: xb_calendar_domain
 #. odoo-python
@@ -576,9 +640,9 @@ msgstr "Título de la página de la videollamada"
 #: model_terms:ir.ui.view,arch_db:xb_calendar_domain.res_config_settings_view_form_xb_calendar_domain
 msgid ""
 "What WhatsApp, Telegram or Slack show when the videocall link is pasted into a\n"
-"                                    chat, instead of “Odoo”. Leave it empty to use the name of the company that\n"
-"                                    organises the meeting."
-msgstr "Lo que muestran WhatsApp, Telegram o Slack cuando la liga de la videollamada se pega en un chat, en vez de «Odoo». Déjelo vacío para usar el nombre de la compañía que organiza la reunión."
+"                                    chat, instead of “Odoo”. Leave it empty to use the name of the company itself.\n"
+"                                    The meeting announces the name of the brand it goes out under."
+msgstr "Lo que muestran WhatsApp, Telegram o Slack cuando la liga de la videollamada se pega en un chat, en vez de «Odoo». Déjalo vacío para usar el nombre de la propia compañía. La reunión anuncia el nombre de la marca con la que sale."
 
 #. module: xb_calendar_domain
 #. odoo-python
@@ -599,8 +663,8 @@ msgid ""
 "When the videocall link is pasted into WhatsApp, Telegram or Slack, the "
 "preview those apps build reads the title of the page it opens, and Odoo "
 "leaves that title as a bare %(odoo)s. The module writes the name of the "
-"company that organises the meeting instead."
-msgstr "Cuando la liga de la videollamada se pega en WhatsApp, Telegram o Slack, la vista previa que arman esas apps lee el título de la página que abre, y Odoo deja ahí un simple %(odoo)s. El módulo escribe en su lugar el nombre de la compañía que organiza la reunión."
+"brand the meeting goes out under instead."
+msgstr "Cuando la liga de la videollamada se pega en WhatsApp, Telegram o Slack, la vista previa que arman esas aplicaciones lee el título de la página que abre, y Odoo deja ese título en un escueto %(odoo)s. El módulo escribe en su lugar el nombre de la marca con la que sale la reunión."
 
 #. module: xb_calendar_domain
 #. odoo-python
@@ -613,6 +677,15 @@ msgstr "Cuándo usarla"
 #: code:addons/xb_calendar_domain/manual.py:0
 msgid "Where it is configured"
 msgstr "Dónde se configura"
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"With one domain per company, every meeting carries the brand it goes out "
+"under, right under its video link. That company decides two things: the "
+"domain written into the link and the name the videocall page announces."
+msgstr "Con un dominio por compañía, cada reunión lleva la marca con la que sale, justo debajo de su enlace de video. Esa compañía decide dos cosas: el dominio que se escribe en la liga y el nombre que anuncia la página de la videollamada."
 
 #. module: xb_calendar_domain
 #: model_terms:ir.ui.view,arch_db:xb_calendar_domain.res_config_settings_view_form_xb_calendar_domain

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-02 16:52+0000\n"
-"PO-Revision-Date: 2026-08-02 16:52+0000\n"
+"POT-Creation-Date: 2026-08-03 19:58+0000\n"
+"PO-Revision-Date: 2026-08-03 19:58+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -67,6 +67,16 @@ msgstr ""
 #. module: xb_calendar_domain
 #. odoo-python
 #: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"A meeting created before this field has no brand of its own and keeps "
+"following the company of its %(organiser)s, so updating the module does not "
+"move a single link. The field is only shown where choosing means something: "
+"one domain per company, and more than one company."
+msgstr ""
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
 msgid "A meeting still shows the old domain."
 msgstr ""
 
@@ -86,6 +96,29 @@ msgid "A meeting with its videocall link"
 msgstr ""
 
 #. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"A new meeting starts with the company selected in the top bar, which is the "
+"one Odoo builds the link with while the meeting is still unsaved: the link "
+"you are shown before saving is the one that gets saved. To send a single "
+"meeting out under another brand, change this field -- there is no need to "
+"change the Organiser, nor the company of your own user."
+msgstr ""
+
+#. module: xb_calendar_domain
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_calendar_event__xb_calendar_brand_visible
+msgid "Brand Can Be Chosen"
+msgstr ""
+
+#. module: xb_calendar_domain
+#: model:ir.model.fields,help:xb_calendar_domain.field_calendar_event__xb_calendar_company_id
+msgid ""
+"Brand this meeting goes out under: its domain is the one written into the videocall link and into the invitation, reminder and update emails, and its name is the one the videocall page announces.\n"
+"A new meeting starts with the company selected in the top bar — the same one the link preview is built with. Left empty, the meeting follows the company of its Organiser, which is how meetings created before this field behave."
+msgstr ""
+
+#. module: xb_calendar_domain
 #: model:ir.model,name:xb_calendar_domain.model_calendar_attendee
 msgid "Calendar Attendee Information"
 msgstr ""
@@ -99,6 +132,15 @@ msgstr ""
 #. odoo-python
 #: code:addons/xb_calendar_domain/manual.py:0
 msgid "Can I undo it?"
+msgstr ""
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"Change the brand of a meeting that already has an Odoo videocall and its "
+"link follows immediately, keeping its access token: the invitations already "
+"sent keep working and only the domain in front of them changes."
 msgstr ""
 
 #. module: xb_calendar_domain
@@ -187,13 +229,22 @@ msgstr ""
 #. module: xb_calendar_domain
 #. odoo-python
 #: code:addons/xb_calendar_domain/manual.py:0
-msgid "Each meeting follows the domain of the company that organises it."
+msgid ""
+"Each meeting carries the brand it goes out under, and follows its domain."
 msgstr ""
 
 #. module: xb_calendar_domain
 #. odoo-python
 #: code:addons/xb_calendar_domain/manual.py:0
 msgid "Every link that points back at a meeting, not only the videocall:"
+msgstr ""
+
+#. module: xb_calendar_domain
+#: model_terms:ir.ui.view,arch_db:xb_calendar_domain.res_config_settings_view_form_xb_calendar_domain
+msgid ""
+"Every meeting carries the brand it goes out under, shown right under its video\n"
+"                                    link. A new meeting starts with the company selected in the top bar, and a\n"
+"                                    meeting created before this field follows the company of its Organiser."
 msgstr ""
 
 #. module: xb_calendar_domain
@@ -245,6 +296,11 @@ msgstr ""
 #. module: xb_calendar_domain
 #: model_terms:ir.ui.view,arch_db:xb_calendar_domain.res_config_settings_view_form_xb_calendar_domain
 msgid "Meeting Links"
+msgstr ""
+
+#. module: xb_calendar_domain
+#: model:ir.model.fields,field_description:xb_calendar_domain.field_calendar_event__xb_calendar_company_id
+msgid "Meeting Brand"
 msgstr ""
 
 #. module: xb_calendar_domain
@@ -397,6 +453,14 @@ msgid "Several companies or brands in the same database."
 msgstr ""
 
 #. module: xb_calendar_domain
+#: model:ir.model.fields,help:xb_calendar_domain.field_calendar_event__xb_calendar_brand_visible
+msgid ""
+"Technical field: a meeting only shows its brand where picking one means "
+"something, that is with one domain per company and more than one company to "
+"choose from."
+msgstr ""
+
+#. module: xb_calendar_domain
 #. odoo-python
 #: code:addons/xb_calendar_domain/manual.py:0
 msgid "The Meeting Links section in the Calendar settings"
@@ -405,10 +469,13 @@ msgstr ""
 #. module: xb_calendar_domain
 #. odoo-python
 #: code:addons/xb_calendar_domain/manual.py:0
-msgid ""
-"The company that decides is the one of the meeting %(organiser)s, not the "
-"company active in the top bar. If a meeting has to go out under another "
-"brand, change its Organiser."
+msgid "The brand of a meeting"
+msgstr ""
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid "The brand of each meeting"
 msgstr ""
 
 #. module: xb_calendar_domain
@@ -517,8 +584,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:xb_calendar_domain.res_config_settings_view_form_xb_calendar_domain
 msgid ""
 "What WhatsApp, Telegram or Slack show when the videocall link is pasted into a\n"
-"                                    chat, instead of “Odoo”. Leave it empty to use the name of the company that\n"
-"                                    organises the meeting."
+"                                    chat, instead of “Odoo”. Leave it empty to use the name of the company itself.\n"
+"                                    The meeting announces the name of the brand it goes out under."
 msgstr ""
 
 #. module: xb_calendar_domain
@@ -540,7 +607,7 @@ msgid ""
 "When the videocall link is pasted into WhatsApp, Telegram or Slack, the "
 "preview those apps build reads the title of the page it opens, and Odoo "
 "leaves that title as a bare %(odoo)s. The module writes the name of the "
-"company that organises the meeting instead."
+"brand the meeting goes out under instead."
 msgstr ""
 
 #. module: xb_calendar_domain
@@ -553,6 +620,15 @@ msgstr ""
 #. odoo-python
 #: code:addons/xb_calendar_domain/manual.py:0
 msgid "Where it is configured"
+msgstr ""
+
+#. module: xb_calendar_domain
+#. odoo-python
+#: code:addons/xb_calendar_domain/manual.py:0
+msgid ""
+"With one domain per company, every meeting carries the brand it goes out "
+"under, right under its video link. That company decides two things: the "
+"domain written into the link and the name the videocall page announces."
 msgstr ""
 
 #. module: xb_calendar_domain

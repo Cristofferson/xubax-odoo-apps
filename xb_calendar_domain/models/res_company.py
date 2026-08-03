@@ -75,6 +75,17 @@ class ResCompany(models.Model):
                     url=raw,
                 ))
 
+    def _xb_calendar_mode(self):
+        """How the domain is chosen: ``default``, ``fixed`` or ``company``.
+
+        Read in one place because three different questions depend on it —
+        which domain, which name on the videocall page, and whether the
+        meeting form shows its brand at all — and an unknown value has to mean
+        ``default`` everywhere, not just where it was remembered.
+        """
+        mode = self.env["ir.config_parameter"].sudo().get_param(MODE_PARAM) or "default"
+        return mode if mode in ("fixed", "company") else "default"
+
     def _xb_calendar_base_url(self):
         """Domain configured for calendar links, or '' to keep Odoo's own.
 
@@ -83,8 +94,8 @@ class ResCompany(models.Model):
         the database behaving exactly as it did before installing the module.
         """
         icp = self.env["ir.config_parameter"].sudo()
-        mode = icp.get_param(MODE_PARAM) or "default"
-        if mode not in ("fixed", "company"):
+        mode = self._xb_calendar_mode()
+        if mode == "default":
             return ""
         general = normalize_base_url(icp.get_param(URL_PARAM))
         if mode == "fixed":
@@ -98,9 +109,7 @@ class ResCompany(models.Model):
         Inert in default mode like everything else here, so switching back —
         or uninstalling — leaves the page exactly as Odoo renders it.
         """
-        icp = self.env["ir.config_parameter"].sudo()
-        mode = icp.get_param(MODE_PARAM) or "default"
-        if mode not in ("fixed", "company"):
+        if self._xb_calendar_mode() == "default":
             return ""
         company = (self[:1] or self.env.company).sudo()
         return (company.xb_calendar_link_title or "").strip() or company.name

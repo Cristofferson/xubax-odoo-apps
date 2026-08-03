@@ -133,7 +133,7 @@ def build_body(env):
              _("Every meeting in the database uses the domain you type."),
              _("One company, or one brand in front of customers.")],
             [_("One domain per company"),
-             _("Each meeting follows the domain of the company that organises it."),
+             _("Each meeting carries the brand it goes out under, and follows its domain."),
              _("Several companies or brands in the same database.")],
         ]))
 
@@ -159,17 +159,38 @@ def build_body(env):
         "which is handier when there are several: %(menu)s.",
         menu=b % _("Settings > Users & Companies > Companies"))))
     out.append(_img(folder, '05_compania', _("The field on the company form")))
+    out.append(_h(_("The brand of each meeting")))
+    out.append(_p(_(
+        "With one domain per company, every meeting carries the brand it goes "
+        "out under, right under its video link. That company decides two "
+        "things: the domain written into the link and the name the videocall "
+        "page announces.")))
+    out.append(_img(folder, '06_marca_reunion', _("The brand of a meeting")))
+    out.append(_p(_(
+        "A new meeting starts with the company selected in the top bar, which "
+        "is the one Odoo builds the link with while the meeting is still "
+        "unsaved: the link you are shown before saving is the one that gets "
+        "saved. To send a single meeting out under another brand, change this "
+        "field -- there is no need to change the Organiser, nor the company of "
+        "your own user.")))
+    out.append(_p(_(
+        "Change the brand of a meeting that already has an Odoo videocall and "
+        "its link follows immediately, keeping its access token: the "
+        "invitations already sent keep working and only the domain in front of "
+        "them changes.")))
     out.append(_note(_(
-        "The company that decides is the one of the meeting %(organiser)s, not "
-        "the company active in the top bar. If a meeting has to go out under "
-        "another brand, change its Organiser.", organiser=b % _("Organiser"))))
+        "A meeting created before this field has no brand of its own and keeps "
+        "following the company of its %(organiser)s, so updating the module "
+        "does not move a single link. The field is only shown where choosing "
+        "means something: one domain per company, and more than one company.",
+        organiser=b % _("Organiser"))))
 
     out.append(_h(_("The name on the videocall page")))
     out.append(_p(_(
         "When the videocall link is pasted into WhatsApp, Telegram or Slack, "
         "the preview those apps build reads the title of the page it opens, "
         "and Odoo leaves that title as a bare %(odoo)s. The module writes the "
-        "name of the company that organises the meeting instead.",
+        "name of the brand the meeting goes out under instead.",
         odoo=b % "Odoo")))
     out.append(_p(_(
         "To announce a different name -- the brand your customers know rather "

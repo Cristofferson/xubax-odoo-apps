@@ -59,6 +59,19 @@
                                     the domain above.
                                 </div>
                             </div>
+                            <!--
+                              The rule that surprises everybody, said out loud
+                              on the screen where the mode is chosen instead of
+                              only in the manual.
+                            -->
+                            <div class="row" invisible="xb_calendar_link_mode != 'company'">
+                                <div class="col-lg-3"/>
+                                <div class="col text-muted">
+                                    Every meeting carries the brand it goes out under, shown right under its video
+                                    link. A new meeting starts with the company selected in the top bar, and a
+                                    meeting created before this field follows the company of its Organiser.
+                                </div>
+                            </div>
 
                             <!--
                               The title of the videocall page: what a messaging
@@ -73,8 +86,8 @@
                                 <div class="col-lg-3"/>
                                 <div class="col text-muted">
                                     What WhatsApp, Telegram or Slack show when the videocall link is pasted into a
-                                    chat, instead of “Odoo”. Leave it empty to use the name of the company that
-                                    organises the meeting.
+                                    chat, instead of “Odoo”. Leave it empty to use the name of the company itself.
+                                    The meeting announces the name of the brand it goes out under.
                                 </div>
                             </div>
                         </div>

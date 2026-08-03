@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_calendar_event_form_xb_calendar_domain" model="ir.ui.view">
+        <field name="name">calendar.event.form.inherit.xb.calendar.domain</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+        <field name="arch" type="xml">
+            <!--
+                Right under the video link, because it is the field that
+                decides it. Hidden unless choosing a brand means something:
+                one domain per company, and more than one company.
+            -->
+            <xpath expr="//div[@name='videocall_location_div']" position="after">
+                <field name="xb_calendar_brand_visible" invisible="1"/>
+                <field name="xb_calendar_company_id"
+                       invisible="not xb_calendar_brand_visible"
+                       readonly="not user_can_edit"
+                       options="{'no_create': True, 'no_open': True}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
