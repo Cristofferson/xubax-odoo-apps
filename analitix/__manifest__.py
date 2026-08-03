@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Analitix — Physical Store Intelligence",
-    "version": "19.0.7.2.0",
+    "version": "19.0.7.3.0",
     "category": "Point of Sale",
     "summary": "Store intelligence on Odoo: visitor counting across any number "
                "of doors, POS conversion (ATV, UPT, revenue per visitor, "
@@ -191,9 +191,10 @@ Privacy by design: no image or video is ever transmitted or stored — the edge
 sends only counts and irreversible numeric embeddings, and those are encrypted
 in the database.
 
-The edge agent (Python, YOLO + ByteTrack) ships separately in the ``edge/``
-folder of the repository; this addon has no computer-vision dependency: it
-only receives JSON.
+The edge agent (Python, YOLO + ByteTrack) is **included**, in the ``edge/``
+folder of the module, and runs on the shop's own machine — not on the Odoo
+server. This addon itself has no computer-vision dependency: it only ever
+receives JSON.
 """,
     "author": "XUBAX",
     "maintainer": "XUBAX",

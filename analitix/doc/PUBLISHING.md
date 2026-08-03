@@ -18,9 +18,11 @@ tools/package.sh /tmp
 
 It asserts, and exits non-zero on any of them:
 
-* `edge/` is not in the archive — the camera agent is a separate product with
-  its own installer and its own heavy dependencies. Shipping it inside the addon
-  would imply Odoo runs the vision, which it does not.
+* `edge/` **is** in the archive. It used to be excluded, on the reasoning that
+  the agent was a separate product; measured, it is 33 KB of Python whose heavy
+  libraries are pip requirements on the shop's own machine. Leaving it out sold
+  a customer a receiver with nothing to receive — and the manual inside the
+  module told them to fetch it from a repository they do not have.
 * `tools/` is not in the archive — build machinery is not what a customer
   installs.
 * No `__pycache__`, no `.pyc`.
@@ -46,7 +48,7 @@ Both matter, and neither substitutes for the other:
   real backlog ahead of them, the anomaly cron sweeps a real fleet). Running the
   suite only against an empty database hides that.
 
-Expected: **227 passed, 0 failed**, and the demo database opens with two stores
+Expected: **268 passed, 0 failed**, and the demo database opens with two stores
 showing today's visitors and a green health badge.
 
 ## 3. Translations
@@ -73,8 +75,10 @@ the only warning anyone gets.
 - [ ] The audit log is still append-only for everybody, including the
       administrator.
 - [ ] No group is granted to anybody by the module's own data except the two
-      administrator accounts on `group_manager` — and `group_security` to
-      nobody at all.
+      administrator accounts on `group_manager` — and `group_security` and
+      `group_corporate` to nobody at all. (The demo data grants both to the
+      administrator so a reviewer can open the watch list and the chain
+      console; that applies only to a database installed `--with-demo`.)
 
 ## 5. Screenshots and screencasts
 
@@ -85,8 +89,9 @@ last year's interface reads as an abandoned app.
 
 ## 6. The listing itself — needs a human with the account
 
-- [ ] **Price and currency.** The manifest ships `price: 0.00`. Set the real
-      figure before submitting, in the manifest *and* on the listing form.
+- [ ] **Price and currency.** The manifest carries `price: 499.00` USD. Confirm
+      it still matches what the listing form says before submitting — the two
+      are set separately and only one of them is in version control.
 - [ ] **Icon and banner.** `static/description/icon.png` (512×512) and
       `banner.png` (1200×600).
 - [ ] Category **Point of Sale**, Odoo version **19.0**, licence **OPL-1**.

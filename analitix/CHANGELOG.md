@@ -3,6 +3,32 @@
 All notable changes to Analitix. Versions follow Odoo's convention:
 `19.0.<phase>.<minor>.<patch>`.
 
+## 19.0.7.3.0 — The edge agent is included
+
+Until now the camera agent was excluded from the published package, on the
+reasoning that it was a separate product with its own installer. Measured, that
+reasoning did not survive: the agent is 33 KB of Python whose heavy libraries
+are pip requirements installed on the shop's own machine, never bundled.
+
+Leaving it out sold a customer a receiver with nothing to receive — and the
+implementation manual *inside that module* told them to fetch it from a
+repository they do not have. A buyer would have installed the app, seen empty
+dashboards, opened the manual and hit a dead end.
+
+* **`edge/` now ships with the module** (+37 KB), and `tools/package.sh` fails
+  if it is **missing** rather than if it is present.
+* **The listing says what you get**: the module, the agent with its systemd unit
+  and example config, the API contract, the manuals, the demo data — and what
+  you still have to buy, which is the camera and the mini-PC.
+* Two FAQ entries a buyer actually asks: whether the camera software is
+  included, and whether anything is licensed per store, per camera or per user.
+  (Nothing is.)
+* The manuals point at `<addons-path>/analitix/edge/`, which the customer has,
+  instead of a repository they do not.
+* The addon still declares **no** computer-vision dependency, and the packaging
+  script still asserts it. Shipping the agent's source beside the module changes
+  nothing about what Odoo needs to run.
+
 ## 19.0.7.2.0 — Listing regenerated, and a figure that was wrong on screen
 
 * **Screenshots and screencasts regenerated** against the current product. The

@@ -364,6 +364,60 @@
   </section>
 
   <section class="alx-sec">
+    <h2>What you get</h2>
+    <p class="alx-lede">Both halves of the product, in one purchase. The camera
+    software is not sold separately and is not a service you have to contract:
+    it is in the module you download.</p>
+
+    <div class="alx-scroll">
+      <table class="alx-table">
+        <tr><th>Included</th><th>What it is</th></tr>
+        <tr>
+          <td><strong>The Odoo module</strong></td>
+          <td>Everything in the table above, on Odoo 19 Community or Enterprise.
+          Unlimited stores, doors, zones and cameras — none of it is licensed by
+          count.</td>
+        </tr>
+        <tr>
+          <td><strong>The edge agent</strong></td>
+          <td>The Python program that runs on the mini-PC in your shop, talks to
+          the camera and does the counting. Source included, in the module's own
+          <code>edge/</code> folder, with its systemd unit and an example
+          configuration. It has a <code>demo</code> mode that posts synthetic
+          crossings, so you can prove the whole chain works before any hardware
+          is mounted.</td>
+        </tr>
+        <tr>
+          <td><strong>The ingest API contract</strong></td>
+          <td><code>doc/API.md</code>: the whole protocol, written so a third
+          party can integrate different hardware without reading our source.
+          Your data is not locked behind our agent.</td>
+        </tr>
+        <tr>
+          <td><strong>Manuals, in the app</strong></td>
+          <td>A user manual for the shop and an implementation guide for whoever
+          mounts the cameras, in Spanish and English, picked from the reader's
+          own Odoo language. Plus six screencasts.</td>
+        </tr>
+        <tr>
+          <td><strong>Demo data</strong></td>
+          <td>Two stores of different shapes, a fortnight of traffic, tickets,
+          walk-outs and a closed monthly report — enough to judge the product
+          without buying a camera first.</td>
+        </tr>
+      </table>
+    </div>
+
+    <p class="alx-note"><strong>Not included, because nobody can sell it in a
+    zip:</strong> the cameras and the mini-PC. Those are ordinary off-the-shelf
+    hardware you buy once — the next section says exactly what, and the cheapest
+    working setup is one overhead camera and one small PC per shop. Installation
+    and calibration are also not included; the implementation guide is written so
+    a competent technician can do it, and we do it for customers who would
+    rather we did.</p>
+  </section>
+
+  <section class="alx-sec">
     <h2>What you need in the shop</h2>
     <div class="alx-scroll">
       <table class="alx-table">
@@ -411,8 +465,9 @@
       <h3>Can I try it before buying cameras?</h3>
       <p>Yes. Install with demo data and you get two stores, a fortnight of
       traffic, tickets, walk-outs and a monthly report — enough to read every
-      screen and judge the product without any hardware. The reference edge agent
-      also has a <code>demo</code> mode that posts synthetic crossings.</p>
+      screen and judge the product without any hardware. The included edge agent
+      also has a <code>demo</code> mode that posts synthetic crossings, so you
+      can prove the whole chain end to end before mounting a camera.</p>
     </div>
     <div class="alx-faq">
       <h3>Does the watch list identify people automatically?</h3>
@@ -421,6 +476,21 @@
       it recognises anybody, entries expire on their own, and a match is a
       discreet prompt to a small named group — never an accusation, never a
       screen, never an automatic action.</p>
+    </div>
+    <div class="alx-faq">
+      <h3>Does this include the software that runs the cameras?</h3>
+      <p>Yes. The edge agent ships inside the module, in its <code>edge/</code>
+      folder — source, systemd unit and example configuration. You copy it to
+      the mini-PC in your shop and start it. What you still have to buy is the
+      hardware itself: a camera and a small PC.</p>
+    </div>
+    <div class="alx-faq">
+      <h3>Is anything licensed per store, per camera or per user?</h3>
+      <p>No. The module is one purchase for your database, with no counter
+      anywhere in it: however many stores, doors, zones and cameras you run, the
+      software does not meter them. The per-store plan you will find inside is a
+      configuration control for your own use — deliberately not a licence check,
+      so a billing problem can never switch a shop's cameras off.</p>
     </div>
     <div class="alx-faq">
       <h3>We have one shop. Does the chain machinery get in the way?</h3>
@@ -445,8 +515,8 @@
     <strong style="color:#f2f4f8;">Analitix</strong> — XUBAX ·
     <a href="mailto:soporte@xubax.com">soporte@xubax.com</a> ·
     <a href="https://www.xubax.com">www.xubax.com</a><br/>
-    The edge agent is distributed separately, with its own installer. This
-    module has no computer-vision dependency and stores no images.
+    The edge agent is included and runs on your own machine in the shop. The
+    Odoo module itself has no computer-vision dependency and stores no images.
   </div>
 </div>
 </section>

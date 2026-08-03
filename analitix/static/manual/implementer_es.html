@@ -50,8 +50,8 @@
 <div class="note">
   <p>El addon <strong>no tiene ninguna dependencia de visión</strong>: ni
   <code>torch</code>, ni <code>insightface</code>, ni <code>opencv</code>. Eso
-  vive en el agente, que se distribuye aparte con su propio instalador. Un
-  tercero puede escribir su propio agente contra
+  vive en el agente, que <strong>viene incluido</strong> pero corre en la tienda,
+  no en el servidor. Un tercero puede escribir su propio agente contra
   <code>doc/API.md</code> sin leer el código de este addon.</p>
 </div>
 
@@ -152,8 +152,21 @@ unidades de compra. Sirven para arrancar barato y migrar después.</p>
 
 <h2 id="agente">5. Instalar el agente edge</h2>
 
-<p>El agente viaja en la carpeta <code>edge/</code> del repositorio, fuera del
-paquete que se publica en apps.odoo.com.</p>
+<p>El agente <strong>viene incluido con el módulo</strong>. Después de instalar
+Analitix lo encuentras en la carpeta de addons de tu Odoo:</p>
+
+<pre><code>&lt;ruta-de-addons&gt;/analitix/edge/
+    analitix_agent.py        el agente
+    config.example.yaml      la configuración a copiar
+    analitix-agent.service   la unidad de systemd
+    requirements.txt         sus dependencias
+    README.md</code></pre>
+
+<div class="note">
+  <p>Cópialo al mini-PC de la tienda. No corre en el servidor de Odoo y no debe:
+  la visión pasa en la tienda, y el addon de Odoo no tiene —ni debe tener—
+  ninguna dependencia de visión.</p>
+</div>
 
 <pre><code># En el mini-PC de la tienda
 sudo mkdir -p /etc/analitix /var/lib/analitix
@@ -284,7 +297,7 @@ explícitamente en el registro de disparos.</p>
 
 <footer class="doc">
   <p>Analitix · XUBAX — soporte: <a href="mailto:soporte@xubax.com">soporte@xubax.com</a><br/>
-  El contrato completo de la API está en <code>doc/API.md</code> del repositorio.
+  El contrato completo de la API está en <code>doc/API.md</code>, dentro del propio módulo.
   Para el uso diario en tienda, ve al <a href="/analitix/manual/user">manual de usuario</a>.</p>
 </footer>
 

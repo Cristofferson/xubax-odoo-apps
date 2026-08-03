@@ -36,13 +36,18 @@ analitix/
   static/manual/ the user manual and implementation guide, es + en
   static/description/  store page, screenshots and screencasts
   doc/API.md     the ingest contract, for anyone writing their own agent
-  edge/          the reference camera agent — NOT part of the published addon
-  tools/         packaging and translation generators — NOT part of the addon
+  edge/          the camera agent — SHIPPED with the addon, runs in the shop
+  tools/         packaging, translations, brand sources, E2E — NOT part of the addon
 ```
 
-`edge/` and `tools/` ship with the repository and are deliberately excluded from
-the apps.odoo.com archive. `tools/package.sh` builds that archive and *asserts*
-the exclusions rather than trusting them. The addon has **no** computer-vision dependency: it receives
+`tools/` is deliberately excluded from the apps.odoo.com archive; `edge/` is
+deliberately **included**, because a customer who buys this and cannot get the
+agent has bought a receiver with nothing to receive. `tools/package.sh` builds
+the archive and *asserts* both, rather than trusting them.
+
+The addon still has no computer-vision dependency of its own: the agent's
+requirements are pip-installed on the shop's mini-PC, never on the Odoo
+server. The addon has **no** computer-vision dependency: it receives
 JSON and nothing else. That is what keeps `insightface` and `torch` out of the
 customer's Odoo server.
 

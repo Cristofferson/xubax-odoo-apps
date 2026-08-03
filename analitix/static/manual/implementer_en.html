@@ -50,9 +50,9 @@
 <div class="note">
   <p>The addon has <strong>no computer-vision dependency</strong> — no
   <code>torch</code>, no <code>insightface</code>, no <code>opencv</code>. That
-  lives in the agent, which ships separately with its own installer. A third
-  party can write their own agent against <code>doc/API.md</code> without
-  reading this addon's source.</p>
+  lives in the agent, which <strong>is included</strong> but runs in the shop,
+  not on the server. A third party can write their own agent against
+  <code>doc/API.md</code> without reading this addon's source.</p>
 </div>
 
 <h2 id="hardware">2. Hardware by camera role</h2>
@@ -151,8 +151,21 @@ no visits and no purchase units. Fine to start cheap and migrate later.</p>
 
 <h2 id="agent">5. Installing the edge agent</h2>
 
-<p>The agent lives in the repository's <code>edge/</code> folder, outside the
-package published to apps.odoo.com.</p>
+<p>The agent <strong>ships with the module</strong>. After installing Analitix
+you will find it in your Odoo's addons folder:</p>
+
+<pre><code>&lt;addons-path&gt;/analitix/edge/
+    analitix_agent.py        the agent
+    config.example.yaml      the configuration to copy
+    analitix-agent.service   the systemd unit
+    requirements.txt         its dependencies
+    README.md</code></pre>
+
+<div class="note">
+  <p>Copy it to the shop's mini-PC. It does not run on the Odoo server and must
+  not: the vision happens in the store, and the Odoo addon has — and must keep
+  — no computer-vision dependency of its own.</p>
+</div>
 
 <pre><code># On the store's mini-PC
 sudo mkdir -p /etc/analitix /var/lib/analitix
@@ -281,7 +294,7 @@ in the firing log.</p>
 
 <footer class="doc">
   <p>Analitix · XUBAX — support: <a href="mailto:soporte@xubax.com">soporte@xubax.com</a><br/>
-  The full API contract is in <code>doc/API.md</code> in the repository. For
+  The full API contract is in <code>doc/API.md</code>, inside the module itself. For
   day-to-day use in the shop, see the
   <a href="/analitix/manual/user">user manual</a>.</p>
 </footer>
