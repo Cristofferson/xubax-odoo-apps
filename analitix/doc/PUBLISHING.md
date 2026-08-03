@@ -92,6 +92,13 @@ last year's interface reads as an abandoned app.
 - [ ] **Price and currency.** The manifest carries `price: 499.00` USD. Confirm
       it still matches what the listing form says before submitting — the two
       are set separately and only one of them is in version control.
+- [ ] **The per-store service is not sold here and cannot be.** apps.odoo.com
+      takes one payment per module, per database; it has no way to meter stores.
+      US$49–179 per store per month is invoiced by XUBAX, and the listing says
+      so plainly rather than leaving a buyer to discover it on an invoice. If
+      the ladder changes, three places move together: `index.html`, the
+      manifest description, and the demo stores' `monthly_fee` — a demo whose
+      ROI is computed against an invented fee is a demo that lies.
 - [ ] **Icon and banner.** `static/description/icon.png` (512×512) and
       `banner.png` (1200×600).
 - [ ] Category **Point of Sale**, Odoo version **19.0**, licence **OPL-1**.

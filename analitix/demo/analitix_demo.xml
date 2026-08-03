@@ -25,11 +25,12 @@
             <field name="heartbeat_interval_s">60</field>
             <field name="offline_threshold_min">5</field>
             <field name="exclude_staff" eval="True"/>
-            <!-- What the shop pays, at the published list price for its plan.
-                 The monthly report compares the revenue it helped recover
-                 against this figure, and with a zero here that comparison says
-                 nothing at all. -->
-            <field name="monthly_fee">1890</field>
+            <!-- What the shop pays, at the published list price for its plan
+                 (Floor, US$120 ≈ 2,400 MXN). The monthly report compares the
+                 revenue it helped recover against this figure, so it has to be
+                 the real price and not a placeholder — a demo whose ROI is
+                 computed against an invented fee is a demo that lies. -->
+            <field name="monthly_fee">2400</field>
             <field name="plan">floor</field>
         </record>
 
@@ -62,7 +63,7 @@
             <field name="heartbeat_interval_s">60</field>
             <field name="offline_threshold_min">10</field>
             <field name="exclude_staff" eval="True"/>
-            <field name="monthly_fee">2890</field>
+            <field name="monthly_fee">3590</field>
             <field name="plan">full</field>
         </record>
 

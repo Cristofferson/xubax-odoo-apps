@@ -3,6 +3,26 @@
 All notable changes to Analitix. Versions follow Odoo's convention:
 `19.0.<phase>.<minor>.<patch>`.
 
+## 19.0.7.4.0 — Pricing stated honestly
+
+The module is US$499 one-time; the running service is US$49–179 per store per
+month, and US$120 — the Floor plan — is the usual one. That second half was
+previously nowhere on the listing, and one FAQ actively contradicted it:
+"nothing is licensed per store". Both statements were separately true and
+together misleading, which is the worst kind of copy.
+
+* The listing now separates **what the software does** from **what the
+  commercial terms are**. The software still meters nothing — no counter of
+  stores, cameras or users, and the per-store plan is a configuration control
+  rather than a licence check, so no billing problem can switch a shop's
+  cameras off. The service is contracted per shop. Both are said out loud.
+* The four plans that have existed in the code since phase 4 now have published
+  prices, with Floor as the anchor.
+* Demo stores carry the real list prices, so the ROI figure in the monthly
+  report is computed against what a customer would actually pay.
+* First store's first month included with the module, so a self-serve buyer is
+  not met with a second invoice on day one.
+
 ## 19.0.7.3.0 — The edge agent is included
 
 Until now the camera agent was excluded from the published package, on the

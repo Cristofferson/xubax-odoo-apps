@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Analitix — Physical Store Intelligence",
-    "version": "19.0.7.3.0",
+    "version": "19.0.7.4.0",
     "category": "Point of Sale",
     "summary": "Store intelligence on Odoo: visitor counting across any number "
                "of doors, POS conversion (ATV, UPT, revenue per visitor, "
@@ -186,6 +186,29 @@ company that owns two hundred of them.
   customer's own retention policy without losing a figure anybody looks at —
   and pruning refuses to run ahead of the summary. Face matching is always
   bounded by store, or by one chain, never by the whole database.
+
+What you get
+------------
+
+* **The Odoo module**, one-time purchase, with no limit on doors, zones,
+  cameras or users.
+* **The edge agent**: the program that runs on the mini-PC in your shop and
+  talks to the camera. Source, systemd unit and example configuration, in the
+  module's own ``edge/`` folder. It has a ``demo`` mode that posts synthetic
+  crossings, so the whole chain can be proved before any hardware is mounted.
+* **The ingest API contract** (``doc/API.md``), written so a third party can
+  integrate different hardware without reading this source — your data is not
+  locked behind our agent.
+* **Manuals inside the app** in Spanish and English, six screencasts, and demo
+  data complete enough to judge the product without buying a camera.
+
+Not included: the cameras and the mini-PC, which are ordinary off-the-shelf
+hardware. The per-store running service — support and the monthly value report —
+is contracted separately, from US$49 to US$179 a month depending on the plan.
+The software itself meters nothing: there is no counter of stores, cameras or
+users anywhere in it, and the plan on each store is a configuration control
+rather than a licence check, so no billing problem can switch a shop's cameras
+off.
 
 Privacy by design: no image or video is ever transmitted or stored — the edge
 sends only counts and irreversible numeric embeddings, and those are encrypted
