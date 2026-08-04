@@ -317,9 +317,23 @@ def install_manual(env):
         # The title is refreshed together with the body: we only get here when
         # the customer has not edited the article, and a manual whose body is in
         # Spanish but whose title stayed in English is worse than either.
-        article.write({'name': title, 'body': body})
+        #
+        # ``install_module`` is what keeps this write from crashing. Writing
+        # ``body`` on a knowledge article runs the collaborative editor's
+        # ``handle_history_divergence``, which announces the change on the bus
+        # through ``request.env``. We run from ``_register_hook``, in the middle
+        # of building the registry: when the load was triggered by an HTTP
+        # request the proxy is bound but its ``env`` does not exist yet, so that
+        # line raises ``'NoneType' object is not subscriptable`` and the manual
+        # is left stale for good -- silently, since the hook catches it. Whether
+        # a load happens to be request-bound is luck, which is exactly why this
+        # only failed *sometimes*. The flag is the core's own way out
+        # (``html_editor/tools.py``, the single place it is read): a write that
+        # does not come from the editor has no history to diverge from.
+        article.with_context(install_module=True).write(
+            {'name': title, 'body': body})
     else:
-        article = env['knowledge.article'].create({
+        article = env['knowledge.article'].with_context(install_module=True).create({
             'name': title,
             'body': body,
             'icon': '🔗',

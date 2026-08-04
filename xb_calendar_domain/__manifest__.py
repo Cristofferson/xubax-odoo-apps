@@ -94,7 +94,7 @@ Compatibility
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",
     "category": "Productivity/Calendar",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.3.1",
     "license": "OPL-1",
     "price": 29.00,
     "currency": "USD",
