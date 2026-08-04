@@ -1,0 +1,7 @@
+# Working files, not worth versioning: the 2 MB originals from the image API,
+# the coordinate grids used to place the overlay, and the check renders.
+plates/
+grid/
+raw/
+chk_*.png
+still_*.png

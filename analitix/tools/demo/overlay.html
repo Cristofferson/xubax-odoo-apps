@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><title>Analitix</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { width:1280px; height:720px; overflow:hidden; position:relative;
+         font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+         background:#000; color:#f2f4f8; }
+  #plate { position:absolute; inset:0; background-size:cover; background-position:center; }
+  #vig { position:absolute; inset:0; background:
+        linear-gradient(180deg, rgba(8,11,18,.55) 0%, rgba(8,11,18,0) 22%,
+                        rgba(8,11,18,0) 62%, rgba(8,11,18,.78) 100%); }
+
+  .stamp { position:absolute; right:18px; top:16px; font-size:10.5px; font-weight:700;
+           letter-spacing:.18em; text-transform:uppercase; color:rgba(242,244,248,.62);
+           background:rgba(8,11,18,.5); padding:5px 11px; border-radius:999px;
+           backdrop-filter:blur(4px); }
+
+  h1 { position:absolute; left:34px; top:26px; font-size:26px; font-weight:800;
+       letter-spacing:-.4px; text-shadow:0 2px 14px rgba(0,0,0,.8); }
+  .sub { position:absolute; left:34px; top:62px; font-size:15px; color:#c8d0de;
+         text-shadow:0 2px 12px rgba(0,0,0,.85); }
+
+  /* detector overlay */
+  .box { position:absolute; border:2px solid #38d39f; border-radius:3px;
+         box-shadow:0 0 0 1px rgba(0,0,0,.45), 0 0 22px rgba(56,211,159,.35);
+         opacity:0; transform:scale(1.06); transition:opacity .35s, transform .35s; }
+  .box.on { opacity:1; transform:scale(1); }
+  .box b { position:absolute; left:-2px; top:-24px; background:#38d39f; color:#062018;
+           font-size:11px; font-weight:800; letter-spacing:.06em; padding:3px 8px;
+           border-radius:3px; white-space:nowrap; }
+  .box.warn { border-color:#f0a637; box-shadow:0 0 0 1px rgba(0,0,0,.45), 0 0 22px rgba(240,166,55,.4); }
+  .box.warn b { background:#f0a637; color:#241802; }
+
+  #line { position:absolute; height:3px; background:#c9a227; opacity:0;
+          box-shadow:0 0 16px rgba(201,162,39,.9); transition:opacity .5s; }
+  #line.on { opacity:1; }
+  #line.hit { animation:hit .6s ease-out; }
+  @keyframes hit { 0% { box-shadow:0 0 40px 8px rgba(201,162,39,1); } 100% {} }
+  #linelbl { position:absolute; font-size:11px; font-weight:800; letter-spacing:.14em;
+             text-transform:uppercase; color:#e2cf94; opacity:0; transition:opacity .5s;
+             text-shadow:0 2px 10px rgba(0,0,0,.9); }
+  #linelbl.on { opacity:1; }
+
+  /* the HUD */
+  .hud { position:absolute; background:rgba(12,16,26,.82); border:1px solid rgba(255,255,255,.1);
+         border-radius:12px; padding:16px 20px; backdrop-filter:blur(9px);
+         opacity:0; transform:translateY(10px); transition:opacity .5s, transform .5s; }
+  .hud.on { opacity:1; transform:none; }
+  .hud h2 { font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+            color:#8b96ab; font-weight:800; margin-bottom:10px; }
+  .hud .big { font-size:40px; font-weight:800; line-height:1; font-variant-numeric:tabular-nums; }
+  .hud .rows { display:flex; gap:26px; }
+  .hud .rows span { display:block; font-size:10px; letter-spacing:.12em;
+                    text-transform:uppercase; color:#8b96ab; margin-top:5px; }
+  .flash { animation:pop .4s ease-out; }
+  @keyframes pop { 0% { transform:scale(1.3); } 100% { transform:scale(1); } }
+  .code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12.5px;
+          line-height:1.85; color:#38d39f; }
+
+  /* face sequence */
+  #wipe { position:absolute; inset:0; background:#080b12; opacity:0;
+          transition:opacity .8s; display:flex; align-items:center;
+          justify-content:center; flex-direction:column; }
+  #wipe.on { opacity:1; }
+  #wipe .x { font-size:70px; color:#f0713f; line-height:1; }
+  #wipe .t { font-size:20px; font-weight:800; margin-top:18px; letter-spacing:.02em; }
+  #wipe .s { font-size:15px; color:#8b96ab; margin-top:10px; }
+
+  /* phone */
+  #phone { position:absolute; right:36px; top:96px; width:290px;
+           background:rgba(12,16,26,.9); border:1px solid rgba(255,255,255,.12);
+           border-radius:16px; padding:16px 18px; backdrop-filter:blur(10px);
+           opacity:0; transform:translateX(18px); transition:opacity .55s, transform .55s; }
+  #phone.on { opacity:1; transform:none; }
+  #phone .who { font-size:10px; letter-spacing:.18em; text-transform:uppercase;
+                color:#c9a227; font-weight:800; margin-bottom:9px; }
+  #phone .txt { font-size:14.5px; line-height:1.5; }
+  #phone .when { font-size:11.5px; color:#8b96ab; margin-top:11px; }
+
+  .foot { position:absolute; left:34px; bottom:24px; font-size:14px; color:#c8d0de;
+          text-shadow:0 2px 12px rgba(0,0,0,.9); }
+
+  /* callout chips, used by the scenes that explain hardware rather than
+     show the detector working */
+  .chip { position:absolute; background:rgba(12,16,26,.88); border:1px solid rgba(255,255,255,.14);
+          border-left:3px solid #c9a227; border-radius:10px; padding:12px 16px;
+          max-width:330px; backdrop-filter:blur(9px); opacity:0;
+          transform:translateY(9px); transition:opacity .5s, transform .5s; }
+  .chip.on { opacity:1; transform:none; }
+  .chip .k { font-size:10px; letter-spacing:.18em; text-transform:uppercase;
+             color:#c9a227; font-weight:800; margin-bottom:7px; }
+  .chip .v { font-size:14px; line-height:1.45; }
+  .chip.ok { border-left-color:#38d39f; } .chip.ok .k { color:#38d39f; }
+  .chip.warn { border-left-color:#f0a637; } .chip.warn .k { color:#f0a637; }
+
+  /* zones are quadrilaterals on a floor seen in perspective */
+  #zones { position:absolute; inset:0; }
+  #zones polygon { fill:rgba(201,162,39,.17); stroke:#c9a227; stroke-width:2.5;
+                   stroke-dasharray:10 7; opacity:0; transition:opacity .6s;
+                   filter:drop-shadow(0 0 10px rgba(0,0,0,.55)); }
+  #zones polygon.on { opacity:1; }
+  .zlbl { position:absolute; font-size:11px; font-weight:800; letter-spacing:.08em;
+          background:#c9a227; color:#241802; padding:3px 9px; border-radius:3px;
+          white-space:nowrap; opacity:0; transition:opacity .5s; }
+  .zlbl.on { opacity:1; }
+  .zlbl em { font-style:normal; opacity:.72; font-weight:700; }
+
+  .plan { position:absolute; right:18px; top:52px; font-size:10.5px; font-weight:800;
+          letter-spacing:.16em; text-transform:uppercase; color:#062018;
+          background:#38d39f; padding:5px 11px; border-radius:999px; }
+</style></head>
+<body>
+  <div id="plate"></div><div id="vig"></div>
+  <div class="stamp" id="stamp">Illustration</div>
+  <h1 id="title"></h1><div class="sub" id="sub"></div>
+  <div id="line"></div><div id="linelbl">virtual line</div>
+  <div id="wipe"><div class="x">✕</div><div class="t">Frame destroyed</div>
+       <div class="s">never written to disk · never queued · never sent</div></div>
+  <div id="phone"><div class="who">Analitix</div>
+       <div class="txt" id="ptxt"></div><div class="when">now · only you were told</div></div>
+  <div class="foot" id="foot"></div>
+
+<script>
+const q = new URLSearchParams(location.search);
+const scene = q.get("s") || "door";
+const $ = id => document.getElementById(id);
+const plate = $("plate");
+plate.style.backgroundImage = "url('crop/" + scene + ".jpg')";
+
+function box({x, y, w, h, label, warn, at, below, right}) {
+  const el = document.createElement("div");
+  el.className = "box" + (warn ? " warn" : "");
+  el.style.cssText += `left:${x}px;top:${y}px;width:${w}px;height:${h}px`;
+  if (label) {
+    el.innerHTML = "<b>" + label + "</b>";
+    // A label above a box that starts near the top of the frame is either
+    // clipped or lands on the headline. Tuck it inside instead.
+    const tag = el.querySelector("b");
+    if (below) tag.style.top = (h + 4) + "px";
+    else if (y < 140) tag.style.top = "4px";
+    // A box against the right edge would push its label off the frame.
+    if (right) { tag.style.left = "auto"; tag.style.right = "-2px"; }
+  }
+  document.body.appendChild(el);
+  setTimeout(() => el.classList.add("on"), at);
+  return el;
+}
+function hud(html, css, at) {
+  const el = document.createElement("div");
+  el.className = "hud"; el.style.cssText += css; el.innerHTML = html;
+  document.body.appendChild(el);
+  setTimeout(() => el.classList.add("on"), at);
+  return el;
+}
+
+
+function chip(kind, key, value, css, at) {
+  const el = document.createElement("div");
+  el.className = "chip" + (kind ? " " + kind : "");
+  el.style.cssText += css;
+  el.innerHTML = '<div class="k">' + key + '</div><div class="v">' + value + '</div>';
+  document.body.appendChild(el);
+  setTimeout(() => el.classList.add("on"), at);
+  return el;
+}
+function zone(points, label, note, lx, ly, at) {
+  let svg = document.getElementById("zones");
+  if (!svg) {
+    svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.id = "zones"; svg.setAttribute("viewBox", "0 0 1280 720");
+    document.body.appendChild(svg);
+  }
+  const el = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+  el.setAttribute("points", points);
+  svg.appendChild(el);
+  const lb = document.createElement("div");
+  lb.className = "zlbl";
+  lb.style.cssText += `left:${lx}px;top:${ly}px`;
+  lb.innerHTML = label + (note ? ' <em>· ' + note + '</em>' : '');
+  document.body.appendChild(lb);
+  setTimeout(() => { el.classList.add("on"); lb.classList.add("on"); }, at);
+}
+function plan(text) {
+  const el = document.createElement("div");
+  el.className = "plan"; el.textContent = text;
+  document.body.appendChild(el);
+}
+
+if (scene === "door") {
+  $("title").textContent = "Counting at the door";
+  $("sub").textContent = "A line across the doorway. Which way you cross it is what counts.";
+  $("foot").textContent = "The overlay is what Analitix does. No image ever leaves the shop.";
+  const L = $("line");
+  L.style.cssText += "left:388px;top:152px;width:445px";
+  $("linelbl").style.cssText += "left:842px;top:144px";
+  setTimeout(() => { L.classList.add("on"); $("linelbl").classList.add("on"); }, 500);
+
+  box({x:437, y:0,   w:130, h:122, label:"t-4471",           at:1100});
+  box({x:632, y:0,   w:132, h:150, label:"t-4472",           at:1500});
+  box({x:533, y:95,  w:136, h:200, label:"t-4470 · IN",      at:2100});
+  box({x:540, y:425, w:222, h:250, label:"t-4468 · staff — not counted", warn:true, at:3000});
+
+  const panel = hud(
+    '<h2>This hour</h2><div class="rows">' +
+    '<div><div class="big" id="cin" style="color:#38d39f">61</div><span>in</span></div>' +
+    '<div><div class="big" id="cout" style="color:#f0a637">44</div><span>out</span></div>' +
+    '<div><div class="big" style="color:#c9a227">17</div><span>inside</span></div></div>',
+    "right:36px;bottom:34px", 1800);
+  setTimeout(() => {
+    $("line").classList.add("hit");
+    const c = $("cin"); c.textContent = "62"; c.classList.add("flash");
+  }, 2400);
+  setTimeout(() => {
+    const c = $("cin"); c.textContent = "63"; c.classList.remove("flash");
+    void c.offsetWidth; c.classList.add("flash"); $("line").classList.remove("hit");
+    void $("line").offsetWidth; $("line").classList.add("hit");
+  }, 4200);
+}
+
+if (scene === "face") {
+  $("title").textContent = "What happens to a face";
+  $("sub").textContent = "Read at the entrance, turned into numbers, matched on this machine — and then gone.";
+  $("foot").textContent = "There is no endpoint that would accept an image. It is not a setting.";
+  box({x:474, y:48, w:146, h:196, label:"face · 0.94", below:true, at:900});
+  hud('<h2>Turned into numbers</h2><div class="code">[ 0.118, −0.442, 0.907,<br/>&nbsp;&nbsp;0.031, −0.765, … ]<br/>512 values · irreversible</div>',
+      "left:34px;bottom:120px;width:300px", 2200);
+  hud('<h2>Matched here</h2><div class="code">staff? &nbsp;no<br/>seen before? &nbsp;14:02<br/>→ one visit, not two</div>',
+      "left:352px;bottom:120px;width:270px", 3600);
+  setTimeout(() => $("wipe").classList.add("on"), 5600);
+}
+
+if (scene === "zone") {
+  $("title").textContent = "The sale that was about to walk out";
+  $("sub").textContent = "Long enough, nobody served them, no ticket. All three — each alone is ordinary.";
+  $("foot").textContent = "One salesperson is nudged. The customer never knows.";
+  box({x:255, y:96, w:400, h:624, label:"t-8841 · Engagement Rings", at:900});
+  const t = hud('<h2>Dwell</h2><div class="big" id="clock" style="color:#f0a637">0:15</div>' +
+                '<span style="display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8b96ab;margin-top:5px">unserved</span>',
+                "left:34px;bottom:120px", 1600);
+  let s = 15;
+  const tick = setInterval(() => {
+    s += 15;
+    $("clock").textContent = Math.floor(s/60) + ":" + String(s%60).padStart(2,"0");
+    if (s >= 240) {
+      clearInterval(tick);
+      $("ptxt").innerHTML = "Someone has been at <b>Engagement Rings</b> for 4 minutes and nobody has been over. Worth a look.";
+      $("phone").classList.add("on");
+    }
+  }, 380);
+}
+
+if (scene === "install") {
+  $("title").textContent = "What actually gets installed";
+  $("sub").textContent = "One small computer in the back room. Nothing on the till, nothing in the cloud.";
+  $("foot").textContent = "If the line drops it keeps counting and sends the backlog when it comes back.";
+  chip("ok", "This is the whole system",
+       "A fanless mini-PC, no graphics card. One per shop, however many cameras it has.",
+       "left:34px;bottom:130px", 900);
+  chip("", "Your own router",
+       "Its only outbound traffic is numbers, to your own Odoo. There is no endpoint that would take a frame.",
+       "right:34px;bottom:130px", 2000);
+  box({x:572, y:300, w:305, h:158, at:600});
+}
+
+if (scene === "cameras") {
+  $("title").textContent = "Cameras you probably already have";
+  $("sub").textContent = "Analogue, USB or IP — the agent opens all three the same way.";
+  $("foot").textContent = "One computer handles several at once. What it never does is send a frame anywhere.";
+  chip("ok", "Analogue · already on the wall",
+       "The old coax camera plus a USB capture stick, about $20. Nothing gets rewired.",
+       "left:26px;bottom:64px;max-width:300px", 900);
+  chip("ok", "USB webcam",
+       "The cheapest way to try a second door before buying anything.",
+       "left:352px;bottom:64px;max-width:270px", 1700);
+  chip("ok", "IP camera · RTSP",
+       "Give it the stream URL. Reconnects on its own when the network blinks.",
+       "right:26px;bottom:64px;max-width:300px", 2500);
+}
+
+if (scene === "blind") {
+  $("title").textContent = "The camera that is online and blind";
+  $("sub").textContent = "Somebody left a display under the lens. The device never stopped reporting.";
+  $("foot").textContent = "An outage is obvious. This is the one that quietly costs you a month of data.";
+  chip("ok", "Device", "Online · last heartbeat 6 s ago", "left:34px;top:130px;max-width:280px", 700);
+  chip("warn", "Crossings, last 45 minutes",
+       "<b style=\'font-size:26px\'>0</b><br/>Usual for a Saturday at 13:00: <b>38</b>",
+       "left:34px;top:250px;max-width:280px", 1700);
+  chip("warn", "Scheduled in Odoo, for the shop manager",
+       "Door camera at Anello Centro is still connected but has stopped seeing. Check the lens and where it is pointing.",
+       "right:34px;top:130px;max-width:330px", 3000);
+}
+
+if (scene === "floor") {
+  $("title").textContent = "Zones are just parts of your floor";
+  $("sub").textContent = "Draw them once. After that, time spent and whether anyone came over is measured per zone.";
+  $("foot").textContent = "No zone, no measurement. The shop decides what is worth watching.";
+  zone("566,172 672,215 250,720 62,720", "NECKLACES", "median 3:10", 300, 300, 900);
+  zone("578,108 872,108 872,252 578,252", "TILL", "median 1:05", 596, 118, 1600);
+  zone("886,148 1244,148 1244,272 886,272", "WATCHES", "median 2:40", 900, 158, 2200);
+  zone("1026,340 1280,340 1280,720 1076,720", "BANGLES", "median 4:20", 1040, 350, 2800);
+}
+
+if (scene === "walkout") {
+  $("title").textContent = "A walk-out stops being a mystery";
+  $("sub").textContent = "Someone came in, stayed nine minutes and left with nothing. That is a number you can work with.";
+  $("foot").textContent = "Conversion is visitors against tickets, same hour, same shop — not a guess.";
+  box({x:78, y:100, w:252, h:615, label:"t-9102 · OUT · 9 min inside, no ticket", warn:true, at:900});
+  box({x:1118, y:128, w:160, h:440, label:"t-9098 · matched to a ticket", below:true, right:true, at:2000});
+  hud('<h2>Today, this shop</h2><div class="rows">' +
+      '<div><div class="big" style="color:#c9a227">41</div><span>visitors</span></div>' +
+      '<div><div class="big" style="color:#38d39f">12</div><span>tickets</span></div>' +
+      '<div><div class="big" style="color:#f0a637">29%</div><span>conversion</span></div></div>',
+      "left:34px;bottom:64px", 3000);
+}
+
+if (scene === "frustrated") {
+  plan("Complete plan");
+  $("title").textContent = "When waiting turns into leaving";
+  $("sub").textContent = "A negative expression that holds, next to nobody serving, is the minute before a walk-out.";
+  $("foot").textContent = "The expression dies with the frame. What is kept is the word, the zone and the time.";
+  box({x:543, y:18, w:158, h:176, label:"expression · negative", warn:true, below:true, at:900});
+  chip("warn", "Held, not a glance",
+       "38 of the last 60 seconds read negative. One frown is nothing; this is not one frown.",
+       "left:34px;bottom:200px;max-width:300px", 2200);
+  setTimeout(() => {
+    $("ptxt").innerHTML = "Someone at <b>Bangles</b> has been waiting a while and looks unhappy about it. Worth going over.";
+    $("phone").classList.add("on");
+  }, 3600);
+}
+
+</script>
+</body></html>

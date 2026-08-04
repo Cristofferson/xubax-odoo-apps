@@ -169,14 +169,32 @@
 
   <section class="alx-sec">
     <h2>How it actually works</h2>
-    <p class="alx-lede">Three short animations of the mechanism, and then the
-    thing that matters most: what the salesperson's phone shows when somebody is
-    about to walk out.</p>
-    <p class="alx-note" style="margin-bottom:30px;"><strong>The first three are
-    diagrams, not camera footage</strong>, and they are labelled that way on
-    screen. We are not going to put strangers' faces on a marketing page for a
-    product whose whole promise is that it never keeps one. The fourth is a real
-    screenshot of Odoo.</p>
+    <p class="alx-lede">In the order the questions usually come: what gets
+    installed, what it can be plugged into, what it does with what it sees, and
+    what finally reaches the person standing on the floor.</p>
+    <p class="alx-note" style="margin-bottom:30px;">The overlay in these scenes —
+    the line, the boxes, the track numbers, the counters, the dwell timer, the
+    zones — is exactly what Analitix draws and exactly what it decides. The shop
+    underneath is a <strong>generated scene with synthetic people</strong>,
+    marked <em>Illustration</em> on screen: we are not going to put a real
+    stranger's face on a marketing page for a product whose whole promise is that
+    it never keeps one. The last two are real screenshots of Odoo.</p>
+
+    <figure class="alx-shot">
+      <img src="demo/scene-install.jpg" alt="A small fanless mini-PC on a shelf in a shop's back room next to the router, marked as the whole system."/>
+      <figcaption><strong>What actually gets installed.</strong> One small
+      fanless computer in the back room — no graphics card, nothing on the till,
+      nothing in the cloud. One per shop, however many cameras that shop has. If
+      the line drops it keeps counting and sends the backlog when it returns.</figcaption>
+    </figure>
+
+    <figure class="alx-shot">
+      <img src="demo/scene-cameras.jpg" alt="An analogue dome camera with a USB capture stick, a USB webcam and an IP bullet camera side by side, each labelled as supported."/>
+      <figcaption><strong>Cameras you probably already have.</strong> Analogue on
+      coax plus a $20 USB capture stick, a plain USB webcam, or an IP camera over
+      RTSP — the agent opens all three the same way, and one computer handles
+      several at once. Nothing gets rewired to start.</figcaption>
+    </figure>
 
     <figure class="alx-video">
       <video controls preload="metadata" src="demo/how-door.webm"></video>
@@ -193,12 +211,46 @@
       disk, never queued, never sent.</figcaption>
     </figure>
 
+    <figure class="alx-shot">
+      <img src="demo/scene-floor.jpg" alt="A jewellery shop seen from a high corner with four zones drawn over the counters, each showing its median dwell time."/>
+      <figcaption><strong>Zones are just parts of your floor.</strong> Drawn once,
+      on the picture of your own shop. From then on, time spent and whether
+      anybody came over is measured per zone. No zone, no measurement — the shop
+      decides what is worth watching.</figcaption>
+    </figure>
+
     <figure class="alx-video">
       <video controls preload="metadata" src="demo/how-zone.webm"></video>
-      <figcaption><strong>Zones, and the sale that walks out.</strong> Long
+      <figcaption><strong>The sale that was about to walk out.</strong> Long
       enough, nobody served them, no ticket — all three, because each one alone
       is completely ordinary. One salesperson is nudged; the customer never
       knows.</figcaption>
+    </figure>
+
+    <figure class="alx-shot">
+      <img src="demo/scene-frustrated.jpg" alt="A customer waiting with folded arms at a counter, her expression read as sustained negative, and the resulting nudge."/>
+      <figcaption><strong>When waiting turns into leaving.</strong>
+      <em>Complete plan.</em> A negative expression that <em>holds</em> — 38 of
+      the last 60 seconds, not one frown — next to nobody serving is the minute
+      before a walk-out. The expression dies with the frame; what is kept is the
+      word, the zone and the time.</figcaption>
+    </figure>
+
+    <figure class="alx-shot">
+      <img src="demo/scene-walkout.jpg" alt="One tracked visitor leaving empty-handed after nine minutes while another is handed a bag at the counter, with today's conversion figures."/>
+      <figcaption><strong>A walk-out stops being a mystery.</strong> Someone came
+      in, stayed nine minutes and left with nothing, while somebody else left
+      with a bag. Conversion is visitors against tickets, same hour and same
+      shop — measured, not estimated.</figcaption>
+    </figure>
+
+    <figure class="alx-shot">
+      <img src="demo/scene-blind.jpg" alt="A camera view almost entirely blocked by a cardboard display, with the device still reporting online and zero crossings in 45 minutes."/>
+      <figcaption><strong>The camera that is online and blind.</strong> Somebody
+      left a display under the lens; the device kept reporting happily. Zero
+      crossings against the 38 this shop usually sees at that hour is what raises
+      it. An outage is obvious — this is the one that quietly costs you a month
+      of data.</figcaption>
     </figure>
 
     <figure class="alx-shot">
