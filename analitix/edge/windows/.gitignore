@@ -1,0 +1,5 @@
+# Lo que produce la compilación, que solo existe en el runner de Windows.
+build/
+dist/
+Output/
+*.exe

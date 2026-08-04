@@ -3,10 +3,11 @@
 Runs on the mini-PC in the store. Watches a camera, counts people crossing a
 virtual line, posts the crossings to Odoo.
 
-**This folder is not part of the published addon.** It ships with the
-repository and is excluded from the apps.odoo.com zip on purpose: the Odoo
-module has no computer-vision dependency and must never acquire one. Odoo
-receives JSON. That is the whole interface.
+**The Odoo module has no computer-vision dependency and must never acquire
+one.** Everything in this folder runs on the mini-PC in the shop; Odoo receives
+JSON, and that is the whole interface. The source ships inside the addon —
+`package.sh` fails the build if it does not — so nobody is locked into our
+agent.
 
 ---
 
@@ -39,7 +40,69 @@ signatures, compares in memory, and sends only the verdict. Setting
 `send_embeddings: true` is for hardware too small to hold the signature set,
 and it is off unless someone chooses it.
 
-## Install
+## Install — Windows
+
+**This is how it is installed in a shop.** Download
+`AnalitixAgentSetup-<version>.exe`, run it, and paste two values. Nothing else.
+
+The installer carries the vision engine inside it, so the mini-PC does not need
+internet, a Python, or anybody who knows what a wheel is. It is a large
+download for that reason — the counting model and its runtime are most of it.
+
+What it does:
+
+| | |
+|---|---|
+| Program | `C:\Program Files\Analitix` |
+| Configuration | `C:\ProgramData\Analitix\agent.yaml` — **not** under Program Files, because it holds the device key and the agent writes to it. Reinstalling never overwrites it. |
+| Queue and state | `C:\ProgramData\Analitix\state` |
+| Log | `C:\ProgramData\Analitix\logs\agent.log`, rotated. On Linux journald collects this; Windows has nobody to collect it, so the agent writes its own. |
+| Autostart | A scheduled task, **Analitix Agent**, running as `SYSTEM` at boot. |
+
+### Why a scheduled task and not a Windows service
+
+A real service has to speak the service-control protocol, and a PyInstaller
+binary that does not gets killed after thirty seconds for "not responding".
+A scheduled task is native, starts before anybody logs in, restarts on its own
+if the process dies, and needs no third-party wrapper. It is visible in Task
+Scheduler under `Analitix Agent`.
+
+### After installing
+
+The installer opens `agent.yaml` for you. Fill in the two lines the
+implementer was given:
+
+```yaml
+odoo_url: "https://tienda.ejemplo.com"
+api_key:  "alx_..."          # from the device form in Odoo
+```
+
+Then restart the task — or the machine:
+
+```bat
+schtasks /End  /TN "Analitix Agent"
+schtasks /Run  /TN "Analitix Agent"
+```
+
+Shortcuts for **Editar la configuración**, **Ver el registro** and **Probar en
+esta ventana** are in the Start menu. The last one runs the agent in the
+foreground with `--verbose`, which is what to use while aiming a camera.
+
+### Building the installer
+
+It is built by GitHub Actions on a real Windows runner
+(`.github/workflows/analitix-agent-windows.yml`) — push a tag
+`analitix-agent-v<version>` or run the workflow by hand. The sources are in
+`windows/`: a PyInstaller spec and an Inno Setup script.
+
+> **Pending: Authenticode signature.** Until the installer is signed, Windows
+> SmartScreen shows "unrecognised app" the first time it runs — in front of the
+> customer. It is a purchase, not code.
+
+## Install — Linux
+
+Supported and used for the machines we provision ourselves, but it is not what
+a customer gets handed.
 
 ```bash
 sudo useradd -r -s /usr/sbin/nologin analitix
@@ -82,9 +145,11 @@ sudo systemctl enable --now analitix-agent
 | `401 invalid_credentials` | Key is wrong, revoked, or the device was archived | Rotate the key on the device form in Odoo and paste the new one. Buffered events survive. |
 | `423 capture_paused` | The store's kill switch is on | Expected. The agent keeps buffering and resumes on its own. |
 | Device shows *Offline* but the agent is running | Heartbeats are not arriving | Check DNS and the firewall from the store. The backlog in the logs tells you how much is queued. |
-| Backlog keeps growing | Odoo unreachable or refusing | Look at the last error in `journalctl -u analitix-agent`. Nothing is lost yet; it will be if the disk fills. |
+| Backlog keeps growing | Odoo unreachable or refusing | Look at the last error — `journalctl -u analitix-agent` on Linux, `C:\ProgramData\Analitix\logs\agent.log` on Windows. Nothing is lost yet; it will be if the disk fills. |
 | Counts look far too high | The line crosses a waiting area, so people drift back and forth over it | Move the line into the doorway itself. |
 | Counts look far too low | Camera too low, people occluding each other | Mount overhead, use a depth camera in a busy doorway. |
+| Windows: nothing happens after installing | The task never started | `schtasks /Query /TN "Analitix Agent" /V /FO LIST`. If it is not there, the installer did not finish as administrator. |
+| Windows: "unrecognised app" on opening the installer | It is not signed yet | Expected until the Authenticode certificate is bought. *More info → Run anyway.* |
 
 ## Reporting zones and the till
 

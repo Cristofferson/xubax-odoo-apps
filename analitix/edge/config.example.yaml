@@ -1,6 +1,9 @@
 # Analitix edge agent — one file per device.
 #
-# Copy to /etc/analitix/agent.yaml, fill in the two values the implementer gets
+# Linux:   copy to /etc/analitix/agent.yaml
+# Windows: the installer already put it in
+#          C:\ProgramData\Analitix\agent.yaml — edit that one.
+# Fill in the two values the implementer gets
 # from Odoo, and start the service. Everything else has a working default.
 
 # ---------------------------------------------------------------- required
@@ -52,7 +55,9 @@ confidence: 0.35
 # Holds the encrypted queue and its key. Must survive reboots — this directory
 # is what stands between a two-hour internet outage and two hours of a paying
 # customer's visitors vanishing.
-state_dir: "/var/lib/analitix"
+# Dónde se guarda la cola cifrada. Si se deja vacío, el agente usa
+# /var/lib/analitix en Linux y C:\ProgramData\Analitix\state en Windows.
+state_dir: ""
 
 # ---------------------------------------------------------------- privacy
 # Send face vectors to Odoo when the agent cannot match them locally.

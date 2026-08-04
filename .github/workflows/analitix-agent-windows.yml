@@ -1,0 +1,76 @@
+# Construye el instalador de Windows del agente de Analitix.
+#
+# Corre aquí y no en el servidor porque el servidor es Linux y esto tiene que
+# compilarse en Windows de verdad: torch trae DLLs nativas y PyInstaller
+# resuelve rutas del sistema donde corre.
+name: Analitix agent · instalador Windows
+
+on:
+  push:
+    tags: ["analitix-agent-v*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Versión del instalador (p. ej. 1.0.0)"
+        required: true
+        default: "1.0.0"
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: analitix/edge/windows
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Dependencias del agente y del empaquetado
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+          pip install requests cryptography PyYAML
+          # El motor de visión va DENTRO del paquete: el técnico que instala en
+          # una tienda no debería necesitar internet ni saber qué es un wheel.
+          # La rueda de CPU pesa la tercera parte que la de CUDA y una mini PC
+          # de tienda no lleva GPU NVIDIA.
+          pip install --index-url https://download.pytorch.org/whl/cpu torch torchvision
+          pip install ultralytics opencv-python
+
+      - name: Resolver la versión
+        id: v
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "version=${{ github.event.inputs.version }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=${GITHUB_REF_NAME#analitix-agent-v}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Compilar el ejecutable
+        run: pyinstaller --noconfirm --clean analitix_agent.spec
+
+      - name: Prueba de humo — que el binario al menos arranque
+        shell: pwsh
+        run: |
+          # Sin --config válido tiene que salir diciendo qué le falta, no
+          # reventar con un ImportError: eso probaría que el empaquetado dejó
+          # fuera algo que se carga por nombre.
+          $p = Start-Process -FilePath "dist\analitix-agent\analitix-agent.exe" `
+                             -ArgumentList "--help" -NoNewWindow -Wait -PassThru
+          if ($p.ExitCode -ne 0) { throw "el binario no arranca (código $($p.ExitCode))" }
+
+      - name: Construir el instalador
+        run: |
+          & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" `
+            "/DAppVersion=${{ steps.v.outputs.version }}" installer.iss
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AnalitixAgentSetup-${{ steps.v.outputs.version }}
+          path: analitix/edge/windows/Output/*.exe
+          if-no-files-found: error

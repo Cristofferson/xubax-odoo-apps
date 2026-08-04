@@ -78,7 +78,13 @@
         <field name="name">analitix.visitor.graph</field>
         <field name="model">analitix.visitor</field>
         <field name="arch" type="xml">
-            <graph string="Visits" type="line" sample="1">
+            <!-- Sin sample="1" a propósito: los datos de ejemplo de Odoo no saben
+                 formatear un agrupado por HORA (SampleServer.FORMATS solo trae
+                 day/week/month/quarter/year), así que en una vista vacía revienta
+                 con "Cannot read properties of undefined (reading 'length')".
+                 Una tienda recién instalada, antes de su primer cruce, veía eso.
+                 Vale más un estado vacío honesto que datos falsos que truenan. -->
+            <graph string="Visits" type="line">
                 <field name="entered_at" interval="hour"/>
             </graph>
         </field>
@@ -225,7 +231,13 @@
         <field name="name">analitix.demographic.pivot</field>
         <field name="model">analitix.demographic</field>
         <field name="arch" type="xml">
-            <pivot string="Demographics" sample="1">
+            <!-- Sin sample="1" a propósito: los datos de ejemplo de Odoo no saben
+                 formatear un agrupado por HORA (SampleServer.FORMATS solo trae
+                 day/week/month/quarter/year), así que en una vista vacía revienta
+                 con "Cannot read properties of undefined (reading 'length')".
+                 Una tienda recién instalada, antes de su primer cruce, veía eso.
+                 Vale más un estado vacío honesto que datos falsos que truenan. -->
+            <pivot string="Demographics">
                 <field name="age_band" type="row"/>
                 <field name="captured_at" interval="hour" type="col"/>
             </pivot>

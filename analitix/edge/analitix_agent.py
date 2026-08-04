@@ -40,6 +40,7 @@ import logging
 import os
 import queue
 import signal
+from logging.handlers import RotatingFileHandler
 import sqlite3
 import sys
 import threading
@@ -406,7 +407,7 @@ class Agent:
         self.client = OdooClient(
             config["odoo_url"], config["api_key"],
             verify_tls=config.get("verify_tls", True))
-        state_dir = config.get("state_dir", "/var/lib/analitix")
+        state_dir = config.get("state_dir") or _default_state_dir()
         os.makedirs(state_dir, exist_ok=True)
         self.queue = EventQueue(
             os.path.join(state_dir, "queue.db"),
@@ -588,17 +589,53 @@ def load_config(path):
         return json.load(handle)
 
 
+#: Dónde vive lo del agente en cada sistema. Windows no tiene /etc ni /var, y
+#: escribir en Archivos de Programa requiere permisos que un servicio no
+#: debería necesitar: en Windows todo lo que cambia vive en ProgramData.
+def _default_state_dir():
+    if os.name == "nt":
+        base = os.environ.get("PROGRAMDATA", r"C:\ProgramData")
+        return os.path.join(base, "Analitix", "state")
+    return "/var/lib/analitix"
+
+
+def _default_config_path():
+    if os.name == "nt":
+        base = os.environ.get("PROGRAMDATA", r"C:\ProgramData")
+        return os.path.join(base, "Analitix", "agent.yaml")
+    return "/etc/analitix/agent.yaml"
+
+
+def _default_log_path():
+    """En Linux el registro lo recoge journald; en Windows no hay quien lo
+    recoja, así que el agente escribe su propio archivo o el técnico se queda
+    sin nada que mirar cuando una cámara no levanta."""
+    if os.name != "nt":
+        return None
+    base = os.environ.get("PROGRAMDATA", r"C:\ProgramData")
+    return os.path.join(base, "Analitix", "logs", "agent.log")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Analitix edge agent")
-    parser.add_argument("--config", required=True, help="YAML or JSON config file")
+    parser.add_argument("--config", default=_default_config_path(),
+                        help="YAML or JSON config file (default: %(default)s)")
     parser.add_argument("--source", choices=["demo", "line"],
                         help="Override the configured source")
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args()
 
+    handlers = [logging.StreamHandler()]
+    log_path = _default_log_path()
+    if log_path:
+        os.makedirs(os.path.dirname(log_path), exist_ok=True)
+        handlers.append(
+            RotatingFileHandler(log_path, maxBytes=2_000_000, backupCount=3,
+                                encoding="utf-8"))
     logging.basicConfig(
         level=logging.DEBUG if args.verbose else logging.INFO,
-        format="%(asctime)s %(levelname)s %(name)s: %(message)s")
+        format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+        handlers=handlers)
 
     config = load_config(args.config)
     if args.source:
@@ -608,8 +645,16 @@ def main():
             sys.exit("Missing '%s' in %s" % (required, args.config))
 
     agent = Agent(config)
-    signal.signal(signal.SIGTERM, agent.stop)
-    signal.signal(signal.SIGINT, agent.stop)
+    # SIGTERM no se entrega nunca en Windows; SIGINT sí (Ctrl+C), y la tarea
+    # programada corta el proceso por su cuenta. Registrar lo que existe y no
+    # reventar por lo que no.
+    for name in ("SIGTERM", "SIGINT"):
+        sig = getattr(signal, name, None)
+        if sig is not None:
+            try:
+                signal.signal(sig, agent.stop)
+            except (ValueError, OSError):
+                pass
     agent.run()
 
 

@@ -29,7 +29,13 @@
         <field name="name">analitix.hourly.graph</field>
         <field name="model">analitix.hourly</field>
         <field name="arch" type="xml">
-            <graph string="Conversion" type="line" sample="1">
+            <!-- Sin sample="1" a propósito: los datos de ejemplo de Odoo no saben
+                 formatear un agrupado por HORA (SampleServer.FORMATS solo trae
+                 day/week/month/quarter/year), así que en una vista vacía revienta
+                 con "Cannot read properties of undefined (reading 'length')".
+                 Una tienda recién instalada, antes de su primer cruce, veía eso.
+                 Vale más un estado vacío honesto que datos falsos que truenan. -->
+            <graph string="Conversion" type="line">
                 <field name="hour" interval="hour"/>
                 <field name="visitors_in" type="measure"/>
                 <field name="tickets" type="measure"/>

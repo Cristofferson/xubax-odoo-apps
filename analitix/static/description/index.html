@@ -264,7 +264,8 @@
       <a class="alx-lbclose" href="#alx-b3" aria-label="Cerrar"></a>
         <figcaption><b>One fanless mini-PC in the back room.</b> No graphics
         card, nothing on the till, nothing in a cloud. One per shop, however many
-        cameras that shop has.</figcaption>
+        cameras that shop has — and it installs from a <b>Windows installer</b>,
+        not from a command line.</figcaption>
       </figure>
       <span id="alx-b4"></span><figure class="alx-shot" id="alx-z4">
         <a class="alx-lbopen" href="#alx-z4" aria-label="Ampliar la imagen"><img src="demo/scene-cameras.jpg" alt="An analogue dome camera with a USB capture stick, a USB webcam and an IP bullet camera side by side, each labelled as supported."/></a>
@@ -873,12 +874,15 @@
         </tr>
         <tr>
           <td><strong>The edge agent</strong></td>
-          <td>The Python program that runs on the mini-PC in your shop, talks to
-          the camera and does the counting. Source included, in the module's own
-          <code>edge/</code> folder, with its systemd unit and an example
-          configuration. It has a <code>demo</code> mode that posts synthetic
-          crossings, so you can prove the whole chain works before any hardware is
-          mounted.</td>
+          <td>The program that runs on the mini-PC in your shop, talks to the
+          camera and does the counting. It installs from a <strong>Windows
+          installer</strong> — no Python to set up and no command line — and the
+          vision engine travels inside it, so the shop's machine does not even
+          need internet while it installs. The source ships too, in the module's
+          own <code>edge/</code> folder, along with a Linux path for anyone who
+          prefers it. It has a <code>demo</code> mode that posts synthetic
+          crossings, so you can prove the whole chain works before any hardware
+          is mounted.</td>
         </tr>
         <tr>
           <td><strong>The ingest API contract</strong></td>
@@ -987,10 +991,16 @@
     </div>
     <div class="alx-faq">
       <h3>Does this include the software that runs the cameras?</h3>
-      <p>Yes. The edge agent ships inside the module, in its <code>edge/</code>
-      folder — source, systemd unit and example configuration. You copy it to the
-      mini-PC in your shop and start it. What you still have to buy is the
-      hardware itself: a camera and a small PC.</p>
+      <p>Yes, and it is not a script you have to deploy. It installs on the
+      shop's mini-PC from a <strong>Windows installer</strong>: run it, paste the
+      two values from the device form in Odoo, and it registers itself to start
+      with the machine. The vision engine is inside the package, so that machine
+      needs no internet during the install and nobody needs to know what a Python
+      environment is.</p>
+      <p>The source ships as well, in the module's own <code>edge/</code> folder,
+      with a Linux path and a systemd unit for whoever prefers to run it that
+      way. What you still have to buy is the hardware itself: a camera and a
+      small PC.</p>
     </div>
     <div class="alx-faq">
       <h3>What does the price cover, and what is billed separately?</h3>

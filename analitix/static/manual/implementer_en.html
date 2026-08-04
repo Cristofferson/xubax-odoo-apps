@@ -173,36 +173,67 @@ no visits and no purchase units. Fine to start cheap and migrate later.</p>
 
 <h2 id="agent">5. Installing the edge agent</h2>
 
-<p>The agent <strong>ships with the module</strong>. After installing Analitix
-you will find it in your Odoo's addons folder:</p>
+<p>On the shop's mini-PC it installs from a <strong>Windows
+installer</strong>. Nothing to copy, no Python environment to build, no need to
+know what a <em>wheel</em> is: the vision engine <strong>travels inside the
+package</strong>, so the shop's machine does not even need internet while it
+installs. That is why the file is large — the counting model and its runtime
+are most of its weight.</p>
 
-<pre><code>&lt;addons-path&gt;/analitix/edge/
-    analitix_agent.py        the agent
-    config.example.yaml      the configuration to copy
-    analitix-agent.service   the systemd unit
-    requirements.txt         its dependencies
-    README.md</code></pre>
+<ol class="steps">
+  <li>Run <code>AnalitixAgentSetup-&lt;version&gt;.exe</code> <strong>as
+  administrator</strong>.</li>
+  <li>It opens <code>agent.yaml</code> for you when it finishes. Paste the
+  <strong>two required values</strong>: <code>odoo_url</code> (https, no
+  exceptions) and <code>api_key</code>, from the device form in Odoo.</li>
+  <li>Save, then restart the task:
+  <code>schtasks /End /TN "Analitix Agent"</code> and
+  <code>schtasks /Run /TN "Analitix Agent"</code>.</li>
+  <li>Confirm the device turns <em>Online</em> in Odoo.</li>
+</ol>
 
-<div class="note">
-  <p>Copy it to the shop's mini-PC. It does not run on the Odoo server and must
-  not: the vision happens in the store, and the Odoo addon has — and must keep
-  — no computer-vision dependency of its own.</p>
+<div class="scroll">
+<table>
+  <tr><th>What</th><th>Where it lands</th></tr>
+  <tr><td>Program</td><td><code>C:\Program Files\Analitix</code></td></tr>
+  <tr><td>Configuration</td><td><code>C:\ProgramData\Analitix\agent.yaml</code> — it holds the device key, and <strong>reinstalling never overwrites it</strong>.</td></tr>
+  <tr><td>Encrypted queue</td><td><code>C:\ProgramData\Analitix\state</code></td></tr>
+  <tr><td>Log</td><td><code>C:\ProgramData\Analitix\logs\agent.log</code>, rotated</td></tr>
+  <tr><td>Autostart</td><td>Scheduled task <strong>Analitix Agent</strong>, as <code>SYSTEM</code>, at boot</td></tr>
+</table>
 </div>
 
-<pre><code># On the store's mini-PC
-sudo mkdir -p /etc/analitix /var/lib/analitix
-sudo cp analitix_agent.py /usr/local/bin/
-sudo cp config.example.yaml /etc/analitix/agent.yaml
-sudo pip3 install -r requirements.txt
+<div class="note">
+  <p><strong>Why a scheduled task and not a Windows service.</strong> A real
+  service has to speak the service-control protocol, and a binary that does not
+  gets killed after thirty seconds for "not responding". A scheduled task is
+  native, starts before anybody logs in, restarts on its own if the process
+  dies, and needs no third-party wrapper. You will find it in Task Scheduler as
+  <code>Analitix Agent</code>.</p>
+</div>
 
-sudo nano /etc/analitix/agent.yaml     # odoo_url + api_key
-sudo cp analitix-agent.service /etc/systemd/system/
-sudo systemctl enable --now analitix-agent
-journalctl -u analitix-agent -f</code></pre>
+<div class="note">
+  <p><strong>Until the installer is signed</strong>, Windows says "unrecognised
+  app" the first time — in front of the customer. It opens through <em>More
+  info → Run anyway</em>. It is a pending formality, not a fault.</p>
+</div>
 
-<p>There are only <strong>two required values</strong>: <code>odoo_url</code>
-(https, no exceptions) and <code>api_key</code>. Everything else has a working
-default.</p>
+<h3>The Start-menu shortcuts</h3>
+<ul>
+  <li><strong>Editar la configuración</strong> — opens the right
+  <code>agent.yaml</code>.</li>
+  <li><strong>Ver el registro</strong> — for when a camera will not come up.</li>
+  <li><strong>Probar en esta ventana</strong> — runs the agent in the foreground
+  with <code>--verbose</code>. This is the one to use <strong>while aiming a
+  camera</strong>: crossings appear as they happen.</li>
+</ul>
+
+<h3>On Linux</h3>
+<p>Still supported, and it is what we use on the machines we provision
+ourselves, but it is not what a customer is handed. The code and the systemd
+unit ship inside the module, in
+<code>&lt;addons-path&gt;/analitix/edge/</code>, with their own
+<code>README.md</code>.</p>
 
 <h3>The settings that matter</h3>
 <div class="scroll">
@@ -211,7 +242,7 @@ default.</p>
   <tr><td><code>source</code></td><td><code>line</code></td><td><code>demo</code> generates synthetic crossings with no camera: use it to prove the link to Odoo works <em>before</em> the hardware is mounted.</td></tr>
   <tr><td><code>line</code></td><td>—</td><td>Pixel coordinates of the doorway. Better pushed down from Odoo.</td></tr>
   <tr><td><code>send_embeddings</code></td><td><code>false</code></td><td>False means face vectors <strong>never leave the store</strong>: the agent pulls staff signatures and compares in memory. Set true only if the hardware cannot hold the signature set.</td></tr>
-  <tr><td><code>state_dir</code></td><td><code>/var/lib/analitix</code></td><td>Holds the encrypted queue. It must survive a reboot: it is the only thing between a two-hour outage and two hours of lost visitors.</td></tr>
+  <tr><td><code>state_dir</code></td><td>empty</td><td>Holds the encrypted queue. It must survive a reboot: it is the only thing between a two-hour outage and two hours of lost visitors.</td></tr>
   <tr><td><code>verify_tls</code></td><td><code>true</code></td><td>Set false <strong>only</strong> on a lab bench with a self-signed certificate.</td></tr>
 </table>
 </div>

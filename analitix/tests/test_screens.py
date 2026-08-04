@@ -228,3 +228,36 @@ class TestGroupedFiguresAreNotNonsense(TransactionCase):
             offenders,
             "ratios that would be summed into a meaningless group total:\n  " +
             "\n  ".join(offenders))
+
+
+@tagged("post_install", "-at_install")
+class TestSampleDataDoesNotCrashOnHourlyViews(TransactionCase):
+    """Una vista agrupada por HORA no puede pedir datos de ejemplo.
+
+    Odoo genera datos falsos cuando una vista no tiene registros, y su
+    formateador solo conoce day/week/month/quarter/year — no *hour*. Con
+    ``sample="1"`` y ``interval="hour"``, una vista vacía revienta en el
+    navegador con «Cannot read properties of undefined (reading 'length')»,
+    que es exactamente lo que ve una tienda recién instalada antes de su
+    primer cruce.
+
+    Se detectó en la demo de retail. Se prueba aquí y no a mano porque el
+    atributo es fácil de volver a poner sin saber lo que cuesta.
+    """
+
+    def test_no_hourly_view_asks_for_sample_data(self):
+        offenders = []
+        views = self.env["ir.ui.view"].search([
+            ("type", "in", ("graph", "pivot")),
+            ("model", "like", "analitix."),
+        ])
+        for view in views:
+            arch = etree.fromstring(view.arch)
+            if arch.get("sample") not in ("1", "true", "True"):
+                continue
+            if arch.xpath('.//field[@interval="hour"]'):
+                offenders.append("%s (%s)" % (view.xml_id or view.name, view.model))
+        self.assertFalse(
+            offenders,
+            "Estas vistas agrupan por hora y piden datos de ejemplo; en una "
+            "base vacía truenan en el navegador: %s" % ", ".join(offenders))

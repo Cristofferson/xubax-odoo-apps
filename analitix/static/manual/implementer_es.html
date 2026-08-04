@@ -173,36 +173,67 @@ compra. Sirven para arrancar barato y migrar después.</p>
 
 <h2 id="agente">5. Instalar el agente edge</h2>
 
-<p>El agente <strong>viene incluido con el módulo</strong>. Después de instalar
-Analitix lo encuentras en la carpeta de addons de tu Odoo:</p>
+<p>En el mini-PC de la tienda se instala con un <strong>instalador de
+Windows</strong>. No hay que copiar archivos, ni crear entornos de Python, ni
+saber qué es un <em>wheel</em>: el motor de visión <strong>va dentro del
+paquete</strong>, así que la máquina de la tienda ni siquiera necesita internet
+durante la instalación. Por eso el archivo es grande — el modelo de conteo y su
+runtime son casi todo su peso.</p>
 
-<pre><code>&lt;ruta-de-addons&gt;/analitix/edge/
-    analitix_agent.py        el agente
-    config.example.yaml      la configuración a copiar
-    analitix-agent.service   la unidad de systemd
-    requirements.txt         sus dependencias
-    README.md</code></pre>
+<ol class="steps">
+  <li>Ejecuta <code>AnalitixAgentSetup-&lt;versión&gt;.exe</code> <strong>como
+  administrador</strong>.</li>
+  <li>Al terminar se abre solo <code>agent.yaml</code>. Pega los
+  <strong>dos únicos valores obligatorios</strong>: <code>odoo_url</code> (https,
+  sin excepción) y <code>api_key</code>, la llave que sale de la ficha del
+  equipo en Odoo.</li>
+  <li>Guarda y reinicia la tarea:
+  <code>schtasks /End /TN "Analitix Agent"</code> y
+  <code>schtasks /Run /TN "Analitix Agent"</code>.</li>
+  <li>Confirma en Odoo que el equipo aparece <em>En línea</em>.</li>
+</ol>
 
-<div class="note">
-  <p>Cópialo al mini-PC de la tienda. No corre en el servidor de Odoo y no debe:
-  la visión pasa en la tienda, y el addon de Odoo no tiene —ni debe tener—
-  ninguna dependencia de visión.</p>
+<div class="scroll">
+<table>
+  <tr><th>Qué</th><th>Dónde queda</th></tr>
+  <tr><td>Programa</td><td><code>C:\Program Files\Analitix</code></td></tr>
+  <tr><td>Configuración</td><td><code>C:\ProgramData\Analitix\agent.yaml</code> — lleva la llave del equipo, y <strong>reinstalar nunca la sobrescribe</strong>.</td></tr>
+  <tr><td>Cola cifrada</td><td><code>C:\ProgramData\Analitix\state</code></td></tr>
+  <tr><td>Registro</td><td><code>C:\ProgramData\Analitix\logs\agent.log</code>, rotado</td></tr>
+  <tr><td>Arranque automático</td><td>Tarea programada <strong>Analitix Agent</strong>, como <code>SYSTEM</code>, al encender</td></tr>
+</table>
 </div>
 
-<pre><code># En el mini-PC de la tienda
-sudo mkdir -p /etc/analitix /var/lib/analitix
-sudo cp analitix_agent.py /usr/local/bin/
-sudo cp config.example.yaml /etc/analitix/agent.yaml
-sudo pip3 install -r requirements.txt
+<div class="note">
+  <p><strong>Por qué tarea programada y no servicio de Windows.</strong> Un
+  servicio de verdad tiene que hablar el protocolo de control de servicios, y un
+  binario que no lo habla Windows lo mata a los treinta segundos por «no
+  responder». La tarea programada es nativa, arranca antes de que nadie inicie
+  sesión, se reinicia sola si el proceso muere y no necesita binarios de
+  terceros. La ves en el Programador de tareas como <code>Analitix Agent</code>.</p>
+</div>
 
-sudo nano /etc/analitix/agent.yaml     # odoo_url + api_key
-sudo cp analitix-agent.service /etc/systemd/system/
-sudo systemctl enable --now analitix-agent
-journalctl -u analitix-agent -f</code></pre>
+<div class="note">
+  <p><strong>Mientras no esté firmado el instalador</strong>, Windows va a
+  decir «aplicación no reconocida» la primera vez — delante del cliente. Se abre
+  con <em>Más información → Ejecutar de todas formas</em>. Es un trámite
+  pendiente, no una falla.</p>
+</div>
 
-<p>Solo hay <strong>dos valores obligatorios</strong>:
-<code>odoo_url</code> (https, sin excepción) y <code>api_key</code>. Todo lo
-demás trae valores por omisión que funcionan.</p>
+<h3>Los accesos del menú Inicio</h3>
+<ul>
+  <li><strong>Editar la configuración</strong> — abre el <code>agent.yaml</code> correcto.</li>
+  <li><strong>Ver el registro</strong> — para cuando una cámara no levanta.</li>
+  <li><strong>Probar en esta ventana</strong> — corre el agente en primer plano
+  con <code>--verbose</code>. Es lo que se usa <strong>mientras se apunta la
+  cámara</strong>: ahí se ven los cruces conforme ocurren.</li>
+</ul>
+
+<h3>En Linux</h3>
+<p>Sigue soportado, y es lo que usamos en los equipos que preparamos nosotros,
+pero no es lo que recibe un cliente. El código y la unidad de systemd vienen
+dentro del módulo, en <code>&lt;ruta-de-addons&gt;/analitix/edge/</code>, con su
+propio <code>README.md</code>.</p>
 
 <h3>Ajustes que importan</h3>
 <div class="scroll">
@@ -211,7 +242,7 @@ demás trae valores por omisión que funcionan.</p>
   <tr><td><code>source</code></td><td><code>line</code></td><td><code>demo</code> genera cruces sintéticos sin cámara: úsalo para probar el enlace con Odoo <em>antes</em> de montar el hardware.</td></tr>
   <tr><td><code>line</code></td><td>—</td><td>Coordenadas en píxeles del vano. Mejor empújala desde Odoo.</td></tr>
   <tr><td><code>send_embeddings</code></td><td><code>false</code></td><td>En falso los vectores faciales <strong>no salen de la tienda</strong>: el agente baja las firmas de personal y compara en memoria. Ponlo en verdadero solo si el equipo no aguanta el conjunto de firmas.</td></tr>
-  <tr><td><code>state_dir</code></td><td><code>/var/lib/analitix</code></td><td>Guarda la cola cifrada. Tiene que sobrevivir a un reinicio: es lo único entre un corte de internet de dos horas y dos horas de visitantes perdidos.</td></tr>
+  <tr><td><code>state_dir</code></td><td>vacío</td><td>Guarda la cola cifrada; vacío usa <code>C:\ProgramData\Analitix\state</code> en Windows y <code>/var/lib/analitix</code> en Linux. Tiene que sobrevivir a un reinicio: es lo único entre un corte de internet de dos horas y dos horas de visitantes perdidos.</td></tr>
   <tr><td><code>verify_tls</code></td><td><code>true</code></td><td>Ponlo en falso <strong>solo</strong> en un banco de pruebas con certificado autofirmado.</td></tr>
 </table>
 </div>
