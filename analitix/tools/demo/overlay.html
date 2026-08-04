@@ -108,6 +108,19 @@
   .plan { position:absolute; right:18px; top:52px; font-size:10.5px; font-weight:800;
           letter-spacing:.16em; text-transform:uppercase; color:#062018;
           background:#38d39f; padding:5px 11px; border-radius:999px; }
+
+  /* a blank screen in the plate, painted with what the rule put on it */
+  .scr { position:absolute; background:#0b1220; border-radius:3px; overflow:hidden;
+         opacity:0; transition:opacity .6s; display:flex; flex-direction:column;
+         align-items:center; justify-content:center; text-align:center;
+         box-shadow:0 0 34px rgba(90,140,255,.28); padding:14px; }
+  .scr.on { opacity:1; }
+  .scr .k { font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+            color:#c9a227; font-weight:800; margin-bottom:9px; }
+  .scr .m { font-size:20px; font-weight:700; line-height:1.35; color:#f2f4f8; }
+  .scr .m em { font-style:normal; color:#c9a227; }
+  .scr.dim { background:rgba(11,18,32,.55); box-shadow:none; }
+  .scr.dim .m { font-size:13px; color:#8b96ab; font-weight:600; }
 </style></head>
 <body>
   <div id="plate"></div><div id="vig"></div>
@@ -124,6 +137,13 @@
 const q = new URLSearchParams(location.search);
 const scene = q.get("s") || "door";
 const $ = id => document.getElementById(id);
+// ?bare=1 drops the headline, the subtitle and the footnote, leaving only the
+// overlay itself — for places that supply their own caption, like a card grid.
+if (q.get("bare")) {
+  const style = document.createElement("style");
+  style.textContent = "h1,.sub,.foot{display:none!important}";
+  document.head.appendChild(style);
+}
 const plate = $("plate");
 plate.style.backgroundImage = "url('crop/" + scene + ".jpg')";
 
@@ -179,6 +199,23 @@ function zone(points, label, note, lx, ly, at) {
   lb.innerHTML = label + (note ? ' <em>· ' + note + '</em>' : '');
   document.body.appendChild(lb);
   setTimeout(() => { el.classList.add("on"); lb.classList.add("on"); }, at);
+}
+
+function screen(x, y, w, h, key, message, dim, at) {
+  const el = document.createElement("div");
+  el.className = "scr" + (dim ? " dim" : "");
+  el.style.cssText += `left:${x}px;top:${y}px;width:${w}px;height:${h}px`;
+  el.innerHTML = (key ? '<div class="k">' + key + "</div>" : "") +
+                 '<div class="m">' + message + "</div>";
+  document.body.appendChild(el);
+  setTimeout(() => el.classList.add("on"), at);
+  return el;
+}
+
+// Some plates have their subject exactly where the headline normally sits.
+function titleAt(top) {
+  $("title").style.top = top + "px";
+  $("sub").style.top = (top + 36) + "px";
 }
 function plan(text) {
   const el = document.createElement("div");
@@ -326,6 +363,98 @@ if (scene === "frustrated") {
     $("ptxt").innerHTML = "Someone at <b>Bangles</b> has been waiting a while and looks unhappy about it. Worth going over.";
     $("phone").classList.add("on");
   }, 3600);
+}
+
+
+if (scene === "window") {
+  $("title").textContent = "Displays: what they stop in front of";
+  $("sub").textContent = "Zones say where people go. A display says what they stop at — and it is never reported alone.";
+  $("foot").textContent = "Attention on its own is a vanity metric. Crossed with the sales of the pieces on it, it is a decision.";
+  zone("0,38 548,64 548,508 0,474", "WINDOW SHOWCASE", "8 pieces on it", 26, 104, 700);
+  box({x:516, y:120, w:312, h:600, label:"purchase unit of 2 · stopped 1:40", at:1500});
+  box({x:938, y:172, w:198, h:548, label:"t-2214 · passed, no stop", warn:true, at:2400});
+  hud('<h2>Window Showcase · today</h2><div class="rows">' +
+      '<div><div class="big" style="color:#c9a227">34</div><span>stops</span></div>' +
+      '<div><div class="big" style="color:#38d39f">1:12</div><span>avg stop</span></div>' +
+      '<div><div class="big" style="color:#f0a637">2</div><span>tickets from it</span></div></div>',
+      "right:34px;bottom:64px", 3200);
+}
+
+if (scene === "screens") {
+  $("title").textContent = "A message to \u201cthe screen\u201d goes to the wrong screen";
+  $("sub").textContent = "Every rule resolves where before what. The destination comes from the zone it happened in.";
+  $("foot").textContent = "The one over the counter, the one at the exit and the one facing the street do different jobs.";
+  titleAt(398);
+  box({x:28, y:22, w:280, h:172, label:"SCREEN A · zone: Necklaces", at:900});
+  screen(34, 28, 268, 160, "Chosen",
+         "The pair she is looking at, <em>in her size</em>", false, 1700);
+  box({x:726, y:144, w:298, h:180, label:"SCREEN B · faces the entrance", warn:true, at:2400});
+  screen(732, 150, 286, 168, "", "not this rule — different job, different zone", true, 2600);
+  chip("ok", "The rule that fired",
+       "Somebody stopped at <b>Necklaces</b> \u2192 the screen <b>in that zone</b>. Destination first, content second.",
+       "right:34px;bottom:64px;max-width:330px", 3400);
+}
+
+if (scene === "welcome") {
+  plan("Actions plan");
+  $("title").textContent = "A welcome that is not a mail merge";
+  $("sub").textContent = "Assembled from an open opportunity, what they actually bought, and this visit.";
+  $("foot").textContent = "Off by default, opt-in per customer, and every read of that data is audited.";
+  box({x:298, y:138, w:362, h:582, label:"t-5501 · recognised · opted in", at:900});
+  screen(648, 88, 438, 244, "Boutique Centro",
+         "Welcome back, <em>Ana</em> \u2014 the pair you asked about came in on Tuesday", false, 1900);
+  chip("ok", "Three sources, or it reads like automation",
+       "An open CRM opportunity · what she has actually bought before · what she is doing right now.",
+       "left:34px;bottom:64px;max-width:320px", 3000);
+  chip("warn", "The social privacy rule",
+       "She is alone, so it shows. Walk in with somebody and the name is dropped \u2014 a greeting is not worth outing a customer.",
+       "right:34px;bottom:64px;max-width:320px", 3800);
+}
+
+if (scene === "staffdoor") {
+  plan("Actions plan");
+  $("title").textContent = "Attendance, off by default";
+  $("sub").textContent = "The signatures that keep staff out of the visitor count already know who walked in, and when.";
+  $("foot").textContent = "Nearly free to build. Not free to decide — so the shop decides, not the camera.";
+  box({x:498, y:20, w:330, h:700, label:"staff \u00b7 not a visitor", warn:true, at:900});
+  chip("ok", "What Odoo gets",
+       "<b>hr.attendance</b> \u2014 Rosa M., check-in 09:02, staff door. Odoo's own register, not a parallel one.",
+       "left:34px;bottom:64px;max-width:310px", 2000);
+  chip("warn", "Why it ships switched off",
+       "A shop that has not agreed this with its team should not start recording their hours because a camera was installed.",
+       "right:34px;bottom:64px;max-width:310px", 3000);
+}
+
+if (scene === "closing") {
+  $("title").textContent = "Entered, never left";
+  $("sub").textContent = "The one signal the other three structurally cannot see.";
+  $("foot").textContent = "Usually a missed exit \u2014 which still matters, because it inflates every occupancy figure after it.";
+  chip("warn", "Inside, according to the counter",
+       "<b style=\'font-size:30px\'>1</b><br/>Shop closed 47 minutes ago.",
+       "left:34px;top:130px;max-width:290px", 800);
+  chip("warn", "The visit that never closed",
+       "<b>t-7734</b> open since 11:18 \u2014 6h 02m, no exit recorded. The behaviour scan only looks at the last hour, so nothing else would have found it.",
+       "left:34px;top:290px;max-width:320px", 2000);
+  setTimeout(() => {
+    $("ptxt").innerHTML = "Either somebody is still in the shop, or the exit was not seen and the occupancy figure is running high. Both are worth thirty seconds.";
+    $("phone").classList.add("on");
+  }, 3400);
+}
+
+if (scene === "group") {
+  $("title").textContent = "Arrived together, then scattered";
+  $("sub").textContent = "Three people and one ticket is not a 33% conversion rate. It is one buying decision.";
+  $("foot").textContent = "It never says anybody is a thief. It says worth going over \u2014 the right answer either way.";
+  box({x:352, y:148, w:168, h:572, label:"u-318", at:900});
+  box({x:530, y:150, w:132, h:508, label:"u-318", at:1200});
+  box({x:640, y:186, w:150, h:512, label:"u-318", at:1500});
+  hud('<h2>Purchase unit u-318</h2><div class="rows">' +
+      '<div><div class="big" style="color:#c9a227">3</div><span>people</span></div>' +
+      '<div><div class="big" style="color:#38d39f">1</div><span>decision</span></div></div>',
+      "right:34px;top:130px", 2200);
+  chip("warn", "Four minutes later",
+       "The same unit is in <b>three different zones</b>. That is the shape worth a quiet look \u2014 and it is also just what three friends shopping look like.",
+       "right:34px;bottom:64px;max-width:330px", 3400);
 }
 
 </script>

@@ -82,6 +82,37 @@ SCENES = {
         "clearly having waited too long. Nobody is behind the counter in front "
         "of her. Seen from the height and angle of a small camera above the "
         "cabinets." + COMMON),
+    "window": (
+        "A lit jewellery shop window seen from the pavement at dusk, with two "
+        "people standing close to the glass looking in at the pieces, and a "
+        "third walking past without stopping. Reflections of the street in the "
+        "glass, warm light from inside." + COMMON),
+    "screens": (
+        "Interior of a small upmarket jewellery shop showing two wall-mounted "
+        "digital screens in the same view: one small screen mounted above a "
+        "glass display counter, and a larger one on the far wall facing the "
+        "entrance. Both screens are switched off and completely blank dark "
+        "grey. A customer stands at the counter in the middle distance." + COMMON),
+    "welcome": (
+        "A woman in her thirties walking in through the door of a jewellery "
+        "shop, seen from inside and slightly to the side. On the wall just "
+        "beside the doorway there is a blank, switched-off dark digital screen "
+        "mounted at eye height. Warm interior light, ordinary afternoon."
+        + COMMON),
+    "staffdoor": (
+        "A shop assistant in a dark uniform with a name badge stepping through "
+        "a plain staff door at the back of a jewellery shop, carrying a bag, "
+        "arriving for a shift. Stockroom corridor lighting, nothing "
+        "ceremonial." + COMMON),
+    "closing": (
+        "Interior of a small jewellery shop after closing time, seen from a "
+        "high corner: display cases emptied and dark, most lights off, one "
+        "security light on, nobody in the room, the front door shut. Quiet and "
+        "still." + COMMON),
+    "group": (
+        "Three young adults walking into a jewellery shop together through the "
+        "same doorway, seen from a camera high on the wall, talking to each "
+        "other as they come in. Warm shop lighting." + COMMON),
 }
 
 

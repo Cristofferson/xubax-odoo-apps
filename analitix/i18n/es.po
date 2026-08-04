@@ -7526,3 +7526,13 @@ msgstr "× la suscripción"
 #: model_terms:ir.ui.view,arch_db:analitix.view_chain_report_list
 msgid "Δ vs Region"
 msgstr "Δ vs región"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__plan__visual
+msgid "Visual Analytics"
+msgstr "Analíticos visuales"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_store__plan__actions
+msgid "Actions"
+msgstr "Acciones"

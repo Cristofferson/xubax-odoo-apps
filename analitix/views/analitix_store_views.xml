@@ -322,6 +322,8 @@
                                            invisible="not anomaly_detection_enabled"/>
                                     <field name="anomaly_dispersal_zones"
                                            invisible="not anomaly_detection_enabled"/>
+                                    <field name="anomaly_never_left_minutes"
+                                           invisible="not anomaly_detection_enabled"/>
                                 </group>
                             </group>
                             <div class="alert alert-warning" role="alert"

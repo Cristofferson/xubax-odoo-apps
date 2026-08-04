@@ -31,25 +31,33 @@ from odoo import api, fields, models, _
 _logger = logging.getLogger(__name__)
 
 #: What each plan switches on. The names are the store fields the plan governs.
+#:
+#: Three plans, and the ladder is the product's own argument: **count** what
+#: comes through the door, **understand** who it was and what they did, then
+#: **act** while they are still standing there. A shop that cannot say which
+#: of the three it wants has not been sold anything yet.
 PLAN_FEATURES = {
+    # Counting and conversion are never gated: every store gets the
+    # denominator, because without it nothing else here means anything.
     "counting": [],
-    "insight": ["reid_enabled", "demographics_enabled",
-                "group_detection_enabled"],
-    "floor": ["reid_enabled", "demographics_enabled",
-              "group_detection_enabled", "lost_sale_enabled",
-              "checkout_match_enabled", "anomaly_detection_enabled",
-              "emotion_alert_enabled"],
+    # Everything that *measures*. Nothing in this plan does anything to
+    # anybody — it watches and reports.
+    "visual": ["reid_enabled", "demographics_enabled",
+               "group_detection_enabled", "checkout_match_enabled"],
+    # Everything that *acts*: a message, a screen, a greeting, a register.
+    #
     # The watch list sits here and not lower down, and the reason is not
     # revenue: it is the one feature that needs the implementer involved —
     # a written agreement with the shop, a notice at the door, and two
     # authorised people for the double control. A self-serve customer on the
     # cheapest plan switching on named facial recognition, with nobody from
     # our side aware of it, is the situation worth designing out.
-    "full": ["reid_enabled", "demographics_enabled",
-             "group_detection_enabled", "lost_sale_enabled",
-             "checkout_match_enabled", "anomaly_detection_enabled",
-             "emotion_alert_enabled", "signage_enabled", "identify_customers",
-             "attendance_enabled", "watchlist_enabled"],
+    "actions": ["reid_enabled", "demographics_enabled",
+                "group_detection_enabled", "checkout_match_enabled",
+                "lost_sale_enabled", "anomaly_detection_enabled",
+                "emotion_alert_enabled", "signage_enabled",
+                "identify_customers", "attendance_enabled",
+                "watchlist_enabled"],
 }
 
 
@@ -62,9 +70,8 @@ class AnalitixStoreSubscription(models.Model):
             # database stores and must never change — renaming a stored
             # selection key orphans every store already on that plan.
             ("counting", "Counting"),
-            ("insight", "Visits"),
-            ("floor", "Service"),
-            ("full", "Complete"),
+            ("visual", "Visual Analytics"),
+            ("actions", "Actions"),
         ],
         string="Plan", default="counting", required=True, tracking=True,
         help="What this store has contracted. It governs which features their "

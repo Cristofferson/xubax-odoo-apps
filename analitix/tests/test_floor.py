@@ -557,6 +557,67 @@ class TestDisplaysAndBehaviour(FloorCase):
         self.assertEqual(len(Anomaly.search(
             [("visitor_id", "=", visit.id), ("kind", "=", "repeat_entry")])), 1)
 
+    def test_a_visit_that_never_closed_is_flagged(self):
+        """The one signal the ordinary scan structurally cannot reach.
+
+        ``_cron_scan`` only looks at visits opened inside the behaviour window,
+        so a visit open since this morning fell out of its search hours ago.
+        That is exactly the one worth flagging — usually a missed exit, which
+        inflates occupancy for the rest of the day.
+        """
+        self.store_one.write({
+            "anomaly_detection_enabled": True,
+            "anomaly_never_left_minutes": 180,
+        })
+        visit = self.make_visit()
+        visit.write({
+            "state": "inside",
+            "entered_at": fields.Datetime.now() - timedelta(hours=6),
+        })
+
+        self.env["analitix.anomaly.event"]._cron_scan()
+
+        signal = self.env["analitix.anomaly.event"].search(
+            [("visitor_id", "=", visit.id), ("kind", "=", "never_left")])
+        self.assertTrue(signal, "a six-hour-old open visit should be flagged")
+        self.assertTrue(signal.alert_id)
+        self.assertIn("occupancy", signal.alert_id.body,
+                      "the nudge has to say the likelier cause is a missed "
+                      "exit, or the salesperson goes looking for a person")
+
+    def test_a_visit_still_inside_within_the_hour_is_not_flagged(self):
+        self.store_one.write({
+            "anomaly_detection_enabled": True,
+            "anomaly_never_left_minutes": 180,
+        })
+        visit = self.make_visit()
+        visit.write({
+            "state": "inside",
+            "entered_at": fields.Datetime.now() - timedelta(minutes=20),
+        })
+
+        self.env["analitix.anomaly.event"]._cron_scan()
+
+        self.assertFalse(self.env["analitix.anomaly.event"].search(
+            [("visitor_id", "=", visit.id), ("kind", "=", "never_left")]))
+
+    def test_a_closed_visit_is_never_flagged_as_never_left(self):
+        self.store_one.write({
+            "anomaly_detection_enabled": True,
+            "anomaly_never_left_minutes": 60,
+        })
+        visit = self.make_visit()
+        visit.write({
+            "state": "left",
+            "entered_at": fields.Datetime.now() - timedelta(hours=9),
+            "exited_at": fields.Datetime.now() - timedelta(hours=8),
+        })
+
+        self.env["analitix.anomaly.event"]._cron_scan()
+
+        self.assertFalse(self.env["analitix.anomaly.event"].search(
+            [("visitor_id", "=", visit.id), ("kind", "=", "never_left")]))
+
     def test_a_behaviour_signal_carries_no_identity(self):
         """It is about a pattern, not a person, and the schema says so."""
         Anomaly = self.env["analitix.anomaly.event"]

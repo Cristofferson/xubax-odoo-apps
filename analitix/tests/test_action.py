@@ -314,7 +314,7 @@ class TestSubscriptionAndValue(ActionCase):
         self.assertFalse(self.store_one.signage_enabled)
         self.assertFalse(self.store_one.lost_sale_enabled)
 
-        self.store_one.plan = "full"
+        self.store_one.plan = "actions"
         self.store_one._onchange_plan()
         self.assertTrue(self.store_one.signage_enabled)
         self.assertTrue(self.store_one.lost_sale_enabled)

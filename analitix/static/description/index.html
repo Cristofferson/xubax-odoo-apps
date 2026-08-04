@@ -1,10 +1,16 @@
 <!--
   apps.odoo.com listing page.
 
+  Structure, deliberately: one lost sale told minute by minute at the top,
+  because that is the thing a shop owner recognises instantly, and only then
+  the arithmetic, the price, and the reference material underneath. The detail
+  is not buried — it is just not what the first screen argues with.
+
   Self-contained on purpose: the store serves this file inside its own page, so
   every style is inlined and scoped under .alx- to avoid colliding with the
   surrounding markup, and every asset is a relative path inside this module.
-  No external font, no CDN, no tracking pixel.
+  No external font, no CDN, no tracking pixel, and no JavaScript — the store
+  does not run it, so nothing here may depend on it.
 
   Screenshots and screencasts are captured from the real UI over the module's
   own demo data. They can be regenerated at any time, which is the only way a
@@ -12,75 +18,298 @@
 -->
 <section class="alx-page">
 <style>
-.alx-page { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: #1b2130; line-height: 1.62; font-size: 16px; }
+.alx-page { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: #1a1c19; line-height: 1.64; font-size: 16px; background: #f3f4f1; }
 .alx-page * { box-sizing: border-box; }
-.alx-wrap { max-width: 1040px; margin: 0 auto; padding: 0 22px; }
-.alx-hero { background: #111726; color: #f2f4f8; padding: 66px 0 58px; }
-.alx-kicker { text-transform: uppercase; letter-spacing: .32em; font-size: 13px; font-weight: 700; color: #c9a227; margin: 0 0 18px; }
-.alx-hero h1 { font-size: 46px; line-height: 1.1; margin: 0 0 18px; font-weight: 800; letter-spacing: -1px; max-width: 850px; }
-.alx-hero h1 em { font-style: normal; color: #c9a227; }
-.alx-hero p { font-size: 20px; color: #a9b2c4; max-width: 760px; margin: 0; }
-.alx-badges { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 30px; }
-.alx-badge { border: 1px solid rgba(201,162,39,.55); color: #e2cf94; border-radius: 999px; padding: 7px 16px; font-size: 14px; font-weight: 600; }
-.alx-sec { padding: 54px 0; border-bottom: 1px solid #e6e3dc; }
-.alx-sec:last-child { border-bottom: 0; }
-.alx-sec h2 { font-size: 30px; line-height: 1.2; margin: 0 0 14px; font-weight: 700; letter-spacing: -.5px; }
-.alx-sec > p.alx-lede { font-size: 18px; color: #5d6577; max-width: 720px; margin: 0 0 28px; }
-.alx-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 22px; }
-.alx-card { border: 1px solid #e6e3dc; border-radius: 10px; padding: 22px 24px; background: #fff; }
-.alx-card h3 { margin: 0 0 8px; font-size: 18px; font-weight: 650; }
-.alx-card p { margin: 0; color: #4d5464; font-size: 15px; }
-.alx-quote { border-left: 4px solid #c9a227; background: #f8f5ee; padding: 20px 24px; border-radius: 0 8px 8px 0; font-size: 19px; margin: 0 0 30px; }
-.alx-quote strong { font-weight: 700; }
-.alx-shot { margin: 0 0 30px; }
-.alx-shot img { width: 100%; height: auto; display: block; border: 1px solid #e0ddd6; border-radius: 8px; }
-.alx-shot figcaption { font-size: 14.5px; color: #5d6577; margin-top: 10px; }
+.alx-wrap { max-width: 960px; margin: 0 auto; padding: 0 26px; }
+.alx-page code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .92em; }
+
+/* ---------------------------------------------------------------- the hook */
+.alx-hero { padding: 74px 0 44px; }
+.alx-clock { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; letter-spacing: .2em; color: #8a7f5f; font-weight: 700; margin: 0 0 22px; }
+.alx-hero h1 { font-size: 46px; line-height: 1.08; letter-spacing: -1.4px; font-weight: 800; margin: 0 0 22px; max-width: 19ch; }
+.alx-hero h1 u { text-decoration: none; box-shadow: inset 0 -.42em 0 rgba(201,162,39,.42); }
+.alx-hero .alx-lead { font-size: 19px; color: #5b6055; max-width: 620px; margin: 0; }
+.alx-badges { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 30px; }
+.alx-badge { border: 1px solid #d8d4c4; color: #6d6448; border-radius: 999px; padding: 6px 14px; font-size: 13.5px; font-weight: 600; background: #fbfaf6; }
+
+/* -------------------------------------------------------------- the minutes */
+.alx-rail { position: relative; padding: 18px 0 6px; }
+.alx-rail::before { content: ""; position: absolute; left: 78px; top: 0; bottom: 60px; width: 1px; background: #cfd0c8; }
+.alx-beat { position: relative; padding: 0 0 46px 118px; }
+.alx-beat .alx-t { position: absolute; left: 0; top: 2px; width: 78px; text-align: right; padding-right: 22px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 15px; font-weight: 700; }
+.alx-beat::after { content: ""; position: absolute; left: 73px; top: 9px; width: 11px; height: 11px; border-radius: 50%; background: #f3f4f1; border: 2px solid #a89457; }
+.alx-beat.alx-hit::after { background: #c9a227; border-color: #c9a227; }
+.alx-beat h3 { font-size: 22px; margin: 0 0 8px; font-weight: 800; letter-spacing: -.5px; }
+.alx-beat p { margin: 0 0 16px; font-size: 16.5px; color: #4c5149; max-width: 56ch; }
+.alx-beat img { width: 100%; height: auto; display: block; border-radius: 12px; border: 1px solid #dcddd5; box-shadow: 0 10px 26px rgba(26,28,25,.09); }
+
+/* --------------------------------------------------------------- the pivot */
+.alx-turn { background: #1a1c19; color: #f3f4f1; padding: 60px 0 66px; }
+.alx-turn .alx-big { font-size: 78px; font-weight: 800; color: #c9a227; line-height: 1; letter-spacing: -3px; font-variant-numeric: tabular-nums; margin: 0 0 12px; }
+.alx-turn h2 { font-size: 34px; line-height: 1.14; margin: 0 0 16px; letter-spacing: -1px; font-weight: 800; max-width: 21ch; }
+.alx-turn p { font-size: 18px; color: #b4b8ae; max-width: 620px; margin: 0; }
+.alx-even { width: 100%; border-collapse: collapse; margin-top: 34px; font-variant-numeric: tabular-nums; }
+.alx-even th { text-align: left; font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase; color: #8d9188; font-weight: 800; padding: 0 0 12px; border-bottom: 1px solid #33362f; }
+.alx-even td { padding: 15px 0; border-bottom: 1px solid #272a24; font-size: 17px; color: #dcded7; }
+.alx-even td.alx-num { font-size: 25px; font-weight: 800; color: #c9a227; letter-spacing: -.5px; text-align: right; }
+.alx-turn .alx-after { font-size: 15px; color: #8d9188; margin-top: 20px; max-width: 620px; }
+
+/* ------------------------------------------------------------- the sections */
+.alx-sec { padding: 56px 0; }
+.alx-sec.alx-white { background: #ffffff; border-top: 1px solid #e2e3dc; border-bottom: 1px solid #e2e3dc; }
+.alx-sec h2 { font-size: 31px; line-height: 1.16; margin: 0 0 14px; font-weight: 800; letter-spacing: -.9px; max-width: 22ch; }
+.alx-sec > .alx-wrap > p.alx-lede, .alx-sec p.alx-lede { font-size: 17.5px; color: #5b6055; max-width: 640px; margin: 0 0 30px; }
+.alx-two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+.alx-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.alx-card { border: 1px solid #e2e3dc; border-radius: 11px; padding: 22px 24px; background: #fff; }
+.alx-card h3 { margin: 0 0 8px; font-size: 17.5px; font-weight: 800; letter-spacing: -.3px; }
+.alx-card p { margin: 0; color: #4c5149; font-size: 15px; }
+.alx-shot { margin: 0 0 28px; }
+.alx-shot img { width: 100%; height: auto; display: block; border: 1px solid #dcddd5; border-radius: 11px; }
+.alx-shot figcaption { font-size: 14.5px; color: #5b6055; margin-top: 11px; line-height: 1.55; }
+.alx-shot figcaption b, .alx-shot figcaption strong { color: #1a1c19; }
 .alx-video { margin: 0 0 26px; }
-.alx-video video { width: 100%; height: auto; display: block; border: 1px solid #e0ddd6; border-radius: 8px; background: #111726; }
-.alx-video figcaption { font-size: 14.5px; color: #5d6577; margin-top: 10px; }
+.alx-video video { width: 100%; height: auto; display: block; border: 1px solid #dcddd5; border-radius: 11px; background: #12151c; }
+.alx-video figcaption { font-size: 14.5px; color: #5b6055; margin-top: 11px; line-height: 1.55; }
+.alx-facts { list-style: none; margin: 30px 0 0; padding: 0; }
+.alx-facts li { padding: 16px 0; border-bottom: 1px solid #dcddd5; font-size: 16.5px; }
+.alx-facts li b { display: block; font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: #8a7f5f; margin-bottom: 5px; }
+
+/* ---------------------------------------------------------------- the price */
+.alx-price { background: #fff; border: 1px solid #dcddd5; border-radius: 14px; padding: 28px 30px; }
+.alx-price h3 { margin: 0 0 16px; font-size: 19px; font-weight: 800; }
+.alx-price table { width: 100%; border-collapse: collapse; }
+.alx-price td { padding: 14px 0; border-bottom: 1px solid #eceee7; font-size: 15.5px; vertical-align: top; color: #4c5149; }
+.alx-price td:last-child { text-align: right; font-weight: 800; white-space: nowrap; color: #1a1c19; font-size: 17px; }
+.alx-price tr:last-child td { border-bottom: 0; }
+.alx-price tr.alx-hot td { background: rgba(201,162,39,.07); }
+.alx-price b { color: #1a1c19; }
+
+/* --------------------------------------------------------------- reference */
+.alx-divider { padding: 52px 0 0; }
+.alx-divider p { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12.5px; letter-spacing: .22em; text-transform: uppercase; color: #8a7f5f; font-weight: 700; margin: 0 0 6px; border-top: 1px solid #d5d6ce; padding-top: 26px; }
+.alx-divider h2 { font-size: 27px; margin: 0; font-weight: 800; letter-spacing: -.7px; }
 .alx-scroll { overflow-x: auto; }
-.alx-table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 15px; }
-.alx-table th, .alx-table td { text-align: left; padding: 11px 14px; border-bottom: 1px solid #e6e3dc; vertical-align: top; }
-.alx-table th { background: #f7f6f3; font-weight: 650; }
+.alx-table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 15px; background: #fff; }
+.alx-table th, .alx-table td { text-align: left; padding: 12px 15px; border-bottom: 1px solid #e2e3dc; vertical-align: top; }
+.alx-table th { background: #f7f7f3; font-weight: 800; font-size: 13px; letter-spacing: .06em; }
 .alx-faq { margin-bottom: 20px; }
-.alx-faq h3 { font-size: 17px; margin: 0 0 6px; font-weight: 650; }
-.alx-faq p { margin: 0; color: #4d5464; }
-.alx-note { background: #f7f6f3; border-radius: 8px; padding: 18px 22px; color: #4d5464; font-size: 15px; }
-.alx-foot { background: #111726; color: #a9b2c4; padding: 34px 0; font-size: 15px; }
+.alx-faq h3 { font-size: 17px; margin: 0 0 6px; font-weight: 800; }
+.alx-faq p { margin: 0; color: #4c5149; }
+.alx-note { background: #fbfaf6; border-left: 3px solid #c9a227; border-radius: 0 9px 9px 0; padding: 18px 22px; color: #4c5149; font-size: 15px; }
+.alx-foot { background: #1a1c19; color: #a8ada2; padding: 34px 0; font-size: 15px; }
 .alx-foot a { color: #c9a227; }
-@media (max-width: 640px) { .alx-hero h1 { font-size: 32px; } .alx-sec h2 { font-size: 24px; } }
+
+@media (max-width: 680px) {
+  .alx-hero h1 { font-size: 32px; }
+  .alx-turn h2, .alx-sec h2 { font-size: 25px; }
+  .alx-turn .alx-big { font-size: 58px; }
+  .alx-rail::before { left: 8px; }
+  .alx-beat { padding-left: 36px; }
+  .alx-beat .alx-t { position: static; width: auto; text-align: left; padding: 0 0 6px; }
+  .alx-beat::after { left: 3px; top: 6px; }
+}
 </style>
 
 <div class="alx-hero">
   <div class="alx-wrap">
-    <p class="alx-kicker">Analitix</p>
-    <h1>Your POS says what you sold.<br/>This says <em>who you didn't sell to</em>.</h1>
-    <p>Physical store intelligence, inside Odoo. Visitors across any number of
-    doors, conversion against your own POS, and the walk-outs your team can
-    still catch.</p>
+    <p class="alx-clock">Saturday · 14:02 · one shop, one camera</p>
+    <h1>A customer walked in. Nine minutes later she left with <u>nothing</u>.</h1>
+    <p class="alx-lead">Nobody in the shop knows it happened. It will not appear
+    in any report you have, because nothing happened — and nothing is exactly
+    what an ERP cannot record.</p>
     <div class="alx-badges">
       <span class="alx-badge">Odoo 19</span>
       <span class="alx-badge">Any number of doors</span>
       <span class="alx-badge">No image ever stored</span>
-      <span class="alx-badge">Edge, not cloud</span>
+      <span class="alx-badge">Runs in the shop, not in a cloud</span>
       <span class="alx-badge">Works with the cameras you have</span>
+      <span class="alx-badge">Camera software included</span>
       <span class="alx-badge">Manuals in ES &amp; EN</span>
-      <span class="alx-badge">One shop or a chain</span>
     </div>
   </div>
 </div>
 
 <div class="alx-wrap">
+  <div class="alx-rail">
 
-  <section class="alx-sec">
-    <p class="alx-quote"><strong>This is not a people counter.</strong> The
-    counter is the foundation. “You had 400 visitors” helps nobody. “Eleven
-    people waited at the ring counter and nine were never spoken to” is a
-    decision somebody can act on tomorrow morning.</p>
+    <div class="alx-beat">
+      <div class="alx-t">14:02</div>
+      <h3>She comes in</h3>
+      <p>A line across the doorway; which way you cross it is what counts. The
+      salesperson stepping out for a coffee is matched and never counted as a
+      customer — without that, ten cigarette breaks a day are ten visitors.</p>
+      <img src="screenshots/how-door.jpg" alt="Overhead view of a shop doorway with a virtual line drawn across it, people tracked in boxes, one marked staff and excluded, and the hourly in-out-inside counters."/>
+    </div>
 
+    <div class="alx-beat">
+      <div class="alx-t">14:04</div>
+      <h3>She stops at the ring counter</h3>
+      <p>Zones are parts of your own floor, drawn once on a picture of your own
+      shop. From then on, time spent there and whether anybody came over is
+      measured — per zone, per hour, per day.</p>
+      <img src="demo/scene-floor.jpg" alt="A jewellery shop from a high corner with four zones drawn over the counters, each showing its median dwell time."/>
+    </div>
+
+    <div class="alx-beat alx-hit">
+      <div class="alx-t">14:06</div>
+      <h3>Four minutes. Still alone.</h3>
+      <p>Long enough, nobody served her, no ticket. Each of those three alone is
+      completely ordinary; together they are the only reliable warning a shop
+      ever gets. This is the minute the whole product exists for.</p>
+      <img src="demo/scene-frustrated.jpg" alt="A customer waiting with folded arms at a counter, her expression read as sustained negative, and the resulting discreet nudge."/>
+    </div>
+
+    <div class="alx-beat">
+      <div class="alx-t">14:11</div>
+      <h3>She leaves</h3>
+      <p>Nine minutes inside, no bag, no ticket. By tomorrow this is
+      indistinguishable from a slow afternoon.</p>
+      <img src="demo/scene-walkout.jpg" alt="One tracked visitor leaving empty-handed after nine minutes while another is handed a bag at the counter, with the day's conversion figures."/>
+    </div>
+
+  </div>
+</div>
+
+<div class="alx-turn">
+  <div class="alx-wrap">
+    <p class="alx-big">29</p>
+    <h2>That was one. Last month it happened twenty-nine times in this shop.</h2>
+    <p>Nine of those twenty-nine had nobody go over at all. The plan that
+    catches them costs US$149 per shop per month, so the only question worth
+    asking is how many of those nine you would have to turn into sales to be
+    even.</p>
+
+    <table class="alx-even">
+      <tr><th>If your average ticket is</th><th style="text-align:right;">You break even at</th></tr>
+      <tr><td>US$80</td><td class="alx-num">1.9 rescued sales a month</td></tr>
+      <tr><td>US$180</td><td class="alx-num">0.8 of one</td></tr>
+      <tr><td>US$400</td><td class="alx-num">0.4 of one</td></tr>
+      <tr><td>US$1,200</td><td class="alx-num">0.1 of one</td></tr>
+    </table>
+
+    <p class="alx-after">That is arithmetic, not a projection. What Analitix
+    guarantees is that you will <em>know</em> the numbers — how many walked out,
+    how many were never attended, which nudges ended in a ticket. Whether the
+    salesperson goes over is still up to the salesperson.</p>
+  </div>
+</div>
+
+<div class="alx-sec">
+  <div class="alx-wrap">
+    <h2>The same afternoon, with Analitix running</h2>
+    <p class="alx-lede">Nothing changes for the customer. One phone buzzes.</p>
+    <div class="alx-two">
+      <figure class="alx-shot">
+        <img src="screenshots/alert-discuss.jpg" alt="Odoo's chat as the salesperson sees it, with the alert saying somebody has been at the ring counter for four minutes and nobody has been over."/>
+        <figcaption><b>14:06 — the nudge.</b> In Odoo's own chat, to the one
+        salesperson on that zone's shift. Short enough to read mid-shift and act
+        on without opening anything. The customer never knows.</figcaption>
+      </figure>
+      <figure class="alx-shot">
+        <img src="screenshots/value_report.jpg" alt="Monthly value report per store: visitors, sales, conversion, walk-outs spotted and rescued, estimated recovered revenue and how it compares with the subscription."/>
+        <figcaption><b>End of the month — the receipt.</b> Walk-outs spotted,
+        walk-outs rescued, and roughly what that was worth, next to what the shop
+        pays. Labelled an <strong>estimate</strong> everywhere it appears —
+        inflating it is the fastest way to lose the customer who eventually
+        checks.</figcaption>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<div class="alx-sec alx-white">
+  <div class="alx-wrap">
+    <h2>What has to be true in the shop</h2>
+    <p class="alx-lede">Less than people expect. One small computer, and very
+    probably the camera that is already on the wall.</p>
+    <div class="alx-two">
+      <figure class="alx-shot">
+        <img src="demo/scene-install.jpg" alt="A small fanless mini-PC on a shelf in a shop's back room next to the router, marked as the whole system."/>
+        <figcaption><b>One fanless mini-PC in the back room.</b> No graphics
+        card, nothing on the till, nothing in a cloud. One per shop, however many
+        cameras that shop has.</figcaption>
+      </figure>
+      <figure class="alx-shot">
+        <img src="demo/scene-cameras.jpg" alt="An analogue dome camera with a USB capture stick, a USB webcam and an IP bullet camera side by side, each labelled as supported."/>
+        <figcaption><b>The camera is probably already up there.</b> Analogue on
+        coax plus a US$20 capture stick, a plain USB webcam, or an IP camera over
+        RTSP — the agent opens all three the same way. Nothing gets rewired to
+        find out whether this is worth it.</figcaption>
+      </figure>
+    </div>
+
+    <ul class="alx-facts">
+      <li><b>Where the images go</b>Nowhere. A face becomes an irreversible list
+      of numbers on that mini-PC and the frame is destroyed in memory — never
+      written to disk, never queued, never sent. There is no endpoint on our side
+      that would accept one, and that is not a setting.</li>
+      <li><b>Where the numbers go</b>Into your own Odoo, over your own
+      connection. If the line drops the agent keeps counting and sends the
+      backlog when it comes back — and it reports a camera that is still online
+      but has stopped seeing, which is the failure that quietly costs a month of
+      data.</li>
+      <li><b>What it does not need</b>New cabling, a server, a GPU for a single
+      door, or a contract with anybody's cloud.</li>
+      <li><b>What you can do before buying hardware</b>Everything. The module
+      ships with two demo shops and a fortnight of traffic, and the included
+      agent has a synthetic mode that posts crossings without a camera, so the
+      whole chain can be proven first.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="alx-sec">
+  <div class="alx-wrap">
+    <h2>What it costs</h2>
+    <p class="alx-lede">The module is a one-time purchase here, with the camera
+    agent included and no limit on doors, zones, cameras or users. What is
+    monthly is the service, per shop you actually analyse.</p>
+
+    <div class="alx-price">
+      <h3>Per shop, per month</h3>
+      <table>
+        <tr><td><b>Counting</b> — how many came in<br/>Visitors at every door with
+        staff excluded, conversion against your POS, average ticket, units per
+        ticket, revenue per visitor, density per m², the per-door split, device
+        health and the monthly report.</td><td>US$49</td></tr>
+        <tr><td><b>Visual Analytics</b> — who they were and what they did<br/>+
+        everything the cameras can measure: a return visit counted once, families
+        as one buying decision, age band and gender at the door, time spent per
+        zone and per display, which visit produced which ticket, visit frequency.
+        Nothing in this plan does anything to anybody — it watches and
+        reports.</td><td>US$99</td></tr>
+        <tr class="alx-hot"><td><b>Actions</b> — do something while they are still
+        there<br/>+ everything that acts: lost-sale detection and the discreet
+        nudge, the nudge when somebody has looked uncomfortable for a while,
+        unusual-behaviour alerts, screens that react to what is measured, the
+        personalised welcome, staff attendance into <code>hr.attendance</code>,
+        floor coaching and the watch list. <em>This is the plan this page is
+        about.</em></td><td>US$149</td></tr>
+      </table>
+        </div>
+
+    <p class="alx-note" style="margin-top:24px;">The first shop's first month is
+    included with the module. <strong>Not included, because nobody can sell it in
+    a zip:</strong> the cameras and the mini-PC, which are ordinary off-the-shelf
+    hardware you buy once. Installation and calibration are not included either;
+    the implementation guide is written so a competent technician can do it, and
+    we do it for customers who would rather we did.</p>
+  </div>
+</div>
+
+<div class="alx-wrap">
+  <div class="alx-divider">
+    <p>The rest, in detail</p>
+    <h2>Everything above, with the receipts</h2>
+  </div>
+</div>
+
+<div class="alx-sec">
+  <div class="alx-wrap">
     <h2>The number your ERP does not have</h2>
-    <p class="alx-lede">Your point of sale knows every ticket. It has no idea
-    how many people walked past those tickets and left. Analitix supplies the
+    <p class="alx-lede">Your point of sale knows every ticket. It has no idea how
+    many people walked past those tickets and left. Analitix supplies the
     denominator, and everything after that follows from it.</p>
 
     <figure class="alx-shot">
@@ -114,20 +343,22 @@
         arrive together are treated as one purchase unit.</p>
       </div>
     </div>
-  </section>
+  </div>
+</div>
 
-  <section class="alx-sec">
+<div class="alx-sec alx-white">
+  <div class="alx-wrap">
     <h2>The walk-outs, while there is still time</h2>
-    <p class="alx-lede">A lost sale is not somebody lingering. It is three
-    things at once: they lingered past your threshold, <em>nobody</em> served
-    them, and there was no ticket. Each alone is ordinary; together they are a
-    sale that walked out.</p>
+    <p class="alx-lede">A lost sale is not somebody lingering. It is three things
+    at once: they lingered past your threshold, <em>nobody</em> served them, and
+    there was no ticket. Each alone is ordinary; together they are a sale that
+    walked out.</p>
 
     <figure class="alx-shot">
       <img src="screenshots/alerts.jpg" alt="Alert list showing recipient, channel, response time in seconds and outcome — ended in a sale, or not attended."/>
-      <figcaption>Every nudge is recorded: who received it, on which channel,
-      how long they took, and whether it ended in a sale. An alert nobody
-      measures is a nudge nobody improves.</figcaption>
+      <figcaption>Every nudge is recorded: who received it, on which channel, how
+      long they took, and whether it ended in a sale. An alert nobody measures is
+      a nudge nobody improves.</figcaption>
     </figure>
 
     <div class="alx-grid">
@@ -145,61 +376,36 @@
       </div>
       <div class="alx-card">
         <h3>Coaching that is fair</h3>
-        <p>Response time and close rate measured against the alerts a
-        salesperson <em>answered</em> — nobody is marked down for a nudge that
-        arrived while they were with another customer.</p>
+        <p>Response time and close rate measured against the alerts a salesperson
+        <em>answered</em> — nobody is marked down for a nudge that arrived while
+        they were with another customer.</p>
       </div>
       <div class="alx-card">
         <h3>A monthly report the owner reads</h3>
-        <p>Plain language, by e-mail: visitors, conversion, walk-outs spotted
-        and rescued, and roughly what that was worth — labelled an estimate
-        every single time.</p>
+        <p>Plain language, by e-mail: visitors, conversion, walk-outs spotted and
+        rescued, and roughly what that was worth — labelled an estimate every
+        single time.</p>
       </div>
     </div>
+  </div>
+</div>
 
-    <figure class="alx-shot" style="margin-top:30px;">
-      <img src="screenshots/value_report.jpg" alt="Monthly value report per store: visitors, sales, conversion, walk-outs spotted and rescued, estimated recovered revenue and how it compares with the subscription."/>
-      <figcaption>The monthly report, per store, next to what that shop pays.
-      The recovered figure is rescued walk-outs times its own average sale — an
-      <strong>estimate</strong>, and labelled as one wherever it appears.
-      Inflating it is the fastest way to lose the customer who eventually
-      checks.</figcaption>
-    </figure>
-  </section>
-
-  <section class="alx-sec">
+<div class="alx-sec">
+  <div class="alx-wrap">
     <h2>How it actually works</h2>
-    <p class="alx-lede">In the order the questions usually come: what gets
-    installed, what it can be plugged into, what it does with what it sees, and
-    what finally reaches the person standing on the floor.</p>
-    <p class="alx-note" style="margin-bottom:30px;">The overlay in these scenes —
+    <p class="alx-lede">The mechanism, in motion. The overlay in these scenes —
     the line, the boxes, the track numbers, the counters, the dwell timer, the
-    zones — is exactly what Analitix draws and exactly what it decides. The shop
-    underneath is a <strong>generated scene with synthetic people</strong>,
-    marked <em>Illustration</em> on screen: we are not going to put a real
-    stranger's face on a marketing page for a product whose whole promise is that
-    it never keeps one. The last two are real screenshots of Odoo.</p>
-
-    <figure class="alx-shot">
-      <img src="demo/scene-install.jpg" alt="A small fanless mini-PC on a shelf in a shop's back room next to the router, marked as the whole system."/>
-      <figcaption><strong>What actually gets installed.</strong> One small
-      fanless computer in the back room — no graphics card, nothing on the till,
-      nothing in the cloud. One per shop, however many cameras that shop has. If
-      the line drops it keeps counting and sends the backlog when it returns.</figcaption>
-    </figure>
-
-    <figure class="alx-shot">
-      <img src="demo/scene-cameras.jpg" alt="An analogue dome camera with a USB capture stick, a USB webcam and an IP bullet camera side by side, each labelled as supported."/>
-      <figcaption><strong>Cameras you probably already have.</strong> Analogue on
-      coax plus a $20 USB capture stick, a plain USB webcam, or an IP camera over
-      RTSP — the agent opens all three the same way, and one computer handles
-      several at once. Nothing gets rewired to start.</figcaption>
-    </figure>
+    zones — is exactly what Analitix draws and exactly what it decides.</p>
+    <p class="alx-note" style="margin-bottom:30px;">The shop underneath is a
+    <strong>generated scene with synthetic people</strong>, marked
+    <em>Illustration</em> on screen: we are not going to put a real stranger's
+    face on a marketing page for a product whose whole promise is that it never
+    keeps one. Everything showing an Odoo window is a real screenshot.</p>
 
     <figure class="alx-video">
       <video controls preload="metadata" src="demo/how-door.webm"></video>
-      <figcaption><strong>People crossing the door.</strong> Seen from above.
-      A line across the doorway; which way you cross it is what counts, and a
+      <figcaption><strong>People crossing the door.</strong> Seen from above. A
+      line across the doorway; which way you cross it is what counts, and a
       crossing matched to an employee is measured but never counted.</figcaption>
     </figure>
 
@@ -211,37 +417,12 @@
       disk, never queued, never sent.</figcaption>
     </figure>
 
-    <figure class="alx-shot">
-      <img src="demo/scene-floor.jpg" alt="A jewellery shop seen from a high corner with four zones drawn over the counters, each showing its median dwell time."/>
-      <figcaption><strong>Zones are just parts of your floor.</strong> Drawn once,
-      on the picture of your own shop. From then on, time spent and whether
-      anybody came over is measured per zone. No zone, no measurement — the shop
-      decides what is worth watching.</figcaption>
-    </figure>
-
     <figure class="alx-video">
       <video controls preload="metadata" src="demo/how-zone.webm"></video>
       <figcaption><strong>The sale that was about to walk out.</strong> Long
       enough, nobody served them, no ticket — all three, because each one alone
       is completely ordinary. One salesperson is nudged; the customer never
       knows.</figcaption>
-    </figure>
-
-    <figure class="alx-shot">
-      <img src="demo/scene-frustrated.jpg" alt="A customer waiting with folded arms at a counter, her expression read as sustained negative, and the resulting nudge."/>
-      <figcaption><strong>When waiting turns into leaving.</strong>
-      <em>Complete plan.</em> A negative expression that <em>holds</em> — 38 of
-      the last 60 seconds, not one frown — next to nobody serving is the minute
-      before a walk-out. The expression dies with the frame; what is kept is the
-      word, the zone and the time.</figcaption>
-    </figure>
-
-    <figure class="alx-shot">
-      <img src="demo/scene-walkout.jpg" alt="One tracked visitor leaving empty-handed after nine minutes while another is handed a bag at the counter, with today's conversion figures."/>
-      <figcaption><strong>A walk-out stops being a mystery.</strong> Someone came
-      in, stayed nine minutes and left with nothing, while somebody else left
-      with a bag. Conversion is visitors against tickets, same hour and same
-      shop — measured, not estimated.</figcaption>
     </figure>
 
     <figure class="alx-shot">
@@ -254,22 +435,129 @@
     </figure>
 
     <figure class="alx-shot">
-      <img src="screenshots/alert-discuss.jpg" alt="Odoo's chat as the salesperson sees it, with the alert telling them somebody has been at the ring counter for four minutes and nobody has been over."/>
-      <figcaption><strong>What reaches the person who can do something about
-      it.</strong> A real screenshot, in Odoo's own chat, as the salesperson on
-      that zone's shift sees it. Short enough to read on a phone mid-shift and
-      act on without opening anything.</figcaption>
+      <img src="screenshots/alert-list.jpg" alt="The salesperson's own alert list in Odoo, showing the nudge, its zone, its channel and whether it was acknowledged."/>
+      <figcaption>The salesperson's own list, where the nudge is acknowledged.
+      That acknowledgement is what the floor-coaching report is built from — an
+      alert nobody measures is a nudge nobody improves.</figcaption>
+    </figure>
+  </div>
+</div>
+
+<div class="alx-sec">
+  <div class="alx-wrap">
+    <h2>The half nobody demos</h2>
+    <p class="alx-lede">Everything above is the part a shop recognises
+    immediately. These are the ones that usually get a line in a feature table
+    and no explanation, which is a shame, because two of them are the reason a
+    shop stays past the first month.</p>
+
+    <div class="alx-two">
+      <figure class="alx-shot">
+        <img src="screenshots/demographics.jpg" alt="Demographic readings at each door: age band, gender, expression and whether the reading was reliable enough to keep."/>
+        <figcaption><b>Age band and gender — bands, never ages.</b> What is
+        stored is "25–34", not "31". That is not squeamishness, it is honesty
+        about an estimate: a demographic model outputs a probability, and
+        reporting it to the year would dress a guess up as a measurement. Bands
+        are also all the question needs — <em>is my evening crowd younger than
+        my morning one</em> — and readings below the confidence floor are thrown
+        away rather than rounded into a total.</figcaption>
+      </figure>
+      <figure class="alx-shot">
+        <img src="screenshots/coaching.jpg" alt="Floor coaching report per salesperson and zone: alerts, answered, missed, ended in a sale, answered rate and median response time."/>
+        <figcaption><b>Floor coaching, measured fairly.</b> Response time and
+        close rate against the nudges a salesperson <em>answered</em> — nobody is
+        marked down for one that arrived while they were with another customer.
+        It is the acknowledgement that makes this possible, which is why the
+        nudge asks for one.</figcaption>
+      </figure>
+    </div>
+
+    <figure class="alx-shot" style="margin-top:32px;">
+      <img src="demo/scene-window.jpg" alt="A lit jewellery window with the showcase marked as a display, two people stopped in front counted as one purchase unit, a passer-by who did not stop, and the day's stops against the tickets that came from what is on it."/>
+      <figcaption><strong>Displays, and what they actually pull.</strong> Zones
+      answer <em>where do people go</em>. A display answers <em>what do they stop
+      in front of</em> — a showcase, a window, a table. On its own that is a
+      vanity metric, so it is never reported on its own: attention is crossed
+      against <strong>the sales of the products on that display</strong>. A
+      window everybody stops at and nobody buys from is a completely different
+      problem from a window nobody stops at, and only the pairing tells them
+      apart.</figcaption>
     </figure>
 
     <figure class="alx-shot">
-      <img src="screenshots/alert-list.jpg" alt="The salesperson's own alert list in Odoo, showing the nudge, its zone, its channel and whether it was acknowledged."/>
-      <figcaption>And their own list, where the nudge is acknowledged. That
-      acknowledgement is what the floor-coaching report is built from —
-      an alert nobody measures is a nudge nobody improves.</figcaption>
+      <img src="demo/scene-screens.jpg" alt="Two screens in the same shop: the one in the zone where the customer stopped is chosen and shows her message, the one facing the entrance is explicitly not this rule's destination."/>
+      <figcaption><strong>Screens that know which screen they are.</strong> A
+      shop's screens are not interchangeable: the one over the counter, the one
+      by the exit and the one facing the street do different jobs, and a message
+      sent to "the screen" is a message sent to the wrong one. Every rule
+      resolves <em>where</em> before <em>what</em>, and the destination comes
+      from the zone the thing happened in.</figcaption>
     </figure>
-  </section>
 
-  <section class="alx-sec">
+    <figure class="alx-shot">
+      <img src="demo/scene-welcome.jpg" alt="A recognised customer walking in while the screen beside the door greets her by name, with the three sources it was assembled from and the social privacy rule."/>
+      <figcaption><strong>A welcome that is not a mail merge.</strong> When a
+      customer has agreed to be recognised, the greeting is assembled from three
+      sources — an open CRM opportunity, what they have actually bought before,
+      and this visit — because any one of them alone produces something that
+      reads like automation. A social privacy rule decides whether it appears at
+      all when they are not alone: a greeting is not worth outing a
+      customer.</figcaption>
+    </figure>
+
+    <figure class="alx-shot">
+      <img src="demo/scene-group.jpg" alt="Three people walking in together, all tracked as one purchase unit, with the note that four minutes later the same unit is in three different zones."/>
+      <figcaption><strong>Unusual behaviour — patterns, never people.</strong>
+      Four shapes: in and out repeatedly, a long stop at an expensive case with
+      nobody nearby, a group that arrives together and scatters, and a visit that
+      never closed. All anonymous, all producing the same discreet "worth going
+      over" a possible lost sale produces. It never says anybody is a thief,
+      because it does not know that and neither does the shop — and a salesperson
+      walking over is the right answer whichever it turns out to be.</figcaption>
+    </figure>
+
+    <figure class="alx-shot">
+      <img src="demo/scene-closing.jpg" alt="The empty shop floor after closing, with the counter still reporting one person inside and a visit that has been open six hours with no exit recorded."/>
+      <figcaption><strong>Entered, never left.</strong> The signal the other
+      three structurally cannot see: they scan visits opened in the last hour,
+      and a visit open since this morning fell out of that window long ago.
+      Usually it means an exit the camera missed — which matters, because a visit
+      that never closes inflates the occupancy figure for the rest of the day.
+      Occasionally it means somebody is still in the shop. Both are worth thirty
+      seconds.</figcaption>
+    </figure>
+
+    <figure class="alx-shot">
+      <img src="demo/scene-staffdoor.jpg" alt="A shop assistant arriving through the staff door, matched as staff rather than a visitor, with the hr.attendance row it produces and the note that it ships switched off."/>
+      <figcaption><strong>Attendance, off by default.</strong> The signatures
+      that keep employees out of the visitor count already know who walked in and
+      when, so the register into Odoo's own <code>hr.attendance</code> is nearly
+      free. The part that is not free is judgement: a shop that has not agreed
+      this with its team should not start recording their hours because a camera
+      was installed. So it ships off.</figcaption>
+    </figure>
+
+    <div class="alx-grid" style="margin-top:8px;">
+      <div class="alx-card">
+        <h3>How much of today is coming back</h3>
+        <p>Visit frequency splits the day's traffic into first-time and
+        returning without knowing who anybody is. A shop whose returning share is
+        sliding has a problem months before the revenue line shows it.</p>
+      </div>
+      <div class="alx-card">
+        <h3>Which visit produced which ticket</h3>
+        <p>Attribution ties a ticket to the pseudonymous visit behind it, which
+        answers what no aggregate can: does the profile that stops at the window
+        actually buy, and does a group spend more than a person alone. Naming
+        that visit is a separate, opt-in thing — the distance between the two is
+        the point.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="alx-sec alx-white">
+  <div class="alx-wrap">
     <h2>See it running</h2>
     <p class="alx-lede">Recorded from the real interface over the demo data that
     ships with the module — nothing staged, and nothing you cannot reproduce on
@@ -305,27 +593,29 @@
       <figcaption>The chain console, and the two decisions only head office takes.
       (<a href="video/es/06-chain-console.webm">versión en español</a>)</figcaption>
     </figure>
-  </section>
+  </div>
+</div>
 
-  <section class="alx-sec">
+<div class="alx-sec">
+  <div class="alx-wrap">
     <h2>The one feature that names a person</h2>
-    <p class="alx-lede">Everything above measures behaviour. The watch list
-    names somebody, and a false positive lands on a real person who did
-    nothing — so it is built with more friction than anything else here, and
-    the friction is the point.</p>
+    <p class="alx-lede">Everything above measures behaviour. The watch list names
+    somebody, and a false positive lands on a real person who did nothing — so it
+    is built with more friction than anything else here, and the friction is the
+    point.</p>
 
     <div class="alx-grid">
       <div class="alx-card">
         <h3>Nobody is added automatically</h3>
-        <p>Ever. There is no code path that creates an entry. A person writes
-        it, with a dated reason, and the record of why is what somebody reads a
-        year later.</p>
+        <p>Ever. There is no code path that creates an entry. A person writes it,
+        with a dated reason, and the record of why is what somebody reads a year
+        later.</p>
       </div>
       <div class="alx-card">
         <h3>It takes two people</h3>
-        <p>A new entry recognises nobody until a <em>second</em> authorised
-        person confirms it, and the author cannot be that person. One bad
-        afternoon should not be enough to mark somebody.</p>
+        <p>A new entry recognises nobody until a <em>second</em> authorised person
+        confirms it, and the author cannot be that person. One bad afternoon
+        should not be enough to mark somebody.</p>
       </div>
       <div class="alx-card">
         <h3>It expires on its own</h3>
@@ -335,26 +625,28 @@
       <div class="alx-card">
         <h3>A match is a prompt, never an action</h3>
         <p>No screen, no door, no automatic report, and never the sales floor at
-        large. It goes quietly to a small named group, and a person decides.
-        False positives are recorded, because a list whose mistakes nobody
-        writes down is one nobody can fix.</p>
+        large. It goes quietly to a small named group, and a person decides. False
+        positives are recorded, because a list whose mistakes nobody writes down
+        is one nobody can fix.</p>
       </div>
     </div>
 
-    <figure class="alx-shot">
+    <figure class="alx-shot" style="margin-top:28px;">
       <img src="screenshots/store_watch.jpg" alt="The store's watch-list settings, switched off, with the warning that switching it on does not create a list."/>
-      <figcaption>Off by default, and the screen says plainly what it is and
-      what it refuses to do. A separate Security role is the only one that can
-      open it — a store manager who reads conversion figures does not get this
-      with the job.</figcaption>
+      <figcaption>Off by default, and the screen says plainly what it is and what
+      it refuses to do. A separate Security role is the only one that can open
+      it — a store manager who reads conversion figures does not get this with the
+      job.</figcaption>
     </figure>
-  </section>
+  </div>
+</div>
 
-  <section class="alx-sec">
+<div class="alx-sec alx-white">
+  <div class="alx-wrap">
     <h2>And if you have two hundred of them</h2>
-    <p class="alx-lede">Head office already knows which branch sells most —
-    that is what an ERP is for. What it has never had is the denominator. With
-    it, "Morelia sold less than Guadalajara" finally splits into two different
+    <p class="alx-lede">Head office already knows which branch sells most — that
+    is what an ERP is for. What it has never had is the denominator. With it,
+    "Morelia sold less than Guadalajara" finally splits into two different
     problems: fewer people came in, or the same people came in and fewer
     bought.</p>
 
@@ -362,18 +654,17 @@
       <img src="screenshots/chain_console.jpg" alt="The chain console: every branch on the same day with conversion, delta against its own region, average ticket, walk-outs and rescue rate."/>
       <figcaption>Every branch on the same stick, and each one measured against
       <strong>its own region on the same day</strong> — which removes the week,
-      the weather and the season, because those move every shop together. What
-      is left belongs to that branch: +5.2 points here, −5.2 there, on the same
+      the weather and the season, because those move every shop together. What is
+      left belongs to that branch: +5.2 points here, −5.2 there, on the same
       footfall.</figcaption>
     </figure>
 
     <div class="alx-grid">
       <div class="alx-card">
         <h3>Scoped, not just grouped</h3>
-        <p>A regional manager is given a <em>region</em> — including the
-        branches that open next year. A hand-written list of stores is one
-        nobody remembers to extend, and stale access outlives the person it was
-        written for.</p>
+        <p>A regional manager is given a <em>region</em> — including the branches
+        that open next year. A hand-written list of stores is one nobody remembers
+        to extend, and stale access outlives the person it was written for.</p>
       </div>
       <div class="alx-card">
         <h3>Two decisions only head office takes</h3>
@@ -391,54 +682,58 @@
       </div>
       <div class="alx-card">
         <h3>Matching never goes unbounded</h3>
-        <p>One arriving face is compared against one store, or at most one
-        chain. Never against everything in the database — which is both a
-        performance property and a promise.</p>
+        <p>One arriving face is compared against one store, or at most one chain.
+        Never against everything in the database — which is both a performance
+        property and a promise.</p>
       </div>
     </div>
 
-    <figure class="alx-shot">
+    <figure class="alx-shot" style="margin-top:28px;">
       <img src="screenshots/chain_form.jpg" alt="The chain form showing the two scope settings and the warning that only the corporate role may change them."/>
       <figcaption>The two settings that decide how far a person's data reaches
-      across your branches, with the warning attached to them rather than
-      buried in a manual.</figcaption>
+      across your branches, with the warning attached to them rather than buried
+      in a manual.</figcaption>
     </figure>
 
     <p class="alx-note">A single-store customer creates neither a chain nor a
     region, and nothing about their installation changes. This exists for the
     companies that need it and costs the shops that do not exactly nothing.</p>
-  </section>
+  </div>
+</div>
 
-  <section class="alx-sec">
-    <h2>What is in each phase</h2>
+<div class="alx-sec">
+  <div class="alx-wrap">
+    <h2>What is in each of the three, in full</h2>
     <div class="alx-scroll">
       <table class="alx-table">
-        <tr><th>Included</th><th>What it gives you</th></tr>
-        <tr><td><strong>Counting &amp; conversion</strong></td><td>Any number of doors, hardened ingest API with one revocable key per device, device health with offline alerts, capture kill switch, staff exclusion, hourly conversion analytics against POS, density per m².</td></tr>
-        <tr><td><strong>Visits &amp; profiling</strong></td><td>Anonymous re-identification across every door, encrypted signatures deleted on your own retention window, purchase units, optional demographics with a confidence floor, liveness.</td></tr>
-        <tr><td><strong>Floor &amp; alerts</strong></td><td>Zones and displays, dwell and engagement, lost-sale detection, the discreet nudge on five channels with a per-zone rota, display performance against the sales of what is on it, ticket attribution, behaviour signals.</td></tr>
-        <tr><td><strong>Action</strong></td><td>Signage rule engine that resolves <em>where</em> before <em>what</em>, personalised welcome with a social privacy rule, floor coaching, visit frequency, CRM leads, staff attendance into <code>hr.attendance</code>, per-store plan, monthly value report.</td></tr>
-        <tr><td><strong>Watch list</strong></td><td>Manual entries only, double control, automatic expiry and periodic review, a match that is a prompt and never an action, false-positive tracking, read auditing, and a separate security role granted to nobody on install.</td></tr>
-        <tr><td><strong>Chain scale</strong> <em>(optional)</em></td><td>Chains and regions with no fixed limit, access scoped by region rather than by a list that goes stale, the corporate console comparing every branch against its own region, two elevated and audited decisions about how far recognition reaches, and a daily rollup that lets raw events be pruned without losing a reported figure.</td></tr>
+        <tr><th>Plan</th><th>What it gives you</th></tr>
+        <tr><td><strong>Counting</strong><br/>US$49</td><td>Any number of doors, hardened ingest API with one revocable key per device, device health with offline <em>and</em> blind-camera alerts, capture kill switch, staff exclusion, hourly conversion analytics against POS, density per m², the monthly value report.</td></tr>
+        <tr><td><strong>Visual Analytics</strong><br/>US$99</td><td>Anonymous re-identification across every door with encrypted signatures deleted on your own retention window, purchase units, demographics by band with a confidence floor, liveness, zones with dwell and engagement, displays with attention crossed against the sales of what is on them, ticket attribution, visit frequency, behaviour signals.</td></tr>
+        <tr><td><strong>Actions</strong><br/>US$149</td><td>Lost-sale detection and the discreet nudge on five channels with a per-zone rota, the sustained-expression nudge, unusual-behaviour alerts, the signage rule engine that resolves <em>where</em> before <em>what</em>, the personalised welcome with a social privacy rule, floor coaching, CRM leads, staff attendance into <code>hr.attendance</code>, and the watch list.</td></tr>
+        <tr><td><strong>Chain scale</strong><br/><em>any plan</em></td><td>Chains and regions with no fixed limit, access scoped by region rather than by a list that goes stale, the corporate console comparing every branch against its own region, two elevated and audited decisions about how far recognition reaches, and a daily rollup that lets raw events be pruned without losing a reported figure.</td></tr>
       </table>
     </div>
-  </section>
+  </div>
+</div>
 
-  <section class="alx-sec">
+<div class="alx-sec alx-white">
+  <div class="alx-wrap">
     <h2>Everything that varies is configuration</h2>
     <p class="alx-lede">Analitix is sold to many stores, not built for one. The
-    number of doors, the number of zones and cameras, every threshold, every
-    alert recipient — all of it is filled in by an implementer, and the test
-    suite fails if anyone ever hardcodes a store's shape.</p>
+    number of doors, the number of zones and cameras, every threshold, every alert
+    recipient — all of it is filled in by an implementer, and the test suite fails
+    if anyone ever hardcodes a store's shape.</p>
     <figure class="alx-shot">
       <img src="screenshots/store_floor.jpg" alt="Store configuration form showing the alert channels split into discreet and not-discreet columns."/>
       <figcaption>The alert channels, split into what only the salesperson
-      perceives and what the customer may notice. The second column ships
-      switched off, and each field says why.</figcaption>
+      perceives and what the customer may notice. The second column ships switched
+      off, and each field says why.</figcaption>
     </figure>
-  </section>
+  </div>
+</div>
 
-  <section class="alx-sec">
+<div class="alx-sec">
+  <div class="alx-wrap">
     <h2>Privacy is a design constraint, not a paragraph</h2>
     <div class="alx-grid">
       <div class="alx-card">
@@ -455,8 +750,8 @@
       <div class="alx-card">
         <h3>Identification is opt-in</h3>
         <p>A store that bought the analytics never acquires a biometric customer
-        index by accident. Naming a customer is off by default, and every read
-        of that data is audited.</p>
+        index by accident. Naming a customer is off by default, and every read of
+        that data is audited.</p>
       </div>
       <div class="alx-card">
         <h3>A kill switch that works instantly</h3>
@@ -464,23 +759,25 @@
         shop, no ticket to anybody.</p>
       </div>
     </div>
-  </section>
+  </div>
+</div>
 
-  <section class="alx-sec">
-    <h2>What you get</h2>
-    <p class="alx-lede">Both halves of the software in one purchase — including
-    the camera agent, which is not sold separately and is not a service you have
-    to contract. What is contracted per shop is the running service: support,
-    the monthly value report, and the plan that shop is on.</p>
+<div class="alx-sec alx-white">
+  <div class="alx-wrap">
+    <h2>What you get for the one-time purchase</h2>
+    <p class="alx-lede">Both halves of the software, including the camera agent —
+    which is not sold separately and is not a service you have to contract. What
+    is contracted per shop is the running service: support, the monthly value
+    report, and the plan that shop is on.</p>
 
     <div class="alx-scroll">
       <table class="alx-table">
         <tr><th>Included</th><th>What it is</th></tr>
         <tr>
           <td><strong>The Odoo module</strong></td>
-          <td>Everything in the table above, on Odoo 19 Community or Enterprise.
-          Unlimited stores, doors, zones and cameras — none of it is licensed by
-          count.</td>
+          <td>Everything in the plan table above, on Odoo 19 Community or
+          Enterprise. Unlimited stores, doors, zones and cameras — none of it is
+          licensed by count.</td>
         </tr>
         <tr>
           <td><strong>The edge agent</strong></td>
@@ -488,20 +785,20 @@
           the camera and does the counting. Source included, in the module's own
           <code>edge/</code> folder, with its systemd unit and an example
           configuration. It has a <code>demo</code> mode that posts synthetic
-          crossings, so you can prove the whole chain works before any hardware
-          is mounted.</td>
+          crossings, so you can prove the whole chain works before any hardware is
+          mounted.</td>
         </tr>
         <tr>
           <td><strong>The ingest API contract</strong></td>
           <td><code>doc/API.md</code>: the whole protocol, written so a third
-          party can integrate different hardware without reading our source.
-          Your data is not locked behind our agent.</td>
+          party can integrate different hardware without reading our source. Your
+          data is not locked behind our agent.</td>
         </tr>
         <tr>
           <td><strong>Manuals, in the app</strong></td>
           <td>A user manual for the shop and an implementation guide for whoever
-          mounts the cameras, in Spanish and English, picked from the reader's
-          own Odoo language. Plus six screencasts.</td>
+          mounts the cameras, in Spanish and English, picked from the reader's own
+          Odoo language. Plus six screencasts.</td>
         </tr>
         <tr>
           <td><strong>Demo data</strong></td>
@@ -511,71 +808,11 @@
         </tr>
       </table>
     </div>
+  </div>
+</div>
 
-    <div class="alx-scroll" style="margin-top:34px;">
-      <table class="alx-table">
-        <tr><th>How it is priced</th><th></th></tr>
-        <tr>
-          <td><strong>The module</strong></td>
-          <td>One-time, here on apps.odoo.com. Unlimited doors, zones, cameras
-          and users, and the edge agent included.</td>
-        </tr>
-        <tr>
-          <td><strong>Per store you analyse</strong></td>
-          <td>From <strong>US$49</strong> to <strong>US$179</strong> a month
-          depending on the plan, contracted with XUBAX. <strong>US$120</strong>
-          is the usual one — the plan that spots the walk-outs. The first
-          store's first month is included with the module.</td>
-        </tr>
-      </table>
-    </div>
-
-    <div class="alx-scroll">
-      <table class="alx-table">
-        <tr><th>Plan</th><th>What the shop gets</th><th>Per store / month</th></tr>
-        <tr>
-          <td><strong>Counting</strong></td>
-          <td>Visitors across every door with staff excluded, conversion against
-          your POS — average ticket, units per ticket, revenue per visitor,
-          density per m² — the per-door split, device health, and the monthly
-          report.</td>
-          <td>US$49</td>
-        </tr>
-        <tr>
-          <td><strong>Visits</strong></td>
-          <td>+ a customer who steps out and comes back <em>counts once</em>;
-          age band, gender and expression at the door; and a family treated as
-          one buying decision instead of four visitors.</td>
-          <td>US$79</td>
-        </tr>
-        <tr>
-          <td><strong>Service</strong></td>
-          <td>+ lost-sale detection and the discreet nudge; the optional nudge
-          when somebody has looked uncomfortable for a while; which visit
-          produced which ticket; behaviour signals. <em>This is the plan the
-          product is really about.</em></td>
-          <td><strong>US$120</strong></td>
-        </tr>
-        <tr>
-          <td><strong>Complete</strong></td>
-          <td>+ the screens react to what is measured; recognising a customer by
-          name at the door; staff attendance into Odoo's own
-          <code>hr.attendance</code>; and the watch list.</td>
-          <td>US$179</td>
-        </tr>
-      </table>
-    </div>
-
-    <p class="alx-note"><strong>Not included, because nobody can sell it in a
-    zip:</strong> the cameras and the mini-PC. Those are ordinary off-the-shelf
-    hardware you buy once — the next section says exactly what, and the cheapest
-    working setup is one overhead camera and one small PC per shop. Installation
-    and calibration are also not included; the implementation guide is written so
-    a competent technician can do it, and we do it for customers who would
-    rather we did.</p>
-  </section>
-
-  <section class="alx-sec">
+<div class="alx-sec">
+  <div class="alx-wrap">
     <h2>What you need in the shop</h2>
     <div class="alx-scroll">
       <table class="alx-table">
@@ -597,21 +834,22 @@
         <tr><td><strong>Hikvision, Dahua, IR beams</strong></td><td>Supported with no agent at all. They count but give no face, so staff exclusion, visits and purchase units need one of the camera positions above.</td></tr>
       </table>
     </div>
+    <p class="alx-note" style="margin-top:26px;">Starting cheap and migrating
+    later is a supported path, and a common one: a shop that begins with one
+    webcam over the door gets its conversion rate on day one, and adds a second
+    camera at face height when it wants to know who those visitors were.</p>
+  </div>
+</div>
 
-    <p class="alx-note">Starting cheap and migrating later is a supported path,
-    and a common one: a shop that begins with one webcam over the door gets its
-    conversion rate on day one, and adds a second camera at face height when it
-    wants to know who those visitors were.</p>
-  </section>
-
-  <section class="alx-sec">
+<div class="alx-sec alx-white">
+  <div class="alx-wrap">
     <h2>Questions people actually ask</h2>
 
     <div class="alx-faq">
       <h3>Does this store video of my customers?</h3>
       <p>No. No image or video is ever transmitted or stored. The frame is
-      discarded in memory the moment the detection is done, and what reaches
-      Odoo is a list of numbers from which no picture can be reconstructed.</p>
+      discarded in memory the moment the detection is done, and what reaches Odoo
+      is a list of numbers from which no picture can be reconstructed.</p>
     </div>
     <div class="alx-faq">
       <h3>Do I have to send face data to a cloud service?</h3>
@@ -622,16 +860,16 @@
     <div class="alx-faq">
       <h3>Do I need IP cameras? We already have analogue CCTV.</h3>
       <p>You do not. The agent opens a video device on the machine, so a USB
-      webcam works, an analogue camera works through a US$20–30 capture stick,
-      and most analogue DVRs already publish an RTSP stream you can point
-      straight at. What actually decides counting accuracy is the angle —
-      overhead, in the doorway — not what the camera cost.</p>
+      webcam works, an analogue camera works through a US$20–30 capture stick, and
+      most analogue DVRs already publish an RTSP stream you can point straight at.
+      What actually decides counting accuracy is the angle — overhead, in the
+      doorway — not what the camera cost.</p>
     </div>
     <div class="alx-faq">
       <h3>My store has three entrances. Does that work?</h3>
-      <p>Yes, and so does one, or seven. The number of doors is configuration.
-      The module's own test suite proves a one-door boutique and a multi-door
-      mall unit both run through the same code.</p>
+      <p>Yes, and so does one, or seven. The number of doors is configuration. The
+      module's own test suite proves a one-door boutique and a multi-door mall
+      unit both run through the same code.</p>
     </div>
     <div class="alx-faq">
       <h3>I use Odoo Community. Do I need Enterprise?</h3>
@@ -644,8 +882,8 @@
       <p>Yes. Install with demo data and you get two stores, a fortnight of
       traffic, tickets, walk-outs and a monthly report — enough to read every
       screen and judge the product without any hardware. The included edge agent
-      also has a <code>demo</code> mode that posts synthetic crossings, so you
-      can prove the whole chain end to end before mounting a camera.</p>
+      also has a <code>demo</code> mode that posts synthetic crossings, so you can
+      prove the whole chain end to end before mounting a camera.</p>
     </div>
     <div class="alx-faq">
       <h3>Does the watch list identify people automatically?</h3>
@@ -658,8 +896,8 @@
     <div class="alx-faq">
       <h3>Does this include the software that runs the cameras?</h3>
       <p>Yes. The edge agent ships inside the module, in its <code>edge/</code>
-      folder — source, systemd unit and example configuration. You copy it to
-      the mini-PC in your shop and start it. What you still have to buy is the
+      folder — source, systemd unit and example configuration. You copy it to the
+      mini-PC in your shop and start it. What you still have to buy is the
       hardware itself: a camera and a small PC.</p>
     </div>
     <div class="alx-faq">
@@ -673,20 +911,20 @@
     </div>
     <div class="alx-faq">
       <h3>Does the software meter me, or stop working if I do not pay?</h3>
-      <p>No, and this is deliberate rather than an oversight. There is no
-      counter of stores, cameras or users anywhere in the code, and the plan on
-      each store is a <em>configuration control</em>, not a licence check — so
-      no billing problem can ever switch a shop's cameras off. The commercial
-      terms are per store; the software is not the thing enforcing them. And if
-      you would rather run it entirely yourself against your own hardware, the
-      full ingest contract ships with the module precisely so you can.</p>
+      <p>No, and this is deliberate rather than an oversight. There is no counter
+      of stores, cameras or users anywhere in the code, and the plan on each store
+      is a <em>configuration control</em>, not a licence check — so no billing
+      problem can ever switch a shop's cameras off. The commercial terms are per
+      store; the software is not the thing enforcing them. And if you would rather
+      run it entirely yourself against your own hardware, the full ingest contract
+      ships with the module precisely so you can.</p>
     </div>
     <div class="alx-faq">
       <h3>We have one shop. Does the chain machinery get in the way?</h3>
       <p>No. You create no chain and no region, every field it adds stays empty,
       and nothing on your screens changes. It is there for the companies with
-      branches to compare, and the module's own test suite includes a check that
-      a single-store installation is untouched by it.</p>
+      branches to compare, and the module's own test suite includes a check that a
+      single-store installation is untouched by it.</p>
     </div>
     <div class="alx-faq">
       <h3>Where is the documentation?</h3>
@@ -695,17 +933,16 @@
       whoever mounts the cameras. The full ingest API contract ships with the
       module for anyone integrating different hardware.</p>
     </div>
-  </section>
-
+  </div>
 </div>
 
 <div class="alx-foot">
   <div class="alx-wrap">
-    <strong style="color:#f2f4f8;">Analitix</strong> — XUBAX ·
+    <strong style="color:#f3f4f1;">Analitix</strong> — XUBAX ·
     <a href="mailto:soporte@xubax.com">soporte@xubax.com</a> ·
     <a href="https://www.xubax.com">www.xubax.com</a><br/>
-    The edge agent is included and runs on your own machine in the shop. The
-    Odoo module itself has no computer-vision dependency and stores no images.
+    The edge agent is included and runs on your own machine in the shop. The Odoo
+    module itself has no computer-vision dependency and stores no images.
   </div>
 </div>
 </section>

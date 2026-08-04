@@ -441,8 +441,9 @@ class AnalitixStore(models.Model):
         string="Flag Unusual Behaviour", default=False,
         help="Notice patterns worth a second look: in and out repeatedly, a "
              "long stop at an expensive case with nobody nearby, a group that "
-             "arrives together and scatters. Anonymous and about behaviour, "
-             "never about people — the named watch list is a separate feature.")
+             "arrives together and scatters, and a visit that never closed. "
+             "Anonymous and about behaviour, never about people — the named "
+             "watch list is a separate feature.")
     anomaly_window_minutes = fields.Integer(
         string="Behaviour Window (min)", default=60, required=True)
     anomaly_reentry_count = fields.Integer(
@@ -451,6 +452,14 @@ class AnalitixStore(models.Model):
         string="Unattended Stop (s)", default=300, required=True)
     anomaly_dispersal_zones = fields.Integer(
         string="Zones Before Dispersal", default=3, required=True)
+    anomaly_never_left_minutes = fields.Integer(
+        string="Visit Open Too Long (min)", default=180, required=True,
+        help="How long a visit may stay open before it is worth a look. The "
+             "usual cause is a missed exit rather than somebody still in the "
+             "shop, and both readings matter: one is a person, the other is a "
+             "counter drifting and an occupancy figure quietly inflating. Set "
+             "it well above the longest ordinary visit this shop has — three "
+             "hours suits most, an appointment-based jeweller wants more.")
 
     # ------------------------------------------------------------------
     # Phase 5 — the watch list

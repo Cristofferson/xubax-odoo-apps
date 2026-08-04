@@ -14,6 +14,15 @@ What it notices
   security signal and a *sales* signal, and that ambiguity is the point.
 * **A group that arrives together and immediately scatters** to separate
   corners — the classic distraction shape.
+* **A visit that never closed** — somebody entered hours ago and no exit was
+  ever recorded. Worth saying plainly what this usually means: not a person
+  hiding behind the stock, but an exit the camera missed. Both readings deserve
+  a look, and the second one is arguably the more valuable, because a visit
+  that never closes inflates the occupancy figure and quietly corrupts every
+  "how many are inside" number after it. It is also the one signal the other
+  three structurally cannot see: they scan visits opened *recently*, and a
+  visit that has been open for six hours fell out of that window five hours
+  ago.
 
 What it says
 ------------
@@ -61,6 +70,7 @@ class AnalitixAnomalyEvent(models.Model):
             ("repeat_entry", "In and out repeatedly"),
             ("long_unattended", "Long stop, nobody nearby"),
             ("group_dispersal", "Arrived together, scattered"),
+            ("never_left", "Entered, never left"),
         ],
         string="Signal", required=True, index=True)
     detected_at = fields.Datetime(
@@ -99,13 +109,24 @@ class AnalitixAnomalyEvent(models.Model):
             "long_unattended": _("Long stop at %(zone)s with nobody nearby",
                                  zone=zone.name if zone else _("a display")),
             "group_dispersal": _("A group came in together and split up"),
+            "never_left": _("A visit has been open for hours with no exit"),
         }
+        # The three floor signals share one closing line; "never left" does not,
+        # because telling a salesperson that somebody who walked in this morning
+        # "simply wants help" would be nonsense. Its likeliest explanation is a
+        # missed exit, and saying so is what makes the nudge actionable.
+        if kind == "never_left":
+            tail = _("Either somebody is still in the shop, or the exit was "
+                     "not seen — which would mean the occupancy figure is "
+                     "running high. Both are worth thirty seconds.")
+        else:
+            tail = _("Worth going over. This is a behaviour pattern, not an "
+                     "accusation — most of the time the person simply wants "
+                     "help.")
         alert = self.env["analitix.alert"].raise_alert(
             store, "anomaly", summaries.get(kind, _("Worth a look")),
-            body=_("%(detail)s\n\nWorth going over. This is a behaviour "
-                   "pattern, not an accusation — most of the time the person "
-                   "simply wants help.",
-                   detail=detail or summaries.get(kind, "")),
+            body=_("%(detail)s\n\n%(tail)s",
+                   detail=detail or summaries.get(kind, ""), tail=tail),
             zone=zone, visitor=visitor)
 
         return self.sudo().create({
@@ -139,6 +160,31 @@ class AnalitixAnomalyEvent(models.Model):
             ])
             for visit in open_visits:
                 self._scan_visit(store, visit)
+            self._scan_stale(store)
+        return True
+
+    @api.model
+    def _scan_stale(self, store):
+        """Visits that are still open long after anybody could still be inside.
+
+        Deliberately a separate search from the one above: that one is bounded
+        to ``anomaly_window_minutes`` so the common signals stay cheap, which
+        means the visit we are looking for here — old by definition — is
+        exactly the one it cannot reach.
+        """
+        cutoff = fields.Datetime.now() - timedelta(
+            minutes=store.anomaly_never_left_minutes)
+        stale = self.env["analitix.visitor"].sudo().search([
+            ("store_id", "=", store.id),
+            ("state", "=", "inside"),
+            ("entered_at", "<", cutoff),
+        ])
+        for visit in stale:
+            hours = (fields.Datetime.now() - visit.entered_at).total_seconds() / 3600
+            self._raise(
+                store, "never_left", visit,
+                detail=_("Open for %(hours)s hours with no exit recorded.",
+                         hours=round(hours, 1)))
         return True
 
     @api.model
