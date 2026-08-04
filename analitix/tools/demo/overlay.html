@@ -137,13 +137,138 @@
 const q = new URLSearchParams(location.search);
 const scene = q.get("s") || "door";
 const $ = id => document.getElementById(id);
+// Spanish for everything the overlay draws. The listing on apps.odoo.com is in
+// English; xubax.com is not, and an English headline burnt into the picture on
+// a Spanish page reads like a stock image. Keys are the exact source strings.
+const LANG = q.get("lang") || "en";
+const DICT = {
+  "virtual line": "línea virtual",
+  "Illustration": "Ilustración",
+  "now · only you were told": "ahora · solo a ti te llegó",
+  "Actions plan": "Plan Acciones",
+  // door
+  "t-4470 · IN": "t-4470 · ENTRA",
+  "t-4468 · staff — not counted": "t-4468 · personal — no se cuenta",
+  "This hour": "Esta hora", "in": "entran", "out": "salen", "inside": "adentro",
+  // floor
+  "NECKLACES": "COLLARES", "TILL": "CAJA", "WATCHES": "RELOJES",
+  "BANGLES": "PULSERAS",
+  "median 3:10": "mediana 3:10", "median 1:05": "mediana 1:05",
+  "median 2:40": "mediana 2:40", "median 4:20": "mediana 4:20",
+  // frustrated
+  "expression · negative": "expresión · negativa",
+  "Held, not a glance": "Sostenida, no una mirada",
+  "38 of the last 60 seconds read negative. One frown is nothing; this is not one frown.":
+    "38 de los últimos 60 segundos leen negativo. Un gesto no es nada; esto no es un gesto.",
+  // walkout
+  "t-9102 · OUT · 9 min inside, no ticket":
+    "t-9102 · SALE · 9 min adentro, sin ticket",
+  "t-9098 · matched to a ticket": "t-9098 · ligada a un ticket",
+  "Today, this shop": "Hoy, esta tienda",
+  "visitors": "visitantes", "tickets": "tickets", "conversion": "conversión",
+  // install
+  "This is the whole system": "Esto es todo el sistema",
+  "A fanless mini-PC, no graphics card. One per shop, however many cameras it has.":
+    "Una mini PC sin ventilador, sin tarjeta de video. Una por tienda, tenga las cámaras que tenga.",
+  "Your own router": "Tu propio router",
+  "Its only outbound traffic is numbers, to your own Odoo. There is no endpoint that would take a frame.":
+    "Lo único que sale son números, hacia tu propio Odoo. No existe un punto que acepte una imagen.",
+  // cameras
+  "Analogue · already on the wall": "Análoga · ya está en la pared",
+  "The old coax camera plus a USB capture stick, about $20. Nothing gets rewired.":
+    "La cámara vieja de coaxial más una capturadora USB de unos $400. No se recablea nada.",
+  "USB webcam": "Webcam USB",
+  "The cheapest way to try a second door before buying anything.":
+    "La forma más barata de probar una segunda puerta antes de comprar nada.",
+  "IP camera · RTSP": "Cámara IP · RTSP",
+  "Give it the stream URL. Reconnects on its own when the network blinks.":
+    "Le das la URL del stream. Se reconecta sola cuando la red parpadea.",
+  // blind
+  "Device": "Equipo",
+  "Online · last heartbeat 6 s ago": "En línea · último latido hace 6 s",
+  "Crossings, last 45 minutes": "Cruces, últimos 45 minutos",
+  "<b style='font-size:26px'>0</b><br/>Usual for a Saturday at 13:00: <b>38</b>":
+    "<b style='font-size:26px'>0</b><br/>Lo normal un sábado a las 13:00: <b>38</b>",
+  "Scheduled in Odoo, for the shop manager": "Agendado en Odoo, para el encargado",
+  "Door camera at Anello Centro is still connected but has stopped seeing. Check the lens and where it is pointing.":
+    "La cámara de la puerta sigue conectada pero dejó de ver. Revisa el lente y hacia dónde apunta.",
+  // window
+  "WINDOW SHOWCASE": "APARADOR", "8 pieces on it": "8 piezas en él",
+  "purchase unit of 2 · stopped 1:40": "unidad de compra de 2 · parada 1:40",
+  "t-2214 · passed, no stop": "t-2214 · pasó, no se detuvo",
+  "Window Showcase · today": "Aparador · hoy",
+  "stops": "paradas", "avg stop": "parada media", "tickets from it": "tickets de él",
+  // screens
+  "SCREEN A · zone: Necklaces": "PANTALLA A · zona: Collares",
+  "SCREEN B · faces the entrance": "PANTALLA B · da a la entrada",
+  "Chosen": "Elegida",
+  "The pair she is looking at, <em>in her size</em>":
+    "El par que está viendo, <em>en su talla</em>",
+  "not this rule — different job, different zone":
+    "esta regla no — otro trabajo, otra zona",
+  "The rule that fired": "La regla que se disparó",
+  "Somebody stopped at <b>Necklaces</b> \u2192 the screen <b>in that zone</b>. Destination first, content second.":
+    "Alguien se detuvo en <b>Collares</b> \u2192 la pantalla <b>de esa zona</b>. Primero el destino, después el contenido.",
+  // welcome
+  "t-5501 · recognised · opted in": "t-5501 · reconocida · dio su permiso",
+  "Boutique Centro": "Boutique Centro",
+  "Welcome back, <em>Ana</em> \u2014 the pair you asked about came in on Tuesday":
+    "Qué bueno verte, <em>Ana</em> \u2014 el par que preguntaste llegó el martes",
+  "Three sources, or it reads like automation":
+    "Tres fuentes, o suena a automatización",
+  "An open CRM opportunity · what she has actually bought before · what she is doing right now.":
+    "Una oportunidad abierta en CRM · lo que sí ha comprado antes · lo que está haciendo ahora.",
+  "The social privacy rule": "La regla de privacidad social",
+  "She is alone, so it shows. Walk in with somebody and the name is dropped \u2014 a greeting is not worth outing a customer.":
+    "Viene sola, así que se muestra. Si entra acompañada el nombre se quita \u2014 un saludo no vale exponer a un cliente.",
+  // staffdoor
+  "staff \u00b7 not a visitor": "personal \u00b7 no es visitante",
+  "What Odoo gets": "Lo que recibe Odoo",
+  "<b>hr.attendance</b> \u2014 Rosa M., check-in 09:02, staff door. Odoo's own register, not a parallel one.":
+    "<b>hr.attendance</b> \u2014 Rosa M., entrada 09:02, puerta de personal. El registro propio de Odoo, no uno paralelo.",
+  "Why it ships switched off": "Por qué viene apagado",
+  "A shop that has not agreed this with its team should not start recording their hours because a camera was installed.":
+    "Una tienda que no lo acordó con su equipo no debería empezar a registrar sus horas porque instalaron una cámara.",
+  // closing
+  "Inside, according to the counter": "Adentro, según el contador",
+  "<b style='font-size:30px'>1</b><br/>Shop closed 47 minutes ago.":
+    "<b style='font-size:30px'>1</b><br/>La tienda cerró hace 47 minutos.",
+  "The visit that never closed": "La visita que nunca cerró",
+  "<b>t-7734</b> open since 11:18 \u2014 6h 02m, no exit recorded. The behaviour scan only looks at the last hour, so nothing else would have found it.":
+    "<b>t-7734</b> abierta desde las 11:18 \u2014 6h 02m, sin salida registrada. El barrido de comportamiento solo mira la última hora, así que nada más la habría encontrado.",
+  // group
+  "Purchase unit u-318": "Unidad de compra u-318",
+  "people": "personas", "decision": "decisión",
+  "Four minutes later": "Cuatro minutos después",
+  "The same unit is in <b>three different zones</b>. That is the shape worth a quiet look \u2014 and it is also just what three friends shopping look like.":
+    "La misma unidad está en <b>tres zonas distintas</b>. Esa es la forma que amerita una mirada discreta \u2014 y también es justo como se ven tres amigos de compras.",
+};
+
+const PHONE_ES = {
+  zone: "Alguien lleva <b>4 minutos</b> en Anillos de Compromiso y nadie se ha acercado. Vale la pena ir.",
+  frustrated: "Alguien en <b>Pulseras</b> lleva rato esperando y no se ve contenta. Vale la pena ir.",
+  closing: "O hay alguien todavía en la tienda, o no se vio la salida y el aforo va inflado. Las dos cosas valen treinta segundos.",
+};
+
+function T(text) {
+  if (LANG !== "es" || text == null) return text;
+  return DICT[text] !== undefined ? DICT[text] : text;
+}
+
+
 // ?bare=1 drops the headline, the subtitle and the footnote, leaving only the
 // overlay itself — for places that supply their own caption, like a card grid.
+if (LANG === "es") {
+  $("linelbl").textContent = T("virtual line");
+  $("stamp").textContent = T("Illustration");
+  document.querySelector("#phone .when").textContent = T("now · only you were told");
+}
 if (q.get("bare")) {
   const style = document.createElement("style");
   style.textContent = "h1,.sub,.foot{display:none!important}";
   document.head.appendChild(style);
 }
+
 const plate = $("plate");
 plate.style.backgroundImage = "url('crop/" + scene + ".jpg')";
 
@@ -152,7 +277,7 @@ function box({x, y, w, h, label, warn, at, below, right}) {
   el.className = "box" + (warn ? " warn" : "");
   el.style.cssText += `left:${x}px;top:${y}px;width:${w}px;height:${h}px`;
   if (label) {
-    el.innerHTML = "<b>" + label + "</b>";
+    el.innerHTML = "<b>" + T(label) + "</b>";
     // A label above a box that starts near the top of the frame is either
     // clipped or lands on the headline. Tuck it inside instead.
     const tag = el.querySelector("b");
@@ -167,7 +292,8 @@ function box({x, y, w, h, label, warn, at, below, right}) {
 }
 function hud(html, css, at) {
   const el = document.createElement("div");
-  el.className = "hud"; el.style.cssText += css; el.innerHTML = html;
+  el.className = "hud"; el.style.cssText += css;
+  el.innerHTML = html.replace(/>([^<>]+)</g, (m, t) => ">" + T(t.trim()) + "<");
   document.body.appendChild(el);
   setTimeout(() => el.classList.add("on"), at);
   return el;
@@ -178,7 +304,7 @@ function chip(kind, key, value, css, at) {
   const el = document.createElement("div");
   el.className = "chip" + (kind ? " " + kind : "");
   el.style.cssText += css;
-  el.innerHTML = '<div class="k">' + key + '</div><div class="v">' + value + '</div>';
+  el.innerHTML = '<div class="k">' + T(key) + '</div><div class="v">' + T(value) + '</div>';
   document.body.appendChild(el);
   setTimeout(() => el.classList.add("on"), at);
   return el;
@@ -196,7 +322,7 @@ function zone(points, label, note, lx, ly, at) {
   const lb = document.createElement("div");
   lb.className = "zlbl";
   lb.style.cssText += `left:${lx}px;top:${ly}px`;
-  lb.innerHTML = label + (note ? ' <em>· ' + note + '</em>' : '');
+  lb.innerHTML = T(label) + (note ? ' <em>· ' + T(note) + '</em>' : '');
   document.body.appendChild(lb);
   setTimeout(() => { el.classList.add("on"); lb.classList.add("on"); }, at);
 }
@@ -205,8 +331,8 @@ function screen(x, y, w, h, key, message, dim, at) {
   const el = document.createElement("div");
   el.className = "scr" + (dim ? " dim" : "");
   el.style.cssText += `left:${x}px;top:${y}px;width:${w}px;height:${h}px`;
-  el.innerHTML = (key ? '<div class="k">' + key + "</div>" : "") +
-                 '<div class="m">' + message + "</div>";
+  el.innerHTML = (key ? '<div class="k">' + T(key) + "</div>" : "") +
+                 '<div class="m">' + T(message) + "</div>";
   document.body.appendChild(el);
   setTimeout(() => el.classList.add("on"), at);
   return el;
@@ -219,7 +345,7 @@ function titleAt(top) {
 }
 function plan(text) {
   const el = document.createElement("div");
-  el.className = "plan"; el.textContent = text;
+  el.className = "plan"; el.textContent = T(text);
   document.body.appendChild(el);
 }
 
@@ -280,7 +406,7 @@ if (scene === "zone") {
     $("clock").textContent = Math.floor(s/60) + ":" + String(s%60).padStart(2,"0");
     if (s >= 240) {
       clearInterval(tick);
-      $("ptxt").innerHTML = "Someone has been at <b>Engagement Rings</b> for 4 minutes and nobody has been over. Worth a look.";
+      $("ptxt").innerHTML = LANG === "es" ? PHONE_ES[scene] : "Someone has been at <b>Engagement Rings</b> for 4 minutes and nobody has been over. Worth a look.";
       $("phone").classList.add("on");
     }
   }, 380);
@@ -360,7 +486,7 @@ if (scene === "frustrated") {
        "38 of the last 60 seconds read negative. One frown is nothing; this is not one frown.",
        "left:34px;bottom:200px;max-width:300px", 2200);
   setTimeout(() => {
-    $("ptxt").innerHTML = "Someone at <b>Bangles</b> has been waiting a while and looks unhappy about it. Worth going over.";
+    $("ptxt").innerHTML = LANG === "es" ? PHONE_ES[scene] : "Someone at <b>Bangles</b> has been waiting a while and looks unhappy about it. Worth going over.";
     $("phone").classList.add("on");
   }, 3600);
 }
@@ -436,7 +562,7 @@ if (scene === "closing") {
        "<b>t-7734</b> open since 11:18 \u2014 6h 02m, no exit recorded. The behaviour scan only looks at the last hour, so nothing else would have found it.",
        "left:34px;top:290px;max-width:320px", 2000);
   setTimeout(() => {
-    $("ptxt").innerHTML = "Either somebody is still in the shop, or the exit was not seen and the occupancy figure is running high. Both are worth thirty seconds.";
+    $("ptxt").innerHTML = LANG === "es" ? PHONE_ES[scene] : "Either somebody is still in the shop, or the exit was not seen and the occupancy figure is running high. Both are worth thirty seconds.";
     $("phone").classList.add("on");
   }, 3400);
 }

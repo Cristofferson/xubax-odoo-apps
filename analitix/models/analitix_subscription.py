@@ -74,10 +74,11 @@ class AnalitixStoreSubscription(models.Model):
             ("actions", "Actions"),
         ],
         string="Plan", default="counting", required=True, tracking=True,
-        help="What this store has contracted. It governs which features their "
-             "users can see and switch on — it is not a licence check in the "
-             "code, so a billing problem can never switch a customer's cameras "
-             "off.")
+        help="What this store has contracted. Each plan contains the one "
+             "before it: Visual Analytics includes Counting, and Actions "
+             "includes both. It governs which features their users can see and "
+             "switch on — it is not a licence check in the code, so a billing "
+             "problem can never switch a customer's cameras off.")
     subscription_order_id = fields.Many2one(
         "sale.order", string="Subscription", ondelete="set null", tracking=True,
         help="The recurring sale order that bills this store. On Odoo "

@@ -204,7 +204,8 @@ What you get
 
 Not included: the cameras and the mini-PC, which are ordinary off-the-shelf
 hardware. The per-store running service — support and the monthly value report —
-is contracted separately, from US$49 to US$179 a month depending on the plan.
+is contracted separately, from US$49 to US$189 a month depending on the plan.
+Each plan contains the one below it; the prices are not cumulative.
 The software itself meters nothing: there is no counter of stores, cameras or
 users anywhere in it, and the plan on each store is a configuration control
 rather than a licence check, so no billing problem can switch a shop's cameras

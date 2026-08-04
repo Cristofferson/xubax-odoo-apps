@@ -94,7 +94,7 @@ last year's interface reads as an abandoned app.
       are set separately and only one of them is in version control.
 - [ ] **The per-store service is not sold here and cannot be.** apps.odoo.com
       takes one payment per module, per database; it has no way to meter stores.
-      US$49–179 per store per month is invoiced by XUBAX, and the listing says
+      US$49–189 per store per month is invoiced by XUBAX, and the listing says
       so plainly rather than leaving a buyer to discover it on an invoice. If
       the ladder changes, three places move together: `index.html`, the
       manifest description, and the demo stores' `monthly_fee` — a demo whose
