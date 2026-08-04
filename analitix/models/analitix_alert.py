@@ -362,7 +362,9 @@ class AnalitixAlert(models.Model):
         """
         self.ensure_one()
         ok, error = self.env["analitix.zone"]._send_to_screen(
-            self.zone_id, self.summary, seconds=store.alert_screen_seconds)
+            self.zone_id, self.summary,
+            layout_ref=store.alert_screen_layout_ref,
+            seconds=store.alert_screen_seconds)
         if error and not ok:
             _logger.info("Analitix: alert %s not shown on screen: %s",
                          self.id, error)

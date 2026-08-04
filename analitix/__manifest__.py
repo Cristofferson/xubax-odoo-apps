@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Analitix — Physical Store Intelligence",
-    "version": "19.0.12.0.0",
+    "version": "19.0.13.0.0",
     "category": "Point of Sale",
     "summary": "Store intelligence on Odoo: visitor counting across any number "
                "of doors, POS conversion (ATV, UPT, revenue per visitor, "

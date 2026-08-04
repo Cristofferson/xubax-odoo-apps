@@ -320,6 +320,12 @@ class AnalitixStore(models.Model):
     alert_screen_seconds = fields.Integer(
         string="Screen Duration (s)", default=20, required=True,
         help="How long an alert stays on the signage screen.")
+    alert_screen_layout_ref = fields.Char(
+        string="Screen Layout",
+        help="Name of the Xibo layout to put on the screen. Xibo cannot show "
+             "loose text: its full-screen and overlay modes need a layout that "
+             "already exists in the CMS. Without this, the screen channel has "
+             "nothing to send and every attempt is recorded as not delivered.")
     alert_ids = fields.One2many("analitix.alert", "store_id", string="Alerts")
 
     # --- checkout attribution and identification ---

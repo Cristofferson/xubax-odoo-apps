@@ -284,6 +284,9 @@
                                     <field name="alert_use_screen"/>
                                     <field name="alert_screen_seconds"
                                            invisible="not alert_use_screen"/>
+                                    <field name="alert_screen_layout_ref"
+                                           placeholder="Nombre del diseño en Xibo…"
+                                           invisible="not alert_use_screen"/>
                                 </group>
                             </group>
                             <div class="alert alert-warning" role="alert"

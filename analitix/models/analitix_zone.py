@@ -162,6 +162,18 @@ class AnalitixZone(models.Model):
         """
         if not zone or not zone.screen_group_ref:
             return False, _("No screen is mapped to this zone.")
+        # Xibo no acepta texto suelto: sus modos de pantalla completa y
+        # superposición exigen un DISEÑO que ya exista en el CMS, y el de cinta
+        # exige un dataset. Se comprueba aquí, junto a las demás cuestiones de
+        # configuración y antes de tocar nada externo, porque es un hecho local
+        # y porque así el fallo no aparece a media tarde disfrazado de
+        # excepción de validación del conector.
+        if not layout_ref:
+            return False, _(
+                "No Xibo layout is set. Xibo cannot put loose text on a "
+                "screen: it needs a layout that already exists in the CMS. "
+                "Set it on the signage rule, or on the store for the alert "
+                "screen channel.")
         installed = self.env["ir.module.module"].sudo().search_count(
             [("name", "=", "xibo_connector"), ("state", "=", "installed")])
         if not installed:
@@ -175,12 +187,10 @@ class AnalitixZone(models.Model):
             server = self.env["xibo.server"].sudo().search([], limit=1)
             if not server:
                 return False, _("No Xibo server is configured.")
-            layout = False
-            if layout_ref:
-                layout = self.env["xibo.layout"].sudo().search(
-                    [("name", "=", layout_ref)], limit=1)
-                if not layout:
-                    return False, _("No Xibo layout named '%s'.", layout_ref)
+            layout = self.env["xibo.layout"].sudo().search(
+                [("name", "=", layout_ref)], limit=1)
+            if not layout:
+                return False, _("No Xibo layout named '%s'.", layout_ref)
             now = fields.Datetime.now()
             vals = {
                 "name": (body or zone.name)[:60],
@@ -191,8 +201,7 @@ class AnalitixZone(models.Model):
                 "to_dt": now + timedelta(seconds=seconds),
                 "duration_seconds": seconds,
             }
-            if layout:
-                vals["layout_id"] = layout.id
+            vals["layout_id"] = layout.id
             broadcast = self.env["xibo.broadcast"].sudo().create(vals)
             broadcast.action_send()
             return True, False

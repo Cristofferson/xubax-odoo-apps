@@ -618,6 +618,21 @@ class TestDisplaysAndBehaviour(FloorCase):
         self.assertFalse(self.env["analitix.anomaly.event"].search(
             [("visitor_id", "=", visit.id), ("kind", "=", "never_left")]))
 
+    def test_the_screen_channel_says_it_needs_a_layout(self):
+        """Xibo no acepta texto suelto, y callarlo costaba entregas.
+
+        Sus modos de pantalla completa y superposición exigen un diseño que ya
+        exista en el CMS. Sin él, el conector rechaza el envío con un error de
+        validación que llegaba al registro como una excepción cualquiera —
+        una tienda con el canal encendido no mostraba nada y nadie sabía por qué.
+        """
+        self.rings.screen_group_ref = "GrupoDePrueba"
+        ok, error = self.env["analitix.zone"]._send_to_screen(
+            self.rings, "Alguien lleva rato esperando", layout_ref=None)
+        self.assertFalse(ok)
+        self.assertIn("layout", (error or "").lower(),
+                      "el error tiene que decir que falta el diseño")
+
     def test_a_behaviour_signal_carries_no_identity(self):
         """It is about a pattern, not a person, and the schema says so."""
         Anomaly = self.env["analitix.anomaly.event"]
