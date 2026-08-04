@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.analitix</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Analitix" string="Analitix" name="analitix"
+                     groups="analitix.group_manager">
+
+                    <block title="Data retention"
+                           name="analitix_retention"
+                           help="The one setting that is genuinely global. Everything else — doors, zones, thresholds, who gets the nudge — belongs to a store, because it changes from one store to the next.">
+                        <setting id="analitix_retention_days"
+                                 string="Keep raw crossings"
+                                 help="Zero keeps them for ever, which is the default. Long-horizon reports read the daily rollup rather than these events, and the nightly job refuses to delete a day the rollup has not summarised yet.">
+                            <div class="mt16">
+                                <field name="analitix_event_retention_days"
+                                       class="o_light_label" style="width:80px;"/>
+                                <span class="ms-2">days</span>
+                            </div>
+                        </setting>
+                    </block>
+
+                    <block title="Your stores" name="analitix_stores">
+                        <setting id="analitix_store_summary"
+                                 string="Stores configured"
+                                 help="A store carries its own doors, zones, cameras and thresholds. A camera can only be given a key once its store is activated.">
+                            <div class="mt16">
+                                <field name="analitix_store_count" class="o_light_label"
+                                       readonly="1"/>
+                                <span class="ms-2">stores, of which</span>
+                                <field name="analitix_activated_count"
+                                       class="o_light_label ms-2" readonly="1"/>
+                                <span class="ms-2">activated</span>
+                            </div>
+                            <div class="mt8">
+                                <button name="action_analitix_new_store" type="object"
+                                        string="Add a store" class="btn-link"
+                                        icon="fa-plus"/>
+                                <button name="action_analitix_stores" type="object"
+                                        string="Open stores" class="btn-link"
+                                        icon="fa-arrow-right"/>
+                            </div>
+                        </setting>
+                    </block>
+
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

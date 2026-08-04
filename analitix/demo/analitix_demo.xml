@@ -38,6 +38,8 @@
             <field name="plan">actions</field>
             <field name="activated" eval="True"/>
             <field name="activation_token">TRIAL</field>
+            <field name="anomaly_detection_enabled" eval="True"/>
+            <field name="emotion_alert_enabled" eval="True"/>
         </record>
 
         <record id="demo_door_boutique_main" model="analitix.door">

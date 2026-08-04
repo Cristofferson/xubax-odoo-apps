@@ -34,4 +34,5 @@ from . import analitix_hourly
 from . import analitix_reports
 from . import analitix_chain_report
 from . import analitix_demo_floor
+from . import res_config_settings
 from . import res_users

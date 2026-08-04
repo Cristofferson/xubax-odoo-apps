@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Analitix — Physical Store Intelligence",
-    "version": "19.0.10.0.0",
+    "version": "19.0.11.0.0",
     "category": "Point of Sale",
     "summary": "Store intelligence on Odoo: visitor counting across any number "
                "of doors, POS conversion (ATV, UPT, revenue per visitor, "
@@ -230,6 +230,8 @@ receives JSON.
     "license": "OPL-1",
     "depends": [
         "base",
+        # La página de Ajustes cuelga de la vista de base_setup.
+        "base_setup",
         "mail",
         "hr",
         # Named by the brief: staff attendance feeds Odoo's own hr.attendance
@@ -276,6 +278,7 @@ receives JSON.
         "views/res_users_views.xml",
         "views/analitix_manual_views.xml",
         "wizards/store_setup_views.xml",
+        "views/res_config_settings_views.xml",
         "views/analitix_menus.xml",
     ],
     "demo": [

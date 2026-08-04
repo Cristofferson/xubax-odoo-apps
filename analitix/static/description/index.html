@@ -104,6 +104,35 @@
 .alx-foot { background: #1a1c19; color: #a8ada2; padding: 34px 0; font-size: 15px; }
 .alx-foot a { color: #c9a227; }
 
+/* ------------------------------------------------- click to enlarge, no JS
+   The store does not run JavaScript in a module description, so this is done
+   with :target — a link opens the figure full-screen, a link closes it. The
+   same <img> is reused rather than duplicated: a second copy would double the
+   weight of the page for nothing.
+
+   The close link is a full-viewport layer *under* the picture, so clicking the
+   backdrop closes and clicking the picture does not. It points at a marker
+   sitting just above each figure, so closing returns to where you were instead
+   of jumping to the top of the page. */
+.alx-shot img { cursor: zoom-in; }
+.alx-lbclose { display: none; }
+/* Only the contents go full-screen; the figure keeps its place in the flow.
+   Taking the figure itself out of the flow reflowed the page, so closing landed
+   somewhere else on it. */
+.alx-shot:target .alx-lbclose { display: block; position: fixed; inset: 0;
+  z-index: 9998; background: rgba(10,12,10,.95); text-decoration: none; }
+.alx-shot:target .alx-lbclose::after { content: "\2715"; position: fixed;
+  top: 14px; right: 22px; font-size: 26px; line-height: 1; color: #fff; opacity: .75; }
+.alx-shot:target .alx-lbopen { position: fixed; z-index: 9999;
+  top: 24px; left: 24px; right: 24px; bottom: 104px;
+  display: flex; align-items: center; justify-content: center; }
+.alx-shot:target img { max-width: min(100%, 1600px); max-height: 100%;
+  width: auto; cursor: zoom-out; border-color: rgba(255,255,255,.16); }
+.alx-shot:target figcaption { position: fixed; z-index: 9999; left: 0; right: 0;
+  bottom: 20px; padding: 0 26px; text-align: center; color: #d6d8d2;
+  max-width: 820px; margin: 0 auto; }
+.alx-shot:target figcaption b, .alx-shot:target figcaption strong { color: #fff; }
+
 @media (max-width: 680px) {
   .alx-hero h1 { font-size: 32px; }
   .alx-turn h2, .alx-sec h2 { font-size: 25px; }
@@ -204,14 +233,16 @@
     <h2>The same afternoon, with Analitix running</h2>
     <p class="alx-lede">Nothing changes for the customer. One phone buzzes.</p>
     <div class="alx-two">
-      <figure class="alx-shot">
-        <img src="screenshots/alert-discuss.jpg" alt="Odoo's chat as the salesperson sees it, with the alert saying somebody has been at the ring counter for four minutes and nobody has been over."/>
+      <span id="alx-b1"></span><figure class="alx-shot" id="alx-z1">
+        <a class="alx-lbopen" href="#alx-z1" aria-label="Ampliar la imagen"><img src="screenshots/alert-discuss.jpg" alt="Odoo's chat as the salesperson sees it, with the alert saying somebody has been at the ring counter for four minutes and nobody has been over."/></a>
+      <a class="alx-lbclose" href="#alx-b1" aria-label="Cerrar"></a>
         <figcaption><b>14:06 — the nudge.</b> In Odoo's own chat, to the one
         salesperson on that zone's shift. Short enough to read mid-shift and act
         on without opening anything. The customer never knows.</figcaption>
       </figure>
-      <figure class="alx-shot">
-        <img src="screenshots/value_report.jpg" alt="Monthly value report per store: visitors, sales, conversion, walk-outs spotted and rescued, estimated recovered revenue and how it compares with the subscription."/>
+      <span id="alx-b2"></span><figure class="alx-shot" id="alx-z2">
+        <a class="alx-lbopen" href="#alx-z2" aria-label="Ampliar la imagen"><img src="screenshots/value_report.jpg" alt="Monthly value report per store: visitors, sales, conversion, walk-outs spotted and rescued, estimated recovered revenue and how it compares with the subscription."/></a>
+      <a class="alx-lbclose" href="#alx-b2" aria-label="Cerrar"></a>
         <figcaption><b>End of the month — the receipt.</b> Walk-outs spotted,
         walk-outs rescued, and roughly what that was worth, next to what the shop
         pays. Labelled an <strong>estimate</strong> everywhere it appears —
@@ -228,14 +259,16 @@
     <p class="alx-lede">Less than people expect. One small computer, and very
     probably the camera that is already on the wall.</p>
     <div class="alx-two">
-      <figure class="alx-shot">
-        <img src="demo/scene-install.jpg" alt="A small fanless mini-PC on a shelf in a shop's back room next to the router, marked as the whole system."/>
+      <span id="alx-b3"></span><figure class="alx-shot" id="alx-z3">
+        <a class="alx-lbopen" href="#alx-z3" aria-label="Ampliar la imagen"><img src="demo/scene-install.jpg" alt="A small fanless mini-PC on a shelf in a shop's back room next to the router, marked as the whole system."/></a>
+      <a class="alx-lbclose" href="#alx-b3" aria-label="Cerrar"></a>
         <figcaption><b>One fanless mini-PC in the back room.</b> No graphics
         card, nothing on the till, nothing in a cloud. One per shop, however many
         cameras that shop has.</figcaption>
       </figure>
-      <figure class="alx-shot">
-        <img src="demo/scene-cameras.jpg" alt="An analogue dome camera with a USB capture stick, a USB webcam and an IP bullet camera side by side, each labelled as supported."/>
+      <span id="alx-b4"></span><figure class="alx-shot" id="alx-z4">
+        <a class="alx-lbopen" href="#alx-z4" aria-label="Ampliar la imagen"><img src="demo/scene-cameras.jpg" alt="An analogue dome camera with a USB capture stick, a USB webcam and an IP bullet camera side by side, each labelled as supported."/></a>
+      <a class="alx-lbclose" href="#alx-b4" aria-label="Cerrar"></a>
         <figcaption><b>The camera is probably already up there.</b> Analogue on
         coax plus a US$20 capture stick, a plain USB webcam, or an IP camera over
         RTSP — the agent opens all three the same way. Nothing gets rewired to
@@ -333,8 +366,9 @@
     many people walked past those tickets and left. Analitix supplies the
     denominator, and everything after that follows from it.</p>
 
-    <figure class="alx-shot">
-      <img src="screenshots/conversion.jpg" alt="Hourly conversion dashboard: visitors, tickets, conversion rate, average ticket, units per ticket and revenue per visitor for two demo stores."/>
+    <span id="alx-b5"></span><figure class="alx-shot" id="alx-z5">
+      <a class="alx-lbopen" href="#alx-z5" aria-label="Ampliar la imagen"><img src="screenshots/conversion.jpg" alt="Hourly conversion dashboard: visitors, tickets, conversion rate, average ticket, units per ticket and revenue per visitor for two demo stores."/></a>
+      <a class="alx-lbclose" href="#alx-b5" aria-label="Cerrar"></a>
       <figcaption>Hourly, per store: visitors, tickets, conversion rate, average
       ticket, units per ticket, revenue per visitor and density per m². Real
       screen, real demo data — it ships with the module.</figcaption>
@@ -375,8 +409,9 @@
     there was no ticket. Each alone is ordinary; together they are a sale that
     walked out.</p>
 
-    <figure class="alx-shot">
-      <img src="screenshots/alerts.jpg" alt="Alert list showing recipient, channel, response time in seconds and outcome — ended in a sale, or not attended."/>
+    <span id="alx-b6"></span><figure class="alx-shot" id="alx-z6">
+      <a class="alx-lbopen" href="#alx-z6" aria-label="Ampliar la imagen"><img src="screenshots/alerts.jpg" alt="Alert list showing recipient, channel, response time in seconds and outcome — ended in a sale, or not attended."/></a>
+      <a class="alx-lbclose" href="#alx-b6" aria-label="Cerrar"></a>
       <figcaption>Every nudge is recorded: who received it, on which channel, how
       long they took, and whether it ended in a sale. An alert nobody measures is
       a nudge nobody improves.</figcaption>
@@ -446,8 +481,9 @@
       knows.</figcaption>
     </figure>
 
-    <figure class="alx-shot">
-      <img src="demo/scene-blind.jpg" alt="A camera view almost entirely blocked by a cardboard display, with the device still reporting online and zero crossings in 45 minutes."/>
+    <span id="alx-b7"></span><figure class="alx-shot" id="alx-z7">
+      <a class="alx-lbopen" href="#alx-z7" aria-label="Ampliar la imagen"><img src="demo/scene-blind.jpg" alt="A camera view almost entirely blocked by a cardboard display, with the device still reporting online and zero crossings in 45 minutes."/></a>
+      <a class="alx-lbclose" href="#alx-b7" aria-label="Cerrar"></a>
       <figcaption><strong>The camera that is online and blind.</strong> Somebody
       left a display under the lens; the device kept reporting happily. Zero
       crossings against the 38 this shop usually sees at that hour is what raises
@@ -455,8 +491,9 @@
       of data.</figcaption>
     </figure>
 
-    <figure class="alx-shot">
-      <img src="screenshots/alert-list.jpg" alt="The salesperson's own alert list in Odoo, showing the nudge, its zone, its channel and whether it was acknowledged."/>
+    <span id="alx-b8"></span><figure class="alx-shot" id="alx-z8">
+      <a class="alx-lbopen" href="#alx-z8" aria-label="Ampliar la imagen"><img src="screenshots/alert-list.jpg" alt="The salesperson's own alert list in Odoo, showing the nudge, its zone, its channel and whether it was acknowledged."/></a>
+      <a class="alx-lbclose" href="#alx-b8" aria-label="Cerrar"></a>
       <figcaption>The salesperson's own list, where the nudge is acknowledged.
       That acknowledgement is what the floor-coaching report is built from — an
       alert nobody measures is a nudge nobody improves.</figcaption>
@@ -473,8 +510,9 @@
     shop stays past the first month.</p>
 
     <div class="alx-two">
-      <figure class="alx-shot">
-        <img src="screenshots/demographics.jpg" alt="Demographic readings at each door: age band, gender, expression and whether the reading was reliable enough to keep."/>
+      <span id="alx-b9"></span><figure class="alx-shot" id="alx-z9">
+        <a class="alx-lbopen" href="#alx-z9" aria-label="Ampliar la imagen"><img src="screenshots/demographics.jpg" alt="Demographic readings at each door: age band, gender, expression and whether the reading was reliable enough to keep."/></a>
+      <a class="alx-lbclose" href="#alx-b9" aria-label="Cerrar"></a>
         <figcaption><b>Age band and gender — bands, never ages.</b> What is
         stored is "25–34", not "31". That is not squeamishness, it is honesty
         about an estimate: a demographic model outputs a probability, and
@@ -483,8 +521,9 @@
         my morning one</em> — and readings below the confidence floor are thrown
         away rather than rounded into a total.</figcaption>
       </figure>
-      <figure class="alx-shot">
-        <img src="screenshots/coaching.jpg" alt="Floor coaching report per salesperson and zone: alerts, answered, missed, ended in a sale, answered rate and median response time."/>
+      <span id="alx-b10"></span><figure class="alx-shot" id="alx-z10">
+        <a class="alx-lbopen" href="#alx-z10" aria-label="Ampliar la imagen"><img src="screenshots/coaching.jpg" alt="Floor coaching report per salesperson and zone: alerts, answered, missed, ended in a sale, answered rate and median response time."/></a>
+      <a class="alx-lbclose" href="#alx-b10" aria-label="Cerrar"></a>
         <figcaption><b>Floor coaching, measured fairly.</b> Response time and
         close rate against the nudges a salesperson <em>answered</em> — nobody is
         marked down for one that arrived while they were with another customer.
@@ -493,8 +532,9 @@
       </figure>
     </div>
 
-    <figure class="alx-shot" style="margin-top:32px;">
-      <img src="demo/scene-window.jpg" alt="A lit jewellery window with the showcase marked as a display, two people stopped in front counted as one purchase unit, a passer-by who did not stop, and the day's stops against the tickets that came from what is on it."/>
+    <span id="alx-b11"></span><figure class="alx-shot" id="alx-z11" style="margin-top:32px;">
+      <a class="alx-lbopen" href="#alx-z11" aria-label="Ampliar la imagen"><img src="demo/scene-window.jpg" alt="A lit jewellery window with the showcase marked as a display, two people stopped in front counted as one purchase unit, a passer-by who did not stop, and the day's stops against the tickets that came from what is on it."/></a>
+      <a class="alx-lbclose" href="#alx-b11" aria-label="Cerrar"></a>
       <figcaption><strong>Displays, and what they actually pull.</strong> Zones
       answer <em>where do people go</em>. A display answers <em>what do they stop
       in front of</em> — a showcase, a window, a table. On its own that is a
@@ -505,8 +545,9 @@
       apart.</figcaption>
     </figure>
 
-    <figure class="alx-shot">
-      <img src="demo/scene-screens.jpg" alt="Two screens in the same shop: the one in the zone where the customer stopped is chosen and shows her message, the one facing the entrance is explicitly not this rule's destination."/>
+    <span id="alx-b12"></span><figure class="alx-shot" id="alx-z12">
+      <a class="alx-lbopen" href="#alx-z12" aria-label="Ampliar la imagen"><img src="demo/scene-screens.jpg" alt="Two screens in the same shop: the one in the zone where the customer stopped is chosen and shows her message, the one facing the entrance is explicitly not this rule's destination."/></a>
+      <a class="alx-lbclose" href="#alx-b12" aria-label="Cerrar"></a>
       <figcaption><strong>Screens that know which screen they are.</strong> A
       shop's screens are not interchangeable: the one over the counter, the one
       by the exit and the one facing the street do different jobs, and a message
@@ -515,8 +556,9 @@
       from the zone the thing happened in.</figcaption>
     </figure>
 
-    <figure class="alx-shot">
-      <img src="demo/scene-welcome.jpg" alt="A recognised customer walking in while the screen beside the door greets her by name, with the three sources it was assembled from and the social privacy rule."/>
+    <span id="alx-b13"></span><figure class="alx-shot" id="alx-z13">
+      <a class="alx-lbopen" href="#alx-z13" aria-label="Ampliar la imagen"><img src="demo/scene-welcome.jpg" alt="A recognised customer walking in while the screen beside the door greets her by name, with the three sources it was assembled from and the social privacy rule."/></a>
+      <a class="alx-lbclose" href="#alx-b13" aria-label="Cerrar"></a>
       <figcaption><strong>A welcome that is not a mail merge.</strong> When a
       customer has agreed to be recognised, the greeting is assembled from three
       sources — an open CRM opportunity, what they have actually bought before,
@@ -526,8 +568,9 @@
       customer.</figcaption>
     </figure>
 
-    <figure class="alx-shot">
-      <img src="demo/scene-group.jpg" alt="Three people walking in together, all tracked as one purchase unit, with the note that four minutes later the same unit is in three different zones."/>
+    <span id="alx-b14"></span><figure class="alx-shot" id="alx-z14">
+      <a class="alx-lbopen" href="#alx-z14" aria-label="Ampliar la imagen"><img src="demo/scene-group.jpg" alt="Three people walking in together, all tracked as one purchase unit, with the note that four minutes later the same unit is in three different zones."/></a>
+      <a class="alx-lbclose" href="#alx-b14" aria-label="Cerrar"></a>
       <figcaption><strong>Unusual behaviour — patterns, never people.</strong>
       Four shapes: in and out repeatedly, a long stop at an expensive case with
       nobody nearby, a group that arrives together and scatters, and a visit that
@@ -537,8 +580,9 @@
       walking over is the right answer whichever it turns out to be.</figcaption>
     </figure>
 
-    <figure class="alx-shot">
-      <img src="demo/scene-closing.jpg" alt="The empty shop floor after closing, with the counter still reporting one person inside and a visit that has been open six hours with no exit recorded."/>
+    <span id="alx-b15"></span><figure class="alx-shot" id="alx-z15">
+      <a class="alx-lbopen" href="#alx-z15" aria-label="Ampliar la imagen"><img src="demo/scene-closing.jpg" alt="The empty shop floor after closing, with the counter still reporting one person inside and a visit that has been open six hours with no exit recorded."/></a>
+      <a class="alx-lbclose" href="#alx-b15" aria-label="Cerrar"></a>
       <figcaption><strong>Entered, never left.</strong> The signal the other
       three structurally cannot see: they scan visits opened in the last hour,
       and a visit open since this morning fell out of that window long ago.
@@ -548,8 +592,9 @@
       seconds.</figcaption>
     </figure>
 
-    <figure class="alx-shot">
-      <img src="demo/scene-staffdoor.jpg" alt="A shop assistant arriving through the staff door, matched as staff rather than a visitor, with the hr.attendance row it produces and the note that it ships switched off."/>
+    <span id="alx-b16"></span><figure class="alx-shot" id="alx-z16">
+      <a class="alx-lbopen" href="#alx-z16" aria-label="Ampliar la imagen"><img src="demo/scene-staffdoor.jpg" alt="A shop assistant arriving through the staff door, matched as staff rather than a visitor, with the hr.attendance row it produces and the note that it ships switched off."/></a>
+      <a class="alx-lbclose" href="#alx-b16" aria-label="Cerrar"></a>
       <figcaption><strong>Attendance, off by default.</strong> The signatures
       that keep employees out of the visitor count already know who walked in and
       when, so the register into Odoo's own <code>hr.attendance</code> is nearly
@@ -652,8 +697,9 @@
       </div>
     </div>
 
-    <figure class="alx-shot" style="margin-top:28px;">
-      <img src="screenshots/store_watch.jpg" alt="The store's watch-list settings, switched off, with the warning that switching it on does not create a list."/>
+    <span id="alx-b17"></span><figure class="alx-shot" id="alx-z17" style="margin-top:28px;">
+      <a class="alx-lbopen" href="#alx-z17" aria-label="Ampliar la imagen"><img src="screenshots/store_watch.jpg" alt="The store's watch-list settings, switched off, with the warning that switching it on does not create a list."/></a>
+      <a class="alx-lbclose" href="#alx-b17" aria-label="Cerrar"></a>
       <figcaption>Off by default, and the screen says plainly what it is and what
       it refuses to do. A separate Security role is the only one that can open
       it — a store manager who reads conversion figures does not get this with the
@@ -671,8 +717,9 @@
     problems: fewer people came in, or the same people came in and fewer
     bought.</p>
 
-    <figure class="alx-shot">
-      <img src="screenshots/chain_console.jpg" alt="The chain console: every branch on the same day with conversion, delta against its own region, average ticket, walk-outs and rescue rate."/>
+    <span id="alx-b18"></span><figure class="alx-shot" id="alx-z18">
+      <a class="alx-lbopen" href="#alx-z18" aria-label="Ampliar la imagen"><img src="screenshots/chain_console.jpg" alt="The chain console: every branch on the same day with conversion, delta against its own region, average ticket, walk-outs and rescue rate."/></a>
+      <a class="alx-lbclose" href="#alx-b18" aria-label="Cerrar"></a>
       <figcaption>Every branch on the same stick, and each one measured against
       <strong>its own region on the same day</strong> — which removes the week,
       the weather and the season, because those move every shop together. What is
@@ -709,8 +756,9 @@
       </div>
     </div>
 
-    <figure class="alx-shot" style="margin-top:28px;">
-      <img src="screenshots/chain_form.jpg" alt="The chain form showing the two scope settings and the warning that only the corporate role may change them."/>
+    <span id="alx-b19"></span><figure class="alx-shot" id="alx-z19" style="margin-top:28px;">
+      <a class="alx-lbopen" href="#alx-z19" aria-label="Ampliar la imagen"><img src="screenshots/chain_form.jpg" alt="The chain form showing the two scope settings and the warning that only the corporate role may change them."/></a>
+      <a class="alx-lbclose" href="#alx-b19" aria-label="Cerrar"></a>
       <figcaption>The two settings that decide how far a person's data reaches
       across your branches, with the warning attached to them rather than buried
       in a manual.</figcaption>
@@ -744,11 +792,34 @@
     number of doors, the number of zones and cameras, every threshold, every alert
     recipient — all of it is filled in by an implementer, and the test suite fails
     if anyone ever hardcodes a store's shape.</p>
-    <figure class="alx-shot">
-      <img src="screenshots/store_floor.jpg" alt="Store configuration form showing the alert channels split into discreet and not-discreet columns."/>
+    <span id="alx-b20"></span><figure class="alx-shot" id="alx-z20">
+      <a class="alx-lbopen" href="#alx-z20" aria-label="Ampliar la imagen"><img src="screenshots/store_floor.jpg" alt="Store configuration form showing the alert channels split into discreet and not-discreet columns."/></a>
+      <a class="alx-lbclose" href="#alx-b20" aria-label="Cerrar"></a>
       <figcaption>The alert channels, split into what only the salesperson
       perceives and what the customer may notice. The second column ships switched
       off, and each field says why.</figcaption>
+    </figure>
+
+    <span id="alx-t1"></span><figure class="alx-shot" id="alx-zt1">
+      <a class="alx-lbopen" href="#alx-zt1" aria-label="Ampliar la imagen"><img src="screenshots/triggers.jpg" alt="The store's Floor and Alerts tab: lost-sale detection, alert routing with cooldown, the channels split by discretion, the sustained-expression thresholds, the five behaviour thresholds and the per-zone thresholds table."/></a>
+      <a class="alx-lbclose" href="#alx-t1" aria-label="Cerrar"></a>
+      <figcaption><strong>Every trigger, on one screen.</strong> What counts as a
+      lost sale, how long before a nudge repeats, how long before it counts as
+      missed, which channels may be used, how sure the expression reading has to
+      be and for how many readings, the five behaviour thresholds — including how
+      long a visit may stay open before somebody looks — and, at the bottom,
+      <strong>each zone carries its own</strong>. A fitting room is not a ring
+      counter, so they do not share a number.</figcaption>
+    </figure>
+
+    <span id="alx-t2"></span><figure class="alx-shot" id="alx-zt2">
+      <a class="alx-lbopen" href="#alx-zt2" aria-label="Ampliar la imagen"><img src="screenshots/settings.jpg" alt="Odoo's own Settings page with the Analitix section: data retention in days and a summary of stores configured and activated."/></a>
+      <a class="alx-lbclose" href="#alx-t2" aria-label="Cerrar"></a>
+      <figcaption><strong>And what little is truly global lives in Odoo's own
+      Settings.</strong> Exactly one thing: how long the raw crossings are kept
+      before the nightly job prunes them, which is a data-retention policy and
+      belongs where a customer can find it — not buried in technical
+      parameters.</figcaption>
     </figure>
   </div>
 </div>
