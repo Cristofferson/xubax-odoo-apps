@@ -85,8 +85,31 @@
                             <field name="visitors_in"/>
                             <field name="visitors_out"/>
                             <field name="last_event_time"/>
+                            <field name="activated"/>
+                            <field name="activation_date" invisible="not activated"/>
                         </group>
                     </group>
+                    <div class="alert alert-info" role="alert" invisible="activated">
+                        <b>This shop is not activated yet.</b> Its cameras cannot
+                        be given a key until it is — nothing else is affected, and
+                        nothing already running anywhere stops.
+                        <div class="mt8">
+                            Send this line to XUBAX:
+                            <field name="activation_request" readonly="1" class="oe_inline"/>
+                        </div>
+                        <div class="mt8">
+                            <field name="activation_code_input" class="oe_inline"
+                                   placeholder="Paste the code they send back…"/>
+                            <button name="action_activate_store" type="object"
+                                    string="Activate" class="btn-primary"
+                                    invisible="not activation_code_input"/>
+                            <button name="action_activate_trial" type="object"
+                                    string="Activate as the first shop"
+                                    class="btn-secondary"
+                                    confirm="A database may activate one shop by itself, so you can prove the whole chain before buying hardware. From the second shop on, activation goes through XUBAX. Continue?"
+                                    invisible="activation_code_input"/>
+                        </div>
+                    </div>
                     <div class="alert alert-warning" role="alert" invisible="capture_enabled">
                         Capture is paused. Nothing is being recorded for this store.
                         <field name="capture_paused_reason" placeholder="Why it is paused…"

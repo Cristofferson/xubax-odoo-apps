@@ -39,6 +39,7 @@ class TestTenantIsolation(TransactionCase):
         for store in (cls.store_a, cls.store_b):
             door = cls.env["analitix.door"].create({
                 "store_id": store.id, "name": "Main", "code": "M"})
+            store.sudo().write({"activated": True})
             device = cls.env["analitix.device"].create({
                 "name": "Counter", "device_uid": "%s-main" % store.code.lower(),
                 "store_id": store.id, "door_id": door.id})

@@ -34,6 +34,12 @@ class AnalitixCase(TransactionCase):
             "area_sqm": 80.0,
             "tz": "UTC",
         })
+        # A shop in a fixture is a contracted shop: activated, the same as a
+        # shop XUBAX has commissioned. The activation gate itself is exercised
+        # in tests/test_activation.py, where it is the subject rather than a
+        # tax on every other test in the addon.
+        cls.store_one.sudo().write({"activated": True,
+                                    "activation_token": "TEST"})
         cls.door_one = cls.Door.create({
             "store_id": cls.store_one.id, "name": "Main", "code": "M",
         })
@@ -52,6 +58,8 @@ class AnalitixCase(TransactionCase):
             "area_sqm": 240.0,
             "tz": "UTC",
         })
+        cls.store_three.sudo().write({"activated": True,
+                                      "activation_token": "TEST"})
         cls.doors_three = cls.Door.create([
             {"store_id": cls.store_three.id, "name": "Street", "code": "S"},
             {"store_id": cls.store_three.id, "name": "Gallery", "code": "G",

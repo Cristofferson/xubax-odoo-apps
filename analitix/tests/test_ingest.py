@@ -31,6 +31,9 @@ class TestIngest(HttpCase):
         self.door = self.env["analitix.door"].create({
             "store_id": self.store.id, "name": "Main", "code": "M",
         })
+        # Contracted shop — see the note in tests/common.py; the gate
+        # itself is tested in tests/test_activation.py.
+        self.store.sudo().write({"activated": True})
         self.device = self.env["analitix.device"].create({
             "name": "Counter", "device_uid": "in1-main",
             "store_id": self.store.id, "door_id": self.door.id,

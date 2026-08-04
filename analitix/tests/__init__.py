@@ -12,4 +12,5 @@ from . import test_action
 from . import test_watchlist
 from . import test_manual
 from . import test_chain
+from . import test_activation
 from . import test_screens

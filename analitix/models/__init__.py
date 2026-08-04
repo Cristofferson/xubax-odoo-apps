@@ -25,6 +25,7 @@ from . import analitix_signage
 from . import analitix_watchlist
 from . import analitix_customer_context
 from . import analitix_attendance
+from . import analitix_activation
 from . import analitix_subscription
 from . import analitix_value_report
 from . import analitix_chain

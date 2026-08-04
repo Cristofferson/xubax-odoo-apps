@@ -308,7 +308,10 @@
     </div>
 
     <p class="alx-note" style="margin-top:24px;">The first shop's first month is
-    included with the module. <strong>Not included, because nobody can sell it in
+    included with the module, and the first shop activates itself so you can
+    prove the whole chain before buying hardware. Bringing each additional shop
+    online needs an activation code from XUBAX — the same visit where the camera
+    gets mounted. Nothing already running is ever switched off by it. <strong>Not included, because nobody can sell it in
     a zip:</strong> the cameras and the mini-PC, which are ordinary off-the-shelf
     hardware you buy once. Installation and calibration are not included either;
     the implementation guide is written so a competent technician can do it, and
@@ -929,12 +932,22 @@
     </div>
     <div class="alx-faq">
       <h3>Does the software meter me, or stop working if I do not pay?</h3>
-      <p>No, and this is deliberate rather than an oversight. There is no counter
-      of stores, cameras or users anywhere in the code, and the plan on each store
-      is a <em>configuration control</em>, not a licence check — so no billing
-      problem can ever switch a shop's cameras off. The commercial terms are per
-      store; the software is not the thing enforcing them. And if you would rather
-      run it entirely yourself against your own hardware, the full ingest contract
+      <p>It does not stop working, and that part is deliberate rather than an
+      oversight: <strong>a shop that is already collecting keeps collecting,
+      whatever happens to the invoice.</strong> There is no check at the point
+      where data arrives, so no billing problem on anybody's side can switch a
+      shop's cameras off, and the plan on each store is a <em>configuration
+      control</em> rather than a licence check.</p>
+      <p>There is exactly one gate, and it is at the other end: <strong>bringing
+      a <em>new</em> shop online needs an activation code</strong> from XUBAX,
+      which is the same moment somebody is in that shop mounting and calibrating
+      the camera. The first shop in a database activates itself, so you can
+      install with demo data, run the agent in its synthetic mode and prove the
+      whole chain before buying anything. From the second shop on, the code is
+      part of commissioning it.</p>
+      <p>A code is tied to one shop in one database — it cannot be moved to
+      another branch, or to a restored copy. And if you would rather run the
+      whole thing yourself against your own hardware, the full ingest contract
       ships with the module precisely so you can.</p>
     </div>
     <div class="alx-faq">

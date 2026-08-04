@@ -36,6 +36,8 @@
                  something in it, not a plan gate. -->
             <field name="monthly_fee">3780</field>
             <field name="plan">actions</field>
+            <field name="activated" eval="True"/>
+            <field name="activation_token">TRIAL</field>
         </record>
 
         <record id="demo_door_boutique_main" model="analitix.door">
@@ -69,6 +71,8 @@
             <field name="exclude_staff" eval="True"/>
             <field name="monthly_fee">3780</field>
             <field name="plan">actions</field>
+            <field name="activated" eval="True"/>
+            <field name="activation_token">TRIAL</field>
         </record>
 
         <record id="demo_door_mall_street" model="analitix.door">

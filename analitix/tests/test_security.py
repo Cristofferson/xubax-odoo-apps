@@ -23,6 +23,9 @@ class TestCredentials(HttpCase):
         })
         self.door = self.env["analitix.door"].create({
             "store_id": self.store.id, "name": "Main", "code": "M"})
+        # Contracted shop — see the note in tests/common.py; the gate
+        # itself is tested in tests/test_activation.py.
+        self.store.sudo().write({"activated": True})
         self.device = self.env["analitix.device"].create({
             "name": "Counter", "device_uid": "k1-main",
             "store_id": self.store.id, "door_id": self.door.id})
@@ -32,6 +35,7 @@ class TestCredentials(HttpCase):
         self.other_store = self.env["analitix.store"].create({
             "name": "Other Store", "code": "K2", "tz": "UTC",
             "company_id": self.env.company.id, "match_mode": "company"})
+        self.other_store.sudo().write({"activated": True})
         self.other_device = self.env["analitix.device"].create({
             "name": "Other counter", "device_uid": "k2-main",
             "store_id": self.other_store.id})

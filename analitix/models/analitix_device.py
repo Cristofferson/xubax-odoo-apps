@@ -213,7 +213,11 @@ class AnalitixDevice(models.Model):
     def create(self, vals_list):
         devices = super().create(vals_list)
         for device in devices:
-            if not device.sudo().api_key_hash:
+            # A shop that is not activated yet gets its device, its place in
+            # the tree and its configuration — just no key, so it cannot send
+            # anything. Refusing the whole create instead would explode in the
+            # middle of the setup wizard.
+            if not device.sudo().api_key_hash and device.store_id._may_issue_key():
                 device._issue_key()
         return devices
 
@@ -238,8 +242,15 @@ class AnalitixDevice(models.Model):
     # Key handling
     # ------------------------------------------------------------------
     def _issue_key(self):
-        """Mint a key, store only its digest, and return the plaintext once."""
+        """Mint a key, store only its digest, and return the plaintext once.
+
+        The store has to be activated first. This is the only gate the
+        commercial terms put on the software, and it is deliberately here and
+        not at ingest: a camera that is already sending keeps sending whatever
+        happens to the invoice.
+        """
         self.ensure_one()
+        self.store_id._ensure_activated()
         raw = "%s_%s" % (KEY_PREFIX, secrets.token_urlsafe(32))
         self.sudo().write({
             "api_key_hash": hash_key(raw),

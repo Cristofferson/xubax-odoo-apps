@@ -128,13 +128,27 @@ class AnalitixStoreSetup(models.TransientModel):
                 "kind": row.hardware,
                 "critical": True,
             })
-            # _issue_key returns the plaintext exactly once, at creation.
-            raw_key = device._issue_key()
-            lines.append(_(
-                "Door: %(door)s\n"
-                "  Device UID : %(uid)s\n"
-                "  API key    : %(key)s\n",
-                door=door.name, uid=device.device_uid, key=raw_key))
+            # _issue_key returns the plaintext exactly once, at creation —
+            # but only for a shop that is activated. An unactivated one still
+            # gets its store, its doors and its devices; what it does not get
+            # is a working key, and the wizard says so rather than failing.
+            if store._may_issue_key():
+                raw_key = device._issue_key()
+                lines.append(_(
+                    "Door: %(door)s\n"
+                    "  Device UID : %(uid)s\n"
+                    "  API key    : %(key)s\n",
+                    door=door.name, uid=device.device_uid, key=raw_key))
+            else:
+                lines.append(_(
+                    "Door: %(door)s\n"
+                    "  Device UID : %(uid)s\n"
+                    "  API key    : pending — this shop is not activated yet.\n"
+                    "               Send this line to XUBAX and paste the code\n"
+                    "               they return on the store form:\n"
+                    "               %(request)s\n",
+                    door=door.name, uid=device.device_uid,
+                    request=store.activation_request or ""))
 
         self.write({
             "state": "done",

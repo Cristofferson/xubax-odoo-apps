@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Analitix — Physical Store Intelligence",
-    "version": "19.0.9.0.0",
+    "version": "19.0.10.0.0",
     "category": "Point of Sale",
     "summary": "Store intelligence on Odoo: visitor counting across any number "
                "of doors, POS conversion (ATV, UPT, revenue per visitor, "
@@ -205,6 +205,8 @@ What you get
 Not included: the cameras and the mini-PC, which are ordinary off-the-shelf
 hardware. The per-store running service — support and the monthly value report —
 is contracted separately, from US$49 to US$189 a month depending on the plan.
+Bringing a new shop online needs an activation code from XUBAX; a shop that is
+already collecting is never switched off by billing.
 Each plan contains the one below it; the prices are not cumulative.
 The software itself meters nothing: there is no counter of stores, cameras or
 users anywhere in it, and the plan on each store is a configuration control

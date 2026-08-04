@@ -97,6 +97,10 @@ class TestConfigurability(AnalitixCase):
     def test_setup_wizard_builds_any_shape(self):
         """The wizard is what an implementer uses; it must not assume a count."""
         Setup = self.env["analitix.store.setup"]
+        # The first shop in a database activates itself, so the wizard hands
+        # over seven working keys. What happens to shop number two is the
+        # subject of tests/test_activation.py, not of this one.
+        self.env["analitix.store"].sudo().search([]).write({"activated": False})
         wizard = Setup.create({
             "name": "Wizard Seven",
             "code": "W7",
