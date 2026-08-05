@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"/><title>gráficas</title>
+<style>
+  /* Las cifras son las REALES de la demo de retail, no inventadas: si el
+     cliente pide ver el sistema después de la presentación, los números de la
+     lámina y los de la pantalla tienen que coincidir. */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#12151c; color:#eef0f4;
+         font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif; }
+  .card { width:1600px; height:820px; padding:56px 64px; position:relative; }
+  h2 { font-size:44px; font-weight:800; letter-spacing:-1px; margin-bottom:6px; }
+  .sub { font-size:22px; color:#9aa3b4; margin-bottom:34px; }
+  .leg { display:flex; gap:30px; margin-bottom:22px; font-size:20px; }
+  .leg i { width:16px; height:16px; border-radius:4px; display:inline-block;
+           margin-right:9px; vertical-align:-2px; }
+  .foot { position:absolute; left:64px; bottom:34px; font-size:19px; color:#7b8496; }
+
+  /* --- barras por hora --- */
+  .bars { display:flex; align-items:flex-end; gap:16px; height:430px; }
+  .col { flex:1; display:flex; flex-direction:column; justify-content:flex-end;
+         align-items:center; gap:5px; height:100%; }
+  /* Los tickets son un SUBCONJUNTO de los visitantes, no algo que se le sume:
+     apilarlos encima hacía que la columna midiera visitantes+tickets y
+     exagerara el tráfico. Van dentro de la barra. */
+  .stack { width:100%; display:flex; flex-direction:column; justify-content:flex-end;
+           align-items:center; background:#985184; border-radius:6px 6px 0 0; }
+  .tik { width:100%; background:#1AD3BB; border-radius:0 0 6px 6px; }
+  .hh { font-size:19px; color:#9aa3b4; }
+  .peak { position:absolute; background:#c9a227; color:#1b1403; font-size:19px;
+          font-weight:800; padding:7px 15px; border-radius:999px; }
+
+  /* --- comparación de tiendas --- */
+  .rows { display:flex; flex-direction:column; gap:42px; margin-top:20px; }
+  .row b { font-size:26px; display:block; margin-bottom:12px; }
+  .track { height:62px; background:#1c2130; border-radius:8px; position:relative; }
+  .fill { height:100%; border-radius:8px; display:flex; align-items:center;
+          padding-left:22px; font-size:26px; font-weight:800; }
+  .tag { position:absolute; right:22px; top:50%; transform:translateY(-50%);
+         font-size:24px; color:#9aa3b4; }
+</style></head>
+<body>
+
+<!-- 1 · la curva del día -->
+<div class="card" id="c-hora">
+  <h2>Tu día, hora por hora</h2>
+  <p class="sub">Cuánta gente entra y cuánta compra. La diferencia es la oportunidad.</p>
+  <div class="leg">
+    <span><i style="background:#985184"></i>Entraron</span>
+    <span><i style="background:#1AD3BB"></i>De ésos, compraron</span>
+  </div>
+  <div class="bars" id="bars"></div>
+  <p class="foot">Datos reales de la demo · promedio de 14 días · dos tiendas</p>
+</div>
+
+<!-- 2 · lo que se recupera -->
+<div class="card" id="c-salidas">
+  <h2>Lo que hoy se va sin que nadie lo note</h2>
+  <p class="sub">Clientes que estuvieron, esperaron, y salieron sin comprar.</p>
+  <div class="rows">
+    <div class="row">
+      <b>Salidas detectadas</b>
+      <div class="track"><div class="fill" style="width:100%;background:#f0713f">62</div>
+        <span class="tag">en 14 días</span></div>
+    </div>
+    <div class="row">
+      <b>Alcanzadas a tiempo por un vendedor</b>
+      <div class="track"><div class="fill" style="width:64.5%;background:#1AD3BB;color:#062018">40</div>
+        <span class="tag">65 % rescatadas</span></div>
+    </div>
+    <div class="row">
+      <b>Se fueron de todos modos</b>
+      <div class="track"><div class="fill" style="width:35.5%;background:#3a4256">22</div>
+        <span class="tag">y ahora sabes cuántas</span></div>
+    </div>
+  </div>
+  <p class="foot">Sin el sistema, las 62 son invisibles: no dejan rastro en ningún reporte.</p>
+</div>
+
+<script>
+// Promedio real por hora en la demo: [hora, entran, compran]
+const D = [[10,1.1,0.1],[11,1.9,0.6],[12,4.6,1.8],[13,7.1,2.8],[14,8.0,2.8],
+           [15,9.0,2.9],[16,9.3,3.1],[17,9.3,3.1],[18,10.3,3.1],[19,10.9,3.9],[20,8.0,2.8]];
+const max = Math.max(...D.map(d => d[1]));
+const cont = document.getElementById("bars");
+D.forEach(([h, v, t]) => {
+  const col = document.createElement("div"); col.className = "col";
+  col.innerHTML =
+    '<div class="stack" style="height:' + (v / max * 88) + '%">' +
+      '<div class="tik" style="height:' + (t / v * 100) + '%"></div>' +
+    '</div><span class="hh">' + h + ':00</span>';
+  cont.appendChild(col);
+});
+</script>
+</body></html>
