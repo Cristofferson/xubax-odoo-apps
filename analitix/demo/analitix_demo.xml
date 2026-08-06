@@ -26,7 +26,7 @@
             <field name="offline_threshold_min">5</field>
             <field name="exclude_staff" eval="True"/>
             <!-- What the shop pays, at the published list price for its plan
-                 (Actions, US$189 ≈ 3,780 MXN). The monthly report compares the
+                 (Actions, US$189 ≈ 3,390 MXN al tipo de cambio real). The monthly report compares the
                  revenue it helped recover against this figure, so it has to be
                  the real price and not a placeholder — a demo whose ROI is
                  computed against an invented fee is a demo that lies.
@@ -34,7 +34,7 @@
                  Both demo shops are on Actions on purpose: somebody installing
                  the demo to evaluate the product should find every screen with
                  something in it, not a plan gate. -->
-            <field name="monthly_fee">3780</field>
+            <field name="monthly_fee">3390</field>
             <field name="plan">actions</field>
             <field name="activated" eval="True"/>
             <field name="activation_token">TRIAL</field>
@@ -71,7 +71,7 @@
             <field name="heartbeat_interval_s">60</field>
             <field name="offline_threshold_min">10</field>
             <field name="exclude_staff" eval="True"/>
-            <field name="monthly_fee">3780</field>
+            <field name="monthly_fee">3390</field>
             <field name="plan">actions</field>
             <field name="activated" eval="True"/>
             <field name="activation_token">TRIAL</field>
