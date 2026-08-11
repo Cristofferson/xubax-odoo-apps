@@ -513,8 +513,13 @@ class XiboServer(models.Model):
     # =========================================================================
     # Schedule helpers — for players that ignore an instant layout change
     # =========================================================================
+    # Xibo event types (lib/Entity/Schedule.php).
+    EVENT_TYPE_LAYOUT = 1
+    EVENT_TYPE_OVERLAY = 3
+
     def schedule_layout(self, display_group_xibo_id, campaign_xibo_id,
-                        seconds=0, is_priority=True, from_dt=None):
+                        seconds=0, is_priority=True, from_dt=None,
+                        event_type_id=None):
         """Put a layout on a display group's schedule and return the event id.
 
         Some players (Windows 4 R407 among them) never act on a `changeLayout`
@@ -525,6 +530,10 @@ class XiboServer(models.Model):
 
         :param seconds: length of the window; 0 leaves it open-ended (the
             caller is then responsible for deleting the event).
+        :param event_type_id: `EVENT_TYPE_LAYOUT` (the default) puts the layout
+            on screen in place of whatever is scheduled. `EVENT_TYPE_OVERLAY`
+            draws it on top instead, leaving the scheduled layout running
+            underneath — which is the only way its audio keeps playing.
         :returns: the Xibo eventId, or False on failure.
         """
         self.ensure_one()
@@ -538,7 +547,7 @@ class XiboServer(models.Model):
         end = start + timedelta(seconds=seconds + 60) if seconds else start + timedelta(days=365)
         try:
             resp = self._request('POST', '/api/schedule', data={
-                'eventTypeId': 1,  # Layout / Campaign
+                'eventTypeId': event_type_id or self.EVENT_TYPE_LAYOUT,
                 'campaignId': campaign_xibo_id,
                 # The CMS runs on PHP: only a key ending in [] is parsed as an
                 # array. Sent as a plain key it arrives as a bare string and

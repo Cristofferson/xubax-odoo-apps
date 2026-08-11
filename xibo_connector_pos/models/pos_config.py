@@ -183,6 +183,17 @@ class PosConfig(models.Model):
         string='Mirror Duration (s)', default=0,
         help="0 = stay until cart is cleared/paid (recommended).",
     )
+    xibo_customer_display_mode = fields.Selection(
+        [('overlay', 'On top — background keeps playing'),
+         ('replace', 'Replace — takes the screen over')],
+        string='Mirror Mode', default='overlay', required=True,
+        help="On top: the mirror is drawn over the screen's normal content, "
+             "which keeps running underneath — so background music and video "
+             "carry on playing while the cart is on screen. This is what you "
+             "want on a screen that also serves as the room's sound.\n"
+             "Replace: the mirror takes the screen over completely and the "
+             "scheduled content stops, audio included.",
+    )
     # Set when the mirror is switched on, cleared when it is reverted. Lives
     # in the database on purpose: Odoo runs several workers and each one
     # would otherwise keep its own idea of whether the screen is already
@@ -909,24 +920,69 @@ class PosConfig(models.Model):
 
     # ===== Stubborn players — schedule the layout instead of only pushing it =====
 
-    def _xibo_show_on_screen(self, screen, layout, seconds, purpose):
+    def _xibo_show_on_screen(self, screen, layout, seconds, purpose, mode='replace'):
         """Put `layout` on `screen` right now; return the CMS answer.
 
-        Most players act on the layout change Odoo pushes over XMR and need
-        nothing else. The ones ticked as *Player Ignores Instant Changes* only
-        ever play what their schedule says, so for those we first schedule the
-        layout for exactly as long as we need it and ask the player to collect
-        — which reaches it over the same XMR channel and is immediate. The
-        push still follows, because on a player that does listen it is what
-        makes the change instant.
+        Two ways to get it there:
 
-        The scheduled window is bounded, so a screen recovers on its own even
-        if the entry is never removed.
+        * ``mode='replace'`` — the layout takes the screen over. Most players
+          act on the layout change Odoo pushes over XMR and need nothing else.
+          The ones ticked as *Player Ignores Instant Changes* only ever play
+          what their schedule says, so for those we first schedule the layout
+          for exactly as long as we need it and ask the player to collect —
+          which reaches it over the same XMR channel and is immediate. The
+          push still follows, because on a player that does listen it is what
+          makes the change instant.
+        * ``mode='overlay'`` — the layout is drawn on top and the screen's own
+          schedule keeps running underneath, audio included. This one always
+          goes through the schedule (as an Overlay event) rather than the
+          ``overlayLayout`` XMR push: the player only ever drops a pushed
+          overlay when its duration runs out — ``revertToSchedule`` clears
+          layout changes but not overlays — so a pushed one could not be taken
+          off when the customer pays. A scheduled overlay comes off the moment
+          the event is deleted and the player collects.
+
+        The scheduled window is bounded either way, so a screen recovers on
+        its own even if the entry is never removed.
         """
         self.ensure_one()
         dg_xibo_id = screen.own_display_group_id
         if not dg_xibo_id:
             return False
+
+        if mode == 'overlay':
+            if not layout.xibo_campaign_id:
+                # An overlay can only be scheduled by campaign. Without one,
+                # fall back to taking the screen over rather than showing
+                # nothing at all.
+                _logger.warning(
+                    "[XIBO POS] layout %s has no campaign — cannot overlay, "
+                    "falling back to replace on screen=%s", layout.name, screen.name,
+                )
+                return self._xibo_show_on_screen(
+                    screen, layout, seconds, purpose, mode='replace')
+            self._xibo_drop_schedule(purpose)
+            event_id = self.xibo_server_id.schedule_layout(
+                dg_xibo_id, layout.xibo_campaign_id, seconds=seconds,
+                event_type_id=self.xibo_server_id.EVENT_TYPE_OVERLAY,
+            )
+            if not event_id:
+                return False
+            self.env['xibo.schedule.event'].track(
+                server=self.xibo_server_id,
+                event_id=event_id,
+                display_group_xibo_id=dg_xibo_id,
+                expires_at=fields.Datetime.add(fields.Datetime.now(), seconds=seconds),
+                purpose=purpose,
+                layout_name=layout.name,
+            )
+            self.xibo_server_id._trigger_collect_now([dg_xibo_id])
+            _logger.info(
+                "[XIBO POS] overlaid layout: screen=%s event=%s window=%ss",
+                screen.name, event_id, seconds,
+            )
+            return {'eventId': event_id}
+
         if screen.force_schedule and layout.xibo_campaign_id:
             self._xibo_drop_schedule(purpose)
             event_id = self.xibo_server_id.schedule_layout(
@@ -979,8 +1035,8 @@ class PosConfig(models.Model):
         if not dg_xibo_id:
             _logger.info("[XIBO POS] activate: target display has no own_display_group_id")
             return False
-        _logger.info("[XIBO POS] calling change_layout: display_group=%s campaign=%s layout=%s",
-                     dg_xibo_id,
+        _logger.info("[XIBO POS] showing mirror (%s): display_group=%s campaign=%s layout=%s",
+                     self.xibo_customer_display_mode, dg_xibo_id,
                      self.xibo_customer_display_layout_id.xibo_campaign_id,
                      self.xibo_customer_display_layout_id.xibo_layout_id)
         # The mirror stays up until the cart is cleared, so its window is the
@@ -991,8 +1047,9 @@ class PosConfig(models.Model):
             self.xibo_customer_display_layout_id,
             seconds=self.xibo_customer_display_duration or MIRROR_STALE_AFTER,
             purpose='pos-mirror-%s' % self.id,
+            mode=self.xibo_customer_display_mode,
         )
-        _logger.info("[XIBO POS] change_layout result: %s", result)
+        _logger.info("[XIBO POS] mirror result: %s", result)
         self._xibo_set_mirror_active(True)
         return result
 
@@ -1006,15 +1063,21 @@ class PosConfig(models.Model):
         dg_xibo_id = self.xibo_customer_display_display_id.own_display_group_id
         if not dg_xibo_id:
             return False
-        _logger.info("[XIBO POS] calling revert_layout: display_group=%s", dg_xibo_id)
-        # Take the mirror off the schedule before reverting: on a player that
-        # only follows its schedule, reverting to a schedule that still holds
-        # the mirror changes nothing.
+        overlaid = self.xibo_customer_display_mode == 'overlay'
+        _logger.info("[XIBO POS] taking the mirror down (%s): display_group=%s",
+                     self.xibo_customer_display_mode, dg_xibo_id)
+        # Take the mirror off the schedule first. An overlay lives only in the
+        # schedule, and on a player that only follows its schedule, reverting
+        # to one that still holds the mirror changes nothing.
         self._xibo_drop_schedule('pos-mirror-%s' % self.id)
-        if self.xibo_customer_display_display_id.force_schedule:
+        if overlaid or self.xibo_customer_display_display_id.force_schedule:
+            # The player drops the overlay when it re-reads its schedule, so
+            # this collect is what actually clears the screen.
             self.xibo_server_id._trigger_collect_now([dg_xibo_id])
-        result = self.xibo_server_id.revert_layout(dg_xibo_id)
-        _logger.info("[XIBO POS] revert_layout result: %s", result)
+        # revertToSchedule only undoes a layout *change*; after an overlay
+        # there is nothing to revert and the screen never left its schedule.
+        result = True if overlaid else self.xibo_server_id.revert_layout(dg_xibo_id)
+        _logger.info("[XIBO POS] mirror down, result: %s", result)
         self._xibo_set_mirror_active(False)
         return result
 

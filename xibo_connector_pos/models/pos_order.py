@@ -501,6 +501,54 @@ class PosOrder(models.Model):
         # cursor. If the transaction rolls back, the callback is never run.
         self.env.cr.postcommit.add(_launch_thread)
 
+    def _xibo_close_mirror_async(self):
+        """Take the Customer Display mirror off the screen now the order is paid.
+
+        Without this the mirror only came down when the cashier started the
+        NEXT order (the front-end's ``clear`` event), so between one customer
+        paying and the next one being rung up the screen sat there showing a
+        finished basket — for as long as the till was idle.
+
+        Runs post-commit in its own thread for the same reason the Thank-You
+        does: the cashier must not wait for CMS round-trips. It is deliberately
+        separate from the Thank-You path, which can be switched off, filtered
+        out by its own rules, or lose the de-duplication race — none of which
+        should leave the mirror stranded on screen.
+        """
+        self.ensure_one()
+        config = self.config_id
+        if not (config and config.xibo_customer_display_enabled):
+            return False
+        order_id = self.id
+        config_id = config.id
+        db_name = self.env.cr.dbname
+
+        def _runner():
+            try:
+                import odoo
+                registry = odoo.modules.registry.Registry(db_name)
+                with registry.cursor() as cr:
+                    env = odoo.api.Environment(cr, odoo.SUPERUSER_ID, {})
+                    cfg = env['pos.config'].browse(config_id)
+                    if not cfg.exists():
+                        return
+                    _logger.info(
+                        "[XIBO POS] order %s paid — taking the mirror off POS %s",
+                        order_id, config_id,
+                    )
+                    cfg._xibo_deactivate_customer_display()
+                    cr.commit()
+            except Exception as e:
+                _logger.exception(
+                    "[XIBO POS] could not take the mirror down after order %s: %s",
+                    order_id, e,
+                )
+
+        self.env.cr.postcommit.add(
+            lambda: threading.Thread(target=_runner, daemon=True).start()
+        )
+        return True
+
     # States in which an order is worth a Thank-You.
     _XIBO_THANKS_STATES = ('paid', 'done', 'invoiced')
 
@@ -514,6 +562,10 @@ class PosOrder(models.Model):
         _logger.info("[XIBO POS THANKS] pos.order.create() hook fired: %s order(s) created, %s to notify",
                      len(orders), len(due))
         for o in due:
+            try:
+                o._xibo_close_mirror_async()
+            except Exception as e:
+                _logger.warning("[XIBO POS] mirror teardown scheduling failed in create: %s", e)
             try:
                 o._xibo_send_thanks_async()
             except Exception as e:
@@ -533,6 +585,10 @@ class PosOrder(models.Model):
             _logger.info("[XIBO POS THANKS] pos.order.write() hook fired: state→%s for %s order(s) (ids=%s)",
                          vals['state'], len(entering), entering.ids)
             for o in entering:
+                try:
+                    o._xibo_close_mirror_async()
+                except Exception as e:
+                    _logger.warning("[XIBO POS] mirror teardown scheduling failed in write: %s", e)
                 try:
                     o._xibo_send_thanks_async()
                 except Exception as e:

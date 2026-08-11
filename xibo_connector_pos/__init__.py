@@ -72,6 +72,11 @@ _POS_CONFIG_COLUMNS = [
     ('xibo_mirror_active_since', 'TIMESTAMP',
      'When the Customer Display mirror was switched on. Replaces the old '
      'in-memory flag, which was per-worker and therefore unreliable.'),
+    # ---- Customer Display mirror mode (since v1.5.41) ----
+    ('xibo_customer_display_mode', "VARCHAR DEFAULT 'overlay'",
+     'How the mirror reaches the screen: overlay (drawn on top, the screen '
+     'keeps playing its own content and audio underneath) or replace (takes '
+     'the screen over).'),
 ]
 
 

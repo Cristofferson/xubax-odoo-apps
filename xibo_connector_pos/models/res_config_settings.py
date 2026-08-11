@@ -50,6 +50,7 @@ class ResConfigSettings(models.TransientModel):
     pos_xibo_customer_display_url = fields.Char(related='pos_config_id.xibo_customer_display_url', readonly=True)
     pos_xibo_customer_display_layout_id = fields.Many2one(related='pos_config_id.xibo_customer_display_layout_id', readonly=True)
     pos_xibo_customer_display_duration = fields.Integer(related='pos_config_id.xibo_customer_display_duration', readonly=False)
+    pos_xibo_customer_display_mode = fields.Selection(related='pos_config_id.xibo_customer_display_mode', readonly=False)
 
     # ④ Recommendations
     pos_xibo_reco_enabled = fields.Boolean(related='pos_config_id.xibo_reco_enabled', readonly=False)

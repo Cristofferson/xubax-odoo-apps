@@ -195,6 +195,13 @@
                                        required="pos_xibo_customer_display_enabled"/>
                             </div>
                             <div class="row mt8">
+                                <label for="pos_xibo_customer_display_mode" class="col-lg-4 o_light_label" string="Mirror Mode"/>
+                                <div class="col-lg-8">
+                                    <field name="pos_xibo_customer_display_mode"/>
+                                    <span class="text-muted ms-2">On top = the screen's own content (and its music) keeps playing behind the cart.</span>
+                                </div>
+                            </div>
+                            <div class="row mt8">
                                 <label for="pos_xibo_customer_display_duration" class="col-lg-4 o_light_label" string="Duration (s)"/>
                                 <div class="col-lg-8">
                                     <field name="pos_xibo_customer_display_duration"/>

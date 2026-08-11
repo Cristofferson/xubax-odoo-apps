@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Xibo Connector — Point of Sale',
-    'version': '19.0.1.5.39',
+    'version': '19.0.1.5.41',
     'category': 'Marketing/Digital Signage',
     'summary': 'AI thank-you with audio, dynamic customer display mirror, and contextual product recommendations on Xibo from your POS.',
     'description': """
@@ -13,6 +13,25 @@ Contextual Recommendations for POS via Xibo CMS.
 
 Changelog
 ---------
+19.0.1.5.41 (2026-08)
+~~~~~~~~~~~~~~~~~~~~~
+* **The mirror now comes down when the customer pays.** It used to leave the
+  screen only on the front-end's ``clear`` event — which fires when the
+  cashier starts the NEXT order. On a till that then sits idle, the finished
+  basket stayed on screen indefinitely. Paying an order now takes the mirror
+  off directly, on its own post-commit thread, independently of the Thank-You
+  (which can be switched off or filtered out).
+* **New — Mirror Mode, so background music keeps playing.** The mirror used to
+  be pushed as a layout *change*, which stops the screen's scheduled content
+  dead, audio included: on a screen that also carries the room's music, every
+  sale silenced it. The new default, *On top*, schedules the mirror as an
+  Overlay instead, so the normal layout keeps running (and playing) behind the
+  cart. *Replace* keeps the old take-the-screen-over behaviour.
+  Note the overlay is deliberately scheduled rather than pushed over XMR: a
+  pushed overlay is only ever dropped by the player when its duration runs out
+  (``revertToSchedule`` clears layout changes, not overlays), so it could not
+  be taken off the moment the customer pays.
+
 19.0.1.5.35 (2026-07)
 ~~~~~~~~~~~~~~~~~~~~~
 * **Screens that never reacted now do.** Some players ignore a real-time

@@ -68,6 +68,13 @@ PRESET_MINIMAL = """<!DOCTYPE html>
     box-shadow:0 4px 30px rgba(0,0,0,.08)}
   .footer{position:absolute;bottom:4vh;font-size:2.2vh;color:#a8a29e;
     opacity:0;animation:fadeIn 1s ease-out 2.2s forwards;letter-spacing:0.05em}
+  /* The brand mark is sized by HEIGHT, and deliberately taller than the text
+     it replaces. Company logos are routinely uploaded on a canvas with a wide
+     margin baked in — the one this was built against wastes 31% of its height
+     on empty pixels — so a box that looks right for a tight logo renders a
+     padded one visibly smaller than the word it stands in for. object-fit
+     keeps any aspect ratio honest inside that box. */
+  .footer img{height:8vh;max-width:45vw;object-fit:contain;display:block}
   @keyframes draw{to{stroke-dashoffset:0}}
   @keyframes fadeIn{to{opacity:1}}
   /* Video walls. Every size above is a share of the viewport HEIGHT, which
@@ -82,6 +89,7 @@ PRESET_MINIMAL = """<!DOCTYPE html>
     .customer{font-size:min(11vh,2.2vw);margin-top:2vh}
     .product-img{width:min(34vh,6vw);height:min(34vh,6vw);margin-top:3vh}
     .footer{font-size:min(5vh,1.1vw);bottom:3vh}
+    .footer img{height:min(16vh,2.8vw);max-width:32vw}
   }
 </style></head>
 <body><div class="wrap">
@@ -119,6 +127,8 @@ PRESET_WARM = """<!DOCTYPE html>
     opacity:0;animation:fadeIn 1s ease-out 1.3s forwards}
   .footer{position:absolute;bottom:4vh;font-size:2.4vh;color:#8b4513;letter-spacing:0.2em;
     text-transform:uppercase;opacity:0;animation:fadeIn 1s ease-out 1.6s forwards}
+  /* See PRESET_MINIMAL for why the logo box is taller than the text it replaces. */
+  .footer img{height:8vh;max-width:45vw;object-fit:contain;display:block}
   @keyframes bloom{to{opacity:1;transform:scale(1)}}
   @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
   @keyframes fadeIn{to{opacity:1}}
@@ -131,6 +141,7 @@ PRESET_WARM = """<!DOCTYPE html>
     .product-img{width:min(34vh,6vw);height:min(34vh,6vw);margin-top:3vh}
     .divider{width:min(20vh,4vw);margin:2vh 0}
     .footer{font-size:min(5vh,1.1vw);bottom:3vh}
+    .footer img{height:min(16vh,2.8vw);max-width:32vw}
   }
 </style></head>
 <body><div class="wrap">
@@ -172,6 +183,11 @@ PRESET_BOLD = """<!DOCTYPE html>
   .footer{position:absolute;bottom:3vh;font-size:2.4vh;color:#737373;letter-spacing:0.3em;
     text-transform:uppercase;font-weight:700;
     opacity:0;animation:fadeIn 1s ease-out 1.6s forwards}
+  /* See PRESET_MINIMAL for why the logo box is taller than the text it replaces.
+     This preset is the dark one: a logo saved on an opaque white canvas shows
+     that canvas as a bright slab. Nothing here can undo that without also
+     erasing logos that are correctly transparent, so it is left to the artwork. */
+  .footer img{height:8vh;max-width:45vw;object-fit:contain;display:block}
   @keyframes pop{to{transform:skew(-8deg) scale(1)}}
   @keyframes slideIn{to{opacity:1;transform:translateX(0)}}
   @keyframes zoomIn{to{opacity:1;transform:scale(1)}}
@@ -185,6 +201,7 @@ PRESET_BOLD = """<!DOCTYPE html>
     .customer{font-size:min(12vh,2.4vw);margin-top:2vh}
     .product-img{width:min(32vh,5.6vw);height:min(32vh,5.6vw);margin-top:3vh}
     .footer{font-size:min(5vh,1.1vw);bottom:2vh}
+    .footer img{height:min(16vh,2.8vw);max-width:32vw}
   }
 </style></head>
 <body><div class="wrap">
@@ -216,6 +233,13 @@ FALLBACK_HTML = """<!DOCTYPE html>
 # Wrapper templates used by _build_html for the conditional bits.
 _CUSTOMER_TPL = '<div class="customer">— {customer}</div>'
 _PRODUCT_IMG_TPL = '<img class="product-img" src="{url}" alt="">'
+
+# Relative on purpose. The absolute form built by _company_logo_url() reads
+# web.base.url, which on a multi-brand database names ONE of the sites — the
+# thank-you page is served from whichever domain the screen was pointed at, so
+# an absolute URL can send the player off to a sibling brand's host for an image
+# that is right here. A relative path is always same-origin and needs no lookup.
+_COMPANY_LOGO_TPL = '<img class="brand" src="/web/image/res.company/{id}/logo" alt="{alt}">'
 
 
 def _escape(value):
@@ -369,7 +393,7 @@ def _build_html(render, company, cashier=None):
         product_image_html = ''
 
     company_name = (company.name if company else '') or ''
-    company_html = _escape(company_name).upper()
+    company_html = _company_footer_html(company)
 
     fmt_args = {
         'message_html': message_html,
@@ -423,6 +447,37 @@ def _build_html(render, company, cashier=None):
         result = result.replace('{' + token + '}', value)
     # Inject audio snippet (no-op if disabled).
     return _inject_before_body_close(result, _audio_html(render))
+
+
+def _company_footer_html(company):
+    """The footer's brand mark: the company logo when there is one, its name if not.
+
+    A shop that has uploaded a logo would rather show it than see its name set in
+    the page's body type, so the logo wins whenever it exists. The name is not a
+    lesser option kept for tidiness — a company with no logo has to be left with
+    something, and an empty footer reads as a broken page.
+
+    Read through sudo() because this is served to a player with no session at
+    all: the public route already browses the render as sudo, but the company can
+    also arrive from the settings preview, and the logo must resolve in both.
+    """
+    name_html = _escape((company.name if company else '') or '').upper()
+
+    if not company:
+        return name_html
+
+    try:
+        has_logo = bool(company.sudo().logo)
+    except Exception:
+        # Never let branding take the page down: the fallback still says who
+        # the shop is, and the customer sees a finished screen either way.
+        _logger.exception("[XIBO POS THANKS] could not read the company logo")
+        return name_html
+
+    if not has_logo:
+        return name_html
+
+    return _COMPANY_LOGO_TPL.format(id=company.id, alt=name_html)
 
 
 def _company_logo_url(company):
