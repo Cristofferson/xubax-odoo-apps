@@ -1,0 +1,42 @@
+// Odoo hardcodes `background-size: cover` and leaves the repeat and the
+// position at their defaults on `.login-overlay`. Reading them from variables
+// instead is what makes the "Image fit" options possible; the fallbacks
+// reproduce the standard look exactly, so a Point of Sale with nothing
+// configured is pixel-identical to a plain Odoo.
+//
+// `.pos .login-overlay` outweighs the core `.login-overlay` rule, so the
+// declarations below win without `!important`.
+.pos .login-overlay {
+    background-size: var(--xb-pos-bg-size, cover);
+    background-repeat: var(--xb-pos-bg-repeat, no-repeat);
+    background-position: var(--xb-pos-bg-position, center);
+
+    // The darkening veil. `.login-overlay` is `position: fixed`, so it opens a
+    // stacking context of its own: the veil sits at layer 0 and the screen's
+    // own blocks are lifted to layer 1, which keeps the clock, the logo and
+    // the buttons above it. At 0% the veil is fully transparent and there is
+    // nothing to see.
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background-color: rgba(0, 0, 0, var(--xb-pos-bg-darkening, 0));
+    }
+
+    > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    // The clock and the date are the only things Odoo draws in plain text over
+    // the background, and they inherit their color: setting it here is enough.
+    // The buttons carry their own colors, so they are left alone.
+    color: var(--xb-pos-bg-text, inherit);
+
+    .timer-hours,
+    .timer-date-container {
+        text-shadow: var(--xb-pos-bg-text-shadow, none);
+    }
+}

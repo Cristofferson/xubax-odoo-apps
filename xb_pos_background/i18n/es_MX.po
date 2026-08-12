@@ -1,0 +1,223 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * xb_pos_background
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-12 20:47+0000\n"
+"PO-Revision-Date: 2026-08-12 20:47+0000\n"
+"Last-Translator: \n"
+"Language: es_MX\n"
+"Language-Team: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#. module: xb_pos_background
+msgid "Automatic"
+msgstr "Automático"
+
+#. module: xb_pos_background
+msgid "Background Image"
+msgstr "Imagen de fondo"
+
+#. module: xb_pos_background
+msgid "Background Is Dark"
+msgstr "El fondo es oscuro"
+
+#. module: xb_pos_background
+msgid "Background color"
+msgstr "Color de fondo"
+
+#. module: xb_pos_background
+msgid "Center"
+msgstr "Centrar"
+
+#. module: xb_pos_background
+msgid "Clock"
+msgstr "Reloj"
+
+#. module: xb_pos_background
+msgid ""
+"Color of the clock and the date drawn over the background. Odoo writes them "
+"in dark gray, which disappears on a dark picture. Automatic looks at how "
+"dark the background ends up — image, color and darkening together — and "
+"picks the readable one."
+msgstr ""
+"Color del reloj y de la fecha que se dibujan sobre el fondo. Odoo los "
+"escribe en gris oscuro, que desaparece sobre una imagen oscura. Automático "
+"mira qué tan oscuro queda el fondo —imagen, color y oscurecimiento juntos— y"
+" elige el que se lee."
+
+#. module: xb_pos_background
+msgid ""
+"Color painted behind the image. It is what shows through when the image does"
+" not cover the whole screen, and it replaces the background on its own when "
+"no image is set."
+msgstr ""
+"Color que se pinta detrás de la imagen. Es lo que se asoma cuando la imagen "
+"no cubre toda la pantalla, y sustituye al fondo por sí solo cuando no hay "
+"imagen."
+
+#. module: xb_pos_background
+msgid "Company logo"
+msgstr "Logo de la compañía"
+
+#. module: xb_pos_background
+msgid "Config Settings"
+msgstr ""
+
+#. module: xb_pos_background
+msgid "Custom POS Logo"
+msgstr "Logo propio del punto de venta"
+
+#. module: xb_pos_background
+msgid "Custom POS Logo Name"
+msgstr "Nombre del logo propio del punto de venta"
+
+#. module: xb_pos_background
+msgid "Custom logo"
+msgstr "Logo propio"
+
+#. module: xb_pos_background
+msgid "Dark text"
+msgstr "Texto oscuro"
+
+#. module: xb_pos_background
+msgid "Darkening (%)"
+msgstr "Oscurecimiento (%)"
+
+#. module: xb_pos_background
+msgid "Display Name"
+msgstr ""
+
+#. module: xb_pos_background
+msgid "Fill the screen"
+msgstr "Llenar la pantalla"
+
+#. module: xb_pos_background
+msgid "Fit the whole image"
+msgstr "Ajustar la imagen completa"
+
+#. module: xb_pos_background
+msgid "ID"
+msgstr ""
+
+#. module: xb_pos_background
+msgid "Image Fit"
+msgstr "Ajuste de la imagen"
+
+#. module: xb_pos_background
+msgid "Image fit"
+msgstr "Ajuste de la imagen"
+
+#. module: xb_pos_background
+msgid ""
+"Image shown behind the clock on the standby screen and on the cashier login "
+"screen of this Point of Sale, in place of the default Odoo background."
+msgstr ""
+"Imagen que se muestra detrás del reloj en la pantalla de reposo y en la de "
+"acceso del cajero de este punto de venta, en lugar del fondo predeterminado "
+"de Odoo."
+
+#. module: xb_pos_background
+msgid "Light text"
+msgstr "Texto claro"
+
+#. module: xb_pos_background
+msgid "Logo shown in the middle of the standby screen and in the POS top bar."
+msgstr ""
+"Logo que se muestra en medio de la pantalla de reposo y en la barra superior"
+" del punto de venta."
+
+#. module: xb_pos_background
+msgid "Logo shown on the standby screen and in the middle of the POS top bar."
+msgstr ""
+"Logo que se muestra en la pantalla de reposo y en medio de la barra superior"
+" del punto de venta."
+
+#. module: xb_pos_background
+msgid "Odoo logo"
+msgstr "Logo de Odoo"
+
+#. module: xb_pos_background
+msgid "POS Background Color"
+msgstr "Color de fondo del punto de venta"
+
+#. module: xb_pos_background
+msgid "POS Background Image"
+msgstr "Imagen de fondo del punto de venta"
+
+#. module: xb_pos_background
+msgid "POS Background Image Name"
+msgstr "Nombre de la imagen de fondo del punto de venta"
+
+#. module: xb_pos_background
+msgid "POS Logo"
+msgstr "Logo del punto de venta"
+
+#. module: xb_pos_background
+msgid ""
+"Percentage of black laid over the image so the clock and the buttons stay "
+"readable on light or busy pictures. 0 leaves the image untouched."
+msgstr ""
+"Porcentaje de negro que se pone sobre la imagen para que el reloj y los "
+"botones sigan legibles sobre fotos claras o muy cargadas. 0 deja la imagen "
+"intacta."
+
+#. module: xb_pos_background
+msgid "Point of Sale Configuration"
+msgstr ""
+
+#. module: xb_pos_background
+msgid ""
+"Shown on the standby screen and on the cashier login screen of this Point of"
+" Sale, in place of the default Odoo background."
+msgstr ""
+"Se muestra en la pantalla de reposo y en la de acceso del cajero de este "
+"punto de venta, en lugar del fondo predeterminado de Odoo."
+
+#. module: xb_pos_background
+msgid "Technical: result of the Automatic reading of the background."
+msgstr "Técnico: resultado de la lectura Automática del fondo."
+
+#. module: xb_pos_background
+#. odoo-python
+#: code:addons/xb_pos_background/models/pos_config.py
+msgid ""
+"The Point of Sale background color must be a hexadecimal color such as "
+"#1B2A4A."
+msgstr ""
+"El color de fondo del punto de venta debe ser un color hexadecimal como "
+"#1B2A4A."
+
+#. module: xb_pos_background
+#. odoo-python
+#: code:addons/xb_pos_background/models/pos_config.py
+#, python-format
+msgid "The Point of Sale background darkening must be between 0 and %s percent."
+msgstr ""
+"El oscurecimiento del fondo del punto de venta debe estar entre 0 y %s por "
+"ciento."
+
+#. module: xb_pos_background
+msgid "Tile"
+msgstr "Mosaico"
+
+#. module: xb_pos_background
+msgid ""
+"Used when the POS logo is set to Custom. A transparent PNG or an SVG gives "
+"the best result, since the logo is drawn straight over the background."
+msgstr ""
+"Se usa cuando el logo del punto de venta está en Propio. Un PNG con "
+"transparencia o un SVG da el mejor resultado, porque el logo se dibuja "
+"directamente sobre el fondo."
+
+#. module: xb_pos_background
+msgid "XUBAX - Background & Logo"
+msgstr "XUBAX - Fondo y logo"
+

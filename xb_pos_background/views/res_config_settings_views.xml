@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_xb_pos_background" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.xb.pos.background</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <!--
+              The native POS settings keep every per-POS block inside the single
+              <div invisible="not pos_config_id"> wrapper, so our block shows up
+              among the native sections and only once a Point of Sale is picked.
+            -->
+            <xpath expr="//div[@invisible='not pos_config_id']" position="inside">
+                <block title="XUBAX - Background &amp; Logo" id="xb_pos_background_block">
+                    <setting id="xb_pos_background_image_setting"
+                             string="Background Image"
+                             help="Shown on the standby screen and on the cashier login screen of this Point of Sale, in place of the default Odoo background.">
+                        <field name="pos_xb_bg_image"
+                               widget="image"
+                               options="{'size': [220, 124]}"
+                               filename="pos_xb_bg_image_name"/>
+                        <div class="content-group mt-2">
+                            <div class="row">
+                                <label for="pos_xb_bg_fit" string="Image fit" class="col-lg-5 o_light_label"/>
+                                <field name="pos_xb_bg_fit"/>
+                            </div>
+                            <div class="row">
+                                <label for="pos_xb_bg_color" string="Background color" class="col-lg-5 o_light_label"/>
+                                <field name="pos_xb_bg_color" widget="color"/>
+                            </div>
+                            <div class="row">
+                                <label for="pos_xb_bg_darkening" string="Darkening (%)" class="col-lg-5 o_light_label"/>
+                                <field name="pos_xb_bg_darkening"/>
+                            </div>
+                            <div class="row">
+                                <label for="pos_xb_bg_text" string="Clock" class="col-lg-5 o_light_label"/>
+                                <field name="pos_xb_bg_text"/>
+                            </div>
+                        </div>
+                    </setting>
+                    <setting id="xb_pos_background_logo_setting"
+                             string="POS Logo"
+                             help="Logo shown in the middle of the standby screen and in the POS top bar.">
+                        <field name="pos_xb_logo_source"/>
+                        <div class="content-group mt-2" invisible="pos_xb_logo_source != 'custom'">
+                            <field name="pos_xb_logo"
+                                   widget="image"
+                                   options="{'size': [220, 90]}"
+                                   filename="pos_xb_logo_name"/>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

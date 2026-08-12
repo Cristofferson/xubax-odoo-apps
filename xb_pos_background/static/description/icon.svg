@@ -1,0 +1,18 @@
+<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+  <!-- Marco de la pantalla -->
+  <path d="M4 12a4 4 0 0 1 4-4h34a4 4 0 0 1 4 4v20a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V12Z" fill="#985184"/>
+  <!-- La imagen dentro: cielo -->
+  <path d="M9 13h32v18H9V13Z" fill="#FBB945"/>
+  <!-- Cerro, recortado por la imagen -->
+  <g clip-path="url(#xb_a)">
+    <circle cx="20" cy="36" r="13" fill="#1AD3BB"/>
+    <circle cx="38" cy="34" r="9" fill="#1A6F66"/>
+  </g>
+  <!-- Sol -->
+  <circle cx="33" cy="19" r="4" fill="#FC868B"/>
+  <!-- Pie -->
+  <path d="M21 36h8v6h-8v-6Zm-6 6h20a1.5 1.5 0 0 1 0 3H15a1.5 1.5 0 0 1 0-3Z" fill="#712258"/>
+  <defs>
+    <clipPath id="xb_a"><path d="M9 13h32v18H9V13Z"/></clipPath>
+  </defs>
+</svg>

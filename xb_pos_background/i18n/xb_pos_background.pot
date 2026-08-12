@@ -1,0 +1,251 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_pos_background
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-12 20:47+0000\n"
+"PO-Revision-Date: 2026-08-12 20:47+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: xb_pos_background
+#: model:ir.model.fields.selection,name:xb_pos_background.selection__pos_config__xb_bg_text__auto
+msgid "Automatic"
+msgstr ""
+
+#. module: xb_pos_background
+#: model_terms:ir.ui.view,arch_db:xb_pos_background.res_config_settings_view_form_xb_pos_background
+msgid "Background Image"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields,field_description:xb_pos_background.field_pos_config__xb_bg_is_dark
+msgid "Background Is Dark"
+msgstr ""
+
+#. module: xb_pos_background
+#: model_terms:ir.ui.view,arch_db:xb_pos_background.res_config_settings_view_form_xb_pos_background
+msgid "Background color"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields.selection,name:xb_pos_background.selection__pos_config__xb_bg_fit__center
+msgid "Center"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields,field_description:xb_pos_background.field_pos_config__xb_bg_text
+#: model:ir.model.fields,field_description:xb_pos_background.field_res_config_settings__pos_xb_bg_text
+#: model_terms:ir.ui.view,arch_db:xb_pos_background.res_config_settings_view_form_xb_pos_background
+msgid "Clock"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields,help:xb_pos_background.field_pos_config__xb_bg_text
+#: model:ir.model.fields,help:xb_pos_background.field_res_config_settings__pos_xb_bg_text
+msgid ""
+"Color of the clock and the date drawn over the background. Odoo writes them "
+"in dark gray, which disappears on a dark picture. Automatic looks at how "
+"dark the background ends up — image, color and darkening together — and "
+"picks the readable one."
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields,help:xb_pos_background.field_pos_config__xb_bg_color
+#: model:ir.model.fields,help:xb_pos_background.field_res_config_settings__pos_xb_bg_color
+msgid ""
+"Color painted behind the image. It is what shows through when the image does"
+" not cover the whole screen, and it replaces the background on its own when "
+"no image is set."
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields.selection,name:xb_pos_background.selection__pos_config__xb_logo_source__company
+msgid "Company logo"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model,name:xb_pos_background.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields,field_description:xb_pos_background.field_pos_config__xb_logo
+#: model:ir.model.fields,field_description:xb_pos_background.field_res_config_settings__pos_xb_logo
+msgid "Custom POS Logo"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields,field_description:xb_pos_background.field_pos_config__xb_logo_name
+#: model:ir.model.fields,field_description:xb_pos_background.field_res_config_settings__pos_xb_logo_name
+msgid "Custom POS Logo Name"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields.selection,name:xb_pos_background.selection__pos_config__xb_logo_source__custom
+msgid "Custom logo"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields.selection,name:xb_pos_background.selection__pos_config__xb_bg_text__dark
+msgid "Dark text"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields,field_description:xb_pos_background.field_pos_config__xb_bg_darkening
+#: model:ir.model.fields,field_description:xb_pos_background.field_res_config_settings__pos_xb_bg_darkening
+#: model_terms:ir.ui.view,arch_db:xb_pos_background.res_config_settings_view_form_xb_pos_background
+msgid "Darkening (%)"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields,field_description:xb_pos_background.field_pos_config__display_name
+#: model:ir.model.fields,field_description:xb_pos_background.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields.selection,name:xb_pos_background.selection__pos_config__xb_bg_fit__cover
+msgid "Fill the screen"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields.selection,name:xb_pos_background.selection__pos_config__xb_bg_fit__contain
+msgid "Fit the whole image"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields,field_description:xb_pos_background.field_pos_config__id
+#: model:ir.model.fields,field_description:xb_pos_background.field_res_config_settings__id
+msgid "ID"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields,field_description:xb_pos_background.field_pos_config__xb_bg_fit
+#: model:ir.model.fields,field_description:xb_pos_background.field_res_config_settings__pos_xb_bg_fit
+msgid "Image Fit"
+msgstr ""
+
+#. module: xb_pos_background
+#: model_terms:ir.ui.view,arch_db:xb_pos_background.res_config_settings_view_form_xb_pos_background
+msgid "Image fit"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields,help:xb_pos_background.field_pos_config__xb_bg_image
+#: model:ir.model.fields,help:xb_pos_background.field_res_config_settings__pos_xb_bg_image
+msgid ""
+"Image shown behind the clock on the standby screen and on the cashier login "
+"screen of this Point of Sale, in place of the default Odoo background."
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields.selection,name:xb_pos_background.selection__pos_config__xb_bg_text__light
+msgid "Light text"
+msgstr ""
+
+#. module: xb_pos_background
+#: model_terms:ir.ui.view,arch_db:xb_pos_background.res_config_settings_view_form_xb_pos_background
+msgid "Logo shown in the middle of the standby screen and in the POS top bar."
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields,help:xb_pos_background.field_pos_config__xb_logo_source
+#: model:ir.model.fields,help:xb_pos_background.field_res_config_settings__pos_xb_logo_source
+msgid "Logo shown on the standby screen and in the middle of the POS top bar."
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields.selection,name:xb_pos_background.selection__pos_config__xb_logo_source__default
+msgid "Odoo logo"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields,field_description:xb_pos_background.field_pos_config__xb_bg_color
+#: model:ir.model.fields,field_description:xb_pos_background.field_res_config_settings__pos_xb_bg_color
+msgid "POS Background Color"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields,field_description:xb_pos_background.field_pos_config__xb_bg_image
+#: model:ir.model.fields,field_description:xb_pos_background.field_res_config_settings__pos_xb_bg_image
+msgid "POS Background Image"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields,field_description:xb_pos_background.field_pos_config__xb_bg_image_name
+#: model:ir.model.fields,field_description:xb_pos_background.field_res_config_settings__pos_xb_bg_image_name
+msgid "POS Background Image Name"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields,field_description:xb_pos_background.field_pos_config__xb_logo_source
+#: model:ir.model.fields,field_description:xb_pos_background.field_res_config_settings__pos_xb_logo_source
+#: model_terms:ir.ui.view,arch_db:xb_pos_background.res_config_settings_view_form_xb_pos_background
+msgid "POS Logo"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields,help:xb_pos_background.field_pos_config__xb_bg_darkening
+#: model:ir.model.fields,help:xb_pos_background.field_res_config_settings__pos_xb_bg_darkening
+msgid ""
+"Percentage of black laid over the image so the clock and the buttons stay "
+"readable on light or busy pictures. 0 leaves the image untouched."
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model,name:xb_pos_background.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr ""
+
+#. module: xb_pos_background
+#: model_terms:ir.ui.view,arch_db:xb_pos_background.res_config_settings_view_form_xb_pos_background
+msgid ""
+"Shown on the standby screen and on the cashier login screen of this Point of"
+" Sale, in place of the default Odoo background."
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields,help:xb_pos_background.field_pos_config__xb_bg_is_dark
+msgid "Technical: result of the Automatic reading of the background."
+msgstr ""
+
+#. module: xb_pos_background
+#. odoo-python
+#: code:addons/xb_pos_background/models/pos_config.py:0
+msgid ""
+"The Point of Sale background color must be a hexadecimal color such as "
+"#1B2A4A."
+msgstr ""
+
+#. module: xb_pos_background
+#. odoo-python
+#: code:addons/xb_pos_background/models/pos_config.py:0
+msgid ""
+"The Point of Sale background darkening must be between 0 and %s percent."
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields.selection,name:xb_pos_background.selection__pos_config__xb_bg_fit__tile
+msgid "Tile"
+msgstr ""
+
+#. module: xb_pos_background
+#: model:ir.model.fields,help:xb_pos_background.field_pos_config__xb_logo
+#: model:ir.model.fields,help:xb_pos_background.field_res_config_settings__pos_xb_logo
+msgid ""
+"Used when the POS logo is set to Custom. A transparent PNG or an SVG gives "
+"the best result, since the logo is drawn straight over the background."
+msgstr ""
+
+#. module: xb_pos_background
+#: model_terms:ir.ui.view,arch_db:xb_pos_background.res_config_settings_view_form_xb_pos_background
+msgid "XUBAX - Background & Logo"
+msgstr ""
