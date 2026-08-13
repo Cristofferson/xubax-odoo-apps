@@ -65,6 +65,7 @@ class XbWishSchedule(models.Model):
             ("before_event", "Before the reminder date"),
             ("after_event", "After the reminder date"),
             ("on_event", "On the reminder date"),
+            ("month_start", "At the start of the event's month"),
         ],
         string="Trigger",
         default="before_event",
@@ -162,6 +163,11 @@ class XbWishSchedule(models.Model):
         anchor = reminder._next_occurrence(today=today)
         if not anchor:
             return False
+        if self.interval_type == "month_start":
+            # Fire on the 1st day of the month in which the event falls,
+            # regardless of the exact day within that month. Ignores
+            # interval_nbr / interval_unit on purpose.
+            return anchor.replace(day=1)
         if self.interval_unit == "now" or self.interval_type == "on_event":
             return anchor
         delta_kwargs = {self.interval_unit: self.interval_nbr}
@@ -179,6 +185,11 @@ class XbWishSchedule(models.Model):
         partner = reminder.partner_id
         if not partner:
             return False
+        # ``res.partner.mobile`` was dropped in Odoo 19 (only ``phone``
+        # remains). Read it defensively: a bare ``partner.mobile`` raises
+        # AttributeError, which the except below would swallow silently,
+        # making every send look like a no-op.
+        partner_number = getattr(partner, "mobile", False) or partner.phone or ""
         try:
             if self.channel == "mail":
                 if not self.mail_template_id or not partner.email:
@@ -192,7 +203,7 @@ class XbWishSchedule(models.Model):
                     },
                 )
             elif self.channel == "sms":
-                if not self.sms_template_id or not partner.mobile and not partner.phone:
+                if not self.sms_template_id or not partner_number:
                     return False
                 # _send_sms reads recipients from the record
                 composer = self.env["sms.composer"].sudo().create({
@@ -200,7 +211,7 @@ class XbWishSchedule(models.Model):
                     "template_id": self.sms_template_id.id,
                     "res_model": "xb.wish.reminders",
                     "res_id": reminder.id,
-                    "numbers": partner.mobile or partner.phone or "",
+                    "numbers": partner_number,
                 })
                 composer._action_send_sms()
             elif self.channel == "whatsapp":
@@ -211,9 +222,16 @@ class XbWishSchedule(models.Model):
                     "wa_template_id": wa_template.id,
                     "res_model": "xb.wish.reminders",
                     "res_ids": str(reminder.id),
-                    "phone": partner.mobile or partner.phone or "",
+                    "phone": partner_number,
                 })
                 composer._send_whatsapp_template()
+                # Greeting context is injected CENTRALLY and LAZILY, when the
+                # WhatsApp channel is actually born (i.e. when the customer
+                # replies), by xb_special_dates_whatsapp's override of
+                # discuss.channel._get_whatsapp_channel. Doing it here instead
+                # would pre-create a channel for every single recipient at send
+                # time — clutter on mass sends — and would only ever cover this
+                # module's reminders instead of every WhatsApp campaign.
             else:
                 return False
             self.sudo().write({
@@ -232,12 +250,17 @@ class XbWishSchedule(models.Model):
     def _compute_display_name(self):
         labels = dict(self._fields["interval_type"].selection)
         units = dict(self._fields["interval_unit"].selection)
-        chans = dict(self._fields["channel"].selection)
+        # ``channel`` uses a method-based selection, so ``field.selection``
+        # holds the method name rather than the (value, label) list. Resolve
+        # it through ``fields_get`` which handles callable selections.
+        chans = dict(self.fields_get(["channel"])["channel"]["selection"])
         for line in self:
             unit = units.get(line.interval_unit, line.interval_unit or "")
             ctype = labels.get(line.interval_type, line.interval_type or "")
             chan = chans.get(line.channel, line.channel or "")
-            if line.interval_unit == "now":
+            if line.interval_type in ("month_start", "on_event"):
+                when = ctype
+            elif line.interval_unit == "now":
                 when = _("Immediately")
             else:
                 when = "%s %s · %s" % (line.interval_nbr, unit, ctype)

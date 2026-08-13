@@ -8,56 +8,35 @@ class XbWishType(models.Model):
     _description = "Special Date Type"
     _order = "name"
 
+    # ------------------------------------------------------------------
+    # There used to be a ``_register_hook`` here that re-imported both .po
+    # files with overwrite=True from a BRAND NEW CURSOR
+    # (``self.env.registry.cursor()``).
+    #
+    # That hangs any ``-i`` or ``-u`` of ANY module in the database, and every
+    # live worker with it: the upgrade transaction already holds the locks on
+    # ir_model and on every table with translatable fields, the new cursor asks
+    # for those very rows, and neither side can move. PostgreSQL does not break
+    # the tie because it sees no cycle — one side is blocked in Python, not in
+    # SQL. It froze a production database for twenty minutes.
+    #
+    # The ``except Exception: pass`` around it guarded against the reload
+    # FAILING, not against it HANGING, which is what it actually did.
+    #
+    # The reload still happens, just from where it cannot deadlock: the
+    # manifest's ``post_init_hook`` on install, and the ``<function>`` in
+    # data/load_translations.xml on every upgrade. Both run inside the cursor
+    # that is already open, so there are never two connections to trip over
+    # each other.
+    # ------------------------------------------------------------------
     @api.model
-    def _register_hook(self):
-        """Auto-reload Spanish translations every time the module is
-        loaded (install, upgrade, or server restart).
+    def _reload_bundled_translations(self):
+        """Reload the module's bundled .po files.
 
-        This makes the module behave correctly for end users: they
-        install/upgrade and translations appear without any manual
-        step. The check is cheap (single sudo flag in DB) and the
-        TranslationImporter is idempotent."""
-        res = super()._register_hook()
-        try:
-            from odoo import api as _api
-            from odoo.modules import get_module_path
-            from odoo.tools.translate import TranslationImporter
-
-            with self.env.registry.cursor() as cr:
-                env = _api.Environment(cr, 1, {})  # 1 = SUPERUSER_ID
-                module_path = get_module_path("xb_special_dates")
-                if not module_path:
-                    return res
-                lang_obj = env["res.lang"].with_context(active_test=False)
-                target_langs = []
-                for code in ("es_MX", "es"):
-                    lang = lang_obj.search([("code", "=", code)], limit=1)
-                    if not lang:
-                        continue
-                    if not lang.active:
-                        lang.sudo().active = True
-                    target_langs.append(code)
-                if not target_langs:
-                    return res
-                importer = TranslationImporter(cr, verbose=False)
-                loaded = 0
-                for code in target_langs:
-                    po_path = "%s/i18n/%s.po" % (module_path, code)
-                    import os as _os
-                    if _os.path.exists(po_path):
-                        importer.load_file(po_path, code)
-                        loaded += 1
-                if loaded:
-                    importer.save(overwrite=True)
-                    import logging as _l
-                    _l.getLogger(__name__).info(
-                        "[xb_special_dates] _register_hook: reloaded %d "
-                        ".po file(s) with overwrite=True", loaded
-                    )
-        except Exception:  # noqa: BLE001
-            # Never let the translation reload block module loading.
-            pass
-        return res
+        Called by data/load_translations.xml on every upgrade."""
+        from odoo.addons.xb_special_dates import _load_translations_overwrite
+        _load_translations_overwrite(self.env)
+        return True
 
     name = fields.Char(string="Name", required=True, translate=True)
     active = fields.Boolean(string="Active", default=True)

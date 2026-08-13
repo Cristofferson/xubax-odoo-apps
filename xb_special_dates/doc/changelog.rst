@@ -1,6 +1,32 @@
 Changelog
 =========
 
+19.0.1.8.0 (2026-08)
+--------------------
+
+* **Fix (critical): no reminder was ever sent on Odoo 19.** ``res.partner``
+  dropped the ``mobile`` field in Odoo 19, and ``_send`` still read
+  ``partner.mobile``. The resulting ``AttributeError`` was swallowed by the
+  cron's ``except``, so every SMS and WhatsApp send silently did nothing —
+  no error anywhere in the interface. The number is now read defensively.
+* **Fix (critical): upgrading any module could freeze the whole database.**
+  Translations were reloaded from a ``_register_hook`` that opened its own
+  database cursor. During an ``-i``/``-u`` of *any* module, that cursor asked
+  for rows the upgrade transaction already had locked, and neither side could
+  move — PostgreSQL cannot break the tie because one side is blocked in
+  Python, not in SQL. The ``except Exception: pass`` around it protected
+  against the reload failing, not against it hanging. The reload now runs from
+  the manifest's ``post_init_hook`` on install and from a ``<function>`` on
+  upgrade, both inside the cursor that is already open.
+* **New trigger: at the start of the event's month.** Fires on the 1st of the
+  month the event falls in, whatever the exact day — the natural cadence for
+  "we are celebrating you this month" campaigns, which the N-days-before
+  trigger cannot express.
+* **Fix: schedule lines showed a blank channel name.** ``_compute_display_name``
+  read ``field.selection`` directly, which holds the *method name* when the
+  selection is method-based (as ``channel`` is, so add-ons can extend it).
+  It now resolves through ``fields_get``.
+
 19.0.1.7.0 (2026-07)
 --------------------
 

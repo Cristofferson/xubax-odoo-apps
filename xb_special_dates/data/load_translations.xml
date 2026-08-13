@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Reload the bundled translations on every upgrade.
+
+         This is a <function> and not a Python hook on purpose: a <function>
+         runs inside the SAME cursor as the upgrade, so it cannot deadlock
+         against it. The previous version of this lived in a `_register_hook`
+         that opened its own cursor, and that froze the whole database — see
+         the comment in models/xb_wish_type.py.
+
+         Deliberately outside a `noupdate` block: it has to run on every `-u`,
+         which is exactly when the new .po files arrive. -->
+    <function model="xb.wish.type" name="_reload_bundled_translations"/>
+</odoo>

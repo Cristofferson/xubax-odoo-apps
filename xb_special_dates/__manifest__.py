@@ -46,7 +46,7 @@ Key features
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",
     "category": "Sales/Sales",
-    "version": "19.0.1.7.0",
+    "version": "19.0.1.8.0",
     "license": "OPL-1",
     "depends": [
         "base",
@@ -68,6 +68,8 @@ Key features
         "views/res_partner_views.xml",
         "views/pos_category_views.xml",
         "views/xb_special_dates_menus.xml",
+        # Last: reload the .po files once everything else is loaded.
+        "data/load_translations.xml",
     ],
     "assets": {
         "point_of_sale._assets_pos": [

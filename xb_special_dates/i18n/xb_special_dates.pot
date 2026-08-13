@@ -201,6 +201,11 @@ msgid "Assign To"
 msgstr ""
 
 #. module: xb_special_dates
+#: model:ir.model.fields.selection,name:xb_special_dates.selection__xb_wish_schedule__interval_type__month_start
+msgid "At the start of the event's month"
+msgstr ""
+
+#. module: xb_special_dates
 #: model:ir.model.fields,field_description:xb_special_dates.field_xb_wish_reminders__message_attachment_count
 msgid "Attachment Count"
 msgstr ""
