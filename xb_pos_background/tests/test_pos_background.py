@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
-
+import base64
+import io
 from unittest.mock import patch
+
+from PIL import Image
 
 from odoo.exceptions import ValidationError
 from odoo.tests import TransactionCase, tagged
@@ -23,6 +26,20 @@ BLACK_IMAGE = (
 WHITE_IMAGE = (
     b"iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAFklEQVR4nGP89uXDfwY8gAmf"
     b"5PBRAAD3kwPpvA072gAAAABJRU5ErkJggg=="
+)
+# 8x8 transparente con un solo pixel opaco: sirve para comprobar que el
+# procesado de Odoo no aplana el canal alfa.
+TRANSPARENT_PNG = (
+    b"iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAE0lEQVR4nGNgGITg////"
+    b"/+lsJQDFUQP9BmQKDgAAAABJRU5ErkJggg=="
+)
+SVG = (
+    b"PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIg"
+    b"aGVpZ2h0PSIxMCI+PC9zdmc+"
+)
+SVG_WITH_HEADER = (
+    b"PD94bWwgdmVyc2lvbj0iMS4wIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv"
+    b"MjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCI+PC9zdmc+"
 )
 
 
@@ -176,6 +193,36 @@ class TestPosBackground(TransactionCase):
             self.config.write({"xb_bg_image": BLACK_IMAGE})
             self.config.flush_recordset()
         self.assertFalse(self.config.xb_bg_is_dark)
+
+    # --- SVG: Odoo takes it and then refuses to serve it ---
+
+    def test_svg_is_refused_on_upload(self):
+        """An image field swallows an SVG without a word, but /web/image hands
+        out its placeholder instead of the drawing — the screen would show
+        Odoo's grey placeholder with nothing to explain why."""
+        for field_name in ("xb_bg_image", "xb_logo"):
+            with self.assertRaises(ValidationError, msg=field_name):
+                self.config.write({field_name: SVG})
+                self.config.flush_recordset()
+            self.config.invalidate_recordset()
+
+    def test_svg_with_xml_declaration_is_refused_too(self):
+        self.config.invalidate_recordset()
+        with self.assertRaises(ValidationError):
+            self.config.write({"xb_logo": SVG_WITH_HEADER})
+            self.config.flush_recordset()
+        self.config.invalidate_recordset()
+
+    def test_a_png_with_transparency_survives(self):
+        """The recommended format has to come out the other side intact:
+        Odoo resizes on upload, and flattening the alpha would put a white box
+        around every logo."""
+        self.config.write({"xb_logo": TRANSPARENT_PNG})
+        self.config.flush_recordset()
+        self.config.invalidate_recordset()
+        image = Image.open(io.BytesIO(base64.b64decode(self.config.xb_logo)))
+        self.assertIn(image.mode, ("RGBA", "LA", "P"))
+        self.assertEqual(image.convert("RGBA").getpixel((0, 0))[3], 0)
 
     # --- Constraints: the color ends up in a CSS custom property ---
 

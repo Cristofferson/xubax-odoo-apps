@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-12 20:47+0000\n"
-"PO-Revision-Date: 2026-08-12 20:47+0000\n"
+"POT-Creation-Date: 2026-08-13 00:07+0000\n"
+"PO-Revision-Date: 2026-08-13 00:07+0000\n"
 "Last-Translator: \n"
 "Language: es_MX\n"
 "Language-Team: \n"
@@ -141,6 +141,17 @@ msgstr ""
 " del punto de venta."
 
 #. module: xb_pos_background
+#. odoo-python
+#: code:addons/xb_pos_background/models/pos_config.py
+msgid ""
+"Odoo cannot serve SVG images to the Point of Sale. Please upload a PNG or a "
+"JPEG instead — a PNG with a transparent background works best for a logo."
+msgstr ""
+"Odoo no puede servir imágenes SVG al punto de venta. Sube un PNG o un JPEG "
+"en su lugar: para un logo, lo que mejor funciona es un PNG con fondo "
+"transparente."
+
+#. module: xb_pos_background
 msgid "Odoo logo"
 msgstr "Logo de Odoo"
 
@@ -210,12 +221,13 @@ msgstr "Mosaico"
 
 #. module: xb_pos_background
 msgid ""
-"Used when the POS logo is set to Custom. A transparent PNG or an SVG gives "
-"the best result, since the logo is drawn straight over the background."
+"Used when the POS logo is set to Custom. A PNG with a transparent background"
+" gives the best result, since the logo is drawn straight over the picture. "
+"SVG files are not supported."
 msgstr ""
-"Se usa cuando el logo del punto de venta está en Propio. Un PNG con "
-"transparencia o un SVG da el mejor resultado, porque el logo se dibuja "
-"directamente sobre el fondo."
+"Se usa cuando el logo del punto de venta está en Propio. Un PNG con fondo "
+"transparente da el mejor resultado, porque el logo se dibuja directamente "
+"sobre la imagen. No se admiten archivos SVG."
 
 #. module: xb_pos_background
 msgid "XUBAX - Background & Logo"

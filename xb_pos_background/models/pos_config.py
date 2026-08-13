@@ -91,9 +91,9 @@ class PosConfig(models.Model):
         string="Custom POS Logo",
         max_width=1024,
         max_height=1024,
-        help="Used when the POS logo is set to Custom. A transparent PNG or an "
-             "SVG gives the best result, since the logo is drawn straight over "
-             "the background.",
+        help="Used when the POS logo is set to Custom. A PNG with a transparent "
+             "background gives the best result, since the logo is drawn "
+             "straight over the picture. SVG files are not supported.",
     )
     xb_logo_name = fields.Char(string="Custom POS Logo Name")
 
@@ -105,6 +105,30 @@ class PosConfig(models.Model):
                     "The Point of Sale background color must be a hexadecimal "
                     "color such as #1B2A4A."
                 ))
+
+    @api.constrains("xb_bg_image", "xb_logo")
+    def _check_xb_no_svg(self):
+        """Odoo stores an SVG in an image field without complaining, but
+        ``/web/image`` refuses to serve it and hands out its placeholder
+        instead — the screen would end up showing Odoo's grey placeholder with
+        nothing to explain why. Better to say so at upload time."""
+        for config in self:
+            for field_name in ("xb_bg_image", "xb_logo"):
+                value = config[field_name]
+                if not value:
+                    continue
+                try:
+                    head = base64.b64decode(value)[:512].lstrip()
+                except Exception:
+                    continue
+                if head.startswith(b"<svg") or (
+                    head.startswith(b"<?xml") and b"<svg" in head
+                ):
+                    raise ValidationError(_(
+                        "Odoo cannot serve SVG images to the Point of Sale. "
+                        "Please upload a PNG or a JPEG instead — a PNG with a "
+                        "transparent background works best for a logo."
+                    ))
 
     @api.constrains("xb_bg_darkening")
     def _check_xb_bg_darkening(self):

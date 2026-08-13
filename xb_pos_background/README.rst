@@ -29,7 +29,8 @@ Image fit                     Fill the screen / fit the whole image / tile /
 Darkening (%)                 0–80 % of black over the picture, so the clock
                               and the buttons stay readable.
 Clock                         Automatic (default), dark or light.
-POS logo                      Odoo logo, company logo, or a custom upload.
+POS logo                      Odoo logo, company logo, or a custom PNG
+                              upload (SVG is not supported).
 ============================  ==============================================
 
 How it works

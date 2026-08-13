@@ -22,15 +22,18 @@ What you can set, per Point of Sale
   screen and on the cashier login screen.
 * **Background color** — painted behind the image; on its own, it turns the
   screen into a flat brand color with no image at all.
-* **Image fit** — *Fill the screen*, *Fit the whole image*, *Tile* or *Center
-  at original size*, so a wide photo, a tall poster and a small pattern all
+* **Image fit** — *Fill the screen*, *Fit the whole image*, *Tile* or
+  *Center*, so a wide photo, a tall poster and a small pattern all
   land properly on any screen shape.
 * **Darkening** — a veil of black from 0 to 80 % over the image. This is the
   setting that turns a nice photo into a usable screen: the clock, the buttons
   and the logo stay readable over bright or busy pictures.
 * **POS logo** — keep the Odoo logo, use your **company logo** in one click, or
   upload a **custom logo**. It replaces the Odoo logo both in the middle of the
-  standby screen and in the POS top bar.
+  standby screen and in the POS top bar. A **PNG with a transparent
+  background** works best, since the logo is drawn straight over the picture;
+  SVG files are not supported, and the module says so instead of letting you
+  save one that would never show.
 
 Everything is set in *Settings ▸ Point of Sale ▸ (your register) ▸
 XUBAX - Background & Logo*. There is nothing to configure on the terminals:
@@ -73,7 +76,7 @@ Compatibility
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",
     "category": "Point of Sale",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "license": "OPL-1",
     "price": 18.00,
     "currency": "USD",
