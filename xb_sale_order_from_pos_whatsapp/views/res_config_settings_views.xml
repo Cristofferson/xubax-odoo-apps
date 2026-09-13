@@ -13,6 +13,12 @@
                          invisible="not pos_xb_enable_sale_order or not pos_xb_allow_quotation or not pos_xb_ask_quotation_delivery">
                     <field name="pos_xb_quotation_wa_template_id" options="{'no_create': True}"/>
                 </setting>
+                <setting id="xb_ready_wa_template_setting"
+                         string="Order ready WhatsApp template (company)"
+                         help="Approved template sent from the orders list (Sales and Point of Sale) to tell the customer the order is ready. Leave empty to hide that button for this company."
+                         invisible="not pos_xb_enable_sale_order">
+                    <field name="xb_ready_wa_template_id" options="{'no_create': True}"/>
+                </setting>
             </xpath>
         </field>
     </record>

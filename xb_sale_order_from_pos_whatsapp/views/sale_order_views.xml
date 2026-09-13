@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+      "Order ready" WhatsApp notice. The base orders list (sale.sale_order_tree) is also
+      the list the POS opens to recover an order (native SelectCreateDialog), so one row
+      button serves Sales and the Point of Sale. Visible only for orders/layaways of a
+      company that has an "order ready" template (xb_can_notify_ready).
+    -->
+    <record id="view_order_tree_xb_ready_notice" model="ir.ui.view">
+        <field name="name">sale.order.list.xb.ready.notice</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="inside">
+                <field name="xb_can_notify_ready" column_invisible="1"/>
+                <field name="xb_ready_notified_date" optional="hide" string="Ready notice"/>
+                <button name="action_xb_notify_ready" type="object" icon="fa-whatsapp"
+                        string="Notify: ready"
+                        title="Tell the customer by WhatsApp that the order is ready"
+                        class="text-success"
+                        invisible="not xb_can_notify_ready or xb_ready_notified_date"/>
+                <button name="action_xb_notify_ready" type="object" icon="fa-check"
+                        string="Notified"
+                        title="Already notified. Click to send the notice again."
+                        confirm="The customer was already told this order is ready. Send the notice again?"
+                        class="text-muted"
+                        invisible="not xb_can_notify_ready or not xb_ready_notified_date"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_form_xb_ready_notice" model="ir.ui.view">
+        <field name="name">sale.order.form.xb.ready.notice</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@id='quotation_send']" position="after">
+                <field name="xb_can_notify_ready" invisible="1"/>
+                <field name="xb_ready_notified_date" invisible="1"/>
+                <button name="action_xb_notify_ready" type="object" icon="fa-whatsapp"
+                        string="Notify: ready (WhatsApp)"
+                        invisible="not xb_can_notify_ready or xb_ready_notified_date"/>
+                <button name="action_xb_notify_ready" type="object" icon="fa-whatsapp"
+                        string="Notify again: ready"
+                        confirm="The customer was already told this order is ready. Send the notice again?"
+                        invisible="not xb_can_notify_ready or not xb_ready_notified_date"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

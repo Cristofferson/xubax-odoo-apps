@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <!--
-      XUBAX - A quotation earns no loyalty points yet, so its ticket must not print them
-      as "Won". On a quotation ticket, pos_loyalty's "Won" line is swapped for "You could
-      earn N loyalty points if you confirm this quotation" (text from
-      xb_sale_order_from_pos, translated there). Every other ticket keeps Odoo's line.
+      XUBAX - The ticket printed when a quotation, order or layaway is CREATED at the POS
+      earns no loyalty points (nothing is paid yet), so it must not print them as "Won".
+      On those tickets pos_loyalty's "Won" line is swapped for the text of
+      xbLoyaltyPendingText (xb_sale_order_from_pos, translated there):
+        quotation -> "You could earn N loyalty points if you confirm this quotation"
+        order / layaway -> "You will earn N loyalty points when this ... is paid in full"
+      Every other ticket (sales, advances, settlements) keeps Odoo's line.
       This lives in its own add-on because it edits pos_loyalty's markup: depending on
       pos_loyalty guarantees that markup is there when this runs.
     -->
     <t t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
         <xpath expr="//t[@t-if='_loyaltyStat.points.won']" position="before">
-            <div t-if="_loyaltyStat.points.won and xbIsQuotationTicket"
-                 class="xb-loyalty-could-earn" style="font-size: 75%;">
-                <t t-out="xbCouldEarnText(_loyaltyStat.points.won)"/>
+            <div t-if="_loyaltyStat.points.won and xbLoyaltyPendingText(_loyaltyStat.points.won)"
+                 class="xb-loyalty-pending" style="font-size: 75%;">
+                <t t-out="xbLoyaltyPendingText(_loyaltyStat.points.won)"/>
             </div>
         </xpath>
         <xpath expr="//t[@t-if='_loyaltyStat.points.won']" position="attributes">
-            <attribute name="t-if">_loyaltyStat.points.won and !xbIsQuotationTicket</attribute>
+            <attribute name="t-if">_loyaltyStat.points.won and !xbLoyaltyPendingText(_loyaltyStat.points.won)</attribute>
         </xpath>
     </t>
 </templates>

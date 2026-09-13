@@ -1058,3 +1058,25 @@ msgstr ""
 #: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.js:0
 msgid "You could earn %(points)s loyalty points if you confirm this quotation"
 msgstr ""
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.js:0
+msgid ""
+"You will earn %(points)s loyalty points when this order is paid in full"
+msgstr ""
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.js:0
+msgid ""
+"You will earn %(points)s loyalty points when this layaway is paid in full"
+msgstr ""
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.js:0
+msgid ""
+"You will earn %(points)s loyalty points when this order / layaway is paid in"
+" full"
+msgstr ""

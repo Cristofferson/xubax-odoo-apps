@@ -23,6 +23,35 @@ patch(OrderReceipt.prototype, {
             points,
         });
     },
+    // The ticket printed when a quotation / order / layaway is CREATED at the POS (the
+    // cart is discarded, nothing is paid yet) earns no loyalty points: this is the line
+    // the add-on xb_sale_order_from_pos_loyalty prints instead of Odoo's "Won". Empty for
+    // every other ticket: advances and settlements are real payments and keep Odoo's.
+    xbLoyaltyPendingText(points) {
+        const so = this.order.uiState?.xbSaleOrder ? this.xbSaleOrder : null;
+        if (!so?.type) {
+            return "";
+        }
+        // Same rule as the header: a quotation already confirmed reads as an order.
+        const kind = so.type === "quotation" && so.state === "sale" ? "order" : so.type;
+        if (kind === "quotation") {
+            return this.xbCouldEarnText(points);
+        }
+        const texts = {
+            order: _t("You will earn %(points)s loyalty points when this order is paid in full", {
+                points,
+            }),
+            layaway: _t(
+                "You will earn %(points)s loyalty points when this layaway is paid in full",
+                { points }
+            ),
+            order_layaway: _t(
+                "You will earn %(points)s loyalty points when this order / layaway is paid in full",
+                { points }
+            ),
+        };
+        return texts[kind] || "";
+    },
     // Big localized type header at the top of the receipt (null if no SO / type).
     // Title is by STATE, not the frozen kind: a quotation already confirmed (state
     // 'sale') prints PEDIDO; only a draft/sent quotation prints COTIZACIÓN. Order and

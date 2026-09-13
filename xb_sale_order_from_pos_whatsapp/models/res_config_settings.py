@@ -8,3 +8,6 @@ class ResConfigSettings(models.TransientModel):
     pos_xb_quotation_wa_template_id = fields.Many2one(
         related="pos_config_id.xb_quotation_wa_template_id", readonly=False
     )
+    xb_ready_wa_template_id = fields.Many2one(
+        related="company_id.xb_ready_wa_template_id", readonly=False
+    )

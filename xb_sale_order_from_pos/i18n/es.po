@@ -1169,3 +1169,26 @@ msgstr "{{ object.company_id.name }} - Cotización {{ object.name }}"
 msgid "You could earn %(points)s loyalty points if you confirm this quotation"
 msgstr ""
 "Podrías ganar %(points)s puntos de lealtad si confirmas esta cotización"
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.js:0
+msgid ""
+"You will earn %(points)s loyalty points when this order is paid in full"
+msgstr "Ganarás %(points)s puntos de lealtad al liquidar este pedido"
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.js:0
+msgid ""
+"You will earn %(points)s loyalty points when this layaway is paid in full"
+msgstr "Ganarás %(points)s puntos de lealtad al liquidar este apartado"
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.js:0
+msgid ""
+"You will earn %(points)s loyalty points when this order / layaway is paid in"
+" full"
+msgstr ""
+"Ganarás %(points)s puntos de lealtad al liquidar este pedido / apartado"

@@ -1,17 +1,22 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Sales, Quotations & Layaway from POS - Loyalty",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "category": "Point of Sale",
-    "summary": "Quotation tickets say how many loyalty points the customer could "
-               "earn by confirming, instead of points already won.",
+    "summary": "Tickets of quotations, orders and layaways created at the POS say how "
+               "many loyalty points the customer will earn, instead of points already won.",
     "description": """
 Sales, Quotations & Layaway from POS - Loyalty
 ==============================================
-A quotation created at the POS earns no loyalty points yet, but Odoo's ticket
-prints them as already "Won". With this add-on a quotation ticket reads
-"You could earn N loyalty points if you confirm this quotation" instead. Every
-other ticket keeps Odoo's own line untouched.
+When a quotation, order or layaway is created at the POS nothing is paid yet, so no
+loyalty points are earned, but Odoo's ticket prints them as already "Won". With this
+add-on the ticket printed on creation says instead:
+
+* Quotation: "You could earn N loyalty points if you confirm this quotation"
+* Order / layaway: "You will earn N loyalty points when this order is paid in full"
+
+Advance and settlement tickets are real payments and keep Odoo's own line, as does
+every regular sale.
 
 Installs by itself when both Sales, Quotations & Layaway from POS and
 Point of Sale Loyalty are present.

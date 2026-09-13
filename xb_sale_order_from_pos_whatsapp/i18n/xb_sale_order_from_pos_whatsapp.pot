@@ -6,14 +6,53 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-12 23:32+0000\n"
-"PO-Revision-Date: 2026-09-12 23:32+0000\n"
+"POT-Creation-Date: 2026-09-13 01:30+0000\n"
+"PO-Revision-Date: 2026-09-13 01:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model:ir.model.fields,help:xb_sale_order_from_pos_whatsapp.field_sale_order__xb_wa_kind_label
+msgid ""
+"\"order\" or \"layaway\" in the customer's language, for \"Your order ... is"
+" ready\"."
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos_whatsapp/models/sale_order.py:0
+msgid "%(customer)s has no phone number: add it to the contact and try again."
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos_whatsapp/models/sale_order.py:0
+msgid "%s has no WhatsApp template for ready orders."
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos_whatsapp/models/sale_order.py:0
+msgid "%s is not an order or layaway waiting to be delivered."
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos_whatsapp.view_order_tree_xb_ready_notice
+msgid "Already notified. Click to send the notice again."
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model:ir.model.fields,help:xb_sale_order_from_pos_whatsapp.field_res_company__xb_ready_wa_template_id
+#: model:ir.model.fields,help:xb_sale_order_from_pos_whatsapp.field_res_config_settings__xb_ready_wa_template_id
+msgid ""
+"Approved WhatsApp template sent from the orders list (Sales and Point of "
+"Sale) to tell the customer the order is ready. Leave empty to hide the "
+"button for this company."
+msgstr ""
 
 #. module: xb_sale_order_from_pos_whatsapp
 #: model:ir.model.fields,help:xb_sale_order_from_pos_whatsapp.field_pos_config__xb_quotation_wa_template_id
@@ -27,9 +66,27 @@ msgstr ""
 #. module: xb_sale_order_from_pos_whatsapp
 #: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos_whatsapp.res_config_settings_view_form_xb_whatsapp
 msgid ""
+"Approved template sent from the orders list (Sales and Point of Sale) to "
+"tell the customer the order is ready. Leave empty to hide that button for "
+"this company."
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos_whatsapp.res_config_settings_view_form_xb_whatsapp
+msgid ""
 "Approved template used when the cashier sends a quotation by WhatsApp. Its "
 "header must be an image: the printed ticket goes there. Leave empty to not "
 "offer WhatsApp at this Point of Sale."
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_sale_order__xb_wa_amount_unpaid
+msgid "Balance due (WhatsApp)"
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model:ir.model,name:xb_sale_order_from_pos_whatsapp.model_res_company
+msgid "Companies"
 msgstr ""
 
 #. module: xb_sale_order_from_pos_whatsapp
@@ -39,9 +96,15 @@ msgstr ""
 
 #. module: xb_sale_order_from_pos_whatsapp
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_pos_config__display_name
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_res_company__display_name
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_sale_order__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_sale_order__xb_wa_kind_label
+msgid "Document word (WhatsApp)"
 msgstr ""
 
 #. module: xb_sale_order_from_pos_whatsapp
@@ -51,9 +114,47 @@ msgstr ""
 
 #. module: xb_sale_order_from_pos_whatsapp
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_pos_config__id
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_res_company__id
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_res_config_settings__id
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_sale_order__id
 msgid "ID"
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos_whatsapp.view_order_tree_xb_ready_notice
+msgid "Notified"
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos_whatsapp.view_order_form_xb_ready_notice
+msgid "Notify again: ready"
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos_whatsapp.view_order_tree_xb_ready_notice
+msgid "Notify: ready"
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos_whatsapp.view_order_form_xb_ready_notice
+msgid "Notify: ready (WhatsApp)"
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos_whatsapp/models/sale_order.py:0
+msgid "Only Sales or Point of Sale users can send this notice."
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_res_company__xb_ready_wa_template_id
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_res_config_settings__xb_ready_wa_template_id
+msgid "Order ready WhatsApp template"
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos_whatsapp.res_config_settings_view_form_xb_whatsapp
+msgid "Order ready WhatsApp template (company)"
 msgstr ""
 
 #. module: xb_sale_order_from_pos_whatsapp
@@ -69,14 +170,42 @@ msgid "Quotation WhatsApp template"
 msgstr ""
 
 #. module: xb_sale_order_from_pos_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos_whatsapp.view_order_tree_xb_ready_notice
+msgid "Ready notice"
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_sale_order__xb_ready_notified_date
+msgid "Ready notice sent"
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos_whatsapp/models/sale_order.py:0
+msgid "Ready notice sent by WhatsApp to %s."
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
 #: model:ir.model,name:xb_sale_order_from_pos_whatsapp.model_sale_order
 msgid "Sales Order"
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos_whatsapp.view_order_tree_xb_ready_notice
+msgid "Tell the customer by WhatsApp that the order is ready"
 msgstr ""
 
 #. module: xb_sale_order_from_pos_whatsapp
 #. odoo-python
 #: code:addons/xb_sale_order_from_pos_whatsapp/models/sale_order.py:0
 msgid "The WhatsApp template %s is not approved by Meta yet."
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos_whatsapp.view_order_form_xb_ready_notice
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos_whatsapp.view_order_tree_xb_ready_notice
+msgid ""
+"The customer was already told this order is ready. Send the notice again?"
 msgstr ""
 
 #. module: xb_sale_order_from_pos_whatsapp
@@ -94,4 +223,32 @@ msgstr ""
 #. odoo-python
 #: code:addons/xb_sale_order_from_pos_whatsapp/models/sale_order.py:0
 msgid "WhatsApp did not accept the message."
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model:ir.model.fields,help:xb_sale_order_from_pos_whatsapp.field_sale_order__xb_ready_notified_date
+msgid "When the customer was told by WhatsApp that this order is ready."
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_sale_order__xb_can_notify_ready
+msgid "Ready notice available"
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos_whatsapp/models/sale_order.py:0
+msgid "layaway"
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos_whatsapp/models/sale_order.py:0
+msgid "order"
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos_whatsapp/models/sale_order.py:0
+msgid "order / layaway"
 msgstr ""
