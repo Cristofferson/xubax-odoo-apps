@@ -87,6 +87,22 @@ class PosConfig(models.Model):
         help="Automatically print the order receipt right after creating the "
              "quotation / sale order / layaway from the POS.",
     )
+    xb_duplicate_receipt_on_create = fields.Boolean(
+        string="Print the order receipt in duplicate",
+        help="Print the order receipt twice when it is created from the POS: two "
+             "identical tickets, one for the customer and one for the shop. "
+             "Quotations are always printed once, whatever this setting says. Only "
+             "applies to the receipt printed on creation, and requires "
+             "\"Auto-print receipt on create\".",
+    )
+    xb_ask_quotation_delivery = fields.Boolean(
+        string="Ask how to deliver each quotation",
+        help="When a quotation is created from the POS, ask how the customer wants "
+             "it: printed, by WhatsApp, by email, or any combination, chosen for each "
+             "quotation. What is sent is the same ticket that is printed. WhatsApp is "
+             "offered only when the WhatsApp add-on is installed and this Point of "
+             "Sale has a quotation template.",
+    )
     xb_show_portal_link = fields.Boolean(
         string="Show online portal link on receipt",
         help="Add the order's online portal link (with access token) and a short "

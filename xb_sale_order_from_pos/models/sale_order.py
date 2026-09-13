@@ -3,11 +3,15 @@
 # Original, clean-room implementation. ALL ERP logic (taxes, fiscal position,
 # down payment / advance) is based exclusively on native Odoo
 # (point_of_sale, pos_sale, sale) plus original design.
+import logging
+
 from markupsafe import Markup
 
 from odoo import Command, _, api, fields, models
-from odoo.exceptions import UserError
-from odoo.tools import float_compare, plaintext2html
+from odoo.exceptions import AccessError, UserError
+from odoo.tools import email_normalize, email_normalize_all, float_compare, plaintext2html
+
+_logger = logging.getLogger(__name__)
 
 
 class SaleOrder(models.Model):
@@ -309,3 +313,132 @@ class SaleOrder(models.Model):
             "partner_ref": partner.ref or "",
             "down_payment_product_id": down_payment_product.id or False,
         }
+
+    # ------------------------------------------------------------------
+    # Quotation delivery: printed (POS side), WhatsApp, email
+    # ------------------------------------------------------------------
+    def xb_send_order_from_pos(self, options):
+        """Send a quotation created at the POS to its customer, by WhatsApp and/or email.
+
+        The POS calls it right after the quotation is created and the cart is gone,
+        so a slow send never holds the cashier. What travels is the ticket the POS
+        prints, drawn to an image by the POS itself (``ticket_image``), never the
+        formal quotation PDF: the customer gets exactly what the shop hands over on
+        paper.
+
+        Each channel runs in its own savepoint and reports back instead of raising:
+        a WhatsApp failure never cancels the email, and neither undoes the quotation,
+        which is already committed.
+
+        ``options`` keys:
+            pos_config_id (int)     Point of Sale that sends it.
+            ticket_image (str)      The printed ticket, base64 JPEG.
+            phone (str|False)       WhatsApp number, when WhatsApp was chosen.
+            email (str|False)       Email address, when email was chosen.
+
+        Returns ``{"whatsapp": {...}, "email": {...}}`` for the channels asked, each
+        ``{"ok": bool, "to": str, "error": str}``.
+        """
+        self.ensure_one()
+        if not self.env.user.has_group("point_of_sale.group_pos_user"):
+            raise AccessError(_("Only Point of Sale users can send quotations from the POS."))
+        # The cashier may lack Sales rights (the POS creates these orders in sudo as
+        # well); what keeps this safe is that it only ever sends documents this
+        # module created from the POS.
+        order = self.sudo()
+        if not order.xb_so_kind:
+            raise UserError(_("This document was not created from the Point of Sale."))
+        config = self.env["pos.config"].browse(options.get("pos_config_id")).exists()
+        if not config:
+            raise UserError(_("The Point of Sale configuration was not found."))
+        ticket_image = options.get("ticket_image")
+        if not ticket_image:
+            raise UserError(_("The ticket image is missing, so nothing was sent."))
+        # One attachment for every channel, created outside their savepoints so a
+        # failed channel cannot take it away from the other one.
+        ticket = self.env["ir.attachment"].sudo().create({
+            "name": "%s.jpg" % order.name,
+            "type": "binary",
+            "datas": ticket_image,
+            "res_model": order._name,
+            "res_id": order.id,
+            "mimetype": "image/jpeg",
+        })
+        results = {}
+        phone = (options.get("phone") or "").strip()
+        if phone:
+            results["whatsapp"] = order._xb_pos_deliver(
+                order._xb_pos_send_whatsapp, phone, config, ticket
+            )
+        email = (options.get("email") or "").strip()
+        if email:
+            results["email"] = order._xb_pos_deliver(
+                order._xb_pos_send_email, email, config, ticket
+            )
+        return results
+
+    def _xb_pos_deliver(self, sender, destination, config, ticket):
+        """Run one channel's ``sender`` in a savepoint; report instead of raising."""
+        try:
+            with self.env.cr.savepoint():
+                sent_to = sender(destination, config, ticket)
+        except UserError as error:
+            return {"ok": False, "to": destination, "error": str(error)}
+        except Exception as error:
+            _logger.exception("Sending %s to %s from the POS failed", self.name, destination)
+            return {"ok": False, "to": destination, "error": str(error)}
+        return {"ok": True, "to": sent_to or destination}
+
+    def _xb_pos_send_email(self, email, config, ticket):
+        normalized = email_normalize(email)
+        if not normalized:
+            raise UserError(_("%s is not a valid email address.", email))
+        template = self.env.ref(
+            "xb_sale_order_from_pos.mail_template_pos_quotation_ticket", raise_if_not_found=False
+        )
+        if not template:
+            raise UserError(_("The email template for POS quotations was deleted."))
+        partner = self.partner_id
+        # Fill the customer's email only when it has none; never overwrite the one
+        # the shop keeps. A different address is used for this send only.
+        if not partner.email:
+            partner.email = email
+        layout = "mail.mail_notification_layout_with_responsible_signature"
+        if normalized in email_normalize_all(partner.email):
+            # To the customer: the native notification path, so the chatter keeps the
+            # email with its ticket, like any quotation sent from Sales.
+            self.with_context(force_send=True).message_post_with_source(
+                template,
+                email_layout_xmlid=layout,
+                subtype_xmlid="mail.mt_comment",
+                attachment_ids=[ticket.id],
+            )
+        else:
+            # A one-off address: same email and ticket, only to it.
+            mail_id = template.send_mail(
+                self.id,
+                force_send=True,
+                email_layout_xmlid=layout,
+                email_values={
+                    "email_to": email,
+                    "recipient_ids": [],
+                    "attachment_ids": [Command.link(ticket.id)],
+                },
+            )
+            # force_send already tried it: a sent mail is gone (auto_delete), a failed
+            # one stays in "exception" with its reason.
+            mail = self.env["mail.mail"].browse(mail_id).exists()
+            if mail and mail.state == "exception":
+                raise UserError(mail.failure_reason or _("The email could not be sent."))
+            self.message_post(
+                body=_("Quotation ticket sent by email to %s.", email),
+                attachment_ids=[ticket.id],
+                subtype_xmlid="mail.mt_note",
+            )
+        return email
+
+    def _xb_pos_send_whatsapp(self, phone, config, ticket):
+        # WhatsApp comes with the optional add-on xb_sale_order_from_pos_whatsapp (it
+        # needs Odoo Enterprise's WhatsApp). Without it the POS never offers this
+        # channel, so only an outdated POS screen can land here.
+        raise UserError(_("WhatsApp is not available in this database."))

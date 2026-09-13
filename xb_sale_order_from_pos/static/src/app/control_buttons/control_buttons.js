@@ -12,6 +12,8 @@ import { PosStore } from "@point_of_sale/app/services/pos_store";
 import { SelectionPopup } from "@point_of_sale/app/components/popups/selection_popup/selection_popup";
 import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import { OrderReceipt } from "@point_of_sale/app/screens/receipt_screen/receipt/order_receipt";
+import { XbQuotationDeliveryPopup } from "@xb_sale_order_from_pos/app/components/xb_quotation_delivery_popup/xb_quotation_delivery_popup";
 
 patch(ControlButtons.prototype, {
     /**
@@ -246,6 +248,18 @@ patch(PosStore.prototype, {
             return;
         }
 
+        // Quotation delivery: ask, for THIS quotation, how the customer wants it
+        // (printed / WhatsApp / email, any combination). Asked BEFORE creating, so
+        // "Cancel" leaves the cart intact and nothing is created.
+        let delivery = null;
+        if (payload.type === "quotation" && this.config.xb_ask_quotation_delivery) {
+            delivery = await this.xbAskQuotationDelivery(payload.partner_id);
+            if (!delivery) {
+                return;
+            }
+        }
+        const wantsSending = Boolean(delivery && (delivery.phone || delivery.email));
+
         try {
             const result = await this.env.services.orm.call(
                 "sale.order",
@@ -260,6 +274,7 @@ patch(PosStore.prototype, {
             // even though this pos.order is NOT natively linked to the SO (we create
             // it directly in the backend, no sale_order_origin_id line).
             const createdOnOrder = this.getOrder();
+            let ticketImage = false;
             if (createdOnOrder) {
                 createdOnOrder.uiState.xbSaleOrder = {
                     sale_order_id: result.sale_order_id,
@@ -272,21 +287,49 @@ patch(PosStore.prototype, {
                 };
                 // Reuse the native receipt printer. Gated by the per-POS toggle
                 // xb_autoprint_on_create (configurable, INDEPENDENT of
-                // iface_print_auto). Awaited so the receipt renders from the INTACT
-                // cart before any quotation discard below. The native ReceiptScreen
-                // is intentionally not used: it is gated to finalized/synced orders,
-                // which this unpaid cart is not.
-                if (this.config.xb_autoprint_on_create) {
-                    // Hardened: a receipt-render failure during autoprint must NEVER
-                    // abort the flow or take down the POS. The Sale Order is already
-                    // created; if the print fails we log it and carry on (the cashier
-                    // can reprint). Catches both rejected promises and render errors
-                    // surfaced through the print pipeline.
-                    try {
-                        await this.printReceipt({ order: createdOnOrder });
-                    } catch (printErr) {
-                        console.warn("[xb] autoprint failed (order already created):", printErr);
+                // iface_print_auto), or, when the cashier was asked how to deliver
+                // this quotation, by her answer. Awaited so the receipt renders from
+                // the INTACT cart before any quotation discard below. The native
+                // ReceiptScreen is intentionally not used: it is gated to
+                // finalized/synced orders, which this unpaid cart is not.
+                const shouldPrint = delivery ? delivery.print : this.config.xb_autoprint_on_create;
+                if (shouldPrint) {
+                    // xb_duplicate_receipt_on_create: print the SAME ticket twice (one
+                    // for the customer, one for the shop). Two sequential print jobs
+                    // rather than one long strip, so the printer cuts between copies.
+                    // Scoped to creation only: advances, settlements and plain sales
+                    // keep printing a single ticket.
+                    // A QUOTATION is always printed ONCE, whatever the toggle says: it
+                    // commits the customer to nothing, so the shop has no counterpart to
+                    // file. Only the confirmed documents (Order / Layaway / the combined
+                    // Order-Layaway) are worth a second copy.
+                    const isQuotation = payload.type === "quotation";
+                    const copies =
+                        this.config.xb_duplicate_receipt_on_create && !isQuotation ? 2 : 1;
+                    for (let copy = 1; copy <= copies; copy++) {
+                        // Hardened: a receipt-render failure during autoprint must NEVER
+                        // abort the flow or take down the POS. The Sale Order is already
+                        // created; if the print fails we log it and carry on (the cashier
+                        // can reprint). Catches both rejected promises and render errors
+                        // surfaced through the print pipeline. A failed copy also stops
+                        // the remaining ones: the printer is down, queueing more only
+                        // piles up errors.
+                        try {
+                            await this.printReceipt({ order: createdOnOrder });
+                        } catch (printErr) {
+                            console.warn(
+                                `[xb] autoprint copy ${copy}/${copies} failed (order already created):`,
+                                printErr
+                            );
+                            break;
+                        }
                     }
+                }
+                // The customer gets the SAME ticket the POS prints: draw that very
+                // receipt to an image while the cart still exists (it is discarded
+                // right below).
+                if (wantsSending) {
+                    ticketImage = await this.xbRenderTicketImage(createdOnOrder);
                 }
             }
             // Discard the consumed cart for ALL three types and open a fresh empty
@@ -302,6 +345,11 @@ patch(PosStore.prototype, {
                 this.removeOrder(consumed, false);
             }
             // Phase 4 will add: advance (down-payment) collection at the POS.
+            // Sent last, with the cart already gone: the cashier can serve the next
+            // customer while the ticket travels.
+            if (wantsSending) {
+                await this.xbSendOrderFromPos(result, delivery, ticketImage);
+            }
         } catch (error) {
             // UserError messages raised by the backend surface here.
             const message =
@@ -309,6 +357,104 @@ patch(PosStore.prototype, {
             this.dialog.add(AlertDialog, {
                 title: _t("Could not create the order"),
                 body: message,
+            });
+        }
+    },
+
+    /**
+     * Ask how the customer wants THIS quotation. Resolves to {print, phone, email}
+     * (phone / email are false when that channel was not chosen), or undefined when
+     * the cashier cancels.
+     */
+    xbAskQuotationDelivery(partnerId) {
+        const partner = this.models["res.partner"].get(partnerId);
+        return makeAwaitable(this.dialog, XbQuotationDeliveryPopup, {
+            partnerName: partner?.name || "",
+            phone: partner?.phone || "",
+            email: partner?.email || "",
+            // WhatsApp comes with the optional add-on xb_sale_order_from_pos_whatsapp,
+            // which adds this per-POS template. Read the RAW id: whatsapp.template is
+            // not loaded in the POS, so the relational accessor would read empty.
+            allowWhatsapp: Boolean(this.config.raw?.xb_quotation_wa_template_id),
+            print: Boolean(this.config.xb_autoprint_on_create),
+        });
+    },
+
+    /**
+     * The printed ticket as a base64 JPEG: same component and props as
+     * printReceipt, same classes as the native "send receipt by email", so what the
+     * customer receives is the paper ticket. False when it cannot be drawn.
+     */
+    async xbRenderTicketImage(order) {
+        try {
+            return await this.env.services.renderer.toJpeg(
+                OrderReceipt,
+                { order, basic_receipt: false },
+                { addClass: "pos-receipt-print p-3" }
+            );
+        } catch (renderErr) {
+            console.warn("[xb] could not draw the quotation ticket:", renderErr);
+            return false;
+        }
+    },
+
+    /**
+     * Send the just-created quotation's ticket by WhatsApp and/or email. Never
+     * throws: the quotation already exists, so a failure is reported to the cashier
+     * and the POS carries on.
+     */
+    async xbSendOrderFromPos(result, delivery, ticketImage) {
+        const name = result.name;
+        const sendLater = _t("The quotation is saved: you can send it from the Sales app.");
+        if (!ticketImage) {
+            this.dialog.add(AlertDialog, {
+                title: _t("%s was not sent", name),
+                body: _t("The ticket image could not be generated, so nothing was sent.") +
+                    "\n\n" + sendLater,
+            });
+            return;
+        }
+        this.notification.add(_t("Sending %s…", name), { type: "info" });
+        let outcome;
+        try {
+            outcome = await this.env.services.orm.call("sale.order", "xb_send_order_from_pos", [
+                [result.sale_order_id],
+                {
+                    pos_config_id: this.config.id,
+                    ticket_image: ticketImage,
+                    phone: delivery.phone || false,
+                    email: delivery.email || false,
+                },
+            ]);
+        } catch (error) {
+            this.dialog.add(AlertDialog, {
+                title: _t("%s was not sent", name),
+                body: (error?.data?.message || error?.message || "") + "\n\n" + sendLater,
+            });
+            return;
+        }
+        const failures = [];
+        for (const [channel, res] of Object.entries(outcome || {})) {
+            const isWhatsapp = channel === "whatsapp";
+            if (res.ok) {
+                this.notification.add(
+                    isWhatsapp
+                        ? _t("%(name)s sent by WhatsApp to %(to)s.", { name, to: res.to })
+                        : _t("%(name)s sent by email to %(to)s.", { name, to: res.to }),
+                    { type: "success" }
+                );
+            } else {
+                failures.push(
+                    isWhatsapp
+                        ? _t("WhatsApp (%(to)s): %(error)s", { to: res.to, error: res.error })
+                        : _t("Email (%(to)s): %(error)s", { to: res.to, error: res.error })
+                );
+            }
+        }
+        if (failures.length) {
+            this.dialog.add(AlertDialog, {
+                title: _t("%s could not be sent", name),
+                body: failures.join("\n\n") + "\n\n" + sendLater,
             });
         }
     },

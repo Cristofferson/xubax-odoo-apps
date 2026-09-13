@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_xb_whatsapp" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.xb.sale.order.from.pos.whatsapp</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="xb_sale_order_from_pos.res_config_settings_view_form_xb"/>
+        <field name="arch" type="xml">
+            <!-- Right under "Ask how to deliver each quotation", which it completes. -->
+            <xpath expr="//setting[@id='xb_ask_quotation_delivery_setting']" position="after">
+                <setting id="xb_quotation_wa_template_setting"
+                         string="Quotation WhatsApp template"
+                         help="Approved template used when the cashier sends a quotation by WhatsApp. Its header must be an image: the printed ticket goes there. Leave empty to not offer WhatsApp at this Point of Sale."
+                         invisible="not pos_xb_enable_sale_order or not pos_xb_allow_quotation or not pos_xb_ask_quotation_delivery">
+                    <field name="pos_xb_quotation_wa_template_id" options="{'no_create': True}"/>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

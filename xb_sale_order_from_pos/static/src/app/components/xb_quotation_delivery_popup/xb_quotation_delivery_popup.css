@@ -1,0 +1,20 @@
+/* XUBAX - quotation delivery popup (POS): big touch targets, a clear "on" state. */
+.xb-quotation-delivery .xb-delivery-option,
+.xb-quotation-delivery .xb-delivery-option label {
+    cursor: pointer;
+}
+
+.xb-quotation-delivery .xb-delivery-option {
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.xb-quotation-delivery .xb-delivery-option-on {
+    border-color: var(--bs-primary, #714b67) !important;
+    background-color: rgba(113, 75, 103, 0.08);
+}
+
+.xb-quotation-delivery .form-check-input {
+    width: 1.6em;
+    height: 1.6em;
+    flex-shrink: 0;
+}

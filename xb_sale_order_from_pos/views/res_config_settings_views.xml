@@ -36,6 +36,12 @@
                              invisible="not pos_xb_enable_sale_order">
                         <field name="pos_xb_allow_quotation"/>
                     </setting>
+                    <setting id="xb_ask_quotation_delivery_setting"
+                             string="Ask how to deliver each quotation"
+                             help="When a quotation is created, the cashier chooses whether it is printed, sent by WhatsApp, sent by email, or any combination. What is sent is the same ticket that is printed."
+                             invisible="not pos_xb_enable_sale_order or not pos_xb_allow_quotation">
+                        <field name="pos_xb_ask_quotation_delivery"/>
+                    </setting>
                     <setting id="xb_differentiate_setting"
                              string="Differentiate Order and Layaway"
                              help="Show separate &quot;Order&quot; and &quot;Layaway&quot; actions instead of a single combined one."
@@ -69,6 +75,12 @@
                              help="Print the receipt automatically right after the order is created."
                              invisible="not pos_xb_enable_sale_order">
                         <field name="pos_xb_autoprint_on_create"/>
+                    </setting>
+                    <setting id="xb_duplicate_receipt_setting"
+                             string="Print the order receipt in duplicate"
+                             help="Print two identical tickets when the order is created: one for the customer, one for the shop. Quotations are always printed once. Requires &quot;Auto-print receipt on create&quot;."
+                             invisible="not pos_xb_enable_sale_order or not pos_xb_autoprint_on_create">
+                        <field name="pos_xb_duplicate_receipt_on_create"/>
                     </setting>
                     <setting id="xb_show_portal_link_setting"
                              string="Show online portal link on receipt"

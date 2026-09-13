@@ -32,6 +32,12 @@ class ResConfigSettings(models.TransientModel):
     pos_xb_autoprint_on_create = fields.Boolean(
         related="pos_config_id.xb_autoprint_on_create", readonly=False
     )
+    pos_xb_duplicate_receipt_on_create = fields.Boolean(
+        related="pos_config_id.xb_duplicate_receipt_on_create", readonly=False
+    )
+    pos_xb_ask_quotation_delivery = fields.Boolean(
+        related="pos_config_id.xb_ask_quotation_delivery", readonly=False
+    )
     pos_xb_show_portal_link = fields.Boolean(
         related="pos_config_id.xb_show_portal_link", readonly=False
     )

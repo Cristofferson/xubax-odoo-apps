@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Sales, Quotations & Layaway from POS",
-    "version": "19.0.1.0.7",
+    "version": "19.0.1.1.0",
     "category": "Point of Sale",
     "summary": "Create quotations, sale orders and layaways (apartados) directly "
                "from the Point of Sale, with detailed receipt and balance.",
@@ -29,6 +29,7 @@ All features are optional and configured per Point of Sale.
         "l10n_mx_edi",
     ],
     "data": [
+        "data/mail_template_data.xml",
         "views/res_config_settings_views.xml",
         "views/sale_order_views.xml",
         "views/pos_payment_method_views.xml",
@@ -37,6 +38,9 @@ All features are optional and configured per Point of Sale.
         "point_of_sale._assets_pos": [
             "xb_sale_order_from_pos/static/src/app/control_buttons/control_buttons.js",
             "xb_sale_order_from_pos/static/src/app/control_buttons/control_buttons.xml",
+            "xb_sale_order_from_pos/static/src/app/components/xb_quotation_delivery_popup/xb_quotation_delivery_popup.js",
+            "xb_sale_order_from_pos/static/src/app/components/xb_quotation_delivery_popup/xb_quotation_delivery_popup.xml",
+            "xb_sale_order_from_pos/static/src/app/components/xb_quotation_delivery_popup/xb_quotation_delivery_popup.css",
             "xb_sale_order_from_pos/static/src/app/models/pos_order.js",
             "xb_sale_order_from_pos/static/src/app/models/pos_order_line.js",
             "xb_sale_order_from_pos/static/src/app/services/pos_store_settle.js",

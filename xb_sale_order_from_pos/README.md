@@ -120,11 +120,14 @@ selected). English-source strings with an `es_MX` translation (`i18n/es_MX.po`).
 | **Create Sale Order / Quotation** | Master switch — enables the whole feature for this POS. | — |
 | Default document state | Pre-selects which document type is highlighted by default in the create dialog (Quotation, or Order / Layaway). It does not confirm anything — confirmation happens natively on payment. | master ON |
 | Allow quotations | Let the cashier save the order as a draft quotation. | master ON |
+| Ask how to deliver each quotation | On each quotation, ask whether it is printed, sent by WhatsApp, sent by email, or any combination. What is sent is the same ticket that is printed (see §5). | master ON **and** *Allow quotations* ON |
+| Quotation WhatsApp template | *(add-on `xb_sale_order_from_pos_whatsapp`)* Approved template with an Image header used to send the ticket by WhatsApp. Empty = WhatsApp is not offered. | *Ask how to deliver each quotation* ON |
 | Differentiate Order and Layaway | Show separate "Order" / "Layaway" actions instead of one combined. | master ON |
 | Show total & pending balance | Show order total + pending balance in the POS order panel. | master ON |
 | Detailed order receipt | Print the order's product detail, total and balance on the receipt. | master ON |
 | Show customer reference | Print the customer reference code before the name. | master ON |
 | Auto-print receipt on create | Print the receipt right after the order is created. | master ON |
+| Print the order receipt in duplicate | Print the SAME ticket twice on creation (one for the customer, one for the shop). Two sequential print jobs, so the printer cuts between copies. Only on creation — advances, settlements and plain sales keep printing one ticket — and **never for quotations**, which always print once. | master ON **and** *Auto-print receipt on create* ON |
 | Show online portal link on receipt | Add the payment QR (review / pay the balance online). | master ON **and** *Detailed order receipt* ON |
 | Self-invoice QR only when settled | Show the native "Need an invoice?" QR only on settled/paid tickets (avoids a double QR on advances); off = native (every ticket). | master ON **and** *Self-Invoicing* (`point_of_sale_use_ticket_qr_code`) ON |
 | Settle rounding product | Product used to absorb the rounding cent on an all-16% settle (Option 2). | master ON |
@@ -153,6 +156,28 @@ selected). English-source strings with an `es_MX` translation (`i18n/es_MX.po`).
   a **configurable self-invoice QR**; the advance's **product detail** on advance tickets;
   and a cash-rounding line that always reconciles (Total + Rounding = To Pay; Cash − To Pay
   = Change).
+- **Quotation delivery (printed / WhatsApp / email).** With *Ask how to deliver each
+  quotation* on, choosing "Quotation" opens a second question — *How does the customer want
+  the quotation?* — with one checkbox per channel, any combination allowed, for **that**
+  quotation only.
+  - It is asked **before** anything is created: *Cancel* leaves the cart untouched.
+  - *Printed* comes pre-checked when *Auto-print receipt on create* is on.
+  - What is sent is **the ticket itself**: the POS draws the very receipt it prints (same
+    component, same data) to an image, and that image goes by WhatsApp and/or email. The
+    formal quotation PDF is not used.
+  - Email uses the template **"Point of Sale: Quotation ticket"** (editable in *Settings ▸
+    Technical ▸ Email Templates*) with the ticket attached; when sent to the customer's own
+    address it is kept in the quotation's chatter like any email sent from Sales.
+  - WhatsApp needs the free add-on **`xb_sale_order_from_pos_whatsapp`** (installs by itself
+    when Odoo Enterprise *WhatsApp* is present) and, per POS, an **approved** WhatsApp
+    template on *Sales Order* whose **header is an Image** — the ticket goes there. Without
+    it, the WhatsApp option simply does not appear.
+  - The cashier sees the customer's phone / email and can change them. A value typed for a
+    customer who had **none** is saved on the contact; an existing one is **never
+    overwritten** — a different value is used for that send only.
+  - Channels are independent: sending happens after the cart is cleared, each channel on its
+    own, and a failure (e.g. WhatsApp rejects the number) is shown to the cashier without
+    affecting the other channel or the quotation, which stays saved.
 - **Mexican support is dormant off-MX.** Every CFDI/SAT touchpoint is gated on the company's
   fiscal country being `MX` (the same key `l10n_mx_edi` uses). On a non-Mexican company:
   the invoice keeps its **native cash rounding** (we don't drop `invoice_cash_rounding_id`),
