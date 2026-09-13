@@ -107,8 +107,10 @@ class PosConfig(models.Model):
         string="Keep paid orders listed until delivered",
         help="In the POS list of orders to recover (Quotation/Order button), keep the "
              "orders and layaways created here while their goods are pending delivery, "
-             "even when fully paid, so they can be delivered from the POS. Odoo's own "
-             "list only shows orders with a balance.",
+             "even when fully paid, so they can be delivered from the POS. Closing an "
+             "order asks whether the customer takes the piece now: if not, only the "
+             "balance is charged, as a down payment, and the piece stays in stock. "
+             "Odoo's own list only shows orders with a balance.",
     )
     xb_show_portal_link = fields.Boolean(
         string="Show online portal link on receipt",

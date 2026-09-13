@@ -44,7 +44,7 @@
                     </setting>
                     <setting id="xb_list_until_delivered_setting"
                              string="Keep paid orders listed until delivered"
-                             help="Orders and layaways created here stay in the POS list of orders (Quotation/Order button) while their goods are pending delivery, even when fully paid, so they can be delivered from the POS."
+                             help="Orders and layaways created here stay in the POS list of orders (Quotation/Order button) while their goods are pending delivery, even when fully paid. Closing an order asks whether the customer takes the piece now; if not, only the balance is charged and the piece stays in stock."
                              invisible="not pos_xb_enable_sale_order">
                         <field name="pos_xb_list_until_delivered"/>
                     </setting>

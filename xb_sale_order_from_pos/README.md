@@ -190,6 +190,11 @@ selected). English-source strings with an `es_MX` translation (`i18n/es_MX.po`).
   delivered from the POS. Orders created with this module now stay listed while their
   goods are pending delivery, paid or not, and leave the list once delivered (an order
   that still owes money stays, to collect it). Orders created in Sales keep Odoo's rule.
+  Because *Close the order* takes the goods out of stock, the POS first asks **whether the
+  customer takes the piece now**: *Yes* closes it as Odoo does; *No, only paying* charges
+  the balance as a down payment instead, so the piece stays in stock and the order stays
+  listed until it is really handed over (then closing it prints a $0 ticket). Per POS:
+  *Keep paid orders listed until delivered*.
 - **Mexican support is dormant off-MX.** Every CFDI/SAT touchpoint is gated on the company's
   fiscal country being `MX` (the same key `l10n_mx_edi` uses). On a non-Mexican company:
   the invoice keeps its **native cash rounding** (we don't drop `invoice_cash_rounding_id`),

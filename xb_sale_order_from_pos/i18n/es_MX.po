@@ -40,6 +40,16 @@ msgid "%s created from POS."
 msgstr "%s creado desde el Punto de Venta."
 
 #. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/services/pos_store_settle.js:0
+msgid ""
+"%s is charged as a down payment; the order stays in the list until the piece"
+" is delivered."
+msgstr ""
+"Se cobran %s como anticipo; el pedido sigue en la lista hasta entregar la "
+"pieza."
+
+#. module: xb_sale_order_from_pos
 #. odoo-python
 #: code:addons/xb_sale_order_from_pos/models/sale_order.py:0
 msgid "%s is not a valid email address."
@@ -457,6 +467,12 @@ msgstr "Forma de pago (SAT)"
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/services/pos_store_settle.js:0
+msgid "Hand over the piece now? The order is already paid."
+msgstr "¿Se entrega la pieza ahora? El pedido ya está pagado."
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
 #: code:addons/xb_sale_order_from_pos/static/src/app/components/xb_quotation_delivery_popup/xb_quotation_delivery_popup.xml:0
 msgid "How does the customer want the quotation?"
 msgstr "¿Cómo quiere el cliente su cotización?"
@@ -478,13 +494,17 @@ msgstr "ID"
 msgid ""
 "In the POS list of orders to recover (Quotation/Order button), keep the "
 "orders and layaways created here while their goods are pending delivery, "
-"even when fully paid, so they can be delivered from the POS. Odoo's own list"
-" only shows orders with a balance."
+"even when fully paid, so they can be delivered from the POS. Closing an "
+"order asks whether the customer takes the piece now: if not, only the "
+"balance is charged, as a down payment, and the piece stays in stock. Odoo's "
+"own list only shows orders with a balance."
 msgstr ""
 "En la lista de pedidos del TPV (botón Cotización/orden), conserva los "
 "pedidos y apartados creados aquí mientras su mercancía no se haya entregado,"
-" aunque ya estén pagados, para poder entregarlos desde el TPV. La lista "
-"original de Odoo solo muestra los que tienen saldo."
+" aunque ya estén pagados, para poder entregarlos desde el TPV. Al cerrar un "
+"pedido pregunta si el cliente se lleva la pieza: si no, solo se cobra el "
+"saldo, como anticipo, y la pieza sigue en inventario. La lista original de "
+"Odoo solo muestra los que tienen saldo."
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,help:xb_sale_order_from_pos.field_sale_order_line__xb_internal_note
@@ -494,6 +514,12 @@ msgid ""
 msgstr ""
 "Nota interna escrita en la línea del carrito del PdV de origen "
 "(pos.order.line.note), convertida a texto limpio en el cliente."
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/services/pos_store_settle.js:0
+msgid "Is the customer taking the piece now?"
+msgstr "¿El cliente se lleva la pieza ahora?"
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
@@ -553,6 +579,12 @@ msgstr ""
 #: code:addons/xb_sale_order_from_pos/static/src/app/control_buttons/control_buttons.js:0
 msgid "Missing customer"
 msgstr "Falta el cliente"
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/services/pos_store_settle.js:0
+msgid "No, only paying"
+msgstr "No, solo va a pagar"
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
@@ -640,11 +672,13 @@ msgstr "Plantilla de pedido (empresa)"
 msgid ""
 "Orders and layaways created here stay in the POS list of orders "
 "(Quotation/Order button) while their goods are pending delivery, even when "
-"fully paid, so they can be delivered from the POS."
+"fully paid. Closing an order asks whether the customer takes the piece now; "
+"if not, only the balance is charged and the piece stays in stock."
 msgstr ""
 "Los pedidos y apartados creados aquí se quedan en la lista de pedidos del "
 "TPV (botón Cotización/orden) mientras su mercancía no se haya entregado, "
-"aunque ya estén pagados, para poder entregarlos desde el TPV."
+"aunque ya estén pagados. Al cerrar un pedido pregunta si el cliente se lleva"
+" la pieza; si no, solo se cobra el saldo y la pieza sigue en inventario."
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order_line__xb_customer_note
@@ -1046,6 +1080,12 @@ msgid "The email template for POS quotations was deleted."
 msgstr "Se eliminó la plantilla de correo de las cotizaciones del TPV."
 
 #. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/services/pos_store_settle.js:0
+msgid "The order is closed and the piece leaves the inventory."
+msgstr "Se cierra el pedido y la pieza sale del inventario."
+
+#. module: xb_sale_order_from_pos
 #. odoo-python
 #: code:addons/xb_sale_order_from_pos/models/sale_order.py:0
 msgid ""
@@ -1194,6 +1234,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
 msgid "XUBAX - Sale Order / Quotation"
 msgstr "XUBAX - Pedido / Cotización"
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/services/pos_store_settle.js:0
+msgid "Yes, the customer takes it"
+msgstr "Sí, se la lleva"
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript

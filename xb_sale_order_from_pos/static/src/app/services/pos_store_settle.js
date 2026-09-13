@@ -2,11 +2,54 @@
 // XUBAX - Sales, Quotations & Layaway from POS (Phase 4)
 // Close the SO balance to EXACTLY amount_unpaid when settling, absorbing the
 // per-tax-group rounding cent of the down-payment credits. Clean-room, native-only.
+// 1.1.3: before closing, ask whether the customer takes the piece now.
 
 import { patch } from "@web/core/utils/patch";
+import { _t } from "@web/core/l10n/translation";
 import { PosStore } from "@point_of_sale/app/services/pos_store";
+import { SelectionPopup } from "@point_of_sale/app/components/popups/selection_popup/selection_popup";
+import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
 
 patch(PosStore.prototype, {
+    /**
+     * "Close the order" (pos_sale's Settle) hands the goods over: the POS order takes
+     * them out of stock and the order leaves the list of orders to deliver. With
+     * xb_list_until_delivered, ask first whether the customer takes the piece now. A
+     * customer who only pays the balance while the piece is still in the shop gets a
+     * down payment for that balance instead (pos_sale's own down-payment line), so the
+     * piece stays in stock and the order stays listed until it is really delivered.
+     * Resolves to "deliver", "pay", or undefined when the cashier closes the question.
+     */
+    async xbAskHandOver(sale_order) {
+        const due = this.currency.round(sale_order.amount_unpaid || 0);
+        const list = [
+            {
+                id: "deliver",
+                item: "deliver",
+                label: _t("Yes, the customer takes it"),
+                description: _t("The order is closed and the piece leaves the inventory."),
+            },
+        ];
+        if (due > 0) {
+            list.push({
+                id: "pay",
+                item: "pay",
+                label: _t("No, only paying"),
+                description: _t(
+                    "%s is charged as a down payment; the order stays in the list until the piece is delivered.",
+                    this.env.utils.formatCurrency(due)
+                ),
+            });
+        }
+        return makeAwaitable(this.dialog, SelectionPopup, {
+            title:
+                due > 0
+                    ? _t("Is the customer taking the piece now?")
+                    : _t("Hand over the piece now? The order is already paid."),
+            list,
+        });
+    },
+
     /**
      * After the native Settle builds the cart, our SO's portion total can land ~1¢
      * off sale.order.amount_unpaid (the source of truth) due to per-tax-group IVA
@@ -23,6 +66,20 @@ patch(PosStore.prototype, {
      * any account.move are untouched.
      */
     async settleSO(sale_order, orderFiscalPos) {
+        if (this.config.xb_list_until_delivered) {
+            const answer = await this.xbAskHandOver(sale_order);
+            if (!answer) {
+                return;
+            }
+            if (answer === "pay") {
+                await this.addDownPaymentProductOrderlineToOrder(
+                    sale_order,
+                    sale_order.amount_unpaid,
+                    false
+                );
+                return;
+            }
+        }
         await super.settleSO(...arguments);
         if (!sale_order?.xb_so_kind) {
             return;
