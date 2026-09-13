@@ -11,9 +11,13 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.sale_order_tree"/>
         <field name="arch" type="xml">
+            <!-- Right after the customer: the list the POS opens is narrow and has many
+                 columns, a button at the end of the row is off-screen for the cashier. -->
             <xpath expr="//list" position="inside">
                 <field name="xb_can_notify_ready" column_invisible="1"/>
                 <field name="xb_ready_notified_date" optional="hide" string="Ready notice"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
                 <button name="action_xb_notify_ready" type="object" icon="fa-whatsapp"
                         string="Notify: ready"
                         title="Tell the customer by WhatsApp that the order is ready"
