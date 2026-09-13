@@ -38,6 +38,9 @@ class ResConfigSettings(models.TransientModel):
     pos_xb_ask_quotation_delivery = fields.Boolean(
         related="pos_config_id.xb_ask_quotation_delivery", readonly=False
     )
+    pos_xb_list_until_delivered = fields.Boolean(
+        related="pos_config_id.xb_list_until_delivered", readonly=False
+    )
     pos_xb_show_portal_link = fields.Boolean(
         related="pos_config_id.xb_show_portal_link", readonly=False
     )

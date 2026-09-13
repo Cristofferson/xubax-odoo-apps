@@ -9,7 +9,7 @@ from markupsafe import Markup
 
 from odoo import Command, _, api, fields, models
 from odoo.exceptions import AccessError, UserError
-from odoo.tools import email_normalize, email_normalize_all, float_compare, plaintext2html
+from odoo.tools import SQL, email_normalize, email_normalize_all, float_compare, plaintext2html
 
 _logger = logging.getLogger(__name__)
 
@@ -31,6 +31,69 @@ class SaleOrder(models.Model):
         copy=False,
         index=True,
     )
+    # Goods not handed over yet. With pos.config.xb_list_until_delivered the POS list
+    # of orders keeps a POS order / layaway while this is set, paid or not (Odoo's own
+    # list drops anything without a balance, so a fully paid order vanished before it
+    # could be delivered from the POS). Handed over = delivered by stock OR settled at
+    # the POS: a settled line whose picking is still open (e.g. a serial number not
+    # captured) was handed over at the counter and must not be offered again. Goods
+    # only: pos_sale never marks a service as delivered, and down-payment and
+    # section/note lines are not goods.
+    xb_pending_delivery = fields.Boolean(
+        string="Pending delivery",
+        compute="_compute_xb_pending_delivery",
+        search="_search_xb_pending_delivery",
+    )
+
+    @api.depends(
+        "order_line.qty_delivered", "order_line.product_uom_qty",
+        "order_line.pos_order_line_ids.qty", "order_line.pos_order_line_ids.order_id.state",
+    )
+    def _compute_xb_pending_delivery(self):
+        for order in self:
+            pending = False
+            for line in order.order_line:
+                if line.display_type or line.is_downpayment or line.product_id.type != "consu":
+                    continue
+                settled = sum(
+                    line.sudo().pos_order_line_ids.filtered(
+                        lambda pos_line: pos_line.order_id.state not in ("draft", "cancel")
+                    ).mapped("qty")
+                )
+                if float_compare(
+                    max(line.qty_delivered, settled), line.product_uom_qty,
+                    precision_rounding=line.product_uom_id.rounding or 0.01,
+                ) < 0:
+                    pending = True
+                    break
+            order.xb_pending_delivery = pending
+
+    def _search_xb_pending_delivery(self, operator, value):
+        if operator != "in":
+            return NotImplemented
+        pending = SQL("""(
+            SELECT l.order_id
+              FROM sale_order_line l
+              JOIN product_product pp ON pp.id = l.product_id
+              JOIN product_template pt ON pt.id = pp.product_tmpl_id
+             WHERE l.display_type IS NULL
+               AND COALESCE(l.is_downpayment, FALSE) = FALSE
+               AND pt.type = 'consu'
+               AND GREATEST(l.qty_delivered, COALESCE((
+                       SELECT SUM(pl.qty)
+                         FROM pos_order_line pl
+                         JOIN pos_order po ON po.id = pl.order_id
+                        WHERE pl.sale_order_line_id = l.id
+                          AND po.state NOT IN ('draft', 'cancel')
+                   ), 0)) < l.product_uom_qty
+        )""")
+        if True in value and False in value:
+            return []
+        if True in value:
+            return [("id", "in", pending)]
+        if False in value:
+            return [("id", "not in", pending)]
+        return [("id", "in", [])]
 
     @api.model
     def _load_pos_data_fields(self, config):

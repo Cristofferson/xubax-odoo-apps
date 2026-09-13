@@ -42,6 +42,12 @@
                              invisible="not pos_xb_enable_sale_order or not pos_xb_allow_quotation">
                         <field name="pos_xb_ask_quotation_delivery"/>
                     </setting>
+                    <setting id="xb_list_until_delivered_setting"
+                             string="Keep paid orders listed until delivered"
+                             help="Orders and layaways created here stay in the POS list of orders (Quotation/Order button) while their goods are pending delivery, even when fully paid, so they can be delivered from the POS."
+                             invisible="not pos_xb_enable_sale_order">
+                        <field name="pos_xb_list_until_delivered"/>
+                    </setting>
                     <setting id="xb_differentiate_setting"
                              string="Differentiate Order and Layaway"
                              help="Show separate &quot;Order&quot; and &quot;Layaway&quot; actions instead of a single combined one."

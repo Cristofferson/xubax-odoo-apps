@@ -103,6 +103,13 @@ class PosConfig(models.Model):
              "offered only when the WhatsApp add-on is installed and this Point of "
              "Sale has a quotation template.",
     )
+    xb_list_until_delivered = fields.Boolean(
+        string="Keep paid orders listed until delivered",
+        help="In the POS list of orders to recover (Quotation/Order button), keep the "
+             "orders and layaways created here while their goods are pending delivery, "
+             "even when fully paid, so they can be delivered from the POS. Odoo's own "
+             "list only shows orders with a balance.",
+    )
     xb_show_portal_link = fields.Boolean(
         string="Show online portal link on receipt",
         help="Add the order's online portal link (with access token) and a short "

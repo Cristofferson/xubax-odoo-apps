@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-12 23:32+0000\n"
-"PO-Revision-Date: 2026-09-12 23:32+0000\n"
+"POT-Creation-Date: 2026-09-13 02:23+0000\n"
+"PO-Revision-Date: 2026-09-13 02:23+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -435,6 +435,16 @@ msgid "ID"
 msgstr ""
 
 #. module: xb_sale_order_from_pos
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_pos_config__xb_list_until_delivered
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_res_config_settings__pos_xb_list_until_delivered
+msgid ""
+"In the POS list of orders to recover (Quotation/Order button), keep the "
+"orders and layaways created here while their goods are pending delivery, "
+"even when fully paid, so they can be delivered from the POS. Odoo's own list"
+" only shows orders with a balance."
+msgstr ""
+
+#. module: xb_sale_order_from_pos
 #: model:ir.model.fields,help:xb_sale_order_from_pos.field_sale_order_line__xb_internal_note
 msgid ""
 "Internal note typed on the originating POS cart line (pos.order.line.note), "
@@ -445,6 +455,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/xb_sale_order_from_pos/static/src/app/components/xb_quotation_delivery_popup/xb_quotation_delivery_popup.js:0
 msgid "It will be saved on the customer's contact."
+msgstr ""
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_pos_config__xb_list_until_delivered
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_config_settings__pos_xb_list_until_delivered
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
+msgid "Keep paid orders listed until delivered"
 msgstr ""
 
 #. module: xb_sale_order_from_pos
@@ -566,6 +583,14 @@ msgid "Order template (company)"
 msgstr ""
 
 #. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
+msgid ""
+"Orders and layaways created here stay in the POS list of orders "
+"(Quotation/Order button) while their goods are pending delivery, even when "
+"fully paid, so they can be delivered from the POS."
+msgstr ""
+
+#. module: xb_sale_order_from_pos
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order_line__xb_customer_note
 msgid "POS Customer Note"
 msgstr ""
@@ -607,6 +632,11 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.xml:0
 msgid "Pay or review your order online:"
+msgstr ""
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_pending_delivery
+msgid "Pending delivery"
 msgstr ""
 
 #. module: xb_sale_order_from_pos
@@ -906,6 +936,12 @@ msgstr ""
 #. module: xb_sale_order_from_pos
 #. odoo-python
 #: code:addons/xb_sale_order_from_pos/models/sale_order.py:0
+msgid "The email could not be sent."
+msgstr ""
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order.py:0
 msgid "The email template for POS quotations was deleted."
 msgstr ""
 
@@ -1044,26 +1080,8 @@ msgstr ""
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
-#: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.xml:0
-msgid "on the base of"
-msgstr ""
-
-#. module: xb_sale_order_from_pos
-#: model:mail.template,subject:xb_sale_order_from_pos.mail_template_pos_quotation_ticket
-msgid "{{ object.company_id.name }} - Quotation {{ object.name }}"
-msgstr ""
-
-#. module: xb_sale_order_from_pos
-#. odoo-javascript
 #: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.js:0
 msgid "You could earn %(points)s loyalty points if you confirm this quotation"
-msgstr ""
-
-#. module: xb_sale_order_from_pos
-#. odoo-javascript
-#: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.js:0
-msgid ""
-"You will earn %(points)s loyalty points when this order is paid in full"
 msgstr ""
 
 #. module: xb_sale_order_from_pos
@@ -1079,4 +1097,22 @@ msgstr ""
 msgid ""
 "You will earn %(points)s loyalty points when this order / layaway is paid in"
 " full"
+msgstr ""
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.js:0
+msgid ""
+"You will earn %(points)s loyalty points when this order is paid in full"
+msgstr ""
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.xml:0
+msgid "on the base of"
+msgstr ""
+
+#. module: xb_sale_order_from_pos
+#: model:mail.template,subject:xb_sale_order_from_pos.mail_template_pos_quotation_ticket
+msgid "{{ object.company_id.name }} - Quotation {{ object.name }}"
 msgstr ""

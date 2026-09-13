@@ -184,6 +184,12 @@ selected). English-source strings with an `es_MX` translation (`i18n/es_MX.po`).
     this quotation"*, an order or layaway *"You will earn N loyalty points when this order
     is paid in full"*, instead of points already *Won*. Advance and settlement tickets are
     real payments and keep Odoo's own line.
+- **Paid orders stay in the POS list until delivered.** Odoo's own list of orders to
+  recover (the *Quotation/Order* button) only shows orders with a balance, so an order or
+  layaway paid in full disappeared before its goods were handed over and could not be
+  delivered from the POS. Orders created with this module now stay listed while their
+  goods are pending delivery, paid or not, and leave the list once delivered (an order
+  that still owes money stays, to collect it). Orders created in Sales keep Odoo's rule.
 - **Mexican support is dormant off-MX.** Every CFDI/SAT touchpoint is gated on the company's
   fiscal country being `MX` (the same key `l10n_mx_edi` uses). On a non-Mexican company:
   the invoice keeps its **native cash rounding** (we don't drop `invoice_cash_rounding_id`),

@@ -14,8 +14,53 @@ import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { OrderReceipt } from "@point_of_sale/app/screens/receipt_screen/receipt/order_receipt";
 import { XbQuotationDeliveryPopup } from "@xb_sale_order_from_pos/app/components/xb_quotation_delivery_popup/xb_quotation_delivery_popup";
+import { SelectCreateDialog } from "@web/views/view_dialogs/select_create_dialog";
 
 patch(ControlButtons.prototype, {
+    /**
+     * The POS list of orders to recover (pos_sale's "Quotation/Order" button), with
+     * one more case. Odoo's own list only shows orders with a balance that are not
+     * fully invoiced, so an order or layaway paid in full vanished before its goods
+     * were handed over and could not be delivered from the POS. Orders created here
+     * now stay listed while their goods are pending delivery (xb_pending_delivery),
+     * paid or not, and leave the list once delivered, unless they still owe money.
+     * Orders created in Sales keep Odoo's rule: warehouse deliveries are not the POS's.
+     * Per POS (xb_list_until_delivered); off, the list is Odoo's own.
+     */
+    onClickQuotation() {
+        if (!this.pos.config.xb_list_until_delivered) {
+            return super.onClickQuotation(...arguments);
+        }
+        const context = {};
+        if (this.partner) {
+            context["search_default_partner_id"] = this.partner.id;
+        }
+        let domain = [
+            ["state", "!=", "cancel"],
+            ["currency_id", "=", this.pos.currency.id],
+            "|",
+            "&",
+            ["invoice_status", "!=", "invoiced"],
+            ["amount_unpaid", ">", 0],
+            "&",
+            ["xb_so_kind", "!=", false],
+            ["xb_pending_delivery", "=", true],
+        ];
+        const partner = this.pos.getOrder()?.getPartner();
+        if (partner) {
+            domain = [...domain, ["partner_id", "any", [["id", "child_of", [partner.id]]]]];
+        }
+        this.dialog.add(SelectCreateDialog, {
+            resModel: "sale.order",
+            noCreate: true,
+            multiSelect: false,
+            domain,
+            context,
+            onSelected: async (resIds) => {
+                await this.pos.onClickSaleOrder(resIds[0]);
+            },
+        });
+    },
     /**
      * Build the order-type options offered to the cashier, honoring the per-POS
      * toggles. Each entry's `item` is the flag set sent to the backend.
