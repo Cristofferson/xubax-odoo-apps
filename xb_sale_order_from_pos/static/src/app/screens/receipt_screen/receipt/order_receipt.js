@@ -12,6 +12,17 @@ patch(OrderReceipt.prototype, {
     get xbSaleOrder() {
         return this.order.xbGetSaleOrderTotals?.() || null;
     },
+    // A quotation ticket (draft/sent, not confirmed yet). It earns no loyalty points:
+    // the add-on xb_sale_order_from_pos_loyalty says how many it could earn instead.
+    get xbIsQuotationTicket() {
+        const so = this.xbSaleOrder;
+        return Boolean(so && so.type === "quotation" && so.state !== "sale");
+    },
+    xbCouldEarnText(points) {
+        return _t("You could earn %(points)s loyalty points if you confirm this quotation", {
+            points,
+        });
+    },
     // Big localized type header at the top of the receipt (null if no SO / type).
     // Title is by STATE, not the frozen kind: a quotation already confirmed (state
     // 'sale') prints PEDIDO; only a draft/sent quotation prints COTIZACIÓN. Order and

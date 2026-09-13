@@ -178,6 +178,10 @@ selected). English-source strings with an `es_MX` translation (`i18n/es_MX.po`).
   - Channels are independent: sending happens after the cart is cleared, each channel on its
     own, and a failure (e.g. WhatsApp rejects the number) is shown to the cashier without
     affecting the other channel or the quotation, which stays saved.
+  - With Odoo's **Point of Sale Loyalty**, the free add-on **`xb_sale_order_from_pos_loyalty`**
+    (installs by itself) makes a quotation ticket say *"You could earn N loyalty points if
+    you confirm this quotation"* instead of points already *Won* — a quotation earns none
+    yet. Every other ticket keeps Odoo's own line.
 - **Mexican support is dormant off-MX.** Every CFDI/SAT touchpoint is gated on the company's
   fiscal country being `MX` (the same key `l10n_mx_edi` uses). On a non-Mexican company:
   the invoice keeps its **native cash rounding** (we don't drop `invoice_cash_rounding_id`),

@@ -25,7 +25,7 @@ msgstr "%(name)s enviada por correo a %(to)s."
 #. odoo-javascript
 #: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.js:0
 msgid "%(vatLabel)s: %(vatId)s"
-msgstr ""
+msgstr "%(vatLabel)s: %(vatId)s"
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
@@ -190,7 +190,7 @@ msgstr ""
 #. module: xb_sale_order_from_pos
 #: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.view_order_tree_xb_balance
 msgid "Balance (POS)"
-msgstr ""
+msgstr "Saldo (PdV)"
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
@@ -207,7 +207,7 @@ msgstr "Descuadre del saldo"
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_company__xb_cfdi_emisor_rfc
 msgid "CFDI issuer RFC (receipt)"
-msgstr ""
+msgstr "RFC del emisor del CFDI (ticket)"
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
@@ -219,7 +219,7 @@ msgstr "Cancelar"
 #. odoo-python
 #: code:addons/xb_sale_order_from_pos/models/sale_order.py:0
 msgid "Cashier:"
-msgstr ""
+msgstr "Cajero:"
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
@@ -230,22 +230,22 @@ msgstr "Elige una o varias. El cliente recibe el mismo ticket que se imprime."
 #. module: xb_sale_order_from_pos
 #: model:ir.model,name:xb_sale_order_from_pos.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Empresas"
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_pos_payment_method__xb_company_country_code
 msgid "Company fiscal country code"
-msgstr ""
+msgstr "Código del país fiscal de la empresa"
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model,name:xb_sale_order_from_pos.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Ajustes de configuración"
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields.selection,name:xb_sale_order_from_pos.selection__pos_config__xb_default_so_state__sale
 msgid "Confirmed order"
-msgstr ""
+msgstr "Pedido confirmado"
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,help:xb_sale_order_from_pos.field_pos_config__xb_autofactura_qr_paid_only
@@ -314,7 +314,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/xb_sale_order_from_pos/models/sale_order.py:0
 msgid "Created from the Point of Sale"
-msgstr ""
+msgstr "Creado desde el Punto de Venta"
 
 #. module: xb_sale_order_from_pos
 #. odoo-python
@@ -322,6 +322,8 @@ msgstr ""
 msgid ""
 "Creating quotations / orders / layaways is disabled for this Point of Sale."
 msgstr ""
+"Crear cotizaciones / pedidos / apartados está desactivado en este Punto de "
+"Venta."
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
@@ -335,6 +337,8 @@ msgid ""
 "Customer note typed on the originating POS cart line "
 "(pos.order.line.customer_note)."
 msgstr ""
+"Nota para el cliente escrita en la línea del carrito del PdV de origen "
+"(pos.order.line.customer_note)."
 
 #. module: xb_sale_order_from_pos
 #: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
@@ -370,7 +374,7 @@ msgstr "Diferenciar Pedido y Apartado"
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__display_name
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre en pantalla"
 
 #. module: xb_sale_order_from_pos
 #: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
@@ -449,7 +453,7 @@ msgstr ""
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_pos_payment_method__l10n_mx_edi_payment_method_id
 msgid "Forma de pago (SAT)"
-msgstr ""
+msgstr "Forma de pago (SAT)"
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
@@ -466,7 +470,7 @@ msgstr "¿Cómo quiere el cliente su cotización?"
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__id
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,help:xb_sale_order_from_pos.field_sale_order_line__xb_internal_note
@@ -474,6 +478,8 @@ msgid ""
 "Internal note typed on the originating POS cart line (pos.order.line.note), "
 "flattened to clean text on the client."
 msgstr ""
+"Nota interna escrita en la línea del carrito del PdV de origen "
+"(pos.order.line.note), convertida a texto limpio en el cliente."
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
@@ -500,7 +506,7 @@ msgstr "Apartado"
 #. module: xb_sale_order_from_pos
 #: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
 msgid "Layaway template (company)"
-msgstr ""
+msgstr "Plantilla de apartado (empresa)"
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,help:xb_sale_order_from_pos.field_pos_config__xb_allow_quotation
@@ -595,7 +601,7 @@ msgstr "Pedido / Apartado"
 #. odoo-javascript
 #: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.xml:0
 msgid "Order portal QR"
-msgstr ""
+msgstr "QR del pedido en línea"
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
@@ -606,45 +612,45 @@ msgstr "Resumen del pedido"
 #. module: xb_sale_order_from_pos
 #: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
 msgid "Order template (company)"
-msgstr ""
+msgstr "Plantilla de pedido (empresa)"
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order_line__xb_customer_note
 msgid "POS Customer Note"
-msgstr ""
+msgstr "Nota para el cliente (PdV)"
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order_line__xb_internal_note
 msgid "POS Internal Note"
-msgstr ""
+msgstr "Nota interna (PdV)"
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_company__xb_layaway_template_id
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_config_settings__xb_layaway_template_id
 msgid "POS Layaway template"
-msgstr ""
+msgstr "Plantilla de apartado (PdV)"
 
 #. module: xb_sale_order_from_pos
 #: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.view_order_form_xb_line_notes
 msgid "POS Notes"
-msgstr ""
+msgstr "Notas del PdV"
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_company__xb_order_template_id
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_config_settings__xb_order_template_id
 msgid "POS Order template"
-msgstr ""
+msgstr "Plantilla de pedido (PdV)"
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_company__xb_quotation_template_id
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_config_settings__xb_quotation_template_id
 msgid "POS Quotation template"
-msgstr ""
+msgstr "Plantilla de cotización (PdV)"
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_so_kind
 msgid "POS document kind"
-msgstr ""
+msgstr "Tipo de documento (PdV)"
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
@@ -655,23 +661,23 @@ msgstr "Paga o revisa tu pedido en línea:"
 #. module: xb_sale_order_from_pos
 #: model:ir.model,name:xb_sale_order_from_pos.model_pos_config
 msgid "Point of Sale Configuration"
-msgstr ""
+msgstr "Configuración del punto de venta"
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model,name:xb_sale_order_from_pos.model_pos_order
 msgid "Point of Sale Orders"
-msgstr ""
+msgstr "Órdenes del punto de venta"
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model,name:xb_sale_order_from_pos.model_pos_payment_method
 msgid "Point of Sale Payment Methods"
-msgstr ""
+msgstr "Métodos de pago del punto de venta"
 
 #. module: xb_sale_order_from_pos
 #. odoo-python
 #: code:addons/xb_sale_order_from_pos/models/sale_order.py:0
 msgid "Point of Sale:"
-msgstr ""
+msgstr "Punto de Venta:"
 
 #. module: xb_sale_order_from_pos
 #: model:mail.template,name:xb_sale_order_from_pos.mail_template_pos_quotation_ticket
@@ -770,6 +776,7 @@ msgstr "Cotización"
 #: model:ir.model.fields,help:xb_sale_order_from_pos.field_res_config_settings__xb_layaway_template_id
 msgid "Quotation Template applied to LAYAWAYS created from the POS."
 msgstr ""
+"Plantilla de cotización que se aplica a los APARTADOS creados desde el PdV."
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,help:xb_sale_order_from_pos.field_res_company__xb_order_template_id
@@ -778,6 +785,8 @@ msgid ""
 "Quotation Template applied to ORDERS (and the combined Order/Layaway) "
 "created from the POS."
 msgstr ""
+"Plantilla de cotización que se aplica a los PEDIDOS (y al combinado "
+"Pedido/Apartado) creados desde el PdV."
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,help:xb_sale_order_from_pos.field_res_company__xb_quotation_template_id
@@ -786,11 +795,14 @@ msgid ""
 "Quotation Template applied to QUOTATIONS created from the POS (validity / "
 "terms / signature / payment). Product lines come from the cart."
 msgstr ""
+"Plantilla de cotización que se aplica a las COTIZACIONES creadas desde el "
+"PdV (vigencia / términos / firma / pago). Las líneas de productos vienen del"
+" carrito."
 
 #. module: xb_sale_order_from_pos
 #: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
 msgid "Quotation template (company)"
-msgstr ""
+msgstr "Plantilla de cotización (empresa)"
 
 #. module: xb_sale_order_from_pos
 #. odoo-python
@@ -806,12 +818,17 @@ msgid ""
 "parent that has one — exactly as l10n_mx_edi picks the CFDI issuer "
 "(l10n_mx_edi_document: parent_ids[::-1].filtered('partner_id.vat'))."
 msgstr ""
+"RFC de la entidad fiscal que emite el CFDI, para el pie del ticket del PdV. "
+"Es el RFC de la propia empresa o, en una sucursal que no lo tiene, el de la "
+"matriz más cercana que sí lo tenga — igual que l10n_mx_edi elige al emisor "
+"del CFDI (l10n_mx_edi_document: "
+"parent_ids[::-1].filtered('partner_id.vat'))."
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
 #: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.xml:0
 msgid "Rounding"
-msgstr ""
+msgstr "Redondeo"
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,help:xb_sale_order_from_pos.field_pos_payment_method__l10n_mx_edi_payment_method_id
@@ -820,12 +837,17 @@ msgid ""
 " is invoiced (e.g. 01 Efectivo, 03 Transferencia, 04 Tarjeta de crédito, 28 "
 "Tarjeta de débito)."
 msgstr ""
+"'Forma de pago' del SAT que se reporta en el CFDI cuando se factura una "
+"orden pagada con este método (p. ej. 01 Efectivo, 03 Transferencia, 04 "
+"Tarjeta de crédito, 28 Tarjeta de débito)."
 
 #. module: xb_sale_order_from_pos
 #: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
 msgid ""
 "Sale Order Template applied to LAYAWAYS created from the POS. Company-wide."
 msgstr ""
+"Plantilla de cotización que se aplica a los APARTADOS creados desde el PdV. "
+"Para toda la empresa."
 
 #. module: xb_sale_order_from_pos
 #: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
@@ -833,6 +855,8 @@ msgid ""
 "Sale Order Template applied to ORDERS (and the combined Order/Layaway) "
 "created from the POS. Company-wide."
 msgstr ""
+"Plantilla de cotización que se aplica a los PEDIDOS (y al combinado "
+"Pedido/Apartado) creados desde el PdV. Para toda la empresa."
 
 #. module: xb_sale_order_from_pos
 #: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
@@ -841,16 +865,19 @@ msgid ""
 "validity, terms and signature/payment requirements. Company-wide; product "
 "lines come from the cart."
 msgstr ""
+"Plantilla de cotización que se aplica a las COTIZACIONES creadas desde el "
+"PdV: define la vigencia, los términos y si se pide firma o pago. Para toda "
+"la empresa; las líneas de productos vienen del carrito."
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model,name:xb_sale_order_from_pos.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Orden de venta"
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model,name:xb_sale_order_from_pos.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Línea de la orden de venta"
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
@@ -942,7 +969,7 @@ msgstr "Mostrar total y saldo pendiente"
 #. odoo-javascript
 #: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.js:0
 msgid "Tax ID: %(vatId)s"
-msgstr ""
+msgstr "ID fiscal: %(vatId)s"
 
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,help:xb_sale_order_from_pos.field_pos_payment_method__xb_company_country_code
@@ -950,6 +977,8 @@ msgid ""
 "The ISO country code in two chars. \n"
 "You can use this field for quick search."
 msgstr ""
+"El código ISO del país en dos caracteres.\n"
+"Puedes utilizar este campo para realizar una búsqueda rápida."
 
 #. module: xb_sale_order_from_pos
 #. odoo-python
@@ -980,6 +1009,9 @@ msgid ""
 "The order total (%(so)s) does not match the POS cart total (%(cart)s). Check"
 " whether prices are tax-included or tax-excluded for this Point of Sale."
 msgstr ""
+"El total de la orden (%(so)s) no coincide con el total del carrito del PdV "
+"(%(cart)s). Revisa si en este Punto de Venta los precios incluyen o no "
+"impuestos."
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
@@ -1021,7 +1053,7 @@ msgstr "El apartado requiere un anticipo."
 #. odoo-javascript
 #: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.xml:0
 msgid "To Pay"
-msgstr ""
+msgstr "Por pagar"
 
 #. module: xb_sale_order_from_pos
 #. odoo-python
@@ -1030,6 +1062,8 @@ msgid ""
 "To register a layaway advance you must configure the down-payment product first:\n"
 "Point of Sale ▸ Settings ▸ this POS ▸ Down Payment Product."
 msgstr ""
+"Para registrar el anticipo de un apartado primero configura el producto de anticipo:\n"
+"Punto de Venta ▸ Ajustes ▸ este PdV ▸ Producto de anticipo."
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
@@ -1045,13 +1079,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.xml:0
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #. module: xb_sale_order_from_pos
 #. odoo-python
 #: code:addons/xb_sale_order_from_pos/models/sale_order.py:0
 msgid "Type:"
-msgstr ""
+msgstr "Tipo:"
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
@@ -1128,3 +1162,10 @@ msgstr "de"
 #: model:mail.template,subject:xb_sale_order_from_pos.mail_template_pos_quotation_ticket
 msgid "{{ object.company_id.name }} - Quotation {{ object.name }}"
 msgstr "{{ object.company_id.name }} - Cotización {{ object.name }}"
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.js:0
+msgid "You could earn %(points)s loyalty points if you confirm this quotation"
+msgstr ""
+"Podrías ganar %(points)s puntos de lealtad si confirmas esta cotización"

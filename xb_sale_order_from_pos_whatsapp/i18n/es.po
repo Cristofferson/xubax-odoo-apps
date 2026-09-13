@@ -36,14 +36,14 @@ msgstr ""
 #. module: xb_sale_order_from_pos_whatsapp
 #: model:ir.model,name:xb_sale_order_from_pos_whatsapp.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Ajustes de configuración"
 
 #. module: xb_sale_order_from_pos_whatsapp
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_pos_config__display_name
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_sale_order__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre para mostrar"
 
 #. module: xb_sale_order_from_pos_whatsapp
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_sale_order__xb_wa_validity_date
@@ -55,12 +55,12 @@ msgstr "Vencimiento (WhatsApp)"
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_res_config_settings__id
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_sale_order__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: xb_sale_order_from_pos_whatsapp
 #: model:ir.model,name:xb_sale_order_from_pos_whatsapp.model_pos_config
 msgid "Point of Sale Configuration"
-msgstr ""
+msgstr "Configuración del TPV"
 
 #. module: xb_sale_order_from_pos_whatsapp
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos_whatsapp.field_pos_config__xb_quotation_wa_template_id
@@ -72,7 +72,7 @@ msgstr "Plantilla de WhatsApp para cotizaciones"
 #. module: xb_sale_order_from_pos_whatsapp
 #: model:ir.model,name:xb_sale_order_from_pos_whatsapp.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Pedido de venta"
 
 #. module: xb_sale_order_from_pos_whatsapp
 #. odoo-python
