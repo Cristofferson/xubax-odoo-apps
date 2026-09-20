@@ -1,0 +1,322 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-19 07:11+0000\n"
+"PO-Revision-Date: 2026-09-19 07:11+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: xb_showroom_wall_xibo
+#. odoo-python
+#: code:addons/xb_showroom_wall_xibo/models/showroom_screen.py:0
+msgid "%(screen)s is back on «%(previous)s»."
+msgstr "%(screen)s regresó a «%(previous)s»."
+
+#. module: xb_showroom_wall_xibo
+#. odoo-python
+#: code:addons/xb_showroom_wall_xibo/models/showroom_screen.py:0
+msgid "%s keeps its default layout; the wall takes over when a piece is sent."
+msgstr ""
+"%s conserva su disposición por defecto; el muro entra cuando se manda una "
+"pieza."
+
+#. module: xb_showroom_wall_xibo
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall_xibo.view_showroom_screen_form_xibo
+msgid ""
+"<b>Always on screen</b>: the wall becomes the screen's default\n"
+"                            layout. When nobody is driving it, it shows its own shop window;\n"
+"                            a purchase thank-you still appears on top and then gives the\n"
+"                            screen back. Instant."
+msgstr ""
+"<b>Siempre en pantalla</b>: el muro se vuelve la disposición por defecto de "
+"la pantalla. Cuando nadie lo usa, muestra su propia vitrina; el "
+"agradecimiento por compra aparece encima y luego devuelve la pantalla. "
+"Inmediato."
+
+#. module: xb_showroom_wall_xibo
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall_xibo.view_showroom_screen_form_xibo
+msgid ""
+"<b>Only while pieces are shown</b>: the screen keeps its own\n"
+"                            default layout and the wall takes over when a sales person sends a\n"
+"                            piece, as the thank-you does. It goes back when the wall is cleared\n"
+"                            or left idle. It relies on the player's live channel: a player that\n"
+"                            does not receive it picks the change up on its next check-in."
+msgstr ""
+"<b>Solo mientras se muestran piezas</b>: la pantalla conserva su propia "
+"disposición por defecto y el muro entra cuando un vendedor manda una pieza, "
+"igual que el agradecimiento. Regresa al vaciar el muro o al quedar sin uso. "
+"Depende del canal en vivo del reproductor: si no le llega, toma el cambio en"
+" su siguiente revisión."
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields.selection,name:xb_showroom_wall_xibo.selection__xb_showroom_screen__xibo_mode__default
+msgid "Always on screen (default layout)"
+msgstr "Siempre en pantalla (disposición por defecto)"
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields,help:xb_showroom_wall_xibo.field_xb_showroom_screen__xibo_mode
+msgid ""
+"Always on screen: the wall becomes the screen's default layout and shows its own shop window when idle. Instant.\n"
+"Only while pieces are shown: the screen keeps its own default layout; the wall takes over when a piece is sent and hands the screen back when cleared or idle. Relies on the player's live channel, as the purchase thank-you does."
+msgstr ""
+"Siempre en pantalla: el muro se vuelve la disposición por defecto de la pantalla y, sin uso, muestra su propia vitrina. Inmediato.\n"
+"Solo mientras se muestran piezas: la pantalla conserva su propia disposición por defecto; el muro entra cuando se manda una pieza y devuelve la pantalla al vaciarse o quedar sin uso. Depende del canal en vivo del reproductor, igual que el agradecimiento por compra."
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields,field_description:xb_showroom_wall_xibo.field_xb_showroom_screen__xibo_pos_config_id
+msgid "Branch"
+msgstr "Sucursal"
+
+#. module: xb_showroom_wall_xibo
+#. odoo-python
+#: code:addons/xb_showroom_wall_xibo/models/showroom_screen.py:0
+msgid "Choose the branch and its Xibo screen first."
+msgstr "Primero elige la sucursal y su pantalla en Xibo."
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields,field_description:xb_showroom_wall_xibo.field_xb_showroom_screen__xibo_previous_layout_xibo_id
+msgid "Default layout before"
+msgstr "Disposición por defecto anterior"
+
+#. module: xb_showroom_wall_xibo
+#. odoo-python
+#: code:addons/xb_showroom_wall_xibo/models/showroom_screen.py:0
+msgid ""
+"Default layout of %(screen)s. When removed, it goes back to «%(previous)s»."
+msgstr ""
+"Es la disposición por defecto de %(screen)s. Al quitarlo, regresa a "
+"«%(previous)s»."
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields,field_description:xb_showroom_wall_xibo.field_pos_config__display_name
+#: model:ir.model.fields,field_description:xb_showroom_wall_xibo.field_xb_showroom_screen__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields,field_description:xb_showroom_wall_xibo.field_xb_showroom_screen__xibo_mode
+msgid "How it enters Xibo"
+msgstr "Cómo entra en Xibo"
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields,field_description:xb_showroom_wall_xibo.field_pos_config__id
+#: model:ir.model.fields,field_description:xb_showroom_wall_xibo.field_xb_showroom_screen__id
+msgid "ID"
+msgstr ""
+
+#. module: xb_showroom_wall_xibo
+#. odoo-python
+#: code:addons/xb_showroom_wall_xibo/models/showroom_screen.py:0
+msgid "Not published on Xibo."
+msgstr "No está publicado en Xibo."
+
+#. module: xb_showroom_wall_xibo
+#. odoo-python
+#: code:addons/xb_showroom_wall_xibo/models/showroom_screen.py:0
+msgid ""
+"On %(screen)s now, showing pieces. Hands the screen back when cleared or "
+"idle."
+msgstr ""
+"En %(screen)s ahora, mostrando piezas. Devuelve la pantalla al vaciarse o "
+"quedar sin uso."
+
+#. module: xb_showroom_wall_xibo
+#. odoo-python
+#: code:addons/xb_showroom_wall_xibo/models/showroom_screen.py:0
+msgid "Only a sales manager can put the wall on a Xibo screen."
+msgstr ""
+"Solo un gerente de ventas puede poner el muro en una pantalla de Xibo."
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields.selection,name:xb_showroom_wall_xibo.selection__xb_showroom_screen__xibo_mode__on_demand
+msgid "Only while pieces are shown"
+msgstr "Solo mientras se muestran piezas"
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model,name:xb_showroom_wall_xibo.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr "Configuración del punto de venta"
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields,field_description:xb_showroom_wall_xibo.field_xb_showroom_screen__xibo_previous_layout_name
+msgid "Previous default layout"
+msgstr "Disposición por defecto anterior"
+
+#. module: xb_showroom_wall_xibo
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall_xibo.view_showroom_screen_form_xibo
+msgid "Publish on the videowall"
+msgstr "Publicar en el videowall"
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields,field_description:xb_showroom_wall_xibo.field_xb_showroom_screen__xibo_published
+msgid "Published on Xibo"
+msgstr "Publicado en Xibo"
+
+#. module: xb_showroom_wall_xibo
+#. odoo-python
+#: code:addons/xb_showroom_wall_xibo/models/showroom_screen.py:0
+msgid "Ready on %(screen)s: it takes over when a piece is sent."
+msgstr "Listo en %(screen)s: entra cuando se manda una pieza."
+
+#. module: xb_showroom_wall_xibo
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall_xibo.view_showroom_screen_form_xibo
+msgid "Remove from the videowall"
+msgstr "Quitar del videowall"
+
+#. module: xb_showroom_wall_xibo
+#. odoo-python
+#: code:addons/xb_showroom_wall_xibo/models/showroom_screen.py:0
+msgid "Showroom"
+msgstr "Showroom"
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model,name:xb_showroom_wall_xibo.model_xb_showroom_screen
+msgid "Showroom Screen"
+msgstr "Pantalla del showroom"
+
+#. module: xb_showroom_wall_xibo
+#. odoo-python
+#: code:addons/xb_showroom_wall_xibo/models/showroom_screen.py:0
+msgid "Showroom Wall — %(name)s [%(stamp)s]"
+msgstr "Muro showroom — %(name)s [%(stamp)s]"
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields,field_description:xb_showroom_wall_xibo.field_xb_showroom_screen__xibo_status
+msgid "Status"
+msgstr "Estado"
+
+#. module: xb_showroom_wall_xibo
+#. odoo-python
+#: code:addons/xb_showroom_wall_xibo/models/showroom_screen.py:0
+msgid "That Xibo screen belongs to another server."
+msgstr "Esa pantalla de Xibo es de otro servidor."
+
+#. module: xb_showroom_wall_xibo
+#. odoo-python
+#: code:addons/xb_showroom_wall_xibo/models/showroom_screen.py:0
+msgid "That Xibo screen was never synced with the CMS."
+msgstr "Esa pantalla de Xibo nunca se sincronizó con el CMS."
+
+#. module: xb_showroom_wall_xibo
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall_xibo.view_showroom_screen_form_xibo
+msgid "The Xibo screen will go back to what it showed before. Continue?"
+msgstr "La pantalla de Xibo regresará a lo que mostraba antes. ¿Continuar?"
+
+#. module: xb_showroom_wall_xibo
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall_xibo.view_showroom_screen_form_xibo
+msgid "The Xibo screen will show this wall as configured below. Continue?"
+msgstr ""
+"La pantalla de Xibo mostrará este muro como se configura abajo. ¿Continuar?"
+
+#. module: xb_showroom_wall_xibo
+#. odoo-python
+#: code:addons/xb_showroom_wall_xibo/models/showroom_screen.py:0
+msgid "The Xibo server of this branch is not connected."
+msgstr "El servidor Xibo de esta sucursal no está conectado."
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields,help:xb_showroom_wall_xibo.field_xb_showroom_screen__xibo_pos_config_id
+msgid ""
+"The point of sale of the branch where this wall hangs. Its Xibo server is "
+"the one the wall is published on."
+msgstr ""
+"La caja de la sucursal donde está este muro. Su servidor Xibo es donde se "
+"publica el muro."
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields,help:xb_showroom_wall_xibo.field_xb_showroom_screen__xibo_display_id
+msgid ""
+"The screen (or videowall) in Xibo that shows this wall. The layout is built "
+"on its canvas, so a 5760x1080 videowall gets the whole surface."
+msgstr ""
+"La pantalla (o videowall) de Xibo que muestra este muro. La disposición se "
+"arma a su tamaño, así que un videowall de 5760x1080 se ocupa completo."
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields,help:xb_showroom_wall_xibo.field_xb_showroom_screen__xibo_previous_layout_xibo_id
+msgid ""
+"The screen's default layout before the wall replaced it. Removing the wall "
+"puts it back."
+msgstr ""
+"La disposición por defecto que tenía la pantalla antes de que el muro la "
+"reemplazara. Al quitar el muro, se devuelve."
+
+#. module: xb_showroom_wall_xibo
+#. odoo-python
+#: code:addons/xb_showroom_wall_xibo/models/showroom_screen.py:0
+msgid "The wall is no longer on %s."
+msgstr "El muro ya no está en %s."
+
+#. module: xb_showroom_wall_xibo
+#. odoo-python
+#: code:addons/xb_showroom_wall_xibo/models/showroom_screen.py:0
+msgid "The wall is now the default layout of %s."
+msgstr "El muro ya es la disposición por defecto de %s."
+
+#. module: xb_showroom_wall_xibo
+#. odoo-python
+#: code:addons/xb_showroom_wall_xibo/models/showroom_screen.py:0
+msgid ""
+"The wall is the default layout of %s and there is no record of what was "
+"there before. Choose another default layout in Xibo first."
+msgstr ""
+"El muro es la disposición por defecto de %s y no hay registro de lo que "
+"había antes. Elige primero otra disposición por defecto en Xibo."
+
+#. module: xb_showroom_wall_xibo
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall_xibo.view_showroom_screen_form_xibo
+msgid "Videowall (Xibo)"
+msgstr "Videowall (Xibo)"
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields,help:xb_showroom_wall_xibo.field_xb_showroom_screen__xibo_server_id
+msgid "Xibo CMS that this POS will broadcast to."
+msgstr "CMS de Xibo al que transmite esta caja."
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields,field_description:xb_showroom_wall_xibo.field_xb_showroom_screen__xibo_layout_url
+msgid "Xibo Layout Url"
+msgstr "URL en la disposición de Xibo"
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields,field_description:xb_showroom_wall_xibo.field_xb_showroom_screen__xibo_on_air_until
+msgid "Xibo On Air Until"
+msgstr "En Xibo hasta"
+
+#. module: xb_showroom_wall_xibo
+#. odoo-python
+#: code:addons/xb_showroom_wall_xibo/models/showroom_screen.py:0
+msgid ""
+"Xibo did not accept the new default layout for %(screen)s (it still reports "
+"layout %(current)s)."
+msgstr ""
+"Xibo no aceptó la nueva disposición por defecto de %(screen)s (sigue "
+"reportando la %(current)s)."
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields,field_description:xb_showroom_wall_xibo.field_xb_showroom_screen__xibo_layout_id
+msgid "Xibo layout"
+msgstr "Disposición en Xibo"
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields,field_description:xb_showroom_wall_xibo.field_xb_showroom_screen__xibo_display_id
+msgid "Xibo screen"
+msgstr "Pantalla en Xibo"
+
+#. module: xb_showroom_wall_xibo
+#: model:ir.model.fields,field_description:xb_showroom_wall_xibo.field_xb_showroom_screen__xibo_server_id
+msgid "Xibo server"
+msgstr "Servidor Xibo"
+
+#. module: xb_showroom_wall_xibo
+#. odoo-python
+#: code:addons/xb_showroom_wall_xibo/models/showroom_screen.py:0
+msgid "nothing recorded"
+msgstr "no quedó registro"

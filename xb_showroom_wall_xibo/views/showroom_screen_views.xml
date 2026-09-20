@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_showroom_screen_form_xibo" model="ir.ui.view">
+        <field name="name">xb.showroom.screen.form.xibo</field>
+        <field name="model">xb.showroom.screen</field>
+        <field name="inherit_id" ref="xb_showroom_wall.view_showroom_screen_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_xibo_publish" type="object" string="Publish on the videowall"
+                        icon="fa-cloud-upload" invisible="not xibo_display_id"
+                        groups="sales_team.group_sale_manager"
+                        confirm="The Xibo screen will show this wall as configured below. Continue?"/>
+                <button name="action_xibo_unpublish" type="object" string="Remove from the videowall"
+                        icon="fa-undo" invisible="not xibo_published"
+                        groups="sales_team.group_sale_manager"
+                        confirm="The Xibo screen will go back to what it showed before. Continue?"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Videowall (Xibo)" name="xibo" groups="sales_team.group_sale_manager">
+                    <group>
+                        <group>
+                            <field name="xibo_pos_config_id" options="{'no_create': True}"/>
+                            <field name="xibo_server_id" invisible="not xibo_pos_config_id"/>
+                            <field name="xibo_display_id" options="{'no_create': True}"
+                                   readonly="not xibo_pos_config_id"/>
+                            <field name="xibo_mode" widget="radio"/>
+                        </group>
+                        <group>
+                            <field name="xibo_status" readonly="1"/>
+                            <field name="xibo_published" readonly="1"/>
+                            <field name="xibo_layout_id" readonly="1" invisible="not xibo_layout_id"/>
+                            <field name="xibo_previous_layout_name" readonly="1"
+                                   invisible="not xibo_previous_layout_name"/>
+                        </group>
+                    </group>
+                    <div class="text-muted small">
+                        <p class="mb-1">
+                            <b>Always on screen</b>: the wall becomes the screen's default
+                            layout. When nobody is driving it, it shows its own shop window;
+                            a purchase thank-you still appears on top and then gives the
+                            screen back. Instant.
+                        </p>
+                        <p class="mb-0">
+                            <b>Only while pieces are shown</b>: the screen keeps its own
+                            default layout and the wall takes over when a sales person sends a
+                            piece, as the thank-you does. It goes back when the wall is cleared
+                            or left idle. It relies on the player's live channel: a player that
+                            does not receive it picks the change up on its next check-in.
+                        </p>
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

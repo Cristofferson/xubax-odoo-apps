@@ -1,0 +1,82 @@
+/* The remote control, as it appears on the shop assistant's tablet.
+   It is a fixed bar: a product page can be a long scroll of metals and
+   sizes, and the wall button has to stay within thumb reach. */
+.o_showroom_bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 1035;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+    padding: .6rem .9rem;
+    background: rgba(17, 17, 19, .94);
+    color: #f3efe6;
+    box-shadow: 0 -.4rem 1.2rem rgba(0, 0, 0, .25);
+}
+.o_showroom_bar.d-none { display: none !important; }
+.o_showroom_label {
+    font-size: .8rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    opacity: .7;
+    margin-right: .25rem;
+}
+.o_showroom_bar .btn { border-radius: 2rem; padding-inline: 1.1rem; }
+.o_showroom_bar .btn-light { font-weight: 500; }
+.o_showroom_now {
+    font-size: .85rem;
+    opacity: .8;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+.o_showroom_now img {
+    height: 2.2rem; width: 2.2rem;
+    object-fit: cover;
+    border-radius: .3rem;
+    background: #fff;
+}
+/* While comparing, each thumbnail is a button: tap it to take that piece off
+   the wall. The cross is big enough for a thumb on a tablet. */
+.o_showroom_thumb {
+    position: relative;
+    display: inline-flex;
+    padding: 0;
+    border: 0;
+    background: none;
+    line-height: 0;
+}
+button.o_showroom_thumb { cursor: pointer; }
+button.o_showroom_thumb img { height: 2.6rem; width: 2.6rem; }
+.o_showroom_x {
+    position: absolute;
+    top: -.45rem; right: -.45rem;
+    width: 1.35rem; height: 1.35rem;
+    border-radius: 50%;
+    background: #f3efe6;
+    color: #111113;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3rem;
+    text-align: center;
+    box-shadow: 0 .1rem .3rem rgba(0, 0, 0, .4);
+}
+button.o_showroom_thumb:hover .o_showroom_x,
+button.o_showroom_thumb:focus-visible .o_showroom_x { background: #e0b25c; }
+/* Leave room for the bar so it never covers the add-to-cart button. */
+body.o_showroom_has_bar { padding-bottom: 4.2rem; }
+
+/* Per-tile shortcut in the shop grid. The tile's image sits in a
+   position-relative wrapper, so this needs its own stacking order to land
+   on top of the picture instead of behind it. */
+.o_showroom_tile {
+    z-index: 5;
+    opacity: .92;
+    border-radius: 2rem;
+    padding: .25rem .6rem;
+}
+.o_showroom_tile:hover { opacity: 1; }
+/* The compare shortcut sits right next to the wall one. */
+.o_showroom_tile.o_showroom_tile_compare { left: 3.1rem !important; }

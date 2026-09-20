@@ -1,0 +1,757 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_showroom_wall
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-20 22:21+0000\n"
+"PO-Revision-Date: 2026-09-20 22:21+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "%s options"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
+msgid "/shop"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__idle_timeout
+msgid "0 keeps the last piece on screen until it is replaced."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.showroom_bar
+msgid ""
+"<select class=\"form-select form-select-sm w-auto o_showroom_screen d-none\" aria-label=\"Showroom screen\"/>\n"
+"            <span class=\"small o_showroom_feedback\" role=\"status\"/>\n"
+"            <span class=\"o_showroom_now\"/>"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.showroom_bar
+msgid ""
+"<span class=\"o_showroom_label\">\n"
+"                <i class=\"fa fa-television me-1\"/>Showroom\n"
+"            </span>"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__idle_mode
+msgid ""
+"A shop window built for this screen keeps the piece on the centre panel; "
+"pointing at another page is useful when you already have signage you like, "
+"but a page designed for one screen looks small and off-centre on a multi-"
+"panel wall."
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/models/showroom_screen.py:0
+msgid "A showroom screen can have 1 to %s panels."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__accent_color
+msgid "Accent colour"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__access_token
+msgid "Access Token"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__active
+msgid "Active"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.showroom_bar
+msgid "Add to compare"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.products_item_showroom
+msgid "Add to the comparison on the wall"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.actions.act_window,help:xb_showroom_wall.action_showroom_screen
+msgid "Add your first showroom screen"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__idle_mode__url
+msgid "Another page"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/models/showroom_screen.py:0
+msgid "Ask us about this piece"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Available in %s metals"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.showroom_bar
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
+msgid "Back to idle"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__idle_timeout
+msgid "Back to idle after (min)"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Back to the shop window."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__bg_color
+msgid "Background colour"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__idle_order__sequence
+msgid "Catalogue order"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__title_mode
+msgid ""
+"Catalogues often name pieces by their internal reference, which reads badly "
+"on a two-metre screen. 'Category and metal' builds the headline from the "
+"data instead, until the commercial names are written."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__title_mode__category
+msgid "Category and metal"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_slot__option_ids
+msgid "Chosen options"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__wall_style__mosaic
+msgid "Colour bands"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__wall_style
+msgid ""
+"Colour bands turn each screen into a block — a deep gold panel for the piece"
+" in its case, clean paper for the piece itself and a full-bleed photo of it "
+"being worn. Plain panels keeps everything on one background."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__company_id
+msgid "Company"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__mode__compare
+msgid "Compare"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Comparing %(count)s of %(max)s"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Could not tell which piece to show."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__create_uid
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_slot__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__create_date
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_slot__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_slot__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__theme__dark
+msgid "Dark"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__display_name
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_slot__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__show_price__none
+msgid "Do not show the price"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
+msgid "Everyone in the company"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "From %s"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__title_mode
+msgid "Headline"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "How it looks on"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__panels
+msgid ""
+"How many physical screens sit side by side. On a multi-panel wall the piece "
+"is drawn on the centre panel so the bezels do not cut it."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__compare_max
+msgid ""
+"How many pieces the wall can hold side by side. Two take a screen each with "
+"their differences listed in the middle; four to six share screens in halves."
+" Sending one more drops the oldest, and the sales person is told."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__poll_interval
+msgid "How often the wall page asks Odoo what to show."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__id
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_slot__id
+msgid "ID"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__heading
+msgid "Idle heading"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__idle_url
+msgid "Idle page"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "In its case"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__lang
+msgid "Language"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__lang
+msgid "Language the wall is written in. Defaults to the company's."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__write_uid
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_slot__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__write_date
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_slot__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__spotlight_at
+msgid "Last push"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__idle_order__price_asc
+msgid "Least expensive first"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__theme__light
+msgid "Light"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
+msgid "Look"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Metal"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_slot__option_ids
+msgid ""
+"Metal, size... as picked on the tablet. Empty when the piece was sent from "
+"the catalogue grid, where no option was chosen yet."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__mode
+msgid "Mode"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__idle_order__price_desc
+msgid "Most expensive first"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__name
+msgid "Name"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "New comparison"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "No showroom screen is configured."
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/models/showroom_screen.py:0
+msgid "Nothing to show on the wall."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__slot_ids
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
+msgid "On screen now"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "On the wall."
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "On the wall:"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "On the wall: comparing %s."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__mode__single
+msgid "One piece"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
+msgid "Open the wall"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__panels
+msgid "Panels"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model,name:xb_showroom_wall.model_xb_showroom_slot
+msgid "Piece currently on a showroom screen"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__idle_count
+msgid "Pieces in rotation"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__compare_max
+msgid "Pieces when comparing"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__idle_mode__plain
+msgid "Plain branded screen"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__wall_style__plain
+msgid "Plain panels"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.actions.act_window,help:xb_showroom_wall.action_showroom_screen
+msgid ""
+"Point the screen's browser or signage player at the wall URL, then send\n"
+"               any product to it from the shop with one tap."
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_slot__price
+msgid "Price"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__show_price
+msgid "Price on the wall"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_slot__product_id
+msgid "Product"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__theme
+msgid ""
+"Product shots on a white background read best on a light wall; pick dark for"
+" lifestyle or dark-background photography."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__idle_qr_url
+msgid "QR destination"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Ready: add the pieces to compare."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__poll_interval
+msgid "Refresh every (s)"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
+msgid "Reset the token"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__idle_mode__own
+msgid "Rotating shop window"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__idle_order
+msgid "Rotation order"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__user_ids
+msgid "Sales people"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Scan to browse the collection"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Scan to take this piece with you"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_slot__screen_id
+msgid "Screen"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__idle_interval
+msgid "Seconds per piece"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__access_token
+msgid ""
+"Secret part of the wall URL. Anyone with the URL can watch the screen, so "
+"treat it like the screen itself."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
+msgid "Security"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__sequence
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_slot__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__idle_category_id
+msgid "Shop window category"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__show_price
+msgid ""
+"Shoppers are often accompanied, so showing the exact figure on a big screen "
+"is a commercial decision, not a technical one."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__show_price__from
+msgid "Show a \"from\" figure"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.products_item_showroom
+msgid "Show on the showroom wall"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.showroom_bar
+msgid "Show on wall"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__show_price__full
+msgid "Show the full price"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Showing the shop window"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model,name:xb_showroom_wall.model_xb_showroom_screen
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
+msgid "Showroom Screen"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.actions.act_window,name:xb_showroom_wall.action_showroom_screen
+#: model:ir.ui.menu,name:xb_showroom_wall.menu_showroom_screen
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_list
+msgid "Showroom Screens"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__idle_order__random
+msgid "Shuffled"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Side by side"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Take off the wall"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Taken off the wall."
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "That piece no longer exists."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__title_mode__product_name
+msgid "The product name"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/models/showroom_screen.py:0
+msgid "The refresh interval must be at least 1 second."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
+msgid "The screen"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/models/showroom_screen.py:0
+msgid "The wall can compare 2 to %s pieces."
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "The wall holds %(max)s pieces: %(names)s was taken off to make room."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__theme
+msgid "Theme"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "This tablet now sends to: %s"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Unknown showroom screen."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__accent_color
+msgid "Used for the price, the rules and the brand line."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__idle_url
+msgid ""
+"Used when 'When idle' is set to another page. A relative path such as /shop "
+"works and avoids domain and login surprises."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__wall_url
+msgid "Wall Url"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__wall_style
+msgid "Wall style"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
+msgid "What the customer sees"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__idle_mode
+msgid "When idle"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
+msgid "When nobody is driving it"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__idle_qr_url
+msgid "Where the QR code on the idle screen points. Empty points at the shop."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__idle_category_id
+msgid ""
+"Which products rotate when nobody is driving the screen. Empty means "
+"everything published."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__user_ids
+msgid ""
+"Who may send pieces to this screen from a tablet. Leave it empty and every "
+"sales person of the company can. With one wall per branch, list each "
+"branch's staff so nobody lands a ring on the wall of another shop."
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "You are not allowed to drive the showroom screen."
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "You cannot send pieces to that screen."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
+msgid "e.g. Ask us about this piece"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
+msgid "e.g. Counter videowall"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
+msgid "https://…/shop"
+msgstr ""

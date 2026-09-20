@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_showroom_screen_list" model="ir.ui.view">
+        <field name="name">xb.showroom.screen.list</field>
+        <field name="model">xb.showroom.screen</field>
+        <field name="arch" type="xml">
+            <list string="Showroom Screens">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="panels"/>
+                <field name="show_price"/>
+                <field name="user_ids" widget="many2many_tags" optional="show"/>
+                <field name="spotlight_at"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_showroom_screen_form" model="ir.ui.view">
+        <field name="name">xb.showroom.screen.form</field>
+        <field name="model">xb.showroom.screen</field>
+        <field name="arch" type="xml">
+            <form string="Showroom Screen">
+                <header>
+                    <button name="action_open_wall" type="object" string="Open the wall"
+                            class="btn-primary" icon="fa-television"/>
+                    <button name="action_clear" type="object" string="Back to idle"
+                            icon="fa-eraser"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Counter videowall"/></h1>
+                    </div>
+                    <group>
+                        <group string="The screen">
+                            <field name="panels"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="user_ids" widget="many2many_tags"
+                                   placeholder="Everyone in the company"/>
+                            <field name="wall_url" widget="CopyClipboardChar"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="What the customer sees">
+                            <field name="wall_style" widget="radio"/>
+                            <field name="title_mode"/>
+                            <field name="show_price"/>
+                            <field name="heading" placeholder="e.g. Ask us about this piece"/>
+                            <field name="idle_timeout"/>
+                            <field name="lang"/>
+                        </group>
+                        <group string="When nobody is driving it">
+                            <field name="idle_mode" widget="radio"/>
+                            <field name="idle_category_id"
+                                   invisible="idle_mode != 'own'"
+                                   options="{'no_create': True}"/>
+                            <field name="idle_count" invisible="idle_mode != 'own'"/>
+                            <field name="idle_interval" invisible="idle_mode != 'own'"/>
+                            <field name="idle_order" invisible="idle_mode != 'own'"/>
+                            <field name="idle_qr_url" invisible="idle_mode != 'own'"
+                                   placeholder="https://…/shop"/>
+                            <field name="idle_url" invisible="idle_mode != 'url'"
+                                   placeholder="/shop"/>
+                        </group>
+                        <group string="Look" groups="base.group_no_one">
+                            <field name="accent_color" widget="color"/>
+                            <field name="bg_color" widget="color"/>
+                            <field name="poll_interval"/>
+                        </group>
+                        <group string="Security" groups="base.group_no_one">
+                            <field name="access_token" password="True"/>
+                            <button name="action_reset_token" type="object"
+                                    string="Reset the token" class="btn-link"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="On screen now" name="now">
+                            <field name="mode"/>
+                            <field name="spotlight_at"/>
+                            <field name="slot_ids">
+                                <list>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_id"/>
+                                    <field name="price"/>
+                                    <field name="currency_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_showroom_screen" model="ir.actions.act_window">
+        <field name="name">Showroom Screens</field>
+        <field name="res_model">xb.showroom.screen</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add your first showroom screen</p>
+            <p>Point the screen's browser or signage player at the wall URL, then send
+               any product to it from the shop with one tap.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_showroom_screen" name="Showroom Screens"
+              parent="website.menu_website_website_settings"
+              action="action_showroom_screen" sequence="70"/>
+
+</odoo>

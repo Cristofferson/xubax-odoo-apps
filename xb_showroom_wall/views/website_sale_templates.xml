@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- The tablet: the sales person browses the real shop, and gets a way to
+         throw what the customer likes onto the big screen. The buttons only
+         exist in the page for signed-in staff, so a visitor from the internet
+         never receives them. They stay hidden until the script confirms that
+         a screen is actually configured. -->
+
+    <template id="showroom_bar" name="Showroom: remote control bar">
+        <div t-if="env.user.has_group('sales_team.group_sale_salesman')"
+             class="o_showroom_bar d-none">
+            <span class="o_showroom_label">
+                <i class="fa fa-television me-1"/>Showroom
+            </span>
+            <t t-if="from_form">
+                <button type="button" class="btn btn-light btn-sm o_showroom_btn"
+                        data-showroom-mode="single" data-showroom-from-form="1">
+                    Show on wall
+                </button>
+                <button type="button" class="btn btn-outline-light btn-sm o_showroom_btn"
+                        data-showroom-mode="compare" data-showroom-from-form="1">
+                    Add to compare
+                </button>
+            </t>
+            <button type="button" class="btn btn-outline-light btn-sm o_showroom_clear">
+                Back to idle
+            </button>
+            <select class="form-select form-select-sm w-auto o_showroom_screen d-none"
+                    aria-label="Showroom screen"/>
+            <span class="small o_showroom_feedback" role="status"/>
+            <span class="o_showroom_now"/>
+        </div>
+    </template>
+
+    <template id="product_showroom_bar" inherit_id="website_sale.product" name="Showroom: send to wall">
+        <xpath expr="//div[@id='product_details']" position="inside">
+            <t t-call="xb_showroom_wall.showroom_bar">
+                <t t-set="from_form" t-value="True"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- The catalogue grid gets the same bar (without the product buttons):
+         a comparison is often built tile by tile, and the sales person needs
+         to see what is on the wall and take pieces off from here too. -->
+    <template id="products_showroom_bar" inherit_id="website_sale.products" name="Showroom: bar on the catalogue">
+        <xpath expr="//div[@id='wrap']" position="inside">
+            <t t-call="xb_showroom_wall.showroom_bar"/>
+        </xpath>
+    </template>
+
+    <template id="products_item_showroom" inherit_id="website_sale.products_item" name="Showroom: send tile to wall">
+        <!-- The image wrapper carries its class through t-attf-class, which
+             hasclass() cannot see, so anchor on the tile's own csrf input. -->
+        <xpath expr="//input[@name='csrf_token']" position="after">
+            <button t-if="env.user.has_group('sales_team.group_sale_salesman')"
+                    type="button"
+                    class="btn btn-dark btn-sm o_showroom_btn o_showroom_tile d-none position-absolute top-0 start-0 m-2"
+                    data-showroom-mode="single"
+                    t-att-data-showroom-template="product.id"
+                    title="Show on the showroom wall">
+                <i class="fa fa-television"/>
+            </button>
+            <button t-if="env.user.has_group('sales_team.group_sale_salesman')"
+                    type="button"
+                    class="btn btn-dark btn-sm o_showroom_btn o_showroom_tile o_showroom_tile_compare d-none position-absolute top-0 start-0 m-2"
+                    data-showroom-mode="compare"
+                    t-att-data-showroom-template="product.id"
+                    title="Add to the comparison on the wall">
+                <i class="fa fa-columns"/>
+            </button>
+        </xpath>
+    </template>
+
+</odoo>
