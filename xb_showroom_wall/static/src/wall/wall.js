@@ -65,6 +65,25 @@
                 img.src = piece.image;
                 if (video.parentNode) { video.parentNode.replaceChild(img, video); }
             }, true);
+            /* El panel toma su color de fondo de la FOTO del anillo, y el
+               vídeo trae el suyo, de otra sesión de estudio: con los dos
+               juntos se dibuja un rectángulo. En cuanto hay un cuadro, se lee
+               su esquina y el panel se pinta de ese mismo color. */
+            video.addEventListener("loadeddata", function () {
+                try {
+                    var lienzo = document.createElement("canvas");
+                    lienzo.width = 16; lienzo.height = 16;
+                    var ctx = lienzo.getContext("2d");
+                    ctx.drawImage(video, 0, 0, 16, 16);
+                    var punto = ctx.getImageData(1, 1, 1, 1).data;
+                    var banda = video.parentNode && video.parentNode.closest
+                        ? video.parentNode.closest(".band")
+                        : null;
+                    if (banda) {
+                        banda.style.background = "rgb(" + punto[0] + "," + punto[1] + "," + punto[2] + ")";
+                    }
+                } catch (e) { /* sin permiso para leer el cuadro: queda el fondo de la foto */ }
+            });
             // Some embedded browsers ignore the autoplay attribute; asking
             // once the file is ready costs nothing where it already plays.
             video.addEventListener("canplay", function () {

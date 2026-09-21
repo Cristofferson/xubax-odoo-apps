@@ -381,7 +381,7 @@ body[data-fit="native"] .piece video {
   /* El vídeo trae su propio blanco de estudio y el panel el suyo, muestreado
      de la foto: juntos dibujan una pleca. Los bordes se desvanecen para que
      uno entre en el otro sin línea. */
-  --desvanecido: 7%;
+  --desvanecido: 9%;
   -webkit-mask-image:
     linear-gradient(to right, transparent 0, #000 var(--desvanecido), #000 calc(100% - var(--desvanecido)), transparent 100%),
     linear-gradient(to bottom, transparent 0, #000 var(--desvanecido), #000 calc(100% - var(--desvanecido)), transparent 100%);
