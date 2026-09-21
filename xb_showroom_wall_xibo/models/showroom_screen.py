@@ -176,15 +176,25 @@ class ShowroomScreen(models.Model):
         self.ensure_one()
         if self.xibo_layout_id:
             self.xibo_pos_config_id._xibo_cms_layout(self.xibo_layout_id)
-        ours = self.search([('xibo_layout_id', '!=', False)]).mapped('xibo_layout_id.xibo_layout_id')
+        ours = self.search([
+            ('xibo_layout_id', '!=', False),
+            ('company_id', '=', self.company_id.id),
+        ]).mapped('xibo_layout_id.xibo_layout_id')
         return layout_xibo_id in ours
 
     # ------------------------------------------------------------------
     # Buttons
     # ------------------------------------------------------------------
     def _xibo_check_rights(self):
+        """The group is not enough: this screen has to be theirs too.
+
+        Without the record check, a manager of one company could publish or
+        unpublish another company's wall by calling the button over RPC with
+        a guessed id, since the work that follows runs as superuser.
+        """
         if not (self.env.user.has_group('sales_team.group_sale_manager') or self.env.is_admin()):
             raise AccessError(_("Only a sales manager can put the wall on a Xibo screen."))
+        self.check_access('write')
 
     def action_xibo_publish(self):
         self.ensure_one()

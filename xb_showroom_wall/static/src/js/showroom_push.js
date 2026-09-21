@@ -104,7 +104,9 @@
     function removeSlot(slotId) {
         rpc("/showroom/remove", { screen_id: current, slot_id: slotId }).then(function (result) {
             if (result.error) { return say(result.error, true); }
-            say(labels.removed);
+            // The wall may have moved on (another tablet, a sale): only say it
+            // came off when it really did, and show what is there now.
+            say(result.ok ? labels.removed : labels.moved_on, !result.ok);
             refreshNow();
         }).catch(function (error) {
             say(String(error.message || error), true);

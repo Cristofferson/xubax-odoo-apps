@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- One wall per branch means one wall per company too: a sales person of
+         one company has no business reading, let alone driving, the screen of
+         another. The tablet already refuses a screen that is not theirs; this
+         closes the same door in the back office. -->
+    <record id="rule_showroom_screen_company" model="ir.rule">
+        <field name="name">Showroom screen: own company only</field>
+        <field name="model_id" ref="model_xb_showroom_screen"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_showroom_slot_company" model="ir.rule">
+        <field name="name">Showroom piece: own company only</field>
+        <field name="model_id" ref="model_xb_showroom_slot"/>
+        <field name="domain_force">['|', ('screen_id.company_id', '=', False), ('screen_id.company_id', 'in', company_ids)]</field>
+    </record>
+
+</odoo>

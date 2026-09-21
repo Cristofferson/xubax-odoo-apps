@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:21+0000\n"
-"PO-Revision-Date: 2026-09-20 22:21+0000\n"
+"POT-Creation-Date: 2026-09-21 04:26+0000\n"
+"PO-Revision-Date: 2026-09-21 04:26+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -45,6 +45,12 @@ msgid ""
 "<span class=\"o_showroom_label\">\n"
 "                <i class=\"fa fa-television me-1\"/>Showroom\n"
 "            </span>"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/models/showroom_screen.py:0
+msgid "A piece can stay 2 to %s seconds on the shop window."
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -406,6 +412,12 @@ msgid "One piece"
 msgstr ""
 
 #. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Only pieces published in the shop of this company can go on the wall."
+msgstr ""
+
+#. module: xb_showroom_wall
 #: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
 msgid "Open the wall"
 msgstr ""
@@ -533,7 +545,8 @@ msgstr ""
 #: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__access_token
 msgid ""
 "Secret part of the wall URL. Anyone with the URL can watch the screen, so "
-"treat it like the screen itself."
+"treat it like the screen itself: it is readable by sales managers only, and "
+"the tablet never needs to see it."
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -628,6 +641,18 @@ msgid "That piece no longer exists."
 msgstr ""
 
 #. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "That piece was no longer on the wall."
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/models/showroom_screen.py:0
+msgid "The idle page must be a path like /my-page or a full https address."
+msgstr ""
+
+#. module: xb_showroom_wall
 #: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__title_mode__product_name
 msgid "The product name"
 msgstr ""
@@ -641,6 +666,17 @@ msgstr ""
 #. module: xb_showroom_wall
 #: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
 msgid "The screen"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/models/showroom_screen.py:0
+msgid "The shop window can rotate 1 to %s pieces."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.constraint,message:xb_showroom_wall.constraint_xb_showroom_screen_access_token_uniq
+msgid "The wall access token must be unique."
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -670,6 +706,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/xb_showroom_wall/controllers/wall.py:0
 msgid "Unknown showroom screen."
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Unknown way of showing the piece."
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -739,6 +781,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/xb_showroom_wall/controllers/wall.py:0
 msgid "You cannot send pieces to that screen."
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "You cannot show that piece on the wall."
 msgstr ""
 
 #. module: xb_showroom_wall

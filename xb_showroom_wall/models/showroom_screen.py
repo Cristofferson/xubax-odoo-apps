@@ -17,6 +17,12 @@ MAX_PANELS = 3
 # Pieces a customer can hold up against each other. Beyond six nobody is
 # comparing any more, and each piece would be too small to judge.
 MAX_COMPARE = 6
+# The shop window rotates in the browser; these bounds keep a mistyped
+# setting from turning a public URL into a catalogue dump.
+MAX_IDLE_PIECES = 48
+MAX_IDLE_INTERVAL = 600
+# How many published pieces a shuffled window draws from.
+RANDOM_POOL = 300
 
 
 class ShowroomScreen(models.Model):
@@ -39,9 +45,11 @@ class ShowroomScreen(models.Model):
              "wall of another shop.")
     access_token = fields.Char(
         string='Access Token', required=True, copy=False, index=True,
+        groups='sales_team.group_sale_manager',
         default=lambda s: secrets.token_urlsafe(24),
         help="Secret part of the wall URL. Anyone with the URL can watch the "
-             "screen, so treat it like the screen itself.")
+             "screen, so treat it like the screen itself: it is readable by "
+             "sales managers only, and the tablet never needs to see it.")
     compare_max = fields.Integer(
         string='Pieces when comparing', default=6,
         help="How many pieces the wall can hold side by side. Two take a "
@@ -127,7 +135,7 @@ class ShowroomScreen(models.Model):
         help="Language the wall is written in. Defaults to the company's.")
     heading = fields.Char(
         string='Idle heading', translate=True,
-        default=lambda s: _("Ask us about this piece"))
+        default=lambda s: s.env._("Ask us about this piece"))
 
     # --- live state (written by the tablet) --------------------------------
     mode = fields.Selection(
@@ -138,14 +146,24 @@ class ShowroomScreen(models.Model):
     spotlight_at = fields.Datetime(string='Last push', readonly=True)
     wall_url = fields.Char(compute='_compute_wall_url')
 
-    _sql_constraints = [
-        ('access_token_uniq', 'unique(access_token)',
-         'The wall access token must be unique.'),
-    ]
+    _access_token_uniq = models.Constraint(
+        'unique(access_token)',
+        "The wall access token must be unique.",
+    )
 
-    @api.constrains('panels', 'poll_interval', 'compare_max')
+    @api.constrains('panels', 'poll_interval', 'compare_max',
+                    'idle_count', 'idle_interval', 'idle_url')
     def _check_panels(self):
         for screen in self:
+            if not 1 <= (screen.idle_count or 12) <= MAX_IDLE_PIECES:
+                raise ValidationError(
+                    _("The shop window can rotate 1 to %s pieces.", MAX_IDLE_PIECES))
+            if not 2 <= (screen.idle_interval or 9) <= MAX_IDLE_INTERVAL:
+                raise ValidationError(
+                    _("A piece can stay 2 to %s seconds on the shop window.", MAX_IDLE_INTERVAL))
+            if screen.idle_url and not screen.idle_url.startswith(('/', 'http://', 'https://')):
+                raise ValidationError(
+                    _("The idle page must be a path like /my-page or a full https address."))
             if not 1 <= screen.panels <= MAX_PANELS:
                 raise ValidationError(
                     _("A showroom screen can have 1 to %s panels.", MAX_PANELS))
@@ -177,11 +195,15 @@ class ShowroomScreen(models.Model):
                 or self.env.user.lang
                 or 'en_US')
 
-    def _idle_pieces(self):
+    def _idle_pieces(self, seed=None):
         """The pieces that rotate when nobody is driving the screen.
 
         Only published products with a picture: a shop window with a
         placeholder image is worse than a shorter rotation.
+
+        ``seed`` keeps a shuffled window on the same pieces for a full round.
+        Without it every poll would draw a different set and the wall would
+        start over instead of rotating.
         """
         self.ensure_one()
         Template = self.env['product.template'].sudo()
@@ -198,11 +220,14 @@ class ShowroomScreen(models.Model):
             'sequence': 'website_sequence asc, id asc',
             'random': 'id asc',
         }.get(self.idle_order or 'price_desc')
-        limit = max(self.idle_count or 12, 1)
-        templates = Template.search(domain, order=order, limit=None if self.idle_order == 'random' else limit)
+        limit = min(max(self.idle_count or 12, 1), MAX_IDLE_PIECES)
         if self.idle_order == 'random':
-            templates = templates.browse(random.sample(templates.ids, min(limit, len(templates))))
-        return templates.mapped('product_variant_id')
+            # Draw from a bounded pool: the wall asks often and the catalogue
+            # can be tens of thousands of pieces long.
+            pool = Template.search(domain, order='id asc', limit=RANDOM_POOL)
+            chosen = random.Random(seed).sample(pool.ids, min(limit, len(pool)))
+            return pool.browse(chosen).mapped('product_variant_id')
+        return Template.search(domain, order=order, limit=limit).mapped('product_variant_id')
 
     def _is_live(self):
         """True while the pushed selection is still what the wall should show."""
@@ -219,7 +244,7 @@ class ShowroomScreen(models.Model):
         self.ensure_one()
         return max(min(self.compare_max or MAX_COMPARE, MAX_COMPARE), 2)
 
-    def push(self, products, mode='single', prices=None):
+    def _push(self, products, mode='single', prices=None):
         """Put ``products`` (product.product recordset) on this screen.
 
         ``prices`` is an optional {product_id: (amount, currency)} map so the

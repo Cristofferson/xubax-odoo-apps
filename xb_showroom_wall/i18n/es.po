@@ -46,6 +46,12 @@ msgid ""
 msgstr ""
 
 #. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/models/showroom_screen.py:0
+msgid "A piece can stay 2 to %s seconds on the shop window."
+msgstr "Una pieza puede estar de 2 a %s segundos en la vitrina."
+
+#. module: xb_showroom_wall
 #: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__idle_mode
 msgid ""
 "A shop window built for this screen keeps the piece on the centre panel; "
@@ -425,6 +431,13 @@ msgid "One piece"
 msgstr "Una pieza"
 
 #. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Only pieces published in the shop of this company can go on the wall."
+msgstr ""
+"Al muro solo pueden ir piezas publicadas en la tienda de esta empresa."
+
+#. module: xb_showroom_wall
 #: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
 msgid "Open the wall"
 msgstr "Abrir el muro"
@@ -556,10 +569,12 @@ msgstr "Segundos por pieza"
 #: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__access_token
 msgid ""
 "Secret part of the wall URL. Anyone with the URL can watch the screen, so "
-"treat it like the screen itself."
+"treat it like the screen itself: it is readable by sales managers only, and "
+"the tablet never needs to see it."
 msgstr ""
-"Parte secreta de la URL del muro. Cualquiera con la URL puede ver la "
-"pantalla, así que trátala como la pantalla misma."
+"Parte secreta de la dirección del muro. Cualquiera que tenga la dirección "
+"puede ver la pantalla, así que trátala como la pantalla misma: solo la leen "
+"los gerentes de ventas, y la tablet nunca necesita verla."
 
 #. module: xb_showroom_wall
 #: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
@@ -655,6 +670,20 @@ msgid "That piece no longer exists."
 msgstr "Esa pieza ya no existe."
 
 #. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "That piece was no longer on the wall."
+msgstr "Esa pieza ya no estaba en el muro."
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/models/showroom_screen.py:0
+msgid "The idle page must be a path like /my-page or a full https address."
+msgstr ""
+"La página de reposo debe ser una ruta como /mi-pagina o una dirección https "
+"completa."
+
+#. module: xb_showroom_wall
 #: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__title_mode__product_name
 msgid "The product name"
 msgstr "El nombre del producto"
@@ -669,6 +698,17 @@ msgstr "El intervalo de refresco debe ser de al menos 1 segundo."
 #: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
 msgid "The screen"
 msgstr "La pantalla"
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/models/showroom_screen.py:0
+msgid "The shop window can rotate 1 to %s pieces."
+msgstr "La vitrina puede rotar de 1 a %s piezas."
+
+#. module: xb_showroom_wall
+#: model:ir.model.constraint,message:xb_showroom_wall.constraint_xb_showroom_screen_access_token_uniq
+msgid "The wall access token must be unique."
+msgstr "La llave del muro no se puede repetir."
 
 #. module: xb_showroom_wall
 #. odoo-python
@@ -698,6 +738,12 @@ msgstr "Esta tablet ahora manda a: %s"
 #: code:addons/xb_showroom_wall/controllers/wall.py:0
 msgid "Unknown showroom screen."
 msgstr "Pantalla de showroom desconocida."
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Unknown way of showing the piece."
+msgstr "No se reconoce esa forma de mostrar la pieza."
 
 #. module: xb_showroom_wall
 #: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__accent_color
@@ -777,6 +823,12 @@ msgstr "No tienes permiso para manejar la pantalla del showroom."
 #: code:addons/xb_showroom_wall/controllers/wall.py:0
 msgid "You cannot send pieces to that screen."
 msgstr "No puedes mandar piezas a esa pantalla."
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "You cannot show that piece on the wall."
+msgstr "No puedes mostrar esa pieza en el muro."
 
 #. module: xb_showroom_wall
 #: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form

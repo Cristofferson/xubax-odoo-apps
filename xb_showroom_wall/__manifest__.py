@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Showroom Wall — catálogo en tablet al videowall',
-    'version': '19.0.1.8.0',
-    'category': 'Sales/Point of Sale',
+    'name': 'Showroom Wall',
+    'version': '19.0.1.9.0',
+    'category': 'Website/eCommerce',
     'summary': 'Send any product from your own web catalog to the showroom '
                'videowall from a tablet, in one tap.',
     'description': """
@@ -46,12 +46,13 @@ Highlights
   Odoo, so it works inside any digital-signage web widget, a browser in
   kiosk mode or a smart TV.
 """,
-    'author': 'XUBAX',
+    'author': 'Cristofferson Reyes Rodriguez',
     'website': 'https://www.xubax.com',
     'license': 'OPL-1',
     'depends': ['website_sale'],
     'data': [
         'security/ir.model.access.csv',
+        'security/showroom_security.xml',
         'views/showroom_screen_views.xml',
         'views/website_sale_templates.xml',
     ],
@@ -61,7 +62,6 @@ Highlights
             'xb_showroom_wall/static/src/js/showroom_push.js',
         ],
     },
-    'images': ['static/description/banner.png'],
     'installable': True,
     'application': False,
 }

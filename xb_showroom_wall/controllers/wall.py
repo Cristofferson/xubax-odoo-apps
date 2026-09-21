@@ -6,15 +6,39 @@ reach the signage player, so a player that only checks in every few minutes
 still shows the piece instantly.
 """
 import base64
+import html as html_escape
 import io
 import json
 import logging
+import time
 
 from odoo import http, _
+from odoo.exceptions import AccessError
 from odoo.http import request, Response
 from odoo.tools import float_round
 
 _logger = logging.getLogger(__name__)
+
+# The wall asks for its state every couple of seconds, and building it reads
+# attachments and samples the photo's backdrop with PIL. The answer only
+# changes when the screen does, so it is built once and kept for a moment: a
+# public URL must never cost a database round of work per poll.
+_STATE_CACHE = {}
+_STATE_CACHE_MAX = 64
+LIVE_TTL = 30      # seconds; the key already changes with every push
+IDLE_TTL = 60      # seconds; the rotation runs in the browser, not here
+
+
+def _cached(key, ttl, build):
+    now = time.time()
+    hit = _STATE_CACHE.get(key)
+    if hit and hit[0] > now:
+        return hit[1]
+    value = build()
+    if len(_STATE_CACHE) > _STATE_CACHE_MAX:
+        _STATE_CACHE.clear()
+    _STATE_CACHE[key] = (now + ttl, value)
+    return value
 
 # Groups allowed to drive a showroom screen from the shop.
 PUSH_GROUPS = ('sales_team.group_sale_salesman', 'point_of_sale.group_pos_user')
@@ -117,11 +141,6 @@ def _is_metal(label):
     return (label or '').strip().lower() in _METAL_WORDS
 
 
-def _metal(product):
-    """The metal, which the wall shows as the headline's second line."""
-    return next((value for label, value in _specs(product) if _is_metal(label)), '')
-
-
 # Commercial names are written as «Verona · Solitario catedral con pavé»: a
 # name to remember and, after the separator, what the piece is. The wall gives
 # each half its own line instead of cramming both into the big one.
@@ -155,14 +174,6 @@ def _headline(screen, product):
         return (template.public_categ_ids[:1].name
                 or template.categ_id.name or template.name)
     return template.name
-
-
-def _specs(product):
-    """The variant's attribute values, as ``('Metal', 'White gold 14Kt')``."""
-    return [
-        (ptav.attribute_id.name, ptav.name)
-        for ptav in product.product_template_attribute_value_ids
-    ]
 
 
 def _option_specs(options):
@@ -214,6 +225,19 @@ def _open_specs(env, product):
         else:
             specs.append((label, env._("%s options", len(values))))
     return metal, metal_count, specs
+
+
+def _may_show(screen, template):
+    """A piece may go on the wall when the shop already shows it.
+
+    The wall is a public page: a piece that is not published has no public
+    images anyway, and one from another company has no business on this
+    screen. Checking here is what keeps `/showroom/push` from turning into a
+    catalogue reader for whoever holds the wall's link.
+    """
+    if not template:
+        return False
+    return bool(template.is_published) and template.company_id.id in (False, screen.company_id.id)
 
 
 def _price_label(screen, slot):
@@ -294,6 +318,11 @@ class ShowroomWall(http.Controller):
         logo = ''
         if screen.company_id.logo:
             logo = '/web/image/res.company/%s/logo' % screen.company_id.id
+        # Everything below is written by staff, but the page is public: a
+        # screen named with a stray tag would otherwise end up as markup.
+        def safe(value):
+            return html_escape.escape(str(value or ''), quote=True)
+
         html = """<!DOCTYPE html>
 <html lang="%(lang)s"><head><meta charset="utf-8"/>
 <title>%(title)s</title>
@@ -309,12 +338,13 @@ class ShowroomWall(http.Controller):
 <script id="cfg" type="application/json">%(config)s</script>
 <script src="/xb_showroom_wall/static/src/wall/wall.js" defer></script>
 </body></html>""" % {
-            'lang': (screen._lang() or 'es').split('_')[0],
-            'theme': screen.theme or 'light',
-            'style': screen.wall_style or 'mosaic',
-            'title': screen.name or 'Showroom',
-            'logo': logo,
-            'config': json.dumps(config),
+            'lang': safe((screen._lang() or 'es').split('_')[0]),
+            'theme': safe(screen.theme or 'light'),
+            'style': safe(screen.wall_style or 'mosaic'),
+            'title': safe(screen.name or 'Showroom'),
+            'logo': safe(logo),
+            # `</script>` inside a colour would close the block early.
+            'config': json.dumps(config).replace('<', '\\u003c'),
         }
         return Response(html, headers=[
             ('Content-Type', 'text/html; charset=utf-8'),
@@ -388,6 +418,26 @@ class ShowroomWall(http.Controller):
         }
 
     def _state_dict(self, screen):
+        """What the wall should show, cached for a few seconds.
+
+        The key carries everything the answer depends on, so a push or a
+        change of settings is seen at once and a quiet screen costs nothing.
+        """
+        if screen._is_live():
+            key = ('live', screen.id, screen._lang(), str(screen.write_date),
+                   str(screen.spotlight_at), tuple(screen.slot_ids.ids))
+            ttl = LIVE_TTL
+        else:
+            # A shuffled shop window keeps the same pieces for a full round,
+            # so the wall rotates instead of starting over on every poll.
+            round_seconds = max((screen.idle_count or 12) * (screen.idle_interval or 9), 60)
+            window = int(time.time() // round_seconds)
+            key = ('idle', screen.id, screen._lang(), str(screen.write_date),
+                   screen.idle_mode, window if screen.idle_order == 'random' else 0)
+            ttl = IDLE_TTL
+        return _cached(key, ttl, lambda: self._build_state(screen, key))
+
+    def _build_state(self, screen, key=None):
         base = request.env['ir.config_parameter'].sudo().get_param('web.base.url') or ''
         # A public request carries no language, so the wall would fall back to
         # English attribute names in front of the customer.
@@ -408,7 +458,7 @@ class ShowroomWall(http.Controller):
                 pieces = [
                     self._piece_dict(screen, product, base,
                                      price=_idle_price(screen, product), qr=qr)
-                    for product in screen._idle_pieces()
+                    for product in screen._idle_pieces(seed=key[-1] if key else None)
                 ]
                 state['pieces'] = pieces
                 # The QR caption doubles as the shop window's invitation.
@@ -462,7 +512,10 @@ class ShowroomWall(http.Controller):
         if not screen:
             return Response(status=404)
         product = request.env['product.product'].sudo().browse(product_id).exists()
-        if not product:
+        # Only what the wall is showing: the QR is for the customer standing in
+        # front of it, not a way to walk the catalogue with the wall's link.
+        on_screen = {piece['id'] for piece in self._state_dict(screen).get('pieces', [])}
+        if not product or product.id not in on_screen:
             return Response(status=404)
         base = (request.env['ir.config_parameter'].sudo()
                 .get_param('web.base.url') or '').rstrip('/')
@@ -488,20 +541,35 @@ class ShowroomWall(http.Controller):
         screen, error = self._pick_screen(screen_id)
         if error:
             return {'error': error}
+        if mode not in ('single', 'compare'):
+            return {'error': _("Unknown way of showing the piece.")}
         env = request.env
-        template = env['product.template'].sudo().browse(int(template_id or 0)).exists()
-        product = env['product.product'].sudo().browse(int(product_id or 0)).exists()
+        # Read as the sales person, never as superuser: what they may not see
+        # in the shop must not reach the wall either.
+        try:
+            template = env['product.template'].browse(int(template_id or 0)).exists()
+            product = env['product.product'].browse(int(product_id or 0)).exists()
+            options = env['product.template.attribute.value'].browse(
+                [int(value) for value in (combination or []) if value]).exists()
+            amount = float(price) if price else None
+            template.check_access('read')
+            product.check_access('read')
+            options.check_access('read')
+        except (TypeError, ValueError):
+            return {'error': _("Could not tell which piece to show.")}
+        except AccessError:
+            return {'error': _("You cannot show that piece on the wall.")}
         if product:
             template = product.product_tmpl_id
-        options = env['product.template.attribute.value'].sudo()
-        if template and combination:
-            options = options.browse([int(i) for i in combination if i]).exists().filtered(
-                lambda v: v.product_tmpl_id == template)
+        options = options.filtered(lambda v: v.product_tmpl_id == template)
         if not product and template:
             product = (template._get_variant_for_combination(options) if options else None) \
                 or template.product_variant_id
         if not product:
             return {'error': _("That piece no longer exists.")}
+        if not _may_show(screen, product.product_tmpl_id):
+            return {'error': _(
+                "Only pieces published in the shop of this company can go on the wall.")}
         if not options and product_id:
             # An existing variant sent without its options: they are its own.
             options = product.product_template_attribute_value_ids
@@ -509,10 +577,10 @@ class ShowroomWall(http.Controller):
         # Keep the exact figure the customer is looking at on the tablet.
         currency = request.website.currency_id if request.website else product.currency_id
         entry = {
-            'product': product,
-            'options': options,
-            'price': float(price) if price else None,
-            'currency': currency if price else None,
+            'product': product.sudo(),
+            'options': options.sudo(),
+            'price': amount,
+            'currency': currency if amount is not None else None,
         }
 
         def key(prod, opts):
@@ -556,8 +624,13 @@ class ShowroomWall(http.Controller):
         screen, error = self._pick_screen(screen_id)
         if error:
             return {'error': error}
-        screen.sudo()._remove_slot(int(slot_id or 0))
-        return {'ok': True}
+        try:
+            removed = screen.sudo()._remove_slot(int(slot_id or 0))
+        except (TypeError, ValueError):
+            removed = False
+        # The wall may have changed under the tablet (another tablet, a sale):
+        # saying "taken off" when nothing was is worse than saying nothing.
+        return {'ok': bool(removed)}
 
     @http.route('/showroom/screens', type='jsonrpc', auth='user', website=True)
     def screens(self, **kw):
@@ -584,6 +657,7 @@ class ShowroomWall(http.Controller):
                 'back_idle': env._("Back to idle"),
                 'remove': env._("Take off the wall"),
                 'removed': env._("Taken off the wall."),
+                'moved_on': env._("That piece was no longer on the wall."),
                 'unknown': env._("Could not tell which piece to show."),
                 'screen_set': env._("This tablet now sends to: %s"),
             },

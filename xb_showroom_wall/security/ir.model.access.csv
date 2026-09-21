@@ -1,7 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_showroom_screen_user,xb.showroom.screen.user,model_xb_showroom_screen,base.group_user,1,0,0,0
-access_showroom_screen_sale,xb.showroom.screen.sale,model_xb_showroom_screen,sales_team.group_sale_salesman,1,1,0,0
+access_showroom_screen_sale,xb.showroom.screen.sale,model_xb_showroom_screen,sales_team.group_sale_salesman,1,0,0,0
 access_showroom_screen_manager,xb.showroom.screen.manager,model_xb_showroom_screen,sales_team.group_sale_manager,1,1,1,1
-access_showroom_slot_user,xb.showroom.slot.user,model_xb_showroom_slot,base.group_user,1,0,0,0
-access_showroom_slot_sale,xb.showroom.slot.sale,model_xb_showroom_slot,sales_team.group_sale_salesman,1,1,1,1
+access_showroom_slot_sale,xb.showroom.slot.sale,model_xb_showroom_slot,sales_team.group_sale_salesman,1,0,0,0
 access_showroom_slot_manager,xb.showroom.slot.manager,model_xb_showroom_slot,sales_team.group_sale_manager,1,1,1,1
