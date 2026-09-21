@@ -44,6 +44,7 @@
                         </group>
                         <group string="What the customer sees">
                             <field name="wall_style" widget="radio"/>
+                            <field name="video_fit" widget="radio"/>
                             <field name="title_mode"/>
                             <field name="show_price"/>
                             <field name="heading" placeholder="e.g. Ask us about this piece"/>
@@ -55,6 +56,7 @@
                             <field name="idle_category_id"
                                    invisible="idle_mode != 'own'"
                                    options="{'no_create': True}"/>
+                            <field name="idle_video" invisible="idle_mode != 'own'"/>
                             <field name="idle_count" invisible="idle_mode != 'own'"/>
                             <field name="idle_interval" invisible="idle_mode != 'own'"/>
                             <field name="idle_order" invisible="idle_mode != 'own'"/>

@@ -95,6 +95,13 @@ class ShowroomScreen(models.Model):
          ('sequence', 'Catalogue order'),
          ('random', 'Shuffled')],
         string='Rotation order', default='price_desc', required=True)
+    idle_video = fields.Boolean(
+        string='Video in the shop window', default=False,
+        help="The shop window changes piece every few seconds, and a player "
+             "that has to fetch and decode a new video that often stutters on "
+             "the first seconds of each one. With this off the window rotates "
+             "photographs, which is always smooth, and the video is kept for "
+             "the moment a sales person puts a piece on the wall.")
     idle_qr_url = fields.Char(
         string='QR destination',
         help="Where the QR code on the idle screen points. Empty points at "
@@ -120,6 +127,15 @@ class ShowroomScreen(models.Model):
              "reads badly on a two-metre screen. 'Category and metal' builds "
              "the headline from the data instead, until the commercial names "
              "are written.")
+    video_fit = fields.Selection(
+        [('cover', 'Fill the panel'),
+         ('native', 'Its own size, never stretched')],
+        string='Video on screen', default='cover', required=True,
+        help="Catalogue videos are often smaller than the screen. Filling the "
+             "panel stretches them, which shows on a wall and makes the player "
+             "decode far more pixels than the file has — on a modest player "
+             "that is what turns a smooth turn into a stutter. At its own size "
+             "the piece looks sharp and plays light, but smaller.")
     theme = fields.Selection(
         [('light', 'Light'), ('dark', 'Dark')], default='light', required=True,
         string='Theme',

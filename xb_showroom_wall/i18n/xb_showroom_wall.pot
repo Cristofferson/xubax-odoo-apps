@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-21 16:03+0000\n"
-"PO-Revision-Date: 2026-09-21 16:03+0000\n"
+"POT-Creation-Date: 2026-09-21 17:34+0000\n"
+"PO-Revision-Date: 2026-09-21 17:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -145,6 +145,16 @@ msgid "Catalogue order"
 msgstr ""
 
 #. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__video_fit
+msgid ""
+"Catalogue videos are often smaller than the screen. Filling the panel "
+"stretches them, which shows on a wall and makes the player decode far more "
+"pixels than the file has — on a modest player that is what turns a smooth "
+"turn into a stutter. At its own size the piece looks sharp and plays light, "
+"but smaller."
+msgstr ""
+
+#. module: xb_showroom_wall
 #: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__title_mode
 msgid ""
 "Catalogues often name pieces by their internal reference, which reads badly "
@@ -236,6 +246,11 @@ msgid "Everyone in the company"
 msgstr ""
 
 #. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__video_fit__cover
+msgid "Fill the panel"
+msgstr ""
+
+#. module: xb_showroom_wall
 #. odoo-python
 #: code:addons/xb_showroom_wall/controllers/wall.py:0
 msgid "From %s"
@@ -292,6 +307,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/xb_showroom_wall/controllers/wall.py:0
 msgid "In its case"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__video_fit__native
+msgid "Its own size, never stretched"
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -681,6 +701,16 @@ msgid "The shop window can rotate 1 to %s pieces."
 msgstr ""
 
 #. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__idle_video
+msgid ""
+"The shop window changes piece every few seconds, and a player that has to "
+"fetch and decode a new video that often stutters on the first seconds of "
+"each one. With this off the window rotates photographs, which is always "
+"smooth, and the video is kept for the moment a sales person puts a piece on "
+"the wall."
+msgstr ""
+
+#. module: xb_showroom_wall
 #: model:ir.model.constraint,message:xb_showroom_wall.constraint_xb_showroom_screen_access_token_uniq
 msgid "The wall access token must be unique."
 msgstr ""
@@ -730,6 +760,16 @@ msgstr ""
 msgid ""
 "Used when 'When idle' is set to another page. A relative path such as /shop "
 "works and avoids domain and login surprises."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__idle_video
+msgid "Video in the shop window"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__video_fit
+msgid "Video on screen"
 msgstr ""
 
 #. module: xb_showroom_wall

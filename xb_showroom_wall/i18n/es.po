@@ -147,6 +147,21 @@ msgid "Catalogue order"
 msgstr "Orden del catálogo"
 
 #. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__video_fit
+msgid ""
+"Catalogue videos are often smaller than the screen. Filling the panel "
+"stretches them, which shows on a wall and makes the player decode far more "
+"pixels than the file has — on a modest player that is what turns a smooth "
+"turn into a stutter. At its own size the piece looks sharp and plays light, "
+"but smaller."
+msgstr ""
+"Los videos del catálogo suelen ser más chicos que la pantalla. Llenar el "
+"panel los estira, lo que se nota en un muro y obliga al reproductor a "
+"descifrar muchos más píxeles de los que trae el archivo: en un equipo "
+"modesto, eso es lo que convierte un giro fluido en uno a pasos. A su tamaño "
+"la pieza se ve nítida y va ligera, pero más chica."
+
+#. module: xb_showroom_wall
 #: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__title_mode
 msgid ""
 "Catalogues often name pieces by their internal reference, which reads badly "
@@ -245,6 +260,11 @@ msgid "Everyone in the company"
 msgstr "Todos los de la empresa"
 
 #. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__video_fit__cover
+msgid "Fill the panel"
+msgstr "Llenar el panel"
+
+#. module: xb_showroom_wall
 #. odoo-python
 #: code:addons/xb_showroom_wall/controllers/wall.py:0
 msgid "From %s"
@@ -308,6 +328,11 @@ msgstr "Página de reposo"
 #: code:addons/xb_showroom_wall/controllers/wall.py:0
 msgid "In its case"
 msgstr "En su estuche"
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__video_fit__native
+msgid "Its own size, never stretched"
+msgstr "A su tamaño, sin estirar"
 
 #. module: xb_showroom_wall
 #: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__lang
@@ -712,6 +737,21 @@ msgid "The shop window can rotate 1 to %s pieces."
 msgstr "La vitrina puede rotar de 1 a %s piezas."
 
 #. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__idle_video
+msgid ""
+"The shop window changes piece every few seconds, and a player that has to "
+"fetch and decode a new video that often stutters on the first seconds of "
+"each one. With this off the window rotates photographs, which is always "
+"smooth, and the video is kept for the moment a sales person puts a piece on "
+"the wall."
+msgstr ""
+"La vitrina cambia de pieza cada pocos segundos, y un reproductor que tiene "
+"que bajar y descifrar un video nuevo con esa frecuencia se entrecorta en los"
+" primeros segundos de cada uno. Con esto apagado la vitrina rota "
+"fotografías, que siempre va fluido, y el video se reserva para cuando un "
+"vendedor pone una pieza en el muro."
+
+#. module: xb_showroom_wall
 #: model:ir.model.constraint,message:xb_showroom_wall.constraint_xb_showroom_screen_access_token_uniq
 msgid "The wall access token must be unique."
 msgstr "La llave del muro no se puede repetir."
@@ -764,6 +804,16 @@ msgid ""
 msgstr ""
 "Se usa cuando «En reposo» apunta a otra página. Una ruta relativa como /shop"
 " funciona y evita sorpresas de dominio y de sesión."
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__idle_video
+msgid "Video in the shop window"
+msgstr "Video en la vitrina"
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__video_fit
+msgid "Video on screen"
+msgstr "Video en pantalla"
 
 #. module: xb_showroom_wall
 #: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__wall_url

@@ -31,8 +31,15 @@
         return node;
     }
 
-    function media(piece, muted) {
-        var fuentes = piece.videos || (piece.video ? [{ url: piece.video, type: "video/mp4" }] : []);
+    function media(piece, state) {
+        /* The shop window changes piece every few seconds: starting a new
+           video that often is what stutters on a modest player, so unless the
+           screen asks for it the window rotates photographs and the video is
+           kept for the piece a sales person puts on the wall. */
+        var enVitrina = state && state.live === false;
+        var fuentes = (enVitrina && !state.idle_video)
+            ? []
+            : (piece.videos || (piece.video ? [{ url: piece.video, type: "video/mp4" }] : []));
         if (fuentes.length) {
             var video = el("video");
             // One <source> per format: a player whose browser lacks the H.264
@@ -181,7 +188,7 @@
         var band = el("section", "band band-light");
         if (piece.bg) { band.style.background = piece.bg; }
         var stage = el("div", "band-stage");
-        stage.appendChild(media(piece));
+        stage.appendChild(media(piece, state));
         band.appendChild(stage);
         band.appendChild(el("div", "band-corner-veil"));
         band.appendChild(titleBlock(piece, "band-corner"));
@@ -239,7 +246,7 @@
         if (piece.bg) { band.style.background = piece.bg; }
 
         var stage = el("div", "band-stage");
-        stage.appendChild(media(piece));
+        stage.appendChild(media(piece, state));
         band.appendChild(stage);
         band.appendChild(el("div", "band-corner-veil"));
 
@@ -367,7 +374,7 @@
         var shots = piece.shots || {};
 
         var stage = el("div", "piece");
-        stage.appendChild(media(piece));
+        stage.appendChild(media(piece, state));
 
         if (panels === 1) {
             frag.appendChild(stage);
@@ -445,9 +452,21 @@
         shopWindow = null;
     }
 
+    /* The next piece's photographs are fetched while this one is on screen:
+       they weigh a megabyte each and a shop player that starts downloading
+       them at the moment of the change shows the change happening. */
+    function precargar(piece) {
+        if (!piece) { return; }
+        var shots = piece.shots || {};
+        [shots.case, shots.hand, piece.image, piece.ring].forEach(function (url) {
+            if (url) { var img = new Image(); img.src = url; }
+        });
+    }
+
     function paintShopWindow() {
         if (!shopWindow || !shopWindow.pieces.length) { return; }
         var piece = shopWindow.pieces[shopWindow.index % shopWindow.pieces.length];
+        precargar(shopWindow.pieces[(shopWindow.index + 1) % shopWindow.pieces.length]);
         wall.classList.remove("on");
         window.setTimeout(function () {
             if (!shopWindow) { return; }

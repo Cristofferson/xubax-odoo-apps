@@ -346,6 +346,7 @@ class ShowroomWall(http.Controller):
             'token': token,
             'theme': screen.theme or 'light',
             'style': screen.wall_style or 'mosaic',
+            'fit': screen.video_fit or 'cover',
             'panels': max(min(screen.panels, 3), 1),
             'poll': max(screen.poll_interval, 1),
             'accent': screen.accent_color or '#cda349',
@@ -372,7 +373,7 @@ class ShowroomWall(http.Controller):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&amp;family=Jost:wght@300;400;500&amp;display=swap"/>
 <link rel="stylesheet" href="/xb_showroom_wall/static/src/wall/wall.css?v=%(stamp)s"/>
-</head><body data-logo="%(logo)s" data-theme="%(theme)s" data-style="%(style)s">
+</head><body data-logo="%(logo)s" data-theme="%(theme)s" data-style="%(style)s" data-fit="%(fit)s">
 <div id="wall" class="wall"></div>
 <iframe id="idle" class="idle" referrerpolicy="no-referrer"></iframe>
 <script id="cfg" type="application/json">%(config)s</script>
@@ -381,6 +382,7 @@ class ShowroomWall(http.Controller):
             'lang': safe((screen._lang() or 'es').split('_')[0]),
             'theme': safe(screen.theme or 'light'),
             'style': safe(screen.wall_style or 'mosaic'),
+            'fit': safe(screen.video_fit or 'cover'),
             'title': safe(screen.name or 'Showroom'),
             'logo': safe(logo),
             'stamp': _asset_stamp(),
@@ -490,6 +492,7 @@ class ShowroomWall(http.Controller):
                 'live': False,
                 'rev': 'idle-%s' % (screen.idle_mode or 'plain'),
                 'idle_mode': screen.idle_mode or 'plain',
+                'idle_video': screen.idle_video,
                 'idle_url': screen.idle_url or '',
                 'heading': screen.heading or '',
                 'interval': max(screen.idle_interval or 9, 2),
