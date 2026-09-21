@@ -672,6 +672,12 @@ msgstr "Esa pieza ya no existe."
 #. module: xb_showroom_wall
 #. odoo-python
 #: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "That piece was already on the wall; it moved to the end."
+msgstr "Esa pieza ya estaba en el muro; se movió al final."
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
 msgid "That piece was no longer on the wall."
 msgstr "Esa pieza ya no estaba en el muro."
 

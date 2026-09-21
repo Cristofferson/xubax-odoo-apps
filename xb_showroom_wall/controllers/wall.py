@@ -613,23 +613,28 @@ class ShowroomWall(http.Controller):
             'currency': currency if amount is not None else None,
         }
 
-        def key(prod, opts):
-            return (prod.id, tuple(sorted(opts.ids)))
-
         entries = [entry]
+        repeated = False
         if mode == 'compare':
-            # What is on the wall stays, the new piece joins at the end; the
-            # same piece sent twice just moves to the end.
+            # What is on the wall stays and the new piece joins at the end.
+            # One ring takes one panel: sent again — from the grid without a
+            # metal chosen, or from its page with one — it moves to the end
+            # instead of showing up twice. Comparing a ring against itself
+            # tells the customer nothing, and both panels carry the same photo.
+            already = screen.slot_ids.filtered(
+                lambda s: s.product_id.product_tmpl_id == template)
+            repeated = bool(already)
             kept = [
                 {'product': slot.product_id, 'options': slot.option_ids,
                  'price': slot.price, 'currency': slot.currency_id}
-                for slot in screen.slot_ids
-                if key(slot.product_id, slot.option_ids) != key(product, options)
+                for slot in screen.slot_ids - already
             ]
             entries = kept + [entry]
         result = screen.sudo()._push_entries(entries, mode=mode)
         screen = screen.with_context(lang=screen._lang())
         message = ''
+        if repeated:
+            message = screen.env._("That piece was already on the wall; it moved to the end.")
         if result['dropped']:
             names = ', '.join(
                 p.default_code or p.product_tmpl_id.default_code or p.product_tmpl_id.name

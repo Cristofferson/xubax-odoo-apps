@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Showroom Wall',
-    'version': '19.0.1.9.1',
+    'version': '19.0.1.9.2',
     'category': 'Website/eCommerce',
     'summary': 'Send any product from your own web catalog to the showroom '
                'videowall from a tablet, in one tap.',
