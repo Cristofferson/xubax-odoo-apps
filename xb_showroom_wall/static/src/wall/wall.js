@@ -528,7 +528,19 @@
         wall.classList.add("on");
     }
 
+    /* A screen hanging in a shop is never reloaded by hand, and a player
+       keeps the script for days. When the server answers with a newer
+       version than the one this page is running, the wall reloads itself. */
+    function checkVersion(state) {
+        if (state.stamp && cfg.stamp && String(state.stamp) !== String(cfg.stamp)) {
+            window.location.reload();
+            return true;
+        }
+        return false;
+    }
+
     function paint(state) {
+        if (checkVersion(state)) { return; }
         if (state.rev === rev) { return; }
         rev = state.rev;
         if (state.live) { goLive(state); } else { goIdle(state); }

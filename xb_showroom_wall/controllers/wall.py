@@ -10,12 +10,13 @@ import html as html_escape
 import io
 import json
 import logging
+import os
 import time
 
 from odoo import http, _
 from odoo.exceptions import AccessError
 from odoo.http import request, Response
-from odoo.tools import float_round
+from odoo.tools import file_path, float_round
 
 _logger = logging.getLogger(__name__)
 
@@ -27,6 +28,31 @@ _STATE_CACHE = {}
 _STATE_CACHE_MAX = 64
 LIVE_TTL = 30      # seconds; the key already changes with every push
 IDLE_TTL = 60      # seconds; the rotation runs in the browser, not here
+
+
+_ASSET_STAMP = None
+
+
+def _asset_stamp():
+    """A number that changes whenever the wall's script or stylesheet does.
+
+    Odoo serves module assets with a week of browser cache, and a signage
+    player keeps them just as long: without this, a screen installed today
+    would still be running last week's wall after an update, showing an
+    older layout with no way to tell. The stamp rides on the URL, so a new
+    file is a new URL and the player fetches it.
+    """
+    global _ASSET_STAMP
+    if _ASSET_STAMP is None:
+        stamp = 0
+        for name in ('wall/wall.css', 'wall/wall.js'):
+            try:
+                stamp = max(stamp, int(os.path.getmtime(
+                    file_path('xb_showroom_wall/static/src/%s' % name))))
+            except (OSError, FileNotFoundError, ValueError):
+                pass
+        _ASSET_STAMP = stamp or 1
+    return _ASSET_STAMP
 
 
 def _cached(key, ttl, build):
@@ -314,6 +340,7 @@ class ShowroomWall(http.Controller):
             # theme in the stylesheet handles the usual light/dark case.
             'background': (screen.bg_color or '')
                           if screen.bg_color not in ('', False, DEFAULT_BG) else '',
+            'stamp': _asset_stamp(),
         }
         logo = ''
         if screen.company_id.logo:
@@ -331,18 +358,19 @@ class ShowroomWall(http.Controller):
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&amp;family=Jost:wght@300;400;500&amp;display=swap"/>
-<link rel="stylesheet" href="/xb_showroom_wall/static/src/wall/wall.css"/>
+<link rel="stylesheet" href="/xb_showroom_wall/static/src/wall/wall.css?v=%(stamp)s"/>
 </head><body data-logo="%(logo)s" data-theme="%(theme)s" data-style="%(style)s">
 <div id="wall" class="wall"></div>
 <iframe id="idle" class="idle" referrerpolicy="no-referrer"></iframe>
 <script id="cfg" type="application/json">%(config)s</script>
-<script src="/xb_showroom_wall/static/src/wall/wall.js" defer></script>
+<script src="/xb_showroom_wall/static/src/wall/wall.js?v=%(stamp)s" defer></script>
 </body></html>""" % {
             'lang': safe((screen._lang() or 'es').split('_')[0]),
             'theme': safe(screen.theme or 'light'),
             'style': safe(screen.wall_style or 'mosaic'),
             'title': safe(screen.name or 'Showroom'),
             'logo': safe(logo),
+            'stamp': _asset_stamp(),
             # `</script>` inside a colour would close the block early.
             'config': json.dumps(config).replace('<', '\\u003c'),
         }
@@ -445,6 +473,7 @@ class ShowroomWall(http.Controller):
         env = screen.env
         if not screen._is_live():
             state = {
+                'stamp': _asset_stamp(),
                 'live': False,
                 'rev': 'idle-%s' % (screen.idle_mode or 'plain'),
                 'idle_mode': screen.idle_mode or 'plain',
@@ -476,6 +505,7 @@ class ShowroomWall(http.Controller):
             for slot in screen.slot_ids
         ]
         return {
+            'stamp': _asset_stamp(),
             'live': True,
             'qr_text': env._("Scan to take this piece with you"),
             'worn_text': env._("How it looks on"),
