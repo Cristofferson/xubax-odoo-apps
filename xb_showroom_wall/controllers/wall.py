@@ -96,15 +96,28 @@ def _may_push(user):
             or _has_group(user, 'base.group_system'))
 
 
-def _video_url(product):
-    """URL of the product's own mp4, if one was published on it."""
-    attachment = request.env['ir.attachment'].sudo().search([
+# Signage players embed a browser, and those browsers are often built
+# without the patented H.264 decoder: an mp4 then plays everywhere except on
+# the screen that matters, with no error to show for it. Every playable copy
+# is offered and the player takes the first one it can decode.
+_VIDEO_ORDER = ('video/webm', 'video/mp4')
+
+
+def _video_sources(product):
+    """The product's video in every format published on it, best first."""
+    attachments = request.env['ir.attachment'].sudo().search([
         ('res_model', '=', 'product.template'),
         ('res_id', '=', product.product_tmpl_id.id),
-        ('mimetype', 'in', ('video/mp4', 'video/webm')),
+        ('mimetype', 'in', _VIDEO_ORDER),
         ('public', '=', True),
-    ], order='id desc', limit=1)
-    return '/web/content/%s' % attachment.id if attachment else ''
+    ], order='id desc')
+    sources, seen = [], set()
+    for mimetype in _VIDEO_ORDER:
+        for attachment in attachments:
+            if attachment.mimetype == mimetype and mimetype not in seen:
+                seen.add(mimetype)
+                sources.append({'url': '/web/content/%s' % attachment.id, 'type': mimetype})
+    return sources
 
 
 def _studio_background(product):
@@ -436,7 +449,7 @@ class ShowroomWall(http.Controller):
             'price': price,
             'image': '/web/image/product.product/%s/image_1920' % product.id,
             'ring': '/web/image/product.product/%s/image_1024' % product.id,
-            'video': _video_url(product),
+            'videos': _video_sources(product),
             'shots': _extra_shots(product),
             'bg': _studio_background(product)
                   if (screen.theme == 'light' or screen.wall_style == 'mosaic') else '',

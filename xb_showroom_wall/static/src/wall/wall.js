@@ -32,9 +32,18 @@
     }
 
     function media(piece, muted) {
-        if (piece.video) {
+        var fuentes = piece.videos || (piece.video ? [{ url: piece.video, type: "video/mp4" }] : []);
+        if (fuentes.length) {
             var video = el("video");
-            video.src = piece.video;
+            // One <source> per format: a player whose browser lacks the H.264
+            // decoder still plays the WebM copy, and the picture never goes
+            // missing without anyone noticing.
+            fuentes.forEach(function (fuente) {
+                var source = document.createElement("source");
+                source.src = fuente.url;
+                source.type = fuente.type;
+                video.appendChild(source);
+            });
             video.autoplay = true;
             video.loop = true;
             video.muted = true;          // browsers only autoplay muted video
@@ -42,11 +51,18 @@
             video.setAttribute("muted", "");
             video.setAttribute("playsinline", "");
             video.preload = "auto";
-            // A missing or unplayable file must not leave an empty panel.
+            // A missing or unplayable file must not leave an empty panel: the
+            // error fires on the <video> when no source could be played.
             video.addEventListener("error", function () {
                 var img = el("img");
                 img.src = piece.image;
                 if (video.parentNode) { video.parentNode.replaceChild(img, video); }
+            }, true);
+            // Some embedded browsers ignore the autoplay attribute; asking
+            // once the file is ready costs nothing where it already plays.
+            video.addEventListener("canplay", function () {
+                var intento = video.play();
+                if (intento && intento.catch) { intento.catch(function () { /* queda el primer cuadro */ }); }
             });
             return video;
         }
