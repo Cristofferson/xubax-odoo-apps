@@ -127,8 +127,37 @@
                                 <div class="col-lg-12">
                                     <field name="pos_xibo_thanks_custom_html" widget="html" options="{'style-inline': true}" nolabel="1"/>
                                     <div class="text-muted small mt-1">
-                                        Placeholders: <code>{{message}}</code>, <code>{{customer_name}}</code>, <code>{{top_product}}</code>, <code>{{product_image_url}}</code>, <code>{{total}}</code>, <code>{{currency}}</code>, <code>{{company_name}}</code>, <code>{{company_logo_url}}</code>.
+                                        Placeholders: <code>{{message}}</code>, <code>{{customer_name}}</code>, <code>{{top_product}}</code>, <code>{{product_image_url}}</code>, <code>{{total}}</code>, <code>{{currency}}</code>, <code>{{company_name}}</code>, <code>{{company_logo_url}}</code>, <code>{{review_qr}}</code>.
                                     </div>
+                                </div>
+                            </div>
+
+                            <h5 class="mt-4 mb-2">Review QR</h5>
+                            <div class="row mt8">
+                                <label for="pos_xibo_thanks_review_enabled" class="col-lg-4 o_light_label" string="Show Review QR"/>
+                                <div class="col-lg-8">
+                                    <field name="pos_xibo_thanks_review_enabled"/>
+                                    <div class="text-muted small mt-1">
+                                        Invites every customer to leave a review. On a video wall it takes the right-hand screen.
+                                    </div>
+                                </div>
+                            </div>
+                            <div invisible="not pos_xibo_thanks_review_enabled">
+                                <div class="row mt8">
+                                    <label for="pos_xibo_thanks_review_url" class="col-lg-4 o_light_label" string="Review Link"/>
+                                    <field name="pos_xibo_thanks_review_url" class="col-lg-8"
+                                           placeholder="https://g.page/r/.../review"
+                                           required="pos_xibo_thanks_review_enabled"/>
+                                </div>
+                                <div class="row mt8">
+                                    <label for="pos_xibo_thanks_review_title" class="col-lg-4 o_light_label" string="Headline"/>
+                                    <field name="pos_xibo_thanks_review_title" class="col-lg-8"
+                                           placeholder="Would you leave us a review?"/>
+                                </div>
+                                <div class="row mt8">
+                                    <label for="pos_xibo_thanks_review_text" class="col-lg-4 o_light_label" string="Instructions"/>
+                                    <field name="pos_xibo_thanks_review_text" class="col-lg-8"
+                                           placeholder="Open your phone camera and point it at the code. It helps us a lot."/>
                                 </div>
                             </div>
 

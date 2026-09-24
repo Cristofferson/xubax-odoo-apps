@@ -38,6 +38,12 @@ class ResConfigSettings(models.TransientModel):
         self.execute()
         return self.pos_config_id.action_xibo_rebuild_thanks_layout()
 
+    # Thank-You review QR (since v19.0.1.5.42)
+    pos_xibo_thanks_review_enabled = fields.Boolean(related='pos_config_id.xibo_thanks_review_enabled', readonly=False)
+    pos_xibo_thanks_review_url = fields.Char(related='pos_config_id.xibo_thanks_review_url', readonly=False)
+    pos_xibo_thanks_review_title = fields.Char(related='pos_config_id.xibo_thanks_review_title', readonly=False)
+    pos_xibo_thanks_review_text = fields.Char(related='pos_config_id.xibo_thanks_review_text', readonly=False)
+
     # ④ Thank-You Audio (since v19.0.1.5.31)
     pos_xibo_thanks_audio_enabled = fields.Boolean(related='pos_config_id.xibo_thanks_audio_enabled', readonly=False)
     pos_xibo_thanks_audio_preset = fields.Selection(related='pos_config_id.xibo_thanks_audio_preset', readonly=False)

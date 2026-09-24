@@ -375,6 +375,116 @@ def _inject_before_body_close(html_body, snippet):
     return html_body[:idx] + snippet + html_body[idx:]
 
 
+# The review panel is laid over any preset. It inherits the preset's text colour
+# and tints its own background with a neutral that reads on light and dark grounds
+# alike, so it needs no per-preset palette. On a wall (past 2:1) the message is
+# narrowed to the left two thirds and the QR takes the right-hand third — on a
+# 3-screen wall, one whole screen. On a 16:9 screen it is a card in the corner.
+_REVIEW_TPL = """<style>
+  .xb-review{position:absolute;right:3vh;bottom:3vh;display:flex;align-items:center;
+    gap:2.5vh;padding:2.5vh;border-radius:2vh;background:rgba(127,127,127,.10);
+    opacity:0;animation:xbReviewIn .8s ease-out 2.4s forwards;text-align:left}
+  .xb-review .xb-qr{width:22vh;height:22vh;padding:1.4vh;background:#fff;border-radius:1.2vh;
+    box-shadow:0 6px 40px rgba(0,0,0,.10);flex:none}
+  .xb-review .xb-qr svg{display:block;width:100%;height:100%}
+  .xb-review .xb-txt{max-width:36vh}
+  .xb-review .xb-stars{color:#b8935a;letter-spacing:.3em;font-size:2.6vh}
+  .xb-review .xb-title{font-size:3.4vh;line-height:1.1;margin:.8vh 0 1.2vh;font-weight:400}
+  .xb-review .xb-text{font-size:2vh;line-height:1.3;opacity:.7}
+  @media (min-aspect-ratio:2/1){
+    /* The message keeps the wall's by-width sizing but on two thirds of the
+       width, so it has to shrink by the same share or it wraps onto a third line
+       and runs into the footer. */
+    .wrap{width:66.66vw}
+    .message{font-size:min(12vh,2.4vw);max-width:60vw}
+    .customer{font-size:min(8vh,1.6vw)}
+    .xb-review{top:0;bottom:0;right:0;width:33.34vw;border-radius:0;padding:0 2vw;
+      justify-content:center;gap:3vw;flex-direction:row-reverse;
+      border-left:1px solid rgba(127,127,127,.18)}
+    .xb-review .xb-qr{width:66vh;height:66vh;padding:2.2vh;border-radius:2vh}
+    .xb-review .xb-txt{max-width:15vw}
+    .xb-review .xb-stars{font-size:4.5vh}
+    .xb-review .xb-title{font-size:9vh;line-height:1.05;margin:1.5vh 0 3vh}
+    .xb-review .xb-text{font-size:5vh}
+  }
+  @keyframes xbReviewIn{to{opacity:1}}
+</style>
+<div class="xb-review">
+  <div class="xb-qr">{qr_svg}</div>
+  <div class="xb-txt">
+    <div class="xb-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+    <div class="xb-title">{title}</div>
+    <div class="xb-text">{text}</div>
+  </div>
+</div>"""
+
+
+def _review_qr_svg(url):
+    """Inline SVG of a QR code for ``url``, or '' when it cannot be drawn.
+
+    Inline on purpose: the player fetches nothing else and no image route has to
+    be public. ``qrcode`` ships with Odoo's own requirements.
+    """
+    try:
+        import io
+        import qrcode
+        import qrcode.image.svg
+    except ImportError:
+        _logger.warning("[XIBO POS THANKS] python 'qrcode' is missing; no review QR")
+        return ''
+    img = qrcode.make(
+        url, image_factory=qrcode.image.svg.SvgPathImage, border=0, box_size=10,
+    )
+    buf = io.BytesIO()
+    img.save(buf)
+    svg = buf.getvalue().decode('utf-8')
+    # Drop the XML prolog and the fixed size so the box around it sets the size.
+    svg = svg[svg.find('<svg'):]
+    head, rest = svg.split('>', 1)
+    head = ' '.join(
+        part for part in head.split(' ')
+        if not part.startswith(('width=', 'height='))
+    )
+    return head + '>' + rest
+
+
+def _review_parts(render, company):
+    """(qr_svg, title, text) for the review panel, or None when it is off."""
+    config = getattr(render, 'config_id', False)
+    if not config or not config.xibo_thanks_review_enabled:
+        return None
+    url = (config.xibo_thanks_review_url or '').strip()
+    if not url.lower().startswith(('https://', 'http://')):
+        return None
+    qr_svg = _review_qr_svg(url)
+    if not qr_svg:
+        return None
+    # Same reasoning as the signature: the player sends no language, so read the
+    # shop's own.
+    lang = (company.partner_id.lang or company.env.lang) if company else 'en_US'
+    env = (company or config).with_context(lang=lang).env
+    title = (config.xibo_thanks_review_title or '').strip() or env._(
+        'Would you leave us a review?')
+    text = (config.xibo_thanks_review_text or '').strip() or env._(
+        'Open your phone camera and point it at the code. It helps us a lot.')
+    return qr_svg, _escape(title), _escape(text)
+
+
+def _review_html(render, company):
+    """The review panel for a preset page, or '' when the QR is off."""
+    try:
+        parts = _review_parts(render, company)
+    except Exception:
+        # A review QR is a bonus: never trade the thank-you itself for it.
+        _logger.exception("[XIBO POS THANKS] could not build the review QR")
+        return ''
+    if not parts:
+        return ''
+    qr_svg, title, text = parts
+    return (_REVIEW_TPL.replace('{qr_svg}', qr_svg)
+            .replace('{title}', title).replace('{text}', text))
+
+
 def _build_html(render, company, cashier=None):
     """Render the chosen preset (or custom HTML) with the data on ``render``.
 
@@ -424,6 +534,7 @@ def _build_html(render, company, cashier=None):
             '{{currency}}': _escape(currency),
             '{{company_name}}': _escape(company_name),
             '{{company_logo_url}}': _escape(_company_logo_url(company)),
+            '{{review_qr}}': _review_html(render, company),
         }
         body = render.custom_html
         for key, val in substitutions.items():
@@ -445,6 +556,7 @@ def _build_html(render, company, cashier=None):
     result = template
     for token, value in fmt_args.items():
         result = result.replace('{' + token + '}', value)
+    result = _inject_before_body_close(result, _review_html(render, company))
     # Inject audio snippet (no-op if disabled).
     return _inject_before_body_close(result, _audio_html(render))
 

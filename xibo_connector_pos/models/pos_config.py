@@ -130,6 +130,30 @@ class PosConfig(models.Model):
              "(use the {{product_image_url}} placeholder there).",
     )
 
+    # Review QR (since v19.0.1.5.42)
+    xibo_thanks_review_enabled = fields.Boolean(
+        string='Show Review QR',
+        default=False,
+        help="If enabled, the Thank-You page shows a QR code that opens your "
+             "review page (e.g. Google). On a video wall it takes the right-hand "
+             "screen; on a single screen it sits in the bottom corner.",
+    )
+    xibo_thanks_review_url = fields.Char(
+        string='Review Link',
+        help="Where the QR code leads, e.g. the link Google gives you under "
+             "'Ask for reviews' (https://g.page/r/.../review).",
+    )
+    xibo_thanks_review_title = fields.Char(
+        string='Review Headline',
+        help="Large text next to the QR code. Leave empty to use "
+             "'Would you leave us a review?'.",
+    )
+    xibo_thanks_review_text = fields.Char(
+        string='Review Instructions',
+        help="Small text under the headline. Leave empty to use 'Open your "
+             "phone camera and point it at the code. It helps us a lot.'.",
+    )
+
     # ④ — Audio notification (since v19.0.1.5.31)
     xibo_thanks_audio_enabled = fields.Boolean(
         string='Enable Audio Notification',

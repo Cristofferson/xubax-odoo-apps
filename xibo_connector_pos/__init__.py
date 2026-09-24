@@ -72,6 +72,15 @@ _POS_CONFIG_COLUMNS = [
     ('xibo_mirror_active_since', 'TIMESTAMP',
      'When the Customer Display mirror was switched on. Replaces the old '
      'in-memory flag, which was per-worker and therefore unreliable.'),
+    # ---- Thank-You review QR (since v1.5.42) ----
+    ('xibo_thanks_review_enabled', 'BOOLEAN DEFAULT FALSE',
+     'Whether the Thank-You page shows a QR code to leave a review.'),
+    ('xibo_thanks_review_url', 'VARCHAR',
+     'Review page the QR code leads to.'),
+    ('xibo_thanks_review_title', 'VARCHAR',
+     'Headline next to the review QR code; empty = built-in text.'),
+    ('xibo_thanks_review_text', 'VARCHAR',
+     'Instructions under the headline; empty = built-in text.'),
     # ---- Customer Display mirror mode (since v1.5.41) ----
     ('xibo_customer_display_mode', "VARCHAR DEFAULT 'overlay'",
      'How the mirror reaches the screen: overlay (drawn on top, the screen '

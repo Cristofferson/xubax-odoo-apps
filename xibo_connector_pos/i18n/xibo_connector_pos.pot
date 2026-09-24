@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-30 18:43+0000\n"
-"PO-Revision-Date: 2026-07-30 18:43+0000\n"
+"POT-Creation-Date: 2026-09-23 23:22+0000\n"
+"PO-Revision-Date: 2026-09-23 23:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -60,6 +60,13 @@ msgstr ""
 msgid ""
 "<span class=\"text-muted ms-2\">If off, the fallback template is used "
 "directly.</span>"
+msgstr ""
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"<span class=\"text-muted ms-2\">On top = the screen's own content (and its "
+"music) keeps playing behind the cart.</span>"
 msgstr ""
 
 #. module: xibo_connector_pos
@@ -483,6 +490,11 @@ msgid ""
 msgstr ""
 
 #. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Headline"
+msgstr ""
+
+#. module: xibo_connector_pos
 #: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__id
 #: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_order__id
 #: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_session__id
@@ -504,6 +516,15 @@ msgid ""
 msgstr ""
 
 #. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_review_enabled
+#: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_review_enabled
+msgid ""
+"If enabled, the Thank-You page shows a QR code that opens your review page "
+"(e.g. Google). On a video wall it takes the right-hand screen; on a single "
+"screen it sits in the bottom corner."
+msgstr ""
+
+#. module: xibo_connector_pos
 #: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_show_product_image
 #: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_show_product_image
 msgid ""
@@ -511,6 +532,26 @@ msgid ""
 "product in the order, served from this Odoo's Media library via a public "
 "URL. Has no effect on Custom HTML (use the {{product_image_url}} placeholder"
 " there)."
+msgstr ""
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Instructions"
+msgstr ""
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid ""
+"Invites every customer to leave a review. On a video wall it takes the "
+"right-hand screen."
+msgstr ""
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_review_title
+#: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_review_title
+msgid ""
+"Large text next to the QR code. Leave empty to use 'Would you leave us a "
+"review?'."
 msgstr ""
 
 #. module: xibo_connector_pos
@@ -593,6 +634,13 @@ msgid "Mirror Duration (s)"
 msgstr ""
 
 #. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_customer_display_mode
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_customer_display_mode
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Mirror Mode"
+msgstr ""
+
+#. module: xibo_connector_pos
 #: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
 msgid "Mode"
 msgstr ""
@@ -628,6 +676,26 @@ msgstr ""
 #: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_ai_agent_id
 #: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_ai_agent_id
 msgid "Odoo AI agent that generates the message. Empty = system default."
+msgstr ""
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__pos_config__xibo_customer_display_mode__overlay
+msgid "On top — background keeps playing"
+msgstr ""
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_customer_display_mode
+#: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_customer_display_mode
+msgid ""
+"On top: the mirror is drawn over the screen's normal content, which keeps running underneath — so background music and video carry on playing while the cart is on screen. This is what you want on a screen that also serves as the room's sound.\n"
+"Replace: the mirror takes the screen over completely and the scheduled content stops, audio included."
+msgstr ""
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/controllers/xibo_thanks_controller.py:0
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Open your phone camera and point it at the code. It helps us a lot."
 msgstr ""
 
 #. module: xibo_connector_pos
@@ -724,7 +792,8 @@ msgid ""
 "Placeholders: <code>{{message}}</code>, <code>{{customer_name}}</code>, "
 "<code>{{top_product}}</code>, <code>{{product_image_url}}</code>, "
 "<code>{{total}}</code>, <code>{{currency}}</code>, "
-"<code>{{company_name}}</code>, <code>{{company_logo_url}}</code>."
+"<code>{{company_name}}</code>, <code>{{company_logo_url}}</code>, "
+"<code>{{review_qr}}</code>."
 msgstr ""
 
 #. module: xibo_connector_pos
@@ -793,6 +862,11 @@ msgid "Recommendation Mode"
 msgstr ""
 
 #. module: xibo_connector_pos
+#: model:ir.model.fields.selection,name:xibo_connector_pos.selection__pos_config__xibo_customer_display_mode__replace
+msgid "Replace — takes the screen over"
+msgstr ""
+
+#. module: xibo_connector_pos
 #: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
 msgid "Require key"
 msgstr ""
@@ -810,6 +884,30 @@ msgid ""
 "Required when Audio Preset is 'Custom'. Full https:// URL to an audio file. "
 "Recommended format: MP3 mono ~96kbps, under 2 seconds. Larger files delay "
 "the audio start."
+msgstr ""
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_review_title
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_review_title
+msgid "Review Headline"
+msgstr ""
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_review_text
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_review_text
+msgid "Review Instructions"
+msgstr ""
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_review_url
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_review_url
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Review Link"
+msgstr ""
+
+#. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Review QR"
 msgstr ""
 
 #. module: xibo_connector_pos
@@ -840,6 +938,12 @@ msgid ""
 msgstr ""
 
 #. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/controllers/xibo_thanks_controller.py:0
+msgid "Served by %(name)s"
+msgstr ""
+
+#. module: xibo_connector_pos
 #: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
 msgid "Set the same tags on the matching <b>Product Categories</b>."
 msgstr ""
@@ -858,6 +962,13 @@ msgid "Show Product Image"
 msgstr ""
 
 #. module: xibo_connector_pos
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_review_enabled
+#: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_review_enabled
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Show Review QR"
+msgstr ""
+
+#. module: xibo_connector_pos
 #: model:ir.model.fields,field_description:xibo_connector_pos.field_pos_config__xibo_thanks_show_product_image
 #: model:ir.model.fields,field_description:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_show_product_image
 #: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
@@ -869,6 +980,14 @@ msgstr ""
 msgid ""
 "Show Xibo media tagged for the products being added to the cart. Tags come "
 "from the product category, optionally overridden per product."
+msgstr ""
+
+#. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_review_text
+#: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_review_text
+msgid ""
+"Small text under the headline. Leave empty to use 'Open your phone camera "
+"and point it at the code. It helps us a lot.'."
 msgstr ""
 
 #. module: xibo_connector_pos
@@ -1150,6 +1269,14 @@ msgid ""
 msgstr ""
 
 #. module: xibo_connector_pos
+#: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_review_url
+#: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_review_url
+msgid ""
+"Where the QR code leads, e.g. the link Google gives you under 'Ask for "
+"reviews' (https://g.page/r/.../review)."
+msgstr ""
+
+#. module: xibo_connector_pos
 #: model:ir.model.fields,help:xibo_connector_pos.field_pos_config__xibo_thanks_audio_preset
 #: model:ir.model.fields,help:xibo_connector_pos.field_res_config_settings__pos_xibo_thanks_audio_preset
 msgid ""
@@ -1161,6 +1288,13 @@ msgstr ""
 #. module: xibo_connector_pos
 #: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
 msgid "Works best on Xibo Player for <b>Windows</b> and <b>Linux</b>."
+msgstr ""
+
+#. module: xibo_connector_pos
+#. odoo-python
+#: code:addons/xibo_connector_pos/controllers/xibo_thanks_controller.py:0
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "Would you leave us a review?"
 msgstr ""
 
 #. module: xibo_connector_pos
@@ -1278,6 +1412,11 @@ msgid "https://example.com/notification.mp3"
 msgstr ""
 
 #. module: xibo_connector_pos
+#: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
+msgid "https://g.page/r/.../review"
+msgstr ""
+
+#. module: xibo_connector_pos
 #: model_terms:ir.ui.view,arch_db:xibo_connector_pos.view_product_category_form_xibo
 msgid "tv,electronics,accessories"
 msgstr ""
@@ -1301,20 +1440,4 @@ msgstr ""
 #. module: xibo_connector_pos
 #: model_terms:ir.ui.view,arch_db:xibo_connector_pos.res_config_settings_view_form_xibo
 msgid "④ Contextual Recommendations"
-msgstr ""
-
-#. module: xibo_connector_pos
-#: model:ir.module.module,shortdesc:base.module_xibo_connector_pos
-msgid "Xibo Connector — Point of Sale"
-msgstr ""
-
-#. module: xibo_connector_pos
-#: model:ir.module.module,summary:base.module_xibo_connector_pos
-msgid "AI thank-you with audio, dynamic customer display mirror, and contextual product recommendations on Xibo from your POS."
-msgstr ""
-
-#. module: xibo_connector_pos
-#. odoo-python
-#: code:addons/xibo_connector_pos/controllers/xibo_thanks_controller.py:0
-msgid "Served by %(name)s"
 msgstr ""
