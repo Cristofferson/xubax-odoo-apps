@@ -314,8 +314,50 @@ class ShowroomScreen(models.Model):
             except Exception as e:
                 _logger.warning("[SHOWROOM XIBO] %s failed for %s: %s", method, screen.name, e)
 
+    def _xibo_interrupt_thanks(self):
+        """A piece sent to the wall takes the screen back from a thank-you.
+
+        A thank-you stays on screen for minutes so the customer can scan its
+        review QR; meanwhile the next customer, already at the counter, is
+        asking to see a ring. Whoever is being attended now wins: the thank-you
+        still on this screen is removed and the player goes back to its own
+        layout, which is the wall (or, on demand, the wall that goes on air
+        right after this).
+        """
+        self.ensure_one()
+        display = self.xibo_display_id
+        if not display:
+            return False
+        configs = self.env['pos.config'].sudo().search([
+            ('xibo_thanks_display_ids', 'in', display.ids),
+        ])
+        events = self.env['xibo.schedule.event'].sudo().search([
+            ('purpose', 'in', ['pos-thanks-%s-%s' % (c.id, display.id) for c in configs]),
+            ('expires_at', '>', fields.Datetime.now()),
+        ])
+        if not events:
+            return False
+        server = events[:1].server_id
+        events.drop()
+        dg_xibo_id = display.own_display_group_id
+        if server and dg_xibo_id:
+            if display.force_schedule:
+                server._trigger_collect_now([dg_xibo_id])
+            server.revert_layout(dg_xibo_id)
+        _logger.info("[SHOWROOM XIBO] %s: thank-you interrupted by a piece sent to the wall",
+                     display.name)
+        return True
+
     def _push_entries(self, entries, mode='single'):
         result = super()._push_entries(entries, mode=mode)
+        # In every mode, not only "on demand": on a wall that is the screen's own
+        # layout the thank-you sits on top of it just the same.
+        for screen in self.filtered('xibo_published'):
+            try:
+                screen._xibo_interrupt_thanks()
+            except Exception as e:
+                _logger.warning("[SHOWROOM XIBO] could not interrupt the thank-you on %s: %s",
+                                screen.name, e)
         self._xibo_safely('_xibo_go_on_air')
         return result
 
