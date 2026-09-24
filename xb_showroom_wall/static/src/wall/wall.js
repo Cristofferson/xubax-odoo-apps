@@ -467,6 +467,7 @@
        pushed piece: on a multi-panel wall the jewel has to stay on the
        centre panel, which a page built for one screen cannot do. */
     function stopShopWindow() {
+        if (shopWindow) { turno += 1; }
         if (shopWindow && shopWindow.timer) { clearInterval(shopWindow.timer); }
         shopWindow = null;
     }
@@ -474,31 +475,82 @@
     /* The next piece's photographs are fetched while this one is on screen:
        they weigh a megabyte each and a shop player that starts downloading
        them at the moment of the change shows the change happening. */
+    // The Image objects are kept: one that is dropped may be dropped from
+    // the player's memory too, and then the change downloads it again.
+    var precargadas = [];
+
     function precargar(piece) {
         if (!piece) { return; }
         var shots = piece.shots || {};
+        precargadas = [];
         [shots.case, shots.hand, piece.image, piece.ring].forEach(function (url) {
-            if (url) { var img = new Image(); img.src = url; }
+            if (url) { var img = new Image(); img.src = url; precargadas.push(img); }
         });
     }
+
+    /* Calls ``done`` once every photo in ``node`` is downloaded and decoded,
+       or after ``limit`` ms, whichever comes first. A shop player is slow:
+       swapping the moment the new piece is built is what showed one screen
+       with its photo and the other two blank or drawn half way. */
+    var LISTA_MAX = 8000;
+    function cuandoListas(node, done, limit) {
+        var imgs = [].slice.call(node.querySelectorAll ? node.querySelectorAll("img") : []);
+        var pendientes = imgs.length;
+        var hecho = false;
+        function fin() {
+            if (hecho) { return; }
+            hecho = true;
+            done();
+        }
+        if (!pendientes) { return fin(); }
+        var reloj = window.setTimeout(fin, limit || LISTA_MAX);
+        function una() {
+            pendientes -= 1;
+            if (pendientes <= 0) { window.clearTimeout(reloj); fin(); }
+        }
+        imgs.forEach(function (img) {
+            var listo = function () {
+                if (img.decode) {
+                    img.decode().then(una, una);
+                } else {
+                    una();
+                }
+            };
+            if (img.complete && img.naturalWidth) {
+                listo();
+            } else {
+                img.addEventListener("load", listo, { once: true });
+                img.addEventListener("error", una, { once: true });
+            }
+        });
+    }
+
+    var turno = 0;   // a newer paint cancels one still waiting for photos
 
     function paintShopWindow() {
         if (!shopWindow || !shopWindow.pieces.length) { return; }
         var piece = shopWindow.pieces[shopWindow.index % shopWindow.pieces.length];
-        precargar(shopWindow.pieces[(shopWindow.index + 1) % shopWindow.pieces.length]);
-        wall.classList.remove("on");
-        window.setTimeout(function () {
-            if (!shopWindow) { return; }
-            if ((cfg.style || "mosaic") !== "mosaic") { applyBackground(piece.bg); }
-            wall.dataset.panels = String(Math.max(Math.min(cfg.panels || 3, 3), 1));
-            wall.dataset.mode = "single";
-            wall.textContent = "";
-            var panels = Math.max(Math.min(cfg.panels || 3, 3), 1);
-            wall.appendChild((cfg.style || "mosaic") === "mosaic"
-                ? renderMosaicSingle(piece, panels, shopWindow.state)
-                : renderSingle(piece, panels, shopWindow.state));
-            wall.classList.add("on");
-        }, 420);
+        var siguiente = shopWindow.pieces[(shopWindow.index + 1) % shopWindow.pieces.length];
+        var panels = Math.max(Math.min(cfg.panels || 3, 3), 1);
+        var holder = document.createElement("div");
+        holder.appendChild((cfg.style || "mosaic") === "mosaic"
+            ? renderMosaicSingle(piece, panels, shopWindow.state)
+            : renderSingle(piece, panels, shopWindow.state));
+        var mio = ++turno;
+        cuandoListas(holder, function () {
+            if (!shopWindow || mio !== turno) { return; }
+            wall.classList.remove("on");
+            window.setTimeout(function () {
+                if (!shopWindow || mio !== turno) { return; }
+                if ((cfg.style || "mosaic") !== "mosaic") { applyBackground(piece.bg); }
+                wall.dataset.panels = String(panels);
+                wall.dataset.mode = "single";
+                wall.textContent = "";
+                while (holder.firstChild) { wall.appendChild(holder.firstChild); }
+                wall.classList.add("on");
+                precargar(siguiente);
+            }, 420);
+        });
     }
 
     function goShopWindow(state) {
@@ -562,24 +614,32 @@
         var panels = Math.max(Math.min(cfg.panels || 3, 3), 1);
         var pieces = state.pieces || [];
         if (!pieces.length) { return goIdle(state); }
-        hidePlain();
-        idle.classList.remove("on");
-        if ((cfg.style || "mosaic") !== "mosaic") { applyBackground(pieces[0].bg); }
-        wall.dataset.panels = String(panels);
-        wall.dataset.mode = state.mode === "compare" ? "compare" : "single";
-        wall.style.setProperty("--cols", String(panels));
-        wall.textContent = "";
         var mosaic = (cfg.style || "mosaic") === "mosaic";
+        var holder = document.createElement("div");
         if (state.mode === "compare") {
-            wall.appendChild(mosaic
+            holder.appendChild(mosaic
                 ? renderMosaicCompare(pieces, state)
                 : renderCompare(pieces.slice(0, panels), state));
         } else {
-            wall.appendChild(mosaic
+            holder.appendChild(mosaic
                 ? renderMosaicSingle(pieces[0], panels, state)
                 : renderSingle(pieces[0], panels, state));
         }
-        wall.classList.add("on");
+        // The customer is waiting for this one: a shorter wait than the
+        // shop window's, and whatever is still missing lands in place.
+        var mio = ++turno;
+        cuandoListas(holder, function () {
+            if (mio !== turno) { return; }
+            hidePlain();
+            idle.classList.remove("on");
+            if (!mosaic) { applyBackground(pieces[0].bg); }
+            wall.dataset.panels = String(panels);
+            wall.dataset.mode = state.mode === "compare" ? "compare" : "single";
+            wall.style.setProperty("--cols", String(panels));
+            wall.textContent = "";
+            while (holder.firstChild) { wall.appendChild(holder.firstChild); }
+            wall.classList.add("on");
+        }, 4000);
     }
 
     /* A screen hanging in a shop is never reloaded by hand, and a player

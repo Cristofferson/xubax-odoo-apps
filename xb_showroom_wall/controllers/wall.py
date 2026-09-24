@@ -153,14 +153,14 @@ _CASE_WORDS = ('estuche', 'caja', 'case', 'box')
 _HAND_WORDS = ('mano', 'dedo', 'hand', 'finger')
 
 
-def _extra_shots(product):
+def _extra_shots(product, photo):
     """``{'case': url, 'hand': url}`` from the product's extra images."""
     images = product.product_tmpl_id.sudo().product_template_image_ids
     shots = {}
     leftovers = []
     for image in images.sorted(lambda i: (i.sequence, i.id)):
         label = (image.name or '').strip().lower()
-        url = '/web/image/product.image/%s/image_1024' % image.id
+        url = photo('i', image)
         if any(word in label for word in _CASE_WORDS):
             shots.setdefault('case', url)
         elif any(word in label for word in _HAND_WORDS):
@@ -264,6 +264,51 @@ def _open_specs(env, product):
         else:
             specs.append((label, env._("%s options", len(values))))
     return metal, metal_count, specs
+
+
+# Catalogue photos are stored as PNG of well over a megabyte each, and Odoo
+# serves them with ``no-cache``. A browser on a desk shrugs that off; a
+# signage player painting three screens could not: every nine seconds it had
+# to fetch and decode four megabytes again, and the change of piece caught it
+# half way — one screen with its photo, the other two blank or half drawn.
+# The wall gets its own copy instead: JPEG, a tenth of the weight, and cached
+# for good, because the URL changes whenever the photo does.
+_PHOTO_CACHE = {}
+_PHOTO_CACHE_MAX = 160
+_PHOTO_KINDS = {
+    # kind: (model, field)
+    'p': ('product.product', 'image_1920'),
+    'r': ('product.product', 'image_1024'),
+    'i': ('product.image', 'image_1024'),
+}
+
+
+def _photo_version(record):
+    stamp = record.write_date
+    if record._name == 'product.product':
+        stamp = max(stamp, record.product_tmpl_id.write_date)
+    return int(stamp.timestamp()) if stamp else 0
+
+
+def _photo_bytes(raw):
+    """The photo as a JPEG on white, or ``None`` when it cannot be read."""
+    try:
+        from PIL import Image
+        image = Image.open(io.BytesIO(raw))
+        image.load()
+        if image.mode in ('RGBA', 'LA', 'P'):
+            image = image.convert('RGBA')
+            flat = Image.new('RGB', image.size, (255, 255, 255))
+            flat.paste(image, mask=image.getchannel('A'))
+            image = flat
+        else:
+            image = image.convert('RGB')
+        out = io.BytesIO()
+        image.save(out, 'JPEG', quality=88, optimize=True)
+        return out.getvalue()
+    except Exception as e:  # pragma: no cover - the original is served instead
+        _logger.warning("[SHOWROOM] could not convert a photo: %s", e)
+        return None
 
 
 def _may_show(screen, template):
@@ -422,6 +467,10 @@ class ShowroomWall(http.Controller):
             metal_count = 0
         else:
             metal, metal_count, specs = _open_specs(screen.env, product)
+
+        def photo(kind, record):
+            return '/showroom/wall/%s/photo/%s/%s.jpg?v=%s' % (
+                screen.access_token, kind, record.id, _photo_version(record))
         # A commercial name carries its own second line, so the metal moves
         # down to the data line instead of being dropped.
         name, description = _split_name(_headline(screen, product))
@@ -449,10 +498,10 @@ class ShowroomWall(http.Controller):
             'specs': [{'label': label, 'value': value} for label, value in specs],
             'reference': product.default_code or product.product_tmpl_id.default_code or '',
             'price': price,
-            'image': '/web/image/product.product/%s/image_1920' % product.id,
-            'ring': '/web/image/product.product/%s/image_1024' % product.id,
+            'image': photo('p', product),
+            'ring': photo('r', product),
             'videos': _video_sources(product),
-            'shots': _extra_shots(product),
+            'shots': _extra_shots(product, photo),
             'bg': _studio_background(product)
                   if (screen.theme == 'light' or screen.wall_style == 'mosaic') else '',
             'qr': qr if qr is not None else (
@@ -535,6 +584,43 @@ class ShowroomWall(http.Controller):
             'heading': screen.heading or '',
             'pieces': pieces,
         }
+
+    @http.route('/showroom/wall/<string:token>/photo/<string:kind>/<int:rec_id>.jpg',
+                type='http', auth='public', methods=['GET'], csrf=False,
+                save_session=False, sitemap=False)
+    def wall_photo(self, token, kind, rec_id, **kw):
+        """A catalogue photo, light enough for a signage player to keep up.
+
+        Only photos of pieces this shop publishes are served, so the route is
+        no wider than the product pages themselves.
+        """
+        screen = _screen(token)
+        if not screen or kind not in _PHOTO_KINDS:
+            return Response(status=404)
+        model, field = _PHOTO_KINDS[kind]
+        record = request.env[model].sudo().browse(rec_id).exists()
+        template = record.product_tmpl_id
+        if not template and model == 'product.image':
+            template = record.product_variant_id.product_tmpl_id
+        if not record or not _may_show(screen, template):
+            return Response(status=404)
+        key = (kind, record.id, _photo_version(record))
+        body = _PHOTO_CACHE.get(key)
+        if body is None:
+            raw = record[field]
+            if not raw:
+                return Response(status=404)
+            raw = base64.b64decode(raw)
+            body = _photo_bytes(raw) or raw
+            if len(_PHOTO_CACHE) >= _PHOTO_CACHE_MAX:
+                _PHOTO_CACHE.clear()
+            _PHOTO_CACHE[key] = body
+        mimetype = 'image/jpeg' if body[:2] == b'\xff\xd8' else 'image/png'
+        return Response(body, headers=[
+            ('Content-Type', mimetype),
+            # The version rides on the URL: a new photo is a new address.
+            ('Cache-Control', 'public, max-age=31536000, immutable'),
+        ])
 
     @http.route('/showroom/wall/<string:token>/qr.png',
                 type='http', auth='public', methods=['GET'], csrf=False,
