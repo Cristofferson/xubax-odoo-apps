@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="xb_sale_order_wa_automation_rule_company" model="ir.rule">
+        <field name="name">Automatic WhatsApp messages: own companies</field>
+        <field name="model_id" ref="model_xb_sale_order_wa_automation"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="xb_sale_order_wa_log_rule_company" model="ir.rule">
+        <field name="name">WhatsApp messages about orders: own companies</field>
+        <field name="model_id" ref="model_xb_sale_order_wa_log"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

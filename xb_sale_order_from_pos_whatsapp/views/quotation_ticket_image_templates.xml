@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+      The quotation drawn like the POS ticket, to go as the image of the WhatsApp
+      quotation template when it is sent from Sales (where there is no printed ticket).
+      Rendered by wkhtmltoimage: plain HTML/CSS, no scripts, images inline.
+    -->
+    <template id="quotation_ticket_image" name="Quotation ticket (WhatsApp image)">
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <style>
+                    * { margin: 0; padding: 0; box-sizing: border-box; }
+                    body { width: 512px; background: #fff; color: #111;
+                           font-family: "DejaVu Sans", Arial, sans-serif; font-size: 15px;
+                           padding: 28px 16px 22px; }
+                    .c { text-align: center; }
+                    .logo { max-width: 240px; max-height: 110px; margin: 0 auto 18px; display: block; }
+                    .title { font-size: 19px; font-weight: bold; margin-bottom: 10px; }
+                    .meta { line-height: 1.6; }
+                    .customer { font-weight: bold; margin-top: 10px; }
+                    .lines { margin-top: 22px; }
+                    .line { margin-bottom: 12px; }
+                    .line .name { font-size: 17px; }
+                    .row { display: -webkit-box; display: flex; }
+                    .row .grow { -webkit-box-flex: 1; flex: 1; }
+                    .amount { font-family: "DejaVu Sans Mono", monospace; font-weight: bold; }
+                    .unit { color: #444; padding-left: 56px; margin-top: 4px; font-size: 14px; }
+                    .total { margin-top: 10px; font-size: 21px; font-weight: bold; }
+                    .pay { margin-top: 24px; font-size: 18px; }
+                    .qr { width: 170px; height: 170px; margin: 10px auto 0; display: block; }
+                    .valid { margin-top: 14px; color: #444; }
+                    .foot { margin-top: 28px; font-size: 13px; line-height: 1.7; }
+                </style>
+            </head>
+            <body>
+                <img t-if="logo" class="logo" t-att-src="logo"/>
+                <div class="c title" t-esc="title"/>
+                <div class="c meta">
+                    <div t-esc="date"/>
+                    <div t-if="seller" t-esc="labels['served']"/>
+                </div>
+                <div class="c customer" t-esc="customer"/>
+                <div class="lines">
+                    <div class="line" t-foreach="lines" t-as="line">
+                        <div class="name"><t t-esc="line['qty']"/> <t t-esc="line['name']"/></div>
+                        <div class="row">
+                            <div class="grow"/>
+                            <div class="amount" t-esc="line['subtotal']"/>
+                        </div>
+                        <div class="unit">
+                            <t t-esc="line['unit']"/> / <t t-esc="line['uom']"/>
+                            <t t-if="line['discount']"> · <t t-esc="labels['discount']"/> <t t-esc="'%g' % line['discount']"/>%</t>
+                        </div>
+                    </div>
+                </div>
+                <div class="row total">
+                    <div class="grow" t-esc="labels['total']"/>
+                    <div class="amount" t-esc="total"/>
+                </div>
+                <t t-if="qr">
+                    <div class="c pay" t-esc="labels['pay']"/>
+                    <img class="qr" t-att-src="qr"/>
+                </t>
+                <div t-if="validity" class="c valid" t-esc="labels['valid']"/>
+                <div class="row foot">
+                    <div class="grow">
+                        <div t-esc="company.name"/>
+                        <div t-foreach="address_lines" t-as="a" t-if="a" t-esc="a"/>
+                    </div>
+                    <div style="text-align: right;">
+                        <div t-if="vat" t-esc="labels['vat']"/>
+                        <div t-if="phone" t-esc="labels['phone']"/>
+                        <div t-if="email" t-esc="email"/>
+                        <div t-if="website" t-esc="website"/>
+                    </div>
+                </div>
+            </body>
+        </html>
+    </template>
+</odoo>

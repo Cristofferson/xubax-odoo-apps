@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- The notices of the "Notify" window, in the order it lists them. The code is the
+         key in sale.order.XB_WA_NOTICES. -->
+    <record id="notice_type_ready" model="xb.sale.order.whatsapp.notice.type">
+        <field name="name">The order is ready</field>
+        <field name="code">ready</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="notice_type_pickup" model="xb.sale.order.whatsapp.notice.type">
+        <field name="name">Reminder: it is waiting to be picked up</field>
+        <field name="code">pickup</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="notice_type_payment" model="xb.sale.order.whatsapp.notice.type">
+        <field name="name">Reminder: balance due</field>
+        <field name="code">payment</field>
+        <field name="sequence">30</field>
+    </record>
+    <record id="notice_type_detail" model="xb.sale.order.whatsapp.notice.type">
+        <field name="name">We need to confirm a detail</field>
+        <field name="code">detail</field>
+        <field name="sequence">40</field>
+    </record>
+    <record id="notice_type_delay" model="xb.sale.order.whatsapp.notice.type">
+        <field name="name">There is a delay: new delivery date</field>
+        <field name="code">delay</field>
+        <field name="sequence">50</field>
+    </record>
+    <!-- Not a notice: the quotation itself, with an image of it as the ticket. -->
+    <record id="notice_type_quotation" model="xb.sale.order.whatsapp.notice.type">
+        <field name="name">Send the quotation</field>
+        <field name="code">quotation</field>
+        <field name="sequence">5</field>
+    </record>
+</odoo>

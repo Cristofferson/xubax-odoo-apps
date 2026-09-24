@@ -15,9 +15,33 @@
                 </setting>
                 <setting id="xb_ready_wa_template_setting"
                          string="Order ready WhatsApp template (company)"
-                         help="Approved template sent from the orders list (Sales and Point of Sale) to tell the customer the order is ready. Leave empty to hide that button for this company."
+                         help="Approved template sent from the orders list (Sales and Point of Sale) to tell the customer the order is ready. Leave empty to not offer this notice for this company."
                          invisible="not pos_xb_enable_sale_order">
                     <field name="xb_ready_wa_template_id" options="{'no_create': True}"/>
+                </setting>
+                <setting id="xb_delay_wa_template_setting"
+                         string="Order late WhatsApp template (company)"
+                         help="Approved template to apologise for a late order and give the customer the new delivery date, sent from the orders list (Sales and Point of Sale). Leave empty to not offer this notice for this company."
+                         invisible="not pos_xb_enable_sale_order">
+                    <field name="xb_delay_wa_template_id" options="{'no_create': True}"/>
+                </setting>
+                <setting id="xb_payment_wa_template_setting"
+                         string="Balance due reminder WhatsApp template (company)"
+                         help="Approved template to remind the customer of the balance still due on an order or layaway, sent from the orders list (Sales and Point of Sale). Leave empty to not offer this notice for this company."
+                         invisible="not pos_xb_enable_sale_order">
+                    <field name="xb_payment_wa_template_id" options="{'no_create': True}"/>
+                </setting>
+                <setting id="xb_pickup_wa_template_setting"
+                         string="Pick-up reminder WhatsApp template (company)"
+                         help="Approved template to remind the customer that a ready order is waiting to be picked up, sent from the orders list (Sales and Point of Sale). Leave empty to not offer this notice for this company."
+                         invisible="not pos_xb_enable_sale_order">
+                    <field name="xb_pickup_wa_template_id" options="{'no_create': True}"/>
+                </setting>
+                <setting id="xb_detail_wa_template_setting"
+                         string="Confirm a detail WhatsApp template (company)"
+                         help="Approved template asking the customer to reply to confirm a detail of the order; once they answer, the seller can write freely. Sent from the orders list (Sales and Point of Sale). Leave empty to not offer this notice for this company."
+                         invisible="not pos_xb_enable_sale_order">
+                    <field name="xb_detail_wa_template_id" options="{'no_create': True}"/>
                 </setting>
             </xpath>
         </field>

@@ -35,3 +35,37 @@ Installs by itself when both `xb_sale_order_from_pos` and Odoo Enterprise **What
   the cashier sees why, and the other channels and the quotation are not affected.
 - Sending runs as the cashier: to render the ticket message she needs read access to Sales
   Orders (e.g. *Sales / User: Own Documents Only*).
+
+## WhatsApp notices about an order ("ready", "late"...)
+
+**One button**, *Notify*, on each order / layaway: in the orders list (Sales, and the
+list the POS opens to recover an order) and on the order form. Never on a plain
+quotation. It opens a window where the seller picks what to tell the customer, reads the
+exact message that will be sent and sends it:
+
+- **The order is ready** — sends the company's *order ready* template (with the balance
+  still due) and remembers when the customer was told. In the list the button then shows
+  as *Notified*, and still opens the same window.
+- **Reminder: it is waiting to be picked up** — once the customer was told it is ready
+  (the window picks it by default then), with the company's *pick-up reminder* template.
+- **Reminder: balance due** — orders and layaways with a balance still due, with the
+  company's *balance due reminder* template.
+- **We need to confirm a detail** — size, engraving, stone... The company's *confirm a
+  detail* template asks the customer to reply: that opens the WhatsApp conversation, and
+  from then on the seller can write freely for 24 hours.
+- **There is a delay: new delivery date** — the seller picks the **new delivery date**
+  and apologises with the company's *order late* template. The date is saved as the
+  order's **Delivery Date** (`commitment_date`), so the promise is on the order for
+  everyone, and the "ready" mark is cleared so *the order is ready* can be sent again
+  when it really is.
+
+Only the notices whose template the company has, and that make sense for the order, are
+offered (no balance reminder on a paid order, no pick-up reminder before the "ready"
+notice); with none, the button does not show at all.
+
+Setup: create each template on **Sales Order** and have Meta approve it, then pick them
+in *Settings ▸ Point of Sale* (**Order ready**, **Pick-up reminder**, **Balance due
+reminder**, **Confirm a detail** and **Order late WhatsApp template**, per company). Besides the usual fields, template variables can use **`xb_wa_kind_label`**
+("order" / "layaway"), **`xb_wa_amount_unpaid`** (balance due with currency) and
+**`xb_wa_delivery_date`** (delivery date as the customer reads it: "sábado 26 de
+septiembre" in Spanish, the year only when it is not this year).

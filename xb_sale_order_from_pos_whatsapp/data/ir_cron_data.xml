@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Automatic WhatsApp messages about orders. Sends nothing until an automation is
+         switched on with an approved template (Sales > Configuration). -->
+    <record id="ir_cron_xb_wa_journey" model="ir.cron">
+        <field name="name">Orders from POS: automatic WhatsApp messages</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_xb_wa_journey()</field>
+        <field name="interval_number">15</field>
+        <field name="interval_type">minutes</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

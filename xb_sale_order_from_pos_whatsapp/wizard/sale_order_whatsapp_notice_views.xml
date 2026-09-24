@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- One window for every WhatsApp notice: pick what to tell the customer, read the
+         message, send it. -->
+    <record id="xb_sale_order_whatsapp_notice_view_form" model="ir.ui.view">
+        <field name="name">xb.sale.order.whatsapp.notice.form</field>
+        <field name="model">xb.sale.order.whatsapp.notice</field>
+        <field name="arch" type="xml">
+            <form string="Notify the customer by WhatsApp">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="order_id" options="{'no_open': True}"/>
+                            <field name="partner_id" options="{'no_open': True}"/>
+                            <field name="phone" widget="phone" required="1"/>
+                            <field name="ready_notified_date" invisible="1"/>
+                            <field name="available_type_ids" invisible="1"/>
+                            <field name="notice_type" invisible="1"/>
+                            <field name="notice_type_id" widget="radio"/>
+                            <div colspan="2" class="text-muted"
+                                 invisible="notice_type not in ('ready', 'pickup') or not ready_notified_date">
+                                The customer was already told this order is ready on
+                                <field name="ready_notified_date" readonly="1" class="oe_inline"/>.
+                            </div>
+                            <field name="current_date" invisible="not current_date"/>
+                            <field name="new_date" options="{'min_date': 'today'}"
+                                   invisible="notice_type != 'delay'"
+                                   required="notice_type == 'delay'"/>
+                            <div colspan="2" class="text-muted" invisible="notice_type != 'detail'">
+                                When the customer replies, the conversation opens in WhatsApp
+                                (Discuss) and you can write to them freely for 24 hours.
+                            </div>
+                            <div colspan="2" class="text-muted" invisible="notice_type != 'delay'">
+                                The new date is saved as the order's delivery date.
+                            </div>
+                            <div colspan="2" class="text-muted" invisible="notice_type != 'quotation'">
+                                It goes with an image of the quotation, like the ticket printed at the Point of Sale.
+                            </div>
+                        </group>
+                        <group>
+                            <div colspan="2">
+                                <field name="preview_whatsapp" nolabel="1" invisible="not preview_whatsapp"/>
+                            </div>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_send" type="object" string="Send by WhatsApp"
+                            icon="fa-whatsapp" class="btn-primary" data-hotkey="q"/>
+                    <button special="cancel" string="Cancel" class="btn-secondary" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- The standard WhatsApp window, opened from an order, must not offer the templates
+         this add-on sends itself: they need values that window cannot fill. -->
+    <record id="whatsapp_composer_view_form_xb_hide" model="ir.ui.view">
+        <field name="name">whatsapp.composer.form.xb.hide.managed</field>
+        <field name="model">whatsapp.composer</field>
+        <field name="inherit_id" ref="whatsapp.whatsapp_composer_view_form"/>
+        <field name="arch" type="xml">
+            <field name="wa_template_id" position="attributes">
+                <attribute name="domain">[('model', '=', res_model), ('status', '=', 'approved'), ('template_type', 'in', context.get('template_types', ['authentication', 'marketing', 'utility'])), ('id', 'not in', context.get('xb_hide_template_ids', []))]</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
