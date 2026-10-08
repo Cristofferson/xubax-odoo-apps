@@ -24,9 +24,20 @@ class KioskQuotation(http.Controller):
         """The contact with this mobile, created if there is none (without a company,
         as the POS creates its customers)."""
         Partner = env["res.partner"].sudo()
+        country = config.company_id.country_id or env.company.country_id
         partner = Partner.search([("phone_sanitized", "=", phone)], limit=1)
         if not partner:
-            country = config.company_id.country_id or env.company.country_id
+            # Older contacts may keep a number Odoo cannot read (no country, extra
+            # digits...): look for the national number at the end of their phone.
+            national = phone.lstrip("+")
+            if country.phone_code and national.startswith(str(country.phone_code)):
+                national = national[len(str(country.phone_code)):]
+            if len(national) >= 7:
+                partner = next((
+                    p for p in Partner.search([("phone", "ilike", "%%%s" % national[-7:])], limit=50)
+                    if re.sub(r"\D", "", p.phone or "").endswith(national)
+                ), Partner.browse())
+        if not partner:
             partner = Partner.create({
                 "name": name,
                 "phone": env["res.partner"]._phone_format(
