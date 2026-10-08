@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_kiosk_quotation" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.xb.kiosk.quotation</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="pos_self_order.res_config_settings_view_form_menu"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='self_ordering_section']" position="inside">
+                <setting string="Quotations from the kiosk" invisible="pos_self_ordering_mode != 'kiosk'"
+                         help="The customer gets a quotation of the cart, printed on the kiosk's printer and/or by WhatsApp. It is created like the POS quotations (same validity and terms).">
+                    <field name="pos_xb_kiosk_quotation"/>
+                    <div class="content-group mt-2" invisible="not pos_xb_kiosk_quotation">
+                        <div class="row">
+                            <label for="pos_xb_kiosk_privacy_url" class="col-lg-4 o_light_label"/>
+                            <field name="pos_xb_kiosk_privacy_url" placeholder="/privacy"/>
+                        </div>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>
