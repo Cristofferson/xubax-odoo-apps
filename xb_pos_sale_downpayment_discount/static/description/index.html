@@ -1,0 +1,79 @@
+<!-- apps.odoo.com store listing for xb_pos_sale_downpayment_discount -->
+
+<section class="oe_container">
+  <div class="oe_row oe_spaced">
+    <h2 class="oe_slogan">POS Down Payment Discount</h2>
+    <h3 class="oe_slogan" style="color:#5f5a55;">
+      The discount the cashier gives on a down payment reaches the sale order,
+      so its balance is what the customer really owes.
+    </h3>
+  </div>
+</section>
+
+<section class="oe_container" style="background:#F6F1E8; padding:24px 0;">
+  <div class="oe_row oe_spaced">
+    <div class="oe_span6">
+      <h3 style="margin-top:0;">The problem</h3>
+      <p>
+        A customer pays part of a sale order at the Point of Sale (a down payment) and the
+        cashier gives a <strong>10&nbsp;% discount</strong> on that line. The customer pays
+        900 instead of 1,000.
+      </p>
+      <p>
+        Odoo only lowers what the <em>ticket</em> charges. The <strong>sale order keeps its
+        full price</strong>, so it shows a balance of 100 that the customer never owed —
+        on the order, in the POS list of orders to settle, on invoices and in any reminder
+        you send.
+      </p>
+    </div>
+    <div class="oe_span6">
+      <h3 style="margin-top:0;">The fix</h3>
+      <p>
+        When the ticket is synced, the module gives the sale order <strong>the same
+        discount</strong>: a <em>POS discount (ticket …)</em> line made with Odoo's own
+        Sales discount tool (fixed amount, taxes included), plus a note in the chatter
+        that says who, how much and on which ticket.
+      </p>
+      <p>The balance of the order is right the moment the customer pays. Nothing to configure.</p>
+    </div>
+  </div>
+</section>
+
+<section class="oe_container">
+  <div class="oe_row oe_spaced">
+    <h3 class="oe_slogan" style="font-size:24px;">Ring of 3,000 · down payment of 1,000 with 10&nbsp;% off</h3>
+    <div class="oe_span12" style="text-align:center;">
+      <img src="screenshot_order.png" alt="Sale order with the POS discount line and the chatter note"
+           style="max-width:100%; border:1px solid #e6e1d9; border-radius:6px;"/>
+    </div>
+    <p style="text-align:center; color:#5f5a55; margin-top:12px;">
+      The order now totals 2,900: 900 paid at the POS, a balance of 2,000.
+    </p>
+  </div>
+</section>
+
+<section class="oe_container" style="background:#fafafa; padding:24px 0;">
+  <div class="oe_row oe_spaced">
+    <h3 class="oe_slogan" style="font-size:24px;">What it does</h3>
+    <ul style="max-width:760px; margin:0 auto; font-size:15px; line-height:1.7;">
+      <li>Works with the native <strong>pos_sale</strong> down payment flow: no new screens, cashiers work as today.</li>
+      <li>Only discounted down payment lines of a sale order are touched; regular sales and settlements are left as Odoo makes them.</li>
+      <li>The discount keeps the <strong>taxes of the order</strong> (Odoo's discount tool splits it per tax when needed).</li>
+      <li>Each POS line is carried <strong>only once</strong>, even if the POS sends the ticket again.</li>
+      <li>A chatter note on the order says which ticket, which percentage and which amount.</li>
+      <li>Any localization, any currency. Translated to Spanish.</li>
+      <li>Covered by automated tests (discount carried, no discount, ticket synced twice).</li>
+    </ul>
+  </div>
+</section>
+
+<section class="oe_container">
+  <div class="oe_row oe_spaced">
+    <h3 class="oe_slogan" style="font-size:24px;">Requirements</h3>
+    <p style="text-align:center;">Odoo 19 · Point of Sale + Sales (<code>pos_sale</code>) · Community or Enterprise · no configuration.</p>
+    <p style="text-align:center; margin-top:18px;">
+      Questions or a change you need? Write to <a href="mailto:soporte@xubax.com">soporte@xubax.com</a> —
+      <a href="https://www.xubax.com" target="_blank">XUBAX</a>.
+    </p>
+  </div>
+</section>
