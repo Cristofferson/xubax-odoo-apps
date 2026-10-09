@@ -195,3 +195,9 @@ msgstr "Escribe un celular válido."
 #: code:addons/xb_self_order_quotation/controllers/quotation.py:0
 msgid "Your cart is empty."
 msgstr "Tu carrito está vacío."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Done typing"
+msgstr "Ocultar teclado"

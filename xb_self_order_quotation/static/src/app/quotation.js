@@ -3,7 +3,7 @@
  * cotización impresa (en la impresora del kiosco) y/o la recibe por WhatsApp. Se crea
  * igual que las cotizaciones de la caja.
  */
-import { Component, useState } from "@odoo/owl";
+import { Component, onMounted, onWillUnmount, useRef, useState } from "@odoo/owl";
 import { patch } from "@web/core/utils/patch";
 import { rpc } from "@web/core/network/rpc";
 import { _t } from "@web/core/l10n/translation";
@@ -35,7 +35,80 @@ export class XbQuoteDialog extends Component {
             sending: false,
             error: "",
             done: null,
+            typing: false,
+            keyboard: 0,
+            visibleHeight: 0,
         });
+        this.dialogRef = useRef("dialog");
+        this.field2Ref = useRef("field2");
+        // Tablets in kiosk mode have no system "back" key: the on-screen keyboard covers
+        // the bottom of the screen and cannot be dismissed. Follow the visible viewport
+        // to keep the dialog above the keyboard, and offer a button to hide it.
+        const vv = window.visualViewport;
+        const onViewport = () => {
+            if (!vv) {
+                return;
+            }
+            this.state.keyboard = Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop));
+            this.state.visibleHeight = Math.round(vv.height);
+        };
+        const onFocus = (ev) => {
+            if (ev.target.matches?.(".xb_quote_dialog input:not([type=checkbox])")) {
+                this.state.typing = true;
+                setTimeout(() => ev.target.scrollIntoView({ block: "nearest" }), 300);
+            }
+        };
+        const onBlur = () => {
+            setTimeout(() => {
+                const el = document.activeElement;
+                this.state.typing = Boolean(el?.matches?.(".xb_quote_dialog input:not([type=checkbox])"));
+            }, 0);
+        };
+        onMounted(() => {
+            vv?.addEventListener("resize", onViewport);
+            vv?.addEventListener("scroll", onViewport);
+            document.addEventListener("focusin", onFocus);
+            document.addEventListener("focusout", onBlur);
+            onViewport();
+        });
+        onWillUnmount(() => {
+            vv?.removeEventListener("resize", onViewport);
+            vv?.removeEventListener("scroll", onViewport);
+            document.removeEventListener("focusin", onFocus);
+            document.removeEventListener("focusout", onBlur);
+        });
+    }
+
+    get dialogStyle() {
+        const { keyboard, visibleHeight } = this.state;
+        if (!keyboard) {
+            return "";
+        }
+        return `bottom: ${keyboard}px !important; max-height: ${Math.round(visibleHeight * 0.95)}px;`;
+    }
+
+    hideKeyboard() {
+        document.activeElement?.blur();
+        this.state.typing = false;
+    }
+
+    onKeydown(ev, action) {
+        if (ev.key !== "Enter") {
+            return;
+        }
+        ev.preventDefault();
+        if (action === "next") {
+            this.field2Ref.el?.focus();
+        } else {
+            this.hideKeyboard();
+        }
+    }
+
+    onDialogPointerDown(ev) {
+        // Touching the dialog outside the fields hides the keyboard.
+        if (!ev.target.closest("input, button, label, a")) {
+            this.hideKeyboard();
+        }
     }
 
     get digits() {

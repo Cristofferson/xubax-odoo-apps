@@ -25,16 +25,21 @@
 
     <t t-name="xb_self_order_quotation.Dialog">
         <div class="xb_quote_backdrop bg-dark bg-opacity-25" t-on-click="() => !state.sending and props.close()"/>
-        <div class="xb_quote_dialog position-absolute fixed-bottom d-flex flex-column w-100 p-4 bg-white shadow-lg">
+        <div class="xb_quote_dialog position-absolute fixed-bottom d-flex flex-column w-100 p-4 bg-white shadow-lg" t-ref="dialog" t-att-style="dialogStyle" t-on-pointerdown="onDialogPointerDown">
             <t t-if="!state.done">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h2 class="mb-0">Your quotation</h2>
-                    <button class="btn-close" aria-label="Close" t-on-click="props.close" t-att-disabled="state.sending"/>
+                    <div class="d-flex align-items-center gap-2">
+                        <button t-if="state.typing" type="button" class="btn btn-sm btn-outline-secondary xb_quote_kb_done" t-on-click="hideKeyboard">
+                            <i class="fa fa-keyboard-o me-1" aria-hidden="true"/>Done typing
+                        </button>
+                        <button class="btn-close" aria-label="Close" t-on-click="props.close" t-att-disabled="state.sending"/>
+                    </div>
                 </div>
                 <p class="text-muted">Leave us your name and mobile: your quotation is kept so that we can help you at the counter.</p>
                 <div class="d-flex flex-column gap-3">
-                    <input id="xb_quote_name" class="form-control form-control-lg" type="text" autocomplete="name" placeholder="Your name" t-model="state.name"/>
-                    <input id="xb_quote_phone" class="form-control form-control-lg" type="tel" inputmode="numeric" maxlength="20" autocomplete="tel" placeholder="Mobile number" t-model="state.phone"/>
+                    <input id="xb_q_f1" t-ref="field1" class="form-control form-control-lg" type="text" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" enterkeyhint="next" placeholder="Your name" t-model="state.name" t-on-keydown="(ev) => this.onKeydown(ev, 'next')"/>
+                    <input id="xb_q_f2" t-ref="field2" class="form-control form-control-lg" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="20" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="done" placeholder="Mobile number" t-model="state.phone" t-on-keydown="(ev) => this.onKeydown(ev, 'done')"/>
                     <div class="d-flex flex-column gap-2">
                         <label t-if="modos.print" class="xb_quote_check"><input type="checkbox" t-model="state.print"/> <span>Print it here</span></label>
                         <label t-if="modos.whatsapp" class="xb_quote_check"><input type="checkbox" t-model="state.whatsapp"/> <span>Send it to my WhatsApp</span></label>
