@@ -45,12 +45,35 @@
       <p style="margin-top:10px;"><strong>1.</strong> In the cart: <em>Print it</em> or <em>Send it to my WhatsApp</em>.</p>
     </div>
     <div class="oe_span4" style="text-align:center;">
-      <img src="kiosk_dialog.png" alt="Name, mobile and privacy notice" style="max-width:100%; border:1px solid #e6e1d9; border-radius:6px;"/>
-      <p style="margin-top:10px;"><strong>2.</strong> Name, mobile and your privacy notice. Both channels can be chosen.</p>
+      <img src="kiosk_dialog.png" alt="Mobile, name and privacy notice" style="max-width:100%; border:1px solid #e6e1d9; border-radius:6px;"/>
+      <p style="margin-top:10px;"><strong>2.</strong> Mobile first: a returning customer gets their name filled in. Then your privacy notice; both channels can be chosen.</p>
     </div>
     <div class="oe_span4" style="text-align:center;">
       <img src="kiosk_done.png" alt="Quotation saved" style="max-width:100%; border:1px solid #e6e1d9; border-radius:6px;"/>
       <p style="margin-top:10px;"><strong>3.</strong> Done: the quotation number, and the kiosk goes back to its start screen.</p>
+    </div>
+  </div>
+</section>
+
+<section class="oe_container" style="background:#F6F1E8; padding:24px 0;">
+  <div class="oe_row oe_spaced">
+    <h3 class="oe_slogan" style="font-size:24px;">Optional: pay at the counter, through Sales</h3>
+    <p style="max-width:780px; margin:0 auto 18px; text-align:center;">
+      Switch it on and the kiosk's order button sends the cart to Sales as a quotation instead of a POS
+      order. The cashier finds it in the POS <em>Quotation/Order</em> list, collects the payment (or a down
+      payment) and Odoo confirms it as a sales order — the same flow as your POS quotations and layaways.
+    </p>
+    <div class="oe_span4" style="text-align:center;">
+      <img src="kiosk_counter.png" alt="Pay at the counter" style="max-width:100%; border:1px solid #e6e1d9; border-radius:6px;"/>
+      <p style="margin-top:10px;">The customer leaves their mobile and name.</p>
+    </div>
+    <div class="oe_span4" style="text-align:center;">
+      <img src="kiosk_counter_done.png" alt="Order number and amount to pay" style="max-width:100%; border:1px solid #e6e1d9; border-radius:6px;"/>
+      <p style="margin-top:10px;">They get the number and the amount to pay at the counter.</p>
+    </div>
+    <div class="oe_span4" style="text-align:center;">
+      <img src="pos_orders.png" alt="The quotation in the POS orders list" style="max-width:100%; border:1px solid #e6e1d9; border-radius:6px;"/>
+      <p style="margin-top:10px;">The cashier charges it from the POS list; once paid it becomes a sales order.</p>
     </div>
   </div>
 </section>
@@ -80,6 +103,9 @@
     <ul style="max-width:780px; margin:0 auto; font-size:15px; line-height:1.7;">
       <li><strong>Print</strong> on the kiosk's ePOS receipt printer, <strong>WhatsApp</strong> with your approved template, or both.</li>
       <li>Mobile numbers are checked with the rules of <strong>your company's country</strong> and stored in international format.</li>
+      <li>A <strong>returning customer</strong> is recognized by their mobile: only their first name is shown (the kiosk is a public place).</li>
+      <li>Made for tablets: the form stays above the on-screen keyboard, with a button to hide it, and no browser autofill pop-ups.</li>
+      <li>Optional <strong>pay at the counter through Sales</strong>: the order button creates a quotation the cashier charges from the POS.</li>
       <li>Your <strong>privacy notice</strong> is linked in the form; without one, the customer agrees to be contacted.</li>
       <li>Variant options chosen at the kiosk (size, color, metal…) go to the quotation line.</li>
       <li>If the printer or WhatsApp fail, the quotation is saved anyway and the customer is told to ask at the counter.</li>
@@ -92,7 +118,7 @@
   <div class="oe_row oe_spaced">
     <div class="oe_span6">
       <h3 style="margin-top:0;">Setup</h3>
-      <p>Point of Sale › Settings › your kiosk › <em>Mobile self-order &amp; Kiosk</em> › tick <strong>Quotations from the kiosk</strong> and, optionally, the link to your privacy notice.</p>
+      <p>Point of Sale › Settings › your kiosk › <em>Mobile self-order &amp; Kiosk</em> › tick <strong>Quotations from the kiosk</strong> and, optionally, the link to your privacy notice. Tick <strong>Pay at the counter through Sales</strong> if the order button should create quotations too.</p>
       <p>To print, set the kiosk's ePOS printer (IP) in the same settings. To send by WhatsApp, set the approved quotation template of <em>Sales, Quotations &amp; Layaway from POS - WhatsApp</em>.</p>
     </div>
     <div class="oe_span6">
