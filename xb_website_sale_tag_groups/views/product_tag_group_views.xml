@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_tag_group_view_list" model="ir.ui.view">
+        <field name="name">product.tag.group.list</field>
+        <field name="model">product.tag.group</field>
+        <field name="arch" type="xml">
+            <list string="Tag Filter Groups">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="tag_count"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="product_tag_group_view_form" model="ir.ui.view">
+        <field name="name">product.tag.group.form</field>
+        <field name="model">product.tag.group</field>
+        <field name="arch" type="xml">
+            <form string="Tag Filter Group">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Style"/></h1>
+                    </div>
+                    <field name="tag_ids" context="{'default_filter_group_id': id}">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="name"/>
+                            <field name="visible_to_customers" widget="boolean_toggle"/>
+                            <field name="product_template_ids" widget="many2many_tags" optional="show"/>
+                        </list>
+                    </field>
+                    <div class="text-muted mt-2">
+                        Customers can tick several tags of this group: products with any of them are shown.
+                        Choosing tags of different groups narrows the results to products that match every group.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_tag_group_action" model="ir.actions.act_window">
+        <field name="name">Tag Filter Groups</field>
+        <field name="res_model">product.tag.group</field>
+        <field name="path">product-tag-groups</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a filter group</p>
+            <p>Group your product tags under their own titles in the shop filters,
+               e.g. <b>Style</b>: Classic, Vintage, Modern — <b>Occasion</b>: Wedding, Birthday.</p>
+        </field>
+    </record>
+
+    <record id="product_tag_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.tag.form.filter.group</field>
+        <field name="model">product.tag</field>
+        <field name="inherit_id" ref="product.product_tag_form_view"/>
+        <field name="arch" type="xml">
+            <field name="visible_to_customers" position="after">
+                <field name="filter_group_id" invisible="not visible_to_customers"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_tag_tree_view_inherit" model="ir.ui.view">
+        <field name="name">product.tag.list.filter.group</field>
+        <field name="model">product.tag</field>
+        <field name="inherit_id" ref="product.product_tag_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="filter_group_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_tag_search_view" model="ir.ui.view">
+        <field name="name">product.tag.search.filter.group</field>
+        <field name="model">product.tag</field>
+        <field name="arch" type="xml">
+            <search string="Product Tags">
+                <field name="name"/>
+                <field name="filter_group_id"/>
+                <filter name="no_group" string="Without filter group" domain="[('filter_group_id', '=', False)]"/>
+                <group>
+                    <filter name="by_group" string="Filter Group" context="{'group_by': 'filter_group_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <menuitem id="menu_product_tag_groups"
+        name="Tag Filter Groups"
+        parent="website_sale.menu_catalog"
+        action="product_tag_group_action"
+        sequence="31"/>
+</odoo>

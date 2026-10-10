@@ -1,0 +1,157 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_website_sale_tag_groups
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-10 22:36+0000\n"
+"PO-Revision-Date: 2026-10-10 22:36+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: xb_website_sale_tag_groups
+#: model:ir.model.constraint,message:xb_website_sale_tag_groups.constraint_product_tag_group_name_uniq
+msgid "A filter group with this title already exists!"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model_terms:ir.actions.act_window,help:xb_website_sale_tag_groups.product_tag_group_action
+msgid "Create a filter group"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model:ir.model.fields,field_description:xb_website_sale_tag_groups.field_product_tag_group__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model:ir.model.fields,field_description:xb_website_sale_tag_groups.field_product_tag_group__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model_terms:ir.ui.view,arch_db:xb_website_sale_tag_groups.product_tag_group_view_form
+msgid ""
+"Customers can tick several tags of this group: products with any of them are shown.\n"
+"                        Choosing tags of different groups narrows the results to products that match every group."
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model:ir.model.fields,field_description:xb_website_sale_tag_groups.field_product_tag__display_name
+#: model:ir.model.fields,field_description:xb_website_sale_tag_groups.field_product_tag_group__display_name
+#: model:ir.model.fields,field_description:xb_website_sale_tag_groups.field_product_template__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model:ir.model.fields,field_description:xb_website_sale_tag_groups.field_product_tag__filter_group_id
+#: model_terms:ir.ui.view,arch_db:xb_website_sale_tag_groups.product_tag_search_view
+msgid "Filter Group"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model:ir.model.fields,field_description:xb_website_sale_tag_groups.field_product_tag_group__name
+msgid "Filter Title"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model_terms:ir.actions.act_window,help:xb_website_sale_tag_groups.product_tag_group_action
+msgid ""
+"Group your product tags under their own titles in the shop filters,\n"
+"               e.g. <b>Style</b>: Classic, Vintage, Modern — <b>Occasion</b>: Wedding, Birthday."
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model:ir.model.fields,field_description:xb_website_sale_tag_groups.field_product_tag__id
+#: model:ir.model.fields,field_description:xb_website_sale_tag_groups.field_product_tag_group__id
+#: model:ir.model.fields,field_description:xb_website_sale_tag_groups.field_product_template__id
+msgid "ID"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model:ir.model.fields,field_description:xb_website_sale_tag_groups.field_product_tag_group__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model:ir.model.fields,field_description:xb_website_sale_tag_groups.field_product_tag_group__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model:ir.model.fields,field_description:xb_website_sale_tag_groups.field_product_tag_group__tag_count
+msgid "Number of Tags"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model:ir.model,name:xb_website_sale_tag_groups.model_product_template
+msgid "Product"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model:ir.model,name:xb_website_sale_tag_groups.model_product_tag
+msgid "Product Tag"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model:ir.model,name:xb_website_sale_tag_groups.model_product_tag_group
+msgid "Product Tag Filter Group"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model_terms:ir.ui.view,arch_db:xb_website_sale_tag_groups.product_tag_search_view
+msgid "Product Tags"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model:ir.model.fields,field_description:xb_website_sale_tag_groups.field_product_tag_group__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model:ir.model.fields,help:xb_website_sale_tag_groups.field_product_tag__filter_group_id
+msgid ""
+"Shows this tag under its own title in the shop filters. Tags of the same "
+"group are combined with OR; different groups are combined with AND. Tags "
+"without a group stay in the standard \"Tags\" block."
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model_terms:ir.ui.view,arch_db:xb_website_sale_tag_groups.product_tag_group_view_form
+msgid "Tag Filter Group"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model:ir.actions.act_window,name:xb_website_sale_tag_groups.product_tag_group_action
+#: model:ir.ui.menu,name:xb_website_sale_tag_groups.menu_product_tag_groups
+#: model_terms:ir.ui.view,arch_db:xb_website_sale_tag_groups.product_tag_group_view_list
+msgid "Tag Filter Groups"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model:ir.model.fields,field_description:xb_website_sale_tag_groups.field_product_tag_group__tag_ids
+#: model_terms:ir.ui.view,arch_db:xb_website_sale_tag_groups.filter_products_tags
+#: model_terms:ir.ui.view,arch_db:xb_website_sale_tag_groups.product_attribute_filters_form
+msgid "Tags"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model:ir.model.fields,help:xb_website_sale_tag_groups.field_product_tag_group__name
+msgid "Title of this block in the shop filters, e.g. \"Style\" or \"Stones\"."
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model_terms:ir.ui.view,arch_db:xb_website_sale_tag_groups.product_tag_search_view
+msgid "Without filter group"
+msgstr ""
+
+#. module: xb_website_sale_tag_groups
+#: model_terms:ir.ui.view,arch_db:xb_website_sale_tag_groups.product_tag_group_view_form
+msgid "e.g. Style"
+msgstr ""

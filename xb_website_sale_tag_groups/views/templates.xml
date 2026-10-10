@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sidebar (desktop): one block per filter group instead of a single "Tags" block. -->
+    <template id="filter_products_tags" inherit_id="website_sale.filter_products_tags"
+              name="Filter by Tags: groups">
+        <xpath expr="//div[hasclass('accordion-item')]" position="replace">
+            <t t-foreach="all_tags._xb_filter_buckets()" t-as="bucket">
+                <t t-set="_key" t-value="bucket[0]"/>
+                <t t-set="_group" t-value="bucket[1]"/>
+                <div class="accordion-item">
+                    <div class="accordion-header h6 mb-0">
+                        <button class="accordion-button px-0 bg-transparent shadow-none"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                aria-expanded="true"
+                                t-attf-data-bs-target="#o_wsale_{{_key}}_option_inner"
+                                t-attf-aria-controls="o_wsale_{{_key}}_option_inner">
+                            <b t-if="_group" t-out="_group.name"/>
+                            <b t-else="">Tags</b>
+                        </button>
+                    </div>
+                    <div t-attf-id="o_wsale_{{_key}}_option_inner" class="accordion-collapse collapse show">
+                        <div class="flex-column mb-3">
+                            <t t-call="website_sale.filter_products_tags_list">
+                                <t t-set="all_tags" t-value="bucket[2]"/>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- "Filters" panel (offcanvas / mobile): same split. -->
+    <template id="product_attribute_filters_form" inherit_id="website_sale.product_attribute_filters_form"
+              name="Filter by Tags: groups (filters panel)">
+        <xpath expr="//div[@t-if='all_tags'][h2[@t-attf-id='o_wsale_offcanvas_tags_header']]" position="replace">
+            <t t-foreach="all_tags._xb_filter_buckets()" t-as="bucket">
+                <t t-set="_key" t-value="bucket[0]"/>
+                <t t-set="_group" t-value="bucket[1]"/>
+                <t t-set="_status" t-value="'inactive'"/>
+                <t t-foreach="bucket[2]" t-as="v" t-if="v.id in tags" t-set="_status" t-value="'active'"/>
+                <div>
+                    <h2 class="accordion-header mb-0" t-attf-id="o_wsale_offcanvas_{{_key}}_header">
+                        <button
+                            t-attf-class="o_wsale_offcanvas_title accordion-button border-top rounded-0 {{_status != 'active' and 'collapsed'}}"
+                            type="button"
+                            t-att-data-status="_status"
+                            data-bs-toggle="collapse"
+                            t-attf-data-bs-target="#o_wsale_offcanvas_{{_key}}"
+                            t-att-aria-expanded="_status == 'active' and 'True' or 'False'"
+                            t-attf-aria-controls="o_wsale_offcanvas_{{_key}}"
+                        >
+                            <b t-if="_group" t-out="_group.name"/>
+                            <b t-else="">Tags</b>
+                        </button>
+                    </h2>
+                    <div
+                        t-attf-id="o_wsale_offcanvas_{{_key}}"
+                        t-attf-class="accordion-collapse collapse {{(_status == 'active') and 'show'}}"
+                        t-att-aria-expanded="(_status == 'active') and 'True' or 'False'"
+                        t-attf-aria-labelledby="o_wsale_offcanvas_{{_key}}_header"
+                    >
+                        <div class="accordion-body pt-0">
+                            <div class="list-group list-group-flush">
+                                <t t-call="website_sale.filter_products_tags_list">
+                                    <t t-set="all_tags" t-value="bucket[2]"/>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>
