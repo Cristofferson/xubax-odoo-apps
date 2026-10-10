@@ -243,11 +243,6 @@ msgid "Companies"
 msgstr "Empresas"
 
 #. module: xb_sale_order_from_pos
-#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_pos_payment_method__xb_company_country_code
-msgid "Company fiscal country code"
-msgstr "Código del país fiscal de la empresa"
-
-#. module: xb_sale_order_from_pos
 #: model:ir.model,name:xb_sale_order_from_pos.model_res_config_settings
 msgid "Config Settings"
 msgstr "Ajustes de configuración"
@@ -459,11 +454,6 @@ msgstr ""
 "centavo de redondeo por impuesto en una línea 0% (p.ej. un pedido todo-16%)."
 " Debe ser un producto de servicio con IVA 0% y una ClaveProdServ del SAT "
 "válida para que el CFDI timbre."
-
-#. module: xb_sale_order_from_pos
-#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_pos_payment_method__l10n_mx_edi_payment_method_id
-msgid "Forma de pago (SAT)"
-msgstr "Forma de pago (SAT)"
 
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
@@ -900,17 +890,6 @@ msgstr ""
 #: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.xml:0
 msgid "Rounding"
 msgstr "Redondeo"
-
-#. module: xb_sale_order_from_pos
-#: model:ir.model.fields,help:xb_sale_order_from_pos.field_pos_payment_method__l10n_mx_edi_payment_method_id
-msgid ""
-"SAT 'Forma de pago' reported on the CFDI when an order paid with this method"
-" is invoiced (e.g. 01 Efectivo, 03 Transferencia, 04 Tarjeta de crédito, 28 "
-"Tarjeta de débito)."
-msgstr ""
-"'Forma de pago' del SAT que se reporta en el CFDI cuando se factura una "
-"orden pagada con este método (p. ej. 01 Efectivo, 03 Transferencia, 04 "
-"Tarjeta de crédito, 28 Tarjeta de débito)."
 
 #. module: xb_sale_order_from_pos
 #: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb

@@ -53,7 +53,8 @@ class PosOrder(models.Model):
         country_code -- NOT on res.company.country_id, which can be MX while the
         company still runs a generic chart. Every CFDI/SAT touchpoint below is gated
         on this, so on a non-Mexican company they stay dormant and the invoice keeps
-        pure native behaviour. l10n_mx_edi is a hard dependency but inert here."""
+        pure native behaviour. The SAT forma de pago lives in the
+        xb_sale_order_from_pos_l10n_mx bridge (installed with l10n_mx_edi)."""
         company = self.company_id
         return (company.account_fiscal_country_id.code or company.country_id.code) == "MX"
 
@@ -99,23 +100,8 @@ class PosOrder(models.Model):
         # our 1-cent settle reconciliation (Option 1/2). Scoped to our orders only;
         # ordinary POS invoices keep the native behaviour.
         #
-        # Mexican CFDI touchpoints below are DORMANT outside Mexico: l10n_mx_edi is a
-        # hard dependency but inert unless the company files taxes in MX. On a non-MX
-        # company this whole block is skipped -> the invoice keeps native cash rounding
-        # and no SAT forma de pago is written (the field stays empty, no error).
+        # MX-only: on a non-Mexican company the invoice keeps the native cash rounding.
+        # The SAT forma de pago is added by xb_sale_order_from_pos_l10n_mx.
         if self._xb_has_our_so() and self._xb_is_mx():
             vals["invoice_cash_rounding_id"] = False
-            # FormaPago: report on the CFDI how the order was actually paid, mapped
-            # from the dominant POS payment method (cash 01, transfer 03, credit 04,
-            # debit 28...). Without l10n_mx_edi_pos the move would otherwise fall back
-            # to the journal/partner default. Skipped when none of the methods carry
-            # a SAT mapping or the partner already pins its own forma de pago.
-            payments = self.payment_ids.filtered(
-                lambda p: p.payment_method_id.l10n_mx_edi_payment_method_id
-            )
-            if payments and not self.partner_id.l10n_mx_edi_payment_method_id:
-                dominant = max(payments, key=lambda p: abs(p.amount))
-                vals["l10n_mx_edi_payment_method_id"] = (
-                    dominant.payment_method_id.l10n_mx_edi_payment_method_id.id
-                )
         return vals

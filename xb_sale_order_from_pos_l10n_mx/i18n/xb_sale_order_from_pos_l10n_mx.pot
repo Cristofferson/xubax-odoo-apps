@@ -1,0 +1,34 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_sale_order_from_pos_l10n_mx
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-13 03:14+0000\n"
+"PO-Revision-Date: 2026-09-13 03:14+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: xb_sale_order_from_pos_l10n_mx
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos_l10n_mx.field_pos_payment_method__xb_company_country_code
+msgid "Company fiscal country code"
+msgstr ""
+
+#. module: xb_sale_order_from_pos_l10n_mx
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos_l10n_mx.field_pos_payment_method__l10n_mx_edi_payment_method_id
+msgid "Forma de pago (SAT)"
+msgstr ""
+
+#. module: xb_sale_order_from_pos_l10n_mx
+#: model:ir.model.fields,help:xb_sale_order_from_pos_l10n_mx.field_pos_payment_method__l10n_mx_edi_payment_method_id
+msgid ""
+"SAT 'Forma de pago' reported on the CFDI when an order paid with this method"
+" is invoiced (e.g. 01 Efectivo, 03 Transferencia, 04 Tarjeta de crédito, 28 "
+"Tarjeta de débito)."
+msgstr ""

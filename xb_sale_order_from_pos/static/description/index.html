@@ -21,7 +21,7 @@
     </div>
     <p class="oe_mt32" style="text-align:center; font-size:15px;">
       Built clean-room on native Odoo (<code>point_of_sale</code>,
-      <code>pos_sale</code>, <code>sale</code>, <code>l10n_mx_edi</code>).
+      <code>pos_sale</code>, <code>sale</code>).
       It <strong>coexists</strong> with — does not replace — the native
       Quotation/Order loader. Every feature is optional and configured per Point of Sale.
     </p>
@@ -30,9 +30,9 @@
                 border-radius:6px; padding:12px 18px; font-size:14px; color:#5a3d52;">
         🌎 <strong>Works with any localization.</strong> First-class support for
         <strong>Mexican CFDI&nbsp;4.0</strong> (advances / settlement invoicing, SAT payment
-        forms, branch RFC). <em>l10n_mx_edi</em> ships as a dependency but stays
-        <strong>dormant unless your company uses the Mexican localization</strong> — non-MX
-        companies get pure native invoicing.
+        forms, branch RFC). It does <strong>not</strong> require the Mexican localization:
+        the SAT payment forms come with a small free bridge that installs itself when
+        <em>l10n_mx_edi</em> is present — non-MX companies get pure native invoicing.
       </p>
     </div>
   </div>
@@ -140,9 +140,10 @@
         can break POS loading), an income account per company, and — in Mexico — a SAT
         <em>ClaveProdServ</em> (placeholder <code>01010101</code> if none applies). If
         unset, an all-16% settle simply tolerates a ±0.01 residual.</li>
-      <li><strong>POS payment method → SAT “Forma de pago”</strong> — map each method
-        (e.g. MX: Cash → 01, Transfer → 03, Debit → 28, Credit → 04) so the CFDI reports
-        the real payment form.</li>
+      <li><strong>POS payment method → SAT “Forma de pago”</strong> (Mexico only, with the
+        bridge <code>xb_sale_order_from_pos_l10n_mx</code>, installed automatically with
+        <code>l10n_mx_edi</code>) — map each method (Cash → 01, Transfer → 03,
+        Debit → 28, Credit → 04) so the CFDI reports the real payment form.</li>
       <li><strong>Multi-company / branches</strong> — when branches share a sales journal,
         the invoice is attributed to the order’s company; the CFDI is issued under the
         branch RFC if it has one, otherwise under the nearest ancestor with a VAT (native
@@ -223,9 +224,9 @@
       <ul style="font-size:14px; line-height:1.7;">
         <li>Odoo <strong>19.0 Enterprise</strong>.</li>
         <li>Depends: <code>point_of_sale</code>, <code>pos_sale</code>,
-          <code>sale</code>, <code>l10n_mx_edi</code> (the latter a hard dependency that
-          stays <strong>dormant on non-Mexican companies</strong> — keyed on the fiscal
-          country, like l10n_mx_edi itself).</li>
+          <code>sale</code>, <code>sale_management</code>. No localization required;
+          in Mexico the free bridge <code>xb_sale_order_from_pos_l10n_mx</code> installs
+          itself with <code>l10n_mx_edi</code>.</li>
         <li>Soft dep: order-level internal note maps to
           <code>sale.order.internal_note</code> only when <code>sale_subscription</code>
           is present — guarded, no error otherwise.</li>

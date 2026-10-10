@@ -219,11 +219,6 @@ msgid "Companies"
 msgstr ""
 
 #. module: xb_sale_order_from_pos
-#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_pos_payment_method__xb_company_country_code
-msgid "Company fiscal country code"
-msgstr ""
-
-#. module: xb_sale_order_from_pos
 #: model:ir.model,name:xb_sale_order_from_pos.model_res_config_settings
 msgid "Config Settings"
 msgstr ""
@@ -418,11 +413,6 @@ msgid ""
 "Fallback used when settling a sale order whose down payments cannot absorb "
 "the per-tax rounding cent in a 0% line (e.g. an all-16% order). Should be a "
 "0% IVA service product with a valid SAT ClaveProdServ so the CFDI stamps."
-msgstr ""
-
-#. module: xb_sale_order_from_pos
-#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_pos_payment_method__l10n_mx_edi_payment_method_id
-msgid "Forma de pago (SAT)"
 msgstr ""
 
 #. module: xb_sale_order_from_pos
@@ -814,14 +804,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.xml:0
 msgid "Rounding"
-msgstr ""
-
-#. module: xb_sale_order_from_pos
-#: model:ir.model.fields,help:xb_sale_order_from_pos.field_pos_payment_method__l10n_mx_edi_payment_method_id
-msgid ""
-"SAT 'Forma de pago' reported on the CFDI when an order paid with this method"
-" is invoiced (e.g. 01 Efectivo, 03 Transferencia, 04 Tarjeta de crédito, 28 "
-"Tarjeta de débito)."
 msgstr ""
 
 #. module: xb_sale_order_from_pos

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-# XUBAX - Sales, Quotations & Layaway from POS
+# XUBAX - Sales, Quotations & Layaway from POS - CFDI 4.0 (Mexico)
 # Bridge POS payment methods to the SAT "Forma de pago" catalog so the CFDI of a
 # POS-issued invoice reflects HOW it was paid (cash 01, transfer 03, credit 04,
 # debit 28...). l10n_mx_edi_pos provides this natively; we reproduce the minimal
-# mapping field clean-room (it is NOT installed here). Native logic only.
+# mapping field clean-room (it is NOT required). Native logic only.
 from odoo import fields, models
 
 

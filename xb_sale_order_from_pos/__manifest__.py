@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Sales, Quotations & Layaway from POS",
-    "version": "19.0.1.1.3",
+    "version": "19.0.1.2.0",
     "category": "Point of Sale",
     "summary": "Create quotations, sale orders and layaways (apartados) directly "
                "from the Point of Sale, with detailed receipt and balance.",
@@ -26,13 +26,11 @@ All features are optional and configured per Point of Sale.
         "pos_sale",
         "sale",
         "sale_management",
-        "l10n_mx_edi",
     ],
     "data": [
         "data/mail_template_data.xml",
         "views/res_config_settings_views.xml",
         "views/sale_order_views.xml",
-        "views/pos_payment_method_views.xml",
     ],
     "assets": {
         "point_of_sale._assets_pos": [

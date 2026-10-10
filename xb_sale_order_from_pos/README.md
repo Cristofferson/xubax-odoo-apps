@@ -5,7 +5,7 @@
 
 > Original, clean-room module: it does **not** copy or derive from any third-party
 > module. All ERP logic (taxes, fiscal position, down payment, settlement, CFDI) is
-> based on native Odoo (`point_of_sale`, `pos_sale`, `sale`, `l10n_mx_edi`).
+> based on native Odoo (`point_of_sale`, `pos_sale`, `sale`).
 
 ---
 
@@ -18,10 +18,11 @@ and print an **enriched receipt** showing the order balance and an online-paymen
 It **coexists** with — does not replace — the native `pos_sale` "Quotation/Order" loader.
 
 **Works with any localization.** Includes **first-class support for Mexican CFDI 4.0**
-(advances/settlement invoicing, SAT payment forms, branch RFC on the receipt). Note:
-`l10n_mx_edi` is installed as a dependency but **remains dormant unless your company uses
-the Mexican localization** — on a non-Mexican company every CFDI/SAT touchpoint is inert
-and invoices keep pure native behaviour (see §5).
+(advances/settlement invoicing, SAT payment forms, branch RFC on the receipt). It does
+**not** require the Mexican localization: the SAT payment forms live in the small bridge
+`xb_sale_order_from_pos_l10n_mx`, which installs itself when `l10n_mx_edi` is present. On a
+non-Mexican company every CFDI touchpoint is inert and invoices keep pure native behaviour
+(see §5).
 
 **Three document types** (the cashier chooses the kind):
 
@@ -46,13 +47,15 @@ Semantics learned/verified in testing:
 ## 2. Requirements & dependencies
 
 - **Odoo 19.0 Enterprise.**
-- **Depends:** `point_of_sale`, `pos_sale`, `sale`, `l10n_mx_edi`.
-  - `l10n_mx_edi` is a **hard dependency** so the Mexican CFDI features ship in a single
-    module, but it stays **dormant on non-Mexican companies**: the dormancy is keyed on the
-    company's **fiscal country** (`account_fiscal_country_id`, as `l10n_mx_edi` itself does),
-    so a company running a generic chart of accounts gets pure native behaviour — no SAT
-    forma de pago written, no cash-rounding change to invoices, the SAT field hidden in the
-    payment-method form, and the receipt footer using the native VAT/Tax-ID line.
+- **Depends:** `point_of_sale`, `pos_sale`, `sale`, `sale_management`. No localization.
+  - **Mexico:** the bridge `xb_sale_order_from_pos_l10n_mx` (depends on `l10n_mx_edi`,
+    `auto_install`) adds the SAT *Forma de pago* to the POS payment methods. The other
+    Mexican touchpoints are keyed on the company's **fiscal country**
+    (`account_fiscal_country_id`, as `l10n_mx_edi` itself does), so a company running a
+    generic chart of accounts gets pure native behaviour — no cash-rounding change to
+    invoices and the receipt footer using the native VAT/Tax-ID line.
+  - Upgrading from 1.1.x: the SAT mapping already set on the payment methods is kept and
+    comes back once the bridge is installed.
 - **Soft dependency (NOT a hard dep):** `sale.order.internal_note` is provided by
   `sale_subscription`. The module maps the POS **order-level** internal note to it **only
   when the field exists** (field-existence guard). Without `sale_subscription`, the
@@ -89,8 +92,9 @@ Semantics learned/verified in testing:
    - If **not configured**, settling an all-16% order simply tolerates a **±0.01** residual
      (opt-in, no error).
 
-3. **POS payment method → SAT "Forma de pago".** The module adds a **`Forma de pago (SAT)`**
-   field to `pos.payment.method`. Map each method, e.g. (Mexico): **Efectivo → 01**,
+3. **POS payment method → SAT "Forma de pago"** (Mexico). The bridge
+   `xb_sale_order_from_pos_l10n_mx` adds a **`Forma de pago (SAT)`** field to
+   `pos.payment.method`. Map each method, e.g. (Mexico): **Efectivo → 01**,
    **Transferencia → 03**, **Tarjeta de débito → 28**, **Tarjeta de crédito → 04**. The CFDI
    of a POS-issued invoice then reports the real payment form. (Editing a payment method
    requires its POS sessions to be closed — native constraint.)
@@ -198,11 +202,9 @@ selected). English-source strings with an `es_MX` translation (`i18n/es_MX.po`).
 - **Mexican support is dormant off-MX.** Every CFDI/SAT touchpoint is gated on the company's
   fiscal country being `MX` (the same key `l10n_mx_edi` uses). On a non-Mexican company:
   the invoice keeps its **native cash rounding** (we don't drop `invoice_cash_rounding_id`),
-  **no SAT forma de pago** is written by this module (any default present is native
-  `l10n_mx_edi`, identical to a vanilla invoice), the **"Forma de pago (SAT)"** field is
-  **hidden** in the payment-method form, and the receipt footer uses the **native** VAT/Tax-ID
-  line. On a Mexican company these features activate automatically — one module, no setting
-  to flip.
+  **no SAT forma de pago** is written (that lives in the Mexican bridge, which is not even
+  installed without `l10n_mx_edi`), and the receipt footer uses the **native** VAT/Tax-ID
+  line. On a Mexican company these features activate automatically — no setting to flip.
 
 ---
 
