@@ -20,9 +20,8 @@ class KioskQuotation(http.Controller):
         return env["res.partner"]._phone_format(number=(phone or "").strip(), country=country)
 
     @staticmethod
-    def _xb_partner(env, config, name, phone):
-        """The contact with this mobile, created if there is none (without a company,
-        as the POS creates its customers)."""
+    def _xb_find_partner(env, config, phone):
+        """The contact with this mobile (E.164), or an empty recordset."""
         Partner = env["res.partner"].sudo()
         country = config.company_id.country_id or env.company.country_id
         partner = Partner.search([("phone_sanitized", "=", phone)], limit=1)
@@ -37,8 +36,16 @@ class KioskQuotation(http.Controller):
                     p for p in Partner.search([("phone", "ilike", "%%%s" % national[-7:])], limit=50)
                     if re.sub(r"\D", "", p.phone or "").endswith(national)
                 ), Partner.browse())
+        return partner
+
+    @classmethod
+    def _xb_partner(cls, env, config, name, phone):
+        """The contact with this mobile, created if there is none (without a company,
+        as the POS creates its customers)."""
+        partner = cls._xb_find_partner(env, config, phone)
         if not partner:
-            partner = Partner.create({
+            country = config.company_id.country_id or env.company.country_id
+            partner = env["res.partner"].sudo().create({
                 "name": name,
                 "phone": env["res.partner"]._phone_format(
                     number=phone, country=country, force_format="INTERNATIONAL") or phone,
@@ -85,6 +92,23 @@ class KioskQuotation(http.Controller):
             "discount": 0.0,
             "tax_ids": taxes.ids,
         }, sin_variante
+
+    @http.route("/xb_kiosk/quotation/customer", type="jsonrpc", auth="public", website=True)
+    def kiosk_quotation_customer(self, access_token=None, phone=None, **kw):
+        """Whether the mobile is already a customer, to fill in their name. Only the
+        first name goes back: the kiosk is in a public place."""
+        config = request.env["pos.config"].sudo().search([("access_token", "=", access_token or "x")], limit=1)
+        if not config or not config.has_active_session:
+            return {"found": False}
+        modes = config._xb_kiosk_quotation_modes()
+        if not (modes["print"] or modes["whatsapp"]):
+            return {"found": False}
+        e164 = self._xb_phone(request.env, config, phone)
+        partner = e164 and self._xb_find_partner(request.env, config, e164)
+        first = partner and (partner.name or "").split()
+        if not first:
+            return {"found": False}
+        return {"found": True, "first_name": first[0].capitalize()}
 
     @http.route("/xb_kiosk/quotation", type="jsonrpc", auth="public", website=True)
     def kiosk_quotation(self, access_token=None, name=None, phone=None, lines=None,

@@ -36,10 +36,11 @@
                         <button class="btn-close" aria-label="Close" t-on-click="props.close" t-att-disabled="state.sending"/>
                     </div>
                 </div>
-                <p class="text-muted">Leave us your name and mobile: your quotation is kept so that we can help you at the counter.</p>
+                <p class="text-muted">Leave us your mobile and name: your quotation is kept so that we can help you at the counter.</p>
                 <div class="d-flex flex-column gap-3">
-                    <input id="xb_q_f1" t-ref="field1" class="form-control form-control-lg" type="text" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" enterkeyhint="next" placeholder="Your name" t-model="state.name" t-on-keydown="(ev) => this.onKeydown(ev, 'next')"/>
-                    <input id="xb_q_f2" t-ref="field2" class="form-control form-control-lg" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="20" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="done" placeholder="Mobile number" t-model="state.phone" t-on-keydown="(ev) => this.onKeydown(ev, 'done')"/>
+                    <input id="xb_q_f1" t-ref="field1" class="form-control form-control-lg" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="20" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="next" placeholder="Mobile number" t-model="state.phone" t-on-input="onPhoneInput" t-on-keydown="(ev) => this.onKeydown(ev, 'next')"/>
+                    <input id="xb_q_f2" t-ref="field2" class="form-control form-control-lg" type="text" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" enterkeyhint="done" placeholder="Your name" t-model="state.name" t-on-keydown="(ev) => this.onKeydown(ev, 'done')"/>
+                    <p t-if="state.known" class="xb_quote_known mb-0">We found you by your mobile. If it is not you, change the name.</p>
                     <div class="d-flex flex-column gap-2">
                         <label t-if="modos.print" class="xb_quote_check"><input type="checkbox" t-model="state.print"/> <span>Print it here</span></label>
                         <label t-if="modos.whatsapp" class="xb_quote_check"><input type="checkbox" t-model="state.whatsapp"/> <span>Send it to my WhatsApp</span></label>

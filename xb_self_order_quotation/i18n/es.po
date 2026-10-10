@@ -67,8 +67,8 @@ msgstr "Tu cotización"
 #. module: xb_self_order_quotation
 #. odoo-javascript
 #: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "Leave us your name and mobile: your quotation is kept so that we can help you at the counter."
-msgstr "Déjanos tu nombre y celular: guardamos tu cotización para atenderte en mostrador."
+msgid "Leave us your mobile and name: your quotation is kept so that we can help you at the counter."
+msgstr "Déjanos tu celular y tu nombre: guardamos tu cotización para atenderte en mostrador."
 
 #. module: xb_self_order_quotation
 #. odoo-javascript
@@ -201,3 +201,9 @@ msgstr "Tu carrito está vacío."
 #: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
 msgid "Done typing"
 msgstr "Ocultar teclado"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "We found you by your mobile. If it is not you, change the name."
+msgstr "Te encontramos por tu celular. Si no eres tú, cambia el nombre."

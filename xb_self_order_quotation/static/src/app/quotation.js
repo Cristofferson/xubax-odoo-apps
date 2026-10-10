@@ -36,6 +36,7 @@ export class XbQuoteDialog extends Component {
             error: "",
             done: null,
             typing: false,
+            known: "",
             keyboard: 0,
             visibleHeight: 0,
         });
@@ -102,6 +103,37 @@ export class XbQuoteDialog extends Component {
         } else {
             this.hideKeyboard();
         }
+    }
+
+    onPhoneInput() {
+        // A known mobile fills in the name (first name only: the kiosk is public).
+        clearTimeout(this._lookup);
+        const digits = this.digits;
+        if (this.state.known && this.state.name === this.state.known) {
+            this.state.name = "";
+        }
+        this.state.known = "";
+        if (digits.length < 10) {
+            return;
+        }
+        this._lookup = setTimeout(async () => {
+            let res;
+            try {
+                res = await rpc("/xb_kiosk/quotation/customer", {
+                    access_token: this.selfOrder.access_token,
+                    phone: this.state.phone,
+                });
+            } catch {
+                return;
+            }
+            if (this.digits !== digits || !res?.found) {
+                return;
+            }
+            if (!this.state.name.trim()) {
+                this.state.name = res.first_name;
+                this.state.known = res.first_name;
+            }
+        }, 400);
     }
 
     onDialogPointerDown(ev) {
