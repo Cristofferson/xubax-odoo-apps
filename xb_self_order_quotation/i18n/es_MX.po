@@ -207,3 +207,81 @@ msgstr "Ocultar teclado"
 #: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
 msgid "We found you by your mobile. If it is not you, change the name."
 msgstr "Te encontramos por tu celular. Si no eres tú, cambia el nombre."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Pay at the counter"
+msgstr "Pagar en mostrador"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Leave us your mobile and name: your order waits for you at the counter."
+msgstr "Déjanos tu celular y tu nombre: tu pedido te espera en caja."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Sending your order…"
+msgstr "Enviando tu pedido…"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Send to the counter"
+msgstr "Enviar a caja"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Your order"
+msgstr "Tu pedido"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "waits for you at the counter."
+msgstr "te espera en caja."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Pay"
+msgstr "Paga"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "at the counter with this number."
+msgstr "en caja con este número."
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/controllers/quotation.py:0
+msgid "The kiosk cannot send orders to the counter right now."
+msgstr "El kiosco no puede enviar pedidos a caja en este momento."
+
+#. module: xb_self_order_quotation
+#: model:ir.model.fields,field_description:xb_self_order_quotation.field_pos_config__xb_kiosk_counter_order
+#: model:ir.model.fields,field_description:xb_self_order_quotation.field_res_config_settings__pos_xb_kiosk_counter_order
+#: model_terms:ir.ui.view,arch_db:xb_self_order_quotation.res_config_settings_view_form_kiosk_quotation
+msgid "Pay at the counter through Sales"
+msgstr "Pagar en mostrador por Ventas"
+
+#. module: xb_self_order_quotation
+#: model:ir.model.fields,help:xb_self_order_quotation.field_pos_config__xb_kiosk_counter_order
+#: model:ir.model.fields,help:xb_self_order_quotation.field_res_config_settings__pos_xb_kiosk_counter_order
+msgid "The kiosk's order button creates a quotation in Sales instead of a POS order: the cashier charges it from the POS quotations/orders list and it becomes a sales order, as with the POS quotations."
+msgstr "El botón para ordenar del kiosco crea una cotización en Ventas en lugar de una orden del TPV: la cajera la cobra desde la lista de cotizaciones/pedidos del TPV y pasa a pedido, igual que las cotizaciones de la caja."
+
+#. module: xb_self_order_quotation
+#: model_terms:ir.ui.view,arch_db:xb_self_order_quotation.res_config_settings_view_form_kiosk_quotation
+msgid "The order button of the kiosk creates a quotation in Sales (with the customer's mobile and name) instead of a POS order. The cashier charges it from the POS quotations/orders list and it becomes a sales order."
+msgstr "El botón para ordenar del kiosco crea una cotización en Ventas (con el celular y el nombre del cliente) en lugar de una orden del TPV. La cajera la cobra desde la lista de cotizaciones/pedidos del TPV y pasa a pedido."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "The ticket could not be printed: just give your number at the counter."
+msgstr "No se pudo imprimir el ticket: solo da tu número en caja."

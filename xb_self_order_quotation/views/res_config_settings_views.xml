@@ -16,6 +16,10 @@
                         </div>
                     </div>
                 </setting>
+                <setting string="Pay at the counter through Sales" invisible="pos_self_ordering_mode != 'kiosk'"
+                         help="The order button of the kiosk creates a quotation in Sales (with the customer's mobile and name) instead of a POS order. The cashier charges it from the POS quotations/orders list and it becomes a sales order.">
+                    <field name="pos_xb_kiosk_counter_order"/>
+                </setting>
             </xpath>
         </field>
     </record>

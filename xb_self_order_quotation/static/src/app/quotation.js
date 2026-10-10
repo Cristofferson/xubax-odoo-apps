@@ -26,12 +26,14 @@ export class XbQuoteDialog extends Component {
         const modos = this.selfOrder.config._xb_quotation || {};
         this.modos = modos;
         this.privacyUrl = modos.privacy_url || false;
+        // «Pay at the counter»: the cart goes to Sales as a quotation for the cashier.
+        this.counter = this.props.modo === "counter";
         this.state = useState({
             name: "",
             phone: "",
             privacy: false,
-            print: this.props.modo === "print" && modos.print,
-            whatsapp: this.props.modo === "whatsapp" && modos.whatsapp,
+            print: this.counter ? Boolean(modos.counter_print) : this.props.modo === "print" && modos.print,
+            whatsapp: !this.counter && this.props.modo === "whatsapp" && modos.whatsapp,
             sending: false,
             error: "",
             done: null,
@@ -152,7 +154,7 @@ export class XbQuoteDialog extends Component {
         return (
             // The server checks the number with the rules of the company's country.
             !s.sending && s.privacy && s.name.trim().length >= 2 && this.digits.length >= 7 &&
-            (s.print || s.whatsapp)
+            (this.counter || s.print || s.whatsapp)
         );
     }
 
@@ -183,6 +185,7 @@ export class XbQuoteDialog extends Component {
                 phone: s.phone,
                 lines: this.lines(),
                 send_whatsapp: s.whatsapp,
+                counter: this.counter,
             });
             if (!res?.ok) {
                 s.error = res?.error || _t("The quotation could not be made. Please ask at the counter.");
@@ -206,6 +209,8 @@ export class XbQuoteDialog extends Component {
                 }
             }
             s.done = {
+                counter: this.counter,
+                total: this.selfOrder.formatMonetary(res.amount_total || 0),
                 name: res.name,
                 customer: res.customer.split(" ")[0],
                 whatsapp: res.whatsapp === true,
@@ -228,6 +233,16 @@ export class XbQuoteDialog extends Component {
 }
 
 patch(CartPage.prototype, {
+    async pay() {
+        const modos = this.selfOrder.config._xb_quotation || {};
+        if (!modos.counter) {
+            return super.pay(...arguments);
+        }
+        if (this.selfOrder.rpcLoading || !this.selfOrder.verifyCart()) {
+            return;
+        }
+        this.dialog.add(XbQuoteDialog, { modo: "counter" });
+    },
     get xbQuotation() {
         const modos = this.selfOrder.config._xb_quotation || {};
         return modos.print || modos.whatsapp ? modos : null;

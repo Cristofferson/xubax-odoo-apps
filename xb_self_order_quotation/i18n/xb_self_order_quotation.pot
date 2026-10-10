@@ -206,3 +206,81 @@ msgstr ""
 #: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
 msgid "We found you by your mobile. If it is not you, change the name."
 msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Pay at the counter"
+msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Leave us your mobile and name: your order waits for you at the counter."
+msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Sending your order…"
+msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Send to the counter"
+msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Your order"
+msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "waits for you at the counter."
+msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Pay"
+msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "at the counter with this number."
+msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/controllers/quotation.py:0
+msgid "The kiosk cannot send orders to the counter right now."
+msgstr ""
+
+#. module: xb_self_order_quotation
+#: model:ir.model.fields,field_description:xb_self_order_quotation.field_pos_config__xb_kiosk_counter_order
+#: model:ir.model.fields,field_description:xb_self_order_quotation.field_res_config_settings__pos_xb_kiosk_counter_order
+#: model_terms:ir.ui.view,arch_db:xb_self_order_quotation.res_config_settings_view_form_kiosk_quotation
+msgid "Pay at the counter through Sales"
+msgstr ""
+
+#. module: xb_self_order_quotation
+#: model:ir.model.fields,help:xb_self_order_quotation.field_pos_config__xb_kiosk_counter_order
+#: model:ir.model.fields,help:xb_self_order_quotation.field_res_config_settings__pos_xb_kiosk_counter_order
+msgid "The kiosk's order button creates a quotation in Sales instead of a POS order: the cashier charges it from the POS quotations/orders list and it becomes a sales order, as with the POS quotations."
+msgstr ""
+
+#. module: xb_self_order_quotation
+#: model_terms:ir.ui.view,arch_db:xb_self_order_quotation.res_config_settings_view_form_kiosk_quotation
+msgid "The order button of the kiosk creates a quotation in Sales (with the customer's mobile and name) instead of a POS order. The cashier charges it from the POS quotations/orders list and it becomes a sales order."
+msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "The ticket could not be printed: just give your number at the counter."
+msgstr ""

@@ -112,16 +112,24 @@ class KioskQuotation(http.Controller):
 
     @http.route("/xb_kiosk/quotation", type="jsonrpc", auth="public", website=True)
     def kiosk_quotation(self, access_token=None, name=None, phone=None, lines=None,
-                        send_whatsapp=False, **kw):
+                        send_whatsapp=False, counter=False, **kw):
         """The customer asks the kiosk for a quotation of the cart: printed and/or by
         WhatsApp. Created exactly as the POS creates its quotations (same function,
-        same validity and terms), for the customer identified by their mobile."""
+        same validity and terms), for the customer identified by their mobile.
+
+        ``counter``: the customer pays at the counter. Same quotation in Sales; the
+        cashier charges it from the POS quotations/orders list and it becomes a sales
+        order, as with the POS quotations."""
         config = request.env["pos.config"].sudo().search([("access_token", "=", access_token or "x")], limit=1)
         if not config or not config.has_active_session:
             return {"error": _("The kiosk cannot make quotations right now.")}
         modes = config._xb_kiosk_quotation_modes()
-        if not (modes["print"] or modes["whatsapp"]):
+        if counter and not modes["counter"]:
+            return {"error": _("The kiosk cannot send orders to the counter right now.")}
+        if not counter and not (modes["print"] or modes["whatsapp"]):
             return {"error": _("The kiosk cannot make quotations right now.")}
+        if counter:
+            send_whatsapp = False
         name = (name or "").strip()
         if len(name) < 2:
             return {"error": _("Write your name.")}
@@ -176,6 +184,7 @@ class KioskQuotation(http.Controller):
             "ok": True,
             "name": order.name,
             "customer": partner.name,
+            "amount_total": order.amount_total,
             "whatsapp": whatsapp,
             "image": (image.decode() if isinstance(image, bytes) else image) or False,
         }
