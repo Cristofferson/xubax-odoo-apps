@@ -284,3 +284,63 @@ msgstr ""
 #: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
 msgid "The ticket could not be printed: just give your number at the counter."
 msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "QUOTATION %s"
+msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Served by: %s"
+msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Total"
+msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Pay or review your order online:"
+msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Valid until %s"
+msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Tax ID: %s"
+msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Phone: %s"
+msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Discount"
+msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Could not draw the image of %s."
+msgstr ""
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "WhatsApp is not available on this kiosk."
+msgstr ""

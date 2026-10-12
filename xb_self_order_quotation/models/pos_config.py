@@ -45,10 +45,7 @@ class PosConfig(models.Model):
             return {"print": False, "whatsapp": False, "counter": counter,
                     "counter_print": counter and printer,
                     "privacy_url": (counter and config.xb_kiosk_privacy_url) or False}
-        whatsapp = bool(self.env["pos.config"].sudo().search([
-            ("company_id", "=", config.company_id.id),
-            ("xb_quotation_wa_template_id.status", "=", "approved"),
-        ], limit=1))
+        whatsapp = config._xb_kiosk_whatsapp_ready()
         return {
             "print": printer,
             "whatsapp": whatsapp,
@@ -56,6 +53,11 @@ class PosConfig(models.Model):
             "counter_print": counter and printer,
             "privacy_url": config.xb_kiosk_privacy_url or False,
         }
+
+    def _xb_kiosk_whatsapp_ready(self):
+        """Whether the kiosk can send the quotation by WhatsApp. Never without the
+        WhatsApp add-on (xb_self_order_quotation_whatsapp)."""
+        return False
 
     @api.model
     def _load_pos_self_data_read(self, records, config):

@@ -9,7 +9,9 @@ Self-Order Kiosk - Quotation (Print / WhatsApp)
 In the kiosk cart the customer can ask for a quotation:
 
 * printed on the kiosk's receipt printer (ePOS printer set on the kiosk), and/or
-* sent to their WhatsApp with the company's approved quotation template.
+* sent to their WhatsApp with the company's approved quotation template (needs
+  WhatsApp, Odoo Enterprise: the free add-on "Self-Order Kiosk - Quotation -
+  WhatsApp" installs itself when it is present).
 
 The customer leaves their name and mobile (checked with the rules of the company's
 country) and accepts your privacy notice: the contact with that mobile is used, or
@@ -23,10 +25,11 @@ template, ready to be picked up at the counter from the POS orders list.
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",
     "category": "Point of Sale",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.3.0",
     "license": "OPL-1",
-    "depends": ["pos_self_order", "phone_validation", "xb_sale_order_from_pos_whatsapp"],
+    "depends": ["pos_self_order", "phone_validation", "xb_sale_order_from_pos"],
     "data": [
+        "views/kiosk_ticket_templates.xml",
         "views/res_config_settings_views.xml",
     ],
     "assets": {
@@ -40,6 +43,6 @@ template, ready to be picked up at the counter from the POS orders list.
     "installable": True,
     "auto_install": False,
     "images": ["static/description/banner.png"],
-    "price": 49.00,
+    "price": 29.00,
     "currency": "USD",
 }

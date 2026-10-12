@@ -128,7 +128,7 @@ class KioskQuotation(http.Controller):
             return {"error": _("The kiosk cannot send orders to the counter right now.")}
         if not counter and not (modes["print"] or modes["whatsapp"]):
             return {"error": _("The kiosk cannot make quotations right now.")}
-        if counter:
+        if counter or not modes["whatsapp"]:
             send_whatsapp = False
         name = (name or "").strip()
         if len(name) < 2:
@@ -168,7 +168,7 @@ class KioskQuotation(http.Controller):
         whatsapp = None
         if send_whatsapp:
             try:
-                order.with_env(env)._xb_send_wa_quotation(phone=e164)
+                order.with_env(env)._xb_kiosk_send_whatsapp(e164)
                 whatsapp = True
             except Exception as e:  # noqa: BLE001 - the quotation exists even if WhatsApp fails
                 _logger.warning("Kiosk quotation %s: WhatsApp failed: %s", order.name, e)
@@ -176,7 +176,7 @@ class KioskQuotation(http.Controller):
         # The quotation is saved even if its ticket cannot be drawn (no wkhtmltoimage,
         # for instance): the kiosk then says it could not be printed.
         try:
-            image = order._xb_quotation_image(as_base64=True)
+            image = order._xb_kiosk_ticket_image(as_base64=True)
         except Exception as e:  # noqa: BLE001
             _logger.warning("Kiosk quotation %s: the ticket could not be drawn: %s", order.name, e)
             image = False

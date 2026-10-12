@@ -285,3 +285,63 @@ msgstr "El botón para ordenar del kiosco crea una cotización en Ventas (con el
 #: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
 msgid "The ticket could not be printed: just give your number at the counter."
 msgstr "No se pudo imprimir el ticket: solo da tu número en caja."
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "QUOTATION %s"
+msgstr "COTIZACIÓN %s"
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Served by: %s"
+msgstr "Atendido por: %s"
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Total"
+msgstr "Total"
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Pay or review your order online:"
+msgstr "Paga o revisa tu pedido en línea:"
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Valid until %s"
+msgstr "Válida hasta el %s"
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Tax ID: %s"
+msgstr "RFC: %s"
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Phone: %s"
+msgstr "Tel.: %s"
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Discount"
+msgstr "Descuento"
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Could not draw the image of %s."
+msgstr "No se pudo generar la imagen de %s."
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "WhatsApp is not available on this kiosk."
+msgstr "WhatsApp no está disponible en este kiosco."

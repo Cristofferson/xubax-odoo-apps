@@ -72,3 +72,12 @@ class TestKioskQuotation(SelfOrderCommonTest):
         self.pos_config.xb_kiosk_quotation = False
         result = self._quote()
         self.assertTrue(result.get("error"))
+
+    def test_whatsapp_without_add_on(self):
+        """Without the WhatsApp add-on there is no WhatsApp: the quotation is made anyway."""
+        if "xb_quotation_wa_template_id" in self.env["pos.config"]._fields:
+            self.skipTest("The WhatsApp add-on is installed")
+        self.assertFalse(self.pos_config._xb_kiosk_quotation_modes()["whatsapp"])
+        result = self._quote(send_whatsapp=True)
+        self.assertTrue(result.get("ok"), result)
+        self.assertIsNone(result["whatsapp"])
