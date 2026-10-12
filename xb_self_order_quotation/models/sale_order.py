@@ -92,3 +92,20 @@ class SaleOrder(models.Model):
         """Send the kiosk quotation to the customer's WhatsApp. Done by the WhatsApp
         add-on (xb_self_order_quotation_whatsapp)."""
         raise UserError(_("WhatsApp is not available on this kiosk."))
+
+    def _xb_kiosk_send_email(self):
+        """Send the kiosk quotation to the customer's email, with the same template
+        and PDF as the «Send by email» button of Sales."""
+        self.ensure_one()
+        template = self.env.ref("sale.email_template_edi_sale", raise_if_not_found=False)
+        if not template:
+            raise UserError(_("Email is not available on this kiosk."))
+        order = self.sudo()
+        order._portal_ensure_token()
+        # Sent on behalf of the company: nobody sold it yet.
+        order.with_context(force_send=True).message_post_with_source(
+            template,
+            email_layout_xmlid="mail.mail_notification_layout_with_responsible_signature",
+            subtype_xmlid="mail.mt_comment",
+            author_id=order.company_id.partner_id.id,
+        )

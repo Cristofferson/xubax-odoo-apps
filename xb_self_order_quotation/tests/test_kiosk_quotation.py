@@ -81,3 +81,45 @@ class TestKioskQuotation(SelfOrderCommonTest):
         result = self._quote(send_whatsapp=True)
         self.assertTrue(result.get("ok"), result)
         self.assertIsNone(result["whatsapp"])
+
+    def test_email_instead_of_mobile(self):
+        """A kiosk that asks for the email: no mobile needed, the quotation goes by email."""
+        self.pos_config.xb_kiosk_contact = "email"
+        modes = self.pos_config._xb_kiosk_quotation_modes()
+        self.assertTrue(modes["email"])
+        self.assertFalse(modes["whatsapp"])
+        self.assertTrue(self._quote(phone="", email="no-at-sign").get("error"))
+        result = self._quote(phone="", email="Ana.Lopez@Example.com ", send_email=True)
+        self.assertTrue(result.get("ok"), result)
+        self.assertIs(result["email"], True)
+        order = self.env["sale.order"].search([("name", "=", result["name"])])
+        self.assertEqual(order.partner_id.email, "ana.lopez@example.com")
+        self.assertFalse(order.partner_id.phone)
+        message = order.message_ids.filtered("attachment_ids")[:1]
+        self.assertIn(order.partner_id, message.partner_ids)
+        self.assertTrue(message.attachment_ids, "The quotation PDF goes with the email")
+        # The same email is the same customer.
+        again = self._quote(phone="", email="ana.lopez@example.com", name="Ana")
+        self.assertEqual(
+            self.env["sale.order"].search([("name", "=", again["name"])]).partner_id, order.partner_id)
+
+    def test_mobile_and_email(self):
+        """Both asked: a customer found by mobile gets the email they were missing."""
+        first = self._quote()
+        partner = self.env["sale.order"].search([("name", "=", first["name"])]).partner_id
+        self.assertFalse(partner.email)
+        self.pos_config.xb_kiosk_contact = "both"
+        self.assertTrue(self._quote(email="").get("error"), "The email is required")
+        result = self._quote(email="ana@example.com")
+        self.assertTrue(result.get("ok"), result)
+        self.assertEqual(self.env["sale.order"].search([("name", "=", result["name"])]).partner_id, partner)
+        self.assertEqual(partner.email, "ana@example.com")
+
+    def test_mobile_only_by_default(self):
+        """Kiosks keep asking for the mobile only: no email delivery."""
+        modes = self.pos_config._xb_kiosk_quotation_modes()
+        self.assertEqual(modes["contact"], "phone")
+        self.assertFalse(modes["email"])
+        result = self._quote(email="ana@example.com", send_email=True)
+        self.assertTrue(result.get("ok"), result)
+        self.assertIsNone(result["email"])

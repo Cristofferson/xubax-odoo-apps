@@ -18,6 +18,9 @@
                     <button t-if="xbQuotation.whatsapp" class="btn btn-lg btn-outline-primary flex-fill" t-on-click="() => this.xbQuote('whatsapp')">
                         <i class="fa fa-whatsapp me-2" aria-hidden="true"/>Send it to my WhatsApp
                     </button>
+                    <button t-if="xbQuotation.email" class="btn btn-lg btn-outline-primary flex-fill" t-on-click="() => this.xbQuote('email')">
+                        <i class="fa fa-envelope-o me-2" aria-hidden="true"/>Email it to me
+                    </button>
                 </div>
             </div>
         </xpath>
@@ -37,15 +40,28 @@
                         <button class="btn-close" aria-label="Close" t-on-click="props.close" t-att-disabled="state.sending"/>
                     </div>
                 </div>
-                <p t-if="counter" class="text-muted">Leave us your mobile and name: your order waits for you at the counter.</p>
-                <p t-else="" class="text-muted">Leave us your mobile and name: your quotation is kept so that we can help you at the counter.</p>
+                <t t-if="contact === 'email'">
+                    <p t-if="counter" class="text-muted">Leave us your email and name: your order waits for you at the counter.</p>
+                    <p t-else="" class="text-muted">Leave us your email and name: your quotation is kept so that we can help you at the counter.</p>
+                </t>
+                <t t-elif="contact === 'both'">
+                    <p t-if="counter" class="text-muted">Leave us your mobile, email and name: your order waits for you at the counter.</p>
+                    <p t-else="" class="text-muted">Leave us your mobile, email and name: your quotation is kept so that we can help you at the counter.</p>
+                </t>
+                <t t-else="">
+                    <p t-if="counter" class="text-muted">Leave us your mobile and name: your order waits for you at the counter.</p>
+                    <p t-else="" class="text-muted">Leave us your mobile and name: your quotation is kept so that we can help you at the counter.</p>
+                </t>
                 <div class="d-flex flex-column gap-3">
-                    <input id="xb_q_f1" t-ref="field1" class="form-control form-control-lg" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="20" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="next" placeholder="Mobile number" t-model="state.phone" t-on-input="onPhoneInput" t-on-keydown="(ev) => this.onKeydown(ev, 'next')"/>
-                    <input id="xb_q_f2" t-ref="field2" class="form-control form-control-lg" type="text" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" enterkeyhint="done" placeholder="Your name" t-model="state.name" t-on-keydown="(ev) => this.onKeydown(ev, 'done')"/>
-                    <p t-if="state.known" class="xb_quote_known mb-0">We found you by your mobile. If it is not you, change the name.</p>
+                    <input t-if="askPhone" id="xb_q_phone" t-ref="phone" class="form-control form-control-lg" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="20" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="next" placeholder="Mobile number" t-model="state.phone" t-on-input="onContactInput" t-on-keydown="(ev) => this.onKeydown(ev, askEmail ? 'email' : 'name')"/>
+                    <input t-if="askEmail" id="xb_q_email" t-ref="email" class="form-control form-control-lg" type="email" inputmode="email" maxlength="120" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="next" placeholder="Email" t-model="state.email" t-on-input="onContactInput" t-on-keydown="(ev) => this.onKeydown(ev, 'name')"/>
+                    <input id="xb_q_name" t-ref="name" class="form-control form-control-lg" type="text" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" enterkeyhint="done" placeholder="Your name" t-model="state.name" t-on-keydown="(ev) => this.onKeydown(ev, false)"/>
+                    <p t-if="state.known and askPhone" class="xb_quote_known mb-0">We found you by your mobile. If it is not you, change the name.</p>
+                    <p t-elif="state.known" class="xb_quote_known mb-0">We found you by your email. If it is not you, change the name.</p>
                     <div t-if="!counter" class="d-flex flex-column gap-2">
                         <label t-if="modos.print" class="xb_quote_check"><input type="checkbox" t-model="state.print"/> <span>Print it here</span></label>
                         <label t-if="modos.whatsapp" class="xb_quote_check"><input type="checkbox" t-model="state.whatsapp"/> <span>Send it to my WhatsApp</span></label>
+                        <label t-if="modos.email" class="xb_quote_check"><input type="checkbox" t-model="state.mail"/> <span>Email it to me</span></label>
                     </div>
                     <label class="xb_quote_check xb_quote_privacy">
                         <input type="checkbox" t-model="state.privacy"/>
@@ -74,6 +90,8 @@
                     <p t-elif="state.done.printFailed" class="mb-0 text-warning">It could not be printed: ask for it at the counter with its number.</p>
                     <p t-if="state.done.whatsapp" class="mb-0">We sent it to your WhatsApp.</p>
                     <p t-if="state.done.whatsappFailed" class="mb-0 text-warning">It could not be sent by WhatsApp: ask for it at the counter with its number.</p>
+                    <p t-if="state.done.emailed" class="mb-0">We sent it to your email.</p>
+                    <p t-if="state.done.emailFailed" class="mb-0 text-warning">It could not be sent by email: ask for it at the counter with its number.</p>
                     <button class="btn btn-lg btn-primary" t-on-click="finish">Done</button>
                 </div>
             </t>

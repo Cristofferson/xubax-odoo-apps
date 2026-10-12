@@ -1,6 +1,3 @@
-# Translation of Odoo Server.
-# This file contains the translation of the following modules:
-#	* xb_self_order_quotation
 #
 msgid ""
 msgstr ""
@@ -13,146 +10,51 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: xb_self_order_quotation
-#: model:ir.model.fields,field_description:xb_self_order_quotation.field_pos_config__xb_kiosk_quotation
-#: model:ir.model.fields,field_description:xb_self_order_quotation.field_res_config_settings__pos_xb_kiosk_quotation
 #: model_terms:ir.ui.view,arch_db:xb_self_order_quotation.res_config_settings_view_form_kiosk_quotation
-msgid "Quotations from the kiosk"
-msgstr "Cotizaciones desde el kiosco"
+msgid "/privacy"
+msgstr "/privacidad"
 
 #. module: xb_self_order_quotation
-#: model:ir.model.fields,field_description:xb_self_order_quotation.field_pos_config__xb_kiosk_privacy_url
-#: model:ir.model.fields,field_description:xb_self_order_quotation.field_res_config_settings__pos_xb_kiosk_privacy_url
-msgid "Privacy notice"
-msgstr "Aviso de privacidad"
+#: model:ir.model.fields,field_description:xb_self_order_quotation.field_pos_config__xb_kiosk_contact
+#: model:ir.model.fields,field_description:xb_self_order_quotation.field_res_config_settings__pos_xb_kiosk_contact
+msgid "Ask the customer for"
+msgstr "Pedir al cliente"
 
 #. module: xb_self_order_quotation
-#: model:ir.model.fields,help:xb_self_order_quotation.field_pos_config__xb_kiosk_quotation
-msgid "In the kiosk cart the customer can ask for a quotation, printed on the kiosk's receipt printer and/or sent to their WhatsApp."
-msgstr "En el carrito del kiosco el cliente puede pedir una cotización, impresa en la impresora de tickets del kiosco y/o enviada a su WhatsApp."
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Close"
+msgstr "Cerrar"
 
 #. module: xb_self_order_quotation
-#: model:ir.model.fields,help:xb_self_order_quotation.field_pos_config__xb_kiosk_privacy_url
-msgid "Page with your privacy notice, linked when the customer leaves their name and mobile. Empty: the customer only agrees to be contacted."
-msgstr "Página con tu aviso de privacidad, ligada cuando el cliente deja su nombre y celular. Vacío: el cliente solo acepta que lo contacten."
+#: model:ir.model,name:xb_self_order_quotation.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Could not draw the image of %s."
+msgstr "No se pudo generar la imagen de %s."
 
 #. module: xb_self_order_quotation
 #: model_terms:ir.ui.view,arch_db:xb_self_order_quotation.res_config_settings_view_form_kiosk_quotation
-msgid "The customer gets a quotation of the cart, printed on the kiosk's printer and/or by WhatsApp. It is created like the POS quotations (same validity and terms)."
-msgstr "El cliente se lleva una cotización del carrito, impresa en la impresora del kiosco y/o por WhatsApp. Se crea como las cotizaciones del TPV (misma vigencia y condiciones)."
+msgid "Customer data"
+msgstr "Datos del cliente"
 
 #. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "Get your quotation"
-msgstr "¿Quieres tu cotización?"
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Discount"
+msgstr "Descuento"
 
 #. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "Print it"
-msgstr "Imprimirla"
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "Send it to my WhatsApp"
-msgstr "Enviarla a mi WhatsApp"
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "Your quotation"
-msgstr "Tu cotización"
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "Leave us your mobile and name: your quotation is kept so that we can help you at the counter."
-msgstr "Déjanos tu celular y tu nombre: guardamos tu cotización para atenderte en mostrador."
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "Your name"
-msgstr "Tu nombre"
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "Mobile number"
-msgstr "Celular"
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "Print it here"
-msgstr "Imprimirla aquí"
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "I accept the"
-msgstr "Acepto el"
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "privacy notice"
-msgstr "aviso de privacidad"
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "I agree to be contacted about my quotation."
-msgstr "Acepto que me contacten por mi cotización."
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "Preparing your quotation…"
-msgstr "Preparando tu cotización…"
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "Get my quotation"
-msgstr "Quiero mi cotización"
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "Done,"
-msgstr "¡Listo,"
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "is saved."
-msgstr "quedó guardada."
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "Pick it up at the counter printer."
-msgstr "Recógela en la impresora del mostrador."
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "It could not be printed: ask for it at the counter with its number."
-msgstr "No se pudo imprimir: pídela en mostrador con su número."
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "We sent it to your WhatsApp."
-msgstr "Te la enviamos a tu WhatsApp."
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "It could not be sent by WhatsApp: ask for it at the counter with its number."
-msgstr "No se pudo enviar por WhatsApp: pídela en mostrador con su número."
+#: model:ir.model.fields,field_description:xb_self_order_quotation.field_ir_http__display_name
+#: model:ir.model.fields,field_description:xb_self_order_quotation.field_pos_config__display_name
+#: model:ir.model.fields,field_description:xb_self_order_quotation.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:xb_self_order_quotation.field_sale_order__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
 
 #. module: xb_self_order_quotation
 #. odoo-javascript
@@ -163,8 +65,168 @@ msgstr "Terminar"
 #. module: xb_self_order_quotation
 #. odoo-javascript
 #: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "The quotation could not be made. Please ask at the counter."
-msgstr "No se pudo hacer la cotización. Por favor pregunta en mostrador."
+msgid "Done typing"
+msgstr "Ocultar teclado"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Done,"
+msgstr "¡Listo,"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+#: model:ir.model.fields.selection,name:xb_self_order_quotation.selection__pos_config__xb_kiosk_contact__email
+msgid "Email"
+msgstr "Correo electrónico"
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Email is not available on this kiosk."
+msgstr "El correo no está disponible en este kiosco."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Email it to me"
+msgstr "Envíamela por correo"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Get my quotation"
+msgstr "Quiero mi cotización"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Get your quotation"
+msgstr "¿Quieres tu cotización?"
+
+#. module: xb_self_order_quotation
+#: model:ir.model,name:xb_self_order_quotation.model_ir_http
+msgid "HTTP Routing"
+msgstr "Enrutamiento HTTP"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "I accept the"
+msgstr "Acepto el"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "I agree to be contacted about my quotation."
+msgstr "Acepto que me contacten por mi cotización."
+
+#. module: xb_self_order_quotation
+#: model:ir.model.fields,field_description:xb_self_order_quotation.field_ir_http__id
+#: model:ir.model.fields,field_description:xb_self_order_quotation.field_pos_config__id
+#: model:ir.model.fields,field_description:xb_self_order_quotation.field_res_config_settings__id
+#: model:ir.model.fields,field_description:xb_self_order_quotation.field_sale_order__id
+msgid "ID"
+msgstr "ID"
+
+#. module: xb_self_order_quotation
+#: model:ir.model.fields,help:xb_self_order_quotation.field_pos_config__xb_kiosk_quotation
+#: model:ir.model.fields,help:xb_self_order_quotation.field_res_config_settings__pos_xb_kiosk_quotation
+msgid ""
+"In the kiosk cart the customer can ask for a quotation, printed on the "
+"kiosk's receipt printer and/or sent to their WhatsApp."
+msgstr ""
+"En el carrito del kiosco el cliente puede pedir una cotización, impresa en "
+"la impresora de tickets del kiosco y/o enviada a su WhatsApp."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "It could not be printed: ask for it at the counter with its number."
+msgstr "No se pudo imprimir: pídela en mostrador con su número."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid ""
+"It could not be sent by WhatsApp: ask for it at the counter with its number."
+msgstr "No se pudo enviar por WhatsApp: pídela en mostrador con su número."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid ""
+"It could not be sent by email: ask for it at the counter with its number."
+msgstr "No se pudo enviar por correo: pídela en mostrador con su número."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Leave us your email and name: your order waits for you at the counter."
+msgstr "Déjanos tu correo y tu nombre: tu pedido te espera en mostrador."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid ""
+"Leave us your email and name: your quotation is kept so that we can help you"
+" at the counter."
+msgstr ""
+"Déjanos tu correo y tu nombre: guardamos tu cotización para atenderte en "
+"mostrador."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid ""
+"Leave us your mobile and name: your order waits for you at the counter."
+msgstr "Déjanos tu celular y tu nombre: tu pedido te espera en caja."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid ""
+"Leave us your mobile and name: your quotation is kept so that we can help "
+"you at the counter."
+msgstr ""
+"Déjanos tu celular y tu nombre: guardamos tu cotización para atenderte en "
+"mostrador."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid ""
+"Leave us your mobile, email and name: your order waits for you at the "
+"counter."
+msgstr ""
+"Déjanos tu celular, tu correo y tu nombre: tu pedido te espera en mostrador."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid ""
+"Leave us your mobile, email and name: your quotation is kept so that we can "
+"help you at the counter."
+msgstr ""
+"Déjanos tu celular, tu correo y tu nombre: guardamos tu cotización para "
+"atenderte en mostrador."
+
+#. module: xb_self_order_quotation
+#: model:ir.model.fields.selection,name:xb_self_order_quotation.selection__pos_config__xb_kiosk_contact__phone
+msgid "Mobile"
+msgstr "Celular"
+
+#. module: xb_self_order_quotation
+#: model:ir.model.fields.selection,name:xb_self_order_quotation.selection__pos_config__xb_kiosk_contact__both
+msgid "Mobile and email"
+msgstr "Celular y correo"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Mobile number"
+msgstr "Celular"
 
 #. module: xb_self_order_quotation
 #. odoo-python
@@ -173,76 +235,14 @@ msgid "One of the pieces is no longer available."
 msgstr "Una de las piezas ya no está disponible."
 
 #. module: xb_self_order_quotation
-#. odoo-python
-#: code:addons/xb_self_order_quotation/controllers/quotation.py:0
-msgid "The kiosk cannot make quotations right now."
-msgstr "El kiosco no puede hacer cotizaciones en este momento."
-
-#. module: xb_self_order_quotation
-#. odoo-python
-#: code:addons/xb_self_order_quotation/controllers/quotation.py:0
-msgid "Write your name."
-msgstr "Escribe tu nombre."
-
-#. module: xb_self_order_quotation
-#. odoo-python
-#: code:addons/xb_self_order_quotation/controllers/quotation.py:0
-msgid "Write a valid mobile number."
-msgstr "Escribe un celular válido."
-
-#. module: xb_self_order_quotation
-#. odoo-python
-#: code:addons/xb_self_order_quotation/controllers/quotation.py:0
-msgid "Your cart is empty."
-msgstr "Tu carrito está vacío."
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "Done typing"
-msgstr "Ocultar teclado"
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "We found you by your mobile. If it is not you, change the name."
-msgstr "Te encontramos por tu celular. Si no eres tú, cambia el nombre."
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "Pay at the counter"
-msgstr "Pagar en mostrador"
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "Leave us your mobile and name: your order waits for you at the counter."
-msgstr "Déjanos tu celular y tu nombre: tu pedido te espera en caja."
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "Sending your order…"
-msgstr "Enviando tu pedido…"
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "Send to the counter"
-msgstr "Enviar a caja"
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "Your order"
-msgstr "Tu pedido"
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "waits for you at the counter."
-msgstr "te espera en caja."
+#: model:ir.model.fields,help:xb_self_order_quotation.field_pos_config__xb_kiosk_privacy_url
+#: model:ir.model.fields,help:xb_self_order_quotation.field_res_config_settings__pos_xb_kiosk_privacy_url
+msgid ""
+"Page with your privacy notice, linked when the customer leaves their name "
+"and mobile. Empty: the customer only agrees to be contacted."
+msgstr ""
+"Página con tu aviso de privacidad, ligada cuando el cliente deja su nombre y"
+" celular. Vacío: el cliente solo acepta que lo contacten."
 
 #. module: xb_self_order_quotation
 #. odoo-javascript
@@ -253,14 +253,8 @@ msgstr "Paga"
 #. module: xb_self_order_quotation
 #. odoo-javascript
 #: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "at the counter with this number."
-msgstr "en caja con este número."
-
-#. module: xb_self_order_quotation
-#. odoo-python
-#: code:addons/xb_self_order_quotation/controllers/quotation.py:0
-msgid "The kiosk cannot send orders to the counter right now."
-msgstr "El kiosco no puede enviar pedidos a caja en este momento."
+msgid "Pay at the counter"
+msgstr "Pagar en mostrador"
 
 #. module: xb_self_order_quotation
 #: model:ir.model.fields,field_description:xb_self_order_quotation.field_pos_config__xb_kiosk_counter_order
@@ -268,41 +262,6 @@ msgstr "El kiosco no puede enviar pedidos a caja en este momento."
 #: model_terms:ir.ui.view,arch_db:xb_self_order_quotation.res_config_settings_view_form_kiosk_quotation
 msgid "Pay at the counter through Sales"
 msgstr "Pagar en mostrador por Ventas"
-
-#. module: xb_self_order_quotation
-#: model:ir.model.fields,help:xb_self_order_quotation.field_pos_config__xb_kiosk_counter_order
-#: model:ir.model.fields,help:xb_self_order_quotation.field_res_config_settings__pos_xb_kiosk_counter_order
-msgid "The kiosk's order button creates a quotation in Sales instead of a POS order: the cashier charges it from the POS quotations/orders list and it becomes a sales order, as with the POS quotations."
-msgstr "El botón para ordenar del kiosco crea una cotización en Ventas en lugar de una orden del TPV: la cajera la cobra desde la lista de cotizaciones/pedidos del TPV y pasa a pedido, igual que las cotizaciones de la caja."
-
-#. module: xb_self_order_quotation
-#: model_terms:ir.ui.view,arch_db:xb_self_order_quotation.res_config_settings_view_form_kiosk_quotation
-msgid "The order button of the kiosk creates a quotation in Sales (with the customer's mobile and name) instead of a POS order. The cashier charges it from the POS quotations/orders list and it becomes a sales order."
-msgstr "El botón para ordenar del kiosco crea una cotización en Ventas (con el celular y el nombre del cliente) en lugar de una orden del TPV. La cajera la cobra desde la lista de cotizaciones/pedidos del TPV y pasa a pedido."
-
-#. module: xb_self_order_quotation
-#. odoo-javascript
-#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
-msgid "The ticket could not be printed: just give your number at the counter."
-msgstr "No se pudo imprimir el ticket: solo da tu número en caja."
-
-#. module: xb_self_order_quotation
-#. odoo-python
-#: code:addons/xb_self_order_quotation/models/sale_order.py:0
-msgid "QUOTATION %s"
-msgstr "COTIZACIÓN %s"
-
-#. module: xb_self_order_quotation
-#. odoo-python
-#: code:addons/xb_self_order_quotation/models/sale_order.py:0
-msgid "Served by: %s"
-msgstr "Atendido por: %s"
-
-#. module: xb_self_order_quotation
-#. odoo-python
-#: code:addons/xb_self_order_quotation/models/sale_order.py:0
-msgid "Total"
-msgstr "Total"
 
 #. module: xb_self_order_quotation
 #. odoo-python
@@ -313,8 +272,85 @@ msgstr "Paga o revisa tu pedido en línea:"
 #. module: xb_self_order_quotation
 #. odoo-python
 #: code:addons/xb_self_order_quotation/models/sale_order.py:0
-msgid "Valid until %s"
-msgstr "Válida hasta el %s"
+msgid "Phone: %s"
+msgstr "Tel.: %s"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Pick it up at the counter printer."
+msgstr "Recógela en la impresora del mostrador."
+
+#. module: xb_self_order_quotation
+#: model:ir.model,name:xb_self_order_quotation.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr "Configuración del punto de venta"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Preparing your quotation…"
+msgstr "Preparando tu cotización…"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Print it"
+msgstr "Imprimirla"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Print it here"
+msgstr "Imprimirla aquí"
+
+#. module: xb_self_order_quotation
+#: model:ir.model.fields,field_description:xb_self_order_quotation.field_pos_config__xb_kiosk_privacy_url
+#: model:ir.model.fields,field_description:xb_self_order_quotation.field_res_config_settings__pos_xb_kiosk_privacy_url
+msgid "Privacy notice"
+msgstr "Aviso de privacidad"
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "QUOTATION %s"
+msgstr "COTIZACIÓN %s"
+
+#. module: xb_self_order_quotation
+#: model:ir.model.fields,field_description:xb_self_order_quotation.field_pos_config__xb_kiosk_quotation
+#: model:ir.model.fields,field_description:xb_self_order_quotation.field_res_config_settings__pos_xb_kiosk_quotation
+#: model_terms:ir.ui.view,arch_db:xb_self_order_quotation.res_config_settings_view_form_kiosk_quotation
+msgid "Quotations from the kiosk"
+msgstr "Cotizaciones desde el kiosco"
+
+#. module: xb_self_order_quotation
+#: model:ir.model,name:xb_self_order_quotation.model_sale_order
+msgid "Sales Order"
+msgstr "Orden de venta"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Send it to my WhatsApp"
+msgstr "Enviarla a mi WhatsApp"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Send to the counter"
+msgstr "Enviar a caja"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Sending your order…"
+msgstr "Enviando tu pedido…"
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/models/sale_order.py:0
+msgid "Served by: %s"
+msgstr "Atendido por: %s"
 
 #. module: xb_self_order_quotation
 #. odoo-python
@@ -323,25 +359,187 @@ msgid "Tax ID: %s"
 msgstr "Id. fiscal: %s"
 
 #. module: xb_self_order_quotation
+#: model_terms:ir.ui.view,arch_db:xb_self_order_quotation.res_config_settings_view_form_kiosk_quotation
+msgid ""
+"The customer gets a quotation of the cart, printed on the kiosk's printer, "
+"by WhatsApp and/or by email. It is created like the POS quotations (same "
+"validity and terms)."
+msgstr ""
+"El cliente obtiene una cotización del carrito, impresa en la impresora del "
+"kiosco, por WhatsApp y/o por correo. Se crea como las cotizaciones de la "
+"caja (misma vigencia y condiciones)."
+
+#. module: xb_self_order_quotation
 #. odoo-python
-#: code:addons/xb_self_order_quotation/models/sale_order.py:0
-msgid "Phone: %s"
-msgstr "Tel.: %s"
+#: code:addons/xb_self_order_quotation/controllers/quotation.py:0
+msgid "The kiosk cannot make quotations right now."
+msgstr "El kiosco no puede hacer cotizaciones en este momento."
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/controllers/quotation.py:0
+msgid "The kiosk cannot send orders to the counter right now."
+msgstr "El kiosco no puede enviar pedidos a caja en este momento."
+
+#. module: xb_self_order_quotation
+#: model:ir.model.fields,help:xb_self_order_quotation.field_pos_config__xb_kiosk_counter_order
+#: model:ir.model.fields,help:xb_self_order_quotation.field_res_config_settings__pos_xb_kiosk_counter_order
+msgid ""
+"The kiosk's order button creates a quotation in Sales instead of a POS "
+"order: the cashier charges it from the POS quotations/orders list and it "
+"becomes a sales order, as with the POS quotations."
+msgstr ""
+"El botón para ordenar del kiosco crea una cotización en Ventas en lugar de "
+"una orden del TPV: la cajera la cobra desde la lista de cotizaciones/pedidos"
+" del TPV y pasa a pedido, igual que las cotizaciones de la caja."
+
+#. module: xb_self_order_quotation
+#: model_terms:ir.ui.view,arch_db:xb_self_order_quotation.res_config_settings_view_form_kiosk_quotation
+msgid ""
+"The order button of the kiosk creates a quotation in Sales (with the "
+"customer's mobile and name) instead of a POS order. The cashier charges it "
+"from the POS quotations/orders list and it becomes a sales order."
+msgstr ""
+"El botón para ordenar del kiosco crea una cotización en Ventas (con el "
+"celular y el nombre del cliente) en lugar de una orden del TPV. La cajera la"
+" cobra desde la lista de cotizaciones/pedidos del TPV y pasa a pedido."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.js:0
+msgid "The quotation could not be made. Please ask at the counter."
+msgstr "No se pudo hacer la cotización. Por favor pregunta en mostrador."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "The ticket could not be printed: just give your number at the counter."
+msgstr "No se pudo imprimir el ticket: solo da tu número en caja."
 
 #. module: xb_self_order_quotation
 #. odoo-python
 #: code:addons/xb_self_order_quotation/models/sale_order.py:0
-msgid "Discount"
-msgstr "Descuento"
+msgid "Total"
+msgstr "Total"
 
 #. module: xb_self_order_quotation
 #. odoo-python
 #: code:addons/xb_self_order_quotation/models/sale_order.py:0
-msgid "Could not draw the image of %s."
-msgstr "No se pudo generar la imagen de %s."
+msgid "Valid until %s"
+msgstr "Válida hasta el %s"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "We found you by your email. If it is not you, change the name."
+msgstr "Te encontramos por tu correo. Si no eres tú, cambia el nombre."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "We found you by your mobile. If it is not you, change the name."
+msgstr "Te encontramos por tu celular. Si no eres tú, cambia el nombre."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "We sent it to your WhatsApp."
+msgstr "Te la enviamos a tu WhatsApp."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "We sent it to your email."
+msgstr "Te la enviamos a tu correo."
+
+#. module: xb_self_order_quotation
+#: model:ir.model.fields,help:xb_self_order_quotation.field_pos_config__xb_kiosk_contact
+#: model:ir.model.fields,help:xb_self_order_quotation.field_res_config_settings__pos_xb_kiosk_contact
+msgid ""
+"What the kiosk asks for to save the quotation and find the customer again. "
+"With an email, the customer can also get the quotation by email."
+msgstr ""
+"Lo que pide el kiosco para guardar la cotización y volver a encontrar al "
+"cliente. Con correo, el cliente también puede recibir la cotización por "
+"correo."
+
+#. module: xb_self_order_quotation
+#: model_terms:ir.ui.view,arch_db:xb_self_order_quotation.res_config_settings_view_form_kiosk_quotation
+msgid ""
+"What the kiosk asks the customer for to save the quotation. With an email, "
+"the customer can also get the quotation by email."
+msgstr ""
+"Lo que el kiosco pide al cliente para guardar la cotización. Con correo, el "
+"cliente también puede recibir la cotización por correo."
 
 #. module: xb_self_order_quotation
 #. odoo-python
 #: code:addons/xb_self_order_quotation/models/sale_order.py:0
 msgid "WhatsApp is not available on this kiosk."
 msgstr "WhatsApp no está disponible en este kiosco."
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/controllers/quotation.py:0
+msgid "Write a valid email."
+msgstr "Escribe un correo válido."
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/controllers/quotation.py:0
+msgid "Write a valid mobile number."
+msgstr "Escribe un celular válido."
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/controllers/quotation.py:0
+msgid "Write your name."
+msgstr "Escribe tu nombre."
+
+#. module: xb_self_order_quotation
+#. odoo-python
+#: code:addons/xb_self_order_quotation/controllers/quotation.py:0
+msgid "Your cart is empty."
+msgstr "Tu carrito está vacío."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Your name"
+msgstr "Tu nombre"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Your order"
+msgstr "Tu pedido"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "Your quotation"
+msgstr "Tu cotización"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "at the counter with this number."
+msgstr "en caja con este número."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "is saved."
+msgstr "quedó guardada."
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "privacy notice"
+msgstr "aviso de privacidad"
+
+#. module: xb_self_order_quotation
+#. odoo-javascript
+#: code:addons/xb_self_order_quotation/static/src/app/quotation.xml:0
+msgid "waits for you at the counter."
+msgstr "te espera en caja."

@@ -1,7 +1,7 @@
 /**
- * Cotización desde el kiosco: el cliente deja su nombre y celular y se lleva la
- * cotización impresa (en la impresora del kiosco) y/o la recibe por WhatsApp. Se crea
- * igual que las cotizaciones de la caja.
+ * Cotización desde el kiosco: el cliente deja su nombre y su celular y/o correo (lo
+ * que pida el kiosco) y se lleva la cotización impresa (en la impresora del kiosco),
+ * por WhatsApp y/o por correo. Se crea igual que las cotizaciones de la caja.
  */
 import { Component, onMounted, onWillUnmount, useRef, useState } from "@odoo/owl";
 import { patch } from "@web/core/utils/patch";
@@ -28,9 +28,15 @@ export class XbQuoteDialog extends Component {
         this.privacyUrl = modos.privacy_url || false;
         // «Pay at the counter»: the cart goes to Sales as a quotation for the cashier.
         this.counter = this.props.modo === "counter";
+        // What the kiosk asks for: "phone", "email" or "both".
+        this.contact = modos.contact || "phone";
+        this.askPhone = this.contact !== "email";
+        this.askEmail = this.contact !== "phone";
         this.state = useState({
             name: "",
             phone: "",
+            email: "",
+            mail: !this.counter && this.props.modo === "email" && Boolean(modos.email),
             privacy: false,
             print: this.counter ? Boolean(modos.counter_print) : this.props.modo === "print" && modos.print,
             whatsapp: !this.counter && this.props.modo === "whatsapp" && modos.whatsapp,
@@ -43,7 +49,7 @@ export class XbQuoteDialog extends Component {
             visibleHeight: 0,
         });
         this.dialogRef = useRef("dialog");
-        this.field2Ref = useRef("field2");
+        this.fieldRefs = { phone: useRef("phone"), email: useRef("email"), name: useRef("name") };
         // Tablets in kiosk mode have no system "back" key: the on-screen keyboard covers
         // the bottom of the screen and cannot be dismissed. Follow the visible viewport
         // to keep the dialog above the keyboard, and offer a button to hide it.
@@ -95,27 +101,33 @@ export class XbQuoteDialog extends Component {
         this.state.typing = false;
     }
 
-    onKeydown(ev, action) {
+    onKeydown(ev, next) {
         if (ev.key !== "Enter") {
             return;
         }
         ev.preventDefault();
-        if (action === "next") {
-            this.field2Ref.el?.focus();
+        if (next) {
+            this.fieldRefs[next].el?.focus();
         } else {
             this.hideKeyboard();
         }
     }
 
-    onPhoneInput() {
-        // A known mobile fills in the name (first name only: the kiosk is public).
+    get emailOk() {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((this.state.email || "").trim());
+    }
+
+    onContactInput() {
+        // A known mobile or email fills in the name (first name only: the kiosk is public).
         clearTimeout(this._lookup);
-        const digits = this.digits;
+        const key = `${this.digits}|${this.state.email.trim()}`;
         if (this.state.known && this.state.name === this.state.known) {
             this.state.name = "";
         }
         this.state.known = "";
-        if (digits.length < 10) {
+        const phoneReady = this.askPhone && this.digits.length >= 10;
+        const emailReady = this.askEmail && this.emailOk;
+        if (!phoneReady && !emailReady) {
             return;
         }
         this._lookup = setTimeout(async () => {
@@ -123,12 +135,13 @@ export class XbQuoteDialog extends Component {
             try {
                 res = await rpc("/xb_kiosk/quotation/customer", {
                     access_token: this.selfOrder.access_token,
-                    phone: this.state.phone,
+                    phone: phoneReady ? this.state.phone : "",
+                    email: emailReady ? this.state.email.trim() : "",
                 });
             } catch {
                 return;
             }
-            if (this.digits !== digits || !res?.found) {
+            if (`${this.digits}|${this.state.email.trim()}` !== key || !res?.found) {
                 return;
             }
             if (!this.state.name.trim()) {
@@ -153,8 +166,10 @@ export class XbQuoteDialog extends Component {
         const s = this.state;
         return (
             // The server checks the number with the rules of the company's country.
-            !s.sending && s.privacy && s.name.trim().length >= 2 && this.digits.length >= 7 &&
-            (this.counter || s.print || s.whatsapp)
+            !s.sending && s.privacy && s.name.trim().length >= 2 &&
+            (!this.askPhone || this.digits.length >= 7) &&
+            (!this.askEmail || this.emailOk) &&
+            (this.counter || s.print || s.whatsapp || s.mail)
         );
     }
 
@@ -182,9 +197,11 @@ export class XbQuoteDialog extends Component {
             const res = await rpc("/xb_kiosk/quotation", {
                 access_token: this.selfOrder.access_token,
                 name: s.name,
-                phone: s.phone,
+                phone: this.askPhone ? s.phone : "",
+                email: this.askEmail ? s.email.trim() : "",
                 lines: this.lines(),
                 send_whatsapp: s.whatsapp,
+                send_email: s.mail,
                 counter: this.counter,
             });
             if (!res?.ok) {
@@ -215,6 +232,8 @@ export class XbQuoteDialog extends Component {
                 customer: res.customer.split(" ")[0],
                 whatsapp: res.whatsapp === true,
                 whatsappFailed: s.whatsapp && res.whatsapp !== true,
+                emailed: res.email === true,
+                emailFailed: s.mail && res.email !== true,
                 printed: s.print && impresa,
                 printFailed: s.print && !impresa,
             };
@@ -245,7 +264,7 @@ patch(CartPage.prototype, {
     },
     get xbQuotation() {
         const modos = this.selfOrder.config._xb_quotation || {};
-        return modos.print || modos.whatsapp ? modos : null;
+        return modos.print || modos.whatsapp || modos.email ? modos : null;
     },
     xbQuote(modo) {
         this.dialog.add(XbQuoteDialog, { modo });

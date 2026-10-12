@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//block[@id='self_ordering_section']" position="inside">
                 <setting string="Quotations from the kiosk" invisible="pos_self_ordering_mode != 'kiosk'"
-                         help="The customer gets a quotation of the cart, printed on the kiosk's printer and/or by WhatsApp. It is created like the POS quotations (same validity and terms).">
+                         help="The customer gets a quotation of the cart, printed on the kiosk's printer, by WhatsApp and/or by email. It is created like the POS quotations (same validity and terms).">
                     <field name="pos_xb_kiosk_quotation"/>
                     <div class="content-group mt-2" invisible="not pos_xb_kiosk_quotation">
                         <div class="row">
@@ -15,6 +15,10 @@
                             <field name="pos_xb_kiosk_privacy_url" placeholder="/privacy"/>
                         </div>
                     </div>
+                </setting>
+                <setting string="Customer data" invisible="pos_self_ordering_mode != 'kiosk' or not (pos_xb_kiosk_quotation or pos_xb_kiosk_counter_order)"
+                         help="What the kiosk asks the customer for to save the quotation. With an email, the customer can also get the quotation by email.">
+                    <field name="pos_xb_kiosk_contact" widget="radio"/>
                 </setting>
                 <setting string="Pay at the counter through Sales" invisible="pos_self_ordering_mode != 'kiosk'"
                          help="The order button of the kiosk creates a quotation in Sales (with the customer's mobile and name) instead of a POS order. The cashier charges it from the POS quotations/orders list and it becomes a sales order.">

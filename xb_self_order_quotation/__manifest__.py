@@ -1,22 +1,25 @@
 # -*- coding: utf-8 -*-
 {
-    "name": "Self-Order Kiosk - Quotation (Print / WhatsApp)",
+    "name": "Self-Order Kiosk - Quotation (Print / WhatsApp / Email)",
     "summary": "The customer gets a quotation of the kiosk cart, printed on the kiosk's "
-               "printer and/or by WhatsApp, created like the POS quotations.",
+               "printer, by WhatsApp and/or by email, created like the POS quotations.",
     "description": """
-Self-Order Kiosk - Quotation (Print / WhatsApp)
-===============================================
+Self-Order Kiosk - Quotation (Print / WhatsApp / Email)
+=======================================================
 In the kiosk cart the customer can ask for a quotation:
 
 * printed on the kiosk's receipt printer (ePOS printer set on the kiosk), and/or
 * sent to their WhatsApp with the company's approved quotation template (needs
   WhatsApp, Odoo Enterprise: the free add-on "Self-Order Kiosk - Quotation -
-  WhatsApp" installs itself when it is present).
+  WhatsApp" installs itself when it is present), and/or
+* sent to their email, with the quotation PDF (the same email as the "Send by
+  email" button of Sales).
 
-The customer leaves their name and mobile (checked with the rules of the company's
-country) and accepts your privacy notice: the contact with that mobile is used, or
-created. Switch it on per kiosk: Point of Sale settings > Mobile self-order & Kiosk >
-Quotations from the kiosk. The quotation is created with the same function
+The customer leaves their name and, as each kiosk asks, their mobile (checked with
+the rules of the company's country), their email, or both; and accepts your privacy
+notice: the contact with that mobile or email is used, or created. Switch it on per
+kiosk: Point of Sale settings > Mobile self-order & Kiosk > Quotations from the kiosk,
+where you also choose what it asks for (Customer data). The quotation is created with the same function
 as the POS quotations (Sales, Quotations & Layaway from POS): same validity, terms and
 template, ready to be picked up at the counter from the POS orders list.
 """,
@@ -25,7 +28,7 @@ template, ready to be picked up at the counter from the POS orders list.
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",
     "category": "Point of Sale",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.4.0",
     "license": "OPL-1",
     "depends": ["pos_self_order", "phone_validation", "xb_sale_order_from_pos"],
     "data": [

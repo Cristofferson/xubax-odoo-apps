@@ -6,6 +6,7 @@ import re
 from odoo import _, http
 from odoo.exceptions import UserError
 from odoo.http import request
+from odoo.tools import email_normalize
 
 _logger = logging.getLogger(__name__)
 
@@ -20,12 +21,13 @@ class KioskQuotation(http.Controller):
         return env["res.partner"]._phone_format(number=(phone or "").strip(), country=country)
 
     @staticmethod
-    def _xb_find_partner(env, config, phone):
-        """The contact with this mobile (E.164), or an empty recordset."""
+    def _xb_find_partner(env, config, phone, email=False):
+        """The contact with this mobile (E.164) or, failing that, this email (already
+        normalized); an empty recordset when there is none."""
         Partner = env["res.partner"].sudo()
         country = config.company_id.country_id or env.company.country_id
-        partner = Partner.search([("phone_sanitized", "=", phone)], limit=1)
-        if not partner:
+        partner = phone and Partner.search([("phone_sanitized", "=", phone)], limit=1)
+        if phone and not partner:
             # Older contacts may keep a number Odoo cannot read (no country, extra
             # digits...): look for the national number at the end of their phone.
             national = phone.lstrip("+")
@@ -36,21 +38,36 @@ class KioskQuotation(http.Controller):
                     p for p in Partner.search([("phone", "ilike", "%%%s" % national[-7:])], limit=50)
                     if re.sub(r"\D", "", p.phone or "").endswith(national)
                 ), Partner.browse())
-        return partner
+        if not partner and email:
+            partner = Partner.search([("email_normalized", "=", email)], limit=1)
+        return partner or Partner.browse()
 
     @classmethod
-    def _xb_partner(cls, env, config, name, phone):
-        """The contact with this mobile, created if there is none (without a company,
-        as the POS creates its customers)."""
-        partner = cls._xb_find_partner(env, config, phone)
+    def _xb_partner(cls, env, config, name, phone, email=False):
+        """The contact with this mobile or email, created if there is none (without a
+        company, as the POS creates its customers). A known contact gets the mobile or
+        email it was missing."""
+        country = config.company_id.country_id or env.company.country_id
+        phone_display = phone and (env["res.partner"]._phone_format(
+            number=phone, country=country, force_format="INTERNATIONAL") or phone)
+        partner = cls._xb_find_partner(env, config, phone, email)
         if not partner:
-            country = config.company_id.country_id or env.company.country_id
-            partner = env["res.partner"].sudo().create({
+            # The kiosk's language: the email and the documents reach them in it.
+            lang = config.self_ordering_default_language_id
+            return env["res.partner"].sudo().create({
                 "name": name,
-                "phone": env["res.partner"]._phone_format(
-                    number=phone, country=country, force_format="INTERNATIONAL") or phone,
+                "phone": phone_display or False,
+                "email": email or False,
                 "country_id": country.id or False,
+                "lang": lang.code if lang.active else False,
             })
+        missing = {}
+        if phone and not partner.phone:
+            missing["phone"] = phone_display
+        if email and not partner.email:
+            missing["email"] = email
+        if missing:
+            partner.write(missing)
         return partner
 
     def _xb_line(self, env, config, pricelist, raw):
@@ -94,17 +111,18 @@ class KioskQuotation(http.Controller):
         }, sin_variante
 
     @http.route("/xb_kiosk/quotation/customer", type="jsonrpc", auth="public", website=True)
-    def kiosk_quotation_customer(self, access_token=None, phone=None, **kw):
-        """Whether the mobile is already a customer, to fill in their name. Only the
-        first name goes back: the kiosk is in a public place."""
+    def kiosk_quotation_customer(self, access_token=None, phone=None, email=None, **kw):
+        """Whether the mobile or email is already a customer, to fill in their name.
+        Only the first name goes back: the kiosk is in a public place."""
         config = request.env["pos.config"].sudo().search([("access_token", "=", access_token or "x")], limit=1)
         if not config or not config.has_active_session:
             return {"found": False}
         modes = config._xb_kiosk_quotation_modes()
-        if not (modes["print"] or modes["whatsapp"]):
+        if not (modes["print"] or modes["whatsapp"] or modes["email"] or modes["counter"]):
             return {"found": False}
-        e164 = self._xb_phone(request.env, config, phone)
-        partner = e164 and self._xb_find_partner(request.env, config, e164)
+        e164 = modes["contact"] != "email" and self._xb_phone(request.env, config, phone)
+        mail = modes["contact"] != "phone" and email_normalize(email or "")
+        partner = (e164 or mail) and self._xb_find_partner(request.env, config, e164, mail)
         first = partner and (partner.name or "").split()
         if not first:
             return {"found": False}
@@ -112,10 +130,11 @@ class KioskQuotation(http.Controller):
 
     @http.route("/xb_kiosk/quotation", type="jsonrpc", auth="public", website=True)
     def kiosk_quotation(self, access_token=None, name=None, phone=None, lines=None,
-                        send_whatsapp=False, counter=False, **kw):
-        """The customer asks the kiosk for a quotation of the cart: printed and/or by
-        WhatsApp. Created exactly as the POS creates its quotations (same function,
-        same validity and terms), for the customer identified by their mobile.
+                        send_whatsapp=False, counter=False, email=None, send_email=False, **kw):
+        """The customer asks the kiosk for a quotation of the cart: printed, by WhatsApp
+        and/or by email. Created exactly as the POS creates its quotations (same
+        function, same validity and terms), for the customer identified by their mobile
+        and/or email, as the kiosk asks.
 
         ``counter``: the customer pays at the counter. Same quotation in Sales; the
         cashier charges it from the POS quotations/orders list and it becomes a sales
@@ -126,10 +145,12 @@ class KioskQuotation(http.Controller):
         modes = config._xb_kiosk_quotation_modes()
         if counter and not modes["counter"]:
             return {"error": _("The kiosk cannot send orders to the counter right now.")}
-        if not counter and not (modes["print"] or modes["whatsapp"]):
+        if not counter and not (modes["print"] or modes["whatsapp"] or modes["email"]):
             return {"error": _("The kiosk cannot make quotations right now.")}
         if counter or not modes["whatsapp"]:
             send_whatsapp = False
+        if counter or not modes["email"]:
+            send_email = False
         name = (name or "").strip()
         if len(name) < 2:
             return {"error": _("Write your name.")}
@@ -138,12 +159,18 @@ class KioskQuotation(http.Controller):
         user = config.self_ordering_default_user_id or request.env.ref("base.user_admin")
         env = request.env(user=user.id, context=dict(request.env.context, allowed_company_ids=config.company_id.ids))
         config = config.with_env(env)
-        e164 = self._xb_phone(env, config, phone)
-        if not e164:
-            return {"error": _("Write a valid mobile number.")}
+        e164 = mail = False
+        if modes["contact"] != "email":
+            e164 = self._xb_phone(env, config, phone)
+            if not e164:
+                return {"error": _("Write a valid mobile number.")}
+        if modes["contact"] != "phone":
+            mail = email_normalize(email or "")
+            if not mail:
+                return {"error": _("Write a valid email.")}
         pricelist = config.pricelist_id
         try:
-            partner = self._xb_partner(env, config, name, e164)
+            partner = self._xb_partner(env, config, name, e164, mail)
             cart, sin_variante = [], []
             for raw in lines:
                 line, extra = self._xb_line(env, config, pricelist, raw)
@@ -173,6 +200,14 @@ class KioskQuotation(http.Controller):
             except Exception as e:  # noqa: BLE001 - the quotation exists even if WhatsApp fails
                 _logger.warning("Kiosk quotation %s: WhatsApp failed: %s", order.name, e)
                 whatsapp = str(e)
+        emailed = None
+        if send_email:
+            try:
+                order.with_env(env)._xb_kiosk_send_email()
+                emailed = True
+            except Exception as e:  # noqa: BLE001 - the quotation exists even if the email fails
+                _logger.warning("Kiosk quotation %s: email failed: %s", order.name, e)
+                emailed = str(e)
         # The quotation is saved even if its ticket cannot be drawn (no wkhtmltoimage,
         # for instance): the kiosk then says it could not be printed.
         try:
@@ -186,5 +221,6 @@ class KioskQuotation(http.Controller):
             "customer": partner.name,
             "amount_total": order.amount_total,
             "whatsapp": whatsapp,
+            "email": emailed,
             "image": (image.decode() if isinstance(image, bytes) else image) or False,
         }
