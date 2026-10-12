@@ -1,5 +1,7 @@
 /**
- * Botón flotante «Filtrar» en la lista de productos del kiosco.
+ * Filtros en la lista de productos del kiosco. Disposición según el ajuste del kiosco
+ * (`_xb_tf.layout`): botón flotante con panel, barra siempre visible, línea de texto que abre el
+ * panel, o el filtro principal a la vista y el resto en el panel.
  *
  * Bloques: primero las secciones de la tienda marcadas como filtro (p. ej. Metal), luego los
  * grupos de etiquetas. Dentro de un bloque las opciones suman (OR); entre bloques se combinan
@@ -14,6 +16,15 @@ import { LandingPage } from "@pos_self_order/app/pages/landing_page/landing_page
 
 const emptyFilters = () => ({ categoryId: null, selected: {}, open: false });
 
+const DEFAULT_SETTINGS = {
+    layout: "fab",
+    icons: "color",
+    show_count: true,
+    categ_ids: [],
+    ink: false,
+    accent: false,
+};
+
 /** Los valores filtrables de un producto: [{group, id, name, sequence}] */
 function productValues(product) {
     const values = [...(product._xb_sections || [])];
@@ -24,6 +35,7 @@ function productValues(product) {
                 id: `t${tag.id}`,
                 name: tag.name,
                 sequence: tag._xb_seq || 0,
+                color: tag._xb_color || false,
             });
         }
     }
@@ -60,6 +72,35 @@ patch(ProductListPage.prototype, {
         return super.selectCategory(...arguments);
     },
 
+    get xbSettings() {
+        return { ...DEFAULT_SETTINGS, ...(this.selfOrder.config._xb_tf || {}) };
+    },
+
+    get xbLayout() {
+        return this.xbSettings.layout;
+    },
+
+    /** Clases y colores propios del kiosco para todo lo que pintan los filtros. */
+    get xbClass() {
+        return `xb_tf_layout_${this.xbSettings.layout} xb_tf_icons_${this.xbSettings.icons}`;
+    },
+
+    get xbStyle() {
+        const { ink, accent } = this.xbSettings;
+        return [ink && `--xb-tf-ink: ${ink}`, accent && `--xb-tf-accent: ${accent}`]
+            .filter(Boolean)
+            .join("; ");
+    },
+
+    /** La categoría elegida (o su categoría principal) está entre las que ofrecen filtros. */
+    get xbCategoryAllowed() {
+        const ids = this.xbSettings.categ_ids || [];
+        if (!ids.length) {
+            return true;
+        }
+        return [this.selectedCategory?.id, this.topSelectedCategory?.id].some((id) => ids.includes(id));
+    },
+
     get xbActive() {
         return !!this.selfOrder.kioskMode && this.xbFilters.categoryId === this.selectedCategory?.id;
     },
@@ -72,7 +113,7 @@ patch(ProductListPage.prototype, {
 
     /** Bloques con al menos dos opciones, o una que no todos los productos tienen. */
     get xbGroups() {
-        if (!this.selfOrder.kioskMode) {
+        if (!this.selfOrder.kioskMode || !this.xbCategoryAllowed) {
             return [];
         }
         const products = this.xbBaseProducts();
@@ -90,7 +131,13 @@ patch(ProductListPage.prototype, {
                 }
                 const values = groups.get(v.group.id).values;
                 if (!values.has(v.id)) {
-                    values.set(v.id, { id: v.id, name: v.name, sequence: v.sequence, total: 0 });
+                    values.set(v.id, {
+                        id: v.id,
+                        name: v.name,
+                        sequence: v.sequence,
+                        color: v.color || false,
+                        total: 0,
+                    });
                 }
                 values.get(v.id).total++;
             }
@@ -105,6 +152,33 @@ patch(ProductListPage.prototype, {
             }))
             .filter((g) => g.values.length > 1 || g.values[0].total < products.length)
             .sort((a, b) => (b.isSection - a.isSection) || a.sequence - b.sequence);
+    },
+
+    /** Con «filtro principal a la vista», el primer bloque va fuera del panel. */
+    get xbMainGroup() {
+        return this.xbLayout === "dots" ? this.xbGroups[0] || null : null;
+    },
+
+    get xbPanelGroups() {
+        const groups = this.xbGroups;
+        return this.xbLayout === "dots" ? groups.slice(1) : groups;
+    },
+
+    /** Elegidos en los bloques del panel (para el botón «Más filtros»). */
+    get xbPanelCountActive() {
+        if (!this.xbActive) {
+            return 0;
+        }
+        return this.xbPanelGroups.reduce((n, g) => n + this.xbSelected(g.id).length, 0);
+    },
+
+    /** Línea de texto: «Metal: Oro blanco · Estilo: Todos». */
+    get xbLineParts() {
+        return this.xbGroups.map((group) => {
+            const ids = this.xbSelected(group.id);
+            const names = group.values.filter((v) => ids.includes(v.id)).map((v) => v.name);
+            return { id: group.id, title: group.name, value: names.length ? names.join(", ") : _t("All"), on: names.length > 0 };
+        });
     },
 
     xbSelected(groupId) {
@@ -153,8 +227,8 @@ patch(ProductListPage.prototype, {
         }
         const ids = this.xbFilters.selected[group.id] || [];
         const on = ids.includes(value.id);
-        if (group.isSection) {
-            // Una sección es de elección única (un solo metal a la vez).
+        if (group.single) {
+            // Elección única (p. ej. un solo metal a la vez).
             this.xbFilters.selected[group.id] = on ? [] : [value.id];
         } else {
             this.xbFilters.selected[group.id] = on

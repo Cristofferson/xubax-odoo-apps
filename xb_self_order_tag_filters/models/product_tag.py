@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from odoo import api, models
 
+# Odoo's default tag color: not chosen by anyone, so not shown as a color dot.
+DEFAULT_TAG_COLOR = '#3C3C3C'
+
 
 class ProductTag(models.Model):
     _inherit = 'product.tag'
@@ -14,6 +17,9 @@ class ProductTag(models.Model):
             tag = tags.get(r['id'])
             group = tag.filter_group_id if tag else False
             r['_xb_seq'] = tag.sequence if tag else 0
+            r['_xb_color'] = (tag and tag.color and tag.color.upper() != DEFAULT_TAG_COLOR
+                              and tag.color) or False
             r['_xb_group'] = group and {
-                'id': group.id, 'name': group.name, 'sequence': group.sequence}
+                'id': group.id, 'name': group.name, 'sequence': group.sequence,
+                'single': group.xb_kiosk_single}
         return res

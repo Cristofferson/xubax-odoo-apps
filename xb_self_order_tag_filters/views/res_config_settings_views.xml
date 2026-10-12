@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_kiosk_filters" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.xb.kiosk.filters</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="pos_self_order.res_config_settings_view_form_menu"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='self_ordering_section']" position="inside">
+                <setting string="Product filters" invisible="pos_self_ordering_mode != 'kiosk'"
+                         help="Customers narrow the products of a category by your website sections (with a kiosk filter title) and tag filter groups.">
+                    <div class="content-group">
+                        <div class="row mt-2">
+                            <label for="pos_xb_tf_layout" string="Layout" class="col-lg-4 o_light_label"/>
+                            <field name="pos_xb_tf_layout"/>
+                        </div>
+                        <div class="row">
+                            <label for="pos_xb_tf_icons" string="Drawings" class="col-lg-4 o_light_label"/>
+                            <field name="pos_xb_tf_icons"/>
+                        </div>
+                        <div class="row">
+                            <label for="pos_xb_tf_show_count" string="Counts" class="col-lg-4 o_light_label"/>
+                            <field name="pos_xb_tf_show_count"/>
+                        </div>
+                        <div class="row">
+                            <label for="pos_xb_tf_categ_ids" string="Categories" class="col-lg-4 o_light_label"/>
+                            <field name="pos_xb_tf_categ_ids" widget="many2many_tags" placeholder="All"/>
+                        </div>
+                        <div class="row">
+                            <label for="pos_xb_tf_color_ink" string="Main color" class="col-lg-4 o_light_label"/>
+                            <field name="pos_xb_tf_color_ink" widget="color"/>
+                        </div>
+                        <div class="row">
+                            <label for="pos_xb_tf_color_accent" string="Highlight color" class="col-lg-4 o_light_label"/>
+                            <field name="pos_xb_tf_color_accent" widget="color"/>
+                        </div>
+                        <div class="text-muted mt-2">
+                            Empty colors take the kiosk theme. Filters are ordered like the tag filter groups, the website sections first.
+                        </div>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

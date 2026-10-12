@@ -4,6 +4,16 @@
 #
 msgid ""
 msgstr ""
+"Project-Id-Version: xb_self_order_tag_filters 19.0\n"
+"Report-Msgid-Bugs-To: soporte@xubax.com\n"
+"POT-Creation-Date: 2026-10-12 05:39+0000\n"
+"PO-Revision-Date: 2026-10-12 05:39+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #. module: xb_self_order_tag_filters
 #. odoo-javascript
@@ -15,6 +25,29 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/xb_self_order_tag_filters/static/src/app/tag_filters.js:0
 msgid "1 result"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#. odoo-javascript
+#: code:addons/xb_self_order_tag_filters/static/src/app/tag_filters.js:0
+#: model_terms:ir.ui.view,arch_db:xb_self_order_tag_filters.res_config_settings_view_form_kiosk_filters
+msgid "All"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields.selection,name:xb_self_order_tag_filters.selection__pos_config__xb_tf_layout__bar
+msgid "Always-visible bar"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields,help:xb_self_order_tag_filters.field_pos_config__xb_tf_color_ink
+#: model:ir.model.fields,help:xb_self_order_tag_filters.field_res_config_settings__pos_xb_tf_color_ink
+msgid "Buttons and chosen options. Empty: the kiosk theme color."
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model_terms:ir.ui.view,arch_db:xb_self_order_tag_filters.res_config_settings_view_form_kiosk_filters
+msgid "Categories"
 msgstr ""
 
 #. module: xb_self_order_tag_filters
@@ -36,14 +69,155 @@ msgid "Close"
 msgstr ""
 
 #. module: xb_self_order_tag_filters
+#: model_terms:ir.ui.view,arch_db:xb_self_order_tag_filters.res_config_settings_view_form_kiosk_filters
+msgid ""
+"Customers narrow the products of a category by your website sections (with a"
+" kiosk filter title) and tag filter groups."
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model_terms:ir.ui.view,arch_db:xb_self_order_tag_filters.res_config_settings_view_form_kiosk_filters
+msgid "Drawings"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields,help:xb_self_order_tag_filters.field_pos_config__xb_tf_show_count
+#: model:ir.model.fields,help:xb_self_order_tag_filters.field_res_config_settings__pos_xb_tf_show_count
+msgid "Each option shows how many products it leaves."
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model_terms:ir.ui.view,arch_db:xb_self_order_tag_filters.res_config_settings_view_form_kiosk_filters
+msgid ""
+"Empty colors take the kiosk theme. Filters are ordered like the tag filter "
+"groups, the website sections first."
+msgstr ""
+
+#. module: xb_self_order_tag_filters
 #. odoo-javascript
 #: code:addons/xb_self_order_tag_filters/static/src/app/tag_filters.xml:0
 msgid "Filter"
 msgstr ""
 
 #. module: xb_self_order_tag_filters
+#: model:ir.model.fields.selection,name:xb_self_order_tag_filters.selection__pos_config__xb_tf_layout__fab
+msgid "Floating button"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields,help:xb_self_order_tag_filters.field_pos_config__xb_tf_layout
+#: model:ir.model.fields,help:xb_self_order_tag_filters.field_res_config_settings__pos_xb_tf_layout
+msgid ""
+"Floating button: a small \"Filter\" button opens a panel with every filter.\n"
+"Always-visible bar: every filter as a row of options above the products.\n"
+"Text line: a discreet line under the categories with what is chosen; it opens the panel.\n"
+"Main filter in view: the first filter (e.g. Metal) stays in view, the rest in the panel."
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields,help:xb_self_order_tag_filters.field_pos_config__xb_tf_color_accent
+#: model:ir.model.fields,help:xb_self_order_tag_filters.field_res_config_settings__pos_xb_tf_color_accent
+msgid ""
+"Frame of the chosen options and counters. Empty: the kiosk theme color."
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model_terms:ir.ui.view,arch_db:xb_self_order_tag_filters.res_config_settings_view_form_kiosk_filters
+msgid "Highlight color"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields,help:xb_self_order_tag_filters.field_product_tag_group__xb_kiosk_single
+msgid ""
+"In the self-order kiosk the customer picks a single tag of this group. Off: "
+"several at once, products with any of them are shown."
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields.selection,name:xb_self_order_tag_filters.selection__pos_config__xb_tf_icons__jewelry
+msgid "Jewelry drawings"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields,field_description:xb_self_order_tag_filters.field_pos_config__xb_tf_icons
+#: model:ir.model.fields,field_description:xb_self_order_tag_filters.field_res_config_settings__pos_xb_tf_icons
+msgid "Kiosk Filter Drawings"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
 #: model:ir.model.fields,field_description:xb_self_order_tag_filters.field_product_public_category__xb_kiosk_filter_title
 msgid "Kiosk Filter Title"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields,field_description:xb_self_order_tag_filters.field_pos_config__xb_tf_layout
+#: model:ir.model.fields,field_description:xb_self_order_tag_filters.field_res_config_settings__pos_xb_tf_layout
+msgid "Kiosk Filters Layout"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields,field_description:xb_self_order_tag_filters.field_pos_config__xb_tf_categ_ids
+#: model:ir.model.fields,field_description:xb_self_order_tag_filters.field_res_config_settings__pos_xb_tf_categ_ids
+msgid "Kiosk Filters: Categories"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields,field_description:xb_self_order_tag_filters.field_pos_config__xb_tf_color_accent
+#: model:ir.model.fields,field_description:xb_self_order_tag_filters.field_res_config_settings__pos_xb_tf_color_accent
+msgid "Kiosk Filters: Highlight Color"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields,field_description:xb_self_order_tag_filters.field_pos_config__xb_tf_color_ink
+#: model:ir.model.fields,field_description:xb_self_order_tag_filters.field_res_config_settings__pos_xb_tf_color_ink
+msgid "Kiosk Filters: Main Color"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields,field_description:xb_self_order_tag_filters.field_pos_config__xb_tf_show_count
+#: model:ir.model.fields,field_description:xb_self_order_tag_filters.field_res_config_settings__pos_xb_tf_show_count
+msgid "Kiosk Filters: Show Counts"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields,field_description:xb_self_order_tag_filters.field_product_tag_group__xb_kiosk_single
+msgid "Kiosk: One at a Time"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields,field_description:xb_self_order_tag_filters.field_product_public_category__xb_kiosk_filter_multi
+msgid "Kiosk: Several at Once"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model_terms:ir.ui.view,arch_db:xb_self_order_tag_filters.res_config_settings_view_form_kiosk_filters
+msgid "Layout"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model_terms:ir.ui.view,arch_db:xb_self_order_tag_filters.res_config_settings_view_form_kiosk_filters
+msgid "Main color"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields.selection,name:xb_self_order_tag_filters.selection__pos_config__xb_tf_layout__dots
+msgid "Main filter in view"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#. odoo-javascript
+#: code:addons/xb_self_order_tag_filters/static/src/app/tag_filters.xml:0
+msgid "More filters"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields.selection,name:xb_self_order_tag_filters.selection__pos_config__xb_tf_icons__none
+msgid "None"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model_terms:ir.ui.view,arch_db:xb_self_order_tag_filters.res_config_settings_view_form_kiosk_filters
+msgid "Product filters"
 msgstr ""
 
 #. module: xb_self_order_tag_filters
@@ -56,6 +230,44 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/xb_self_order_tag_filters/static/src/app/tag_filters.js:0
 msgid "See 1 result"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model_terms:ir.ui.view,arch_db:xb_self_order_tag_filters.res_config_settings_view_form_kiosk_filters
+msgid "Counts"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields.selection,name:xb_self_order_tag_filters.selection__pos_config__xb_tf_icons__color
+msgid "Tag color"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields,help:xb_self_order_tag_filters.field_pos_config__xb_tf_icons
+#: model:ir.model.fields,help:xb_self_order_tag_filters.field_res_config_settings__pos_xb_tf_icons
+msgid ""
+"Tag color: a dot with the color of each tag (when it has one).\n"
+"Jewelry drawings: stone shapes (Round, Princess, Oval…) and metal colors (White gold, Yellow gold, Rose gold…), recognised by the option name."
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields.selection,name:xb_self_order_tag_filters.selection__pos_config__xb_tf_layout__line
+msgid "Text line"
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields,help:xb_self_order_tag_filters.field_product_public_category__xb_kiosk_filter_multi
+msgid ""
+"The customer can pick several subcategories of this filter at once. Off: one"
+" at a time (e.g. a single metal)."
+msgstr ""
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields,help:xb_self_order_tag_filters.field_pos_config__xb_tf_categ_ids
+#: model:ir.model.fields,help:xb_self_order_tag_filters.field_res_config_settings__pos_xb_tf_categ_ids
+msgid ""
+"The kiosk categories that offer filters. Empty: every category with "
+"something to filter."
 msgstr ""
 
 #. module: xb_self_order_tag_filters

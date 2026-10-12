@@ -1,24 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
+    <!-- Una opción de filtro: botón grande en el panel, «chip» en la barra y en el filtro principal. -->
+    <t t-name="xb_self_order_tag_filters.Option">
+        <t t-set="xbOn" t-value="xbSelected(group.id).includes(value.id)"/>
+        <t t-set="xbN" t-value="xbCount(group.id, value.id)"/>
+        <button class="xb_tf_option" t-att-class="{'xb_tf_on': xbOn, 'xb_tf_chip': xbChip}" t-att-disabled="!xbOn and xbN === 0" t-att-data-value="value.name" t-on-click="() => this.xbToggle(group, value)">
+            <span class="xb_tf_icon" aria-hidden="true" t-att-style="xbSettings.icons === 'color' and value.color ? 'display: block; background: ' + value.color : ''"/>
+            <span t-esc="value.name"/>
+            <small t-if="xbSettings.show_count" t-esc="xbN"/>
+        </button>
+    </t>
+
     <t t-inherit="pos_self_order.ProductListPage" t-inherit-mode="extension">
         <!-- Cuántos productos quedan, sobre la lista, solo con filtros puestos. -->
         <xpath expr="//div[hasclass('product_container')]/section" position="before">
-            <div t-if="xbCountActive" class="xb_tf_count d-flex justify-content-between align-items-center pt-3 px-3 px-sm-0">
+            <div t-if="xbCountActive" class="xb_tf_count d-flex justify-content-between align-items-center pt-3 px-3 px-sm-0" t-att-style="xbStyle">
                 <span t-esc="xbResultLabel"/>
                 <button class="xb_tf_link" t-on-click="xbResetFilters">Clear filters</button>
             </div>
         </xpath>
+        <!-- Barra, línea de texto o filtro principal: fijos entre las categorías y los productos. -->
+        <xpath expr="//div[@t-ref='product_list']" position="before">
+            <t t-set="xbGroupList" t-value="xbGroups"/>
+            <t t-set="xbPanelList" t-value="xbLayout === 'dots' ? xbGroupList.slice(1) : xbGroupList"/>
+            <div t-if="xbGroupList.length and xbLayout !== 'fab'" class="xb_tf_strip flex-shrink-0" t-att-class="xbClass" t-att-style="xbStyle">
+                <div class="container o_self_container">
+                    <t t-if="xbLayout === 'bar'">
+                        <div t-foreach="xbGroupList" t-as="group" t-key="group.id" class="xb_tf_row">
+                            <span class="xb_tf_title" t-esc="group.name"/>
+                            <div class="xb_tf_chips">
+                                <t t-foreach="group.values" t-as="value" t-key="value.id">
+                                    <t t-call="xb_self_order_tag_filters.Option"><t t-set="xbChip" t-value="true"/></t>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                    <button t-elif="xbLayout === 'line'" class="xb_tf_line" t-on-click="xbOpen">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
+                        <span class="xb_tf_line_text">
+                            <t t-foreach="xbLineParts" t-as="part" t-key="part.id">
+                                <span t-if="!part_first" class="xb_tf_sep"> · </span>
+                                <span><t t-esc="part.title"/>: <b t-att-class="{'xb_tf_line_on': part.on}" t-esc="part.value"/></span>
+                            </t>
+                        </span>
+                        <span class="xb_tf_chevron" aria-hidden="true">›</span>
+                    </button>
+                    <div t-elif="xbLayout === 'dots'" class="xb_tf_row">
+                        <t t-set="group" t-value="xbGroupList[0]"/>
+                        <span class="xb_tf_title" t-esc="group.name"/>
+                        <div class="xb_tf_chips">
+                            <t t-foreach="group.values" t-as="value" t-key="value.id">
+                                <t t-call="xb_self_order_tag_filters.Option"><t t-set="xbChip" t-value="true"/></t>
+                            </t>
+                        </div>
+                        <button t-if="xbPanelList.length" class="xb_tf_more" t-on-click="xbOpen">
+                            <span>More filters</span>
+                            <i t-if="xbPanelCountActive" t-esc="xbPanelCountActive"/>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </xpath>
         <!-- Botón flotante, justo encima del pie, y el panel que abre. -->
         <xpath expr="//OrderWidget/.." position="before">
-            <t t-set="xbGroupList" t-value="xbGroups"/>
-            <div t-if="xbGroupList.length" class="xb_tf_anchor position-relative">
+            <div t-if="xbGroupList.length and xbLayout === 'fab'" class="xb_tf_anchor position-relative" t-att-style="xbStyle">
                 <button class="xb_tf_fab" t-on-click="xbOpen">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
                     <span>Filter</span>
                     <i t-if="xbCountActive" t-esc="xbCountActive"/>
                 </button>
             </div>
-            <div t-if="xbFilters.open and xbGroupList.length" class="xb_tf_overlay">
+            <div t-if="xbFilters.open and xbPanelList.length and xbLayout !== 'bar'" class="xb_tf_overlay" t-att-class="xbClass" t-att-style="xbStyle">
                 <div class="xb_tf_shade" t-on-click="xbClose"/>
                 <div class="xb_tf_sheet">
                     <div class="xb_tf_head">
@@ -26,17 +78,11 @@
                         <button class="xb_tf_link" t-on-click="xbClose">Close</button>
                     </div>
                     <div class="xb_tf_body">
-                        <section t-foreach="xbGroupList" t-as="group" t-key="group.id" class="xb_tf_group">
+                        <section t-foreach="xbPanelList" t-as="group" t-key="group.id" class="xb_tf_group">
                             <div class="xb_tf_title" t-esc="group.name"/>
                             <div class="xb_tf_options" t-att-class="{'xb_tf_options_4': group.isSection}">
                                 <t t-foreach="group.values" t-as="value" t-key="value.id">
-                                    <t t-set="xbOn" t-value="xbSelected(group.id).includes(value.id)"/>
-                                    <t t-set="xbN" t-value="xbCount(group.id, value.id)"/>
-                                    <button class="xb_tf_option" t-att-class="{'xb_tf_on': xbOn}" t-att-disabled="!xbOn and xbN === 0" t-att-data-value="value.name" t-on-click="() => this.xbToggle(group, value)">
-                                        <span class="xb_tf_icon" aria-hidden="true"/>
-                                        <span t-esc="value.name"/>
-                                        <small t-esc="xbN"/>
-                                    </button>
+                                    <t t-call="xb_self_order_tag_filters.Option"><t t-set="xbChip" t-value="false"/></t>
                                 </t>
                             </div>
                         </section>

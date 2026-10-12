@@ -21,7 +21,8 @@ class ProductTemplate(models.Model):
                     sections.setdefault(tmpl.id, []).append({
                         'group': {'id': 'c%s' % categ.parent_id.id,
                                   'name': categ.parent_id.xb_kiosk_filter_title,
-                                  'sequence': categ.parent_id.sequence},
+                                  'sequence': categ.parent_id.sequence,
+                                  'single': not categ.parent_id.xb_kiosk_filter_multi},
                         'id': 'c%s' % categ.id, 'name': categ.name, 'sequence': categ.sequence,
                     })
         for r in res:
