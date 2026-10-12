@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="pos_self_order.ProductListPage" t-inherit-mode="extension">
+        <!-- Cuántos productos quedan, sobre la lista, solo con filtros puestos. -->
+        <xpath expr="//div[hasclass('product_container')]/section" position="before">
+            <div t-if="xbCountActive" class="xb_tf_count d-flex justify-content-between align-items-center pt-3 px-3 px-sm-0">
+                <span t-esc="xbResultLabel"/>
+                <button class="xb_tf_link" t-on-click="xbResetFilters">Clear filters</button>
+            </div>
+        </xpath>
+        <!-- Botón flotante, justo encima del pie, y el panel que abre. -->
+        <xpath expr="//OrderWidget/.." position="before">
+            <t t-set="xbGroupList" t-value="xbGroups"/>
+            <div t-if="xbGroupList.length" class="xb_tf_anchor position-relative">
+                <button class="xb_tf_fab" t-on-click="xbOpen">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
+                    <span>Filter</span>
+                    <i t-if="xbCountActive" t-esc="xbCountActive"/>
+                </button>
+            </div>
+            <div t-if="xbFilters.open and xbGroupList.length" class="xb_tf_overlay">
+                <div class="xb_tf_shade" t-on-click="xbClose"/>
+                <div class="xb_tf_sheet">
+                    <div class="xb_tf_head">
+                        <h2>Filter</h2>
+                        <button class="xb_tf_link" t-on-click="xbClose">Close</button>
+                    </div>
+                    <div class="xb_tf_body">
+                        <section t-foreach="xbGroupList" t-as="group" t-key="group.id" class="xb_tf_group">
+                            <div class="xb_tf_title" t-esc="group.name"/>
+                            <div class="xb_tf_options" t-att-class="{'xb_tf_options_4': group.isSection}">
+                                <t t-foreach="group.values" t-as="value" t-key="value.id">
+                                    <t t-set="xbOn" t-value="xbSelected(group.id).includes(value.id)"/>
+                                    <t t-set="xbN" t-value="xbCount(group.id, value.id)"/>
+                                    <button class="xb_tf_option" t-att-class="{'xb_tf_on': xbOn}" t-att-disabled="!xbOn and xbN === 0" t-att-data-value="value.name" t-on-click="() => this.xbToggle(group, value)">
+                                        <span class="xb_tf_icon" aria-hidden="true"/>
+                                        <span t-esc="value.name"/>
+                                        <small t-esc="xbN"/>
+                                    </button>
+                                </t>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="xb_tf_foot">
+                        <button class="xb_tf_clear" t-on-click="xbResetFilters">Clear</button>
+                        <button class="xb_tf_go" t-on-click="xbClose">
+                            <t t-esc="xbSeeLabel"/>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </t>
+</templates>

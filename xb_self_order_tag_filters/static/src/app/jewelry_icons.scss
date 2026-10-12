@@ -1,0 +1,83 @@
+// Dibujos de joyería por nombre de opción: forma de la piedra y color del metal.
+// Cualquier opción con otro nombre se queda solo con su texto.
+
+.xb_tf_option[data-value="Redondo"] .xb_tf_icon, .xb_tf_option[data-value="Round"] .xb_tf_icon {
+    display: block;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314110E' stroke-width='1.2'><circle cx='12' cy='12' r='8'/><circle cx='12' cy='12' r='4'/><path d='M12 4v4M12 16v4M4 12h4M16 12h4'/></svg>") center / contain no-repeat;
+}
+.xb_tf_option[data-value="Princesa"] .xb_tf_icon, .xb_tf_option[data-value="Princess"] .xb_tf_icon {
+    display: block;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314110E' stroke-width='1.2'><rect x='5' y='5' width='14' height='14'/><path d='M5 5l14 14M19 5L5 19'/></svg>") center / contain no-repeat;
+}
+.xb_tf_option[data-value="Cojín"] .xb_tf_icon, .xb_tf_option[data-value="Cushion"] .xb_tf_icon {
+    display: block;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314110E' stroke-width='1.2'><rect x='5' y='5' width='14' height='14' rx='4'/><rect x='9' y='9' width='6' height='6' rx='1.5'/></svg>") center / contain no-repeat;
+}
+.xb_tf_option[data-value="Ovalada"] .xb_tf_icon, .xb_tf_option[data-value="Oval"] .xb_tf_icon {
+    display: block;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314110E' stroke-width='1.2'><ellipse cx='12' cy='12' rx='6' ry='9'/><ellipse cx='12' cy='12' rx='2.6' ry='4.5'/></svg>") center / contain no-repeat;
+}
+.xb_tf_option[data-value="Esmeralda"] .xb_tf_icon, .xb_tf_option[data-value="Emerald"] .xb_tf_icon {
+    display: block;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314110E' stroke-width='1.2'><path d='M8 3h8l3 3v12l-3 3H8l-3-3V6z'/><rect x='9' y='7' width='6' height='10'/></svg>") center / contain no-repeat;
+}
+.xb_tf_option[data-value="Marquise"] .xb_tf_icon, .xb_tf_option[data-value="Marquesa"] .xb_tf_icon {
+    display: block;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314110E' stroke-width='1.2'><path d='M12 2c5 5 5 15 0 20c-5-5-5-15 0-20z'/><path d='M12 6v12'/></svg>") center / contain no-repeat;
+}
+.xb_tf_option[data-value="Pera"] .xb_tf_icon, .xb_tf_option[data-value="Pear"] .xb_tf_icon {
+    display: block;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314110E' stroke-width='1.2'><path d='M12 2c4 6 7 9 7 13a7 7 0 0 1-14 0c0-4 3-7 7-13z'/></svg>") center / contain no-repeat;
+}
+.xb_tf_option[data-value="Corazón"] .xb_tf_icon, .xb_tf_option[data-value="Heart"] .xb_tf_icon {
+    display: block;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314110E' stroke-width='1.2'><path d='M12 20s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9c0 6-8 11-8 11z'/></svg>") center / contain no-repeat;
+}
+.xb_tf_option[data-value="Oro blanco"] .xb_tf_icon, .xb_tf_option[data-value="White gold"] .xb_tf_icon, .xb_tf_option[data-value="Platino"] .xb_tf_icon, .xb_tf_option[data-value="Platinum"] .xb_tf_icon, .xb_tf_option[data-value="Plata"] .xb_tf_icon, .xb_tf_option[data-value="Silver"] .xb_tf_icon {
+    display: block;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+    background: radial-gradient(circle at 35% 30%, #fff, #d6d4cf 70%);
+}
+.xb_tf_option[data-value="Oro amarillo"] .xb_tf_icon, .xb_tf_option[data-value="Yellow gold"] .xb_tf_icon {
+    display: block;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+    background: radial-gradient(circle at 35% 30%, #f6e2a8, #c99a45 70%);
+}
+.xb_tf_option[data-value="Oro rosa"] .xb_tf_icon, .xb_tf_option[data-value="Rose gold"] .xb_tf_icon {
+    display: block;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+    background: radial-gradient(circle at 35% 30%, #f6d2c4, #c98a6f 70%);
+}
+.xb_tf_option[data-value="Bitono"] .xb_tf_icon, .xb_tf_option[data-value="Two-tone"] .xb_tf_icon {
+    display: block;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+    background: linear-gradient(90deg, #dedcd6 50%, #d3a957 50%);
+}

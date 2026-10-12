@@ -1,0 +1,82 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_self_order_tag_filters
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: XUBAX\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+"Language: es_MX\n"
+
+#. module: xb_self_order_tag_filters
+#. odoo-javascript
+#: code:addons/xb_self_order_tag_filters/static/src/app/tag_filters.js:0
+msgid "%s results"
+msgstr "%s resultados"
+
+#. module: xb_self_order_tag_filters
+#. odoo-javascript
+#: code:addons/xb_self_order_tag_filters/static/src/app/tag_filters.js:0
+msgid "1 result"
+msgstr "1 resultado"
+
+#. module: xb_self_order_tag_filters
+#. odoo-javascript
+#: code:addons/xb_self_order_tag_filters/static/src/app/tag_filters.xml:0
+msgid "Clear"
+msgstr "Limpiar"
+
+#. module: xb_self_order_tag_filters
+#. odoo-javascript
+#: code:addons/xb_self_order_tag_filters/static/src/app/tag_filters.xml:0
+msgid "Clear filters"
+msgstr "Limpiar filtros"
+
+#. module: xb_self_order_tag_filters
+#. odoo-javascript
+#: code:addons/xb_self_order_tag_filters/static/src/app/tag_filters.xml:0
+msgid "Close"
+msgstr "Cerrar"
+
+#. module: xb_self_order_tag_filters
+#. odoo-javascript
+#: code:addons/xb_self_order_tag_filters/static/src/app/tag_filters.xml:0
+msgid "Filter"
+msgstr "Filtrar"
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields,field_description:xb_self_order_tag_filters.field_product_public_category__xb_kiosk_filter_title
+msgid "Kiosk Filter Title"
+msgstr "Título como filtro del kiosco"
+
+#. module: xb_self_order_tag_filters
+#. odoo-javascript
+#: code:addons/xb_self_order_tag_filters/static/src/app/tag_filters.js:0
+msgid "See %s results"
+msgstr "Ver %s resultados"
+
+#. module: xb_self_order_tag_filters
+#. odoo-javascript
+#: code:addons/xb_self_order_tag_filters/static/src/app/tag_filters.js:0
+msgid "See 1 result"
+msgstr "Ver 1 resultado"
+
+#. module: xb_self_order_tag_filters
+#: model:ir.model.fields,help:xb_self_order_tag_filters.field_product_public_category__xb_kiosk_filter_title
+msgid ""
+"When set, the subcategories of this category are offered as a filter in the "
+"self-order kiosk, under this title (e.g. \"Metal\")."
+msgstr ""
+"Si lo llenas, las subcategorías de esta categoría se ofrecen como filtro en "
+"el kiosco de autoservicio, con este título (p. ej. «Metal»)."
+
+#. module: xb_self_order_tag_filters
+#: model_terms:ir.ui.view,arch_db:xb_self_order_tag_filters.product_public_category_form_view
+msgid "e.g. Metal"
+msgstr "p. ej. Metal"

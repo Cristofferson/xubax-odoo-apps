@@ -1,0 +1,166 @@
+// Botón flotante y panel de filtros del kiosco. Colores por variables para que cada tema
+// los ajuste (--xb-tf-ink: botón y elegido; --xb-tf-accent: marco de lo elegido).
+.o_self_product_list_page {
+    --xb-tf-ink: var(--bs-body-color, #212529);
+    --xb-tf-accent: var(--bs-primary, #714b67);
+    --xb-tf-soft: rgba(0, 0, 0, 0.04);
+    --xb-tf-line: rgba(0, 0, 0, 0.12);
+    --xb-tf-muted: rgba(0, 0, 0, 0.55);
+    --xb-tf-title-font: inherit;
+}
+
+.xb_tf_count {
+    font-size: 1rem;
+    color: var(--xb-tf-muted);
+    b { color: var(--xb-tf-ink); }
+}
+
+.xb_tf_link {
+    border: 0;
+    background: none;
+    padding: 0.25rem 0;
+    color: var(--xb-tf-accent);
+    text-decoration: underline;
+    font-size: 1rem;
+}
+
+.xb_tf_anchor { height: 0; z-index: 5; }
+
+.xb_tf_fab {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: 0;
+    border-radius: 999px;
+    padding: 0.9rem 1.5rem;
+    background: var(--xb-tf-ink);
+    color: #fff;
+    font-size: 1rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.25);
+    svg { width: 1.2rem; height: 1.2rem; stroke: currentColor; fill: none; stroke-width: 1.6; }
+    i {
+        font-style: normal;
+        letter-spacing: 0;
+        min-width: 1.5rem;
+        height: 1.5rem;
+        padding: 0 0.4rem;
+        border-radius: 999px;
+        display: inline-grid;
+        place-items: center;
+        background: var(--xb-tf-accent);
+        font-size: 0.85rem;
+    }
+}
+
+.xb_tf_overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1050;
+}
+
+.xb_tf_shade {
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 17, 14, 0.35);
+    animation: xb_tf_fade 0.2s ease;
+}
+
+.xb_tf_sheet {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: 78vh;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 1.25rem 1.25rem 0 0;
+    box-shadow: 0 -0.75rem 2rem rgba(0, 0, 0, 0.18);
+    animation: xb_tf_up 0.25s ease;
+}
+
+.xb_tf_head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.75rem 0.5rem;
+    h2 { margin: 0; font-size: 2rem; font-weight: 500; font-family: var(--xb-tf-title-font); }
+}
+
+.xb_tf_body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 0 1.75rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.xb_tf_title {
+    font-size: 0.85rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--xb-tf-muted);
+    margin-bottom: 0.6rem;
+}
+
+.xb_tf_options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.6rem;
+    &.xb_tf_options_4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.xb_tf_option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    min-height: 4.5rem;
+    padding: 0.8rem 0.4rem;
+    border: 1px solid var(--xb-tf-line);
+    background: #fff;
+    color: var(--xb-tf-ink);
+    font-size: 1rem;
+    line-height: 1.2;
+    small { color: var(--xb-tf-muted); font-size: 0.8rem; }
+    &.xb_tf_on {
+        border-color: var(--xb-tf-accent);
+        box-shadow: inset 0 0 0 1px var(--xb-tf-accent);
+        background: var(--xb-tf-soft);
+    }
+    &:disabled { opacity: 0.35; }
+    // Los temas ponen aquí un dibujo por opción (forma de la piedra, color del metal…).
+    .xb_tf_icon { display: none; }
+}
+
+.xb_tf_foot {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem 1.75rem;
+    border-top: 1px solid var(--xb-tf-line);
+    button { padding: 1.1rem 1.25rem; font-size: 1rem; }
+    .xb_tf_clear { border: 1px solid var(--xb-tf-line); background: #fff; color: var(--xb-tf-ink); }
+    .xb_tf_go {
+        flex: 1;
+        border: 0;
+        background: var(--xb-tf-ink);
+        color: #fff;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+}
+
+@keyframes xb_tf_up { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes xb_tf_fade { from { opacity: 0; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+    .xb_tf_sheet, .xb_tf_shade { animation: none; }
+}
