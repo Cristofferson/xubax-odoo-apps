@@ -1,0 +1,129 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_self_order_rawbt
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-15 02:08+0000\n"
+"PO-Revision-Date: 2026-10-15 02:08+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields.selection,name:xb_self_order_rawbt.selection__pos_config__xb_rawbt_paper__384
+msgid "58 mm"
+msgstr "58 mm"
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields.selection,name:xb_self_order_rawbt.selection__pos_config__xb_rawbt_paper__576
+msgid "80 mm"
+msgstr "80 mm"
+
+#. module: xb_self_order_rawbt
+#: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
+msgid "<b>A</b>Android intent"
+msgstr "<b>A</b>Intent de Android"
+
+#. module: xb_self_order_rawbt
+#: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
+msgid "<b>B</b>rawbt: link"
+msgstr "<b>B</b>Liga rawbt:"
+
+#. module: xb_self_order_rawbt
+#: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
+msgid "<b>C</b>Android intent, 3 seconds later (like the kiosk)"
+msgstr "<b>C</b>Intent de Android, 3 segundos después (como el kiosco)"
+
+#. module: xb_self_order_rawbt
+#: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
+msgid "<b>D</b>rawbt: link, 3 seconds later (like the kiosk)"
+msgstr "<b>D</b>Liga rawbt:, 3 segundos después (como el kiosco)"
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields.selection,name:xb_self_order_rawbt.selection__pos_config__xb_rawbt_method__intent
+msgid "Android intent"
+msgstr "Intent de Android"
+
+#. module: xb_self_order_rawbt
+#. odoo-javascript
+#: code:addons/xb_self_order_rawbt/static/src/app/rawbt_printer.js:0
+msgid "Check that the RawBT app is installed and connected to the printer."
+msgstr "Revisa que la app RawBT esté instalada y conectada a la impresora."
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields,help:xb_self_order_rawbt.field_pos_config__xb_rawbt_method
+#: model:ir.model.fields,help:xb_self_order_rawbt.field_res_config_settings__pos_xb_rawbt_method
+msgid ""
+"How the kiosk hands the ticket to RawBT. Use the test page to find the one "
+"that prints on your tablet."
+msgstr "Cómo le pasa el kiosco el ticket a RawBT. Usa la página de prueba para ver cuál imprime en tu tablet."
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields,field_description:xb_self_order_rawbt.field_pos_config__xb_rawbt
+#: model:ir.model.fields,field_description:xb_self_order_rawbt.field_res_config_settings__pos_xb_rawbt
+#: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.res_config_settings_view_form_kiosk_rawbt
+msgid "Kiosk printer through RawBT"
+msgstr "Impresora del kiosco por RawBT"
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields,field_description:xb_self_order_rawbt.field_pos_config__xb_rawbt_paper
+#: model:ir.model.fields,field_description:xb_self_order_rawbt.field_res_config_settings__pos_xb_rawbt_paper
+msgid "Paper width"
+msgstr "Ancho del papel"
+
+#. module: xb_self_order_rawbt
+#: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
+msgid "Printer test -"
+msgstr "Prueba de impresora -"
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields,field_description:xb_self_order_rawbt.field_pos_config__xb_rawbt_test_url
+#: model:ir.model.fields,field_description:xb_self_order_rawbt.field_res_config_settings__pos_xb_rawbt_test_url
+msgid "Printer test page"
+msgstr "Página de prueba de impresora"
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields,field_description:xb_self_order_rawbt.field_pos_config__xb_rawbt_method
+#: model:ir.model.fields,field_description:xb_self_order_rawbt.field_res_config_settings__pos_xb_rawbt_method
+msgid "Sending method"
+msgstr "Forma de envío"
+
+#. module: xb_self_order_rawbt
+#: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
+msgid ""
+"Tap each button and note which ones print, and whether a window appears. "
+"Paper:"
+msgstr "Toca cada botón y fíjate cuáles imprimen y si aparece alguna ventana. Papel:"
+
+#. module: xb_self_order_rawbt
+#: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.res_config_settings_view_form_kiosk_rawbt
+msgid ""
+"The kiosk prints its tickets on the printer of the tablet (USB or Bluetooth)"
+" through the RawBT app (Android), instead of the Epson printer."
+msgstr "El kiosco imprime sus tickets en la impresora de la tablet (USB o Bluetooth) por medio de la app RawBT (Android), en lugar de la impresora Epson."
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields,help:xb_self_order_rawbt.field_pos_config__xb_rawbt
+#: model:ir.model.fields,help:xb_self_order_rawbt.field_res_config_settings__pos_xb_rawbt
+msgid ""
+"The kiosk prints its tickets through the RawBT app of the tablet (Android) "
+"on the printer RawBT is connected to (USB, Bluetooth or network), instead of"
+" the Epson ePOS printer."
+msgstr "El kiosco imprime sus tickets por medio de la app RawBT de la tablet (Android) en la impresora a la que esté conectada RawBT (USB, Bluetooth o red), en lugar de la impresora Epson ePOS."
+
+#. module: xb_self_order_rawbt
+#. odoo-javascript
+#: code:addons/xb_self_order_rawbt/static/src/app/rawbt_printer.js:0
+msgid "The ticket could not be printed"
+msgstr "No se pudo imprimir el ticket"
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields.selection,name:xb_self_order_rawbt.selection__pos_config__xb_rawbt_method__scheme
+msgid "rawbt: link"
+msgstr "Liga rawbt:"

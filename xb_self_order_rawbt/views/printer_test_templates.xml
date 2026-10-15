@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="printer_test" name="Kiosk printer test (RawBT)">
+        <t t-out="'&lt;!DOCTYPE html&gt;'"/>
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <title>Printer test</title>
+                <style>
+                    body { font-family: sans-serif; margin: 16px; background: #fff; color: #222; }
+                    h1 { font-size: 22px; margin: 0 0 4px; }
+                    p { color: #555; }
+                    button { display: block; width: 100%; margin: 12px 0; padding: 18px; font-size: 18px;
+                             border: 1px solid #999; border-radius: 10px; background: #f4f4f4; text-align: left; }
+                    button b { display: block; font-size: 20px; }
+                    #log { margin-top: 16px; font-size: 14px; color: #777; }
+                </style>
+                <script type="text/javascript" src="/xb_self_order_rawbt/static/lib/xb_rawbt.js"/>
+            </head>
+            <body t-att-data-width="width">
+                <h1>Printer test - <t t-esc="config.name"/></h1>
+                <p>Tap each button and note which ones print, and whether a window appears. Paper: <t t-esc="'80 mm' if width == 576 else '58 mm'"/>.</p>
+                <button data-method="intent" data-delay="0"><b>A</b>Android intent</button>
+                <button data-method="scheme" data-delay="0"><b>B</b>rawbt: link</button>
+                <button data-method="intent" data-delay="3000"><b>C</b>Android intent, 3 seconds later (like the kiosk)</button>
+                <button data-method="scheme" data-delay="3000"><b>D</b>rawbt: link, 3 seconds later (like the kiosk)</button>
+                <div id="log"/>
+                <script type="text/javascript">
+                    (function () {
+                        var width = parseInt(document.body.dataset.width, 10) || 576;
+                        function ticket(label) {
+                            var c = document.createElement("canvas");
+                            c.width = width; c.height = 360;
+                            var g = c.getContext("2d");
+                            g.fillStyle = "#fff"; g.fillRect(0, 0, c.width, c.height);
+                            g.strokeStyle = "#000"; g.lineWidth = 4; g.strokeRect(2, 2, c.width - 4, c.height - 4);
+                            g.fillStyle = "#000"; g.textAlign = "center";
+                            g.font = "bold 44px sans-serif"; g.fillText("TEST " + label, c.width / 2, 80);
+                            g.font = "28px sans-serif";
+                            g.fillText("RawBT - " + (width === 576 ? "80 mm" : "58 mm"), c.width / 2, 140);
+                            g.fillText(new Date().toLocaleString(), c.width / 2, 190);
+                            for (var x = 0; x !== Math.ceil(c.width / 24) * 24; x += 24) { g.fillRect(x, 240, 12, 40); }
+                            g.font = "22px sans-serif";
+                            g.fillText("The frame must be complete on the paper", c.width / 2, 330);
+                            return window.XbRawBT.toBase64(window.XbRawBT.canvasToEscPos(c, width));
+                        }
+                        var log = document.getElementById("log");
+                        document.querySelectorAll("button").forEach(function (btn) {
+                            btn.addEventListener("click", function () {
+                                var label = btn.querySelector("b").textContent;
+                                var delay = parseInt(btn.dataset.delay, 10);
+                                var b64 = ticket(label);
+                                log.textContent = "Sending " + label + (delay ? " in 3 s..." : "...");
+                                setTimeout(function () {
+                                    window.XbRawBT.send(b64, btn.dataset.method);
+                                    log.textContent = "Sent " + label + ".";
+                                }, delay);
+                            });
+                        });
+                    })();
+                </script>
+            </body>
+        </html>
+    </template>
+</odoo>
