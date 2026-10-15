@@ -1,0 +1,455 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* analitix_self_order
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-15 03:10+0000\n"
+"PO-Revision-Date: 2026-10-15 03:10+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: analitix_self_order
+#: model:ir.model.fields,help:analitix_self_order.field_analitix_kiosk_session__use_rate
+msgid ""
+"100 when the person touched the kiosk. Its average is the share of stops "
+"that became a use."
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,help:analitix_self_order.field_analitix_kiosk_session__conversion_rate
+msgid ""
+"100 when the stop ended in a sale. Its average over a group is the kiosk's "
+"conversion rate."
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields.selection,name:analitix_self_order.selection__analitix_kiosk_session__age_band__18-24
+msgid "18-24"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields.selection,name:analitix_self_order.selection__analitix_kiosk_session__age_band__25-34
+msgid "25-34"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields.selection,name:analitix_self_order.selection__analitix_kiosk_session__age_band__35-44
+msgid "35-44"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields.selection,name:analitix_self_order.selection__analitix_kiosk_session__age_band__45-54
+msgid "45-54"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields.selection,name:analitix_self_order.selection__analitix_kiosk_session__age_band__55-64
+msgid "55-64"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields.selection,name:analitix_self_order.selection__analitix_kiosk_session__age_band__65+
+msgid "65+"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.constraint,message:analitix_self_order.constraint_analitix_kiosk_session_uuid_unique
+msgid "A kiosk stop is recorded once."
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,help:analitix_self_order.field_pos_config__analitix_kiosk_debug
+#: model:ir.model.fields,help:analitix_self_order.field_res_config_settings__pos_analitix_kiosk_debug
+msgid ""
+"A small box on the kiosk shows how many faces it sees, for setting it up. "
+"Turn it off for customers."
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__age_band
+#: model_terms:ir.ui.view,arch_db:analitix_self_order.analitix_kiosk_session_view_search
+msgid "Age Band"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__age_confidence
+msgid "Age Confidence"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,help:analitix_self_order.field_analitix_kiosk_session__reliable
+msgid "Age and gender clear the store's confidence floor."
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__amount
+msgid "Amount"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model,name:analitix_self_order.model_analitix_kiosk_session
+msgid "Analitix Kiosk Stop"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_pos_config__analitix_store_id
+#: model:ir.model.fields,field_description:analitix_self_order.field_res_config_settings__pos_analitix_store_id
+msgid "Analitix store"
+msgstr ""
+
+#. module: analitix_self_order
+#. odoo-javascript
+#: code:addons/analitix_self_order/static/src/app/kiosk_camera.js:0
+msgid "Analitix: %(faces)s face(s) · %(fps)s/s · %(queue)s to send"
+msgstr ""
+
+#. module: analitix_self_order
+#. odoo-javascript
+#: code:addons/analitix_self_order/static/src/app/kiosk_camera.js:0
+msgid "Analitix: no camera (%s)"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.actions.server,name:analitix_self_order.cron_kiosk_match_outcomes_ir_actions_server
+msgid "Analitix: sales of recent kiosk stops"
+msgstr ""
+
+#. module: analitix_self_order
+#. odoo-javascript
+#: code:addons/analitix_self_order/static/src/app/kiosk_camera.js:0
+msgid "Analitix: starting the camera…"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields.selection,name:analitix_self_order.selection__analitix_kiosk_session__age_band__0-12
+msgid "Child (0-12)"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_pos_config__analitix_kiosk_min_face
+#: model:ir.model.fields,field_description:analitix_self_order.field_res_config_settings__pos_analitix_kiosk_min_face
+msgid "Closest distance (face size %)"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__company_id
+msgid "Company"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model,name:analitix_self_order.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__conversion_rate
+msgid "Conversion (%)"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__converted
+msgid "Converted"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: analitix_self_order
+#: model_terms:ir.ui.view,arch_db:analitix_self_order.analitix_kiosk_session_view_search
+msgid "Day"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__display_name
+#: model:ir.model.fields,field_description:analitix_self_order.field_ir_http__display_name
+#: model:ir.model.fields,field_description:analitix_self_order.field_pos_config__display_name
+#: model:ir.model.fields,field_description:analitix_self_order.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__ended_at
+msgid "Ended"
+msgstr ""
+
+#. module: analitix_self_order
+#: model_terms:ir.ui.view,arch_db:analitix_self_order.analitix_kiosk_session_view_search
+msgid "Ended in a sale"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,help:analitix_self_order.field_pos_config__analitix_kiosk_min_face
+#: model:ir.model.fields,help:analitix_self_order.field_res_config_settings__pos_analitix_kiosk_min_face
+msgid ""
+"Faces smaller than this share of the image width are people walking by in "
+"the back, not people at the kiosk. Raise it if the kiosk counts passers-by; "
+"lower it if it misses people standing in front."
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__attention_seconds
+msgid "Facing the screen (s)"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields.selection,name:analitix_self_order.selection__analitix_kiosk_session__gender__female
+msgid "Female"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__gender
+#: model_terms:ir.ui.view,arch_db:analitix_self_order.analitix_kiosk_session_view_search
+msgid "Gender"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__gender_confidence
+msgid "Gender Confidence"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model,name:analitix_self_order.model_ir_http
+msgid "HTTP Routing"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__hour
+#: model_terms:ir.ui.view,arch_db:analitix_self_order.analitix_kiosk_session_view_search
+msgid "Hour"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,help:analitix_self_order.field_analitix_kiosk_session__hour
+msgid "Hour of the day in the store's timezone."
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__id
+#: model:ir.model.fields,field_description:analitix_self_order.field_ir_http__id
+#: model:ir.model.fields,field_description:analitix_self_order.field_pos_config__id
+#: model:ir.model.fields,field_description:analitix_self_order.field_res_config_settings__id
+msgid "ID"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.actions.act_window,name:analitix_self_order.action_kiosk_session
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__config_id
+#: model:ir.ui.menu,name:analitix_self_order.menu_kiosk_session
+#: model_terms:ir.ui.view,arch_db:analitix_self_order.analitix_kiosk_session_view_graph
+#: model_terms:ir.ui.view,arch_db:analitix_self_order.analitix_kiosk_session_view_pivot
+msgid "Kiosk"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__pos_order_id
+msgid "Kiosk Order"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields.selection,name:analitix_self_order.selection__analitix_kiosk_session__outcome__pos_order
+msgid "Kiosk order"
+msgstr ""
+
+#. module: analitix_self_order
+#: model_terms:ir.ui.view,arch_db:analitix_self_order.analitix_kiosk_session_view_search
+msgid "Last 30 days"
+msgstr ""
+
+#. module: analitix_self_order
+#: model_terms:ir.ui.view,arch_db:analitix_self_order.analitix_kiosk_session_view_search
+msgid "Last 7 days"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields.selection,name:analitix_self_order.selection__analitix_kiosk_session__outcome__none
+msgid "Left without buying"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields.selection,name:analitix_self_order.selection__analitix_kiosk_session__gender__male
+msgid "Male"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_pos_config__analitix_kiosk_camera
+#: model:ir.model.fields,field_description:analitix_self_order.field_res_config_settings__pos_analitix_kiosk_camera
+msgid "Measure the kiosk with its camera"
+msgstr ""
+
+#. module: analitix_self_order
+#: model_terms:ir.ui.view,arch_db:analitix_self_order.res_config_settings_view_form_analitix_kiosk
+msgid "Measure the kiosk with its camera (Analitix)"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,help:analitix_self_order.field_analitix_kiosk_session__people
+msgid "Most faces seen together during the stop."
+msgstr ""
+
+#. module: analitix_self_order
+#: model_terms:ir.actions.act_window,help:analitix_self_order.action_kiosk_session
+msgid "No one has stopped at the kiosk yet"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__outcome
+#: model_terms:ir.ui.view,arch_db:analitix_self_order.analitix_kiosk_session_view_search
+msgid "Outcome"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__people
+msgid "People"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model,name:analitix_self_order.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields.selection,name:analitix_self_order.selection__analitix_kiosk_session__outcome__sale_order
+msgid "Quotation or order in Sales"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__reliable
+msgid "Reliable"
+msgstr ""
+
+#. module: analitix_self_order
+#: model_terms:ir.ui.view,arch_db:analitix_self_order.analitix_kiosk_session_view_search
+msgid "Reliable age and gender"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__sale_order_id
+msgid "Sales Order"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,help:analitix_self_order.field_analitix_kiosk_session__attention_seconds
+msgid "Seconds in which a face was seen looking at the kiosk."
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_pos_config__analitix_kiosk_debug
+#: model:ir.model.fields,field_description:analitix_self_order.field_res_config_settings__pos_analitix_kiosk_debug
+msgid "Show the camera reading"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__started_at
+msgid "Started"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__store_id
+msgid "Store"
+msgstr ""
+
+#. module: analitix_self_order
+#: model_terms:ir.actions.act_window,help:analitix_self_order.action_kiosk_session
+msgid ""
+"Switch on «Measure the kiosk with its camera» in the kiosk settings of the "
+"Point of Sale. Every person who stops in front of the kiosk shows up here: "
+"how long, whether they used it, approximate age and gender, and whether it "
+"ended in a sale."
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields.selection,name:analitix_self_order.selection__analitix_kiosk_session__age_band__13-17
+msgid "Teen (13-17)"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,help:analitix_self_order.field_pos_config__analitix_kiosk_camera
+#: model:ir.model.fields,help:analitix_self_order.field_res_config_settings__pos_analitix_kiosk_camera
+msgid ""
+"The kiosk reads its front camera in the browser and sends Analitix one row "
+"per person who stops: time, use, approximate age and gender, and whether it "
+"ended in a sale. No image leaves the tablet."
+msgstr ""
+
+#. module: analitix_self_order
+#: model_terms:ir.ui.view,arch_db:analitix_self_order.res_config_settings_view_form_analitix_kiosk
+msgid ""
+"The kiosk's front camera counts who stops at the kiosk, for how long, "
+"approximate age and gender, and whether it ends in a sale. No image leaves "
+"the tablet. Put up a notice that a camera is in use."
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__minutes
+msgid "Time at the kiosk (min)"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__seconds
+msgid "Time at the kiosk (s)"
+msgstr ""
+
+#. module: analitix_self_order
+#: model_terms:ir.ui.view,arch_db:analitix_self_order.analitix_kiosk_session_view_search
+msgid "Today"
+msgstr ""
+
+#. module: analitix_self_order
+#: model_terms:ir.ui.view,arch_db:analitix_self_order.analitix_kiosk_session_view_list
+msgid "Total"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__touches
+msgid "Touches"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields.selection,name:analitix_self_order.selection__analitix_kiosk_session__gender__unknown
+msgid "Unknown"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__use_rate
+msgid "Use (%)"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__touched
+#: model_terms:ir.ui.view,arch_db:analitix_self_order.analitix_kiosk_session_view_search
+msgid "Used the kiosk"
+msgstr ""
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__uuid
+msgid "Uuid"
+msgstr ""

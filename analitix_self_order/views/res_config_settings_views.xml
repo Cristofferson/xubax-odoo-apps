@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_analitix_kiosk" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.analitix.kiosk</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="pos_self_order.res_config_settings_view_form_menu"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='self_ordering_section']" position="inside">
+                <setting string="Measure the kiosk with its camera (Analitix)" invisible="pos_self_ordering_mode != 'kiosk'"
+                         help="The kiosk's front camera counts who stops at the kiosk, for how long, approximate age and gender, and whether it ends in a sale. No image leaves the tablet. Put up a notice that a camera is in use.">
+                    <field name="pos_analitix_kiosk_camera"/>
+                    <div class="content-group mt-2" invisible="not pos_analitix_kiosk_camera">
+                        <div class="row">
+                            <label for="pos_analitix_store_id" class="col-lg-4 o_light_label"/>
+                            <field name="pos_analitix_store_id" required="pos_analitix_kiosk_camera"/>
+                        </div>
+                        <div class="row">
+                            <label for="pos_analitix_kiosk_min_face" class="col-lg-4 o_light_label"/>
+                            <field name="pos_analitix_kiosk_min_face"/>
+                        </div>
+                        <div class="row">
+                            <label for="pos_analitix_kiosk_debug" class="col-lg-4 o_light_label"/>
+                            <field name="pos_analitix_kiosk_debug"/>
+                        </div>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

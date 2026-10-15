@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="analitix_kiosk_session_view_list" model="ir.ui.view">
+        <field name="name">analitix.kiosk.session.list</field>
+        <field name="model">analitix.kiosk.session</field>
+        <field name="arch" type="xml">
+            <list create="false" edit="false">
+                <field name="started_at"/>
+                <field name="config_id" optional="hide"/>
+                <field name="store_id" optional="hide"/>
+                <field name="seconds" sum="Total"/>
+                <field name="attention_seconds" optional="show"/>
+                <field name="people" optional="show"/>
+                <field name="touched"/>
+                <field name="age_band"/>
+                <field name="gender"/>
+                <field name="reliable" optional="hide"/>
+                <field name="outcome"/>
+                <field name="amount" sum="Total" optional="show"/>
+                <field name="sale_order_id" optional="hide"/>
+                <field name="pos_order_id" optional="hide"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="analitix_kiosk_session_view_pivot" model="ir.ui.view">
+        <field name="name">analitix.kiosk.session.pivot</field>
+        <field name="model">analitix.kiosk.session</field>
+        <field name="arch" type="xml">
+            <pivot string="Kiosk">
+                <field name="started_at" interval="day" type="row"/>
+                <field name="outcome" type="col"/>
+                <field name="minutes" type="measure"/>
+                <field name="use_rate" type="measure"/>
+                <field name="conversion_rate" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="analitix_kiosk_session_view_graph" model="ir.ui.view">
+        <field name="name">analitix.kiosk.session.graph</field>
+        <field name="model">analitix.kiosk.session</field>
+        <field name="arch" type="xml">
+            <graph string="Kiosk" type="bar" stacked="1">
+                <field name="hour"/>
+                <field name="outcome"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="analitix_kiosk_session_view_search" model="ir.ui.view">
+        <field name="name">analitix.kiosk.session.search</field>
+        <field name="model">analitix.kiosk.session</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="config_id"/>
+                <field name="store_id"/>
+                <filter name="today" string="Today"
+                        domain="[('started_at', '&gt;=', (context_today()).strftime('%Y-%m-%d'))]"/>
+                <filter name="last_7" string="Last 7 days"
+                        domain="[('started_at', '&gt;=', (context_today() - relativedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <filter name="last_30" string="Last 30 days"
+                        domain="[('started_at', '&gt;=', (context_today() - relativedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter name="used" string="Used the kiosk" domain="[('touched', '=', True)]"/>
+                <filter name="converted" string="Ended in a sale" domain="[('converted', '=', True)]"/>
+                <filter name="reliable" string="Reliable age and gender" domain="[('reliable', '=', True)]"/>
+                <group>
+                    <filter name="by_day" string="Day" context="{'group_by': 'started_at:day'}"/>
+                    <filter name="by_hour" string="Hour" context="{'group_by': 'hour'}"/>
+                    <filter name="by_outcome" string="Outcome" context="{'group_by': 'outcome'}"/>
+                    <filter name="by_age" string="Age Band" context="{'group_by': 'age_band'}"/>
+                    <filter name="by_gender" string="Gender" context="{'group_by': 'gender'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_kiosk_session" model="ir.actions.act_window">
+        <field name="name">Kiosk</field>
+        <field name="res_model">analitix.kiosk.session</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="search_view_id" ref="analitix_kiosk_session_view_search"/>
+        <field name="context">{'search_default_last_7': 1, 'pivot_measures': ['__count', 'minutes', 'use_rate', 'conversion_rate']}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No one has stopped at the kiosk yet</p>
+            <p>Switch on «Measure the kiosk with its camera» in the kiosk settings of the Point of Sale. Every person who stops in front of the kiosk shows up here: how long, whether they used it, approximate age and gender, and whether it ended in a sale.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_kiosk_session" name="Kiosk" parent="analitix.menu_analysis"
+              action="action_kiosk_session" sequence="23"/>
+</odoo>

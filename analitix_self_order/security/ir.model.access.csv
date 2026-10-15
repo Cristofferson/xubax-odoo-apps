@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_kiosk_session_user,analitix.kiosk.session user,model_analitix_kiosk_session,analitix.group_user,1,0,0,0
+access_kiosk_session_manager,analitix.kiosk.session manager,model_analitix_kiosk_session,analitix.group_manager,1,1,0,1
