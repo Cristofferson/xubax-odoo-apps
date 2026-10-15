@@ -19,6 +19,7 @@ const TOUCH_KEEPS_MS = 2000; // a touch counts as presence even if the face is h
 const MIN_STOP_MS = 3000; // shorter is someone walking past
 const FLUSH_MS = 60000;
 const QUEUE_KEY = "analitix_kiosk_queue";
+const CAMERA_KEY = "analitix_kiosk_camera";
 
 function readQueue() {
     try {
@@ -87,10 +88,6 @@ export class KioskCamera {
             await faceapi.tf.ready();
             await faceapi.nets.tinyFaceDetector.loadFromUri(this.options.models);
             await faceapi.nets.ageGenderNet.loadFromUri(this.options.models);
-            const stream = await navigator.mediaDevices.getUserMedia({
-                video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 } },
-                audio: false,
-            });
             this.video = document.createElement("video");
             this.video.muted = true;
             this.video.playsInline = true;
@@ -100,13 +97,21 @@ export class KioskCamera {
             // this screen only (nothing is sent), to check its angle and rotation.
             this.video.style.cssText = this.options.debug
                 ? "position:fixed;left:8px;bottom:36px;width:160px;z-index:99999;" +
-                  "border:2px solid #fff;border-radius:6px;pointer-events:none"
+                  "border:2px solid #fff;border-radius:6px"
                 : "position:fixed;width:2px;height:2px;opacity:0;pointer-events:none;left:0;top:0";
             document.body.appendChild(this.video);
-            this.video.srcObject = stream;
-            await this.video.play();
+            if (this.options.debug) {
+                // Kiosks often carry two cameras (colour and infrared): tapping the
+                // preview moves to the next one, and the tablet remembers the choice.
+                this.video.addEventListener("pointerdown", (ev) => {
+                    ev.stopPropagation();
+                    this.nextCamera();
+                });
+            }
+            await this.openCamera();
             this.options.detector = new faceapi.TinyFaceDetectorOptions({
-                inputSize: 224,
+                // Finer than the default: small faces of people a step back still show.
+                inputSize: 320,
                 scoreThreshold: 0.5,
             });
             this.loop();
@@ -116,10 +121,66 @@ export class KioskCamera {
         }
     }
 
+    /** Open the camera this tablet chose (or the front one), at a good resolution. */
+    async openCamera() {
+        let saved = null;
+        try {
+            saved = localStorage.getItem(CAMERA_KEY);
+        } catch {
+            // No storage: the front camera.
+        }
+        const constraints = { width: { ideal: 1280 }, height: { ideal: 720 } };
+        // Some tablets cannot open a second camera while the first is still on.
+        this.stream?.getTracks().forEach((track) => track.stop());
+        let stream;
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({
+                video: saved ? { ...constraints, deviceId: { exact: saved } } : { ...constraints, facingMode: "user" },
+                audio: false,
+            });
+        } catch (error) {
+            if (!saved) {
+                throw error;
+            }
+            // The remembered camera is gone: back to the front one.
+            stream = await navigator.mediaDevices.getUserMedia({
+                video: { ...constraints, facingMode: "user" },
+                audio: false,
+            });
+        }
+        this.stream = stream;
+        this.video.srcObject = stream;
+        await this.video.play();
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        this.cameras = devices.filter((device) => device.kind === "videoinput");
+        const current = stream.getVideoTracks()[0]?.getSettings().deviceId;
+        this.cameraIndex = Math.max(this.cameras.findIndex((d) => d.deviceId === current), 0);
+    }
+
+    async nextCamera() {
+        if (!this.cameras?.length || this.switching) {
+            return;
+        }
+        this.switching = true;
+        const next = this.cameras[(this.cameraIndex + 1) % this.cameras.length];
+        try {
+            localStorage.setItem(CAMERA_KEY, next.deviceId);
+        } catch {
+            // No storage: the choice lasts until the page reloads.
+        }
+        try {
+            await this.openCamera();
+        } catch (error) {
+            console.warn("[analitix] switching camera failed:", error);
+        } finally {
+            this.switching = false;
+        }
+    }
+
     async loop() {
         const started = performance.now();
         try {
-            if (document.visibilityState === "visible" && this.video.readyState >= 2) {
+            if (document.visibilityState === "visible" && !this.switching && this.video.readyState >= 2) {
                 await this.tick();
             }
         } catch (error) {
@@ -166,11 +227,13 @@ export class KioskCamera {
         }
         this.show(
             _t(
-                "Analitix: %(faces)s face(s) near · %(seen)s in view · largest %(largest)s% · %(size)s · %(fps)s/s · %(queue)s to send",
+                "Analitix: %(faces)s face(s) near · %(seen)s in view · largest %(largest)s% · camera %(camera)s of %(cameras)s · %(size)s · %(fps)s/s · %(queue)s to send",
                 {
                     faces: this.faces,
                     seen: this.seen,
                     largest: this.largest,
+                    camera: (this.cameraIndex || 0) + 1,
+                    cameras: this.cameras?.length || 1,
                     size: `${this.video.videoWidth}×${this.video.videoHeight}`,
                     fps: this.fps.toFixed(1),
                     queue: this.queue.length,

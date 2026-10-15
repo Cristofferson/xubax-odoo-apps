@@ -109,10 +109,10 @@ msgstr "Tienda de Analitix"
 #: code:addons/analitix_self_order/static/src/app/kiosk_camera.js:0
 msgid ""
 "Analitix: %(faces)s face(s) near · %(seen)s in view · largest %(largest)s% · "
-"%(size)s · %(fps)s/s · %(queue)s to send"
+"camera %(camera)s of %(cameras)s · %(size)s · %(fps)s/s · %(queue)s to send"
 msgstr ""
 "Analitix: %(faces)s cara(s) cerca · %(seen)s a la vista · la más grande "
-"%(largest)s% · %(size)s · %(fps)s/s · %(queue)s por enviar"
+"%(largest)s% · cámara %(camera)s de %(cameras)s · %(size)s · %(fps)s/s · %(queue)s por enviar"
 
 #. module: analitix_self_order
 #. odoo-javascript

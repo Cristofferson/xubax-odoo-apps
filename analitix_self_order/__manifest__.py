@@ -25,7 +25,7 @@ a camera is in use.
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",
     "category": "Point of Sale",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "license": "OPL-1",
     "depends": ["analitix", "pos_self_order", "sale"],
     "data": [

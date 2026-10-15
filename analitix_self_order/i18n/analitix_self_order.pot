@@ -109,7 +109,7 @@ msgstr ""
 #: code:addons/analitix_self_order/static/src/app/kiosk_camera.js:0
 msgid ""
 "Analitix: %(faces)s face(s) near · %(seen)s in view · largest %(largest)s% · "
-"%(size)s · %(fps)s/s · %(queue)s to send"
+"camera %(camera)s of %(cameras)s · %(size)s · %(fps)s/s · %(queue)s to send"
 msgstr ""
 
 #. module: analitix_self_order
