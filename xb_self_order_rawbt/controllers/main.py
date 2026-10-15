@@ -16,8 +16,14 @@ class RawBTTest(http.Controller):
         lang = config.self_ordering_default_language_id.code or config.company_id.partner_id.lang
         if lang:
             request.update_context(lang=lang)
-        return request.render("xb_self_order_rawbt.printer_test", {
+        version = request.env["ir.module.module"].sudo().search(
+            [("name", "=", "xb_self_order_rawbt")], limit=1).latest_version or ""
+        html = request.env["ir.qweb"]._render("xb_self_order_rawbt.printer_test", {
             "config": config,
             "width": int(config.xb_rawbt_paper or 576),
             "method": config.xb_rawbt_method or "intent",
+            # In the URL of the script: a tablet that kept an older copy loads this one.
+            "version": version,
         })
+        return request.make_response("<!DOCTYPE html>\n" + str(html), headers=[
+            ("Content-Type", "text/html; charset=utf-8"), ("Cache-Control", "no-store")])

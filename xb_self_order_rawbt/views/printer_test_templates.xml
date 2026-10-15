@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="printer_test" name="Kiosk printer test (RawBT)">
-        <t t-out="'&lt;!DOCTYPE html&gt;'"/>
         <html>
             <head>
                 <meta charset="utf-8"/>
@@ -13,10 +12,11 @@
                     p { color: #555; }
                     button { display: block; width: 100%; margin: 12px 0; padding: 18px; font-size: 18px;
                              border: 1px solid #999; border-radius: 10px; background: #f4f4f4; text-align: left; }
+                    button:active { background: #ddd; }
                     button b { display: block; font-size: 20px; }
                     #log { margin-top: 16px; font-size: 14px; color: #777; }
                 </style>
-                <script type="text/javascript" src="/xb_self_order_rawbt/static/lib/xb_rawbt.js"/>
+                <script type="text/javascript" t-att-src="'/xb_self_order_rawbt/static/lib/xb_rawbt.js?v=%s' % version"/>
             </head>
             <body t-att-data-width="width" t-att-data-method="method">
                 <h1>Printer test - <t t-esc="config.name"/></h1>
@@ -50,9 +50,13 @@
                         document.querySelectorAll("button").forEach(function (btn) {
                             btn.addEventListener("click", function () {
                                 var label = btn.querySelector("b").textContent;
-                                var job = ticket(label, btn.dataset.format);
-                                log.textContent = "Sent " + label + ".";
-                                window.XbRawBT.send(job[0], method, job[1]);
+                                try {
+                                    var job = ticket(label, btn.dataset.format);
+                                    log.textContent = "Sent " + label + ".";
+                                    window.XbRawBT.send(job[0], method, job[1]);
+                                } catch (e) {
+                                    log.textContent = "Error " + label + ": " + e.message;
+                                }
                             });
                         });
                     })();
