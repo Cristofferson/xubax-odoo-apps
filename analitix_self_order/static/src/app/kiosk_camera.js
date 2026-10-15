@@ -96,8 +96,12 @@ export class KioskCamera {
             this.video.playsInline = true;
             this.video.setAttribute("playsinline", "");
             // On the page but invisible: some browsers stop decoding a detached video.
-            this.video.style.cssText =
-                "position:fixed;width:2px;height:2px;opacity:0;pointer-events:none;left:0;top:0";
+            // While setting the kiosk up, a small preview shows what the camera sees, on
+            // this screen only (nothing is sent), to check its angle and rotation.
+            this.video.style.cssText = this.options.debug
+                ? "position:fixed;left:8px;bottom:36px;width:160px;z-index:99999;" +
+                  "border:2px solid #fff;border-radius:6px;pointer-events:none"
+                : "position:fixed;width:2px;height:2px;opacity:0;pointer-events:none;left:0;top:0";
             document.body.appendChild(this.video);
             this.video.srcObject = stream;
             await this.video.play();
@@ -137,6 +141,10 @@ export class KioskCamera {
         const step = this.lastTick ? Math.min(now - this.lastTick, 1000) : 0;
         this.lastTick = now;
         this.faces = near.length;
+        this.seen = detections.length;
+        this.largest = detections.length
+            ? Math.round((100 * Math.max(...detections.map((d) => d.detection.box.width))) / width)
+            : 0;
 
         if (near.length || now - this.lastTouch < TOUCH_KEEPS_MS) {
             const stop = this.current || this.open(now);
@@ -157,11 +165,17 @@ export class KioskCamera {
             this.close();
         }
         this.show(
-            _t("Analitix: %(faces)s face(s) · %(fps)s/s · %(queue)s to send", {
-                faces: this.faces,
-                fps: this.fps.toFixed(1),
-                queue: this.queue.length,
-            })
+            _t(
+                "Analitix: %(faces)s face(s) near · %(seen)s in view · largest %(largest)s% · %(size)s · %(fps)s/s · %(queue)s to send",
+                {
+                    faces: this.faces,
+                    seen: this.seen,
+                    largest: this.largest,
+                    size: `${this.video.videoWidth}×${this.video.videoHeight}`,
+                    fps: this.fps.toFixed(1),
+                    queue: this.queue.length,
+                }
+            )
         );
     }
 
