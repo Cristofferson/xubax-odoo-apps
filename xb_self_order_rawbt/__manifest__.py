@@ -20,7 +20,7 @@ paper width and the sending method on the tablet.
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",
     "category": "Point of Sale",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.1.2",
     "license": "OPL-1",
     "depends": ["pos_self_order"],
     "data": [

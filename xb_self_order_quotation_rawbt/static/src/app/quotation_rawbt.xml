@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <!-- The ticket comes out of the kiosk itself, not at the counter. -->
+    <t t-name="xb_self_order_quotation_rawbt.Dialog" t-inherit="xb_self_order_quotation.Dialog" t-inherit-mode="extension">
+        <xpath expr="//p[@t-if='state.done.printed']" position="attributes">
+            <attribute name="t-if">state.done.printed and !selfOrder.config._xb_rawbt</attribute>
+        </xpath>
+        <xpath expr="//p[@t-if='state.done.printed and !selfOrder.config._xb_rawbt']" position="before">
+            <p t-if="state.done.printed and selfOrder.config._xb_rawbt" class="mb-0">Your ticket comes out of the kiosk printer.</p>
+        </xpath>
+    </t>
+</templates>
