@@ -19,6 +19,10 @@
                             <field name="pos_xb_rawbt_method"/>
                         </div>
                         <div class="row">
+                            <label for="pos_xb_rawbt_format" class="col-lg-4 o_light_label"/>
+                            <field name="pos_xb_rawbt_format"/>
+                        </div>
+                        <div class="row">
                             <label for="pos_xb_rawbt_test_url" class="col-lg-4 o_light_label"/>
                             <field name="pos_xb_rawbt_test_url" widget="url" readonly="1"/>
                         </div>

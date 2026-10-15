@@ -18,6 +18,12 @@ class PosConfig(models.Model):
         string="Sending method", default="intent", required=True,
         help="How the kiosk hands the ticket to RawBT. Use the test page to find the "
              "one that prints on your tablet.")
+    xb_rawbt_format = fields.Selection(
+        [("bands", "Image in blocks"), ("single", "Image in one piece"),
+         ("esc24", "Lines of 24 dots"), ("image", "Image drawn by RawBT")],
+        string="Ticket format", default="bands", required=True,
+        help="How the ticket travels to the printer. If a line comes out cut or "
+             "shifted, try another one on the test page.")
     xb_rawbt_test_url = fields.Char(
         string="Printer test page", compute="_compute_xb_rawbt_test_url")
 
@@ -33,7 +39,8 @@ class PosConfig(models.Model):
         self.ensure_one()
         if not self.xb_rawbt:
             return False
-        return {"width": int(self.xb_rawbt_paper or 576), "method": self.xb_rawbt_method or "intent"}
+        return {"width": int(self.xb_rawbt_paper or 576), "method": self.xb_rawbt_method or "intent",
+                "format": self.xb_rawbt_format or "bands"}
 
     @api.model
     def _load_pos_self_data_read(self, records, config):

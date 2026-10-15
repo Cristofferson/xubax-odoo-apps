@@ -6,14 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 02:08+0000\n"
-"PO-Revision-Date: 2026-10-15 02:08+0000\n"
+"POT-Creation-Date: 2026-10-15 02:22+0000\n"
+"PO-Revision-Date: 2026-10-15 02:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: \n"
 
 #. module: xb_self_order_rawbt
 #: model:ir.model.fields.selection,name:xb_self_order_rawbt.selection__pos_config__xb_rawbt_paper__384
@@ -27,23 +27,23 @@ msgstr "80 mm"
 
 #. module: xb_self_order_rawbt
 #: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
-msgid "<b>A</b>Android intent"
-msgstr "<b>A</b>Intent de Android"
+msgid "<b>1</b>Image in blocks"
+msgstr "<b>1</b>Imagen en bloques"
 
 #. module: xb_self_order_rawbt
 #: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
-msgid "<b>B</b>rawbt: link"
-msgstr "<b>B</b>Liga rawbt:"
+msgid "<b>2</b>Image in one piece"
+msgstr "<b>2</b>Imagen de una pieza"
 
 #. module: xb_self_order_rawbt
 #: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
-msgid "<b>C</b>Android intent, 3 seconds later (like the kiosk)"
-msgstr "<b>C</b>Intent de Android, 3 segundos después (como el kiosco)"
+msgid "<b>3</b>Lines of 24 dots"
+msgstr "<b>3</b>Renglones de 24 puntos"
 
 #. module: xb_self_order_rawbt
 #: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
-msgid "<b>D</b>rawbt: link, 3 seconds later (like the kiosk)"
-msgstr "<b>D</b>Liga rawbt:, 3 segundos después (como el kiosco)"
+msgid "<b>4</b>Image drawn by RawBT"
+msgstr "<b>4</b>Imagen dibujada por RawBT"
 
 #. module: xb_self_order_rawbt
 #: model:ir.model.fields.selection,name:xb_self_order_rawbt.selection__pos_config__xb_rawbt_method__intent
@@ -65,11 +65,39 @@ msgid ""
 msgstr "Cómo le pasa el kiosco el ticket a RawBT. Usa la página de prueba para ver cuál imprime en tu tablet."
 
 #. module: xb_self_order_rawbt
+#: model:ir.model.fields,help:xb_self_order_rawbt.field_pos_config__xb_rawbt_format
+#: model:ir.model.fields,help:xb_self_order_rawbt.field_res_config_settings__pos_xb_rawbt_format
+msgid ""
+"How the ticket travels to the printer. If a line comes out cut or shifted, "
+"try another one on the test page."
+msgstr "Cómo viaja el ticket a la impresora. Si algún renglón sale cortado o movido, prueba otro en la página de prueba."
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields.selection,name:xb_self_order_rawbt.selection__pos_config__xb_rawbt_format__image
+msgid "Image drawn by RawBT"
+msgstr "Imagen dibujada por RawBT"
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields.selection,name:xb_self_order_rawbt.selection__pos_config__xb_rawbt_format__bands
+msgid "Image in blocks"
+msgstr "Imagen en bloques"
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields.selection,name:xb_self_order_rawbt.selection__pos_config__xb_rawbt_format__single
+msgid "Image in one piece"
+msgstr "Imagen de una pieza"
+
+#. module: xb_self_order_rawbt
 #: model:ir.model.fields,field_description:xb_self_order_rawbt.field_pos_config__xb_rawbt
 #: model:ir.model.fields,field_description:xb_self_order_rawbt.field_res_config_settings__pos_xb_rawbt
 #: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.res_config_settings_view_form_kiosk_rawbt
 msgid "Kiosk printer through RawBT"
 msgstr "Impresora del kiosco por RawBT"
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields.selection,name:xb_self_order_rawbt.selection__pos_config__xb_rawbt_format__esc24
+msgid "Lines of 24 dots"
+msgstr "Renglones de 24 puntos"
 
 #. module: xb_self_order_rawbt
 #: model:ir.model.fields,field_description:xb_self_order_rawbt.field_pos_config__xb_rawbt_paper
@@ -97,9 +125,9 @@ msgstr "Forma de envío"
 #. module: xb_self_order_rawbt
 #: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
 msgid ""
-"Tap each button and note which ones print, and whether a window appears. "
-"Paper:"
-msgstr "Toca cada botón y fíjate cuáles imprimen y si aparece alguna ventana. Papel:"
+"Tap each button and check the ticket: every line of text must come out "
+"whole. Paper:"
+msgstr "Toca cada botón y revisa el ticket: cada renglón de texto debe salir completo. Papel:"
 
 #. module: xb_self_order_rawbt
 #: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.res_config_settings_view_form_kiosk_rawbt
@@ -122,6 +150,12 @@ msgstr "El kiosco imprime sus tickets por medio de la app RawBT de la tablet (An
 #: code:addons/xb_self_order_rawbt/static/src/app/rawbt_printer.js:0
 msgid "The ticket could not be printed"
 msgstr "No se pudo imprimir el ticket"
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields,field_description:xb_self_order_rawbt.field_pos_config__xb_rawbt_format
+#: model:ir.model.fields,field_description:xb_self_order_rawbt.field_res_config_settings__pos_xb_rawbt_format
+msgid "Ticket format"
+msgstr "Formato del ticket"
 
 #. module: xb_self_order_rawbt
 #: model:ir.model.fields.selection,name:xb_self_order_rawbt.selection__pos_config__xb_rawbt_method__scheme

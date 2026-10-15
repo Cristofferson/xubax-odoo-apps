@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 02:08+0000\n"
-"PO-Revision-Date: 2026-10-15 02:08+0000\n"
+"POT-Creation-Date: 2026-10-15 02:22+0000\n"
+"PO-Revision-Date: 2026-10-15 02:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -27,22 +27,22 @@ msgstr ""
 
 #. module: xb_self_order_rawbt
 #: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
-msgid "<b>A</b>Android intent"
+msgid "<b>1</b>Image in blocks"
 msgstr ""
 
 #. module: xb_self_order_rawbt
 #: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
-msgid "<b>B</b>rawbt: link"
+msgid "<b>2</b>Image in one piece"
 msgstr ""
 
 #. module: xb_self_order_rawbt
 #: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
-msgid "<b>C</b>Android intent, 3 seconds later (like the kiosk)"
+msgid "<b>3</b>Lines of 24 dots"
 msgstr ""
 
 #. module: xb_self_order_rawbt
 #: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
-msgid "<b>D</b>rawbt: link, 3 seconds later (like the kiosk)"
+msgid "<b>4</b>Image drawn by RawBT"
 msgstr ""
 
 #. module: xb_self_order_rawbt
@@ -76,9 +76,32 @@ msgid ""
 msgstr ""
 
 #. module: xb_self_order_rawbt
+#: model:ir.model.fields,help:xb_self_order_rawbt.field_pos_config__xb_rawbt_format
+#: model:ir.model.fields,help:xb_self_order_rawbt.field_res_config_settings__pos_xb_rawbt_format
+msgid ""
+"How the ticket travels to the printer. If a line comes out cut or shifted, "
+"try another one on the test page."
+msgstr ""
+
+#. module: xb_self_order_rawbt
 #: model:ir.model.fields,field_description:xb_self_order_rawbt.field_pos_config__id
 #: model:ir.model.fields,field_description:xb_self_order_rawbt.field_res_config_settings__id
 msgid "ID"
+msgstr ""
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields.selection,name:xb_self_order_rawbt.selection__pos_config__xb_rawbt_format__image
+msgid "Image drawn by RawBT"
+msgstr ""
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields.selection,name:xb_self_order_rawbt.selection__pos_config__xb_rawbt_format__bands
+msgid "Image in blocks"
+msgstr ""
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields.selection,name:xb_self_order_rawbt.selection__pos_config__xb_rawbt_format__single
+msgid "Image in one piece"
 msgstr ""
 
 #. module: xb_self_order_rawbt
@@ -86,6 +109,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:xb_self_order_rawbt.field_res_config_settings__pos_xb_rawbt
 #: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.res_config_settings_view_form_kiosk_rawbt
 msgid "Kiosk printer through RawBT"
+msgstr ""
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields.selection,name:xb_self_order_rawbt.selection__pos_config__xb_rawbt_format__esc24
+msgid "Lines of 24 dots"
 msgstr ""
 
 #. module: xb_self_order_rawbt
@@ -119,8 +147,8 @@ msgstr ""
 #. module: xb_self_order_rawbt
 #: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
 msgid ""
-"Tap each button and note which ones print, and whether a window appears. "
-"Paper:"
+"Tap each button and check the ticket: every line of text must come out "
+"whole. Paper:"
 msgstr ""
 
 #. module: xb_self_order_rawbt
@@ -143,6 +171,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/xb_self_order_rawbt/static/src/app/rawbt_printer.js:0
 msgid "The ticket could not be printed"
+msgstr ""
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields,field_description:xb_self_order_rawbt.field_pos_config__xb_rawbt_format
+#: model:ir.model.fields,field_description:xb_self_order_rawbt.field_res_config_settings__pos_xb_rawbt_format
+msgid "Ticket format"
 msgstr ""
 
 #. module: xb_self_order_rawbt

@@ -5,19 +5,20 @@ import { SelfOrder } from "@pos_self_order/app/services/self_order_service";
 
 /** Sends the kiosk's tickets to the RawBT app of the tablet, as ESC/POS. */
 export class RawBTPrinter extends BasePrinter {
-    setup({ width, method }) {
+    setup({ width, method, format }) {
         super.setup(...arguments);
         this.width = width || 576;
         this.method = method || "intent";
+        this.format = format || "bands";
     }
 
     processCanvas(canvas) {
-        return window.XbRawBT.toBase64(window.XbRawBT.canvasToEscPos(canvas, this.width));
+        return window.XbRawBT.job(canvas, this.width, this.format);
     }
 
-    async sendPrintingJob(b64) {
+    async sendPrintingJob([b64, png]) {
         // RawBT gives no answer back: once Android has the job, it is printed.
-        window.XbRawBT.send(b64, this.method);
+        window.XbRawBT.send(b64, this.method, png);
         return { result: true };
     }
 
