@@ -183,3 +183,18 @@ msgstr ""
 #: model:ir.model.fields.selection,name:xb_self_order_rawbt.selection__pos_config__xb_rawbt_method__scheme
 msgid "rawbt: link"
 msgstr ""
+
+#. module: xb_self_order_rawbt
+#: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
+msgid "Sample product"
+msgstr ""
+
+#. module: xb_self_order_rawbt
+#: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
+msgid "Total 123.45"
+msgstr ""
+
+#. module: xb_self_order_rawbt
+#: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
+msgid "Thank you for your visit"
+msgstr ""

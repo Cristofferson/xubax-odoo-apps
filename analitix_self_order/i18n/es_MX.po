@@ -391,3 +391,70 @@ msgstr "Uso (%)"
 #: model_terms:ir.ui.view,arch_db:analitix_self_order.analitix_kiosk_session_view_search
 msgid "Used the kiosk"
 msgstr "Usó el kiosco"
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: analitix_self_order
+#: model:ir.model,name:analitix_self_order.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__display_name
+#: model:ir.model.fields,field_description:analitix_self_order.field_ir_http__display_name
+#: model:ir.model.fields,field_description:analitix_self_order.field_pos_config__display_name
+#: model:ir.model.fields,field_description:analitix_self_order.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Nombre en pantalla"
+
+#. module: analitix_self_order
+#: model:ir.model,name:analitix_self_order.model_ir_http
+msgid "HTTP Routing"
+msgstr "Enrutamiento HTTP"
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__id
+#: model:ir.model.fields,field_description:analitix_self_order.field_ir_http__id
+#: model:ir.model.fields,field_description:analitix_self_order.field_pos_config__id
+#: model:ir.model.fields,field_description:analitix_self_order.field_res_config_settings__id
+msgid "ID"
+msgstr "ID"
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: analitix_self_order
+#: model:ir.model,name:analitix_self_order.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr "Configuración del punto de venta"
+
+#. module: analitix_self_order
+#: model:ir.model.fields,field_description:analitix_self_order.field_analitix_kiosk_session__uuid
+msgid "Uuid"
+msgstr "UUID"
+

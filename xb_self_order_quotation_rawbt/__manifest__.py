@@ -20,6 +20,7 @@ Bridge between *Self-Order Kiosk - Quotation* and *Self-Order Kiosk - USB Printe
             "xb_self_order_quotation_rawbt/static/src/app/quotation_rawbt.xml",
         ],
     },
+    "images": ["static/description/banner.png"],
     "application": False,
     "installable": True,
     "auto_install": True,

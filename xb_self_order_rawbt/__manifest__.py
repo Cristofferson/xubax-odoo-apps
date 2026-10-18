@@ -20,7 +20,7 @@ paper width and the sending method on the tablet.
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",
     "category": "Point of Sale",
-    "version": "19.0.1.1.2",
+    "version": "19.0.1.1.3",
     "license": "OPL-1",
     "depends": ["pos_self_order"],
     "data": [
@@ -33,6 +33,9 @@ paper width and the sending method on the tablet.
             "xb_self_order_rawbt/static/src/app/rawbt_printer.js",
         ],
     },
+    "images": ["static/description/banner.png"],
+    "price": 19.0,
+    "currency": "USD",
     "application": False,
     "installable": True,
     "auto_install": False,

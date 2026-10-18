@@ -1,0 +1,81 @@
+<!-- apps.odoo.com store listing for xb_self_order_rawbt -->
+
+<section class="oe_container">
+  <div class="oe_row oe_spaced">
+    <h2 class="oe_slogan">Self-Order Kiosk - USB Printer (RawBT)</h2>
+    <h3 class="oe_slogan" style="color:#5f5a55;">
+      Your kiosk prints on the receipt printer it carries: USB or Bluetooth, no network printer needed.
+    </h3>
+  </div>
+</section>
+
+<section class="oe_container" style="background:#F6F1E8; padding:24px 0;">
+  <div class="oe_row oe_spaced">
+    <div class="oe_span6">
+      <h3 style="margin-top:0;">The problem</h3>
+      <p style="font-size:15px; line-height:1.7;">
+        Many Android kiosks come with a receipt printer built in, connected by USB.
+        Odoo's Self-Order Kiosk can only print on <strong>Epson ePOS network printers</strong>,
+        so that printer sits unused and the tickets go to a printer at the counter, far from the customer.
+      </p>
+      <h3>The solution</h3>
+      <ul style="font-size:15px; line-height:1.7;">
+        <li>The kiosk sends each ticket, as <strong>ESC/POS</strong>, to the free <strong>RawBT</strong> app on the same tablet.</li>
+        <li>RawBT prints it on the printer it is paired with: <strong>USB, Bluetooth or network</strong>.</li>
+        <li>Everything the kiosk prints goes there: order tickets and, with our quotation app, quotations.</li>
+        <li>Switch it on <strong>per kiosk</strong>; the other kiosks keep their Epson printer.</li>
+      </ul>
+    </div>
+    <div class="oe_span6" style="text-align:center;">
+      <img src="settings.png" alt="Kiosk printer through RawBT settings" style="max-width:100%; border:1px solid #e6e1d9; border-radius:6px;"/>
+    </div>
+  </div>
+</section>
+
+<section class="oe_container">
+  <div class="oe_row oe_spaced">
+    <h3 class="oe_slogan" style="font-size:24px;">Made for real thermal printers</h3>
+    <div class="oe_span6" style="text-align:center;">
+      <img src="test_page.png" alt="Printer test page on the tablet" style="max-width:320px; border:1px solid #e6e1d9; border-radius:6px;"/>
+    </div>
+    <div class="oe_span6">
+      <ul style="font-size:15px; line-height:1.7;">
+        <li><strong>Paper width:</strong> 80 mm (576 dots) or 58 mm (384 dots).</li>
+        <li><strong>Four ticket formats</strong>, because cheap printers differ: image in blocks, image in one piece,
+          lines of 24 dots, or an image drawn by RawBT. Pick the one that prints every line whole.</li>
+        <li><strong>Two sending methods</strong> (Android intent or <code>rawbt:</code> link) for the browsers and kiosk apps that block one of them.</li>
+        <li>A <strong>test page</strong> per kiosk, opened on the tablet, prints a sample ticket with each format so you can choose in a minute.</li>
+        <li>Tip: in RawBT, turn off the print dialog and the ticket comes out at once.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="oe_container" style="background:#F6F1E8; padding:24px 0;">
+  <div class="oe_row oe_spaced">
+    <h3 class="oe_slogan" style="font-size:24px;">How to set it up</h3>
+    <ol style="font-size:15px; line-height:1.8; max-width:760px; margin:0 auto;">
+      <li>Install <strong>RawBT</strong> from Google Play on the kiosk tablet and print its own test on your printer.</li>
+      <li>In Odoo: <em>Point of Sale › Settings › Mobile self-order &amp; Kiosk</em>, choose the kiosk and switch on <strong>Kiosk printer through RawBT</strong>.</li>
+      <li>Open the <strong>test page</strong> link on the tablet, tap each format and keep the one that prints best.</li>
+    </ol>
+  </div>
+</section>
+
+<section class="oe_container">
+  <div class="oe_row oe_spaced">
+    <h3 class="oe_slogan" style="font-size:24px;">Requirements</h3>
+    <p style="text-align:center;">
+      Odoo 19 Community or Enterprise · Point of Sale with <strong>Self-Order Kiosk</strong> ·
+      an <strong>Android</strong> kiosk tablet with the RawBT app (by 402d, sold separately in Google Play).
+    </p>
+    <p style="text-align:center;">
+      With <em>Self-Order Kiosk - Quotation</em> (XUBAX), the free add-on <em>Self-Order Kiosk Quotation - RawBT</em>
+      installs by itself and tells the customer the ticket comes out of the kiosk.
+    </p>
+    <p style="text-align:center; margin-top:18px;">
+      Questions? Write to <a href="mailto:soporte@xubax.com">soporte@xubax.com</a> —
+      <a href="https://www.xubax.com" target="_blank">XUBAX</a>.
+    </p>
+  </div>
+</section>

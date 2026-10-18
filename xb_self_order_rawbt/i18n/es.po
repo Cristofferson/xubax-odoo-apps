@@ -161,3 +161,40 @@ msgstr "Formato del ticket"
 #: model:ir.model.fields.selection,name:xb_self_order_rawbt.selection__pos_config__xb_rawbt_method__scheme
 msgid "rawbt: link"
 msgstr "Liga rawbt:"
+
+#. module: xb_self_order_rawbt
+#: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
+msgid "Sample product"
+msgstr "Producto de ejemplo"
+
+#. module: xb_self_order_rawbt
+#: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
+msgid "Total 123.45"
+msgstr "Total 123.45"
+
+#. module: xb_self_order_rawbt
+#: model_terms:ir.ui.view,arch_db:xb_self_order_rawbt.printer_test
+msgid "Thank you for your visit"
+msgstr "Gracias por su visita"
+
+#. module: xb_self_order_rawbt
+#: model:ir.model,name:xb_self_order_rawbt.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields,field_description:xb_self_order_rawbt.field_pos_config__display_name
+#: model:ir.model.fields,field_description:xb_self_order_rawbt.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Nombre en pantalla"
+
+#. module: xb_self_order_rawbt
+#: model:ir.model.fields,field_description:xb_self_order_rawbt.field_pos_config__id
+#: model:ir.model.fields,field_description:xb_self_order_rawbt.field_res_config_settings__id
+msgid "ID"
+msgstr "ID"
+
+#. module: xb_self_order_rawbt
+#: model:ir.model,name:xb_self_order_rawbt.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr "Configuración del punto de venta"

@@ -26,10 +26,18 @@
                 <button data-format="esc24"><b>3</b>Lines of 24 dots</button>
                 <button data-format="image"><b>4</b>Image drawn by RawBT</button>
                 <div id="log"/>
+                <ul id="lines" hidden="hidden">
+                    <li>Sample product</li>
+                    <li>Total 123.45</li>
+                    <li>Thank you for your visit</li>
+                    <li t-esc="config.company_id.name"/>
+                </ul>
                 <script type="text/javascript">
                     (function () {
                         var width = parseInt(document.body.dataset.width, 10) || 576;
                         var method = document.body.dataset.method || "intent";
+                        var lines = Array.prototype.map.call(
+                            document.querySelectorAll("#lines li"), function (li) { return li.textContent; });
                         function ticket(label, format) {
                             var c = document.createElement("canvas");
                             c.width = width; c.height = 560;
@@ -41,9 +49,9 @@
                             g.font = "28px sans-serif";
                             var y = 110;
                             ["RawBT " + (width === 576 ? "80 mm" : "58 mm"), new Date().toLocaleString(),
-                             "Anillo de compromiso 14K", "Total $14,551.07", "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-                             "abcdefghijklmnopqrstuvwxyz", "0123456789 $ , . - /", "Gracias por su visita",
-                             "Anello"].forEach(function (line) { g.fillText(line, c.width / 2, y); y += 46; });
+                             lines[0], lines[1], "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz",
+                             "0123456789 $ , . - /", lines[2], lines[3]].forEach(function (line) {
+                                g.fillText(line, c.width / 2, y); y += 46; });
                             return window.XbRawBT.job(c, width, format);
                         }
                         var log = document.getElementById("log");
