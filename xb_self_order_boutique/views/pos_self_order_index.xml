@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- With the installable app on, the kiosk page declares itself as an app (manifest, icon, bar color). -->
+    <template id="pos_self_order_index_boutique" inherit_id="pos_self_order.index" name="Self-Order Kiosk: Boutique app">
+        <xpath expr="//title" position="replace">
+            <t t-set="xb_bq_config" t-value="request.env['pos.config'].sudo().browse(session_info.get('data', {}).get('config_id')).exists()"/>
+            <t t-if="xb_bq_config and xb_bq_config.xb_bq_enabled and xb_bq_config.xb_bq_app">
+                <title t-esc="xb_bq_config.xb_bq_app_name or xb_bq_config.company_id.name"/>
+                <link rel="manifest" t-attf-href="/xb-boutique/{{ xb_bq_config.id }}/manifest.webmanifest?access_token={{ access_token }}"/>
+                <link rel="apple-touch-icon" t-attf-href="/xb-boutique/{{ xb_bq_config.id }}/icon-192.png?access_token={{ access_token }}"/>
+                <link rel="icon" type="image/png" t-attf-href="/xb-boutique/{{ xb_bq_config.id }}/icon-192.png?access_token={{ access_token }}"/>
+                <meta name="theme-color" t-att-content="xb_bq_config.xb_bq_bar_color or '#FFFFFF'"/>
+                <meta name="mobile-web-app-capable" content="yes"/>
+                <meta name="apple-mobile-web-app-capable" content="yes"/>
+            </t>
+            <title t-else="">Odoo Self Order</title>
+        </xpath>
+    </template>
+</odoo>

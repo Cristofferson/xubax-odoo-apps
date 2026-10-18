@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <!-- Product list: the price as the kiosk owner chose ("From" + lowest, price, or none). -->
+    <t t-inherit="pos_self_order.ProductListPage" t-inherit-mode="extension">
+        <xpath expr="//span[hasclass('o-so-tabular-nums')]" position="replace">
+            <t t-set="xbBqConf" t-value="selfOrder.config._xb_bq"/>
+            <t t-if="xbBqConf">
+                <t t-if="xbBqConf.price !== 'none'">
+                    <t t-set="xbBqPriceInfo" t-value="xbBqPrice(product)"/>
+                    <span t-if="xbBqPriceInfo.from" class="xb_bq_from" t-esc="xbBqText('from')"/>
+                    <span t-esc="selfOrder.formatMonetary(xbBqPriceInfo.amount)" class="o-so-tabular-nums fs-4 fw-bold text-primary"/>
+                </t>
+            </t>
+            <span t-else="" t-esc="selfOrder.formatMonetary(selfOrder.getProductDisplayPrice(product))" class="o-so-tabular-nums fs-4 fw-bold text-primary"/>
+        </xpath>
+    </t>
+
+    <!-- Product page: main photo, carousel or editorial mosaic. -->
+    <t t-inherit="pos_self_order.ProductPage" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_self_product_image')]" position="attributes">
+            <attribute name="t-if">xbBqGallery === 'single'</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('o_self_product_image')]" position="after">
+            <t t-elif="xbBqGallery === 'carousel'">
+                <t t-set="xbBqItems" t-value="xbBqSlides"/>
+                <div class="xb_bq_carousel w-100">
+                    <div class="xb_bq_carousel_track" t-on-scroll="xbBqOnScroll">
+                        <t t-foreach="xbBqItems" t-as="slide" t-key="slide.key">
+                            <div class="xb_bq_slide">
+                                <video t-if="slide.video" class="xb_bq_video" autoplay="" muted="" loop="" playsinline="" t-att-poster="slide.poster">
+                                    <t t-foreach="slide.video" t-as="source" t-key="source.url">
+                                        <source t-att-src="source.url" t-att-type="source.type"/>
+                                    </t>
+                                </video>
+                                <img t-else="" t-att-src="slide.src" loading="lazy" t-att-alt="product.name"/>
+                            </div>
+                        </t>
+                    </div>
+                    <div t-if="xbBqItems.length > 1" class="xb_bq_dots">
+                        <t t-foreach="xbBqItems" t-as="slide" t-key="slide.key">
+                            <span t-att-class="{'active': slide_index === xbBq.slide}"/>
+                        </t>
+                    </div>
+                </div>
+            </t>
+            <t t-else="">
+                <t t-set="xbBqItems" t-value="xbBqSlides"/>
+                <t t-set="xbBqBig" t-value="xbBqItems[0]"/>
+                <t t-set="xbBqRest" t-value="xbBqItems.slice(1)"/>
+                <div class="xb_bq_mosaic w-100">
+                    <div class="xb_bq_mosaic_big">
+                        <video t-if="xbBqBig.video" class="xb_bq_video" autoplay="" muted="" loop="" playsinline="" t-att-poster="xbBqBig.poster">
+                            <t t-foreach="xbBqBig.video" t-as="source" t-key="source.url">
+                                <source t-att-src="source.url" t-att-type="source.type"/>
+                            </t>
+                        </video>
+                        <img t-else="" t-att-src="xbBqBig.src" loading="lazy" t-att-alt="product.name"/>
+                    </div>
+                    <t t-foreach="xbBqRest" t-as="slide" t-key="slide.key">
+                        <div class="xb_bq_mosaic_cell" t-att-class="{'xb_bq_mosaic_wide': slide_last and xbBqRest.length % 2 === 1}">
+                            <img t-att-src="slide.src" loading="lazy" t-att-alt="product.name"/>
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </xpath>
+    </t>
+
+    <!-- Shop words instead of restaurant ones. -->
+    <t t-inherit="pos_self_order.CartPage" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('cart_container')]/h1" position="attributes">
+            <attribute name="t-if">!selfOrder.config._xb_bq</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('cart_container')]/h1" position="after">
+            <h1 t-else="" class="ms-3 ms-sm-0 mb-3" t-esc="xbBqText('cart_title')"/>
+        </xpath>
+    </t>
+    <t t-inherit="pos_self_order.ConfirmationPage" t-inherit-mode="extension">
+        <xpath expr="//h1[hasclass('mb-0')][not(@t-if)][not(@t-elif)]" position="attributes">
+            <attribute name="t-if">!selfOrder.config._xb_bq</attribute>
+        </xpath>
+        <xpath expr="//h1[hasclass('mb-0')][not(@t-elif)]" position="after">
+            <h1 t-else="" class="mb-0" t-esc="xbBqText('done')"/>
+        </xpath>
+        <xpath expr="//h3[hasclass('text-muted')]" position="attributes">
+            <attribute name="t-if">!selfOrder.config._xb_bq</attribute>
+        </xpath>
+        <xpath expr="//h3[hasclass('text-muted')]" position="after">
+            <h3 t-else="" class="d-block text-muted" t-esc="xbBqText('number')"/>
+        </xpath>
+    </t>
+</templates>

@@ -1,0 +1,394 @@
+// XUBAX - Boutique theme for the self-order kiosk. Every color, font and size comes from
+// the kiosk settings as CSS variables on <html class="xb-bq">; nothing applies without it.
+
+@font-face { font-family: "XbBqCormorant"; font-weight: 500; font-style: normal; font-display: swap; src: url("/xb_self_order_boutique/static/fonts/CormorantGaramond-500.woff2") format("woff2"); }
+@font-face { font-family: "XbBqCormorant"; font-weight: 500; font-style: italic; font-display: swap; src: url("/xb_self_order_boutique/static/fonts/CormorantGaramond-500i.woff2") format("woff2"); }
+@font-face { font-family: "XbBqPlayfair"; font-weight: 500; font-display: swap; src: url("/xb_self_order_boutique/static/fonts/PlayfairDisplay-500.woff2") format("woff2"); }
+@font-face { font-family: "XbBqMontserrat"; font-weight: 400; font-display: swap; src: url("/xb_self_order_boutique/static/fonts/Montserrat-400.woff2") format("woff2"); }
+@font-face { font-family: "XbBqMontserrat"; font-weight: 500; font-display: swap; src: url("/xb_self_order_boutique/static/fonts/Montserrat-500.woff2") format("woff2"); }
+@font-face { font-family: "XbBqMontserrat"; font-weight: 600; font-display: swap; src: url("/xb_self_order_boutique/static/fonts/Montserrat-600.woff2") format("woff2"); }
+@font-face { font-family: "XbBqJost"; font-weight: 300; font-display: swap; src: url("/xb_self_order_boutique/static/fonts/Jost-300.woff2") format("woff2"); }
+@font-face { font-family: "XbBqJost"; font-weight: 400; font-display: swap; src: url("/xb_self_order_boutique/static/fonts/Jost-400.woff2") format("woff2"); }
+@font-face { font-family: "XbBqJost"; font-weight: 500; font-display: swap; src: url("/xb_self_order_boutique/static/fonts/Jost-500.woff2") format("woff2"); }
+@font-face { font-family: "XbBqLato"; font-weight: 400; font-display: swap; src: url("/xb_self_order_boutique/static/fonts/Lato-400.woff2") format("woff2"); }
+@font-face { font-family: "XbBqLato"; font-weight: 700; font-display: swap; src: url("/xb_self_order_boutique/static/fonts/Lato-700.woff2") format("woff2"); }
+
+@mixin bq-caps($size: 0.8rem, $spacing: 0.14em) {
+    font-family: var(--xb-bq-body-font);
+    font-weight: 500;
+    font-size: $size;
+    letter-spacing: $spacing;
+    text-transform: uppercase;
+}
+
+html.xb-bq {
+    body {
+        font-family: var(--xb-bq-body-font);
+        color: var(--xb-bq-ink);
+    }
+
+    // ---------------------------------------------------------------- Buttons
+    .btn-primary, .btn-secondary, .btn-light.btn-lg {
+        border-radius: var(--xb-bq-radius) !important;
+        @include bq-caps(0.95rem, 0.12em);
+        padding-block: 0.95rem;
+    }
+    // Outlined buttons ("Ver en el muro"): ink and gold instead of Odoo's purple.
+    .btn-outline-primary {
+        border-radius: var(--xb-bq-radius) !important;
+        @include bq-caps(0.82rem, 0.08em);
+        color: var(--xb-bq-ink) !important;
+        background: #fff !important;
+        border: 1px solid var(--xb-bq-ink) !important;
+        // Only while pressed: on a touch screen hover and focus stay after the tap.
+        &:active { color: #fff !important; background: var(--xb-bq-primary) !important; border-color: var(--xb-bq-primary) !important; }
+        &:hover, &:focus { color: var(--xb-bq-ink) !important; background: #fff !important; }
+        .fa { color: var(--xb-bq-primary); }
+        &:hover .fa, &:active .fa { color: #fff; }
+    }
+    .btn-secondary {
+        background: #fff;
+        color: var(--xb-bq-ink);
+        border: 1px solid var(--xb-bq-ink) !important;
+    }
+
+    // ---------------------------------------------------------------- Product list
+    .o_self_product_list_page {
+        background: #fff !important;
+
+        // Categories: spaced capitals, gold underline on the active one.
+        .bg-view.border-bottom {
+            border-color: var(--xb-bq-line) !important;
+        }
+        .category_list {
+            gap: 2.25rem !important;
+            justify-content: center;
+        }
+        .category_btn {
+            background: none !important;
+            > div {
+                background: none !important;
+                color: var(--xb-bq-muted) !important;
+                border-radius: var(--xb-bq-radius) !important;
+                padding: 0.6rem 0 !important;
+                border-bottom: 2px solid transparent !important;
+                span { @include bq-caps(0.95rem, 0.16em); }
+            }
+            > div.text-bg-primary {
+                color: var(--xb-bq-ink) !important;
+                border-bottom-color: var(--xb-bq-primary) !important;
+            }
+            img { display: none !important; }
+        }
+
+        // Grid: two columns of large square photos, three on wide screens.
+        .product_list.grid {
+            display: grid !important;
+            grid-template-columns: repeat(var(--xb-bq-cols), minmax(0, 1fr)) !important;
+            gap: 2.5rem 1.25rem !important;
+            padding-block: 1.75rem 2.5rem;
+            @media (min-width: 1200px) { grid-template-columns: repeat(var(--xb-bq-cols-wide), minmax(0, 1fr)) !important; }
+        }
+        .o_self_product_box {
+            grid-column: auto / span 1 !important;
+            background: none !important;
+            box-shadow: none !important;
+            border-radius: var(--xb-bq-radius) !important;
+            padding: 0 !important;
+
+            article {
+                flex-direction: column !important;
+                align-items: stretch !important;
+            }
+            .product_img {
+                width: 100% !important;
+                margin: 0 !important;
+                background: var(--xb-bq-photo);
+                img {
+                    object-fit: contain !important;
+                    border-radius: var(--xb-bq-radius) !important;
+                    mix-blend-mode: multiply;
+                    padding: 6%;
+                }
+            }
+            article > div:nth-child(2) {
+                margin-top: 0.9rem !important;
+                text-align: left !important;
+                align-items: flex-start !important;
+                gap: 0.25rem !important;
+            }
+            // Product name (ProductNameWidget)
+            article > div:nth-child(2) > :first-child,
+            article > div:nth-child(2) > :first-child * {
+                font-family: var(--xb-bq-title-font) !important;
+                font-weight: 500 !important;
+                font-size: 1.45rem !important;
+                line-height: 1.2 !important;
+                color: var(--xb-bq-ink) !important;
+                text-transform: none !important;
+                letter-spacing: 0 !important;
+                -webkit-line-clamp: 2;
+            }
+            .xb_bq_from {
+                font-family: var(--xb-bq-body-font);
+                font-size: 0.85rem;
+                color: var(--xb-bq-muted);
+                margin-top: 0.15rem;
+            }
+            .o-so-tabular-nums {
+                font-family: var(--xb-bq-body-font);
+                font-weight: 500 !important;
+                font-size: 1.2rem !important;
+                color: var(--xb-bq-ink) !important;
+            }
+            .product_descr { display: none !important; }
+            .badge.text-bg-primary {
+                border-radius: var(--xb-bq-radius) !important;
+                background: var(--xb-bq-ink) !important;
+                color: #fff !important;
+            }
+        }
+    }
+
+    // ---------------------------------------------------------------- Product page
+    .o_self_product_page {
+        background: #fff !important;
+
+        .o_self_product_page_header {
+            background: #fff !important;
+            color: var(--xb-bq-ink) !important;
+            border-bottom: 1px solid var(--xb-bq-line);
+            .btn-link { color: var(--xb-bq-ink) !important; @include bq-caps(0.9rem, 0.14em); }
+            .o_self_product_name { font-family: var(--xb-bq-title-font); font-weight: 500; color: var(--xb-bq-ink) !important; }
+        }
+        .py-3.text-bg-primary {
+            background: #fff !important;
+            color: var(--xb-bq-ink) !important;
+            h1 {
+                color: var(--xb-bq-ink) !important;
+                font-family: var(--xb-bq-title-font);
+                font-weight: 500;
+                font-size: 2.6rem;
+                text-align: center;
+                line-height: 1.1;
+                margin-top: 1rem !important;
+            }
+        }
+        .o_self_product_image {
+            width: 100% !important;
+            max-width: 640px;
+            border-radius: var(--xb-bq-radius) !important;
+            background: var(--xb-bq-photo);
+            img { border-radius: var(--xb-bq-radius) !important; object-fit: contain; mix-blend-mode: multiply; padding: 5%; }
+        }
+
+        // Editorial mosaic: video (or main photo) full width, then photos two by two.
+        .xb_bq_mosaic {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 6px;
+            max-width: 760px;
+            margin-inline: auto;
+            > div {
+                background: var(--xb-bq-photo);
+                overflow: hidden;
+                aspect-ratio: 1;
+            }
+            .xb_bq_mosaic_big {
+                grid-column: 1 / -1;
+                aspect-ratio: 16 / 11;
+            }
+            .xb_bq_mosaic_wide {
+                grid-column: 1 / -1;
+                aspect-ratio: 2 / 1;
+            }
+            img, video {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                mix-blend-mode: multiply;
+            }
+            video { mix-blend-mode: normal; object-fit: cover; }
+        }
+
+        // Options: label in spaced capitals, values as compact chips.
+        .o_self_product_page_attributes {
+            h2 {
+                @include bq-caps(0.95rem, 0.16em);
+                color: var(--xb-bq-ink);
+                border-top: 1px solid var(--xb-bq-line);
+                padding-top: 1.4rem !important;
+                .badge { display: none; }
+            }
+            .self_order_attribute_selection {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.6rem;
+                margin: 0;
+                > div {
+                    width: auto !important;
+                    flex: 0 0 auto;
+                    padding: 0 !important;
+                }
+                .btn {
+                    min-height: 0 !important;
+                    min-width: 4.5rem;
+                    padding: 0.8rem 1.15rem !important;
+                    border-radius: var(--xb-bq-radius) !important;
+                    background: #fff !important;
+                    border: 1px solid var(--xb-bq-line) !important;
+                    color: var(--xb-bq-ink) !important;
+                    span.fs-4 { font-family: var(--xb-bq-body-font); font-size: 1.05rem !important; font-weight: 400; }
+                    // Price extra next to the name, not in the corner (the chip is compact).
+                    > div { flex-wrap: nowrap; gap: 0.5rem !important; }
+                    .badge {
+                        position: static !important;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                        background: none !important;
+                        color: var(--xb-bq-muted) !important;
+                        font-family: var(--xb-bq-body-font);
+                        font-size: 0.9rem;
+                        font-weight: 400 !important;
+                        white-space: nowrap;
+                    }
+                }
+                .btn.border-primary {
+                    border-color: var(--xb-bq-primary) !important;
+                    background: var(--xb-bq-soft) !important;
+                    box-shadow: inset 0 0 0 1px var(--xb-bq-primary);
+                }
+            }
+        }
+        .o_self_footer {
+            border-color: var(--xb-bq-line) !important;
+            h4 { @include bq-caps(0.75rem, 0.16em); color: var(--xb-bq-muted) !important; opacity: 1 !important; }
+            .fs-2 { font-family: var(--xb-bq-body-font); font-weight: 500 !important; color: var(--xb-bq-ink) !important; }
+        }
+    }
+
+        // Footer buttons: smaller caps so "Agregar al carrito" fits next to the price.
+        .o_self_footer .btn {
+            @include bq-caps(0.82rem, 0.08em);
+            white-space: nowrap;
+            text-overflow: clip !important;
+            padding-inline: 1.1rem !important;
+        }
+
+    // ---------------------------------------------------------------- Cart and order bar
+    .o_self_footer, .o_self_order_widget {
+        font-family: var(--xb-bq-body-font);
+    }
+    .o_self_cart_page {
+        background: #fff !important;
+        background-image: none !important;
+        .cart_container h1 {
+            font-family: var(--xb-bq-title-font);
+            font-weight: 500;
+            font-size: 2.6rem;
+        }
+        .order_box {
+            border-radius: var(--xb-bq-radius) !important;
+            border-color: var(--xb-bq-line) !important;
+            box-shadow: none !important;
+        }
+        .product_img {
+            background: var(--xb-bq-photo);
+            img { border-radius: var(--xb-bq-radius) !important; object-fit: contain !important; mix-blend-mode: multiply; }
+        }
+        .product-cart-item {
+            border-color: var(--xb-bq-line) !important;
+            .fs-4.fw-bold {
+                font-family: var(--xb-bq-title-font);
+                font-weight: 500 !important;
+                font-size: 1.5rem !important;
+            }
+        }
+        .text-primary { color: var(--xb-bq-ink) !important; font-weight: 500; }
+    }
+    .page-buttons {
+        border-top: 1px solid var(--xb-bq-line);
+        .text-primary { color: var(--xb-bq-ink) !important; }
+    }
+
+
+    // ---------------------------------------------------------------- Filters (xb_self_order_tag_filters)
+    .o_self_product_list_page {
+        --xb-tf-ink: var(--xb-bq-ink);
+        --xb-tf-accent: var(--xb-bq-primary);
+        --xb-tf-soft: var(--xb-bq-soft);
+        --xb-tf-line: var(--xb-bq-line);
+        --xb-tf-muted: var(--xb-bq-muted);
+        --xb-tf-title-font: var(--xb-bq-title-font);
+    }
+    .xb_tf_fab, .xb_tf_go, .xb_tf_title { font-family: var(--xb-bq-body-font); font-weight: 500; }
+    .xb_tf_link { color: var(--xb-bq-primary-d); }
+
+    // ---------------------------------------------------------------- Carousel
+    .xb_bq_carousel {
+        max-width: 760px;
+        margin-inline: auto;
+        .xb_bq_carousel_track {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            border-radius: var(--xb-bq-radius);
+            &::-webkit-scrollbar { display: none; }
+        }
+        .xb_bq_slide {
+            flex: 0 0 100%;
+            aspect-ratio: 1;
+            scroll-snap-align: center;
+            background: var(--xb-bq-photo);
+            img, video {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                mix-blend-mode: multiply;
+            }
+            video { mix-blend-mode: normal; object-fit: cover; }
+        }
+        .xb_bq_dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            padding-top: 0.9rem;
+            span {
+                width: 0.55rem;
+                height: 0.55rem;
+                border-radius: 50%;
+                background: var(--xb-bq-line);
+                transition: background 0.2s;
+                &.active { background: var(--xb-bq-primary); }
+            }
+        }
+    }
+    .xb_bq_mosaic {
+        border-radius: var(--xb-bq-radius);
+        overflow: hidden;
+    }
+
+    // ---------------------------------------------------------------- Confirmation
+    .confirmation-page {
+        font-family: var(--xb-bq-body-font);
+        color: var(--xb-bq-ink);
+        h1 {
+            font-family: var(--xb-bq-title-font);
+            font-weight: 500 !important;
+            font-size: 2.6rem;
+            line-height: 1.15;
+            text-wrap: balance;
+        }
+        h3 { @include bq-caps(0.85rem, 0.16em); color: var(--xb-bq-muted) !important; }
+        .rounded-4, .rounded-bottom { border-radius: var(--xb-bq-radius) !important; }
+        .border-light { border-color: var(--xb-bq-line) !important; }
+        .tracking-number {
+            font-family: var(--xb-bq-title-font);
+            font-weight: 500 !important;
+            color: var(--xb-bq-ink) !important;
+        }
+    }
+}

@@ -1,0 +1,558 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_self_order_boutique
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-18 20:23+0000\n"
+"PO-Revision-Date: 2026-10-18 20:23+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields.selection,name:xb_self_order_boutique.selection__pos_config__xb_bq_price__from
+msgid "\"From\" + price"
+msgstr "«Desde» + precio"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,help:xb_self_order_boutique.field_pos_config__xb_bq_price
+#: model:ir.model.fields,help:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_price
+msgid ""
+"\"From\" + price: products with options that change the price show the "
+"lowest one after \"From\". No price: the price shows only on the product "
+"page."
+msgstr "«Desde» + precio: los productos con opciones que cambian el precio muestran el más bajo después de «Desde». Sin precio: el precio solo aparece en la ficha del producto."
+
+#. module: xb_self_order_boutique
+#. odoo-python
+#: code:addons/xb_self_order_boutique/models/pos_config.py:0
+msgid "%(field)s must be a color like #A6824C."
+msgstr "%(field)s debe ser un color como #A6824C."
+
+#. module: xb_self_order_boutique
+#. odoo-javascript
+#: code:addons/xb_self_order_boutique/static/src/app/boutique.js:0
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "All set! See you at the counter"
+msgstr "¡Listo! Te esperamos en mostrador"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "App icon"
+msgstr "Ícono de la app"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "App name"
+msgstr "Nombre de la app"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "App on the tablet"
+msgstr "App en la tablet"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Bar color"
+msgstr "Color de la barra"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Before the price"
+msgstr "Antes del precio"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,help:xb_self_order_boutique.field_pos_config__xb_bq_color_photo
+#: model:ir.model.fields,help:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_color_photo
+msgid "Behind every product photo. Photos on white blend into it."
+msgstr "Detrás de cada foto de producto. Las fotos con fondo blanco se funden con él."
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_enabled
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_enabled
+msgid "Boutique Theme"
+msgstr "Tema boutique"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Boutique theme"
+msgstr "Tema boutique"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_txt_from
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_txt_from
+msgid "Boutique: \"From\" Word"
+msgstr "Boutique: palabra «Desde»"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_app_icon
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_app_icon
+msgid "Boutique: App Icon"
+msgstr "Boutique: ícono de la app"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_app_name
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_app_name
+msgid "Boutique: App Name"
+msgstr "Boutique: nombre de la app"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_bar_color
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_bar_color
+msgid "Boutique: Bar Color"
+msgstr "Boutique: color de la barra"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_txt_order
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_txt_order
+msgid "Boutique: Cart Button"
+msgstr "Boutique: botón del carrito"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_txt_cart_title
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_txt_cart_title
+msgid "Boutique: Cart Title"
+msgstr "Boutique: título del carrito"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_txt_done
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_txt_done
+msgid "Boutique: Confirmation Title"
+msgstr "Boutique: título de confirmación"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_corners
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_corners
+msgid "Boutique: Corners"
+msgstr "Boutique: esquinas"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_app
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_app
+msgid "Boutique: Installable App"
+msgstr "Boutique: app instalable"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_color_line
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_color_line
+msgid "Boutique: Line Color"
+msgstr "Boutique: color de líneas"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_color_primary
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_color_primary
+msgid "Boutique: Main Color"
+msgstr "Boutique: color principal"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_txt_number
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_txt_number
+msgid "Boutique: Order Number Title"
+msgstr "Boutique: título del número de pedido"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_color_photo
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_color_photo
+msgid "Boutique: Photo Background"
+msgstr "Boutique: fondo de foto"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_price
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_price
+msgid "Boutique: Price in the List"
+msgstr "Boutique: precio en la lista"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_columns
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_columns
+msgid "Boutique: Product Columns"
+msgstr "Boutique: columnas de productos"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_gallery
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_gallery
+msgid "Boutique: Product Gallery"
+msgstr "Boutique: galería del producto"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_txt_checkout
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_txt_checkout
+msgid "Boutique: Product List Button"
+msgstr "Boutique: botón de la lista"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_color_ink
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_color_ink
+msgid "Boutique: Text Color"
+msgstr "Boutique: color del texto"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_font_body
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_font_body
+msgid "Boutique: Text Font"
+msgstr "Boutique: letra del texto"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__xb_bq_font_title
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_font_title
+msgid "Boutique: Title Font"
+msgstr "Boutique: letra de títulos"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,help:xb_self_order_boutique.field_pos_config__xb_bq_color_primary
+#: model:ir.model.fields,help:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_color_primary
+msgid "Buttons, the active category and the chosen options."
+msgstr "Botones, la categoría activa y las opciones elegidas."
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields.selection,name:xb_self_order_boutique.selection__pos_config__xb_bq_gallery__carousel
+msgid "Carousel"
+msgstr "Carrusel"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Cart button"
+msgstr "Botón del carrito"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Cart title"
+msgstr "Título del carrito"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,help:xb_self_order_boutique.field_pos_config__xb_bq_bar_color
+#: model:ir.model.fields,help:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_bar_color
+msgid "Color of the tablet's status bar and of the app's splash screen."
+msgstr "Color de la barra de estado de la tablet y de la pantalla de inicio de la app."
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Columns"
+msgstr "Columnas"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,help:xb_self_order_boutique.field_pos_config__xb_bq_columns
+#: model:ir.model.fields,help:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_columns
+msgid ""
+"Columns of the product list on a portrait tablet. Wide screens add one."
+msgstr "Columnas de la lista de productos en una tablet vertical. Las pantallas anchas suman una."
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Company name"
+msgstr "Nombre de la empresa"
+
+#. module: xb_self_order_boutique
+#: model:ir.model,name:xb_self_order_boutique.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Confirmation"
+msgstr "Confirmación"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields.selection,name:xb_self_order_boutique.selection__pos_config__xb_bq_font_title__cormorant
+msgid "Cormorant Garamond (elegant serif)"
+msgstr "Cormorant Garamond (serifa elegante)"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Corners"
+msgstr "Esquinas"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields.selection,name:xb_self_order_boutique.selection__pos_config__xb_bq_font_body__sans
+#: model:ir.model.fields.selection,name:xb_self_order_boutique.selection__pos_config__xb_bq_font_title__sans
+msgid "Device sans-serif"
+msgstr "Sin serifa del dispositivo"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields.selection,name:xb_self_order_boutique.selection__pos_config__xb_bq_font_title__serif
+msgid "Device serif"
+msgstr "Con serifa del dispositivo"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_ir_http__display_name
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__display_name
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_product_template__display_name
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Nombre en pantalla"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,help:xb_self_order_boutique.field_pos_config__xb_bq_txt_done
+#: model:ir.model.fields,help:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_txt_done
+msgid "Empty: \"All set! See you at the counter\"."
+msgstr "Vacío: «¡Listo! Te esperamos en mostrador»."
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,help:xb_self_order_boutique.field_pos_config__xb_bq_txt_from
+#: model:ir.model.fields,help:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_txt_from
+msgid "Empty: \"From\"."
+msgstr "Vacío: «Desde»."
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,help:xb_self_order_boutique.field_pos_config__xb_bq_txt_order
+#: model:ir.model.fields,help:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_txt_order
+msgid "Empty: \"Pay at the counter\"."
+msgstr "Vacío: «Pagar en mostrador»."
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,help:xb_self_order_boutique.field_pos_config__xb_bq_txt_checkout
+#: model:ir.model.fields,help:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_txt_checkout
+msgid "Empty: \"View my selection\"."
+msgstr "Vacío: «Ver mi selección»."
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,help:xb_self_order_boutique.field_pos_config__xb_bq_txt_number
+#: model:ir.model.fields,help:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_txt_number
+msgid "Empty: \"Your order number\"."
+msgstr "Vacío: «Tu número de pedido»."
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,help:xb_self_order_boutique.field_pos_config__xb_bq_txt_cart_title
+#: model:ir.model.fields,help:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_txt_cart_title
+msgid "Empty: \"Your selection\"."
+msgstr "Vacío: «Tu selección»."
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,help:xb_self_order_boutique.field_pos_config__xb_bq_app_name
+#: model:ir.model.fields,help:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_app_name
+msgid "Empty: the company name."
+msgstr "Vacío: el nombre de la empresa."
+
+#. module: xb_self_order_boutique
+#. odoo-javascript
+#: code:addons/xb_self_order_boutique/static/src/app/boutique.js:0
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "From"
+msgstr "Desde"
+
+#. module: xb_self_order_boutique
+#: model:ir.model,name:xb_self_order_boutique.model_ir_http
+msgid "HTTP Routing"
+msgstr "Enrutamiento HTTP"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_ir_http__id
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_pos_config__id
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_product_template__id
+#: model:ir.model.fields,field_description:xb_self_order_boutique.field_res_config_settings__id
+msgid "ID"
+msgstr "ID"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Installable app"
+msgstr "App instalable"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields.selection,name:xb_self_order_boutique.selection__pos_config__xb_bq_font_body__jost
+msgid "Jost"
+msgstr "Jost"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields.selection,name:xb_self_order_boutique.selection__pos_config__xb_bq_font_body__lato
+msgid "Lato"
+msgstr "Lato"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Lines"
+msgstr "Líneas"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "List button"
+msgstr "Botón de la lista"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Look"
+msgstr "Aspecto"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Main color"
+msgstr "Color principal"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields.selection,name:xb_self_order_boutique.selection__pos_config__xb_bq_gallery__single
+msgid "Main photo"
+msgstr "Foto principal"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields.selection,name:xb_self_order_boutique.selection__pos_config__xb_bq_font_body__montserrat
+msgid "Montserrat"
+msgstr "Montserrat"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields.selection,name:xb_self_order_boutique.selection__pos_config__xb_bq_font_title__montserrat
+msgid "Montserrat (geometric sans)"
+msgstr "Montserrat (sin serifa geométrica)"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields.selection,name:xb_self_order_boutique.selection__pos_config__xb_bq_gallery__mosaic
+msgid "Mosaic with video"
+msgstr "Mosaico con video"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields.selection,name:xb_self_order_boutique.selection__pos_config__xb_bq_price__none
+msgid "No price"
+msgstr "Sin precio"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Order number"
+msgstr "Número de pedido"
+
+#. module: xb_self_order_boutique
+#. odoo-javascript
+#: code:addons/xb_self_order_boutique/static/src/app/boutique.js:0
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Pay at the counter"
+msgstr "Pagar en mostrador"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Photo background"
+msgstr "Fondo de foto"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields.selection,name:xb_self_order_boutique.selection__pos_config__xb_bq_font_title__playfair
+msgid "Playfair Display (classic serif)"
+msgstr "Playfair Display (serifa clásica)"
+
+#. module: xb_self_order_boutique
+#: model:ir.model,name:xb_self_order_boutique.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr "Configuración del punto de venta"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields.selection,name:xb_self_order_boutique.selection__pos_config__xb_bq_price__price
+msgid "Price"
+msgstr "Precio"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Price in the list"
+msgstr "Precio en la lista"
+
+#. module: xb_self_order_boutique
+#: model:ir.model,name:xb_self_order_boutique.model_product_template
+msgid "Product"
+msgstr "Producto"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,help:xb_self_order_boutique.field_pos_config__xb_bq_color_ink
+#: model:ir.model.fields,help:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_color_ink
+msgid "Product names, prices and titles."
+msgstr "Nombres de productos, precios y títulos."
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Product page"
+msgstr "Ficha del producto"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Products"
+msgstr "Productos"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields.selection,name:xb_self_order_boutique.selection__pos_config__xb_bq_corners__rounded
+msgid "Rounded"
+msgstr "Redondeadas"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields.selection,name:xb_self_order_boutique.selection__pos_config__xb_bq_corners__square
+msgid "Square"
+msgstr "Rectas"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,help:xb_self_order_boutique.field_pos_config__xb_bq_app_icon
+#: model:ir.model.fields,help:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_app_icon
+msgid "Square image, at least 512 x 512 px. Empty: the company logo."
+msgstr "Imagen cuadrada de al menos 512 x 512 px. Vacío: el logo de la empresa."
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Text color"
+msgstr "Color del texto"
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Text font"
+msgstr "Letra del texto"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,help:xb_self_order_boutique.field_pos_config__xb_bq_enabled
+#: model:ir.model.fields,help:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_enabled
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid ""
+"The kiosk takes the look of a boutique: large photos, your colors and fonts,"
+" shop words on the buttons."
+msgstr "El kiosco toma el aspecto de una boutique: fotos grandes, tus colores y letras, y palabras de tienda en los botones."
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,help:xb_self_order_boutique.field_pos_config__xb_bq_app
+#: model:ir.model.fields,help:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_app
+msgid ""
+"The tablet can install the kiosk as an app that opens full screen, with your"
+" name and icon. In a plain browser tab, the first touch switches to full "
+"screen."
+msgstr "La tablet puede instalar el kiosco como app que abre en pantalla completa, con tu nombre e ícono. En una pestaña normal del navegador, el primer toque pasa a pantalla completa."
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,help:xb_self_order_boutique.field_pos_config__xb_bq_color_line
+#: model:ir.model.fields,help:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_color_line
+msgid "Thin lines and the frame of the options."
+msgstr "Líneas finas y el marco de las opciones."
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Title font"
+msgstr "Letra de títulos"
+
+#. module: xb_self_order_boutique
+#. odoo-javascript
+#: code:addons/xb_self_order_boutique/static/src/app/boutique.js:0
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "View my selection"
+msgstr "Ver mi selección"
+
+#. module: xb_self_order_boutique
+#: model:ir.model.fields,help:xb_self_order_boutique.field_pos_config__xb_bq_gallery
+#: model:ir.model.fields,help:xb_self_order_boutique.field_res_config_settings__pos_xb_bq_gallery
+msgid ""
+"What the product page shows: the main photo, a carousel of the extra photos "
+"(swipe), or a mosaic with the published video on top and the photos two by "
+"two."
+msgstr "Lo que muestra la ficha del producto: la foto principal, un carrusel con las fotos extra (deslizar), o un mosaico con el video publicado arriba y las fotos de dos en dos."
+
+#. module: xb_self_order_boutique
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Words"
+msgstr "Textos"
+
+#. module: xb_self_order_boutique
+#. odoo-javascript
+#: code:addons/xb_self_order_boutique/static/src/app/boutique.js:0
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Your order number"
+msgstr "Tu número de pedido"
+
+#. module: xb_self_order_boutique
+#. odoo-javascript
+#: code:addons/xb_self_order_boutique/static/src/app/boutique.js:0
+#: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
+msgid "Your selection"
+msgstr "Tu selección"

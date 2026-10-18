@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_kiosk_boutique" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.xb.kiosk.boutique</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="pos_self_order.res_config_settings_view_form_menu"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='self_ordering_section']" position="inside">
+                <setting string="Boutique theme" invisible="pos_self_ordering_mode != 'kiosk'"
+                         help="The kiosk takes the look of a boutique: large photos, your colors and fonts, shop words on the buttons.">
+                    <field name="pos_xb_bq_enabled"/>
+                    <div class="content-group mt-2" invisible="not pos_xb_bq_enabled">
+                        <div class="fw-bold mt-2">Look</div>
+                        <div class="row"><label for="pos_xb_bq_color_primary" string="Main color" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_color_primary" widget="color"/></div>
+                        <div class="row"><label for="pos_xb_bq_color_ink" string="Text color" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_color_ink" widget="color"/></div>
+                        <div class="row"><label for="pos_xb_bq_color_photo" string="Photo background" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_color_photo" widget="color"/></div>
+                        <div class="row"><label for="pos_xb_bq_color_line" string="Lines" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_color_line" widget="color"/></div>
+                        <div class="row"><label for="pos_xb_bq_font_title" string="Title font" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_font_title"/></div>
+                        <div class="row"><label for="pos_xb_bq_font_body" string="Text font" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_font_body"/></div>
+                        <div class="row"><label for="pos_xb_bq_corners" string="Corners" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_corners" widget="radio" options="{'horizontal': true}"/></div>
+                        <div class="fw-bold mt-3">Products</div>
+                        <div class="row"><label for="pos_xb_bq_columns" string="Columns" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_columns" widget="radio" options="{'horizontal': true}"/></div>
+                        <div class="row"><label for="pos_xb_bq_price" string="Price in the list" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_price"/></div>
+                        <div class="row"><label for="pos_xb_bq_gallery" string="Product page" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_gallery"/></div>
+                        <div class="fw-bold mt-3">Words</div>
+                        <div class="row"><label for="pos_xb_bq_txt_checkout" string="List button" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_txt_checkout" placeholder="View my selection"/></div>
+                        <div class="row"><label for="pos_xb_bq_txt_order" string="Cart button" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_txt_order" placeholder="Pay at the counter"/></div>
+                        <div class="row"><label for="pos_xb_bq_txt_cart_title" string="Cart title" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_txt_cart_title" placeholder="Your selection"/></div>
+                        <div class="row"><label for="pos_xb_bq_txt_done" string="Confirmation" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_txt_done" placeholder="All set! See you at the counter"/></div>
+                        <div class="row"><label for="pos_xb_bq_txt_number" string="Order number" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_txt_number" placeholder="Your order number"/></div>
+                        <div class="row"><label for="pos_xb_bq_txt_from" string="Before the price" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_txt_from" placeholder="From"/></div>
+                        <div class="fw-bold mt-3">App on the tablet</div>
+                        <div class="row"><label for="pos_xb_bq_app" string="Installable app" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_app"/></div>
+                        <div invisible="not pos_xb_bq_app">
+                        <div class="row"><label for="pos_xb_bq_app_name" string="App name" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_app_name" placeholder="Company name"/></div>
+                        <div class="row"><label for="pos_xb_bq_app_icon" string="App icon" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_app_icon" widget="image" class="oe_avatar" options="{'size': [96, 96]}"/></div>
+                        <div class="row"><label for="pos_xb_bq_bar_color" string="Bar color" class="col-lg-4 o_light_label"/><field name="pos_xb_bq_bar_color" widget="color"/></div>
+                        </div>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>
