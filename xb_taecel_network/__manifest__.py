@@ -39,7 +39,7 @@ Runs on Odoo 18.0 and 19.0.
 """,
     'category': 'Sales/Point of Sale',
     'version': '19.0.1.0.6',
-    'author': 'Cristofferson Reyes',
+    'author': 'XUBAX',
     'website': 'https://xubax.com',
     'license': 'OPL-1',
     'price': 149.00,

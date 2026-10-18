@@ -29,7 +29,7 @@ imported are never modified.
 Installs itself as soon as both *Products from Vendor Bills* and Odoo's
 Mexican localisation (``l10n_mx_edi``) are present.
 """,
-    "author": "Cristofferson Reyes",
+    "author": "XUBAX",
     "maintainer": "XUBAX",
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",

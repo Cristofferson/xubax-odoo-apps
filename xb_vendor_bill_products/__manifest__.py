@@ -102,7 +102,7 @@ Compatibility
 -------------
 * Odoo 19.0 Community and Enterprise.
 """,
-    "author": "Cristofferson Reyes",
+    "author": "XUBAX",
     "maintainer": "XUBAX",
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",

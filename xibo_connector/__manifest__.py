@@ -107,8 +107,8 @@ Changelog
 * Privacy field ``xibo_show_in_public_screens`` on res.partner.
     """,
 
-    'author': 'Cristofferson Reyes Rodriguez',
-    'maintainer': 'Cristofferson Reyes Rodriguez',
+    'author': 'XUBAX',
+    'maintainer': 'XUBAX',
     'website': 'https://www.xubax.com',
     'support': 'soporte@xubax.com',
     'license': 'OPL-1',

@@ -70,7 +70,7 @@ Key features
 
 AI video (v2) plugs in through the same pluggable media layer.
 """,
-    "author": "Cristofferson Reyes",
+    "author": "XUBAX",
     "maintainer": "XUBAX",
     "company": "XUBAX",
     "website": "https://www.xubax.com",

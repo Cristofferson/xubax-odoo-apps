@@ -21,7 +21,7 @@ platforms (OTAs):
 """,
     'category': 'Sales/Rental',
     'version': '19.0.1.0.0',
-    'author': 'Cristofferson Reyes Rodriguez',
+    'author': 'XUBAX',
     'website': 'https://xubax.com',
     'license': 'OPL-1',
     'price': 249.00,

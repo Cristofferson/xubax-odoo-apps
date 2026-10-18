@@ -20,7 +20,7 @@ covers every campaign you send as a template, not just Special Dates
 reminders, and only for customers who actually answer, so a large send does
 not fill Discuss with empty conversations.
 """,
-    "author": "Cristofferson Reyes",
+    "author": "XUBAX",
     "maintainer": "XUBAX",
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",

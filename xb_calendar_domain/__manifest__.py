@@ -89,7 +89,7 @@ Compatibility
 * Calendar (``calendar``). Online Appointments is supported when installed,
   but not required.
 """,
-    "author": "Cristofferson Reyes",
+    "author": "XUBAX",
     "maintainer": "XUBAX",
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",

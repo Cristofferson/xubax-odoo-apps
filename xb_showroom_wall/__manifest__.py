@@ -46,7 +46,7 @@ Highlights
   Odoo, so it works inside any digital-signage web widget, a browser in
   kiosk mode or a smart TV.
 """,
-    'author': 'Cristofferson Reyes Rodriguez',
+    'author': 'XUBAX',
     'website': 'https://www.xubax.com',
     'license': 'OPL-1',
     'depends': ['website_sale'],

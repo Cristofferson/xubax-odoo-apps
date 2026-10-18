@@ -263,8 +263,8 @@ Changelog
   ``device_uuid`` in the websocket bus.
 * In-memory ``_xibo_mirror_active`` deduplicates XMR calls on every product add.
     """,
-    'author': 'Cristofferson Reyes Rodriguez',
-    'maintainer': 'Cristofferson Reyes Rodriguez',
+    'author': 'XUBAX',
+    'maintainer': 'XUBAX',
     'website': 'https://www.xubax.com',
     'support': 'soporte@xubax.com',
     'license': 'OPL-1',

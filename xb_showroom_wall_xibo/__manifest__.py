@@ -24,7 +24,7 @@ setup when the screen is driven by Xibo:
   back when the wall is cleared or left idle. A purchase thank-you always
   wins over the wall.
 """,
-    'author': 'Cristofferson Reyes Rodriguez',
+    'author': 'XUBAX',
     'website': 'https://www.xubax.com',
     'license': 'OPL-1',
     'depends': ['xb_showroom_wall', 'xibo_connector_pos'],

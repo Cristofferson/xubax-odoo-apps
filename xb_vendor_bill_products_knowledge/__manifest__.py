@@ -25,7 +25,7 @@ Installs itself automatically when both *Products from Vendor Bills* and the
 *Knowledge* app are present. It creates the manual only once; your later edits
 are never overwritten.
 """,
-    "author": "Cristofferson Reyes",
+    "author": "XUBAX",
     "maintainer": "XUBAX",
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",

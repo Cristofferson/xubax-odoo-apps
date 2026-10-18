@@ -41,7 +41,7 @@ Key features
 * Compatible with Mexican localization and multi-company setups.
 * Includes English, Spanish and Spanish (Mexico) translations.
 """,
-    "author": "Cristofferson Reyes",
+    "author": "XUBAX",
     "maintainer": "XUBAX",
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",

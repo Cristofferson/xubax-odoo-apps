@@ -22,7 +22,7 @@ selection" experience.
 This is an add-on of the Xibo Connector suite. Requires the POS connector and
 the eCommerce (Website Sale) app.
 """,
-    'author': 'Cristofferson',
+    'author': 'XUBAX',
     'website': 'https://www.xubax.com',
     'license': 'OPL-1',
     'depends': [
