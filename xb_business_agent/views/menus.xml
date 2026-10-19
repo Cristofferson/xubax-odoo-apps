@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_xb_business_agent_root" name="AI Agent"
+              parent="whatsapp.whatsapp_menu_main" sequence="5"
+              groups="whatsapp.group_whatsapp_admin"/>
+    <menuitem id="menu_xb_business_knowledge" name="Knowledge Base"
+              parent="menu_xb_business_agent_root" action="action_xb_business_knowledge" sequence="1"/>
+    <menuitem id="menu_xb_business_job" name="Log"
+              parent="menu_xb_business_agent_root" action="action_xb_business_job" sequence="2"/>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_xb_business_knowledge_user,xb.business.knowledge usuario,model_xb_business_knowledge,base.group_user,1,1,1,1
+access_xb_business_job_user,xb.business.job usuario,model_xb_business_job,base.group_user,1,0,0,0
+access_xb_business_job_admin,xb.business.job admin,model_xb_business_job,base.group_system,1,1,1,1

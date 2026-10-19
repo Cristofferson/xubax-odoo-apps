@@ -1,0 +1,113 @@
+<!-- apps.odoo.com store listing for xb_business_agent -->
+
+<section class="oe_container">
+  <div class="oe_row oe_spaced">
+    <h2 class="oe_slogan">WhatsApp AI Agent</h2>
+    <h3 class="oe_slogan" style="color:#5f5a55;">
+      Your customers write to your WhatsApp at any hour. An AI agent answers them with
+      your prices and hours, logs the lead in the CRM and books the appointment.
+    </h3>
+  </div>
+</section>
+
+<section class="oe_container" style="background:#F3F7F5; padding:24px 0;">
+  <div class="oe_row oe_spaced">
+    <div class="oe_span6">
+      <h3 style="margin-top:0;">The problem</h3>
+      <p>
+        Most questions on WhatsApp are the same ones: <em>how much is it, when are you
+        open, do you have time on Tuesday?</em> If nobody answers within minutes, the
+        customer writes to the next business on the list.
+      </p>
+      <p>
+        Answering them takes your team away from the work, and at night or on weekends
+        nobody answers at all.
+      </p>
+    </div>
+    <div class="oe_span6">
+      <h3 style="margin-top:0;">What the agent does</h3>
+      <p>
+        The agent (Anthropic Claude) answers every message on your WhatsApp number,
+        inside Odoo, in the language the customer writes in. It uses <strong>only what
+        you wrote in its knowledge base</strong>, so it never makes up prices or
+        promotions.
+      </p>
+      <p>
+        When someone is interested it creates the <strong>opportunity in your CRM</strong>,
+        and when they want to book it offers real free slots and <strong>books the
+        appointment in Odoo Appointments</strong>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="oe_container">
+  <div class="oe_row oe_spaced">
+    <h3 class="oe_slogan">Everything stays in standard Odoo</h3>
+    <div class="oe_span6">
+      <ul>
+        <li><strong>Knowledge base</strong> (WhatsApp ▸ AI Agent): services, prices, hours
+            and location, FAQs and rules. Edit it any time; the next answer already uses it.</li>
+        <li><strong>CRM</strong>: native opportunities with medium <em>WhatsApp</em>,
+            assigned to your team in turns, with what the customer said.</li>
+        <li><strong>Appointments</strong>: the agent books only the appointment types you
+            choose, with their own hours, staff and duration. It can also show or cancel the
+            customer's upcoming appointments.</li>
+      </ul>
+    </div>
+    <div class="oe_span6">
+      <ul>
+        <li><strong>Reads what customers send</strong>: photos, PDFs (receipts, forms,
+            documents) and voice notes (transcribed with OpenAI, optional).</li>
+        <li><strong>Hands over to a person</strong> when it doesn't know, for payments or
+            complaints, sensitive matters, or when the customer asks. Your team gets an
+            activity and a message in their inbox.</li>
+        <li><strong>Log with costs</strong>: every reply, the tools it used and its cost in USD.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="oe_container" style="background:#F6F1E8; padding:24px 0;">
+  <div class="oe_row oe_spaced">
+    <div class="oe_span6">
+      <h3 style="margin-top:0;">You stay in control</h3>
+      <ul>
+        <li><strong>Rehearsal mode</strong> is on by default: the agent writes its answers as
+            internal notes in the chat, without sending them, until you are happy.</li>
+        <li><strong>Test numbers</strong>: limit the agent to a few numbers while you try it.</li>
+        <li>If someone from your team replies in the chat, <strong>the agent goes quiet</strong>
+            in that conversation. Type <code>#agente</code> or <code>#bot</code> to hand it back.</li>
+        <li>The agent only sees and cancels the appointments of the person it is talking to.</li>
+      </ul>
+    </div>
+    <div class="oe_span6">
+      <h3 style="margin-top:0;">Setup in 5 minutes</h3>
+      <ol>
+        <li>Connect your number in <em>WhatsApp ▸ Configuration ▸ WhatsApp Business Accounts</em> (standard Odoo).</li>
+        <li>Open the account and, in <em>AI Agent</em>, paste your Anthropic API key and
+            choose who answers and which appointments it can book.</li>
+        <li>Write your knowledge base.</li>
+        <li>Turn the agent on with rehearsal mode, read its notes, and turn rehearsal off.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="oe_container">
+  <div class="oe_row oe_spaced">
+    <h3 class="oe_slogan">Requirements and costs</h3>
+    <ul>
+      <li>Odoo 19 <strong>Enterprise</strong> with WhatsApp, CRM and Appointments.</li>
+      <li>An <strong>Anthropic API key</strong> (console.anthropic.com). You pay Anthropic for what
+          you use: with Claude Sonnet a typical answer costs about 1 to 2 US cents. Choose Opus
+          for the best answers or Haiku for the lowest cost.</li>
+      <li>Optional: an OpenAI API key to transcribe voice notes.</li>
+      <li>The Python library <code>anthropic</code> on the server (<code>pip install anthropic</code>).</li>
+      <li>Interface in English and Spanish.</li>
+    </ul>
+    <p style="color:#5f5a55;">
+      Support: <a href="mailto:soporte@xubax.com">soporte@xubax.com</a> · <a href="https://www.xubax.com">www.xubax.com</a>
+    </p>
+  </div>
+</section>

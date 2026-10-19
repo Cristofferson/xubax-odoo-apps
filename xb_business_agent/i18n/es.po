@@ -1,0 +1,945 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_business_agent
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-19 05:43+0000\n"
+"PO-Revision-Date: 2026-10-19 05:43+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "%(who)s wrote again and is waiting for a person: «%(text)s»"
+msgstr "%(who)s volvió a escribir y espera a una persona: «%(text)s»"
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "%s handed the chat back to the agent."
+msgstr "%s devolvió la plática al agente."
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "(Registered by the WhatsApp agent)"
+msgstr "(Registrado por el agente de WhatsApp)"
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.whatsapp_account_view_form_xb_business_agent
+msgid "443 123 4567, 55 7013 1853"
+msgstr "443 123 4567, 55 7013 1853"
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.whatsapp_account_view_form_xb_business_agent
+msgid ""
+"<b>Rehearsal mode:</b> the agent sends NOTHING to the customer; it leaves "
+"its answer as an internal note in the conversation."
+msgstr ""
+"<b>Modo ensayo:</b> el agente NO le envía nada al cliente; deja su respuesta"
+" como nota interna en la conversación."
+
+#. module: xb_business_agent
+#: model:ir.model.fields.selection,name:xb_business_agent.selection__discuss_channel__xb_ba_pause_reason__human
+msgid "A person replied"
+msgstr "Contestó una persona"
+
+#. module: xb_business_agent
+#: model:ir.ui.menu,name:xb_business_agent.menu_xb_business_agent_root
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.whatsapp_account_view_form_xb_business_agent
+msgid "AI Agent"
+msgstr "Agente IA"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_whatsapp_account__xb_ba_enabled
+msgid "AI agent on"
+msgstr "Agente IA encendido"
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "AI agent rehearsal (not sent)"
+msgstr "Ensayo del agente IA (no se envió)"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__model_name
+msgid "AI model"
+msgstr "Modelo de IA"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__message_needaction
+msgid "Action Needed"
+msgstr "Acción requerida"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_knowledge__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__activity_ids
+msgid "Activities"
+msgstr "Actividades"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Decoración de excepción de actividad"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__activity_state
+msgid "Activity State"
+msgstr "Estado de la actividad"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Icono de tipo de actividad"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_whatsapp_account__xb_ba_instructions
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.whatsapp_account_view_form_xb_business_agent
+msgid "Agent instructions"
+msgstr "Instrucciones del agente"
+
+#. module: xb_business_agent
+#: model:ir.actions.act_window,name:xb_business_agent.action_xb_business_job
+msgid "Agent log"
+msgstr "Bitácora del agente"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_discuss_channel__xb_ba_paused_until
+msgid "Agent paused until"
+msgstr "Agente en pausa hasta"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_whatsapp_account__xb_ba_job_count
+msgid "Agent replies"
+msgstr "Respuestas del agente"
+
+#. module: xb_business_agent
+#: model:ir.model.fields.selection,name:xb_business_agent.selection__xb_business_job__state__done
+msgid "Answered"
+msgstr "Contestado"
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.whatsapp_account_view_form_xb_business_agent
+msgid ""
+"Answers as internal notes, not sent. Turn it off when you are happy with "
+"them."
+msgstr ""
+"Respuestas como nota interna, sin enviarse. Apágalo cuando estés conforme."
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_whatsapp_account__xb_ba_api_key
+msgid "Anthropic API key"
+msgstr "Llave de API de Anthropic"
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "Appointment booked on WhatsApp: %(type)s, %(when)s with %(name)s"
+msgstr "Cita agendada por WhatsApp: %(type)s, %(when)s con %(name)s"
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "Appointment cancelled on WhatsApp: %(type)s, %(when)s (%(who)s)"
+msgstr "Cita cancelada por WhatsApp: %(type)s, %(when)s (%(who)s)"
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.whatsapp_account_view_form_xb_business_agent
+msgid ""
+"Appointment types of the Appointments app the agent can book: hours, staff "
+"and duration come from there."
+msgstr ""
+"Tipos de cita de la app Citas que el agente puede agendar: horarios, "
+"encargado y duración salen de ahí."
+
+#. module: xb_business_agent
+#: model:ir.model.fields,help:xb_business_agent.field_whatsapp_account__xb_ba_appointment_type_ids
+msgid ""
+"Appointment types of the Appointments app: hours, staff and duration come "
+"from there."
+msgstr ""
+"Tipos de cita de la app Citas: horarios, encargado y duración salen de ahí."
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_whatsapp_account__xb_ba_appointment_type_ids
+msgid "Appointments it can book"
+msgstr "Citas que puede agendar"
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "Asked to talk to a person"
+msgstr "Pidió hablar con una persona"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__message_attachment_count
+msgid "Attachment Count"
+msgstr "Número de adjuntos"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__attempts
+msgid "Attempts"
+msgstr "Intentos"
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid ""
+"Booked by the WhatsApp agent.\n"
+"WhatsApp: %s"
+msgstr ""
+"Agendada por el agente de WhatsApp.\n"
+"WhatsApp: %s"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_whatsapp_account__xb_ba_company_name
+msgid "Business name"
+msgstr "Nombre del negocio"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__cache_read_tokens
+msgid "Cache read tokens"
+msgstr "Tokens leídos de caché"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__cache_write_tokens
+msgid "Cache write tokens"
+msgstr "Tokens escritos en caché"
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "City"
+msgstr "Ciudad"
+
+#. module: xb_business_agent
+#: model:ir.model.fields.selection,name:xb_business_agent.selection__whatsapp_account__xb_ba_model__claude-haiku-5-5
+msgid "Claude Haiku 5.5 (cheapest)"
+msgstr "Claude Haiku 5.5 (el más barato)"
+
+#. module: xb_business_agent
+#: model:ir.model.fields.selection,name:xb_business_agent.selection__whatsapp_account__xb_ba_model__claude-opus-5-5
+msgid "Claude Opus 5.5 (best)"
+msgstr "Claude Opus 5.5 (el mejor)"
+
+#. module: xb_business_agent
+#: model:ir.model.fields.selection,name:xb_business_agent.selection__whatsapp_account__xb_ba_model__claude-sonnet-5-5
+msgid "Claude Sonnet 5.5 (balanced)"
+msgstr "Claude Sonnet 5.5 (equilibrado)"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__partner_id
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_knowledge__content
+msgid "Content"
+msgstr "Contenido"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__channel_id
+msgid "Conversation"
+msgstr "Conversación"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__cost_usd
+msgid "Cost (USD)"
+msgstr "Costo (USD)"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__create_uid
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_knowledge__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__create_date
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_knowledge__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__message_id
+msgid "Customer message"
+msgstr "Mensaje del cliente"
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.view_xb_business_job_list
+msgid "Date"
+msgstr "Fecha"
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.view_xb_business_job_search
+msgid "Day"
+msgstr "Día"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__reason
+msgid "Detail"
+msgstr "Detalle"
+
+#. module: xb_business_agent
+#: model:ir.model,name:xb_business_agent.model_discuss_channel
+msgid "Discussion Channel"
+msgstr "Canal de conversación"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_discuss_channel__display_name
+#: model:ir.model.fields,field_description:xb_business_agent.field_whatsapp_account__display_name
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__display_name
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_knowledge__display_name
+msgid "Display Name"
+msgstr "Nombre en pantalla"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__duration
+msgid "Duration (s)"
+msgstr "Duración (s)"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_whatsapp_account__xb_ba_effort
+msgid "Effort"
+msgstr "Esfuerzo"
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "Email"
+msgstr "Correo"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,help:xb_business_agent.field_xb_business_knowledge__account_ids
+msgid "Empty = applies to every number with the agent."
+msgstr "Vacío = aplica a todos los números con agente."
+
+#. module: xb_business_agent
+#: model:ir.model.fields.selection,name:xb_business_agent.selection__xb_business_job__state__error
+msgid "Error"
+msgstr "Error"
+
+#. module: xb_business_agent
+#: model_terms:ir.actions.act_window,help:xb_business_agent.action_xb_business_job
+msgid "Every message the agent handles shows up here"
+msgstr "Aquí aparece cada mensaje que atiende el agente"
+
+#. module: xb_business_agent
+#: model:ir.model.fields.selection,name:xb_business_agent.selection__xb_business_knowledge__kind__faq
+msgid "FAQ"
+msgstr "Pregunta frecuente"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (contactos)"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,help:xb_business_agent.field_xb_business_job__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Icono de Font Awesome, p. ej. fa-tasks"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,help:xb_business_agent.field_whatsapp_account__xb_ba_only_numbers
+msgid ""
+"For testing: mobile numbers separated by commas. Empty = answers everyone."
+msgstr "Para probar: celulares separados por coma. Vacío = atiende a todos."
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.whatsapp_account_view_form_xb_business_agent
+msgid ""
+"For testing: only answer these numbers, separated by commas. Empty = "
+"everyone."
+msgstr ""
+"Para probar: solo atiende a estos números, separados por coma. Vacío = a "
+"todos."
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.whatsapp_account_view_form_xb_business_agent
+msgid ""
+"Get it at console.anthropic.com → API Keys. Set a monthly spend limit there."
+msgstr ""
+"Se saca en console.anthropic.com → API Keys. Ponle un tope de gasto mensual "
+"allá."
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__has_message
+msgid "Has Message"
+msgstr "Tiene mensaje"
+
+#. module: xb_business_agent
+#: model:ir.model.fields.selection,name:xb_business_agent.selection__whatsapp_account__xb_ba_effort__high
+msgid "High"
+msgstr "Alto"
+
+#. module: xb_business_agent
+#: model:ir.model.fields.selection,name:xb_business_agent.selection__xb_business_knowledge__kind__schedule
+msgid "Hours and location"
+msgstr "Horario y ubicación"
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.whatsapp_account_view_form_xb_business_agent
+msgid "How much it thinks before answering."
+msgstr "Cuánto piensa antes de contestar."
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.whatsapp_account_view_form_xb_business_agent
+msgid "How the agent introduces the business. Empty = the company name."
+msgstr "Cómo presenta el agente al negocio. Vacío = el nombre de la empresa."
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.whatsapp_account_view_form_xb_business_agent
+msgid "How the agent should behave..."
+msgstr "Cómo debe comportarse el agente..."
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_discuss_channel__id
+#: model:ir.model.fields,field_description:xb_business_agent.field_whatsapp_account__id
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__id
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_knowledge__id
+msgid "ID"
+msgstr "ID"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__activity_exception_icon
+msgid "Icon"
+msgstr "Icono"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,help:xb_business_agent.field_xb_business_job__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Icono para indicar una actividad de excepción."
+
+#. module: xb_business_agent
+#: model:ir.model.fields,help:xb_business_agent.field_xb_business_job__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcado, hay mensajes nuevos que requieren tu atención."
+
+#. module: xb_business_agent
+#: model:ir.model.fields,help:xb_business_agent.field_xb_business_job__message_has_error
+#: model:ir.model.fields,help:xb_business_agent.field_xb_business_job__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si está marcado, algunos mensajes tienen un error de entrega."
+
+#. module: xb_business_agent
+#: model:ir.model.fields,help:xb_business_agent.field_whatsapp_account__xb_ba_pause_hours
+msgid ""
+"If someone from the team replies, the agent stays quiet for these hours in "
+"that conversation. Type \"#agente\" or \"#bot\" in the chat to hand it back "
+"sooner."
+msgstr ""
+"Si alguien del equipo contesta, el agente se calla estas horas en esa "
+"conversación. Escribe «#agente» o «#bot» en la plática para devolvérsela "
+"antes."
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.whatsapp_account_view_form_xb_business_agent
+msgid ""
+"If someone from the team replies, the agent stays quiet for these hours in "
+"that conversation. Type #agente or #bot to hand it back."
+msgstr ""
+"Si alguien del equipo contesta, el agente se calla estas horas en esa "
+"conversación. Escribe #agente o #bot para devolvérsela."
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.whatsapp_account_view_form_xb_business_agent
+msgid ""
+"If the customer insists while waiting for a person, they get this (at most "
+"every 2 h) and the team is reminded."
+msgstr ""
+"Si el cliente insiste mientras espera a una persona, se le contesta esto "
+"(máx. cada 2 h) y se vuelve a avisar al equipo."
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__input_tokens
+msgid "Input tokens"
+msgstr "Tokens de entrada"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__message_is_follower
+msgid "Is Follower"
+msgstr "Es seguidor"
+
+#. module: xb_business_agent
+#: model:ir.ui.menu,name:xb_business_agent.menu_xb_business_knowledge
+msgid "Knowledge Base"
+msgstr "Base de conocimiento"
+
+#. module: xb_business_agent
+#: model:ir.actions.act_window,name:xb_business_agent.action_xb_business_knowledge
+msgid "Knowledge base"
+msgstr "Base de conocimiento"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__write_uid
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_knowledge__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__write_date
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_knowledge__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_discuss_channel__xb_ba_hold_dt
+msgid "Last reminder while paused"
+msgstr "Último aviso en pausa"
+
+#. module: xb_business_agent
+#: model:ir.ui.menu,name:xb_business_agent.menu_xb_business_job
+msgid "Log"
+msgstr "Bitácora"
+
+#. module: xb_business_agent
+#: model:ir.model.fields.selection,name:xb_business_agent.selection__whatsapp_account__xb_ba_effort__low
+msgid "Low"
+msgstr "Bajo"
+
+#. module: xb_business_agent
+#: model:ir.model.fields.selection,name:xb_business_agent.selection__whatsapp_account__xb_ba_effort__medium
+msgid "Medium"
+msgstr "Medio"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__message_has_error
+msgid "Message Delivery error"
+msgstr "Error de entrega del mensaje"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_whatsapp_account__xb_ba_hold_message
+msgid "Message while waiting for a person"
+msgstr "Mensaje mientras espera a una persona"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_whatsapp_account__xb_ba_model
+msgid "Model"
+msgstr "Modelo"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Mi fecha límite de actividad"
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "New lead from WhatsApp: %s"
+msgstr "Interesado nuevo por WhatsApp: %s"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "Siguiente evento de calendario de actividad"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Fecha límite de la siguiente actividad"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__activity_summary
+msgid "Next Activity Summary"
+msgstr "Resumen de la siguiente actividad"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__activity_type_id
+msgid "Next Activity Type"
+msgstr "Tipo de la siguiente actividad"
+
+#. module: xb_business_agent
+#: model:ir.model.fields.selection,name:xb_business_agent.selection__xb_business_job__state__skipped
+msgid "No reply"
+msgstr "Sin respuesta"
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "Notes"
+msgstr "Notas"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__whatsapp_number
+msgid "Number"
+msgstr "Número"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de acciones"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de errores"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,help:xb_business_agent.field_xb_business_job__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Número de mensajes que requieren una acción"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,help:xb_business_agent.field_xb_business_job__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensajes con error de entrega"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_knowledge__account_ids
+msgid "Numbers"
+msgstr "Números"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_whatsapp_account__xb_ba_only_numbers
+msgid "Only answer these numbers"
+msgstr "Solo atender estos números"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_whatsapp_account__xb_ba_openai_key
+msgid "OpenAI key (voice notes)"
+msgstr "Llave de OpenAI (notas de voz)"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_discuss_channel__xb_ba_lead_id
+msgid "Opportunity"
+msgstr "Oportunidad"
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.whatsapp_account_view_form_xb_business_agent
+msgid "Opus answers best; Sonnet costs half; Haiku is the cheapest."
+msgstr "Opus contesta mejor; Sonnet cuesta la mitad; Haiku es el más barato."
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__output_tokens
+msgid "Output tokens"
+msgstr "Tokens de salida"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_discuss_channel__xb_ba_pause_reason
+msgid "Pause reason"
+msgstr "Motivo de la pausa"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_whatsapp_account__xb_ba_pause_hours
+msgid "Pause when a person replies (h)"
+msgstr "Pausa si contesta una persona (h)"
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "Payments or complaints"
+msgstr "Pagos o quejas"
+
+#. module: xb_business_agent
+#: model:ir.model.fields.selection,name:xb_business_agent.selection__xb_business_knowledge__kind__price
+msgid "Price"
+msgstr "Precio"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__rating_ids
+msgid "Ratings"
+msgstr "Calificaciones"
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.view_xb_business_job_search
+msgid "Rehearsal"
+msgstr "Ensayo"
+
+#. module: xb_business_agent
+#: model:ir.model.fields.selection,name:xb_business_agent.selection__xb_business_job__state__draft
+msgid "Rehearsal (not sent)"
+msgstr "Ensayo (no enviado)"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_whatsapp_account__xb_ba_shadow
+msgid "Rehearsal mode"
+msgstr "Modo ensayo"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__reply
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.view_xb_business_job_form
+msgid "Reply"
+msgstr "Respuesta"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__activity_user_id
+msgid "Responsible User"
+msgstr "Usuario responsable"
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "Review"
+msgstr "Revisión"
+
+#. module: xb_business_agent
+#: model:ir.model.fields.selection,name:xb_business_agent.selection__xb_business_knowledge__kind__policy
+msgid "Rule or policy"
+msgstr "Regla o política"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Error de entrega de SMS"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_whatsapp_account__xb_ba_team_id
+msgid "Sales team"
+msgstr "Equipo de ventas"
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "Sensitive matter"
+msgstr "Tema delicado"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_knowledge__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+#: model:ir.model.fields.selection,name:xb_business_agent.selection__xb_business_knowledge__kind__service
+msgid "Service"
+msgstr "Servicio"
+
+#. module: xb_business_agent
+#: model_terms:ir.actions.act_window,help:xb_business_agent.action_xb_business_knowledge
+msgid ""
+"Services, prices, hours, FAQs and rules. The agent never makes\n"
+"               things up: it only uses what is written here."
+msgstr ""
+"Servicios, precios, horarios, preguntas frecuentes y reglas. El agente no\n"
+"               inventa: solo usa lo que esté aquí."
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__state
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.view_xb_business_job_search
+msgid "Status"
+msgstr "Estado"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,help:xb_business_agent.field_xb_business_job__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"Estado según las actividades\n"
+"Vencida: la fecha límite ya pasó\n"
+"Hoy: la actividad es hoy\n"
+"Planificada: actividades futuras."
+
+#. module: xb_business_agent
+#: model_terms:ir.actions.act_window,help:xb_business_agent.action_xb_business_knowledge
+msgid "Teach the agent what you offer"
+msgstr "Enséñale al agente qué ofreces"
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "The AI model refused to answer this message; please review it."
+msgstr "El modelo de IA se negó a contestar este mensaje; revísalo tú."
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "The Anthropic API key is missing on the WhatsApp account"
+msgstr "Falta la llave de API de Anthropic en la cuenta de WhatsApp"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,help:xb_business_agent.field_whatsapp_account__xb_ba_enabled
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.whatsapp_account_view_form_xb_business_agent
+msgid "The agent answers the messages that reach this number."
+msgstr "El agente contesta los mensajes que llegan a este número."
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "The agent could not answer %(who)s: %(error)s"
+msgstr "El agente no pudo contestar a %(who)s: %(error)s"
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "The agent didn't know the answer"
+msgstr "El agente no supo responder"
+
+#. module: xb_business_agent
+#: model:ir.model.fields.selection,name:xb_business_agent.selection__discuss_channel__xb_ba_pause_reason__handoff
+msgid "The agent handed it over"
+msgstr "El agente la pasó a una persona"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,help:xb_business_agent.field_whatsapp_account__xb_ba_shadow
+msgid ""
+"The agent sends NOTHING: it leaves its answer as an internal note in the "
+"conversation."
+msgstr ""
+"El agente NO envía nada: deja su respuesta como nota interna en la "
+"conversación."
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "The chat was already with the agent."
+msgstr "La plática ya estaba con el agente."
+
+#. module: xb_business_agent
+#: model:ir.model.fields,help:xb_business_agent.field_whatsapp_account__xb_ba_user_ids
+msgid ""
+"They get what the agent hands over to a person, and new leads (taking "
+"turns)."
+msgstr ""
+"Reciben lo que el agente pasa a una persona y los interesados nuevos (por "
+"turnos)."
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.whatsapp_account_view_form_xb_business_agent
+msgid ""
+"They get what the agent hands over to a person; new leads are shared out in "
+"turns."
+msgstr ""
+"Reciben lo que el agente pasa a una persona; los interesados nuevos se "
+"reparten por turnos."
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_knowledge__name
+msgid "Title"
+msgstr "Título"
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.whatsapp_account_view_form_xb_business_agent
+msgid ""
+"To turn the customer's voice notes into text (the audio is sent to OpenAI)."
+msgstr ""
+"Para pasar a texto las notas de voz del cliente (el audio se manda a "
+"OpenAI)."
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.view_xb_business_job_list
+msgid "Total"
+msgstr "Total"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_whatsapp_account__xb_ba_turn
+msgid "Turn"
+msgstr "Turno"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_knowledge__kind
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.view_xb_business_knowledge_search
+msgid "Type"
+msgstr "Tipo"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,help:xb_business_agent.field_xb_business_job__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo de la actividad de excepción en el registro."
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.view_xb_business_job_form
+msgid "Usage"
+msgstr "Consumo"
+
+#. module: xb_business_agent
+#: model:ir.model.fields.selection,name:xb_business_agent.selection__xb_business_job__state__pending
+msgid "Waiting"
+msgstr "En espera"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes del sitio web"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,help:xb_business_agent.field_xb_business_job__website_message_ids
+msgid "Website communication history"
+msgstr "Historial de comunicación del sitio web"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_xb_business_job__log
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.view_xb_business_job_form
+msgid "What it did"
+msgstr "Lo que hizo"
+
+#. module: xb_business_agent
+#: model_terms:ir.actions.act_window,help:xb_business_agent.action_xb_business_job
+msgid "What it replied, which tools it used and how much it cost."
+msgstr "Qué contestó, qué herramientas usó y cuánto costó."
+
+#. module: xb_business_agent
+#: model:ir.actions.server,name:xb_business_agent.ir_cron_xb_business_agent_ir_actions_server
+msgid "WhatsApp AI Agent: answer messages"
+msgstr "Agente IA de WhatsApp: contestar mensajes"
+
+#. module: xb_business_agent
+#: model:ir.model,name:xb_business_agent.model_whatsapp_account
+msgid "WhatsApp Business Account"
+msgstr "Cuenta de WhatsApp Business"
+
+#. module: xb_business_agent
+#: model:ir.model,name:xb_business_agent.model_xb_business_knowledge
+msgid "WhatsApp agent knowledge base"
+msgstr "Base de conocimiento del agente de WhatsApp"
+
+#. module: xb_business_agent
+#: model:ir.model,name:xb_business_agent.model_xb_business_job
+msgid "WhatsApp agent reply (log)"
+msgstr "Respuesta del agente de WhatsApp (bitácora)"
+
+#. module: xb_business_agent
+#: model:ir.model.fields,field_description:xb_business_agent.field_whatsapp_account__xb_ba_user_ids
+msgid "Who answers"
+msgstr "Quién atiende"
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.view_xb_business_job_search
+msgid "With errors"
+msgstr "Con error"
+
+#. module: xb_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_business_agent.view_xb_business_knowledge_form
+msgid ""
+"Write it as you would explain it to a customer. The agent only says what is "
+"written here."
+msgstr ""
+"Escríbelo como se lo explicarías a un cliente. El agente solo dice lo que "
+"esté aquí."
+
+#. module: xb_business_agent
+#. odoo-python
+#: code:addons/xb_business_agent/models/discuss_channel.py:0
+msgid "🚨 Urgent: "
+msgstr "🚨 Urgente: "
