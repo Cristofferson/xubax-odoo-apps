@@ -49,6 +49,9 @@ Highlights
     'author': 'XUBAX',
     'website': 'https://www.xubax.com',
     'license': 'OPL-1',
+    'images': ['static/description/banner.png'],
+    'price': 149.0,
+    'currency': 'USD',
     'depends': ['website_sale'],
     'data': [
         'security/ir.model.access.csv',

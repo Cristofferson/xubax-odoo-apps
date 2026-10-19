@@ -27,6 +27,7 @@ setup when the screen is driven by Xibo:
     'author': 'XUBAX',
     'website': 'https://www.xubax.com',
     'license': 'OPL-1',
+    'images': ['static/description/banner.png'],
     'depends': ['xb_showroom_wall', 'xibo_connector_pos'],
     'data': [
         'views/showroom_screen_views.xml',

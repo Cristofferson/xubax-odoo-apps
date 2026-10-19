@@ -26,6 +26,7 @@ on their own can see a piece in large on the showroom wall.
     'author': 'XUBAX',
     'website': 'https://www.xubax.com',
     'license': 'OPL-1',
+    'images': ['static/description/banner.png'],
     'depends': ['xb_showroom_wall', 'pos_self_order'],
     'data': [
         'views/res_config_settings_views.xml',
