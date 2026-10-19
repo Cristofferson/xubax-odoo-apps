@@ -1,0 +1,91 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_self_order_assistant_business_agent
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-19 14:08+0000\n"
+"PO-Revision-Date: 2026-10-19 14:08+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: xb_self_order_assistant_business_agent
+#: model:ir.model.fields.selection,name:xb_self_order_assistant_business_agent.selection__pos_config__xb_va_ba_kb_source__both
+msgid "Both"
+msgstr "Ambas"
+
+#. module: xb_self_order_assistant_business_agent
+#: model:ir.model,name:xb_self_order_assistant_business_agent.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: xb_self_order_assistant_business_agent
+#: model:ir.model,name:xb_self_order_assistant_business_agent.model_discuss_channel
+msgid "Discussion Channel"
+msgstr "Canal de conversación"
+
+#. module: xb_self_order_assistant_business_agent
+#: model:ir.model.fields,field_description:xb_self_order_assistant_business_agent.field_discuss_channel__display_name
+#: model:ir.model.fields,field_description:xb_self_order_assistant_business_agent.field_pos_config__display_name
+#: model:ir.model.fields,field_description:xb_self_order_assistant_business_agent.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: xb_self_order_assistant_business_agent
+#: model:ir.model.fields,field_description:xb_self_order_assistant_business_agent.field_discuss_channel__id
+#: model:ir.model.fields,field_description:xb_self_order_assistant_business_agent.field_pos_config__id
+#: model:ir.model.fields,field_description:xb_self_order_assistant_business_agent.field_res_config_settings__id
+msgid "ID"
+msgstr ""
+
+#. module: xb_self_order_assistant_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant_business_agent.res_config_settings_view_form_xb_va_ba
+msgid "Knowledge from"
+msgstr "Conocimiento de"
+
+#. module: xb_self_order_assistant_business_agent
+#: model:ir.model.fields.selection,name:xb_self_order_assistant_business_agent.selection__pos_config__xb_va_ba_kb_source__own
+msgid "Only what I write here"
+msgstr "Solo lo que escribo aquí"
+
+#. module: xb_self_order_assistant_business_agent
+#: model:ir.model,name:xb_self_order_assistant_business_agent.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr "Configuración del punto de venta"
+
+#. module: xb_self_order_assistant_business_agent
+#: model:ir.model.fields,field_description:xb_self_order_assistant_business_agent.field_pos_config__xb_va_ba_kb_source
+#: model:ir.model.fields,field_description:xb_self_order_assistant_business_agent.field_res_config_settings__pos_xb_va_ba_kb_source
+msgid "Shop knowledge from"
+msgstr "Conocimiento de la tienda desde"
+
+#. module: xb_self_order_assistant_business_agent
+#: model:ir.model.fields.selection,name:xb_self_order_assistant_business_agent.selection__pos_config__xb_va_ba_kb_source__agent
+msgid "The WhatsApp agent's knowledge base"
+msgstr "La base de conocimientos del agente de WhatsApp"
+
+#. module: xb_self_order_assistant_business_agent
+#: model:ir.model.fields,help:xb_self_order_assistant_business_agent.field_pos_config__xb_va_ba_account_id
+#: model:ir.model.fields,help:xb_self_order_assistant_business_agent.field_res_config_settings__pos_xb_va_ba_account_id
+msgid "The seller uses the same knowledge base as this number's AI agent."
+msgstr ""
+"El vendedor usa la misma base de conocimientos que el agente de IA de este "
+"número."
+
+#. module: xb_self_order_assistant_business_agent
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant_business_agent.res_config_settings_view_form_xb_va_ba
+msgid "WhatsApp agent"
+msgstr "Agente de WhatsApp"
+
+#. module: xb_self_order_assistant_business_agent
+#: model:ir.model.fields,field_description:xb_self_order_assistant_business_agent.field_pos_config__xb_va_ba_account_id
+#: model:ir.model.fields,field_description:xb_self_order_assistant_business_agent.field_res_config_settings__pos_xb_va_ba_account_id
+msgid "WhatsApp agent number"
+msgstr "Número del agente de WhatsApp"
