@@ -1,0 +1,48 @@
+// Comparing on the wall from the kiosk.
+.o_xb_compare_bar {
+    background: #fff;
+    .o_xb_compare_label { font-weight: 500; }
+    .o_xb_compare_new { color: #8C6A38 !important; text-decoration: none; font-weight: 500; }
+    .o_xb_compare_thumb {
+        flex: 0 0 56px;
+        height: 56px;
+        border: 1px solid #E6E1D9;
+        background: #F1EFEB;
+        border-radius: 0;
+        img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+    }
+    .o_xb_compare_x {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        width: 20px;
+        height: 20px;
+        line-height: 18px;
+        border-radius: 50%;
+        background: #14110E;
+        color: #fff;
+        font-size: 14px;
+    }
+}
+.o_xb_compare_toggle {
+    align-self: flex-start;
+    padding: 0.35rem 0;
+    border: 0;
+    color: #6E665C;
+    font-size: 0.9rem;
+    &.o_xb_on { color: #8C6A38; font-weight: 500; }
+}
+
+// Product page footer: «Ver en el muro» and «Comparar» share a row of their own,
+// price and «Agregar al carrito» go below, so no button gets cut.
+.o_self_product_page .o_self_footer .d-flex.justify-content-between {
+    flex-wrap: wrap;
+    gap: 0.75rem !important;
+    .o_xb_showroom_kiosk_btn, .o_xb_showroom_compare_btn {
+        order: -1;
+        flex: 1 1 calc(50% - 0.75rem);
+        margin: 0 !important;
+    }
+    > div:first-child { flex: 1 1 auto; margin: 0 !important; }
+    > .btn-primary { flex: 0 0 auto; }
+}

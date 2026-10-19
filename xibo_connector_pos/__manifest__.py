@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Xibo Connector — Point of Sale',
-    'version': '19.0.1.5.42',
+    'version': '19.0.1.5.43',
     'category': 'Marketing/Digital Signage',
     'summary': 'AI thank-you with audio, dynamic customer display mirror, and contextual product recommendations on Xibo from your POS.',
     'description': """

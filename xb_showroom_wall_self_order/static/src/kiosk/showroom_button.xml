@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="xb_showroom_wall_self_order.ProductPage" t-inherit="pos_self_order.ProductPage" t-inherit-mode="extension">
+        <xpath expr="//button[@t-on-click='addToCart']" position="before">
+            <button t-if="canShowOnWall" class="btn btn-lg btn-outline-primary text-truncate o_xb_showroom_kiosk_btn"
+                    t-on-click="showOnWall" t-att-disabled="wall.sending">
+                <i class="fa fa-television me-2" aria-hidden="true"/>
+                <span>Show on the wall</span>
+            </button>
+        </xpath>
+    </t>
+</templates>

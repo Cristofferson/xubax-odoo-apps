@@ -13,7 +13,7 @@
             <span class="o_showroom_label">
                 <i class="fa fa-television me-1"/>Showroom
             </span>
-            <t t-if="from_form">
+            <t t-if="from_form and product.xb_showroom_enabled">
                 <button type="button" class="btn btn-light btn-sm o_showroom_btn"
                         data-showroom-mode="single" data-showroom-from-form="1">
                     Show on wall
@@ -54,7 +54,7 @@
         <!-- The image wrapper carries its class through t-attf-class, which
              hasclass() cannot see, so anchor on the tile's own csrf input. -->
         <xpath expr="//input[@name='csrf_token']" position="after">
-            <button t-if="env.user.has_group('sales_team.group_sale_salesman')"
+            <button t-if="product.xb_showroom_enabled and env.user.has_group('sales_team.group_sale_salesman')"
                     type="button"
                     class="btn btn-dark btn-sm o_showroom_btn o_showroom_tile d-none position-absolute top-0 start-0 m-2"
                     data-showroom-mode="single"
@@ -62,7 +62,7 @@
                     title="Show on the showroom wall">
                 <i class="fa fa-television"/>
             </button>
-            <button t-if="env.user.has_group('sales_team.group_sale_salesman')"
+            <button t-if="product.xb_showroom_enabled and env.user.has_group('sales_team.group_sale_salesman')"
                     type="button"
                     class="btn btn-dark btn-sm o_showroom_btn o_showroom_tile o_showroom_tile_compare d-none position-absolute top-0 start-0 m-2"
                     data-showroom-mode="compare"

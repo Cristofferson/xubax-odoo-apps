@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Showroom Wall',
-    'version': '19.0.1.13.0',
+    'version': '19.0.1.25.0',
     'category': 'Website/eCommerce',
     'summary': 'Send any product from your own web catalog to the showroom '
                'videowall from a tablet, in one tap.',
@@ -54,6 +54,7 @@ Highlights
         'security/ir.model.access.csv',
         'security/showroom_security.xml',
         'views/showroom_screen_views.xml',
+        'views/product_template_views.xml',
         'views/website_sale_templates.xml',
     ],
     'assets': {

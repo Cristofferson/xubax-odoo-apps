@@ -1,0 +1,153 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-29 17:28+0000\n"
+"PO-Revision-Date: 2026-09-29 17:28+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: xb_showroom_wall_self_order
+#: model:ir.model,name:xb_showroom_wall_self_order.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: xb_showroom_wall_self_order
+#. odoo-python
+#: code:addons/xb_showroom_wall_self_order/controllers/kiosk.py:0
+msgid "Could not tell which piece to show."
+msgstr "No se pudo saber qué pieza mostrar."
+
+#. module: xb_showroom_wall_self_order
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall_self_order.res_config_settings_view_form_showroom_kiosk
+msgid ""
+"Customers can show a piece on this wall from the kiosk. Only products ticked"
+" 'Show on the showroom wall'."
+msgstr ""
+"Los clientes pueden ver una pieza en este muro desde el kiosco. Solo "
+"productos con «Ver en el muro del showroom» marcado."
+
+#. module: xb_showroom_wall_self_order
+#: model:ir.model.fields,field_description:xb_showroom_wall_self_order.field_pos_config__display_name
+#: model:ir.model.fields,field_description:xb_showroom_wall_self_order.field_product_template__display_name
+#: model:ir.model.fields,field_description:xb_showroom_wall_self_order.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: xb_showroom_wall_self_order
+#: model:ir.model.fields,field_description:xb_showroom_wall_self_order.field_pos_config__id
+#: model:ir.model.fields,field_description:xb_showroom_wall_self_order.field_product_template__id
+#: model:ir.model.fields,field_description:xb_showroom_wall_self_order.field_res_config_settings__id
+msgid "ID"
+msgstr "ID"
+
+#. module: xb_showroom_wall_self_order
+#. odoo-python
+#: code:addons/xb_showroom_wall_self_order/controllers/kiosk.py:0
+msgid "Look at the wall!"
+msgstr "¡Mira el muro!"
+
+#. module: xb_showroom_wall_self_order
+#. odoo-python
+#: code:addons/xb_showroom_wall_self_order/controllers/kiosk.py:0
+msgid "One moment: the wall is showing the piece that was just sent."
+msgstr "Un momento: el muro está mostrando la pieza que se acaba de mandar."
+
+#. module: xb_showroom_wall_self_order
+#: model:ir.model,name:xb_showroom_wall_self_order.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr "Configuración del punto de venta"
+
+#. module: xb_showroom_wall_self_order
+#: model:ir.model,name:xb_showroom_wall_self_order.model_product_template
+msgid "Product"
+msgstr "Producto"
+
+#. module: xb_showroom_wall_self_order
+#. odoo-javascript
+#: code:addons/xb_showroom_wall_self_order/static/src/kiosk/showroom_button.xml:0
+msgid "Show on the wall"
+msgstr "Ver en el muro"
+
+#. module: xb_showroom_wall_self_order
+#: model:ir.model.fields,field_description:xb_showroom_wall_self_order.field_pos_config__xb_showroom_screen_id
+#: model:ir.model.fields,field_description:xb_showroom_wall_self_order.field_res_config_settings__pos_xb_showroom_screen_id
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall_self_order.res_config_settings_view_form_showroom_kiosk
+msgid "Showroom wall"
+msgstr "Muro del showroom"
+
+#. module: xb_showroom_wall_self_order
+#: model:ir.model.fields,help:xb_showroom_wall_self_order.field_pos_config__xb_showroom_screen_id
+#: model:ir.model.fields,help:xb_showroom_wall_self_order.field_res_config_settings__pos_xb_showroom_screen_id
+msgid ""
+"The kiosk's product page gets a button that shows the piece on this wall. "
+"Only products ticked 'Show on the showroom wall'."
+msgstr ""
+"La página del producto en el kiosco tendrá un botón para ver la pieza en "
+"este muro. Solo productos con «Ver en el muro del showroom» marcado."
+
+#. module: xb_showroom_wall_self_order
+#. odoo-python
+#: code:addons/xb_showroom_wall_self_order/controllers/kiosk.py:0
+msgid "The wall is not available from this kiosk right now."
+msgstr "El muro no está disponible desde este kiosco en este momento."
+
+#. module: xb_showroom_wall_self_order
+#. odoo-javascript
+#: code:addons/xb_showroom_wall_self_order/static/src/kiosk/showroom_button.js:0
+msgid "The wall is not available right now."
+msgstr "El muro no está disponible en este momento."
+
+#. module: xb_showroom_wall_self_order
+#. odoo-python
+#: code:addons/xb_showroom_wall_self_order/controllers/kiosk.py:0
+msgid "This piece cannot be shown on the wall."
+msgstr "Esta pieza no se puede mostrar en el muro."
+
+#. module: xb_showroom_wall_self_order
+#. odoo-javascript
+#: code:addons/xb_showroom_wall_self_order/static/src/kiosk/showroom_compare.xml:0
+msgid "Compare"
+msgstr "Comparar"
+
+#. module: xb_showroom_wall_self_order
+#. odoo-javascript
+#: code:addons/xb_showroom_wall_self_order/static/src/kiosk/showroom_compare.xml:0
+msgid "+ Compare"
+msgstr "+ Comparar"
+
+#. module: xb_showroom_wall_self_order
+#. odoo-javascript
+#: code:addons/xb_showroom_wall_self_order/static/src/kiosk/showroom_compare.xml:0
+msgid "New comparison"
+msgstr "Nueva comparación"
+
+#. module: xb_showroom_wall_self_order
+#. odoo-javascript
+#: code:addons/xb_showroom_wall_self_order/static/src/kiosk/showroom_compare.js:0
+msgid "Comparing %(count)s of %(max)s"
+msgstr "Comparando %(count)s de %(max)s"
+
+#. module: xb_showroom_wall_self_order
+#. odoo-python
+#: code:addons/xb_showroom_wall_self_order/controllers/kiosk.py:0
+msgid "On the wall: comparing %s."
+msgstr "En el muro: comparando %s."
+
+#. module: xb_showroom_wall_self_order
+#. odoo-python
+#: code:addons/xb_showroom_wall_self_order/controllers/kiosk.py:0
+msgid "That piece was already on the wall; it moved to the end."
+msgstr "Esa pieza ya estaba en el muro; se movió al final."
+
+#. module: xb_showroom_wall_self_order
+#. odoo-python
+#: code:addons/xb_showroom_wall_self_order/controllers/kiosk.py:0
+msgid "The wall holds %(max)s pieces: %(names)s was taken off to make room."
+msgstr "El muro muestra hasta %(max)s piezas: se quitó %(names)s para hacer lugar."

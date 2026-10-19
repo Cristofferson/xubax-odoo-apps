@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Showroom Wall — Xibo',
-    'version': '19.0.1.0.2',
+    'version': '19.0.1.0.3',
     'category': 'Sales/Point of Sale',
     'summary': 'Publish the showroom wall on a Xibo screen in one click, as '
                'its default layout or only while pieces are being shown.',
@@ -30,6 +30,7 @@ setup when the screen is driven by Xibo:
     'depends': ['xb_showroom_wall', 'xibo_connector_pos'],
     'data': [
         'views/showroom_screen_views.xml',
+        'views/product_template_views.xml',
     ],
     'installable': True,
     'auto_install': True,

@@ -6,11 +6,15 @@ reads it. Nothing is pushed to the screen: the wall page polls, which keeps
 this working behind any signage player without relying on its live-command
 channel.
 """
+import logging
 import random
 import secrets
+import time
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
+
+_logger = logging.getLogger(__name__)
 
 # Physical screens standing side by side.
 MAX_PANELS = 3
@@ -152,6 +156,14 @@ class ShowroomScreen(models.Model):
     heading = fields.Char(
         string='Idle heading', translate=True,
         default=lambda s: s.env._("Ask us about this piece"))
+    compare_kicker = fields.Char(
+        string='Comparison tagline', translate=True,
+        help="Short line next to the title of the comparison, e.g. what every "
+             "piece has in common. Empty = no tagline.")
+    compare_footer = fields.Char(
+        string='Comparison footnote', translate=True,
+        help="Line under the comparison, e.g. what is included or how long it "
+             "takes. Empty = no footnote.")
 
     # --- live state (written by the tablet) --------------------------------
     mode = fields.Selection(
@@ -214,8 +226,8 @@ class ShowroomScreen(models.Model):
     def _idle_pieces(self, seed=None):
         """The pieces that rotate when nobody is driving the screen.
 
-        Only published products with a picture: a shop window with a
-        placeholder image is worse than a shorter rotation.
+        Only published products enabled for the wall and with a picture: a
+        shop window with a placeholder image is worse than a shorter rotation.
 
         ``seed`` keeps a shuffled window on the same pieces for a full round.
         Without it every poll would draw a different set and the wall would
@@ -225,6 +237,7 @@ class ShowroomScreen(models.Model):
         Template = self.env['product.template'].sudo()
         domain = [
             ('is_published', '=', True),
+            ('xb_showroom_enabled', '=', True),
             ('image_1920', '!=', False),
             ('company_id', 'in', (False, self.company_id.id)),
         ]
@@ -306,17 +319,39 @@ class ShowroomScreen(models.Model):
                 'option_ids': [(6, 0, entry['options'].ids if entry.get('options') else [])],
                 'price': amount if amount is not None else product.list_price,
                 'currency_id': currency.id,
+                'source': self.env.context.get('xb_showroom_source') or 'web',
             }))
         self.write({
             'mode': mode,
             'spotlight_at': fields.Datetime.now(),
             'slot_ids': [(5, 0, 0)] + vals,
         })
+        self._announce_newest()
         return {
             'count': len(entries),
             'dropped': [entry['product'] for entry in dropped],
             'limit': limit,
         }
+
+    def _announce_newest(self):
+        """Have the wall say the name of the piece just sent.
+
+        Lives here and not in a controller so every way of sending a piece
+        (the sales tablet, the self-service kiosk) is announced. Only the
+        newest piece is said, never the whole comparison."""
+        self.ensure_one()
+        try:
+            from ..controllers.wall import _voice_attachment, _voice_key, _voice_text
+            newest = self.sudo().slot_ids[-1:]
+            voice = _voice_attachment(self.env, _voice_text(newest.product_id)) if newest else None
+            if voice:
+                self.env.cr.execute("""
+                    INSERT INTO ir_config_parameter (key, value, create_date, write_date)
+                    VALUES (%s, %s, now() at time zone 'UTC', now() at time zone 'UTC')
+                    ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, write_date = EXCLUDED.write_date
+                """, [_voice_key(self), '%s|%s|%s' % (newest.id, voice.id, time.time())])
+        except Exception as e:  # noqa: BLE001 - the voice never blocks a push
+            _logger.warning("[SHOWROOM] voice announce failed: %s", e)
 
     def _remove_slot(self, slot_id):
         """Take one piece off the wall; the rest stay where they were."""
@@ -362,3 +397,10 @@ class ShowroomSlot(models.Model):
              "sent from the catalogue grid, where no option was chosen yet.")
     price = fields.Float(digits='Product Price')
     currency_id = fields.Many2one('res.currency')
+    # Who put the piece there. The wall shows whatever was sent last, from
+    # the tablet or from a self-service kiosk; the source is what keeps a
+    # sales person's comparison from quietly absorbing the piece a customer
+    # sent from the kiosk a moment before.
+    source = fields.Selection(
+        [('web', 'Sales person'), ('kiosk', 'Self-service kiosk')],
+        default='web', required=True)

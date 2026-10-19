@@ -48,6 +48,8 @@
                             <field name="title_mode"/>
                             <field name="show_price"/>
                             <field name="heading" placeholder="e.g. Ask us about this piece"/>
+                            <field name="compare_kicker" placeholder="e.g. Handmade · Free engraving"/>
+                            <field name="compare_footer" placeholder="e.g. Certificate included · Ready in 2 weeks"/>
                             <field name="idle_timeout"/>
                             <field name="lang"/>
                         </group>

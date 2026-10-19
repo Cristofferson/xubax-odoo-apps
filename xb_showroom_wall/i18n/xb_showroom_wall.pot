@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-21 17:34+0000\n"
-"PO-Revision-Date: 2026-09-21 17:34+0000\n"
+"POT-Creation-Date: 2026-10-19 06:07+0000\n"
+"PO-Revision-Date: 2026-10-19 06:07+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,43 @@ msgstr ""
 #. module: xb_showroom_wall
 #. odoo-python
 #: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "%.1f"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "%s + centre"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "%s days"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "%s g approx."
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "%s mm"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
 msgid "%s options"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "+ natural centre diamond, quoted separately"
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -29,6 +65,12 @@ msgstr ""
 #. module: xb_showroom_wall
 #: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__idle_timeout
 msgid "0 keeps the last piece on screen until it is replaced."
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "1 day"
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -74,6 +116,12 @@ msgid "Accent colour"
 msgstr ""
 
 #. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Accents"
+msgstr ""
+
+#. module: xb_showroom_wall
 #: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__access_token
 msgid "Access Token"
 msgstr ""
@@ -105,6 +153,7 @@ msgstr ""
 
 #. module: xb_showroom_wall
 #. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
 #: code:addons/xb_showroom_wall/models/showroom_screen.py:0
 msgid "Ask us about this piece"
 msgstr ""
@@ -140,6 +189,18 @@ msgid "Background colour"
 msgstr ""
 
 #. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Band width"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Book an appointment"
+msgstr ""
+
+#. module: xb_showroom_wall
 #: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__idle_order__sequence
 msgid "Catalogue order"
 msgstr ""
@@ -165,6 +226,12 @@ msgstr ""
 #. module: xb_showroom_wall
 #: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__title_mode__category
 msgid "Category and metal"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Centre stone"
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -198,7 +265,23 @@ msgstr ""
 #. module: xb_showroom_wall
 #. odoo-python
 #: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Compare and choose"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
 msgid "Comparing %(count)s of %(max)s"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__compare_footer
+msgid "Comparison footnote"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__compare_kicker
+msgid "Comparison tagline"
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -220,6 +303,20 @@ msgid "Created on"
 msgstr ""
 
 #. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Cubic zirconia"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid ""
+"Cubic zirconia included · Lab-grown or natural diamond with ICERT "
+"certificate and laser inscription"
+msgstr ""
+
+#. module: xb_showroom_wall
 #: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_slot__currency_id
 msgid "Currency"
 msgstr ""
@@ -230,6 +327,13 @@ msgid "Dark"
 msgstr ""
 
 #. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Delivery"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_product_template__display_name
 #: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__display_name
 #: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_slot__display_name
 msgid "Display Name"
@@ -238,6 +342,12 @@ msgstr ""
 #. module: xb_showroom_wall
 #: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__show_price__none
 msgid "Do not show the price"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Done! It's on your phone"
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -253,12 +363,30 @@ msgstr ""
 #. module: xb_showroom_wall
 #. odoo-python
 #: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "From"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
 msgid "From %s"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Handmade in Mexico · Interest-free months"
 msgstr ""
 
 #. module: xb_showroom_wall
 #: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__title_mode
 msgid "Headline"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Hi! I'd like these pieces I saw at %s:"
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -288,6 +416,7 @@ msgid "How often the wall page asks Odoo what to show."
 msgstr ""
 
 #. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_product_template__id
 #: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__id
 #: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_slot__id
 msgid "ID"
@@ -352,6 +481,13 @@ msgid "Light"
 msgstr ""
 
 #. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__compare_footer
+msgid ""
+"Line under the comparison, e.g. what is included or how long it takes. Empty"
+" = no footnote."
+msgstr ""
+
+#. module: xb_showroom_wall
 #: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
 msgid "Look"
 msgstr ""
@@ -372,6 +508,12 @@ msgstr ""
 #. module: xb_showroom_wall
 #: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__mode
 msgid "Mode"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Most accessible price"
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -406,6 +548,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__slot_ids
 #: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
 msgid "On screen now"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.product_template_search_showroom
+msgid "On the showroom wall"
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -492,6 +639,7 @@ msgid "Price on the wall"
 msgstr ""
 
 #. module: xb_showroom_wall
+#: model:ir.model,name:xb_showroom_wall.model_product_template
 #: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_slot__product_id
 msgid "Product"
 msgstr ""
@@ -511,6 +659,12 @@ msgstr ""
 #. module: xb_showroom_wall
 #. odoo-python
 #: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Quoted separately"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
 msgid "Ready: add the pieces to compare."
 msgstr ""
 
@@ -522,6 +676,12 @@ msgstr ""
 #. module: xb_showroom_wall
 #: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
 msgid "Reset the token"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Right now the wall is showing our shop window."
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -540,9 +700,34 @@ msgid "Sales people"
 msgstr ""
 
 #. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_product_product__xb_showroom_enabled
+#: model:ir.model.fields,help:xb_showroom_wall.field_product_template__xb_showroom_enabled
+msgid ""
+"Sales people get the 'Show on wall' and 'Compare' buttons for this product "
+"on the website, and it may rotate in the wall's shop window."
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_slot__source__web
+msgid "Sales person"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Same design, you choose"
+msgstr ""
+
+#. module: xb_showroom_wall
 #. odoo-python
 #: code:addons/xb_showroom_wall/controllers/wall.py:0
 msgid "Scan to browse the collection"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Scan to see it on your phone"
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -575,6 +760,29 @@ msgid "Security"
 msgstr ""
 
 #. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "See it in the shop"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "See the collection"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_slot__source__kiosk
+msgid "Self-service kiosk"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Send it to me on WhatsApp"
+msgstr ""
+
+#. module: xb_showroom_wall
 #: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_screen__sequence
 #: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_slot__sequence
 msgid "Sequence"
@@ -593,11 +801,20 @@ msgid ""
 msgstr ""
 
 #. module: xb_showroom_wall
+#: model:ir.model.fields,help:xb_showroom_wall.field_xb_showroom_screen__compare_kicker
+msgid ""
+"Short line next to the title of the comparison, e.g. what every piece has in"
+" common. Empty = no tagline."
+msgstr ""
+
+#. module: xb_showroom_wall
 #: model:ir.model.fields.selection,name:xb_showroom_wall.selection__xb_showroom_screen__show_price__from
 msgid "Show a \"from\" figure"
 msgstr ""
 
 #. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_product_product__xb_showroom_enabled
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_product_template__xb_showroom_enabled
 #: model_terms:ir.ui.view,arch_db:xb_showroom_wall.products_item_showroom
 msgid "Show on the showroom wall"
 msgstr ""
@@ -639,7 +856,12 @@ msgstr ""
 #. module: xb_showroom_wall
 #. odoo-python
 #: code:addons/xb_showroom_wall/controllers/wall.py:0
-msgid "Side by side"
+msgid "Size"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model:ir.model.fields,field_description:xb_showroom_wall.field_xb_showroom_slot__source
+msgid "Source"
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -652,6 +874,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/xb_showroom_wall/controllers/wall.py:0
 msgid "Taken off the wall."
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Thank you for visiting us"
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -676,6 +904,18 @@ msgstr ""
 #. odoo-python
 #: code:addons/xb_showroom_wall/models/showroom_screen.py:0
 msgid "The idle page must be a path like /my-page or a full https address."
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "The most brilliant"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "The most gold"
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -735,7 +975,21 @@ msgstr ""
 #. module: xb_showroom_wall
 #. odoo-python
 #: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid ""
+"This piece is not enabled for the wall. Tick «Show on the showroom wall» on "
+"the product."
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
 msgid "This tablet now sends to: %s"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Total carats"
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -783,8 +1037,20 @@ msgid "Wall style"
 msgstr ""
 
 #. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Weight"
+msgstr ""
+
+#. module: xb_showroom_wall
 #: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
 msgid "What the customer sees"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "What you saw on the wall at %s"
 msgstr ""
 
 #. module: xb_showroom_wall
@@ -820,6 +1086,12 @@ msgstr ""
 #. module: xb_showroom_wall
 #. odoo-python
 #: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Widest band"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
 msgid "You are not allowed to drive the showroom screen."
 msgstr ""
 
@@ -836,13 +1108,29 @@ msgid "You cannot show that piece on the wall."
 msgstr ""
 
 #. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Your selection"
+msgstr ""
+
+#. module: xb_showroom_wall
 #: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
 msgid "e.g. Ask us about this piece"
 msgstr ""
 
 #. module: xb_showroom_wall
 #: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
+msgid "e.g. Certificate included · Ready in 2 weeks"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
 msgid "e.g. Counter videowall"
+msgstr ""
+
+#. module: xb_showroom_wall
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
+msgid "e.g. Handmade · Free engraving"
 msgstr ""
 
 #. module: xb_showroom_wall

@@ -6,11 +6,17 @@ reach the signage player, so a player that only checks in every few minutes
 still shows the piece instantly.
 """
 import base64
+import hashlib
+import hmac
 import html as html_escape
 import io
 import json
+import re
 import logging
 import os
+import shlex
+import subprocess
+import tempfile
 import time
 
 from odoo import http, _
@@ -26,11 +32,22 @@ _logger = logging.getLogger(__name__)
 # public URL must never cost a database round of work per poll.
 _STATE_CACHE = {}
 _STATE_CACHE_MAX = 64
+# How long the wall shows «it's on your phone» after someone taps the
+# counter's NFC stand.
+TAP_SHOW = 12
 LIVE_TTL = 30      # seconds; the key already changes with every push
 IDLE_TTL = 60      # seconds; the rotation runs in the browser, not here
 
 
 _ASSET_STAMP = None
+
+
+# Files whose change must reload the wall page. A module that adds its own painter
+# (see ``_wall_plugins``) appends its stylesheet and script here at import time.
+STAMP_FILES = [
+    'xb_showroom_wall/static/src/wall/wall.css',
+    'xb_showroom_wall/static/src/wall/wall.js',
+]
 
 
 def _asset_stamp():
@@ -45,10 +62,9 @@ def _asset_stamp():
     global _ASSET_STAMP
     if _ASSET_STAMP is None:
         stamp = 0
-        for name in ('wall/wall.css', 'wall/wall.js'):
+        for name in STAMP_FILES:
             try:
-                stamp = max(stamp, int(os.path.getmtime(
-                    file_path('xb_showroom_wall/static/src/%s' % name))))
+                stamp = max(stamp, int(os.path.getmtime(file_path(name))))
             except (OSError, FileNotFoundError, ValueError):
                 pass
         _ASSET_STAMP = stamp or 1
@@ -151,6 +167,7 @@ def _studio_background(product):
 # because the case is always photographed before the hand.
 _CASE_WORDS = ('estuche', 'caja', 'case', 'box')
 _HAND_WORDS = ('mano', 'dedo', 'hand', 'finger')
+_SIDE_WORDS = ('lado', 'perfil', 'side', 'profile')
 
 
 def _extra_shots(product, photo):
@@ -165,12 +182,168 @@ def _extra_shots(product, photo):
             shots.setdefault('case', url)
         elif any(word in label for word in _HAND_WORDS):
             shots.setdefault('hand', url)
+        elif any(word in label for word in _SIDE_WORDS):
+            shots.setdefault('side', url)
         else:
             leftovers.append(url)
-    for key in ('case', 'hand'):
-        if key not in shots and leftovers:
-            shots[key] = leftovers.pop(0)
+    # A photo that is not named as a case or hand shot is not passed off as
+    # one: the wall would caption another angle "In its case". It stays an
+    # extra angle of the piece instead.
+    shots['angles'] = leftovers[:4]
     return shots
+
+
+_CT = re.compile(r'(\d+(?:[.,]\d+)?)\s*(?:ct|qts|quilates?)\b', re.I)
+
+
+def _carats(text):
+    m = _CT.search(text or '')
+    return float(m.group(1).replace(',', '.')) if m else 0.0
+
+
+_MM = ((0.005, 1.0), (0.01, 1.3), (0.015, 1.5), (0.02, 1.7), (0.03, 2.0), (0.04, 2.2), (0.05, 2.4),
+       (0.07, 2.7), (0.10, 3.0), (0.15, 3.4), (0.20, 3.8), (0.25, 4.1), (0.33, 4.4), (0.50, 5.2),
+       (0.75, 5.9), (1.00, 6.5), (1.50, 7.4), (2.00, 8.2))
+
+
+def _mm(carats):
+    """Diameter in mm of a round brilliant of ``carats`` (jeweller's table)."""
+    best = min(_MM, key=lambda row: abs(row[0] - carats))
+    return ('%.1f' % best[1]).rstrip('0').rstrip('.')
+
+
+def _stone_facts(env, tmpl, options=None):
+    """Stones as a customer compares them, from the bill of materials:
+    ``Stones`` (1 centre + N), ``Accents`` (N × size) and ``Total carats``.
+
+    The bill lists one set of lines per kind of stone (zirconia, lab-grown,
+    natural); the set that applies is the one of the stone picked on the
+    tablet, or the zirconia every piece includes. Zirconia has no carats of
+    its own, so accent sizes and the total come from the diamond lines of the
+    same piece (same setting, same sizes), read as «diamond equivalent»."""
+    if 'mrp.bom' not in env:
+        return []
+    bom = env['mrp.bom'].sudo().search(
+        [('product_tmpl_id', '=', tmpl.id), ('product_id', '=', False)], limit=1)
+    if not bom:
+        return []
+    stone_line = tmpl.attribute_line_ids.filtered(
+        lambda l: (l.attribute_id.with_context(lang='en_US').name or '').lower() in ('stone', 'piedra'))
+    picked = (options or env['product.template.attribute.value']).filtered(
+        lambda v: v.attribute_line_id in stone_line)[:1]
+    if not picked and stone_line:
+        picked = stone_line.product_template_value_ids.filtered(
+            lambda v: 'zirconia' in (v.name or '').lower())[:1]
+
+    def applies(line, value):
+        cond = line.bom_product_template_attribute_value_ids.filtered(
+            lambda v: v.attribute_line_id in stone_line)
+        return not cond or (value and value in cond)
+
+    def split(value):
+        centre, accents = 0.0, []
+        split.centre_name = ''
+        for line in bom.bom_line_ids:
+            if not applies(line, value):
+                continue
+            name = line.product_id.display_name or ''
+            is_centre = line.product_qty == 1 and ('central' in name.lower() or line.product_id.default_code)
+            if is_centre:
+                centre = _carats(name) or centre
+                split.centre_name = line.product_id.name or ''
+            else:
+                accents.append((int(line.product_qty), _carats(name)))
+        return centre, accents
+
+    centre, accents = split(picked)
+    centre_name = split.centre_name
+    count = sum(q for q, _s in accents)
+    kind = (picked.name or '') if picked else ''
+    is_zirconia = 'zirconia' in kind.lower() or not kind
+    if count and not any(size for _q, size in accents):
+        # Zirconia: sizes from the lab-grown version of the same setting.
+        lab = stone_line.product_template_value_ids.filtered(
+            lambda v: 'laboratorio' in (v.name or '').lower() and _carats(v.name))[:1]
+        _c, lab_accents = split(lab)
+        if sum(q for q, _s in lab_accents) == count:
+            accents = lab_accents
+    facts = []
+    # Centre stone: its kind and size, never hidden behind the accents.
+    if is_zirconia:
+        # «Zirconia central redonda» → «Zirconia redonda»: the shape is in the
+        # bill of materials; the size is not recorded yet.
+        central = re.sub(r'\s*central\b', '', centre_name, flags=re.I).strip() or env._("Cubic zirconia")
+    else:
+        central = re.sub(r'\s*·.*$', '', kind).replace('Diamante de laboratorio', 'Diamante laboratorio')
+        central = re.sub(r'(\d+)\.00 ct', r'\1 ct', central)
+    facts.append((env._("Centre stone"), central))
+    if count:
+        sizes = {}
+        for q, size in accents:
+            sizes[size] = sizes.get(size, 0) + q
+        parts = []
+        for size, q in sorted(sizes.items(), reverse=True):
+            if not size:
+                parts.append(str(q))
+            elif is_zirconia:
+                # Zirconia is not sold by the carat: the size goes in mm.
+                parts.append('%s × %s mm' % (q, _mm(size)))
+            else:
+                parts.append('%s × %s ct' % (q, ('%.2f' % size).rstrip('0').rstrip('.')))
+        facts.append((env._("Accents"), ' + '.join(parts)))
+    if not is_zirconia:
+        accent_ct = sum(q * size for q, size in accents)
+        total = accent_ct + centre
+        if total:
+            value = '%.2f ct' % total
+            if not centre:
+                value = env._("%s + centre", value)
+            facts.append((env._("Total carats"), value))
+    return facts
+
+
+def _piece_facts(env, product, chosen=False, options=None):
+    """``(blurb, [(label, value)])``: a short description of the piece and the
+    facts a customer weighs when comparing jewels — stones, weight and band
+    width. They come from fields only a jewellery database has (Studio fields
+    and the bill of materials), so each one is optional."""
+    tmpl = product.product_tmpl_id.sudo()
+
+    def text(field):
+        if field not in tmpl._fields or not tmpl[field]:
+            return ''
+        return str(tmpl[field]).strip()
+
+    facts = []
+    facts += _stone_facts(env, tmpl, options)
+    weight = 0.0
+    if options and hasattr(tmpl, '_xb_proyectar_ptavs'):
+        # The slot's product is whichever variant exists (dynamic variants),
+        # often another metal: the weight is projected for the combination
+        # the customer picked, or two versions of one ring weigh differently.
+        try:
+            comb = tmpl._get_first_possible_combination()
+            for option in options.sudo():
+                if option.product_tmpl_id == tmpl:
+                    comb = (comb - comb.filtered(
+                        lambda v: v.attribute_line_id == option.attribute_line_id)) | option
+            weight = tmpl._xb_proyectar_ptavs(comb)[0] or 0.0
+        except Exception as e:  # noqa: BLE001 - facts never break the wall
+            _logger.warning("[SHOWROOM] weight projection failed for %s: %s", tmpl.id, e)
+            weight = 0.0
+    if not weight and chosen and 'xb_peso_proyectado' in product._fields:
+        weight = product.sudo().xb_peso_proyectado or 0.0
+    if not weight:
+        try:
+            weight = float(text('x_studio_peso_joya').replace(',', '.') or 0)
+        except ValueError:
+            weight = 0.0
+    if weight:
+        facts.append((env._("Weight"), env._("%s g approx.", ('%.1f' % weight))))
+    width = text('x_studio_ancho_joya')
+    if width:
+        facts.append((env._("Band width"), env._("%s mm", width)))
+    return text('x_studio_descripcion'), facts
 
 
 _METAL_WORDS = ('metal', 'material')
@@ -312,16 +485,157 @@ def _photo_bytes(raw):
 
 
 def _may_show(screen, template):
-    """A piece may go on the wall when the shop already shows it.
+    """A piece may go on the wall when the shop already shows it, or when
+    someone ticked it for the wall.
 
-    The wall is a public page: a piece that is not published has no public
-    images anyway, and one from another company has no business on this
-    screen. Checking here is what keeps `/showroom/push` from turning into a
-    catalogue reader for whoever holds the wall's link.
+    The wall is a public page. A published piece is public anyway; one that
+    is not (a kiosk-only item, say) only reaches it because staff ticked
+    «Show on the showroom wall» on it. One from another company has no
+    business on this screen. Checking here is what keeps the push routes and
+    the photo route from turning into a catalogue reader for whoever holds
+    the wall's link.
     """
     if not template:
         return False
-    return bool(template.is_published) and template.company_id.id in (False, screen.company_id.id)
+    if template.company_id.id not in (False, screen.company_id.id):
+        return False
+    return bool(template.is_published or template.xb_showroom_enabled)
+
+
+def _tap_token(screen):
+    """The short secret printed on the counter's NFC stand.
+
+    Derived from the screen's own token, so the stand needs no field of its
+    own, and the wall's token never leaves the player: a tag can be read by
+    anyone who picks it up."""
+    secret = screen.env['ir.config_parameter'].sudo().get_param('database.secret') or ''
+    raw = hmac.new(secret.encode(), ('tap:%s' % screen.access_token).encode(),
+                   hashlib.sha256).digest()
+    return base64.urlsafe_b64encode(raw)[:12].decode()
+
+
+def _tap_key(screen):
+    return 'xb_showroom_wall.tap.%s' % screen.id
+
+
+def _tap_read(screen):
+    # Read straight from the table: the wall asks every second, and going
+    # through the parameter cache would mean flushing every worker's cache on
+    # each tap.
+    screen.env.cr.execute(
+        "SELECT value FROM ir_config_parameter WHERE key = %s", [_tap_key(screen)])
+    row = screen.env.cr.fetchone()
+    try:
+        return float(row[0]) if row else 0.0
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def _tap_write(screen):
+    screen.env.cr.execute("""
+        INSERT INTO ir_config_parameter (key, value, create_date, write_date)
+        VALUES (%s, %s, now() at time zone 'UTC', now() at time zone 'UTC')
+        ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, write_date = EXCLUDED.write_date
+    """, [_tap_key(screen), str(time.time())])
+
+
+def _shop_url(base, slot):
+    """The product page with the slot's combination already chosen: the shop
+    selects whatever ``attribute_values`` lists (product.attribute.value ids)."""
+    url = '%s%s' % (base, slot.product_id.product_tmpl_id.website_url or '/shop')
+    if slot.option_ids:
+        url += '?attribute_values=%s' % ','.join(
+            str(i) for i in slot.option_ids.sudo().product_attribute_value_id.ids)
+    return url
+
+
+def _option_titles(slots):
+    """What sets each slot apart when they are versions of one design:
+    ``{slot.id: 'Diamante de laboratorio 1.00 ct'}``, empty when they are
+    different designs or there is only one."""
+    if len(slots) < 2:
+        return {}
+    names = {s.product_id.product_tmpl_id.name for s in slots}
+    if len(names) != 1:
+        return {}
+    titles = {}
+    for slot in slots:
+        parts = []
+        for option in slot.option_ids:
+            if all(option.name in other.option_ids.mapped('name') for other in slots):
+                continue
+            label = option.name or ''
+            if re.fullmatch(r'[\d.,]+', label.strip()):
+                label = '%s %s' % (option.attribute_id.name, label)
+            parts.append(label)
+        titles[slot.id] = ' · '.join(parts)
+    return titles
+
+
+# The wall says the name of the piece just sent («Bellagio»). The voice is
+# made on the server by whatever command `xb_showroom_wall.tts_command` holds
+# (it reads the text on stdin and writes a WAV to {out}), once per name, and
+# kept as an attachment. Without the parameter the wall stays silent.
+VOICE_PREFIX = 'xb_showroom_voice_'
+VOICE_SHOW = 30   # seconds after a push during which the wall may still say it
+
+
+def _voice_text(product):
+    """The name to say: the commercial name before its description
+    («Bellagio · Solitario con doble pavé» → «Bellagio»)."""
+    name = (product.product_tmpl_id.name or '').strip()
+    for separator in _NAME_SEPARATORS:
+        if separator in name:
+            return name.split(separator)[0].strip()
+    return name
+
+
+def _voice_attachment(env, text):
+    """The MP3 that says ``text``, made on first use; empty recordset when
+    the voice is not configured or could not be made."""
+    attachments = env['ir.attachment'].sudo()
+    params = env['ir.config_parameter'].sudo()
+    command = (params.get_param('xb_showroom_wall.tts_command') or '').strip()
+    if not command or not text:
+        return attachments.browse()
+    chime = params.get_param('xb_showroom_wall.tts_chime', '1') not in ('0', 'False', 'false', '')
+    key = hashlib.sha1(('%s|%s|%s' % (command, chime, text)).encode()).hexdigest()[:20]
+    name = '%s%s.mp3' % (VOICE_PREFIX, key)
+    found = attachments.search([('res_model', '=', 'xb.showroom.screen'), ('name', '=', name)], limit=1)
+    if found:
+        return found
+    try:
+        with tempfile.TemporaryDirectory() as tmp:
+            wav, mp3 = os.path.join(tmp, 'voice.wav'), os.path.join(tmp, 'voice.mp3')
+            subprocess.run(shlex.split(command.replace('{out}', wav)), input=text.encode(),
+                           capture_output=True, timeout=30, check=True)
+            if chime:
+                # A soft two-note bell first: it turns heads before the name.
+                graph = ('[0][1]amix=inputs=2,volume=0.35,afade=t=in:d=0.01,'
+                         'afade=t=out:st=0.15:d=1.05,aresample=22050,aformat=channel_layouts=mono[c];'
+                         'anullsrc=r=22050:cl=mono,atrim=0:0.3[s];'
+                         '[2]aresample=22050,aformat=channel_layouts=mono[v];'
+                         '[c][s][v]concat=n=3:v=0:a=1,loudnorm=I=-16:TP=-1.5')
+                args = ['-f', 'lavfi', '-i', 'sine=frequency=1318:duration=1.2',
+                        '-f', 'lavfi', '-i', 'sine=frequency=1976:duration=1.2',
+                        '-i', wav, '-filter_complex', graph]
+            else:
+                args = ['-i', wav, '-af', 'loudnorm=I=-16:TP=-1.5']
+            subprocess.run(['ffmpeg', '-loglevel', 'error', '-y'] + args + ['-ac', '1', '-b:a', '64k', mp3],
+                           capture_output=True, timeout=30, check=True)
+            with open(mp3, 'rb') as handle:
+                data = handle.read()
+    except Exception as e:  # noqa: BLE001 - the voice never blocks the wall
+        _logger.warning("[SHOWROOM] voice for %r failed: %s", text, e)
+        return attachments.browse()
+    return attachments.create({
+        'name': name, 'raw': data, 'mimetype': 'audio/mpeg',
+        'res_model': 'xb.showroom.screen', 'res_id': 0,
+    })
+
+
+def _voice_key(screen):
+    return 'xb_showroom_wall.voice.%s' % screen.id
 
 
 def _price_label(screen, slot):
@@ -329,12 +643,110 @@ def _price_label(screen, slot):
         return ''
     currency = slot.currency_id or screen.company_id.currency_id
     amount = slot.price
-    if screen.show_price == 'from':
-        # A deliberately vague figure: round down to a readable step.
-        step = 1000 if amount >= 10000 else 100
-        amount = float_round(amount, precision_rounding=step, rounding_method='DOWN')
+    if screen.show_price == 'from' and not slot.option_ids:
+        # The push already stored the shop's own «from» figure (cheapest gold
+        # of the piece, as the tablet would show it), so it goes out as is.
         return screen.env._("From %s") % _money(amount, currency)
     return _money(amount, currency)
+
+
+_KT = re.compile(r'(\d+)\s*k', re.I)
+
+
+def _from_price(template):
+    """The shop's «from» price of ``template``: the default combination with
+    the metal swapped for each GOLD the piece offers, cheapest wins. Silver
+    and steel are left out on purpose: «from» on a gold engagement ring must
+    not quote the silver version. Needs a website request (pricelist, taxes).
+    None when the piece has no metal choice or the shop cannot price it."""
+    try:
+        comb = template._get_first_possible_combination()
+        line = template.valid_product_template_attribute_line_ids.filtered(
+            lambda l: (l.attribute_id.with_context(lang='en_US').name or '').lower() == 'metal')
+        if not line:
+            return None
+        golds = line.product_template_value_ids._only_active().filtered(
+            lambda v: 'oro' in (v.name or '').lower() and 'imitaci' not in (v.name or '').lower()
+            and _KT.search(v.name or ''))
+        prices = []
+        for value in golds:
+            option = (comb - comb.filtered(lambda v: v.attribute_line_id == line)) | value
+            info = template._get_combination_info(option)
+            if info.get('price'):
+                prices.append(info['price'])
+        return min(prices) if prices else None
+    except Exception as e:  # noqa: BLE001 - a price must never stop the push
+        _logger.warning("[SHOWROOM] «from» price failed for %s: %s", template.id, e)
+        return None
+
+
+def _shop_pricelist(screen):
+    """The pricelist the shop of the screen's company sells with."""
+    env = screen.env['product.pricelist'].sudo()
+    site = screen.env['website'].sudo().search([('company_id', '=', screen.company_id.id)], limit=1)
+    return (site and env.search([('website_id', '=', site.id)], limit=1)) \
+        or env.search([('company_id', '=', screen.company_id.id)], limit=1)
+
+
+_COLOURS = ('blanco', 'amarillo', 'rosa', 'bitono', 'florentino')
+
+
+def _karat_prices(screen, product, options=None):
+    """``([{label, amount, chosen}], stone)``: the shop's price in 10K, 14K and
+    18K, taxes as the shop shows them (included).
+
+    Without ``options`` (sent from the grid) it is the piece's «from»: the
+    default combination, cheapest gold of each karat. With the options the
+    customer picked on the tablet, the stone, size and colour of gold are
+    kept and only the karat changes, so the wall answers «how much is MY
+    ring in 14K or 18K»; the karat they chose is flagged."""
+    try:
+        template = product.product_tmpl_id.sudo().with_company(screen.company_id)
+        pricelist = _shop_pricelist(screen)
+        if not pricelist:
+            return [], ''
+        lines = template.valid_product_template_attribute_line_ids
+        line = lines.filtered(
+            lambda l: (l.attribute_id.with_context(lang='en_US').name or '').lower() == 'metal')
+        if not line:
+            return [], ''
+        comb = template._get_first_possible_combination()
+        chosen_metal = None
+        stone = ''
+        for option in (options or template.env['product.template.attribute.value']).sudo():
+            if option.product_tmpl_id != template:
+                continue
+            comb = (comb - comb.filtered(lambda v: v.attribute_line_id == option.attribute_line_id)) | option
+            if option.attribute_line_id == line:
+                chosen_metal = option
+            elif (option.attribute_id.with_context(lang='en_US').name or '').lower() in ('stone', 'piedra'):
+                stone = option.name or ''
+        colour = None
+        if chosen_metal:
+            name = (chosen_metal.name or '').lower()
+            colour = next((c for c in _COLOURS if c in name), None)
+        best = {}
+        for value in line.product_template_value_ids._only_active():
+            name = (value.name or '').lower()
+            match = _KT.search(value.name or '')
+            if 'oro' not in name or 'imitaci' in name or not match:
+                continue
+            if colour and colour not in name:
+                continue
+            kt = int(match.group(1))
+            option = (comb - comb.filtered(lambda v: v.attribute_line_id == line)) | value
+            price = pricelist._get_product_price(
+                template.with_context(**template._get_product_price_context(option)), 1.0)
+            if template.taxes_id:
+                price = template.taxes_id.compute_all(price, product=template)['total_included']
+            if price and (kt not in best or price < best[kt][0]):
+                best[kt] = (price, value == chosen_metal)
+        rows = [{'label': '%sK' % kt, 'amount': best[kt][0], 'chosen': best[kt][1]}
+                for kt in sorted(best) if kt in (10, 14, 18)]
+        return rows, stone
+    except Exception as e:  # noqa: BLE001 - prices never break the wall
+        _logger.warning("[SHOWROOM] karat prices failed for %s: %s", product.id, e)
+        return [], ''
 
 
 def _qr_response(target):
@@ -359,6 +771,11 @@ def _qr_response(target):
 def _idle_price(screen, product):
     """Price label for a piece in the rotation (no push carried its figure)."""
     if screen.show_price == 'none':
+        return ''
+    # Priced by weight and metal: its sale price is not on the product, and
+    # the rotation has no shop context to work it out. Better no figure than
+    # a wrong one.
+    if getattr(product.product_tmpl_id, 'xb_precio_por_metal', False):
         return ''
     currency = product.currency_id or screen.company_id.currency_id
     amount = product.list_price
@@ -408,21 +825,41 @@ class ShowroomWall(http.Controller):
         # screen named with a stray tag would otherwise end up as markup.
         def safe(value):
             return html_escape.escape(str(value or ''), quote=True)
+        plugins = self._wall_plugins(screen)
 
         html = """<!DOCTYPE html>
 <html lang="%(lang)s"><head><meta charset="utf-8"/>
 <title>%(title)s</title>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="robots" content="noindex, nofollow"/>
+<script>
+/* Safety net, kept apart from wall.js so it runs even when that never
+   starts: if the wall has not painted a fresh state for a minute and the
+   server answers, reload the page. A frozen shop player otherwise stays
+   white until someone restarts it. */
+(function () {
+    var start = Date.now(), url = location.pathname, busy = false;
+    window.__xbWallBeat = 0;
+    setInterval(function () {
+        if (busy || Date.now() - (window.__xbWallBeat || start) < 60000) { return; }
+        busy = true;
+        var control = window.AbortController ? new AbortController() : null;
+        setTimeout(function () { if (control) { control.abort(); } busy = false; }, 10000);
+        fetch(url + "/state", { cache: "no-store", credentials: "omit", signal: control ? control.signal : undefined })
+            .then(function (response) { if (response.ok) { location.replace(url + "?r=" + Date.now()); } })
+            .catch(function () { /* offline: try again on the next round */ });
+    }, 15000);
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&amp;family=Jost:wght@300;400;500&amp;display=swap"/>
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&amp;family=Jost:wght@300;400;500&amp;display=swap"/>
 <link rel="stylesheet" href="/xb_showroom_wall/static/src/wall/wall.css?v=%(stamp)s"/>
-</head><body data-logo="%(logo)s" data-theme="%(theme)s" data-style="%(style)s" data-fit="%(fit)s">
+%(plugin_css)s</head><body data-logo="%(logo)s" data-theme="%(theme)s" data-style="%(style)s" data-fit="%(fit)s">
 <div id="wall" class="wall"></div>
 <iframe id="idle" class="idle" referrerpolicy="no-referrer"></iframe>
 <script id="cfg" type="application/json">%(config)s</script>
-<script src="/xb_showroom_wall/static/src/wall/wall.js?v=%(stamp)s" defer></script>
+%(plugin_js)s<script src="/xb_showroom_wall/static/src/wall/wall.js?v=%(stamp)s" defer></script>
 </body></html>""" % {
             'lang': safe((screen._lang() or 'es').split('_')[0]),
             'theme': safe(screen.theme or 'light'),
@@ -433,6 +870,10 @@ class ShowroomWall(http.Controller):
             'stamp': _asset_stamp(),
             # `</script>` inside a colour would close the block early.
             'config': json.dumps(config).replace('<', '\\u003c'),
+            'plugin_css': ''.join('<link rel="stylesheet" href="%s?v=%s"/>\n' % (safe(p['css']), _asset_stamp())
+                                  for p in plugins if p.get('css')),
+            'plugin_js': ''.join('<script src="%s?v=%s" defer></script>\n' % (safe(p['js']), _asset_stamp())
+                                 for p in plugins if p.get('js')),
         }
         return Response(html, headers=[
             ('Content-Type', 'text/html; charset=utf-8'),
@@ -446,11 +887,37 @@ class ShowroomWall(http.Controller):
         if not screen:
             return Response('{"error":"unknown"}', status=404,
                             headers=[('Content-Type', 'application/json')])
-        state = self._state_dict(screen)
+        state = dict(self._state_dict(screen))
+        screen.env.cr.execute(
+            "SELECT value FROM ir_config_parameter WHERE key = %s", [_voice_key(screen)])
+        row = screen.env.cr.fetchone()
+        try:
+            slot_id, voice_id, said = (row[0].split('|') if row else ('', '', '0'))
+            if (screen._is_live() and time.time() - float(said) < VOICE_SHOW
+                    and int(slot_id) in screen.slot_ids.ids):
+                state['voice'] = {
+                    'key': slot_id,
+                    'url': '/showroom/wall/%s/voice/%s.mp3' % (token, int(voice_id)),
+                }
+        except (TypeError, ValueError):
+            pass
+        tapped = _tap_read(screen)
+        if tapped and time.time() - tapped < TAP_SHOW:
+            screen = screen.with_context(lang=screen._lang())
+            state['tap'] = int(tapped)
+            state['tap_text'] = screen.env._("Done! It's on your phone")
+            state['tap_sub'] = screen.env._("Thank you for visiting us")
         return Response(json.dumps(state), headers=[
             ('Content-Type', 'application/json; charset=utf-8'),
             ('Cache-Control', 'no-cache, no-store, must-revalidate'),
         ])
+
+    def _wall_plugins(self, screen):
+        """Extra stylesheets/scripts for the wall page: ``[{'css': url, 'js': url}]``.
+
+        A module that knows how to draw its own kind of piece (e.g. wedding coins) adds its files here
+        and registers a painter in ``window.XBWallPlugins``; the wall asks the painters first."""
+        return []
 
     def _piece_dict(self, screen, product, base, price='', qr=None,
                     options=None, slot=None):
@@ -474,6 +941,8 @@ class ShowroomWall(http.Controller):
         # A commercial name carries its own second line, so the metal moves
         # down to the data line instead of being dropped.
         name, description = _split_name(_headline(screen, product))
+        blurb, facts = _piece_facts(screen.env, product, chosen=bool(options), options=options)
+        specs = list(specs) + facts
         subtitle = description or metal
         if description and metal:
             # «METAL: Disponible en 13 metales» reads twice; on the data line
@@ -489,6 +958,7 @@ class ShowroomWall(http.Controller):
             # so the reference stays the one that tells them apart.
             'short': name if screen.title_mode == 'product_name' else '',
             'subtitle': subtitle,
+            'blurb': blurb,
             # True when the second line is the description and the metal went
             # down to the data line: the comparison table must not ask for it
             # twice.
@@ -504,8 +974,12 @@ class ShowroomWall(http.Controller):
             'shots': _extra_shots(product, photo),
             'bg': _studio_background(product)
                   if (screen.theme == 'light' or screen.wall_style == 'mosaic') else '',
+            # With a combination chosen the QR carries the slot, so the phone
+            # opens the product page with that same metal, size and stone.
             'qr': qr if qr is not None else (
-                '/showroom/wall/%s/qr/%s.png' % (screen.access_token, product.id)),
+                '/showroom/wall/%s/qr/%s.png%s' % (
+                    screen.access_token, product.id,
+                    '?s=%s' % slot.id if slot and slot.option_ids else '')),
             'url': '%s%s' % (base.rstrip('/'), product.product_tmpl_id.website_url or ''),
         }
 
@@ -560,6 +1034,8 @@ class ShowroomWall(http.Controller):
                     "Scan to browse the collection")
                 state['worn_text'] = env._("How it looks on")
                 state['case_text'] = env._("In its case")
+                state['ask_text'] = env._("Ask us about this piece")
+                state['kicker_text'] = screen.company_id.name or ''
                 state['rev'] = 'idle-own-%s' % ','.join(
                     str(piece['id']) for piece in pieces)
             return state
@@ -569,13 +1045,43 @@ class ShowroomWall(http.Controller):
                              options=slot.option_ids, slot=slot)
             for slot in screen.slot_ids
         ]
+        if screen.mode == 'compare' and screen.show_price != 'none':
+            for piece, slot in zip(pieces, screen.slot_ids):
+                currency = slot.currency_id or screen.company_id.currency_id
+                rows, stone = _karat_prices(screen, slot.product_id, slot.option_ids)
+                piece['karats'] = [
+                    {'label': row['label'], 'price': _money(row['amount'], currency),
+                     'chosen': row['chosen']} for row in rows]
+                # The stone type goes on the «Stones» row: what was picked on
+                # the tablet, or the cubic zirconia every piece includes.
+                piece['stone_type'] = stone or env._("Cubic zirconia")
+                days = int(slot.product_id.product_tmpl_id.sale_delay or 0)
+                piece['lead_text'] = (env._("%s days", days) if days != 1 else env._("1 day")) if days else ''
+                piece['stone_note'] = ''
         return {
             'stamp': _asset_stamp(),
             'live': True,
             'qr_text': env._("Scan to take this piece with you"),
             'worn_text': env._("How it looks on"),
             'case_text': env._("In its case"),
-            'diff_text': env._("Side by side"),
+            'ask_text': env._("Ask us about this piece"),
+            'kicker_text': screen.company_id.name or '',
+            'diff_text': env._("Compare and choose"),
+            'diff_kicker': screen.compare_kicker or '',
+            'diff_footer': screen.compare_footer or '',
+            'lead_label': env._("Delivery"),
+            'same_text': env._("Same design, you choose"),
+            'size_text': env._("Size"),
+            'natural_note': env._("+ natural centre diamond, quoted separately"),
+            'quote_text': env._("Quoted separately"),
+            'from_text': env._("From"),
+            'qr_card_text': env._("Scan to see it on your phone"),
+            'badge_texts': {
+                'price': env._("Most accessible price"),
+                'stones': env._("The most brilliant"),
+                'gold': env._("The most gold"),
+                'width': env._("Widest band"),
+            },
             'price_text': env._("Price"),
             'metal_text': env._("Metal"),
             'rev': '%s-%s-%s' % (
@@ -584,6 +1090,21 @@ class ShowroomWall(http.Controller):
             'heading': screen.heading or '',
             'pieces': pieces,
         }
+
+    @http.route('/showroom/wall/<string:token>/voice/<int:att_id>.mp3',
+                type='http', auth='public', methods=['GET'], csrf=False,
+                save_session=False, sitemap=False)
+    def wall_voice(self, token, att_id, **kw):
+        """The spoken name of a piece; only the wall's own voice files."""
+        screen = _screen(token)
+        voice = request.env['ir.attachment'].sudo().browse(att_id).exists()
+        if (not screen or not voice or voice.res_model != 'xb.showroom.screen'
+                or not (voice.name or '').startswith(VOICE_PREFIX)):
+            return Response(status=404)
+        return Response(voice.raw, headers=[
+            ('Content-Type', 'audio/mpeg'),
+            ('Cache-Control', 'public, max-age=31536000, immutable'),
+        ])
 
     @http.route('/showroom/wall/<string:token>/photo/<string:kind>/<int:rec_id>.jpg',
                 type='http', auth='public', methods=['GET'], csrf=False,
@@ -652,7 +1173,122 @@ class ShowroomWall(http.Controller):
         base = (request.env['ir.config_parameter'].sudo()
                 .get_param('web.base.url') or '').rstrip('/')
         target = '%s%s' % (base, product.product_tmpl_id.website_url or '/shop')
+        # The shop page selects the options listed in `attribute_values`
+        # (ids of product.attribute.value), so the customer's phone shows the
+        # same combination and price as the wall.
+        slot = screen.slot_ids.filtered(lambda s: str(s.id) == str(kw.get('s') or ''))
+        if slot and slot.product_id == product and slot.option_ids:
+            target = _shop_url(base, slot)
         return _qr_response(target)
+
+    # ------------------------------------------------------------------
+    # The counter's NFC stand
+    # ------------------------------------------------------------------
+    @http.route('/showroom/t/<string:tap>', type='http', auth='public',
+                methods=['GET'], csrf=False, save_session=False, sitemap=False)
+    def wall_tap(self, tap, **kw):
+        """A phone tapped the stand: show it what the wall is showing.
+
+        The tag holds this one fixed address, so it never has to be written
+        again; what it opens follows the wall. The wall itself answers with a
+        short «it's on your phone», which is what makes the gesture visible."""
+        screens = request.env['xb.showroom.screen'].sudo().search([('access_token', '!=', False)])
+        screen = next((s for s in screens if hmac.compare_digest(_tap_token(s), tap or '')), None)
+        if not screen:
+            return Response(_("Unknown showroom screen."), status=404)
+        _tap_write(screen)
+        return Response(self._tap_page(screen.with_context(lang=screen._lang())), headers=[
+            ('Content-Type', 'text/html; charset=utf-8'),
+            ('Cache-Control', 'no-cache, no-store, must-revalidate'),
+        ])
+
+    def _tap_page(self, screen):
+        env = screen.env
+        base = (env['ir.config_parameter'].sudo().get_param('web.base.url') or '').rstrip('/')
+        company = screen.company_id
+        shop = company.name or ''
+
+        def esc(value):
+            return html_escape.escape(str(value or ''), quote=True)
+
+        live = screen._is_live()
+        slots = screen.slot_ids if live else screen.slot_ids.browse()
+        titles = _option_titles(slots)
+        cards, lines = [], []
+        for slot in slots:
+            piece = self._piece_dict(screen, slot.product_id, base,
+                                     price=_price_label(screen, slot),
+                                     options=slot.option_ids, slot=slot)
+            title = titles.get(slot.id) or piece['short'] or piece['product_name'] or piece['name']
+            subtitle = piece['product_name'] if titles.get(slot.id) else piece['subtitle']
+            url = _shop_url(base, slot)
+            facts = [spec for spec in piece['specs']
+                     if spec['label'].lower() not in ('piedra', 'stone')][:4]
+            days = int(slot.product_id.product_tmpl_id.sale_delay or 0)
+            if days:
+                facts.append({'label': env._("Delivery"),
+                              'value': env._("%s days", days) if days != 1 else env._("1 day")})
+            cards.append("""<article class="card">
+<a class="pic" href="%(url)s"><img src="%(img)s" alt="%(title)s" loading="lazy"/></a>
+<div class="txt"><h2>%(title)s</h2><p class="sub">%(sub)s</p>
+<p class="price">%(price)s</p><dl>%(facts)s</dl>
+<a class="btn" href="%(url)s">%(see)s</a></div></article>""" % {
+                'url': esc(url), 'img': esc(piece['image']), 'title': esc(title),
+                'sub': esc(subtitle), 'price': esc(piece['price']),
+                'facts': ''.join('<div><dt>%s</dt><dd>%s</dd></div>' % (esc(f['label']), esc(f['value']))
+                                 for f in facts),
+                'see': esc(env._("See it in the shop")),
+            })
+            lines.append('• %s%s%s\n%s' % (
+                piece['product_name'] or title,
+                (' · %s' % titles[slot.id]) if titles.get(slot.id) else '',
+                (' · %s' % piece['price']) if piece['price'] else '', url))
+
+        number = re.sub(r'\D', '', env['ir.config_parameter'].sudo().get_param(
+            'xb_showroom_wall.whatsapp') or getattr(company, 'mobile', '') or company.phone or '')
+        actions = ''
+        if cards and number:
+            from urllib.parse import quote
+            text = env._("Hi! I'd like these pieces I saw at %s:", shop) + '\n\n' + '\n\n'.join(lines)
+            actions += '<a class="btn wa" href="https://wa.me/%s?text=%s">%s</a>' % (
+                number, quote(text), esc(env._("Send it to me on WhatsApp")))
+        actions += '<a class="btn ghost" href="%s/appointment">%s</a>' % (
+            esc(base), esc(env._("Book an appointment")))
+        if not cards:
+            body = '<section class="empty"><p>%s</p><a class="btn" href="%s">%s</a></section>' % (
+                esc(env._("Right now the wall is showing our shop window.")),
+                esc(screen.idle_qr_url or '%s/shop' % base), esc(env._("See the collection")))
+        else:
+            body = ''.join(cards)
+        logo = ('<img class="logo" src="/web/image/res.company/%s/logo" alt="%s"/>' % (company.id, esc(shop))
+                if company.logo else '<div class="logo-text">%s</div>' % esc(shop))
+        return """<!DOCTYPE html><html lang="%(lang)s"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="robots" content="noindex, nofollow"/>
+<title>%(title)s · %(shop)s</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&amp;family=Jost:wght@300;400;500&amp;display=swap"/>
+<style>
+:root{--bg:#FAF8F4;--ink:#14110E;--muted:#6f6556;--gold:#A6824C;--line:#e7dfd2;--card:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:300 16px/1.5 Jost,system-ui,sans-serif}
+header{padding:28px 20px 8px;text-align:center}.logo{height:40px;max-width:60%%}.logo-text{font:400 22px "Playfair Display",serif;letter-spacing:.2em}
+h1{font:400 30px/1.15 "Playfair Display",Georgia,serif;margin:18px 0 4px}.lead{color:var(--muted);margin:0}
+main{padding:12px 16px 140px;display:grid;gap:16px;max-width:560px;margin:0 auto}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.pic{display:block;background:#fff}.pic img{display:block;width:100%%;aspect-ratio:4/3;object-fit:contain;padding:8px}
+.txt{padding:16px 18px 18px}h2{font:400 21px/1.2 "Playfair Display",serif;margin:0}.sub{color:var(--muted);margin:2px 0 0;font-size:14px}
+.price{font-size:24px;font-weight:500;color:var(--gold);margin:10px 0 6px}
+dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px;margin:8px 0 14px}dt{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}dd{margin:0;font-weight:400}
+.btn{display:block;text-align:center;padding:13px 16px;border-radius:999px;background:var(--ink);color:#fff;text-decoration:none;font-weight:400;letter-spacing:.04em}
+.btn.wa{background:#1f6f4a}.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.bar{position:fixed;left:0;right:0;bottom:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:rgba(250,248,244,.96);border-top:1px solid var(--line);display:grid;gap:8px}
+.bar .btn{max-width:528px;width:100%%;margin:0 auto}.empty{text-align:center;padding:24px 8px}.empty p{color:var(--muted)}
+</style></head><body>
+<header>%(logo)s<h1>%(title)s</h1><p class="lead">%(lead)s</p></header>
+<main>%(body)s</main><nav class="bar">%(actions)s</nav></body></html>""" % {
+            'lang': esc((screen._lang() or 'es').split('_')[0]), 'shop': esc(shop), 'logo': logo,
+            'title': esc(env._("Your selection")),
+            'lead': esc(env._("What you saw on the wall at %s", shop)),
+            'body': body, 'actions': actions,
+        }
 
     # ------------------------------------------------------------------
     # The tablet
@@ -702,11 +1338,17 @@ class ShowroomWall(http.Controller):
         if not _may_show(screen, product.product_tmpl_id):
             return {'error': _(
                 "Only pieces published in the shop of this company can go on the wall.")}
+        if not product.product_tmpl_id.xb_showroom_enabled:
+            return {'error': _(
+                "This piece is not enabled for the wall. Tick «Show on the showroom wall» on the product.")}
         if not options and product_id:
             # An existing variant sent without its options: they are its own.
             options = product.product_template_attribute_value_ids
 
-        # Keep the exact figure the customer is looking at on the tablet.
+        # Keep the exact figure the customer is looking at on the tablet; a
+        # screen that shows «from» stores the shop's own «from» figure.
+        if screen.show_price == 'from' and not options:
+            amount = _from_price(product.product_tmpl_id) or amount
         currency = request.website.currency_id if request.website else product.currency_id
         entry = {
             'product': product.sudo(),
@@ -719,17 +1361,23 @@ class ShowroomWall(http.Controller):
         repeated = False
         if mode == 'compare':
             # What is on the wall stays and the new piece joins at the end.
-            # One ring takes one panel: sent again — from the grid without a
-            # metal chosen, or from its page with one — it moves to the end
-            # instead of showing up twice. Comparing a ring against itself
-            # tells the customer nothing, and both panels carry the same photo.
-            already = screen.slot_ids.filtered(
-                lambda s: s.product_id.product_tmpl_id == template)
+            # The same ring sent again moves to the end instead of showing up
+            # twice. Two versions of one design are a real question («this
+            # one with a lab diamond or a natural one?»), so the same model
+            # joins when both carry a combination and the combinations differ;
+            # sent from the grid (no combination) it still replaces itself.
+            # Only the sales person's own pieces are compared: one a customer
+            # sent from the kiosk gave way to this push, the latest wins.
+            own = screen.slot_ids.filtered(lambda s: s.source == 'web')
+            already = own.filtered(
+                lambda s: s.product_id.product_tmpl_id == template and (
+                    not options or not s.option_ids
+                    or set(s.option_ids.ids) == set(options.ids)))
             repeated = bool(already)
             kept = [
                 {'product': slot.product_id, 'options': slot.option_ids,
                  'price': slot.price, 'currency': slot.currency_id}
-                for slot in screen.slot_ids - already
+                for slot in own - already
             ]
             entries = kept + [entry]
         result = screen.sudo()._push_entries(entries, mode=mode)

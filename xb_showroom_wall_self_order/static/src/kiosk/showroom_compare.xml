@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <!-- Bar shared by the list and the product page: the pieces being compared on the wall. -->
+    <t t-name="xb_showroom_wall_self_order.CompareBar">
+        <div t-if="xbCompare.pieces.length" class="o_xb_compare_bar border-top">
+            <div class="container o_self_container d-flex align-items-center gap-3 py-2">
+                <span class="o_xb_compare_label text-nowrap" t-esc="xbCompararTexto()"/>
+                <div class="d-flex gap-2 flex-grow-1 overflow-x-auto">
+                    <t t-foreach="xbCompare.pieces" t-as="pieza" t-key="pieza.slot_id">
+                        <button class="o_xb_compare_thumb btn p-0 position-relative" t-on-click="() => this.xbQuitar(pieza.slot_id)"
+                                t-att-title="pieza.name" t-att-aria-label="pieza.name">
+                            <img t-att-src="pieza.image" t-att-alt="pieza.name"/>
+                            <span class="o_xb_compare_x" aria-hidden="true">×</span>
+                        </button>
+                    </t>
+                </div>
+                <button class="btn btn-link text-nowrap o_xb_compare_new" t-on-click="xbNueva">New comparison</button>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="xb_showroom_wall_self_order.ProductListPageCompare" t-inherit="pos_self_order.ProductListPage" t-inherit-mode="extension">
+        <xpath expr="//span[hasclass('o-so-tabular-nums')]" position="after">
+            <button t-if="xbPuedeComparar(product)" class="o_xb_compare_toggle btn btn-sm"
+                    t-att-class="{'o_xb_on': xbComparando(product)}"
+                    t-on-click.stop="() => this.xbAlternar(product)">
+                <i t-attf-class="fa {{ xbComparando(product) ? 'fa-check-square' : 'fa-square-o' }} me-1" aria-hidden="true"/>
+                <span>Compare</span>
+            </button>
+        </xpath>
+        <xpath expr="//OrderWidget/.." position="before">
+            <t t-call="xb_showroom_wall_self_order.CompareBar"/>
+        </xpath>
+    </t>
+
+    <t t-name="xb_showroom_wall_self_order.ProductPageCompare" t-inherit="pos_self_order.ProductPage" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('o_xb_showroom_kiosk_btn')]" position="after">
+            <button t-if="canShowOnWall" class="btn btn-lg btn-outline-primary text-truncate o_xb_showroom_compare_btn"
+                    t-on-click="xbComparar" t-att-disabled="xbCompare.busy">
+                <span>+ Compare</span>
+            </button>
+        </xpath>
+        <xpath expr="//div[hasclass('o_self_footer')]" position="before">
+            <t t-call="xb_showroom_wall_self_order.CompareBar"/>
+        </xpath>
+    </t>
+</templates>

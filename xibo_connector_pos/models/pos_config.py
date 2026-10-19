@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 import logging
 import secrets
+import time
 import uuid
+
+from psycopg2 import errors as pg_errors
 
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
@@ -11,6 +14,11 @@ _logger = logging.getLogger(__name__)
 # A Customer Display mirror older than this is considered gone, so the next
 # cart re-sends the XMR command instead of trusting a stale flag.
 MIRROR_STALE_AFTER = 4 * 3600  # seconds
+
+# A mirror event on the CMS that Odoo is not tracking is left over — Odoo
+# lost it — once it is at least this old. Younger ones may belong to a mirror
+# another worker is putting up right now and has not committed yet.
+MIRROR_ORPHAN_MIN_AGE = 30  # seconds
 
 # pos.config fields the POS front-end reads (see static/src/cart_events.js).
 # Changing any of them must invalidate the browser-side POS cache.
@@ -1044,8 +1052,81 @@ class PosConfig(models.Model):
             entries.drop()
         return True
 
+    def _xibo_lock_mirror(self):
+        """Take this POS's row lock before touching its mirror; False if a
+        concurrent request just changed it.
+
+        The POS often sends the same "add" twice a few milliseconds apart and
+        two workers take them at once. Both read the flag as off, both put a
+        mirror up, and the loser of the race is rolled back and retried by
+        Odoo — but the event it already created on the CMS is not rolled back
+        with it. Odoo never learns about that one, so it never takes it down,
+        and the screen stays on the mirror for hours. Waiting on the row lock
+        makes the second request find out that the first one got there.
+        """
+        self.ensure_one()
+        try:
+            with self.env.cr.savepoint(flush=False):
+                self.env.cr.execute(
+                    "SELECT id FROM pos_config WHERE id = %s FOR UPDATE", [self.id])
+        except pg_errors.SerializationFailure:
+            return False
+        return True
+
+    def _xibo_sweep_mirror_orphans(self, dg_xibo_id):
+        """Delete mirror events left on the CMS that Odoo is not tracking.
+
+        However an event got lost (the race above, a worker killed mid-call,
+        a CMS answer that never arrived), it would keep the mirror on screen
+        until its window runs out. Only events that look like ours are
+        touched: this POS's mirror campaign on this screen, with a window no
+        longer than the mirror's own, and old enough not to be in flight.
+        Returns how many were removed.
+        """
+        self.ensure_one()
+        server = self.xibo_server_id
+        campaign = self.xibo_customer_display_layout_id.xibo_campaign_id
+        if not (server and campaign and dg_xibo_id):
+            return 0
+        try:
+            events = server._request('GET', '/api/schedule', params={
+                'campaignId': campaign,
+                'displayGroupIds[]': dg_xibo_id,
+                'length': 200,
+            }, raise_on_error=False)
+            if not isinstance(events, list):
+                return 0
+            tracked = set(self.env['xibo.schedule.event'].sudo().search([
+                ('server_id', '=', server.id),
+            ]).mapped('xibo_event_id'))
+            window = (self.xibo_customer_display_duration or MIRROR_STALE_AFTER) + 60
+            cutoff = time.time() - MIRROR_ORPHAN_MIN_AGE
+            removed = 0
+            for event in events:
+                groups = [g.get('displayGroupId') for g in (event.get('displayGroups') or [])]
+                start = event.get('fromDt') or 0
+                end = event.get('toDt') or 0
+                if (event.get('campaignId') != campaign or dg_xibo_id not in groups
+                        or event.get('eventId') in tracked
+                        or not start or start > cutoff
+                        or not end or end - start > window):
+                    continue
+                server.delete_schedule_event(event['eventId'])
+                removed += 1
+            if removed:
+                _logger.info("[XIBO POS] removed %s leftover mirror event(s) from display_group=%s",
+                             removed, dg_xibo_id)
+            return removed
+        except Exception as e:
+            _logger.warning("[XIBO POS] could not sweep leftover mirrors: %s", e)
+            return 0
+
     def _xibo_activate_customer_display(self):
         self.ensure_one()
+        if not self._xibo_lock_mirror():
+            _logger.info("[XIBO POS] mirror being put up by another request for POS %s, skipping",
+                         self.id)
+            return True
         if self._xibo_is_mirror_active():
             _logger.info("[XIBO POS] mirror already active for POS %s, skipping XMR", self.id)
             return True
@@ -1079,12 +1160,15 @@ class PosConfig(models.Model):
 
     def _xibo_deactivate_customer_display(self):
         self.ensure_one()
+        dg_xibo_id = self.xibo_customer_display_display_id.own_display_group_id
         if not self._xibo_is_mirror_active():
             _logger.info("[XIBO POS] mirror already inactive for POS %s, skipping XMR", self.id)
+            # Nothing of ours is up, but one Odoo lost track of may be.
+            if dg_xibo_id and self._xibo_sweep_mirror_orphans(dg_xibo_id):
+                self.xibo_server_id._trigger_collect_now([dg_xibo_id])
             return True
         if not self.xibo_customer_display_display_id:
             return False
-        dg_xibo_id = self.xibo_customer_display_display_id.own_display_group_id
         if not dg_xibo_id:
             return False
         overlaid = self.xibo_customer_display_mode == 'overlay'
@@ -1094,6 +1178,7 @@ class PosConfig(models.Model):
         # schedule, and on a player that only follows its schedule, reverting
         # to one that still holds the mirror changes nothing.
         self._xibo_drop_schedule('pos-mirror-%s' % self.id)
+        self._xibo_sweep_mirror_orphans(dg_xibo_id)
         if overlaid or self.xibo_customer_display_display_id.force_schedule:
             # The player drops the overlay when it re-reads its schedule, so
             # this collect is what actually clears the screen.

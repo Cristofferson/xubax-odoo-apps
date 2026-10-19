@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_template_form_showroom" model="ir.ui.view">
+        <field name="name">product.template.form.showroom</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='options']" position="inside">
+                <span name="showroom_option" class="d-inline-flex"
+                      groups="sales_team.group_sale_manager">
+                    <field name="xb_showroom_enabled"/>
+                    <label for="xb_showroom_enabled"/>
+                </span>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- A catalogue is marked in bulk: the column toggles in place. -->
+    <record id="product_template_list_showroom" model="ir.ui.view">
+        <field name="name">product.template.list.showroom</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sale_ok']" position="after">
+                <field name="xb_showroom_enabled" widget="boolean_toggle" optional="hide"
+                       groups="sales_team.group_sale_manager"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_search_showroom" model="ir.ui.view">
+        <field name="name">product.template.search.showroom</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='services']" position="after">
+                <filter string="On the showroom wall" name="showroom_enabled"
+                        domain="[('xb_showroom_enabled', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
