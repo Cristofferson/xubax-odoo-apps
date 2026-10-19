@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_xb_va_wall" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.xb.va.wall</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="xb_self_order_assistant.res_config_settings_view_form_xb_va"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('fw-bold')][text()='Limits']" position="before">
+                <div class="fw-bold mt-3">Videowall</div>
+                <div class="row"><label for="pos_xb_va_auto_wall" string="Shows on the wall by itself" class="col-lg-4 o_light_label"/><field name="pos_xb_va_auto_wall"/></div>
+                <div class="row"><label for="pos_xb_va_follow_wall" string="Goes to the wall" class="col-lg-4 o_light_label"/><field name="pos_xb_va_follow_wall"/></div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

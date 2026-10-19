@@ -1,0 +1,1934 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_self_order_assistant
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-19 13:57+0000\n"
+"PO-Revision-Date: 2026-10-19 13:57+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+msgid ""
+"%(seller)s this week at %(kiosk)s: %(count)s conversations, %(sales)s sales"
+msgstr ""
+"%(seller)s esta semana en %(kiosk)s: %(count)s conversaciones, %(sales)s "
+"ventas"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "<i class=\"fa fa-book me-1\"/>Manual"
+msgstr "<i class=\"fa fa-book me-1\"/>Manual en inglés"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "<i class=\"fa fa-book me-1\"/>Manual (Spanish)"
+msgstr "<i class=\"fa fa-book me-1\"/>Manual"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid ""
+"A seller in the kiosk that customers talk to: it recommends your products, "
+"answers out loud and calls a person when needed."
+msgstr ""
+"Un vendedor en el kiosco con el que el cliente habla: recomienda tus "
+"productos, contesta en voz alta y llama a una persona cuando hace falta."
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.actions.act_window,help:xb_self_order_assistant.xb_va_avatar_action
+msgid ""
+"A square face picture and, for full screen, a vertical picture or short "
+"videos."
+msgstr ""
+"Una foto cuadrada de la cara y, para pantalla completa, una foto vertical o "
+"videos cortos."
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+msgid "AI cost (USD)"
+msgstr "Costo de IA (USD)"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__model_name
+msgid "AI model"
+msgstr "Modelo de IA"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "About your shop"
+msgstr "Sobre tu tienda"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__message_needaction
+msgid "Action Needed"
+msgstr "Acción requerida"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_avatar__active
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_voice__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.actions.act_window,help:xb_self_order_assistant.xb_va_avatar_action
+msgid "Add a face for your virtual seller"
+msgstr "Agrega una cara para tu vendedor virtual"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__cart_added
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_conversation_view_search
+msgid "Added to cart"
+msgstr "Agregó al carrito"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_pos_config__xb_va_continuous
+#: model:ir.model.fields,help:xb_self_order_assistant.field_res_config_settings__pos_xb_va_continuous
+msgid ""
+"After speaking, the seller listens again by itself: the customer just talks."
+msgstr ""
+"Al terminar de hablar, el vendedor vuelve a escuchar solo: el cliente solo "
+"habla."
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Alert on cash registers"
+msgstr "Alerta en las cajas"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_ho_pos
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_ho_pos
+msgid "Alert on the cash registers"
+msgstr "Alerta en las cajas"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "All"
+msgstr "Todas"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+msgid "Amount of those sales"
+msgstr "Monto de esas ventas"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.avatar,name:xb_self_order_assistant.avatar_andres
+msgid "Andrés"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Anthropic (thinks)"
+msgstr "Anthropic (piensa)"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+msgid "Appointments booked"
+msgstr "Citas agendadas"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.voice,name:xb_self_order_assistant.voice_ash
+msgid "Ash"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__handoff
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_conversation_view_search
+msgid "Asked for a person"
+msgstr "Pidió una persona"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+msgid "Asked for and not found"
+msgstr "Lo que pidieron y no había"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__message_attachment_count
+msgid "Attachment Count"
+msgstr "Número de adjuntos"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_avatar_id
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_avatar_id
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Avatar"
+msgstr "Avatar"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__pos_config__xb_va_model__claude-sonnet-5-5
+msgid "Balanced (Claude Sonnet)"
+msgstr "Equilibrado (Claude Sonnet)"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__pos_config__xb_va_sales_style__balanced
+msgid "Balanced: advises and proposes the next step"
+msgstr "Equilibrada: asesora y propone el siguiente paso"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.voice,name:xb_self_order_assistant.voice_ballad
+msgid "Ballad"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__pos_config__xb_va_model__claude-opus-5-5
+msgid "Best answers, slower (Claude Opus)"
+msgstr "Mejores respuestas, más lento (Claude Opus)"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__appointment
+msgid "Booked an appointment"
+msgstr "Agendó cita"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__pos_config__xb_va_position__left
+msgid "Bottom left"
+msgstr "Abajo a la izquierda"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__pos_config__xb_va_position__right
+msgid "Bottom right"
+msgstr "Abajo a la derecha"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.voice,description:xb_self_order_assistant.voice_coral
+msgid "Bright and cheerful"
+msgstr "Alegre y luminosa"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Button"
+msgstr "Botón"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_position
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_position
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Button position"
+msgstr "Posición del botón"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_button
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_button
+msgid "Button text"
+msgstr "Texto del botón"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__cache_read_tokens
+msgid "Cache Read Tokens"
+msgstr "Tokens leídos de caché"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__cache_write_tokens
+msgid "Cache Write Tokens"
+msgstr "Tokens escritos en caché"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Call a person from the shop"
+msgstr "Llamar a alguien de la tienda"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_handoff_label
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_handoff_label
+msgid "Call a person: button text"
+msgstr "Llamar a una persona: texto del botón"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Calling a person"
+msgstr "Llamar a una persona"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.voice,description:xb_self_order_assistant.voice_echo
+msgid "Calm and friendly"
+msgstr "Tranquila y amable"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.avatar,name:xb_self_order_assistant.avatar_camila
+msgid "Camila"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Can I help you?"
+msgstr "¿Te ayudo?"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_ho_pos_ids
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_ho_pos_ids
+msgid "Cash registers that get the alert"
+msgstr "Cajas que reciben la alerta"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.voice,name:xb_self_order_assistant.voice_cedar
+msgid "Cedar"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__voice_chars
+msgid "Characters spoken"
+msgstr "Caracteres hablados"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_ho_discuss
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_ho_discuss
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Chat in Odoo"
+msgstr "Chat en Odoo"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/controllers/main.py:0
+msgid "Check the number and try again."
+msgstr "Revisa el número e inténtalo de nuevo."
+
+#. module: xb_self_order_assistant
+#: model:xb.va.voice,description:xb_self_order_assistant.voice_ash
+msgid "Clear and confident"
+msgstr "Clara y segura"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "Close"
+msgstr "Cerrar"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_voice__code
+msgid "Code"
+msgstr "Código"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_avatar__company_id
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__company_id
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_search__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: xb_self_order_assistant
+#: model:ir.model,name:xb_self_order_assistant.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__pos_config__xb_va_sales_style__consultative
+msgid "Consultative: advises, never pushes"
+msgstr "Consultiva: asesora, nunca presiona"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_engine
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_engine
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_search__conversation_id
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_conversation_view_form
+msgid "Conversation"
+msgstr "Conversación"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+#: model:ir.ui.menu,name:xb_self_order_assistant.menu_xb_va_conversation
+msgid "Conversations"
+msgstr "Conversaciones"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.voice,name:xb_self_order_assistant.voice_coral
+msgid "Coral"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__cost_usd
+msgid "Cost (USD)"
+msgstr "Costo (USD)"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_avatar__create_uid
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__create_uid
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_search__create_uid
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_voice__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_avatar__create_date
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__create_date
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_search__create_date
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_voice__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/va_conversation.py:0
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__partner_id
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+msgid "Customer at the kiosk %s asks for a person"
+msgstr "Un cliente en el kiosco %s pide que lo atienda una persona"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__xb_va_conversation__presence__phone
+msgid "Customer's phone"
+msgstr "Celular del cliente"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Daily limit (USD)"
+msgstr "Tope diario (USD)"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_daily_limit
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_daily_limit
+msgid "Daily spending limit (USD)"
+msgstr "Tope de gasto diario (USD)"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.avatar,name:xb_self_order_assistant.avatar_daniela
+msgid "Daniela"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_conversation_view_search
+msgid "Day"
+msgstr "Día"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.voice,description:xb_self_order_assistant.voice_onyx
+msgid "Deep, serious"
+msgstr "Grave, seria"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "Delete"
+msgstr "Borrar"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Delivery in 7 days. Free engraving. We accept cards and transfers..."
+msgstr ""
+"Entrega en 7 días. Grabado gratis. Aceptamos tarjeta y transferencia..."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_pos_config__xb_va_knowledge
+#: model:ir.model.fields,help:xb_self_order_assistant.field_res_config_settings__pos_xb_va_knowledge
+msgid ""
+"Delivery times, sizes, warranties, payment methods, hours, policies... The "
+"seller only states what is written here or in the product data."
+msgstr ""
+"Tiempos de entrega, medidas, garantías, formas de pago, horarios, "
+"políticas... El vendedor solo afirma lo que esté escrito aquí o en los datos"
+" del producto."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_voice__description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.avatar,name:xb_self_order_assistant.avatar_diego
+msgid "Diego"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model:ir.model,name:xb_self_order_assistant.model_discuss_channel
+msgid "Discussion Channel"
+msgstr "Canal de conversación"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_discuss_channel__display_name
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_ir_http__display_name
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__display_name
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_order__display_name
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_avatar__display_name
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__display_name
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_search__display_name
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_voice__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__pos_config__xb_va_greet__off
+msgid "Does not greet"
+msgstr "No saluda"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.js:0
+msgid "Done! I sent it to your WhatsApp, with everything we talked about."
+msgstr "¡Listo! Te lo mandé a tu WhatsApp, con todo lo que platicamos."
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.js:0
+msgid "Done! I've let the shop know; someone will be with you in a moment."
+msgstr "¡Listo! Ya avisé a la tienda; en un momento te atienden."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_ho_email
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_ho_email
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "E-mail"
+msgstr "Correo"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_pos_config__xb_va_instructions
+#: model:ir.model.fields,help:xb_self_order_assistant.field_res_config_settings__pos_xb_va_instructions
+msgid "E.g. 'Always offer the engraving', 'Never talk about discounts'."
+msgstr "Ej.: «Ofrece siempre el grabado», «Nunca hables de descuentos»."
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.actions.act_window,help:xb_self_order_assistant.xb_va_search_action
+msgid ""
+"Each search the virtual seller makes shows here; in red, what the shop did "
+"not have."
+msgstr ""
+"Aquí aparece cada búsqueda que hace el vendedor virtual; en rojo, lo que la "
+"tienda no tenía."
+
+#. module: xb_self_order_assistant
+#: model:xb.va.voice,name:xb_self_order_assistant.voice_echo
+msgid "Echo"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_pos_config__xb_va_ho_pos_ids
+#: model:ir.model.fields,help:xb_self_order_assistant.field_res_config_settings__pos_xb_va_ho_pos_ids
+msgid "Empty = every cash register of the company."
+msgstr "Vacío = todas las cajas de la compañía."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_xb_va_avatar__company_id
+msgid "Empty = every company can use it."
+msgstr "Vacío = todas las compañías lo pueden usar."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__converted
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_conversation_view_search
+msgid "Ended in a sale"
+msgstr "Terminó en venta"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+msgid "Ended in a sale or quotation"
+msgstr "Terminó en venta o cotización"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_pos_config__xb_va_weekly_report
+#: model:ir.model.fields,help:xb_self_order_assistant.field_res_config_settings__pos_xb_va_weekly_report
+msgid ""
+"Every Monday the people who attend get the week's numbers: conversations, "
+"sales, what customers asked for and what the shop did not have."
+msgstr ""
+"Cada lunes, las personas que atienden reciben los números de la semana: "
+"conversaciones, ventas, lo que pidieron los clientes y lo que la tienda no "
+"tenía."
+
+#. module: xb_self_order_assistant
+#: model:xb.va.voice,description:xb_self_order_assistant.voice_ballad
+msgid "Expressive, elegant"
+msgstr "Expresiva, elegante"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_instructions
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_instructions
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Extra rules"
+msgstr "Reglas extra"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_avatar_face
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_avatar__image
+msgid "Face"
+msgstr "Cara"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__pos_config__xb_va_model__claude-haiku-5-5
+msgid "Fast and cheap (Claude Haiku)"
+msgstr "Rápido y económico (Claude Haiku)"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (contactos)"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_search__found
+msgid "Found"
+msgstr "Encontrado"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/va_conversation.py:0
+msgid "From %s"
+msgstr "Desde %s"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "Full screen"
+msgstr "Pantalla completa"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_avatar__image_full
+msgid "Full screen picture"
+msgstr "Foto de pantalla completa"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_avatar__gender
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_voice__gender
+msgid "Gender"
+msgstr "Género"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_greeting
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_greeting
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Greeting"
+msgstr "Saludo"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_greet_text
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_greet_text
+msgid "Greeting when someone comes close"
+msgstr "Saludo cuando alguien se acerca"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__pos_config__xb_va_greet__voice
+msgid "Greets out loud and waves"
+msgstr "Saluda en voz alta y hace señas"
+
+#. module: xb_self_order_assistant
+#: model:ir.model,name:xb_self_order_assistant.model_ir_http
+msgid "HTTP Routing"
+msgstr "Enrutamiento HTTP"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Hands-free"
+msgstr "Manos libres"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_continuous
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_continuous
+msgid "Hands-free conversation"
+msgstr "Conversación manos libres"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__has_message
+msgid "Has Message"
+msgstr "Tiene mensaje"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Hear the voice"
+msgstr "Escuchar la voz"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/controllers/main.py:0
+msgid "Here I am, on your phone. We can keep talking."
+msgstr "Aquí estoy, en tu celular. Podemos seguir platicando."
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+msgid "Hi! I'm %s. Can I help you find something special?"
+msgstr "¡Hola! Soy %s. ¿Te ayudo a encontrar algo especial?"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Hi! I'm Sofía. Can I help you find something special?"
+msgstr "¡Hola! Soy Sofía. ¿Te ayudo a encontrar algo especial?"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+msgid "Hi, I'm %s. What are you looking for today?"
+msgstr "Hola, soy %s. ¿Qué estás buscando hoy?"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Hi, I'm Sofía. What are you looking for today?"
+msgstr "Hola, soy Sofía. ¿Qué estás buscando hoy?"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_pos_config__xb_va_voice_style
+#: model:ir.model.fields,help:xb_self_order_assistant.field_res_config_settings__pos_xb_va_voice_style
+msgid "How the voice sounds: accent, pace, mood."
+msgstr "Cómo suena la voz: acento, ritmo, ánimo."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_name_say
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_name_say
+msgid "How to say the name"
+msgstr "Cómo se pronuncia"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/controllers/main.py:0
+msgid "I can't attend right now; please ask at the counter."
+msgstr "Por ahora no puedo atenderte; pregunta en el mostrador, por favor."
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.js:0
+msgid "I can't use the microphone. You can type your question."
+msgstr "No puedo usar el micrófono. Puedes escribir tu pregunta."
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.js:0
+msgid "I didn't hear you well. Can you say it again?"
+msgstr "No te escuché bien. ¿Me lo repites?"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "I'm listening, go ahead"
+msgstr "Te escucho, adelante"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "I'm on your phone now"
+msgstr "Ya estoy en tu celular"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_discuss_channel__id
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_ir_http__id
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__id
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_order__id
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__id
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_avatar__id
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__id
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_search__id
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_voice__id
+msgid "ID"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_xb_va_conversation__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcado, hay mensajes nuevos que requieren tu atención."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_xb_va_conversation__message_has_error
+#: model:ir.model.fields,help:xb_self_order_assistant.field_xb_va_conversation__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si está marcado, algunos mensajes tienen error de entrega."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__input_tokens
+msgid "Input Tokens"
+msgstr "Tokens de entrada"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__pos_config__xb_va_engine__realtime
+msgid "Instant conversation (live voice)"
+msgstr "Conversación instantánea (voz en vivo)"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_pos_config__xb_va_engine
+#: model:ir.model.fields,help:xb_self_order_assistant.field_res_config_settings__pos_xb_va_engine
+msgid ""
+"Instant: answers in about a second and can be interrupted, like a person "
+"(OpenAI Realtime). Step by step: waits until the customer finishes, then "
+"thinks and answers."
+msgstr ""
+"Instantánea: contesta en cerca de un segundo y se le puede interrumpir, como"
+" a una persona (OpenAI Realtime). Paso a paso: espera a que el cliente "
+"termine, luego piensa y contesta."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_model
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_model
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Intelligence"
+msgstr "Inteligencia"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__message_is_follower
+msgid "Is Follower"
+msgstr "Es seguidor"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.js:0
+msgid "It could not be sent."
+msgstr "No se pudo enviar."
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/controllers/main.py:0
+msgid "It could not be sent. Please ask at the counter."
+msgstr "No se pudo enviar. Por favor pregunta en el mostrador."
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Keys (all kiosks)"
+msgstr "Llaves (todos los kioscos)"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__config_id
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_search__config_id
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__xb_va_conversation__presence__kiosk
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_conversation_view_search
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_search_view_search
+msgid "Kiosk"
+msgstr "Kiosco"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/va_conversation.py:0
+msgid "Kiosk customer %s"
+msgstr "Cliente del kiosco %s"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_search_view_search
+msgid "Last 30 days"
+msgstr "Últimos 30 días"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_conversation_view_search
+msgid "Last 7 days"
+msgstr "Últimos 7 días"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_avatar__write_uid
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__write_uid
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_search__write_uid
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_voice__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_avatar__write_date
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__write_date
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_search__write_date
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_voice__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__last_dt
+msgid "Last message"
+msgstr "Último mensaje"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/va_conversation.py:0
+msgid "Let me call a person from the shop to help you better."
+msgstr "Déjame llamar a alguien de la tienda para ayudarte mejor."
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Limits"
+msgstr "Límites"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_tap_url
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_tap_url
+msgid "Link for the kiosk's NFC sticker"
+msgstr "Liga para la etiqueta NFC del kiosco"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#. odoo-python
+#: code:addons/xb_self_order_assistant/controllers/main.py:0
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "Listening…"
+msgstr "Escuchando…"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_listen
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_listen
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Listens (microphone)"
+msgstr "Escucha (micrófono)"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__rt_audio_in
+msgid "Live audio in (tokens)"
+msgstr "Audio en vivo recibido (tokens)"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__rt_audio_out
+msgid "Live audio out (tokens)"
+msgstr "Audio en vivo enviado (tokens)"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__rt_cached_in
+msgid "Live cached in (tokens)"
+msgstr "Entrada en caché en vivo (tokens)"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Live voice"
+msgstr "Voz en vivo"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_rt_model
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_rt_model
+msgid "Live voice model"
+msgstr "Modelo de voz en vivo"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__pos_config__xb_va_rt_model__gpt-realtime-2_1
+msgid "Live voice, best answers"
+msgstr "Voz en vivo, mejores respuestas"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__pos_config__xb_va_rt_model__gpt-realtime-2_1-mini
+msgid "Live voice, fast and cheap"
+msgstr "Voz en vivo, rápida y económica"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.avatar,name:xb_self_order_assistant.avatar_lucia
+msgid "Lucía"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__pos_config__xb_va_gender__male
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__xb_va_avatar__gender__male
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__xb_va_voice__gender__male
+msgid "Man"
+msgstr "Hombre"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.avatar,name:xb_self_order_assistant.avatar_mariana
+msgid "Mariana"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model:xb.va.voice,name:xb_self_order_assistant.voice_marin
+msgid "Marin"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model:xb.va.avatar,name:xb_self_order_assistant.avatar_mateo
+msgid "Mateo"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__message_has_error
+msgid "Message Delivery error"
+msgstr "Error de entrega del mensaje"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__messages_json
+msgid "Messages Json"
+msgstr "Mensajes (JSON)"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__mobile_expires
+msgid "Mobile Expires"
+msgstr "Vence en el celular"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__mobile_token
+msgid "Mobile Token"
+msgstr "Llave del celular"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+msgid "Most shown products"
+msgstr "Productos más mostrados"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_avatar_view_form
+msgid "Movement (optional)"
+msgstr "Movimiento (opcional)"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_avatar_view_kanban
+msgid "Moves (video)"
+msgstr "Se mueve (video)"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "NFC sticker link"
+msgstr "Liga de la etiqueta NFC"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_avatar__name
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__name
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_voice__name
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Name"
+msgstr "Nombre"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.voice,description:xb_self_order_assistant.voice_cedar
+#: model:xb.va.voice,description:xb_self_order_assistant.voice_marin
+msgid "Natural, conversational"
+msgstr "Natural, de conversación"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.actions.act_window,help:xb_self_order_assistant.xb_va_conversation_action
+msgid "No conversations yet"
+msgstr "Todavía no hay conversaciones"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+msgid "No summary."
+msgstr "Sin resumen."
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_search_view_search
+msgid "Not found (what the shop lacks)"
+msgstr "No encontrado (lo que le falta a la tienda)"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.actions.act_window,help:xb_self_order_assistant.xb_va_search_action
+msgid "Nothing asked yet"
+msgstr "Todavía no han pedido nada"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.voice,name:xb_self_order_assistant.voice_nova
+msgid "Nova"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de acciones"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de errores"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_xb_va_conversation__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Mensajes que requieren acción"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_xb_va_conversation__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Mensajes con error de entrega"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_pos_config__xb_va_name_say
+#: model:ir.model.fields,help:xb_self_order_assistant.field_res_config_settings__pos_xb_va_name_say
+msgid ""
+"Only for the voice, when the name is written in a special way (e.g. AnelIA "
+"is said Anelia)."
+msgstr ""
+"Solo para la voz, cuando el nombre se escribe de forma especial (p. ej. "
+"AnelIA se dice Anelia)."
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Only if it is written in a special way"
+msgstr "Solo si se escribe de forma especial"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.voice,name:xb_self_order_assistant.voice_onyx
+msgid "Onyx"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "Open the conversation"
+msgstr "Abrir la conversación"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "OpenAI (listens, speaks)"
+msgstr "OpenAI (escucha y habla)"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__pos_config__xb_va_greet__open
+msgid "Opens full screen and starts talking"
+msgstr "Se abre a pantalla completa y empieza a platicar"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/controllers/main.py:0
+msgid "Our conversation"
+msgstr "Nuestra conversación"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__output_tokens
+msgid "Output Tokens"
+msgstr "Tokens de salida"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_ho_user_ids
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_ho_user_ids
+msgid "People who attend"
+msgstr "Personas que atienden"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__phone
+msgid "Phone"
+msgstr "Teléfono"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.js:0
+msgid "Please go to the counter, they will help you there."
+msgstr "Por favor pasa al mostrador, ahí te atienden."
+
+#. module: xb_self_order_assistant
+#: model:ir.model,name:xb_self_order_assistant.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr "Configuración del punto de venta"
+
+#. module: xb_self_order_assistant
+#: model:ir.model,name:xb_self_order_assistant.model_pos_order
+msgid "Point of Sale Orders"
+msgstr "Pedidos del punto de venta"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__product_ids
+msgid "Products shown"
+msgstr "Productos mostrados"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+msgid "Products shown: %s"
+msgstr "Productos mostrados: %s"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "QR"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_conversation_view_form
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_conversation_view_list
+msgid "Questions"
+msgstr "Preguntas"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+msgid "Questions answered"
+msgstr "Preguntas contestadas"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__rating_ids
+msgid "Ratings"
+msgstr "Calificaciones"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.js:0
+msgid "Read at the kiosk"
+msgstr "Leído en el kiosco"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_scan
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_scan
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Reads cards and barcodes"
+msgstr "Lee tarjetas y códigos de barras"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.avatar,name:xb_self_order_assistant.avatar_renata
+msgid "Renata"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Restart after (s)"
+msgstr "Reiniciar tras (s)"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_idle_seconds
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_idle_seconds
+msgid "Restart after (seconds without use)"
+msgstr "Reiniciar tras (segundos sin uso)"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_search__results
+msgid "Results"
+msgstr "Resultados"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.avatar,name:xb_self_order_assistant.avatar_roberto
+msgid "Roberto"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Error de entrega de SMS"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.voice,name:xb_self_order_assistant.voice_sage
+msgid "Sage"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_conversation_view_search
+msgid "Said"
+msgstr "Dijo"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Said as"
+msgstr "Se dice"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__pos_order_id
+msgid "Sale"
+msgstr "Venta"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__sale_amount
+msgid "Sale amount"
+msgstr "Monto de la venta"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__sale_ref
+msgid "Sale or quotation"
+msgstr "Venta o cotización"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__pos_config__xb_va_sales_style__assertive
+msgid "Sales-driven: shows, highlights and closes"
+msgstr "Comercial: muestra, resalta y cierra la venta"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "Scan it with your phone's camera and we keep talking there."
+msgstr "Escanéalo con la cámara de tu celular y ahí seguimos platicando."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_search__text
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_search_view_search
+msgid "Searched"
+msgstr "Buscó"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__search_ids
+msgid "Searches"
+msgstr "Búsquedas"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__listen_seconds
+msgid "Seconds listened"
+msgstr "Segundos escuchados"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "See all the avatars"
+msgstr "Ver todos los avatares"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/picks.xml:0
+msgid "See everything"
+msgstr "Ver todo"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/controllers/main.py:0
+msgid "See it"
+msgstr "Verlo"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "See you there!"
+msgstr "¡Ahí nos vemos!"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__share_url
+msgid "Selection page"
+msgstr "Página de la selección"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_gender
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_gender
+msgid "Seller is a"
+msgstr "Es"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_name
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_name
+msgid "Seller name"
+msgstr "Nombre"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#. odoo-python
+#: code:addons/xb_self_order_assistant/controllers/main.py:0
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "Send"
+msgstr "Enviar"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "Send it to my WhatsApp"
+msgstr "Enviármelo por WhatsApp"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+msgid "Sent by WhatsApp"
+msgstr "Enviado por WhatsApp"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__shared
+msgid "Sent to the customer"
+msgstr "Enviado al cliente"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_avatar__sequence
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_voice__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.voice,description:xb_self_order_assistant.voice_sage
+msgid "Serene, elegant"
+msgstr "Serena, elegante"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__share_token
+msgid "Share Token"
+msgstr "Token para compartir"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.voice,name:xb_self_order_assistant.voice_shimmer
+msgid "Shimmer"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_xb_va_avatar__video_idle
+msgid ""
+"Short MP4 loop of the person listening (breathing, blinking, smiling). "
+"Optional."
+msgstr ""
+"Video MP4 corto en bucle de la persona escuchando (respira, parpadea, "
+"sonríe). Opcional."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_xb_va_avatar__video_talk
+msgid ""
+"Short MP4 loop of the person talking. Played while the seller speaks. "
+"Optional."
+msgstr ""
+"Video MP4 corto en bucle de la persona hablando. Se reproduce mientras el "
+"vendedor habla. Opcional."
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+msgid "Showed products"
+msgstr "Mostró productos"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.voice,description:xb_self_order_assistant.voice_shimmer
+msgid "Soft and calm"
+msgstr "Suave y tranquila"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+#: model:xb.va.avatar,name:xb_self_order_assistant.avatar_sofia
+msgid "Sofía"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Someone comes close"
+msgstr "Alguien se acerca"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#. odoo-python
+#: code:addons/xb_self_order_assistant/controllers/main.py:0
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.js:0
+msgid "Sorry, I can't talk right now. You can write your question."
+msgstr "Perdón, ahorita no puedo hablar. Puedes escribir tu pregunta."
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/controllers/main.py:0
+msgid "Sorry, I had a problem. Can you repeat it?"
+msgstr "Perdón, tuve un problema. ¿Me lo repites?"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.js:0
+msgid "Sorry, I lost the connection. Can you try again?"
+msgstr "Perdón, se perdió la conexión. ¿Lo intentas de nuevo?"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/va_conversation.py:0
+msgid "Sorry, can you say that again?"
+msgstr "Perdón, ¿me lo repites?"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#. odoo-python
+#: code:addons/xb_self_order_assistant/controllers/main.py:0
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "Speaking…"
+msgstr "Hablando…"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_speak
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_speak
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Speaks its answers"
+msgstr "Dice sus respuestas en voz alta"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_res_config_settings__pos_xb_va_avatar_face
+#: model:ir.model.fields,help:xb_self_order_assistant.field_xb_va_avatar__image
+msgid "Square, face centered: shown in the round button and the chat."
+msgstr ""
+"Cuadrada, con la cara al centro: se ve en el botón redondo y en el chat."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_start_full
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_start_full
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Start full screen"
+msgstr "Iniciar a pantalla completa"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_conversation_view_form
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_conversation_view_list
+msgid "Started"
+msgstr "Inicio"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__pos_config__xb_va_engine__classic
+msgid "Step by step (listens, thinks, answers)"
+msgstr "Paso a paso (escucha, piensa y contesta)"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Take it to the phone"
+msgstr "Llevarlo al celular"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "Take me on your phone"
+msgstr "Llévame en tu celular"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "Talk"
+msgstr "Hablar"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "Tap the microphone and talk"
+msgstr "Toca el micrófono y habla"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/controllers/main.py:0
+msgid "Tap to talk"
+msgstr "Toca para hablar"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/controllers/main.py:0
+msgid "The customer pressed the button to call a person."
+msgstr "El cliente tocó el botón para llamar a una persona."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_pos_config__xb_va_avatar_id
+#: model:ir.model.fields,help:xb_self_order_assistant.field_res_config_settings__pos_xb_va_avatar_id
+msgid "The face of the seller. Empty = a round light."
+msgstr "La cara del vendedor. Vacío = una esfera de luz."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__pos_config__xb_va_rt_voice__live
+msgid "The live model's own voice (fastest, can be interrupted)"
+msgstr ""
+"La voz propia del modelo en vivo (la más rápida, se le puede interrumpir)"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_pos_config__xb_va_rt_voice
+#: model:ir.model.fields,help:xb_self_order_assistant.field_res_config_settings__pos_xb_va_rt_voice
+msgid ""
+"The live model's own voice keeps an English accent in other languages. With "
+"the adjustable voice the seller still listens and thinks live, and speaks "
+"with the chosen voice and accent."
+msgstr ""
+"La voz propia del modelo en vivo conserva acento en inglés en otros idiomas."
+" Con la voz ajustable, el vendedor sigue escuchando y pensando en vivo, y "
+"habla con la voz y el acento elegidos."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_pos_config__xb_va_start_full
+#: model:ir.model.fields,help:xb_self_order_assistant.field_res_config_settings__pos_xb_va_start_full
+msgid ""
+"The seller fills the screen when the customer opens it, like talking to a "
+"person."
+msgstr ""
+"Al abrirlo, el vendedor ocupa toda la pantalla, como platicar con una "
+"persona."
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "The shop has been notified"
+msgstr "Ya avisamos a la tienda"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#. odoo-python
+#: code:addons/xb_self_order_assistant/controllers/main.py:0
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "Thinking…"
+msgstr "Pensando…"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_conversation_view_search
+msgid "Today"
+msgstr "Hoy"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__token
+msgid "Token"
+msgstr "Token"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+msgid "Took it to their phone"
+msgstr "Se lo llevó a su celular"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_conversation_view_list
+msgid "Total"
+msgstr "Total"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__transcript
+msgid "Transcript"
+msgstr "Conversación"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.actions.act_window,help:xb_self_order_assistant.xb_va_conversation_action
+msgid "Turn on the virtual seller in a kiosk's settings."
+msgstr "Activa el vendedor virtual en los ajustes de un kiosco."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__turns
+msgid "Turns"
+msgstr "Turnos"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_search__price_max
+msgid "Up to (price)"
+msgstr "Hasta (precio)"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_pos_config__xb_va_greet
+#: model:ir.model.fields,help:xb_self_order_assistant.field_res_config_settings__pos_xb_va_greet
+msgid ""
+"Uses the kiosk camera (Analitix if it is installed, else a simple movement "
+"detector; no picture is kept) to notice someone standing in front of the "
+"kiosk."
+msgstr ""
+"Usa la cámara del kiosco (la de Analitix si está instalada; si no, un "
+"detector de movimiento sencillo; no se guarda ninguna imagen) para notar que"
+" alguien se paró frente al kiosco."
+
+#. module: xb_self_order_assistant
+#: model:xb.va.avatar,name:xb_self_order_assistant.avatar_valeria
+msgid "Valeria"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_xb_va_avatar__image_full
+msgid ""
+"Vertical, from the head to the waist: shown when the seller fills the "
+"screen."
+msgstr ""
+"Vertical, de la cabeza a la cintura: se ve cuando el vendedor ocupa la "
+"pantalla."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_avatar__video_idle
+msgid "Video: listening"
+msgstr "Video: escuchando"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_avatar__video_talk
+msgid "Video: talking"
+msgstr "Video: hablando"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_avatar_view_form
+msgid ""
+"Videos: MP4, vertical, a few seconds, the same framing as the full screen "
+"picture, so that one loops into the other."
+msgstr ""
+"Videos: MP4, verticales, de pocos segundos y con el mismo encuadre que la "
+"foto de pantalla completa, para que uno pase al otro sin cortes."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__xb_va_conversation__presence__wall
+msgid "Videowall"
+msgstr "Videowall"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+#: model:ir.actions.act_window,name:xb_self_order_assistant.xb_va_conversation_action
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_enabled
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_enabled
+#: model:ir.ui.menu,name:xb_self_order_assistant.menu_xb_va_root
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_conversation_view_graph
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_conversation_view_pivot
+msgid "Virtual seller"
+msgstr "Vendedor virtual"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Virtual seller (AI)"
+msgstr "Vendedor virtual (IA)"
+
+#. module: xb_self_order_assistant
+#: model:ir.model,name:xb_self_order_assistant.model_xb_va_avatar
+msgid "Virtual seller avatar"
+msgstr "Avatar del vendedor virtual"
+
+#. module: xb_self_order_assistant
+#: model:ir.actions.act_window,name:xb_self_order_assistant.xb_va_avatar_action
+#: model:ir.ui.menu,name:xb_self_order_assistant.menu_xb_va_avatar
+msgid "Virtual seller avatars"
+msgstr "Avatares del vendedor virtual"
+
+#. module: xb_self_order_assistant
+#: model:ir.model,name:xb_self_order_assistant.model_xb_va_conversation
+msgid "Virtual seller conversation"
+msgstr "Conversación del vendedor virtual"
+
+#. module: xb_self_order_assistant
+#: model:ir.model,name:xb_self_order_assistant.model_xb_va_search
+msgid "Virtual seller search"
+msgstr "Búsqueda del vendedor virtual"
+
+#. module: xb_self_order_assistant
+#: model:ir.model,name:xb_self_order_assistant.model_xb_va_voice
+msgid "Virtual seller voice"
+msgstr "Voz del vendedor virtual"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/models/pos_config.py:0
+msgid "Virtual seller · %s"
+msgstr "Vendedor virtual · %s"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__xb_va_anthropic_key
+msgid "Virtual seller: Anthropic key"
+msgstr "Vendedor virtual: llave de Anthropic"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__xb_va_openai_key
+msgid "Virtual seller: OpenAI key"
+msgstr "Vendedor virtual: llave de OpenAI"
+
+#. module: xb_self_order_assistant
+#: model:ir.actions.server,name:xb_self_order_assistant.ir_cron_xb_va_weekly_digest_ir_actions_server
+msgid "Virtual seller: weekly summary"
+msgstr "Vendedor virtual: resumen semanal"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_voice_id
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_voice_id
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Voice"
+msgstr "Voz"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_rt_voice
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_rt_voice
+msgid "Voice in instant conversation"
+msgstr "Voz en la conversación instantánea"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_xb_va_voice__code
+msgid "Voice name at OpenAI, e.g. nova."
+msgstr "Nombre de la voz en OpenAI, p. ej. nova."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__pos_config__xb_va_rt_voice__tts
+msgid "Voice with adjustable accent (recommended for Spanish)"
+msgstr "Voz con acento ajustable (recomendada en español)"
+
+#. module: xb_self_order_assistant
+#: model:xb.va.voice,description:xb_self_order_assistant.voice_nova
+msgid "Warm and friendly"
+msgstr "Cálida y amable"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_sales_style
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_sales_style
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Way of selling"
+msgstr "Forma de vender"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_voice_style
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_voice_style
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Way of speaking"
+msgstr "Forma de hablar"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "We'll send you what you saw and our conversation."
+msgstr "Te mandamos lo que viste y nuestra conversación."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes del sitio web"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_xb_va_conversation__website_message_ids
+msgid "Website communication history"
+msgstr "Historial de comunicación del sitio web"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Weekly summary"
+msgstr "Resumen semanal"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_weekly_report
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_weekly_report
+msgid "Weekly summary by e-mail"
+msgstr "Resumen semanal por correo"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__went_phone
+msgid "Went to the phone"
+msgstr "Se fue al celular"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__went_wall
+msgid "Went to the wall"
+msgstr "Se fue al muro"
+
+#. module: xb_self_order_assistant
+#: model:ir.actions.act_window,name:xb_self_order_assistant.xb_va_search_action
+#: model:ir.ui.menu,name:xb_self_order_assistant.menu_xb_va_search
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_search_view_pivot
+msgid "What customers asked for"
+msgstr "Lo que pidieron los clientes"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_knowledge
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_knowledge
+msgid "What it knows about your shop"
+msgstr "Lo que sabe de tu tienda"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "What it says and knows"
+msgstr "Qué dice y qué sabe"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/controllers/main.py:0
+msgid "What you saw with %s at our kiosk."
+msgstr "Lo que viste con %s en nuestro kiosco."
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_search_view_list
+msgid "When"
+msgstr "Cuándo"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_pos_config__xb_va_daily_limit
+#: model:ir.model.fields,help:xb_self_order_assistant.field_res_config_settings__pos_xb_va_daily_limit
+msgid "When reached, the button hides until the next day. 0 = no limit."
+msgstr ""
+"Al llegar al tope, el botón se oculta hasta el día siguiente. 0 = sin tope."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_pos_config__xb_va_greet
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_res_config_settings__pos_xb_va_greet
+msgid "When someone comes close"
+msgstr "Cuando alguien se acerca"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_pos_config__xb_va_scan
+#: model:ir.model.fields,help:xb_self_order_assistant.field_res_config_settings__pos_xb_va_scan
+msgid ""
+"When the customer brings a card (NFC) or a barcode to the kiosk reader, the "
+"seller recognizes the product and talks about it."
+msgstr ""
+"Cuando el cliente acerca una tarjeta (NFC) o un código de barras al lector "
+"del kiosco, el vendedor reconoce el producto y le cuenta de él."
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_xb_va_conversation__presence
+msgid "Where the seller is"
+msgstr "Dónde está el vendedor"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Which registers"
+msgstr "Qué cajas"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Who attends"
+msgstr "Quién atiende"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Who it is"
+msgstr "Quién es"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__pos_config__xb_va_gender__female
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__xb_va_avatar__gender__female
+#: model:ir.model.fields.selection,name:xb_self_order_assistant.selection__xb_va_voice__gender__female
+msgid "Woman"
+msgstr "Mujer"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid "Woman or man"
+msgstr "Mujer u hombre"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "Write"
+msgstr "Escribir"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,help:xb_self_order_assistant.field_pos_config__xb_va_tap_url
+#: model:ir.model.fields,help:xb_self_order_assistant.field_res_config_settings__pos_xb_va_tap_url
+msgid ""
+"Write it on an NFC sticker on the kiosk (e.g. with the free app NFC Tools): "
+"when the customer brings their phone close, the seller moves to their phone "
+"with the whole conversation."
+msgstr ""
+"Grábala en una etiqueta NFC pegada en el kiosco (por ejemplo con la app "
+"gratuita NFC Tools): cuando el cliente acerca su celular, el vendedor se "
+"pasa a su celular con toda la conversación."
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.res_config_settings_view_form_xb_va
+msgid ""
+"Write it on an NFC sticker on the kiosk: bringing the phone close takes the "
+"seller there."
+msgstr ""
+"Grábala en una etiqueta NFC en el kiosco: al acercar el celular, el vendedor"
+" se pasa a él."
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.js:0
+msgid "Write your full mobile number."
+msgstr "Escribe tu celular completo."
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#. odoo-python
+#: code:addons/xb_self_order_assistant/controllers/main.py:0
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "Write your question…"
+msgstr "Escribe tu pregunta…"
+
+#. module: xb_self_order_assistant
+#: model:ir.model.fields,field_description:xb_self_order_assistant.field_discuss_channel__xb_va_config_id
+msgid "Xb Va Config"
+msgstr ""
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/assistant.xml:0
+msgid "Your WhatsApp number"
+msgstr "Tu número de WhatsApp"
+
+#. module: xb_self_order_assistant
+#. odoo-python
+#: code:addons/xb_self_order_assistant/controllers/main.py:0
+msgid "Your selection"
+msgstr "Tu selección"
+
+#. module: xb_self_order_assistant
+#: model_terms:ir.ui.view,arch_db:xb_self_order_assistant.xb_va_avatar_view_form
+msgid "e.g. Sofía"
+msgstr "p. ej. Sofía"
+
+#. module: xb_self_order_assistant
+#. odoo-javascript
+#: code:addons/xb_self_order_assistant/static/src/app/picks.xml:0
+msgid "selected for you"
+msgstr "seleccionados para ti"

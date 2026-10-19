@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="xb_va_conversation_view_list" model="ir.ui.view">
+        <field name="name">xb.va.conversation.list</field>
+        <field name="model">xb.va.conversation</field>
+        <field name="arch" type="xml">
+            <list create="false" decoration-warning="handoff">
+                <field name="create_date" string="Started"/>
+                <field name="config_id"/>
+                <field name="turns" string="Questions"/>
+                <field name="product_ids" widget="many2many_tags" optional="show"/>
+                <field name="handoff" optional="show"/>
+                <field name="cart_added" optional="show"/>
+                <field name="appointment" optional="hide"/>
+                <field name="went_phone" optional="hide"/>
+                <field name="converted" optional="show"/>
+                <field name="sale_ref" optional="show"/>
+                <field name="sale_amount" sum="Total" optional="show"/>
+                <field name="cost_usd" sum="Total" optional="show"/>
+            </list>
+        </field>
+    </record>
+    <record id="xb_va_conversation_view_form" model="ir.ui.view">
+        <field name="name">xb.va.conversation.form</field>
+        <field name="model">xb.va.conversation</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="config_id"/>
+                            <field name="create_date" string="Started"/>
+                            <field name="last_dt"/>
+                            <field name="handoff"/>
+                            <field name="converted"/>
+                            <field name="sale_ref" invisible="not converted"/>
+                            <field name="sale_amount" invisible="not converted"/>
+                        </group>
+                        <group>
+                            <field name="turns" string="Questions"/>
+                            <field name="model_name"/>
+                            <field name="cost_usd"/>
+                        </group>
+                    </group>
+                    <field name="product_ids" widget="many2many_tags"/>
+                    <separator string="Conversation"/>
+                    <field name="transcript" nolabel="1"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="xb_va_conversation_view_search" model="ir.ui.view">
+        <field name="name">xb.va.conversation.search</field>
+        <field name="model">xb.va.conversation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="transcript" string="Said"/>
+                <field name="product_ids"/>
+                <field name="config_id"/>
+                <filter name="handoff" string="Asked for a person" domain="[('handoff', '=', True)]"/>
+                <filter name="converted" string="Ended in a sale" domain="[('converted', '=', True)]"/>
+                <filter name="cart" string="Added to cart" domain="[('cart_added', '=', True)]"/>
+                <separator/>
+                <filter name="last_7" string="Last 7 days" domain="[('create_date', '&gt;=', 'today -7d')]"/>
+                <filter name="today" string="Today" domain="[('create_date', '&gt;=', 'today')]"/>
+                <group>
+                    <filter name="by_kiosk" string="Kiosk" context="{'group_by': 'config_id'}"/>
+                    <filter name="by_day" string="Day" context="{'group_by': 'create_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="xb_va_conversation_view_graph" model="ir.ui.view">
+        <field name="name">xb.va.conversation.graph</field>
+        <field name="model">xb.va.conversation</field>
+        <field name="arch" type="xml">
+            <graph string="Virtual seller" type="bar" sample="1">
+                <field name="create_date" interval="day"/>
+                <field name="converted"/>
+            </graph>
+        </field>
+    </record>
+    <record id="xb_va_conversation_view_pivot" model="ir.ui.view">
+        <field name="name">xb.va.conversation.pivot</field>
+        <field name="model">xb.va.conversation</field>
+        <field name="arch" type="xml">
+            <pivot string="Virtual seller" sample="1">
+                <field name="create_date" interval="week" type="row"/>
+                <field name="converted" type="col"/>
+                <field name="sale_amount" type="measure"/>
+                <field name="turns" type="measure"/>
+                <field name="cost_usd" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="xb_va_search_view_list" model="ir.ui.view">
+        <field name="name">xb.va.search.list</field>
+        <field name="model">xb.va.search</field>
+        <field name="arch" type="xml">
+            <list create="false" edit="false" decoration-danger="not found">
+                <field name="create_date" string="When"/>
+                <field name="config_id"/>
+                <field name="text"/>
+                <field name="price_max" optional="show"/>
+                <field name="results"/>
+                <field name="found" column_invisible="1"/>
+                <field name="conversation_id" optional="hide"/>
+            </list>
+        </field>
+    </record>
+    <record id="xb_va_search_view_pivot" model="ir.ui.view">
+        <field name="name">xb.va.search.pivot</field>
+        <field name="model">xb.va.search</field>
+        <field name="arch" type="xml">
+            <pivot string="What customers asked for">
+                <field name="text" type="row"/>
+                <field name="found" type="col"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="xb_va_search_view_search" model="ir.ui.view">
+        <field name="name">xb.va.search.search</field>
+        <field name="model">xb.va.search</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="text"/>
+                <field name="config_id"/>
+                <filter name="not_found" string="Not found (what the shop lacks)" domain="[('found', '=', False)]"/>
+                <filter name="last_30" string="Last 30 days" domain="[('create_date', '&gt;=', 'today -30d')]"/>
+                <group>
+                    <filter name="by_text" string="Searched" context="{'group_by': 'text'}"/>
+                    <filter name="by_kiosk" string="Kiosk" context="{'group_by': 'config_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="xb_va_search_action" model="ir.actions.act_window">
+        <field name="name">What customers asked for</field>
+        <field name="res_model">xb.va.search</field>
+        <field name="view_mode">list,pivot</field>
+        <field name="context">{'search_default_last_30': 1}</field>
+        <field name="help" type="html"><p class="o_view_nocontent_smiling_face">Nothing asked yet</p><p>Each search the virtual seller makes shows here; in red, what the shop did not have.</p></field>
+    </record>
+    <record id="xb_va_conversation_action" model="ir.actions.act_window">
+        <field name="name">Virtual seller</field>
+        <field name="res_model">xb.va.conversation</field>
+        <field name="view_mode">list,graph,pivot,form</field>
+        <field name="help" type="html"><p class="o_view_nocontent_smiling_face">No conversations yet</p><p>Turn on the virtual seller in a kiosk's settings.</p></field>
+    </record>
+    <menuitem id="menu_xb_va_root" name="Virtual seller" parent="point_of_sale.menu_point_rep" sequence="40"
+              groups="point_of_sale.group_pos_manager"/>
+    <menuitem id="menu_xb_va_conversation" name="Conversations" action="xb_va_conversation_action"
+              parent="menu_xb_va_root" sequence="1"/>
+    <menuitem id="menu_xb_va_search" name="What customers asked for" action="xb_va_search_action"
+              parent="menu_xb_va_root" sequence="2"/>
+</odoo>

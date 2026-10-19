@@ -1,0 +1,440 @@
+// XUBAX - Virtual seller in the self-order kiosk.
+$xb-va-ink: #1d1d1f;
+$xb-va-accent: var(--xb-bq-primary, #1B2580);
+
+.xb-va-orb {
+    display: inline-block;
+    flex: none;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 32%, #f3f7b0, #d9e021 42%, $xb-va-accent 100%);
+    box-shadow: 0 0 0 0 rgba(217, 224, 33, 0.6);
+    transition: transform 0.2s;
+    &.xb-va-talking { animation: xb-va-talk 0.5s ease-in-out infinite alternate; }
+    &.xb-va-listening { animation: xb-va-listen 1.2s ease-out infinite; }
+    &.xb-va-thinking { animation: xb-va-pulse 1.2s ease-out infinite; }
+}
+@keyframes xb-va-talk { from { transform: scale(0.94); } to { transform: scale(1.08); } }
+@keyframes xb-va-listen { 0% { box-shadow: 0 0 0 0 rgba(229, 72, 77, 0.6); } 100% { box-shadow: 0 0 0 0.9rem rgba(229, 72, 77, 0); } }
+@keyframes xb-va-pulse { 0% { box-shadow: 0 0 0 0 rgba(217, 224, 33, 0.7); } 100% { box-shadow: 0 0 0 1.1rem rgba(217, 224, 33, 0); } }
+
+.xb-va-avatar {
+    object-fit: cover;
+    background: #fff;
+    border: 2px solid #fff;
+}
+
+.xb-va-fab {
+    position: fixed;
+    right: 1.4rem;
+    bottom: 7.5rem;
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.5rem 1.4rem 0.5rem 0.5rem;
+    border: 0;
+    border-radius: 999px;
+    background: #fff;
+    color: $xb-va-ink;
+    font-size: 1.25rem;
+    font-weight: 600;
+    box-shadow: 0 0.6rem 1.8rem rgba(0, 0, 0, 0.18);
+    .xb-va-orb { animation: xb-va-pulse 2.4s ease-out infinite; }
+    &.xb-va-fab-high { bottom: 13rem; }
+    &.xb-va-fab-left { right: auto; left: 1.4rem; }
+}
+
+.xb-va-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1060;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.35);
+}
+
+.xb-va-panel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 52rem;
+    height: 78vh;
+    max-height: 62rem;
+    padding: 1.4rem 1.4rem 1rem;
+    border-radius: 1.6rem 1.6rem 0 0;
+    background: #f7f6f2;
+    color: $xb-va-ink;
+    box-shadow: 0 -0.6rem 2rem rgba(0, 0, 0, 0.2);
+}
+
+.xb-va-head {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    .xb-va-orb { width: 3.8rem; height: 3.8rem; }
+}
+.xb-va-who { flex: 1; }
+.xb-va-name { font-size: 1.5rem; font-weight: 700; }
+.xb-va-status { font-size: 1.05rem; color: #6b6b70; }
+.xb-va-close {
+    border: 0;
+    background: transparent;
+    font-size: 2.4rem;
+    line-height: 1;
+    color: #6b6b70;
+}
+
+.xb-va-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1rem 0.2rem;
+}
+.xb-va-msg {
+    max-width: 85%;
+    padding: 0.8rem 1.1rem;
+    border-radius: 1.2rem;
+    font-size: 1.3rem;
+    line-height: 1.4;
+    white-space: pre-line;
+}
+.xb-va-seller { align-self: flex-start; background: #fff; border-bottom-left-radius: 0.3rem; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); }
+.xb-va-customer { align-self: flex-end; background: $xb-va-accent; color: #fff; border-bottom-right-radius: 0.3rem; }
+.xb-va-dots span {
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.55rem;
+    margin: 0 0.15rem;
+    border-radius: 50%;
+    background: #9a9aa0;
+    animation: xb-va-dot 1s infinite;
+    &:nth-child(2) { animation-delay: 0.15s; }
+    &:nth-child(3) { animation-delay: 0.3s; }
+}
+@keyframes xb-va-dot { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+
+.xb-va-cards {
+    display: flex;
+    gap: 0.8rem;
+    overflow-x: auto;
+    padding: 0.2rem 0.1rem 0.4rem;
+}
+.xb-va-card {
+    flex: none;
+    width: 11.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0 0 0.7rem;
+    border: 0;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: #fff;
+    text-align: left;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+    img { flex: none; width: 100%; height: 10rem; object-fit: cover; background: #f1efe9; }
+}
+.xb-va-card-name {
+    flex: none;
+    color: $xb-va-ink;
+    display: block;
+    max-height: 2.6rem;
+    overflow: hidden;
+    padding: 0.3rem 0.8rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.25;
+}
+.xb-va-card-price { padding: 0 0.8rem; font-size: 1.05rem; font-weight: 700; color: $xb-va-accent; }
+
+.xb-va-foot {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+.xb-va-mic {
+    flex: none;
+    width: 4.6rem;
+    height: 4.6rem;
+    border: 0;
+    border-radius: 50%;
+    background: $xb-va-accent;
+    color: #fff;
+    &.xb-va-rec { background: #e5484d; animation: xb-va-pulse 1s ease-out infinite; }
+    &:disabled { opacity: 0.5; }
+}
+.xb-va-input {
+    flex: 1;
+    min-width: 0;
+    height: 3.4rem;
+    padding: 0 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 999px;
+    font-size: 1.2rem;
+}
+.xb-va-send {
+    height: 3.4rem;
+    padding: 0 1.3rem;
+    border: 0;
+    border-radius: 999px;
+    background: $xb-va-ink;
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 600;
+    &:disabled { opacity: 0.35; }
+}
+.xb-va-hint { padding-top: 0.4rem; font-size: 0.95rem; color: #8a8a90; }
+.xb-va-person {
+    align-self: center;
+    margin-top: 0.6rem;
+    padding: 0.5rem 1.2rem;
+    border: 1px solid rgba(0, 0, 0, 0.18);
+    border-radius: 999px;
+    background: transparent;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $xb-va-ink;
+    &:disabled { opacity: 0.6; }
+}
+
+// Docked conversation while the customer looks at the recommended products.
+.xb-va-dock {
+    position: fixed;
+    left: 50%;
+    bottom: 7rem;
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    width: calc(100% - 2rem);
+    max-width: 52rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 1.4rem;
+    background: #f7f6f2;
+    color: $xb-va-ink;
+    box-shadow: 0 0.6rem 1.8rem rgba(0, 0, 0, 0.22);
+    transform: translateX(-50%);
+}
+.xb-va-dock-text {
+    flex: 1;
+    max-height: 4.2rem;
+    overflow: hidden;
+    font-size: 1.1rem;
+    line-height: 1.3;
+}
+.xb-va-mic-sm { width: 3.4rem; height: 3.4rem; }
+.xb-va-dock-btn {
+    flex: none;
+    width: 2.6rem;
+    height: 2.6rem;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: #6b6b70;
+    font-size: 1.8rem;
+    line-height: 1;
+}
+.xb-va-picks-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 1rem 0 0;
+    padding: 0.7rem 1.1rem;
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+}
+.xb-va-picks-title { font-size: 1.2rem; font-weight: 600; }
+.xb-va-picks-all {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 999px;
+    background: transparent;
+    padding: 0.4rem 1rem;
+    font-weight: 600;
+    color: $xb-va-ink;
+}
+
+// Full screen: the seller fills the screen, what it says shows as subtitles.
+.xb-va-stage {
+    position: fixed;
+    inset: 0;
+    z-index: 1060;
+    overflow: hidden;
+    background: #e9e6e1;
+    color: #fff;
+}
+.xb-va-stage-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 20%;
+}
+.xb-va-stage-talk { opacity: 0; transition: opacity 0.25s; &.xb-va-on { opacity: 1; } }
+// Still picture: it breathes, and glows softly while talking.
+.xb-va-alive { animation: xb-va-breathe 5s ease-in-out infinite; transform-origin: 50% 30%; }
+.xb-va-talking-img { animation: xb-va-breathe 5s ease-in-out infinite, xb-va-glow 0.6s ease-in-out infinite alternate; }
+@keyframes xb-va-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.015); } }
+@keyframes xb-va-glow { from { filter: brightness(1); } to { filter: brightness(1.05); } }
+.xb-va-stage-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 1.4rem;
+    background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0));
+}
+.xb-va-stage-name {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+    small { font-size: 1.05rem; font-weight: 500; opacity: 0.9; }
+}
+.xb-va-stage-btn {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.6rem;
+    height: 3.6rem;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+    color: $xb-va-ink;
+    font-size: 2rem;
+    line-height: 1;
+    &:disabled { opacity: 0.5; }
+}
+.xb-va-stage-bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 4rem 1.6rem 2.2rem;
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6) 35%);
+}
+.xb-va-stage-said { max-width: 46rem; font-size: 1.1rem; font-style: italic; opacity: 0.85; text-align: center; }
+.xb-va-stage-sub {
+    max-width: 46rem;
+    max-height: 9.6rem;
+    overflow: hidden;
+    font-size: 1.55rem;
+    line-height: 1.38;
+    text-align: center;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+.xb-va-stage-controls { display: flex; align-items: center; gap: 2rem; margin-top: 0.4rem; }
+.xb-va-mic-lg { width: 5.6rem; height: 5.6rem; }
+.xb-va-tofull { font-size: 1.8rem; }
+
+.xb-va-share {
+    align-self: center;
+    margin-top: 0.6rem;
+    padding: 0.55rem 1.3rem;
+    border: 0;
+    border-radius: 999px;
+    background: #25d366;
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+.xb-va-stage-wa { background: #25d366; color: #fff; }
+.xb-va-pad-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1070;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.45);
+}
+.xb-va-pad {
+    width: 100%;
+    max-width: 26rem;
+    padding: 1.6rem;
+    border-radius: 1.6rem;
+    background: #fff;
+    color: $xb-va-ink;
+    text-align: center;
+}
+.xb-va-pad-title { font-size: 1.5rem; font-weight: 700; }
+.xb-va-pad-sub { margin-top: 0.3rem; font-size: 1rem; color: #6b6b70; }
+.xb-va-pad-number {
+    margin: 1rem 0 0.4rem;
+    padding: 0.7rem;
+    border-radius: 0.9rem;
+    background: #f3f2ee;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+.xb-va-pad-error { color: #c0392b; font-weight: 600; }
+.xb-va-pad-keys {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.7rem;
+    margin-top: 0.8rem;
+}
+.xb-va-key {
+    height: 4.2rem;
+    border: 0;
+    border-radius: 1rem;
+    background: #f3f2ee;
+    color: $xb-va-ink;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+.xb-va-key-ok { background: #25d366; color: #fff; font-size: 1.3rem; }
+.xb-va-pad-cancel {
+    margin-top: 1rem;
+    border: 0;
+    background: transparent;
+    color: #6b6b70;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.xb-va-system { align-self: center; padding: 0.3rem 0.9rem; border-radius: 999px; background: #e9e6df; font-size: 1rem; color: #6b6b70; }
+.xb-va-qr-img { width: 18rem; height: 18rem; margin: 1rem auto 0; display: block; image-rendering: pixelated; }
+.xb-va-qr-face { width: 6rem; height: 6rem; margin: 0 auto 0.8rem; display: block; }
+
+// Someone came close: the button waves and a bubble says hello.
+.xb-va-fab-waving { animation: xb-va-wave 0.9s ease-in-out 4; }
+@keyframes xb-va-wave { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-4deg) scale(1.06); } 75% { transform: rotate(4deg) scale(1.06); } }
+.xb-va-wave {
+    position: fixed;
+    right: 1.4rem;
+    bottom: 12.5rem;
+    z-index: 1050;
+    max-width: 24rem;
+    padding: 0.9rem 1.2rem;
+    border-radius: 1.2rem 1.2rem 0.3rem 1.2rem;
+    background: #fff;
+    color: $xb-va-ink;
+    font-size: 1.25rem;
+    font-weight: 600;
+    box-shadow: 0 0.6rem 1.8rem rgba(0, 0, 0, 0.18);
+    animation: xb-va-pop 0.4s ease-out;
+    &.xb-va-wave-left { right: auto; left: 1.4rem; border-radius: 1.2rem 1.2rem 1.2rem 0.3rem; }
+    &.xb-va-fab-high { bottom: 18rem; }
+}
+@keyframes xb-va-pop { from { opacity: 0; transform: translateY(10px) scale(0.95); } to { opacity: 1; transform: none; } }

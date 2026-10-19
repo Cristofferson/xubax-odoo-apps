@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Virtual Seller manual</title>
+<link rel="stylesheet" href="manual.css">
+</head><body><main>
+<p class="lang"><a href="es.html">Español</a></p>
+<h1>Virtual Seller (AI) for the Self-Order Kiosk</h1>
+<p class="lead">A seller with a face, a name and a voice on your kiosk. This manual has two parts: how the shop uses her day to day,
+and how to set her up.</p>
+<nav><ol>
+  <li><a href="#use">Day to day</a></li>
+  <li><a href="#install">Install</a></li>
+  <li><a href="#setup">Set up a kiosk</a></li>
+  <li><a href="#addons">Add-ons: wall, WhatsApp, appointments, quotation, Analitix</a></li>
+  <li><a href="#reports">Reports and weekly e-mail</a></li>
+  <li><a href="#costs">Costs and limits</a></li>
+  <li><a href="#help">If something does not work</a></li>
+</ol></nav>
+
+<h2 id="use">1. Day to day</h2>
+<h3>What the customer sees</h3>
+<div class="row">
+  <figure><img src="../description/kiosk_greeting.png" alt=""><figcaption>The button, and her greeting when someone walks up.</figcaption></figure>
+  <figure><img src="../description/kiosk_fullscreen.png" alt=""><figcaption>Full screen: she speaks and listens.</figcaption></figure>
+  <figure><img src="../description/kiosk_picks.png" alt=""><figcaption>Her picks at the top of the product list.</figcaption></figure>
+</div>
+<ul>
+  <li>The customer touches the button (or she opens by herself when someone stops in front of the kiosk, if you chose so).</li>
+  <li>They talk, or type. She answers out loud and in writing, in the customer's language.</li>
+  <li>She searches the kiosk's products and shows her picks at the top of the list, with their prices.
+      She can open a product, choose its options and add it to the cart.</li>
+  <li>The buttons under the conversation: <strong>Send it to my WhatsApp</strong>, <strong>Take me on your phone</strong>
+      and <strong>Call a person from the shop</strong>.</li>
+  <li>When nobody uses the kiosk for a while (90 seconds by default) the conversation ends and the kiosk starts again.</li>
+</ul>
+<h3>When she calls a person</h3>
+<p>If the customer asks for a person (or she cannot help), the people you chose get, depending on the settings:</p>
+<ul>
+  <li>a chat in Odoo (Discuss) with a summary of what the customer wants;</li>
+  <li>an alert on the cash register screens;</li>
+  <li>an e-mail.</li>
+</ul>
+<p class="note">Go to the kiosk: the summary tells you what the customer was looking for and what she already showed.</p>
+<h3>When she goes to the phone</h3>
+<div class="row">
+  <figure><img src="../description/kiosk_qr.png" alt=""><figcaption>QR to continue on the phone.</figcaption></figure>
+  <figure><img src="../description/phone.png" alt=""><figcaption>The same conversation on the phone.</figcaption></figure>
+</div>
+<p>The customer scans the QR, or taps their phone on the kiosk's NFC sticker. The conversation continues on their phone, with
+its history and the products; the kiosk frees itself for the next customer. From the phone she can still answer, show products
+and book appointments.</p>
+
+<h2 id="install">2. Install</h2>
+<ol>
+  <li>On the server, install the Python packages: <code>pip install anthropic requests</code>.</li>
+  <li>Install the app <strong>Self-Order Kiosk - Virtual Seller (AI)</strong>. The free add-ons install by themselves when their
+      other app is present (see <a href="#addons">section 4</a>).</li>
+  <li>Get the API keys:
+    <ul>
+      <li><strong>Anthropic</strong> (she thinks): <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> › API keys.</li>
+      <li><strong>OpenAI</strong> (she listens and speaks): <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a>.</li>
+    </ul>
+    Load some credit on both accounts.</li>
+  <li>The kiosk must open over <strong>HTTPS</strong>: browsers only allow the microphone and the camera on secure pages.</li>
+</ol>
+
+<h2 id="setup">3. Set up a kiosk</h2>
+<p><em>Point of Sale › Configuration › Settings</em>, choose the kiosk at the top, and in <em>Mobile self-order &amp; Kiosk</em> switch on
+<strong>Virtual seller (AI)</strong>. Each kiosk has its own seller. Save to apply.</p>
+<div class="row">
+  <figure><img src="../description/settings_1.png" alt=""><figcaption>Who she is.</figcaption></figure>
+  <figure><img src="../description/settings_2.png" alt=""><figcaption>What she knows and how she sells.</figcaption></figure>
+  <figure><img src="../description/settings_3.png" alt=""><figcaption>Phone, WhatsApp, limits and keys.</figcaption></figure>
+</div>
+<h3>Who she is</h3>
+<table>
+  <tr><th>Name</th><td>Her name, e.g. Sofía. <em>Said as</em>: only if it is written in a special way (e.g. "AnelIA" said "Anelia").</td></tr>
+  <tr><th>Woman or man</th><td>Filters the avatars and voices.</td></tr>
+  <tr><th>Avatar</th><td>Her photo. <em>See all the avatars</em> opens the gallery: eleven included, and you can add your own
+      (a face photo and, optionally, a full-body photo for the full screen).</td></tr>
+  <tr><th>Start full screen</th><td>She opens big, with her full photo; otherwise as a chat panel.</td></tr>
+  <tr><th>Voice / Way of speaking</th><td>The voice, and how it sounds: "warm and friendly, Mexican Spanish". <em>Hear the voice</em> plays her greeting.</td></tr>
+  <tr><th>Speaks its answers / Listens</th><td>Turn the voice and the microphone on or off. <em>Hands-free</em>: after speaking she listens again by herself.</td></tr>
+  <tr><th>Reads cards and barcodes</th><td>With a USB/Bluetooth reader or the tablet's NFC, the customer shows a product tag and she talks about it.</td></tr>
+  <tr><th>Someone comes close</th><td>Does not greet / greets out loud and waves / opens full screen and starts talking. Uses the tablet's camera
+      (or Analitix); no picture is kept.</td></tr>
+  <tr><th>Button position</th><td>Bottom right or bottom left, so it does not cover your kiosk's buttons.</td></tr>
+</table>
+<h3>What she says and knows</h3>
+<table>
+  <tr><th>Button / Greeting</th><td>The button text and her first sentence.</td></tr>
+  <tr><th>About your shop</th><td>The most important field. Write what a good seller of yours would say: delivery times, payment methods,
+      months without interest, warranty, services, opening hours, address, what makes you different. She uses it to answer and to sell.</td></tr>
+  <tr><th>Way of selling</th><td><em>Consultative</em> (advises, never pushes), <em>Balanced</em>, or <em>Sales-driven</em> (shows, recommends and closes:
+      sends products to the wall by herself, mentions a payment method or a difference with each price).</td></tr>
+  <tr><th>Extra rules</th><td>Anything else: "Never offer discounts", "Always mention free engraving".</td></tr>
+  <tr><th>Conversation</th><td><em>Step by step</em>: listens, thinks, answers (the cheapest; choose the <em>Intelligence</em> level).
+      <em>Instant conversation</em>: live voice that can be interrupted, like a phone call. In instant conversation, <em>Voice</em> can be the
+      live one or your chosen voice (better accent).</td></tr>
+</table>
+<h3>Calling a person</h3>
+<p>The button text, <em>Who attends</em> (users), and how: <em>Chat in Odoo</em>, <em>Alert on cash registers</em> (and which ones), <em>E-mail</em>.</p>
+<h3>Take it to the phone</h3>
+<p><strong>NFC sticker link</strong>: write this link on an NFC sticker (for example with the free app <em>NFC Tools</em>: Write › Add a record › URL)
+and stick it on the kiosk. A customer who taps their phone there takes the current conversation with them. The QR needs nothing.</p>
+<h3>Limits and keys</h3>
+<table>
+  <tr><th>Weekly summary</th><td>Every Monday, an e-mail to the people who attend (see <a href="#reports">section 5</a>).</td></tr>
+  <tr><th>Restart after (s)</th><td>Seconds without use before the conversation ends and the kiosk starts again.</td></tr>
+  <tr><th>Daily limit (USD)</th><td>When the day's conversations reach it, the button hides until the next day. 0 = no limit.</td></tr>
+  <tr><th>Keys (all kiosks)</th><td>Your Anthropic and OpenAI keys. Shared by all the kiosks of the database.</td></tr>
+</table>
+
+<h2 id="addons">4. Add-ons</h2>
+<p>Free; each installs by itself when the other app is present, and adds its section to the same settings.</p>
+<h3>Showroom Wall (videowall)</h3>
+<figure class="wide"><img src="../description/wall_seller.png" alt=""><figcaption>On the wall, she goes with the product.</figcaption></figure>
+<p>With <em>Showroom Wall</em> and its kiosk link: she sends the product the customer likes to the big screen, with its options, and goes with it
+(small, with subtitles; she speaks from the wall's speakers). <em>Goes to the wall</em>: she follows the product; <em>Shows on the wall by itself</em>:
+every product she opens also goes to the wall. A tap on the wall's NFC base takes the conversation to the phone.</p>
+<h3>WhatsApp (Odoo Enterprise)</h3>
+<p>In the settings, <em>Create the template</em> makes the WhatsApp template and sends it to Meta for approval (usually minutes to a day).
+When it is approved, the <em>Send it to my WhatsApp</em> button appears: the customer types their number and receives a page with the products
+and the conversation. The contact is created or found by their phone; <em>Opportunity in CRM</em> also creates an opportunity.</p>
+<h3>Appointments (Odoo Enterprise)</h3>
+<p>Choose the appointment type she <em>Books</em>. She offers free times and books the visit with the customer's name and phone.</p>
+<h3>Kiosk Quotation</h3>
+<p>With <em>Self-Order Kiosk Quotation</em>: "print me a quotation" opens the kiosk's quotation window for the cart, to print at the kiosk or send by WhatsApp.
+The quotation is linked to her conversation.</p>
+<h3>Analitix</h3>
+<p>With <em>Analitix - Self-Order</em>: Analitix's camera tells her when someone stops in front of the kiosk, instead of her own movement detector.</p>
+
+<h2 id="reports">5. Reports and weekly e-mail</h2>
+<div class="row">
+  <figure class="wide"><img src="../description/report_list.png" alt=""><figcaption>Point of Sale › Reporting › Virtual seller.</figcaption></figure>
+</div>
+<ul>
+  <li><strong>Conversations</strong>: date, kiosk, questions, products shown, cart, appointment, WhatsApp, phone, wall, the sale it ended in
+      (kiosk order or quotation) and its cost. Graph and pivot views.</li>
+  <li>Open one to read the whole conversation.</li>
+  <li><strong>Searches</strong>: what customers looked for; in red, what was not found — products you could add.</li>
+  <li><strong>Weekly e-mail</strong>: the week's numbers, the most shown products and what was asked for and not found.</li>
+</ul>
+<div class="row">
+  <figure class="wide"><img src="../description/searches.png" alt=""><figcaption>What customers looked for.</figcaption></figure>
+  <figure><img src="../description/weekly_email.png" alt=""><figcaption>Weekly e-mail.</figcaption></figure>
+</div>
+
+<h2 id="costs">6. Costs and limits</h2>
+<ul>
+  <li>You pay Anthropic and OpenAI directly with your keys. In our shops a conversation costs 3 to 6 US cents on average.</li>
+  <li><em>Step by step</em> is the cheapest; <em>instant conversation</em> costs more (live audio).</li>
+  <li>Each voice sentence is generated once and kept: repeated greetings cost nothing.</li>
+  <li>The <em>Daily limit</em> protects you: when it is reached the button hides until the next day.</li>
+</ul>
+
+<h2 id="help">7. If something does not work</h2>
+<table>
+  <tr><th>The button does not appear</th><td>The kiosk is not in <em>Kiosk</em> mode, the seller is off, or the daily limit was reached (it comes back the next day). Reload the kiosk after changing the settings.</td></tr>
+  <tr><th>She does not hear</th><td>The kiosk must open over HTTPS and the browser must allow the microphone.</td></tr>
+  <tr><th>She does not speak</th><td><em>Speaks its answers</em> is off, the OpenAI key is missing, or the tablet's volume is down. Some browsers need a first touch on the screen.</td></tr>
+  <tr><th>"Sorry, I can't talk right now"</th><td>Check the keys and the credit in Anthropic / OpenAI.</td></tr>
+  <tr><th>No WhatsApp button</th><td>The template is not approved yet by Meta.</td></tr>
+  <tr><th>She does not go to the wall</th><td>The Showroom Wall must be linked to this kiosk and its screen open.</td></tr>
+  <tr><th>Changes do not show on the kiosk</th><td>Reload the kiosk page.</td></tr>
+</table>
+<p class="foot">XUBAX · <a href="mailto:soporte@xubax.com">soporte@xubax.com</a> · <a href="https://www.xubax.com">www.xubax.com</a></p>
+</main></body></html>

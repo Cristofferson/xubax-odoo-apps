@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_xb_va_share_wa" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.xb.va.share.whatsapp</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="xb_self_order_assistant.res_config_settings_view_form_xb_va"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('fw-bold')][text()='Limits']" position="before">
+                <div class="fw-bold mt-3">Send the selection by WhatsApp</div>
+                <div class="row"><label for="pos_xb_va_wa_send_template_id" string="Template" class="col-lg-4 o_light_label"/><field name="pos_xb_va_wa_send_template_id" options="{'no_create': True}"/></div>
+                <div class="row" invisible="pos_xb_va_wa_send_template_id"><div class="col-lg-4"/><div class="col"><button name="action_xb_va_create_wa_template" type="object" string="Create the template" icon="fa-whatsapp" class="btn-link px-0"/><div class="text-muted small">Then press "Submit for approval" and wait for Meta to approve it.</div></div></div>
+                <div class="row"><label for="pos_xb_va_create_lead" string="Opportunity in CRM" class="col-lg-4 o_light_label"/><field name="pos_xb_va_create_lead"/></div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

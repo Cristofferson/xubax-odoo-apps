@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="xb_self_order_assistant.VirtualSeller">
+        <t t-if="visible">
+            <div t-if="!state.open and state.waving" class="xb-va-wave" t-att-class="{'xb-va-wave-left': va.position === 'left', 'xb-va-fab-high': high}" t-on-click="open" t-esc="va.greet_text"/>
+            <button t-if="!state.open" class="xb-va-fab" t-att-class="{'xb-va-fab-high': high, 'xb-va-fab-left': va.position === 'left', 'xb-va-fab-waving': state.waving}" t-on-click="open">
+                <img t-if="avatarUrl()" class="xb-va-orb xb-va-avatar" t-att-src="avatarUrl()" t-att-alt="va.name"/>
+                <span t-else="" class="xb-va-orb"/>
+                <span class="xb-va-fab-label" t-esc="va.button"/>
+            </button>
+            <div t-elif="state.mode === 'full'" class="xb-va-stage" t-on-click="touch">
+                <t t-if="avatarUrl('idle')">
+                    <video class="xb-va-stage-media" t-att-src="avatarUrl('idle')" autoplay="1" loop="1" muted="1" playsinline="1"/>
+                    <video t-if="avatarUrl('talk')" class="xb-va-stage-media xb-va-stage-talk" t-att-class="{'xb-va-on': state.speaking}"
+                           t-att-src="avatarUrl('talk')" autoplay="1" loop="1" muted="1" playsinline="1"/>
+                </t>
+                <img t-else="" class="xb-va-stage-media xb-va-alive" t-att-class="{'xb-va-talking-img': state.speaking}"
+                     t-att-src="avatarUrl('full')" t-att-alt="va.name"/>
+                <div class="xb-va-stage-top">
+                    <div class="xb-va-stage-name">
+                        <span t-esc="va.name"/>
+                        <small>
+                            <t t-if="state.recording">Listening…</t>
+                            <t t-elif="state.busy">Thinking…</t>
+                            <t t-elif="state.speaking">Speaking…</t>
+                            <t t-else="">Virtual seller</t>
+                        </small>
+                    </div>
+                    <button class="xb-va-stage-btn" t-on-click="close" aria-label="Close">×</button>
+                </div>
+                <div class="xb-va-stage-bottom">
+                    <div t-if="state.lastCustomer" class="xb-va-stage-said" t-esc="state.lastCustomer"/>
+                    <div class="xb-va-stage-sub" t-esc="state.busy ? '…' : lastSellerText"/>
+                    <div class="xb-va-stage-controls">
+                        <button class="xb-va-stage-btn" t-on-click="() => this.setMode('chat')" aria-label="Write">
+                            <svg viewBox="0 0 24 24" width="26" height="26"><rect x="2" y="6" width="20" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 10h1M10 10h1M14 10h1M18 10h1M7 14h10" stroke="currentColor" stroke-width="2"/></svg>
+                        </button>
+                        <button t-if="canListen" class="xb-va-mic xb-va-mic-lg" t-att-class="{'xb-va-rec': state.recording}"
+                                t-att-disabled="state.busy" t-on-click="() => this.toggleMic()" aria-label="Talk">
+                            <svg viewBox="0 0 24 24" width="40" height="40"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                        </button>
+                        <button t-if="canShare" class="xb-va-stage-btn xb-va-stage-wa" t-on-click="openPad" aria-label="Send it to my WhatsApp">
+                            <svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 9c0 3 3 6 6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                        </button>
+                        <button class="xb-va-stage-btn" t-on-click="openQr" aria-label="Take me on your phone">
+                            <svg viewBox="0 0 24 24" width="24" height="24"><rect x="6" y="2" width="12" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 18h2" stroke="currentColor" stroke-width="2"/></svg>
+                        </button>
+                        <button class="xb-va-stage-btn xb-va-stage-person" t-att-disabled="state.handoff" t-on-click="callPerson" t-att-aria-label="va.handoff">
+                            <svg viewBox="0 0 24 24" width="26" height="26"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c1-5 15-5 16 0" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div t-elif="state.mode === 'mini'" class="xb-va-dock" t-on-click="touch">
+                <img t-if="avatarUrl()" class="xb-va-orb xb-va-avatar" t-att-src="avatarUrl()" t-att-alt="va.name"
+                     t-att-class="{'xb-va-talking': state.speaking, 'xb-va-thinking': state.busy, 'xb-va-listening': state.recording}"/>
+                <span t-else="" class="xb-va-orb" t-att-class="{'xb-va-talking': state.speaking, 'xb-va-thinking': state.busy, 'xb-va-listening': state.recording}"/>
+                <div class="xb-va-dock-text" t-on-click="expand">
+                    <t t-if="state.recording">I'm listening, go ahead</t>
+                    <t t-elif="state.busy">Thinking…</t>
+                    <t t-else="" t-esc="lastSellerText"/>
+                </div>
+                <button t-if="canListen" class="xb-va-mic xb-va-mic-sm" t-att-class="{'xb-va-rec': state.recording}"
+                        t-att-disabled="state.busy" t-on-click="() => this.toggleMic()" aria-label="Talk">
+                    <svg viewBox="0 0 24 24" width="26" height="26"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                </button>
+                <button class="xb-va-dock-btn" t-on-click="expand" aria-label="Open the conversation">⌃</button>
+                <button class="xb-va-dock-btn" t-on-click="close" aria-label="Close">×</button>
+            </div>
+            <div t-else="" class="xb-va-backdrop" t-on-click.self="close">
+                <div class="xb-va-panel" t-on-click="touch">
+                    <div class="xb-va-head">
+                        <img t-if="avatarUrl()" class="xb-va-orb xb-va-avatar" t-att-src="avatarUrl()" t-att-alt="va.name"
+                             t-att-class="{'xb-va-talking': state.speaking, 'xb-va-thinking': state.busy, 'xb-va-listening': state.recording}"/>
+                        <span t-else="" class="xb-va-orb" t-att-class="{'xb-va-talking': state.speaking, 'xb-va-thinking': state.busy, 'xb-va-listening': state.recording}"/>
+                        <div class="xb-va-who">
+                            <div class="xb-va-name" t-esc="va.name"/>
+                            <div class="xb-va-status">
+                                <t t-if="state.recording">Listening…</t>
+                                <t t-elif="state.busy">Thinking…</t>
+                                <t t-elif="state.speaking">Speaking…</t>
+                                <t t-else="">Virtual seller</t>
+                            </div>
+                        </div>
+                        <button t-if="hasFull" class="xb-va-close xb-va-tofull" t-on-click="() => this.setMode('full')" aria-label="Full screen">⤢</button>
+                        <button class="xb-va-close" t-on-click="close" aria-label="Close">×</button>
+                    </div>
+                    <div class="xb-va-list" t-ref="list">
+                        <t t-foreach="state.messages" t-as="msg" t-key="msg.id">
+                            <div t-att-class="'xb-va-msg xb-va-' + msg.who" t-esc="msg.text"/>
+                        </t>
+                        <div t-if="state.busy" class="xb-va-msg xb-va-seller xb-va-dots"><span/><span/><span/></div>
+                    </div>
+                    <div class="xb-va-foot">
+                        <button t-if="canListen" class="xb-va-mic" t-att-class="{'xb-va-rec': state.recording}"
+                                t-att-disabled="state.busy" t-on-click="() => this.toggleMic()" aria-label="Talk">
+                            <svg viewBox="0 0 24 24" width="34" height="34"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                        </button>
+                        <input class="xb-va-input" type="text" t-model="state.typed" t-on-keydown="onKey"
+                               t-att-disabled="state.busy or (state.recording and !isLive)" placeholder="Write your question…"/>
+                        <button class="xb-va-send" t-att-disabled="state.busy or !state.typed.trim()" t-on-click="() => this.send(state.typed)">Send</button>
+                    </div>
+                    <div class="xb-va-hint" t-if="state.recording">I'm listening, go ahead</div>
+                    <div class="xb-va-hint" t-elif="canListen and !state.busy and !state.speaking">Tap the microphone and talk</div>
+                    <button t-if="canShare" class="xb-va-share" t-on-click="openPad">Send it to my WhatsApp</button>
+                    <button class="xb-va-person" t-on-click="openQr">Take me on your phone</button>
+                    <button class="xb-va-person" t-att-disabled="state.handoff" t-on-click="callPerson">
+                        <t t-if="state.handoff">The shop has been notified</t>
+                        <t t-else="" t-esc="va.handoff"/>
+                    </button>
+                </div>
+            </div>
+
+            <div t-if="state.open and state.pad.open" class="xb-va-pad-backdrop">
+                <div class="xb-va-pad" t-on-click="touch">
+                    <div class="xb-va-pad-title">Your WhatsApp number</div>
+                    <div class="xb-va-pad-sub">We'll send you what you saw and our conversation.</div>
+                    <div class="xb-va-pad-number" t-esc="state.pad.digits or '—'"/>
+                    <div t-if="state.pad.error" class="xb-va-pad-error" t-esc="state.pad.error"/>
+                    <div class="xb-va-pad-keys">
+                        <t t-foreach="['1','2','3','4','5','6','7','8','9','del','0','ok']" t-as="k" t-key="k">
+                            <button t-if="k === 'del'" class="xb-va-key" t-on-click="() => this.padKey('del')" aria-label="Delete">⌫</button>
+                            <button t-elif="k === 'ok'" class="xb-va-key xb-va-key-ok" t-att-disabled="state.pad.sending" t-on-click="sendSelection">
+                                <t t-if="state.pad.sending">…</t><t t-else="">Send</t>
+                            </button>
+                            <button t-else="" class="xb-va-key" t-on-click="() => this.padKey(k)" t-esc="k"/>
+                        </t>
+                    </div>
+                    <button class="xb-va-pad-cancel" t-on-click="closePad">Cancel</button>
+                </div>
+            </div>
+
+            <div t-if="state.open and state.qr.open" class="xb-va-pad-backdrop" t-on-click.self="closeQr">
+                <div class="xb-va-pad xb-va-qr">
+                    <t t-if="!state.qr.gone">
+                        <div class="xb-va-pad-title">Take me on your phone</div>
+                        <div class="xb-va-pad-sub">Scan it with your phone's camera and we keep talking there.</div>
+                        <img class="xb-va-qr-img" t-att-src="state.qr.src" alt="QR"/>
+                        <button class="xb-va-pad-cancel" t-on-click="closeQr">Close</button>
+                    </t>
+                    <t t-else="">
+                        <img t-if="avatarUrl()" class="xb-va-orb xb-va-avatar xb-va-qr-face" t-att-src="avatarUrl()" alt=""/>
+                        <div class="xb-va-pad-title">I'm on your phone now</div>
+                        <div class="xb-va-pad-sub">See you there!</div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </t>
+
+    <t t-name="xb_self_order_assistant.selfOrderIndex" t-inherit="pos_self_order.selfOrderIndex" t-inherit-mode="extension">
+        <xpath expr="//MainComponentsContainer" position="before">
+            <XbVirtualSeller t-if="selfIsReady"/>
+        </xpath>
+    </t>
+
+</templates>

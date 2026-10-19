@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manual del vendedor virtual</title>
+<link rel="stylesheet" href="manual.css">
+</head><body><main>
+<p class="lang"><a href="en.html">English</a></p>
+<h1>Vendedor virtual (IA) para el kiosco de autopedido</h1>
+<p class="lead">Una vendedora con cara, nombre y voz en tu kiosco. Este manual tiene dos partes: cómo la usa la tienda en el día a día
+y cómo configurarla.</p>
+<nav><ol>
+  <li><a href="#uso">El día a día</a></li>
+  <li><a href="#instalar">Instalar</a></li>
+  <li><a href="#configurar">Configurar un kiosco</a></li>
+  <li><a href="#complementos">Complementos: muro, WhatsApp, citas, cotización, Analitix</a></li>
+  <li><a href="#reportes">Reportes y correo semanal</a></li>
+  <li><a href="#costos">Costos y límites</a></li>
+  <li><a href="#ayuda">Si algo no funciona</a></li>
+</ol></nav>
+<p class="note">Las capturas son de la tienda de demostración, en inglés; en tu Odoo en español los nombres son los que aparecen en este manual.</p>
+
+<h2 id="uso">1. El día a día</h2>
+<h3>Lo que ve el cliente</h3>
+<div class="row">
+  <figure><img src="../description/kiosk_greeting.png" alt=""><figcaption>El botón, y su saludo cuando alguien se acerca.</figcaption></figure>
+  <figure><img src="../description/kiosk_fullscreen.png" alt=""><figcaption>Pantalla completa: habla y escucha.</figcaption></figure>
+  <figure><img src="../description/kiosk_picks.png" alt=""><figcaption>Sus sugerencias arriba de la lista de productos.</figcaption></figure>
+</div>
+<ul>
+  <li>El cliente toca el botón (o ella se abre sola cuando alguien se para frente al kiosco, si así lo elegiste).</li>
+  <li>El cliente habla o escribe. Ella contesta en voz alta y por escrito, en el idioma del cliente.</li>
+  <li>Busca entre los productos del kiosco y pone sus sugerencias arriba de la lista, con su precio.
+      Puede abrir un producto, elegir sus opciones y agregarlo al carrito.</li>
+  <li>Los botones debajo de la plática: <strong>Enviármelo por WhatsApp</strong>, <strong>Llévame en tu celular</strong>
+      y <strong>Llamar a alguien de la tienda</strong>.</li>
+  <li>Si nadie usa el kiosco un rato (90 segundos de fábrica), la plática termina y el kiosco vuelve a empezar.</li>
+</ul>
+<h3>Cuando llama a una persona</h3>
+<p>Si el cliente pide hablar con alguien (o ella no puede ayudar), las personas que elegiste reciben, según la configuración:</p>
+<ul>
+  <li>un chat en Odoo (Conversaciones) con el resumen de lo que busca el cliente;</li>
+  <li>un aviso en las pantallas de las cajas;</li>
+  <li>un correo.</li>
+</ul>
+<p class="note">Ve al kiosco: el resumen te dice qué buscaba el cliente y qué le enseñó ella.</p>
+<h3>Cuando se va al celular</h3>
+<div class="row">
+  <figure><img src="../description/kiosk_qr.png" alt=""><figcaption>QR para seguir en el celular.</figcaption></figure>
+  <figure><img src="../description/phone.png" alt=""><figcaption>La misma plática en el celular.</figcaption></figure>
+</div>
+<p>El cliente escanea el QR o acerca su celular a la etiqueta NFC del kiosco. La plática sigue en su celular, con todo lo que llevaban y
+los productos; el kiosco queda libre para el siguiente cliente. Desde el celular ella sigue contestando, enseñando productos y agendando citas.</p>
+
+<h2 id="instalar">2. Instalar</h2>
+<ol>
+  <li>En el servidor, instala los paquetes de Python: <code>pip install anthropic requests</code>.</li>
+  <li>Instala la app <strong>Self-Order Kiosk - Virtual Seller (AI)</strong>. Los complementos gratuitos se instalan solos cuando
+      está su otra app (ver <a href="#complementos">sección 4</a>).</li>
+  <li>Saca las llaves:
+    <ul>
+      <li><strong>Anthropic</strong> (piensa): <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> › API keys.</li>
+      <li><strong>OpenAI</strong> (escucha y habla): <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a>.</li>
+    </ul>
+    Carga saldo en las dos cuentas.</li>
+  <li>El kiosco debe abrirse con <strong>HTTPS</strong>: los navegadores solo permiten micrófono y cámara en páginas seguras.</li>
+</ol>
+
+<h2 id="configurar">3. Configurar un kiosco</h2>
+<p><em>Punto de venta › Configuración › Ajustes</em>, elige el kiosco arriba y en <em>Autopedidos por celular y quioscos</em> activa
+<strong>Vendedor virtual (IA)</strong>. Cada kiosco tiene su propia vendedora. Guarda para aplicar.</p>
+<div class="row">
+  <figure><img src="../description/settings_1.png" alt=""><figcaption>Quién es.</figcaption></figure>
+  <figure><img src="../description/settings_2.png" alt=""><figcaption>Qué sabe y cómo vende.</figcaption></figure>
+  <figure><img src="../description/settings_3.png" alt=""><figcaption>Celular, WhatsApp, límites y llaves.</figcaption></figure>
+</div>
+<h3>Quién es</h3>
+<table>
+  <tr><th>Nombre</th><td>Su nombre, p. ej. Sofía. <em>Se dice</em>: solo si se escribe de forma especial (p. ej. «AnelIA» se dice «Anelia»).</td></tr>
+  <tr><th>Mujer u hombre</th><td>Filtra los avatares y las voces.</td></tr>
+  <tr><th>Avatar</th><td>Su foto. <em>Ver todos los avatares</em> abre la galería: trae once y puedes agregar los tuyos
+      (una foto de la cara y, si quieres, una de cuerpo completo para la pantalla completa).</td></tr>
+  <tr><th>Iniciar a pantalla completa</th><td>Se abre en grande con su foto completa; si no, como panel de chat.</td></tr>
+  <tr><th>Voz / Forma de hablar</th><td>La voz y cómo suena: «cálida y amable, español de México». <em>Escuchar la voz</em> reproduce su saludo.</td></tr>
+  <tr><th>Dice sus respuestas en voz alta / Escucha</th><td>Prende o apaga la voz y el micrófono. <em>Manos libres</em>: después de hablar vuelve a escuchar sola.</td></tr>
+  <tr><th>Lee tarjetas y códigos de barras</th><td>Con un lector USB/Bluetooth o el NFC de la tablet, el cliente enseña la etiqueta de un producto y ella habla de él.</td></tr>
+  <tr><th>Alguien se acerca</th><td>No saluda / saluda en voz alta y hace señas / se abre a pantalla completa y empieza a platicar. Usa la cámara de la tablet
+      (o Analitix); no se guarda ninguna imagen.</td></tr>
+  <tr><th>Posición del botón</th><td>Abajo a la derecha o a la izquierda, para que no tape los botones de tu kiosco.</td></tr>
+</table>
+<h3>Qué dice y qué sabe</h3>
+<table>
+  <tr><th>Botón / Saludo</th><td>El texto del botón y su primera frase.</td></tr>
+  <tr><th>Sobre tu tienda</th><td>El campo más importante. Escribe lo que diría tu mejor vendedor: tiempos de entrega, formas de pago,
+      meses sin intereses, garantía, servicios, horario, dirección, qué te hace diferente. Lo usa para contestar y para vender.</td></tr>
+  <tr><th>Forma de vender</th><td><em>Consultiva</em> (asesora, nunca presiona), <em>Equilibrada</em>, o <em>Comercial</em> (enseña, recomienda y cierra:
+      manda productos al muro por su cuenta y con cada precio menciona una forma de pago o algo que te distingue).</td></tr>
+  <tr><th>Reglas extra</th><td>Lo que quieras: «Nunca ofrezcas descuentos», «Menciona siempre el grabado gratis».</td></tr>
+  <tr><th>Conversación</th><td><em>Paso a paso</em>: escucha, piensa y contesta (la más barata; eliges la <em>Inteligencia</em>).
+      <em>Conversación instantánea</em>: voz en vivo que se puede interrumpir, como una llamada. En la instantánea, la <em>Voz</em> puede ser la
+      de la voz en vivo o la que elegiste (mejor acento).</td></tr>
+</table>
+<h3>Llamar a una persona</h3>
+<p>El texto del botón, <em>Quién atiende</em> (usuarios) y cómo: <em>Chat en Odoo</em>, <em>Alerta en las cajas</em> (y en cuáles), <em>Correo</em>.</p>
+<h3>Llevarlo al celular</h3>
+<p><strong>Liga de la etiqueta NFC</strong>: graba esta liga en una etiqueta NFC (por ejemplo con la app gratuita <em>NFC Tools</em>: Escribir › Agregar registro › URL)
+y pégala en el kiosco. El cliente que acerque ahí su celular se lleva la plática que está en curso. El QR no necesita nada.</p>
+<h3>Límites y llaves</h3>
+<table>
+  <tr><th>Resumen semanal</th><td>Cada lunes, un correo a las personas que atienden (ver <a href="#reportes">sección 5</a>).</td></tr>
+  <tr><th>Reiniciar tras (s)</th><td>Segundos sin uso antes de que la plática termine y el kiosco vuelva a empezar.</td></tr>
+  <tr><th>Tope diario (USD)</th><td>Cuando las pláticas del día lo alcanzan, el botón se esconde hasta el día siguiente. 0 = sin tope.</td></tr>
+  <tr><th>Llaves (todos los kioscos)</th><td>Tus llaves de Anthropic y OpenAI. Las comparten todos los kioscos de la base de datos.</td></tr>
+</table>
+
+<h2 id="complementos">4. Complementos</h2>
+<p>Gratuitos; cada uno se instala solo cuando está la otra app, y agrega su sección en los mismos ajustes.</p>
+<h3>Muro de exhibición (videowall)</h3>
+<figure class="wide"><img src="../description/wall_seller.png" alt=""><figcaption>En el muro, ella acompaña al producto.</figcaption></figure>
+<p>Con <em>Showroom Wall</em> y su enlace con el kiosco: manda a la pantalla grande el producto que le gusta al cliente, con sus opciones, y se va con él
+(pequeña, con subtítulos; habla por las bocinas del muro). <em>Se pasa al muro</em>: acompaña al producto; <em>La muestra en el muro sola</em>:
+todo producto que abre también va al muro. Acercar el celular a la base NFC del muro se lleva la plática al celular.</p>
+<h3>WhatsApp (Odoo Enterprise)</h3>
+<p>En los ajustes, <em>Crear la plantilla</em> hace la plantilla de WhatsApp y la manda a aprobar a Meta (de minutos a un día).
+Cuando la aprueban aparece el botón <em>Enviármelo por WhatsApp</em>: el cliente teclea su número y recibe una página con los productos
+y la plática. El contacto se crea o se encuentra por su teléfono; <em>Oportunidad en el CRM</em> además crea una oportunidad.</p>
+<h3>Citas (Odoo Enterprise)</h3>
+<p>Elige el tipo de cita que <em>Agenda</em>. Ella ofrece horarios libres y aparta la cita con el nombre y teléfono del cliente.</p>
+<h3>Cotización del kiosco</h3>
+<p>Con <em>Self-Order Kiosk Quotation</em>: «imprímeme una cotización» abre la ventana de cotización del kiosco con el carrito, para imprimirla ahí o mandarla por WhatsApp.
+La cotización queda ligada a su plática.</p>
+<h3>Analitix</h3>
+<p>Con <em>Analitix - Self-Order</em>: la cámara de Analitix le avisa cuando alguien se para frente al kiosco, en lugar de su propio detector de movimiento.</p>
+
+<h2 id="reportes">5. Reportes y correo semanal</h2>
+<div class="row">
+  <figure class="wide"><img src="../description/report_list.png" alt=""><figcaption>Punto de venta › Reportes › Vendedor virtual.</figcaption></figure>
+</div>
+<ul>
+  <li><strong>Conversaciones</strong>: fecha, kiosco, preguntas, productos que enseñó, carrito, cita, WhatsApp, celular, muro, la venta en que terminó
+      (pedido del kiosco o cotización) y su costo. Vistas de gráfica y tabla dinámica.</li>
+  <li>Abre una para leer toda la plática.</li>
+  <li><strong>Búsquedas</strong>: lo que buscaron los clientes; en rojo, lo que no se encontró: productos que podrías agregar.</li>
+  <li><strong>Correo semanal</strong>: los números de la semana, los productos más enseñados y lo que pidieron y no había.</li>
+</ul>
+<div class="row">
+  <figure class="wide"><img src="../description/searches.png" alt=""><figcaption>Lo que buscaron los clientes.</figcaption></figure>
+  <figure><img src="../description/weekly_email.png" alt=""><figcaption>Correo semanal.</figcaption></figure>
+</div>
+
+<h2 id="costos">6. Costos y límites</h2>
+<ul>
+  <li>Le pagas directo a Anthropic y OpenAI con tus llaves. En nuestras tiendas una plática cuesta en promedio de 3 a 6 centavos de dólar.</li>
+  <li><em>Paso a paso</em> es lo más barato; la <em>conversación instantánea</em> cuesta más (audio en vivo).</li>
+  <li>Cada frase con voz se genera una vez y se guarda: los saludos repetidos no cuestan.</li>
+  <li>El <em>Tope diario</em> te protege: al llegar, el botón se esconde hasta el día siguiente.</li>
+</ul>
+
+<h2 id="ayuda">7. Si algo no funciona</h2>
+<table>
+  <tr><th>No aparece el botón</th><td>El punto de venta no está en modo <em>Kiosco</em>, la vendedora está apagada o se llegó al tope diario (regresa al día siguiente). Recarga el kiosco después de cambiar los ajustes.</td></tr>
+  <tr><th>No escucha</th><td>El kiosco debe abrirse con HTTPS y el navegador debe permitir el micrófono.</td></tr>
+  <tr><th>No habla</th><td><em>Dice sus respuestas en voz alta</em> está apagado, falta la llave de OpenAI o el volumen de la tablet está abajo. Algunos navegadores piden un primer toque en la pantalla.</td></tr>
+  <tr><th>«Perdón, ahorita no puedo hablar»</th><td>Revisa las llaves y el saldo en Anthropic / OpenAI.</td></tr>
+  <tr><th>No sale el botón de WhatsApp</th><td>Meta todavía no aprueba la plantilla.</td></tr>
+  <tr><th>No se pasa al muro</th><td>El muro debe estar enlazado con este kiosco y su pantalla abierta.</td></tr>
+  <tr><th>Los cambios no se ven en el kiosco</th><td>Recarga la página del kiosco.</td></tr>
+</table>
+<p class="foot">XUBAX · <a href="mailto:soporte@xubax.com">soporte@xubax.com</a> · <a href="https://www.xubax.com">www.xubax.com</a></p>
+</main></body></html>

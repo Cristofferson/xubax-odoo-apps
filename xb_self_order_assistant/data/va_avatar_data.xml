@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="avatar_sofia" model="xb.va.avatar">
+        <field name="name">Sofía</field>
+        <field name="gender">female</field>
+        <field name="sequence">1</field>
+        <field name="image" type="base64" file="xb_self_order_assistant/static/img/avatars/sofia.jpg"/>
+        <field name="image_full" type="base64" file="xb_self_order_assistant/static/img/avatars/sofia_full.jpg"/>
+    </record>
+    <record id="avatar_valeria" model="xb.va.avatar">
+        <field name="name">Valeria</field>
+        <field name="gender">female</field>
+        <field name="sequence">2</field>
+        <field name="image" type="base64" file="xb_self_order_assistant/static/img/avatars/valeria.jpg"/>
+        <field name="image_full" type="base64" file="xb_self_order_assistant/static/img/avatars/valeria_full.jpg"/>
+    </record>
+    <record id="avatar_mariana" model="xb.va.avatar">
+        <field name="name">Mariana</field>
+        <field name="gender">female</field>
+        <field name="sequence">3</field>
+        <field name="image" type="base64" file="xb_self_order_assistant/static/img/avatars/mariana.jpg"/>
+        <field name="image_full" type="base64" file="xb_self_order_assistant/static/img/avatars/mariana_full.jpg"/>
+    </record>
+    <record id="avatar_lucia" model="xb.va.avatar">
+        <field name="name">Lucía</field>
+        <field name="gender">female</field>
+        <field name="sequence">4</field>
+        <field name="image" type="base64" file="xb_self_order_assistant/static/img/avatars/lucia.jpg"/>
+        <field name="image_full" type="base64" file="xb_self_order_assistant/static/img/avatars/lucia_full.jpg"/>
+    </record>
+    <record id="avatar_daniela" model="xb.va.avatar">
+        <field name="name">Daniela</field>
+        <field name="gender">female</field>
+        <field name="sequence">5</field>
+        <field name="image" type="base64" file="xb_self_order_assistant/static/img/avatars/daniela.jpg"/>
+        <field name="image_full" type="base64" file="xb_self_order_assistant/static/img/avatars/daniela_full.jpg"/>
+    </record>
+    <record id="avatar_camila" model="xb.va.avatar">
+        <field name="name">Camila</field>
+        <field name="gender">female</field>
+        <field name="sequence">6</field>
+        <field name="image" type="base64" file="xb_self_order_assistant/static/img/avatars/camila.jpg"/>
+        <field name="image_full" type="base64" file="xb_self_order_assistant/static/img/avatars/camila_full.jpg"/>
+    </record>
+    <record id="avatar_renata" model="xb.va.avatar">
+        <field name="name">Renata</field>
+        <field name="gender">female</field>
+        <field name="sequence">7</field>
+        <field name="image" type="base64" file="xb_self_order_assistant/static/img/avatars/renata.jpg"/>
+        <field name="image_full" type="base64" file="xb_self_order_assistant/static/img/avatars/renata_full.jpg"/>
+    </record>
+    <record id="avatar_diego" model="xb.va.avatar">
+        <field name="name">Diego</field>
+        <field name="gender">male</field>
+        <field name="sequence">8</field>
+        <field name="image" type="base64" file="xb_self_order_assistant/static/img/avatars/diego.jpg"/>
+        <field name="image_full" type="base64" file="xb_self_order_assistant/static/img/avatars/diego_full.jpg"/>
+    </record>
+    <record id="avatar_mateo" model="xb.va.avatar">
+        <field name="name">Mateo</field>
+        <field name="gender">male</field>
+        <field name="sequence">9</field>
+        <field name="image" type="base64" file="xb_self_order_assistant/static/img/avatars/mateo.jpg"/>
+        <field name="image_full" type="base64" file="xb_self_order_assistant/static/img/avatars/mateo_full.jpg"/>
+    </record>
+    <record id="avatar_roberto" model="xb.va.avatar">
+        <field name="name">Roberto</field>
+        <field name="gender">male</field>
+        <field name="sequence">10</field>
+        <field name="image" type="base64" file="xb_self_order_assistant/static/img/avatars/roberto.jpg"/>
+        <field name="image_full" type="base64" file="xb_self_order_assistant/static/img/avatars/roberto_full.jpg"/>
+    </record>
+    <record id="avatar_andres" model="xb.va.avatar">
+        <field name="name">Andrés</field>
+        <field name="gender">male</field>
+        <field name="sequence">11</field>
+        <field name="image" type="base64" file="xb_self_order_assistant/static/img/avatars/andres.jpg"/>
+        <field name="image_full" type="base64" file="xb_self_order_assistant/static/img/avatars/andres_full.jpg"/>
+    </record>
+</odoo>

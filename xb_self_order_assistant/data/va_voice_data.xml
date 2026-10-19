@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="voice_nova" model="xb.va.voice"><field name="name">Nova</field><field name="code">nova</field><field name="gender">female</field><field name="sequence">1</field><field name="description">Warm and friendly</field></record>
+    <record id="voice_marin" model="xb.va.voice"><field name="name">Marin</field><field name="code">marin</field><field name="gender">female</field><field name="sequence">2</field><field name="description">Natural, conversational</field></record>
+    <record id="voice_coral" model="xb.va.voice"><field name="name">Coral</field><field name="code">coral</field><field name="gender">female</field><field name="sequence">3</field><field name="description">Bright and cheerful</field></record>
+    <record id="voice_shimmer" model="xb.va.voice"><field name="name">Shimmer</field><field name="code">shimmer</field><field name="gender">female</field><field name="sequence">4</field><field name="description">Soft and calm</field></record>
+    <record id="voice_sage" model="xb.va.voice"><field name="name">Sage</field><field name="code">sage</field><field name="gender">female</field><field name="sequence">5</field><field name="description">Serene, elegant</field></record>
+    <record id="voice_cedar" model="xb.va.voice"><field name="name">Cedar</field><field name="code">cedar</field><field name="gender">male</field><field name="sequence">1</field><field name="description">Natural, conversational</field></record>
+    <record id="voice_ash" model="xb.va.voice"><field name="name">Ash</field><field name="code">ash</field><field name="gender">male</field><field name="sequence">2</field><field name="description">Clear and confident</field></record>
+    <record id="voice_echo" model="xb.va.voice"><field name="name">Echo</field><field name="code">echo</field><field name="gender">male</field><field name="sequence">3</field><field name="description">Calm and friendly</field></record>
+    <record id="voice_onyx" model="xb.va.voice"><field name="name">Onyx</field><field name="code">onyx</field><field name="gender">male</field><field name="sequence">4</field><field name="description">Deep, serious</field></record>
+    <record id="voice_ballad" model="xb.va.voice"><field name="name">Ballad</field><field name="code">ballad</field><field name="gender">male</field><field name="sequence">5</field><field name="description">Expressive, elegant</field></record>
+</odoo>

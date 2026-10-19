@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_xb_va_voice_user,xb.va.voice user,model_xb_va_voice,point_of_sale.group_pos_user,1,0,0,0
+access_xb_va_voice_manager,xb.va.voice manager,model_xb_va_voice,point_of_sale.group_pos_manager,1,1,1,1
+access_xb_va_conversation_manager,xb.va.conversation manager,model_xb_va_conversation,point_of_sale.group_pos_manager,1,1,0,1
+access_xb_va_avatar_user,xb.va.avatar user,model_xb_va_avatar,point_of_sale.group_pos_user,1,0,0,0
+access_xb_va_avatar_manager,xb.va.avatar manager,model_xb_va_avatar,point_of_sale.group_pos_manager,1,1,1,1
+access_xb_va_search_manager,xb.va.search manager,model_xb_va_search,point_of_sale.group_pos_manager,1,0,0,1

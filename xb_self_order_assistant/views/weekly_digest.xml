@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="weekly_digest" name="Virtual seller: weekly summary">
+        <div style="font-family: Arial, sans-serif; color: #1d1d1f; max-width: 600px;">
+            <h2 style="margin: 0 0 4px;"><t t-esc="config.xb_va_name"/> · <t t-esc="config.name"/></h2>
+            <p style="margin: 0 0 16px; color: #6b6b70;" t-esc="labels['period']"/>
+            <table style="width: 100%; border-collapse: collapse;">
+                <t t-foreach="rows" t-as="row">
+                    <tr><td style="padding: 6px 0; border-bottom: 1px solid #eee;" t-esc="row[0]"/>
+                        <td style="padding: 6px 0; border-bottom: 1px solid #eee; text-align: right; font-weight: bold;" t-esc="row[1]"/></tr>
+                </t>
+            </table>
+            <t t-if="n['top']">
+                <h3 style="margin: 20px 0 6px;" t-esc="labels['top']"/>
+                <ul style="margin: 0; padding-left: 18px;"><li t-foreach="n['top']" t-as="t"><t t-esc="t[0]"/> (<t t-esc="t[1]"/>)</li></ul>
+            </t>
+            <t t-if="n['missing']">
+                <h3 style="margin: 20px 0 6px;" t-esc="labels['missing']"/>
+                <ul style="margin: 0; padding-left: 18px;"><li t-foreach="n['missing']" t-as="m"><t t-esc="m[0]"/> (<t t-esc="m[1]"/>)</li></ul>
+            </t>
+        </div>
+    </template>
+</odoo>

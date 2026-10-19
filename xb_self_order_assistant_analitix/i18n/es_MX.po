@@ -1,0 +1,5 @@
+#
+msgid ""
+msgstr ""
+"Language: es_MX\n"
+"Content-Type: text/plain; charset=UTF-8\n"

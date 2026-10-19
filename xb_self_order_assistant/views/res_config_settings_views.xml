@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_xb_va" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.xb.va</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="pos_self_order.res_config_settings_view_form_menu"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='self_ordering_section']" position="inside">
+                <setting string="Virtual seller (AI)" invisible="pos_self_ordering_mode != 'kiosk'"
+                         help="A seller in the kiosk that customers talk to: it recommends your products, answers out loud and calls a person when needed.">
+                    <field name="pos_xb_va_enabled"/>
+                    <div class="mt-1">
+                        <a href="/xb_self_order_assistant/static/manual/en.html" target="_blank" class="me-3"><i class="fa fa-book me-1"/>Manual</a>
+                        <a href="/xb_self_order_assistant/static/manual/es.html" target="_blank"><i class="fa fa-book me-1"/>Manual (Spanish)</a>
+                    </div>
+                    <div class="content-group mt-2" invisible="not pos_xb_va_enabled">
+                        <div class="fw-bold mt-2">Who it is</div>
+                        <div class="row"><label for="pos_xb_va_name" string="Name" class="col-lg-4 o_light_label"/><field name="pos_xb_va_name"/></div>
+                        <div class="row"><label for="pos_xb_va_name_say" string="Said as" class="col-lg-4 o_light_label"/><field name="pos_xb_va_name_say" placeholder="Only if it is written in a special way"/></div>
+                        <div class="row"><label for="pos_xb_va_gender" string="Woman or man" class="col-lg-4 o_light_label"/><field name="pos_xb_va_gender" widget="radio" options="{'horizontal': true}"/></div>
+                        <div class="row"><label for="pos_xb_va_avatar_id" string="Avatar" class="col-lg-4 o_light_label"/><div class="col d-flex align-items-center gap-2"><field name="pos_xb_va_avatar_face" widget="image" options="{'size': [56, 56]}" invisible="not pos_xb_va_avatar_id"/><field name="pos_xb_va_avatar_id" domain="[('gender', '=', pos_xb_va_gender)]" options="{'no_quick_create': True}"/></div></div>
+                        <div class="row"><div class="col-lg-4"/><div class="col"><button name="%(xb_self_order_assistant.xb_va_avatar_action)d" type="action" string="See all the avatars" icon="fa-th" class="btn-link px-0"/></div></div>
+                        <div class="row" invisible="not pos_xb_va_avatar_id"><label for="pos_xb_va_start_full" string="Start full screen" class="col-lg-4 o_light_label"/><field name="pos_xb_va_start_full"/></div>
+                        <div class="row"><label for="pos_xb_va_voice_id" string="Voice" class="col-lg-4 o_light_label"/><field name="pos_xb_va_voice_id" options="{'no_create': True, 'no_open': True}" domain="[('gender', '=', pos_xb_va_gender)]"/></div>
+                        <div class="row"><label for="pos_xb_va_voice_style" string="Way of speaking" class="col-lg-4 o_light_label"/><field name="pos_xb_va_voice_style"/></div>
+                        <div class="row"><div class="col-lg-4"/><div class="col"><button name="action_xb_va_hear_voice" type="object" string="Hear the voice" icon="fa-volume-up" class="btn-link px-0"/></div></div>
+                        <div class="row"><label for="pos_xb_va_speak" string="Speaks its answers" class="col-lg-4 o_light_label"/><field name="pos_xb_va_speak"/></div>
+                        <div class="row"><label for="pos_xb_va_listen" string="Listens (microphone)" class="col-lg-4 o_light_label"/><field name="pos_xb_va_listen"/></div>
+                        <div class="row" invisible="not pos_xb_va_listen"><label for="pos_xb_va_continuous" string="Hands-free" class="col-lg-4 o_light_label"/><field name="pos_xb_va_continuous"/></div>
+                        <div class="row"><label for="pos_xb_va_scan" string="Reads cards and barcodes" class="col-lg-4 o_light_label"/><field name="pos_xb_va_scan"/></div>
+                        <div class="row"><label for="pos_xb_va_greet" string="Someone comes close" class="col-lg-4 o_light_label"/><field name="pos_xb_va_greet" widget="radio"/></div>
+                        <div class="row" invisible="pos_xb_va_greet == 'off'"><label for="pos_xb_va_greet_text" string="Greeting" class="col-lg-4 o_light_label"/><field name="pos_xb_va_greet_text" placeholder="Hi! I'm Sofía. Can I help you find something special?"/></div>
+                        <div class="row"><label for="pos_xb_va_position" string="Button position" class="col-lg-4 o_light_label"/><field name="pos_xb_va_position" widget="radio" options="{'horizontal': true}"/></div>
+                        <div class="fw-bold mt-3">What it says and knows</div>
+                        <div class="row"><label for="pos_xb_va_button" string="Button" class="col-lg-4 o_light_label"/><field name="pos_xb_va_button" placeholder="Can I help you?"/></div>
+                        <div class="row"><label for="pos_xb_va_greeting" string="Greeting" class="col-lg-4 o_light_label"/><field name="pos_xb_va_greeting" placeholder="Hi, I'm Sofía. What are you looking for today?"/></div>
+                        <div class="row mt-2"><label for="pos_xb_va_knowledge" string="About your shop" class="col-lg-4 o_light_label"/><field name="pos_xb_va_knowledge" placeholder="Delivery in 7 days. Free engraving. We accept cards and transfers..."/></div>
+                        <div class="row mt-2"><label for="pos_xb_va_sales_style" string="Way of selling" class="col-lg-4 o_light_label"/><field name="pos_xb_va_sales_style" widget="radio"/></div>
+                        <div class="row mt-2"><label for="pos_xb_va_instructions" string="Extra rules" class="col-lg-4 o_light_label"/><field name="pos_xb_va_instructions"/></div>
+                        <div class="row"><label for="pos_xb_va_engine" string="Conversation" class="col-lg-4 o_light_label"/><field name="pos_xb_va_engine" widget="radio"/></div>
+                        <div class="row" invisible="pos_xb_va_engine != 'classic'"><label for="pos_xb_va_model" string="Intelligence" class="col-lg-4 o_light_label"/><field name="pos_xb_va_model"/></div>
+                        <div class="row" invisible="pos_xb_va_engine != 'realtime'"><label for="pos_xb_va_rt_model" string="Live voice" class="col-lg-4 o_light_label"/><field name="pos_xb_va_rt_model"/></div>
+                        <div class="row" invisible="pos_xb_va_engine != 'realtime'"><label for="pos_xb_va_rt_voice" string="Voice" class="col-lg-4 o_light_label"/><field name="pos_xb_va_rt_voice" widget="radio"/></div>
+                        <div class="fw-bold mt-3">Calling a person</div>
+                        <div class="row"><label for="pos_xb_va_handoff_label" string="Button" class="col-lg-4 o_light_label"/><field name="pos_xb_va_handoff_label" placeholder="Call a person from the shop"/></div>
+                        <div class="row"><label for="pos_xb_va_ho_user_ids" string="Who attends" class="col-lg-4 o_light_label"/><field name="pos_xb_va_ho_user_ids" widget="many2many_tags"/></div>
+                        <div class="row"><label for="pos_xb_va_ho_discuss" string="Chat in Odoo" class="col-lg-4 o_light_label"/><field name="pos_xb_va_ho_discuss"/></div>
+                        <div class="row"><label for="pos_xb_va_ho_pos" string="Alert on cash registers" class="col-lg-4 o_light_label"/><field name="pos_xb_va_ho_pos"/></div>
+                        <div class="row" invisible="not pos_xb_va_ho_pos"><label for="pos_xb_va_ho_pos_ids" string="Which registers" class="col-lg-4 o_light_label"/><field name="pos_xb_va_ho_pos_ids" widget="many2many_tags" placeholder="All"/></div>
+                        <div class="row"><label for="pos_xb_va_ho_email" string="E-mail" class="col-lg-4 o_light_label"/><field name="pos_xb_va_ho_email"/></div>
+                        <div class="fw-bold mt-3">Take it to the phone</div>
+                        <div class="row"><label for="pos_xb_va_tap_url" string="NFC sticker link" class="col-lg-4 o_light_label"/><field name="pos_xb_va_tap_url" widget="CopyClipboardChar"/></div>
+                        <div class="row"><div class="col-lg-4"/><div class="col text-muted small">Write it on an NFC sticker on the kiosk: bringing the phone close takes the seller there.</div></div>
+                        <div class="fw-bold mt-3">Limits</div>
+                        <div class="row"><label for="pos_xb_va_weekly_report" string="Weekly summary" class="col-lg-4 o_light_label"/><field name="pos_xb_va_weekly_report"/></div>
+                        <div class="row"><label for="pos_xb_va_idle_seconds" string="Restart after (s)" class="col-lg-4 o_light_label"/><field name="pos_xb_va_idle_seconds"/></div>
+                        <div class="row"><label for="pos_xb_va_daily_limit" string="Daily limit (USD)" class="col-lg-4 o_light_label"/><field name="pos_xb_va_daily_limit"/></div>
+                        <div class="fw-bold mt-3">Keys (all kiosks)</div>
+                        <div class="row"><label for="xb_va_anthropic_key" string="Anthropic (thinks)" class="col-lg-4 o_light_label"/><field name="xb_va_anthropic_key" password="True"/></div>
+                        <div class="row"><label for="xb_va_openai_key" string="OpenAI (listens, speaks)" class="col-lg-4 o_light_label"/><field name="xb_va_openai_key" password="True"/></div>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>
