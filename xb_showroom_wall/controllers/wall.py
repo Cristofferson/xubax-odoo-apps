@@ -196,8 +196,13 @@ def _extra_shots(product, photo):
 _CT = re.compile(r'(\d+(?:[.,]\d+)?)\s*(?:ct|qts|quilates?)\b', re.I)
 
 
+# Stones named the shop's way, «Diamante LAB PR 0.10 VVS2 E VG»: the size
+# comes after the shape, with no unit.
+_CT_GEM = re.compile(r'^\s*Diamante\s+(?:(?:LAB|NAT)\s+)?(?:[A-Z]{2,4}\s+)?(\d+(?:[.,]\d+)?)\b', re.I)
+
+
 def _carats(text):
-    m = _CT.search(text or '')
+    m = _CT.search(text or '') or _CT_GEM.search(text or '')
     return float(m.group(1).replace(',', '.')) if m else 0.0
 
 
@@ -210,6 +215,41 @@ def _mm(carats):
     """Diameter in mm of a round brilliant of ``carats`` (jeweller's table)."""
     best = min(_MM, key=lambda row: abs(row[0] - carats))
     return ('%.1f' % best[1]).rstrip('0').rstrip('.')
+
+
+_CLARITY = re.compile(r'\b(FL|IF|VVS1|VVS2|VS1|VS2|SI1|SI2|SI3|I1|I2|I3)\b')
+_COLOUR = re.compile(r'\b([D-M])\b')
+# «ID» in the shop's lab-grown component names is graded Excellent (per the shop).
+_CUTS = {'ID': 'Excelente', 'EX': 'Excelente', 'VG': 'Muy bueno', 'G': 'Bueno', 'F': 'Regular'}
+
+
+def _grade_facts(env, name):
+    """Colour, clarity and cut of a centre diamond the piece includes (lab-
+    grown), read from its component's name, e.g. «Diamante LAB 0.50Qts VVS2 E
+    ID»: those components carry no grading fields. Same labels as a diamond
+    picked from stock, so a comparison lines them up in the same rows."""
+    labels = _grade_labels(env)
+    text = re.sub(r'^.*?\d+(?:[.,]\d+)?\s*(?:qts|ct)\b', '', name or '', flags=re.I)
+    clarity = _CLARITY.search(text)
+    rest = text[clarity.end():] if clarity else text
+    colour = _COLOUR.search(rest)
+    cut = rest[colour.end():].split()[:1] if colour else []
+    facts = []
+    if colour:
+        facts.append((labels['colour'], colour.group(1)))
+    if clarity:
+        facts.append((labels['clarity'], clarity.group(1)))
+    if cut and cut[0].upper() in _CUTS:
+        facts.append((labels['cut'], _CUTS[cut[0].upper()]))
+    if facts:
+        # Every diamond the shop sets comes with its ICERT certificate.
+        facts.append((labels['certificate'], 'ICERT'))
+    return facts
+
+
+def _grade_labels(env):
+    return {'colour': env._("Colour"), 'clarity': env._("Clarity"),
+            'cut': env._("Cut"), 'certificate': env._("Certificate")}
 
 
 def _stone_facts(env, tmpl, options=None):
@@ -277,6 +317,8 @@ def _stone_facts(env, tmpl, options=None):
         central = re.sub(r'\s*·.*$', '', kind).replace('Diamante de laboratorio', 'Diamante laboratorio')
         central = re.sub(r'(\d+)\.00 ct', r'\1 ct', central)
     facts.append((env._("Centre stone"), central))
+    if not is_zirconia:
+        facts += _grade_facts(env, centre_name)
     if count:
         sizes = {}
         for q, size in accents:
@@ -452,8 +494,212 @@ _PHOTO_KINDS = {
     # kind: (model, field)
     'p': ('product.product', 'image_1920'),
     'r': ('product.product', 'image_1024'),
-    'i': ('product.image', 'image_1024'),
+    'i': ('product.image', 'image_1920'),
 }
+# Photos that fill a whole screen (in the case, on the hand) were made at
+# 1024 px and the wall stretches them to 1920: the server enlarges them with
+# a finer filter and sharpens them, so the screen does not do it bluntly.
+_PHOTO_WIDTH = {'i': 1920}
+# Bumped whenever the processing above changes: players and Cloudflare keep a
+# photo for a year under its address, so a new look needs a new address.
+_PHOTO_LOOK = {'i': 's2'}
+# Those enlarged photos are made once and kept as attachments: making one
+# takes about a second, and the shop window asks for a new piece every few
+# seconds. WebP, so the player downloads about what it did at 1024 px.
+STORED_PREFIX = 'xb_wall_photo_'
+
+
+CLIP_PREFIX = 'xb_wall_motion5_'
+
+
+def _stone_spot(image):
+    """``(cx, cy, size)`` of the stone in one frame of its video: the facets
+    are where the edges are, the plain backdrop has none."""
+    import numpy
+    from PIL import ImageFilter
+    gray = image.convert('L')
+    width, height = gray.size
+    ratio = 320.0 / max(width, height)
+    small = gray.resize((max(1, int(width * ratio)), max(1, int(height * ratio)))).filter(
+        ImageFilter.GaussianBlur(1))
+    edges = numpy.asarray(small.filter(ImageFilter.FIND_EDGES), dtype=float)
+    edges[:3, :] = edges[-3:, :] = 0
+    edges[:, :3] = edges[:, -3:] = 0
+    ys, xs = numpy.where(edges > max(18, numpy.percentile(edges, 90)))
+    if len(xs) < 50:
+        return None
+    x0, x1 = numpy.percentile(xs, [3, 97]) / ratio
+    y0, y1 = numpy.percentile(ys, [3, 97]) / ratio
+    edged = ((x0 + x1) / 2, (y0 + y1) / 2, max(x1 - x0, y1 - y0))
+    # Edges alone are fooled by a striped or scratched backdrop. The facets
+    # also throw greys far darker than the light backdrop: where those are
+    # dense is the stone. A very bright stone on a dull backdrop has few of
+    # them; then the edges answer.
+    plain = numpy.asarray(gray.resize(small.size), dtype=float)
+    dark = (plain < numpy.median(plain) - 40).astype(float)
+    reach = 4
+    total = numpy.pad(numpy.pad(dark, reach).cumsum(0).cumsum(1), ((1, 0), (1, 0)))
+    side = 2 * reach + 1
+    dense = (total[side:, side:] - total[:-side, side:] - total[side:, :-side] + total[:-side, :-side]) > 0.25 * side * side
+    if dense.sum() < 30:
+        return edged
+    x0, x1 = _stone_run(dense.sum(axis=0))
+    y0, y1 = _stone_run(dense.sum(axis=1))
+    darkest = ((x0 + x1) / 2 / ratio, (y0 + y1) / 2 / ratio, max(x1 - x0, y1 - y0) / ratio)
+    return darkest if darkest[2] >= 0.6 * edged[2] else edged
+
+
+def _stone_run(profile):
+    """``(start, end)`` of the run around the peak of ``profile`` that stays
+    above a fifth of it: the stone, without stray specks further out."""
+    peak = int(profile.argmax())
+    limit = profile[peak] * 0.2
+    start = end = peak
+    while start > 0 and profile[start - 1] > limit:
+        start -= 1
+    while end < len(profile) - 1 and profile[end + 1] > limit:
+        end += 1
+    return start, end + 1
+
+
+def _stone_view_centred(raw):
+    """A small view of the stone (hearts, arrows, ASET…) as a square with the
+    stone in its middle, or ``None``. The square keeps the side the wall's
+    circle already showed (the photo's short side): the stone is only moved,
+    never scaled. What is left uncovered takes the photo's own backdrop."""
+    try:
+        import numpy
+        from PIL import Image
+        with Image.open(io.BytesIO(raw)) as source:
+            image = source.convert('RGB')
+        width, height = image.size
+        ratio = 320.0 / max(width, height)
+        small = numpy.asarray(image.resize((max(1, int(width * ratio)), max(1, int(height * ratio)))),
+                              dtype=float)
+        corners = numpy.concatenate([small[:6, :6].reshape(-1, 3), small[:6, -6:].reshape(-1, 3),
+                                     small[-6:, :6].reshape(-1, 3), small[-6:, -6:].reshape(-1, 3)])
+        backdrop = numpy.median(corners, axis=0)
+        apart = (numpy.sqrt(((small - backdrop) ** 2).sum(axis=2)) > 60).astype(float)
+        reach = 4
+        total = numpy.pad(numpy.pad(apart, reach).cumsum(0).cumsum(1), ((1, 0), (1, 0)))
+        side = 2 * reach + 1
+        dense = (total[side:, side:] - total[:-side, side:] - total[side:, :-side]
+                 + total[:-side, :-side]) > 0.3 * side * side
+        if dense.sum() < 30:
+            return None
+        x0, x1 = _stone_run(dense.sum(axis=0))
+        y0, y1 = _stone_run(dense.sum(axis=1))
+        cx, cy = (x0 + x1) / 2 / ratio, (y0 + y1) / 2 / ratio
+        side = min(width, height)
+        square = Image.new('RGB', (side, side), tuple(int(c) for c in backdrop))
+        square.paste(image, (int(round(side / 2 - cx)), int(round(side / 2 - cy))))
+        out = io.BytesIO()
+        square.save(out, 'JPEG', quality=90)
+        return out.getvalue()
+    except Exception:  # noqa: BLE001 - the photo as it is, rather than none
+        return None
+
+
+def _stone_centred(frames):
+    """The frames cut to a square that follows the stone. The stone sits off
+    the centre of the turntable, so in the phone video it circles around;
+    centred frame by frame it turns on its own axis instead.
+
+    ``frames`` are file paths, opened one at a time: a high-definition phone
+    video holds a gigabyte of frames, more than a worker may take at once."""
+    import numpy
+    from PIL import Image
+
+    def still(path):
+        with Image.open(path) as image:
+            return image.convert('RGB')
+    spots = [_stone_spot(still(frame)) for frame in frames]
+    known = [spot for spot in spots if spot]
+    if not known:
+        shown = []
+        for frame in frames:
+            image = still(frame)
+            image.thumbnail((800, 800))
+            shown.append(image)
+        return shown
+    last, steady = known[0], []
+    for spot in spots:
+        last = spot or last
+        steady.append(last)
+    side = int(numpy.percentile([spot[2] for spot in known], 90) * 1.25) // 2 * 2
+    size = min(800, side)
+    centred = []
+    for index, path in enumerate(frames):
+        frame = still(path)
+        # A short moving average: the reading of each frame wobbles a little.
+        window = steady[max(0, index - 3): index + 4]
+        cx = sum(spot[0] for spot in window) / len(window)
+        cy = sum(spot[1] for spot in window) / len(window)
+        corners = [frame.getpixel(point) for point in (
+            (2, 2), (frame.width - 3, 2), (2, frame.height - 3), (frame.width - 3, frame.height - 3))]
+        backdrop = tuple(sorted(corner[channel] for corner in corners)[2] for channel in range(3))
+        square = Image.new('RGB', (side, side), backdrop)
+        square.paste(frame, (int(round(side / 2 - cx)), int(round(side / 2 - cy))))
+        centred.append(square.resize((size, size), Image.LANCZOS))
+    return centred
+
+
+def _stone_clip(env, source):
+    """The stone's video ``source`` (an attachment) as an animated WebP,
+    made once and kept. Not a video: the wall's player already decodes the
+    piece's video and did not play a second one beside it, while an image
+    always animates. Each frame is cut around the stone so it turns in place,
+    at the phone's own resolution (never blown up), slightly sharpened and
+    brightened so its backdrop reads white."""
+    attachments = env['ir.attachment'].sudo()
+    name = '%s%s.webp' % (CLIP_PREFIX, source.checksum or source.id)
+    found = attachments.search([('res_model', '=', 'xb.showroom.screen'), ('name', '=', name)], limit=1)
+    if found:
+        return found
+    try:
+        from PIL import Image
+        # Odoo registers only the image formats it uses itself; WebP must be
+        # loaded by hand or saving it fails with «'WEBP'».
+        from PIL import WebPImagePlugin  # noqa: F401
+        with tempfile.TemporaryDirectory() as tmp:
+            src, out = os.path.join(tmp, 'source'), os.path.join(tmp, 'motion.webp')
+            with open(src, 'wb') as handle:
+                handle.write(source.raw)
+            subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', src, '-an', '-t', '12',
+                            '-vf', 'fps=15,unsharp=5:5:0.6,eq=brightness=0.07:contrast=1.15',
+                            '-q:v', '2', os.path.join(tmp, 'frame_%03d.jpg')],
+                           capture_output=True, timeout=120, check=True)
+            names = sorted(name for name in os.listdir(tmp) if name.startswith('frame_'))
+            frames = _stone_centred([os.path.join(tmp, name) for name in names])
+            frames[0].save(out, 'WEBP', save_all=True, append_images=frames[1:], duration=67,
+                           loop=0, quality=75, method=4)
+            with open(out, 'rb') as handle:
+                data = handle.read()
+    except Exception as e:  # noqa: BLE001 - the photo stands in for the video
+        _logger.warning("[SHOWROOM] clip of attachment %s failed: %s", source.id, e)
+        return attachments.browse()
+    return attachments.create({
+        'name': name, 'raw': data, 'mimetype': 'image/webp',
+        'res_model': 'xb.showroom.screen', 'res_id': 0,
+    })
+
+
+def _stored_photo(env, kind, record, raw):
+    """The enlarged photo of ``record`` (``raw`` is its original), made the
+    first time it is asked for and kept as an attachment."""
+    attachments = env['ir.attachment'].sudo()
+    name = '%s%s_%s_%s%s.webp' % (STORED_PREFIX, kind, record.id,
+                                 _photo_version(record), _PHOTO_LOOK.get(kind, ''))
+    found = attachments.search([('res_model', '=', 'xb.showroom.screen'), ('name', '=', name)], limit=1)
+    if found:
+        return found.raw
+    body = _photo_bytes(raw, _PHOTO_WIDTH[kind], webp=True)
+    if body:
+        attachments.create({
+            'name': name, 'raw': body, 'mimetype': 'image/webp',
+            'res_model': 'xb.showroom.screen', 'res_id': 0,
+        })
+    return body
 
 
 def _photo_version(record):
@@ -463,10 +709,12 @@ def _photo_version(record):
     return int(stamp.timestamp()) if stamp else 0
 
 
-def _photo_bytes(raw):
-    """The photo as a JPEG on white, or ``None`` when it cannot be read."""
+def _photo_bytes(raw, width=0, webp=False):
+    """The photo as a JPEG on white, or ``None`` when it cannot be read.
+    With ``width``, a smaller photo is enlarged to it and sharpened; with
+    ``webp``, it is saved as WebP instead."""
     try:
-        from PIL import Image
+        from PIL import Image, ImageFilter
         image = Image.open(io.BytesIO(raw))
         image.load()
         if image.mode in ('RGBA', 'LA', 'P'):
@@ -476,8 +724,20 @@ def _photo_bytes(raw):
             image = flat
         else:
             image = image.convert('RGB')
+        if width and image.width < width:
+            # Twice the size first, sharpened there, then down to the screen:
+            # finer edges than a single stretch.
+            big = image.resize((image.width * 2, image.height * 2), Image.LANCZOS)
+            big = big.filter(ImageFilter.UnsharpMask(radius=2.2, percent=90, threshold=2))
+            big = big.filter(ImageFilter.UnsharpMask(radius=0.8, percent=60, threshold=1))
+            image = big.resize((width, round(image.height * width / image.width)), Image.LANCZOS)
         out = io.BytesIO()
-        image.save(out, 'JPEG', quality=88, optimize=True)
+        if webp:
+            # Odoo loads only a few image formats; WebP has to be asked for.
+            from PIL import WebPImagePlugin  # noqa: F401
+            image.save(out, 'WEBP', quality=80, method=4)
+        else:
+            image.save(out, 'JPEG', quality=88, optimize=True)
         return out.getvalue()
     except Exception as e:  # pragma: no cover - the original is served instead
         _logger.warning("[SHOWROOM] could not convert a photo: %s", e)
@@ -843,11 +1103,14 @@ class ShowroomWall(http.Controller):
     setInterval(function () {
         if (busy || Date.now() - (window.__xbWallBeat || start) < 60000) { return; }
         busy = true;
-        var control = window.AbortController ? new AbortController() : null;
-        setTimeout(function () { if (control) { control.abort(); } busy = false; }, 10000);
-        fetch(url + "/state", { cache: "no-store", credentials: "omit", signal: control ? control.signal : undefined })
-            .then(function (response) { if (response.ok) { location.replace(url + "?r=" + Date.now()); } })
-            .catch(function () { /* offline: try again on the next round */ });
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url + "/state?t=" + Date.now());
+        xhr.timeout = 10000;
+        xhr.onload = function () {
+            if (xhr.status === 200) { location.replace(url + "?r=" + Date.now()); } else { busy = false; }
+        };
+        xhr.onerror = xhr.ontimeout = function () { busy = false; /* offline: try again on the next round */ };
+        xhr.send();
     }, 15000);
 })();
 </script>
@@ -919,6 +1182,107 @@ class ShowroomWall(http.Controller):
         and registers a painter in ``window.XBWallPlugins``; the wall asks the painters first."""
         return []
 
+    def _wall_stone(self, template, options):
+        """``(stone, price)``: the loose stone the customer chose in the shop
+        for ``template`` with ``options`` (a ``product.product``, sudo) and
+        its price as the shop shows it. None here: a module that lets the
+        customer pick the stone (e.g. a natural diamond) says which one."""
+        return request.env['product.product'].sudo(), 0.0
+
+    def _wall_fact_labels(self, screen):
+        """Labels of the stone facts, translated here (``env._`` translates
+        with the module that calls it, so another module must ask for them)."""
+        return dict(_grade_labels(screen.env), centre=screen.env._("Centre stone"),
+                    total=screen.env._("Total carats"))
+
+    def _wall_stone_media(self, screen, product, options, slot):
+        """``{'stone': product.template, 'sample': bool}``: the stone whose
+        video (or photo) goes on the wall beside the piece, in place of the
+        case shot. ``sample`` when it only illustrates the kind of stone.
+        None here: a module that knows the shop's stones says which."""
+        return {}
+
+    def _wall_stone_allowed(self, screen, template):
+        """Whether the stone routes may serve ``template``'s photo and video."""
+        return False
+
+    def _wall_stone_views(self, template):
+        """``[(product.image, label)]``: other views of the stone shown small
+        under its details. Here, its extra images named after the «·»."""
+        views = []
+        for image in template.product_template_image_ids.sorted(lambda i: (i.sequence, i.id)):
+            label = re.sub(r'\s*\(.*?\)', '', (image.name or '').split('·')[-1]).strip()
+            if image.image_1920 and label:
+                views.append((image, label))
+        return views
+
+    def _wall_stone_video(self, template):
+        """The attachment with ``template``'s own video, if it has one."""
+        return request.env['ir.attachment'].sudo().browse()
+
+    def _stone_media_dict(self, screen, product, options, slot):
+        found = self._wall_stone_media(screen, product, options, slot)
+        template = found.get('stone') if found else None
+        if not template:
+            return False
+        video = self._wall_stone_video(template)
+        base = '/showroom/wall/%s/stone/%s' % (screen.access_token, template.id)
+        media = {
+            # The way the clip is made rides on the address too: players keep
+            # it a year, so a new cut must be a new address.
+            'motion': '%s/motion.webp?v=%s%s' % (base, (video.checksum or '')[:10], CLIP_PREFIX[-3:-1])
+                      if video else '',
+            'image': '%s/photo.jpg?v=%s' % (base, _photo_version(template)) if template.image_1920 else '',
+            'sample': bool(found.get('sample')),
+            # ``{'width': '5.09 mm', 'height': '5.06 mm'}`` when the stone's
+            # measurements are known: drawn round it like a technical drawing.
+            'size': found.get('size') or False,
+            # A sample may borrow its small views from another stone whose
+            # photos are clearer (``views``); a chosen stone shows its own.
+            'views': [
+                # «c1»: the views are now centred on the stone; a new address
+                # so players drop the copy they keep for a year.
+                {'url': '/showroom/wall/%s/stone/%s/view%s.jpg?v=%sc1' % (
+                    screen.access_token, shown.id, image.id, _photo_version(image)), 'label': label}
+                for shown in [found.get('views') or template]
+                for image, label in self._wall_stone_views(shown)[:4]
+            ],
+        }
+        return media if (media['motion'] or media['image']) else False
+
+    def _wall_reference(self, product, options):
+        """The reference of the version the customer chose. With dynamic
+        variants that version often has no product yet and ``product`` is
+        another one (e.g. the zirconia ring for a lab-grown diamond): its code
+        is rewritten, segment by segment, with the chosen values. If a value
+        cannot be placed, only the model's own code is shown, never another
+        version's."""
+        code = product.default_code or product.product_tmpl_id.default_code or ''
+        if not options or not product.default_code:
+            return code
+        have = {value.attribute_id: value for value in product.product_template_attribute_value_ids}
+        segments = code.split('/')
+        for value in options:
+            old = have.get(value.attribute_id)
+            if not old or old == value:
+                continue
+            before, after = self._wall_ref_token(old), self._wall_ref_token(value)
+            if not after or before not in segments:
+                return product.product_tmpl_id.default_code or ''
+            segments[segments.index(before)] = after
+        return '/'.join(segments)
+
+    def _wall_ref_token(self, value):
+        """How an attribute value is written inside a reference."""
+        return (value.name or '').strip()
+
+    def _wall_stone_facts(self, screen, stone, facts):
+        """The facts of a piece once its chosen ``stone`` is known: the
+        centre stone is that stone instead of the generic option name."""
+        label = screen.env._("Centre stone")
+        facts = [(l, v) for l, v in facts if l != label]
+        return [(label, stone.display_name)] + facts
+
     def _piece_dict(self, screen, product, base, price='', qr=None,
                     options=None, slot=None):
         """One piece as the wall needs it. Shared by the live push and the
@@ -936,12 +1300,32 @@ class ShowroomWall(http.Controller):
             metal, metal_count, specs = _open_specs(screen.env, product)
 
         def photo(kind, record):
-            return '/showroom/wall/%s/photo/%s/%s.jpg?v=%s' % (
-                screen.access_token, kind, record.id, _photo_version(record))
+            return '/showroom/wall/%s/photo/%s/%s.jpg?v=%s%s' % (
+                screen.access_token, kind, record.id, _photo_version(record), _PHOTO_LOOK.get(kind, ''))
         # A commercial name carries its own second line, so the metal moves
         # down to the data line instead of being dropped.
         name, description = _split_name(_headline(screen, product))
         blurb, facts = _piece_facts(screen.env, product, chosen=bool(options), options=options)
+        stone = slot.stone_id if slot else None
+        stone_text = ''
+        if stone:
+            facts = self._wall_stone_facts(screen, stone.sudo(), facts)
+            centre = self._wall_fact_labels(screen)['centre']
+            stone_text = next((v for l, v in facts if l == centre), '')
+            # «Piedra: Diamante natural» becomes the stone itself, so the short
+            # data line of a single piece says which diamond it is.
+            option = next((i for i, (l, _v) in enumerate(specs)
+                           if (l or '').lower() in ('piedra', 'stone')), None)
+            if option is not None and stone_text:
+                specs = list(specs)
+                # Under «Stone» the word «diamond» goes without saying; the
+                # short data line has little room next to the reference.
+                short = re.sub(r'^(Diamante|Diamond)\s+', '', stone_text, flags=re.I)
+                specs[option] = (specs[option][0], short[:1].upper() + short[1:])
+        labels = self._wall_fact_labels(screen)
+        # The total carats close the block: centre stone plus accents.
+        grading = [labels[key] for key in ('colour', 'clarity', 'cut', 'certificate', 'total')]
+        grades = [{'label': label, 'value': value} for label, value in facts if label in grading]
         specs = list(specs) + facts
         subtitle = description or metal
         if description and metal:
@@ -952,6 +1336,9 @@ class ShowroomWall(http.Controller):
         return {
             'id': product.id,
             'slot': slot.id if slot else False,
+            # The chosen stone is in the price: nothing is «quoted separately».
+            'stone_included': bool(stone),
+            'stone_text': stone_text,
             'name': name,
             # The short commercial name distinguishes pieces when comparing.
             # With the category as the headline they would all read the same,
@@ -966,7 +1353,14 @@ class ShowroomWall(http.Controller):
             'product_name': product.product_tmpl_id.name,
             'variant': ', '.join(value for _label, value in ([('', metal)] if metal else []) + specs),
             'specs': [{'label': label, 'value': value} for label, value in specs],
-            'reference': product.default_code or product.product_tmpl_id.default_code or '',
+            'reference': self._wall_reference(product, options),
+            # A graded diamond (lab-grown or natural) gets its own short block
+            # on the single-piece wall: compare already shows it row by row.
+            'diamond': {
+                'title': next((value for label, value in facts if label == labels['centre']), ''),
+                'grades': grades,
+            } if grades else False,
+            'stone_media': self._stone_media_dict(screen, product, options, slot) if grades else False,
             'price': price,
             'image': photo('p', product),
             'ring': photo('r', product),
@@ -1050,8 +1444,10 @@ class ShowroomWall(http.Controller):
                 currency = slot.currency_id or screen.company_id.currency_id
                 rows, stone = _karat_prices(screen, slot.product_id, slot.option_ids)
                 piece['karats'] = [
-                    {'label': row['label'], 'price': _money(row['amount'], currency),
+                    {'label': row['label'], 'price': _money(row['amount'] + slot.stone_price, currency),
                      'chosen': row['chosen']} for row in rows]
+                if slot.stone_id:
+                    stone = piece['stone_text'] or stone
                 # The stone type goes on the «Stones» row: what was picked on
                 # the tablet, or the cubic zirconia every piece includes.
                 piece['stone_type'] = stone or env._("Cubic zirconia")
@@ -1064,6 +1460,7 @@ class ShowroomWall(http.Controller):
             'qr_text': env._("Scan to take this piece with you"),
             'worn_text': env._("How it looks on"),
             'case_text': env._("In its case"),
+            'sample_text': env._("Reference image"),
             'ask_text': env._("Ask us about this piece"),
             'kicker_text': screen.company_id.name or '',
             'diff_text': env._("Compare and choose"),
@@ -1132,6 +1529,54 @@ class ShowroomWall(http.Controller):
             if not raw:
                 return Response(status=404)
             raw = base64.b64decode(raw)
+            if kind in _PHOTO_WIDTH:
+                body = _stored_photo(request.env, kind, record, raw) or raw
+            else:
+                body = _photo_bytes(raw) or raw
+            if len(_PHOTO_CACHE) >= _PHOTO_CACHE_MAX:
+                _PHOTO_CACHE.clear()
+            _PHOTO_CACHE[key] = body
+        mimetype = ('image/jpeg' if body[:2] == b'\xff\xd8'
+                    else 'image/webp' if body[:4] == b'RIFF' else 'image/png')
+        return Response(body, headers=[
+            ('Content-Type', mimetype),
+            # The version rides on the URL: a new photo is a new address.
+            ('Cache-Control', 'public, max-age=31536000, immutable'),
+        ])
+
+    @http.route('/showroom/wall/<string:token>/stone/<int:tmpl_id>/<string:kind>',
+                type='http', auth='public', methods=['GET'], csrf=False,
+                save_session=False, sitemap=False)
+    def wall_stone(self, token, tmpl_id, kind, **kw):
+        """Photo or video of the stone beside the piece, only for stones a
+        module vouches for (see ``_wall_stone_allowed``)."""
+        screen = _screen(token)
+        template = request.env['product.template'].sudo().browse(tmpl_id).exists()
+        view = re.match(r'^view(\d+)\.jpg$', kind)
+        if (not screen or not template or not (view or kind in ('photo.jpg', 'motion.webp'))
+                or not self._wall_stone_allowed(screen, template)):
+            return Response(status=404)
+        if kind == 'motion.webp':
+            video = self._wall_stone_video(template)
+            clip = _stone_clip(request.env, video) if video else None
+            if not clip:
+                return Response(status=404)
+            return request.env['ir.binary']._get_stream_from(clip, 'raw').get_response(
+                max_age=31536000, immutable=True)
+        record, field = template, 'image_1920'
+        if view:
+            record = template.product_template_image_ids.filtered(lambda i: i.id == int(view.group(1)))
+            field = 'image_1024'
+            if not record:
+                return Response(status=404)
+        key = ('s', record._name, record.id, _photo_version(record), bool(view))
+        body = _PHOTO_CACHE.get(key)
+        if body is None:
+            if not record[field]:
+                return Response(status=404)
+            raw = base64.b64decode(record[field])
+            if view:
+                raw = _stone_view_centred(raw) or raw
             body = _photo_bytes(raw) or raw
             if len(_PHOTO_CACHE) >= _PHOTO_CACHE_MAX:
                 _PHOTO_CACHE.clear()
@@ -1139,7 +1584,6 @@ class ShowroomWall(http.Controller):
         mimetype = 'image/jpeg' if body[:2] == b'\xff\xd8' else 'image/png'
         return Response(body, headers=[
             ('Content-Type', mimetype),
-            # The version rides on the URL: a new photo is a new address.
             ('Cache-Control', 'public, max-age=31536000, immutable'),
         ])
 
@@ -1349,12 +1793,18 @@ dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px;margi
         # screen that shows «from» stores the shop's own «from» figure.
         if screen.show_price == 'from' and not options:
             amount = _from_price(product.product_tmpl_id) or amount
+        stone, stone_price = self._wall_stone(template, options)
+        if stone and amount is not None:
+            # The tablet shows the setting; the wall shows setting + stone.
+            amount += stone_price
         currency = request.website.currency_id if request.website else product.currency_id
         entry = {
             'product': product.sudo(),
             'options': options.sudo(),
             'price': amount,
             'currency': currency if amount is not None else None,
+            'stone': stone,
+            'stone_price': stone_price,
         }
 
         entries = [entry]
@@ -1369,14 +1819,16 @@ dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px;margi
             # Only the sales person's own pieces are compared: one a customer
             # sent from the kiosk gave way to this push, the latest wins.
             own = screen.slot_ids.filtered(lambda s: s.source == 'web')
+            # The same ring with another chosen stone is another piece.
             already = own.filtered(
-                lambda s: s.product_id.product_tmpl_id == template and (
+                lambda s: s.product_id.product_tmpl_id == template and s.stone_id == stone and (
                     not options or not s.option_ids
                     or set(s.option_ids.ids) == set(options.ids)))
             repeated = bool(already)
             kept = [
                 {'product': slot.product_id, 'options': slot.option_ids,
-                 'price': slot.price, 'currency': slot.currency_id}
+                 'price': slot.price, 'currency': slot.currency_id,
+                 'stone': slot.stone_id, 'stone_price': slot.stone_price}
                 for slot in own - already
             ]
             entries = kept + [entry]

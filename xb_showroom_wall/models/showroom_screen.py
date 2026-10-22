@@ -290,7 +290,9 @@ class ShowroomScreen(models.Model):
     def _push_entries(self, entries, mode='single'):
         """Put ``entries`` on this screen, oldest first.
 
-        Each entry is ``{'product', 'options', 'price', 'currency'}``.
+        Each entry is ``{'product', 'options', 'price', 'currency'}``, plus
+        optionally ``stone`` and ``stone_price`` (a loose stone chosen for the
+        setting, already counted in ``price``).
         ``options`` are the attribute values the customer picked on the
         tablet. With dynamic variants the exact combination often has no
         product yet, so the choice travels on the slot instead of forcing a
@@ -320,6 +322,8 @@ class ShowroomScreen(models.Model):
                 'price': amount if amount is not None else product.list_price,
                 'currency_id': currency.id,
                 'source': self.env.context.get('xb_showroom_source') or 'web',
+                'stone_id': entry['stone'].id if entry.get('stone') else False,
+                'stone_price': entry.get('stone_price') or 0.0,
             }))
         self.write({
             'mode': mode,
@@ -397,6 +401,11 @@ class ShowroomSlot(models.Model):
              "sent from the catalogue grid, where no option was chosen yet.")
     price = fields.Float(digits='Product Price')
     currency_id = fields.Many2one('res.currency')
+    # A loose stone the customer chose for the setting (e.g. a natural
+    # diamond picked from stock). ``price`` already includes it; its own
+    # figure is kept so the karat prices of a comparison can add it too.
+    stone_id = fields.Many2one('product.product', string='Chosen stone', ondelete='set null')
+    stone_price = fields.Float(digits='Product Price')
     # Who put the piece there. The wall shows whatever was sent last, from
     # the tablet or from a self-service kiosk; the source is what keeps a
     # sales person's comparison from quietly absorbing the piece a customer

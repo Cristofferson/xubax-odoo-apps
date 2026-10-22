@@ -170,6 +170,8 @@
         var shots = piece.shots || {};
         band.appendChild(shot(shots.case || piece.ring || piece.image, "band-bleed case"));
         band.appendChild(el("div", "band-veil bottom"));
+        // Sobre el frente oscuro del estuche: ahí no tapa la joya.
+        if (piece.diamond) { band.appendChild(diamondBlock(piece.diamond, "over-case")); }
 
         var foot = el("div", "band-foot over-bottom");
         var left = el("div", "band-footcol");
@@ -180,6 +182,8 @@
         band.appendChild(foot);
         return band;
     }
+
+    var WEIGHT_LABELS = ["peso", "weight"];
 
     function titleBlock(piece, cls, headline) {
         /* Dos renglones: el nombre grande y el metal debajo en cursiva. Con
@@ -196,12 +200,88 @@
         if (piece.blurb) { box.appendChild(el("p", "band-blurb", piece.blurb)); }
         box.appendChild(el("div", "band-rule"));
         var strip = dataStrip(piece, 3);
+        // El peso aproximado siempre, aunque venga después en la lista.
+        var weight = (piece.specs || []).slice(3).filter(function (spec) {
+            return WEIGHT_LABELS.indexOf((spec.label || "").toLowerCase()) >= 0;
+        })[0];
+        if (weight) { strip.appendChild(dataStrip({specs: [weight]}, 1).firstChild); }
         strip.classList.add("inline");
         box.appendChild(strip);
         return box;
     }
 
-    function paperBand(piece, state, soloPieza) {
+    function diamondBlock(diamond, cls) {
+        /* Color, pureza, corte y certificado del diamante: en el modo de una
+           pieza no caben en la línea de datos y se quedaban sin decir. */
+        var box = el("div", "band-diamond" + (cls ? " " + cls : ""));
+        if (diamond.title) { box.appendChild(el("div", "band-diamond-title", diamond.title)); }
+        var grades = el("div", "band-diamond-grades");
+        diamond.grades.forEach(function (grade) {
+            var item = el("span", "band-diamond-grade");
+            item.appendChild(el("span", null, grade.label));
+            item.appendChild(el("b", null, grade.value));
+            grades.appendChild(item);
+        });
+        box.appendChild(grades);
+        return box;
+    }
+
+    function stoneBand(piece, state) {
+        /* El diamante que eligió el cliente, en lugar del estuche: su video
+           (como imagen animada: el reproductor del muro no abre un segundo
+           video) en un círculo grande sobre blanco, sus características a la
+           derecha y, debajo, sus otras vistas en miniatura. */
+        var band = el("section", "band band-stone");
+        var stone = piece.stone_media;
+        var stage = el("div", "stone-stage");
+        var ring = el("div", "stone-ring");
+        var still = shot(stone.motion || stone.image, "stone-shot");
+        if (stone.motion && stone.image) {
+            still.addEventListener("error", function onError() {
+                still.removeEventListener("error", onError);
+                still.src = stone.image;
+            });
+        }
+        // Una foto fija gira despacio sobre su eje, como el diamante del video.
+        if (stone.spin && !stone.motion) { still.classList.add("spin"); }
+        ring.appendChild(still);
+        stage.appendChild(ring);
+        // Sus medidas como en un plano: una cota abajo (ancho) y otra al
+        // lado (alto), del tamaño del diamante dentro del círculo.
+        if (stone.size) {
+            [["across", stone.size.width], ["down", stone.size.height]].forEach(function (cota) {
+                var line = el("div", "stone-measure " + cota[0]);
+                line.appendChild(el("span", null, cota[1]));
+                stage.appendChild(line);
+            });
+        }
+        if (stone.sample && state.sample_text) {
+            stage.appendChild(el("div", "stone-sample", state.sample_text));
+        }
+        band.appendChild(stage);
+
+        var side = el("div", "stone-side");
+        if (piece.diamond) { side.appendChild(diamondBlock(piece.diamond, "in-stone")); }
+        if (stone.views && stone.views.length) {
+            var views = el("div", "stone-views");
+            stone.views.forEach(function (view) {
+                var item = el("div", "stone-view");
+                item.appendChild(shot(view.url, "stone-view-shot"));
+                item.appendChild(el("span", null, view.label));
+                views.appendChild(item);
+            });
+            side.appendChild(views);
+        }
+        band.appendChild(side);
+
+        var row = el("div", "band-foot stone-ref");
+        row.appendChild(el("div", "band-ref", piece.reference ? "Ref. " + piece.reference : ""));
+        if (logo) { row.appendChild(shot(logo, "band-logo")); }
+        band.appendChild(row);
+        return band;
+    }
+
+    function paperBand(piece, state, soloPieza, sinRef) {
         /* El vídeo se queda a sangre completa —no se cede un pixel— y el
            título se apoya en la esquina baja, donde el cuadro sólo tiene
            fondo de estudio: nada cae sobre la joya. */
@@ -213,7 +293,9 @@
         if (soloPieza) { return band; }
         band.appendChild(el("div", "band-corner-veil"));
         band.appendChild(titleBlock(piece, "band-corner"));
-        if (piece.reference) {
+        // Con el panel del estuche al lado la referencia ya está ahí: aquí
+        // se encimaba con la línea de datos.
+        if (piece.reference && !sinRef) {
             band.appendChild(el("div", "band-ref corner-right", "Ref. " + piece.reference));
         }
         return band;
@@ -225,6 +307,14 @@
         var picture = shots.hand || shots.case || piece.image;
         band.appendChild(shot(picture, "band-bleed"));
         band.appendChild(el("div", "band-scrim"));
+        // El diamante tomó el lugar del estuche: el estuche queda en un
+        // recuadro abajo a la izquierda, donde la mano sólo tiene fondo.
+        if (piece.stone_media && shots.case && shots.hand) {
+            var inset = el("figure", "band-inset");
+            inset.appendChild(shot(shots.case, "band-inset-shot"));
+            inset.appendChild(el("figcaption", null, state.case_text || ""));
+            band.appendChild(inset);
+        }
 
         var over = el("div", "band-over");
         over.appendChild(el("h2", "band-worn", state.worn_text || ""));
@@ -275,6 +365,7 @@
         var box = el("div", "pb-marca-box");
         if (logo) { box.appendChild(shot(logo, "pb-logo")); }
         if (state.ask_text) { box.appendChild(el("div", "pb-invite", state.ask_text)); }
+        if (piece.diamond) { box.appendChild(diamondBlock(piece.diamond, "centred")); }
         if (piece.price) { box.appendChild(el("div", "band-price", piece.price)); }
         if (piece.qr) {
             box.appendChild(shot(piece.qr, "band-qr pb-qr"));
@@ -325,11 +416,12 @@
             return frag;
         }
         // The details panel already names the piece: the centre shows it alone.
-        var alone = panels >= 2 && !shots.case;
+        var alone = panels >= 2 && !shots.case && !piece.stone_media;
         if (panels >= 2) {
-            frag.appendChild(shots.case ? goldBand(piece, state) : detailsBand(piece, state));
+            frag.appendChild(piece.stone_media ? stoneBand(piece, state)
+                             : shots.case ? goldBand(piece, state) : detailsBand(piece, state));
         }
-        frag.appendChild(paperBand(piece, state, alone));
+        frag.appendChild(paperBand(piece, state, alone, panels >= 2));
         if (panels >= 3) {
             frag.appendChild(shots.hand ? photoBand(piece, state) : inviteBand(piece, state));
         }
@@ -546,7 +638,9 @@
         return parts.join(" · ");
     }
     function isGold(piece) { return /oro/i.test(specOf(piece, "metal") || "oro"); }
-    function isNatural(piece) { return /natural/i.test(specOf(piece, "piedra central") || specOf(piece, "piedra")); }
+    // Un diamante natural sin elegir: su piedra no viene en el precio. Si el cliente ya la
+    // eligió (stone_included), el precio y los datos ya son los de ESE diamante.
+    function isNatural(piece) { return !piece.stone_included && /natural/i.test(specOf(piece, "piedra central") || specOf(piece, "piedra")); }
     function priceOf(piece, state) {
         var ks = piece.karats || [];
         var k = ks.filter(function (x) { return x.chosen; })[0];
@@ -583,6 +677,15 @@
         return value;
     }
 
+    // Lo que define al diamante (piedra, color, pureza, corte, certificado,
+    // acentos y quilataje total) va siempre, aunque sea igual en todas.
+    var KEEP_LABELS = ["piedra central", "color", "pureza", "corte", "certificado", "acentos", "quilataje total",
+        "centre stone", "colour", "clarity", "cut", "certificate", "accents", "total carats"];
+    function keeps(pieces, label) {
+        var low = (label || "").toLowerCase();
+        return KEEP_LABELS.indexOf(low) >= 0 && pieces.some(function (piece) { return specOf(piece, low); });
+    }
+
     function differingRows(pieces, state) {
         var metalLabel = (state.metal_text || "Metal").toLowerCase();
         var labels = [];
@@ -598,7 +701,7 @@
                 var values = pieces.map(function (piece) { return factValue(piece, label); });
                 return values.some(function (v) { return v !== values[0]; });
             };
-            return labels.filter(differs);
+            return labels.filter(function (label) { return differs(label) || keeps(pieces, label); });
         }
         pieces.forEach(function (piece) {
             (piece.specs || []).forEach(function (spec) {
@@ -611,9 +714,12 @@
         });
         return labels.filter(function (label) {
             var values = pieces.map(function (piece) { return factLabel(piece, label) + "|" + factValue(piece, label); });
-            return values.some(function (v) { return v !== values[0]; });
+            return values.some(function (v) { return v !== values[0]; }) || keeps(pieces, label);
         });
     }
+
+    var CC_GRADES = ["color", "pureza", "corte", "certificado", "colour", "clarity", "cut", "certificate"];
+    var CC_WIDE = ["acentos", "accents"];   // «6 × 0.04 ct + 10 × 0.02 ct» no cabe en una columna
 
     function compareCard(piece, state, badge, rows) {
         /* Diseño «Revista»: la foto del anillo puesto llena la tarjeta, la
@@ -646,11 +752,29 @@
         }
         if (rows.length || piece.lead_text) {
             var facts = el("div", "cc-facts");
+            // Color, pureza, corte y certificado van juntos en un renglón
+            // («Calidad»): cuatro celdas sueltas subían el texto hasta tapar
+            // el anillo de la foto de fondo.
+            var grades = rows.filter(function (label) { return CC_GRADES.indexOf((label || "").toLowerCase()) >= 0; })
+                .map(function (label) { return factValue(piece, label); })
+                .filter(function (v) { return v && v !== "—"; });
+            var gradesDone = false;
             rows.forEach(function (label) {
+                var low = (label || "").toLowerCase();
                 var item = el("div", "cc-fact" + (state.__same ? " hot" : ""));
+                if (CC_GRADES.indexOf(low) >= 0) {
+                    if (gradesDone || !grades.length) { return; }
+                    gradesDone = true;
+                    item.classList.add("wide");
+                    item.appendChild(el("span", null, state.grade_text || "Calidad"));
+                    item.appendChild(el("b", null, grades.join(" · ")));
+                    facts.appendChild(item);
+                    return;
+                }
+                if (CC_WIDE.indexOf(low) >= 0) { item.classList.add("wide"); }
                 item.appendChild(el("span", null, factLabel(piece, label)));
                 var fv = factValue(piece, label);
-                if ((label || "").toLowerCase() === "metal") { fv = prettyMetal(fv); }
+                if (low === "metal") { fv = prettyMetal(fv); }
                 item.appendChild(el("b", null, fv));
                 facts.appendChild(item);
             });
@@ -1059,38 +1183,49 @@
 
     /* One request at a time. A shop player that stalls for a few seconds
        otherwise wakes up with twenty requests queued, all answered at once,
-       and the piece it was sent waits behind them. */
+       and the piece it was sent waits behind them.
+       XMLHttpRequest, not fetch: in the shop's player the connection that
+       fetch(credentials: "omit") uses went silent for minutes while the
+       seller's XMLHttpRequest on the same page kept answering (20-oct). */
     var enVuelo = false;
 
     function poll() {
         if (enVuelo) { return; }
         enVuelo = true;
-        var control = window.AbortController ? new AbortController() : null;
-        var corte = control ? window.setTimeout(function () { control.abort(); }, 8000) : null;
-        fetch("/showroom/wall/" + encodeURIComponent(cfg.token) + "/state",
-              { cache: "no-store", credentials: "omit", signal: control ? control.signal : undefined })
-            .then(function (response) {
-                if (!response.ok) { throw new Error("http " + response.status); }
-                return response.json();
-            })
-            .then(function (state) {
+        var xhr = new XMLHttpRequest();
+        var done = false;
+        function fail(error) {
+            // Keep the current piece on screen: a hiccup in the shop's
+            // wifi must never turn the wall black in front of a customer.
+            failures += 1;
+            if (failures === 1 || failures % 30 === 0) {
+                console.warn("[showroom] state unreachable", error);
+            }
+        }
+        function finish() {
+            if (done) { return; }
+            done = true;
+            enVuelo = false;
+        }
+        xhr.open("GET", "/showroom/wall/" + encodeURIComponent(cfg.token) + "/state?t=" + Date.now());
+        xhr.timeout = 8000;
+        xhr.onload = function () {
+            try {
+                if (xhr.status !== 200) { throw new Error("http " + xhr.status); }
+                var state = JSON.parse(xhr.responseText);
                 failures = 0;
                 paint(state);
                 // Read by the safety net in the page head.
                 window.__xbWallBeat = Date.now();
-            })
-            .catch(function (error) {
-                // Keep the current piece on screen: a hiccup in the shop's
-                // wifi must never turn the wall black in front of a customer.
-                failures += 1;
-                if (failures === 1 || failures % 30 === 0) {
-                    console.warn("[showroom] state unreachable", error);
-                }
-            })
-            .then(function () {
-                enVuelo = false;
-                if (corte) { window.clearTimeout(corte); }
-            });
+            } catch (error) {
+                fail(error);
+            }
+            finish();
+        };
+        xhr.onerror = function () { fail("network"); finish(); };
+        xhr.ontimeout = function () { fail("timeout"); finish(); };
+        xhr.onabort = finish;
+        xhr.send();
     }
 
     poll();

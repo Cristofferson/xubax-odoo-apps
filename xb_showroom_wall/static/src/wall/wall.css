@@ -221,6 +221,80 @@ body[data-style="mosaic"] .wall[data-mode="compare"] { grid-template-columns: re
 }
 .band-worn { margin: 0; font-family: "Playfair Display", Georgia, serif; font-size: 5vh; font-weight: 400; line-height: 1.05; }
 .band-price { font-size: 4vh; color: #e6c993; letter-spacing: .06em; }
+.band-diamond { display: flex; flex-direction: column; gap: 1.2vh; align-items: flex-end; }
+.band-diamond-title { font-size: 2.3vh; letter-spacing: .2em; text-transform: uppercase; color: #e6c993; }
+.band-diamond-grades { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 1vh 3vh; max-width: 52vh; }
+.band-diamond-grade { display: inline-flex; gap: .7em; align-items: baseline; white-space: nowrap; font-size: 2.1vh; color: #d3c7b1; }
+.band-diamond-grade b { color: #f7f1e6; font-weight: 500; font-size: 2.5vh; }
+.band-diamond.centred { align-items: center; }
+.band-diamond.over-case {
+  position: absolute; left: 4vh; bottom: 15.5vh; z-index: 3; align-items: flex-start;
+  padding: 1.6vh 2.2vh; border-radius: .6vh; background: rgba(20, 16, 10, .62);
+}
+.band-diamond.over-case .band-diamond-grades { justify-content: flex-start; }
+.band-diamond.centred .band-diamond-grades { justify-content: center; }
+/* --- panel del diamante elegido (en lugar del estuche) ---
+   Fondo blanco. El diamante en un círculo grande a la izquierda; sus datos
+   a la derecha y, debajo, sus otras vistas en miniatura (corazones,
+   flechas…). El panel del muro es horizontal: 1920x1080. */
+.band-stone {
+  color: #221c14;
+  background: radial-gradient(ellipse 50% 70% at 30% 50%, #fbf7f0 0%, #ffffff 70%);
+}
+.stone-stage {
+  position: absolute; left: 8%; top: calc(50% - 1.8vh); transform: translateY(-50%);
+  width: 76vh; height: 76vh;
+}
+.stone-ring {
+  position: absolute; inset: 0; border-radius: 50%; overflow: hidden; background: #fff;
+  box-shadow: 0 0 0 1px rgba(166,130,76,.45), 0 0 0 1.7vh rgba(166,130,76,.06), 0 4.6vh 8.4vh rgba(70,50,20,.20);
+}
+.stone-shot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.stone-sample {
+  position: absolute; left: 0; right: 0; top: calc(100% + 2vh); text-align: center;
+  font-size: 1.5vh; letter-spacing: .32em; text-transform: uppercase; color: #a6824c;
+}
+/* Cotas del diamante, como en un plano: el diamante ocupa el 80 % central
+   del círculo, y cada cota lleva sus topes en los extremos. */
+.stone-measure { position: absolute; color: #8a6a31; border-color: rgba(138,106,49,.85); border-style: solid; border-width: 0; }
+.stone-measure::before { content: ""; position: absolute; border: 0 solid rgba(138,106,49,.85); }
+.stone-measure span {
+  position: absolute; left: 50%; top: 50%; padding: 0 1.2vh; background: #fff; white-space: nowrap;
+  font-family: "Playfair Display", Georgia, serif; font-size: 2.6vh; line-height: 1;
+}
+.stone-measure.across { left: 10%; right: 10%; top: calc(100% + 2.6vh); height: 2.2vh; border-left-width: 1px; border-right-width: 1px; }
+.stone-measure.across::before { left: 0; right: 0; top: 50%; border-top-width: 1px; }
+.stone-measure.across span { transform: translate(-50%, -50%); }
+.stone-measure.down { top: 10%; bottom: 10%; right: calc(100% + 2.6vh); width: 2.2vh; border-top-width: 1px; border-bottom-width: 1px; }
+.stone-measure.down::before { top: 0; bottom: 0; left: 50%; border-left-width: 1px; }
+.stone-measure.down span { transform: translate(-50%, -50%) rotate(-90deg); }
+.stone-side {
+  position: absolute; left: 58.9%; right: 5.7%; top: 50%; transform: translateY(-55%);
+  display: flex; flex-direction: column; gap: 4.4vh;
+}
+.stone-ref { position: absolute; left: 58.9%; right: 5.7%; bottom: 4.4vh; padding: 0; align-items: center; }
+.band-stone .band-ref { color: #8a6a31; }
+.band-diamond.in-stone { align-items: flex-start; gap: 4vh; }
+.band-diamond.in-stone .band-diamond-title {
+  font-family: "Playfair Display", Georgia, serif; font-size: 5.7vh; line-height: 1.08;
+  text-transform: none; letter-spacing: 0; color: #221c14; text-wrap: balance;
+}
+.band-diamond.in-stone .band-diamond-grades {
+  display: grid; grid-template-columns: auto auto; justify-content: start;
+  gap: 3vh 7.4vh; max-width: none;
+}
+.band-diamond.in-stone .band-diamond-grade {
+  flex-direction: column-reverse; gap: .8vh; padding-left: 2.2vh; border-left: 1px solid rgba(166,130,76,.6);
+}
+.band-diamond.in-stone .band-diamond-grade span { font-size: 1.55vh; letter-spacing: .24em; text-transform: uppercase; color: #a6824c; }
+.band-diamond.in-stone .band-diamond-grade b { font-family: "Playfair Display", Georgia, serif; font-size: 4.4vh; font-weight: 400; color: #221c14; line-height: 1; }
+.stone-views { display: flex; gap: 3vh; }
+.stone-view { display: flex; flex-direction: column; align-items: center; gap: 1.1vh; }
+.stone-view-shot {
+  width: 13vh; height: 13vh; border-radius: 50%; object-fit: cover;
+  box-shadow: 0 0 0 1px rgba(166,130,76,.5), 0 1.3vh 2.8vh rgba(70,50,20,.15);
+}
+.stone-view span { font-size: 1.3vh; letter-spacing: .24em; text-transform: uppercase; color: #a6824c; }
 .band-qrow { display: flex; align-items: center; gap: 2.4vh; }
 .band-note { width: 26vh; font-size: 2.3vh; line-height: 1.45; color: #d3c7b1; }
 .band-qr { width: 20vh; height: 20vh; background: #fff; padding: 1.2vh; border-radius: .4vh; }
@@ -261,6 +335,13 @@ body[data-style="mosaic"] .wall[data-mode="compare"] { grid-template-columns: re
   background: none; color: #6b6151; padding: 0; gap: 4.2vh;
   font-size: 2.1vh; justify-content: flex-start;
 }
+/* una pieza sola: un dato por renglón, que «Piedra: Diamante de laboratorio
+   1.00 ct» no se salga del panel */
+.band:not(.band-compare) > .band-corner > .band-strip.inline {
+  flex-direction: column; align-items: flex-start; gap: 1.1vh; width: 50vh;
+}
+.band:not(.band-compare) > .band-corner > .band-strip.inline .strip-item { white-space: normal; }
+.band:not(.band-compare) > .band-corner > .band-strip.inline .strip-label { white-space: nowrap; }
 .band-strip.inline .strip-label { color: #9a8f79; }
 .band-strip.inline b { color: #2b2317; font-weight: 500; }
 .band-ref.corner-right {
@@ -546,3 +627,29 @@ body[data-fit="cover"] .band-compare.third .band-stage video { transform: scale(
 /* Un solo precio por tarjeta: el de la combinación elegida */
 .cc-price-one span { display: block; font-size: calc(1.3vh * var(--s)); letter-spacing: .26em; text-transform: uppercase; color: #c9b48c; font-weight: 400; margin-bottom: .3vh; }
 .cc-price-one b { font-weight: 500; font-size: calc(3.6vh * var(--s)); color: #e6c993; }
+
+/* ---- tarjetas de comparar: la foto de la mano arriba, los datos abajo ----
+   La foto ya no llega hasta el pie: con los datos del diamante el texto
+   subía hasta tapar el anillo. Se desvanece en el fondo antes del nombre. */
+.cc-card .cc-bg { inset: 0 0 auto 0; height: 60%; object-position: 50% 52%;
+  -webkit-mask-image: linear-gradient(180deg, #000 62%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 62%, transparent 100%); }
+.cc-card::after { background: linear-gradient(180deg, rgba(20,17,14,0) 30%, rgba(20,17,14,.55) 48%, rgba(20,17,14,.97) 62%); }
+.cc-card { background: #16120e; }
+.cc-fact.wide { grid-column: span 2; }
+/* Títulos en dorado, datos en blanco: el mismo tono hacía que se confundieran. */
+.cc-fact span { color: #c9a467; }
+.cc-fact b, .cc-fact.hot b, .cc-fact.lead b { color: #ffffff; font-weight: 500; font-size: 112%; }
+.cc-fact.wide b { white-space: normal; }
+.cc-facts { grid-template-columns: repeat(3, auto); justify-content: start; }
+
+/* El estuche en recuadro cuando el diamante ocupa su pantalla. */
+.band-inset { position: absolute; left: 8.3vh; bottom: 8.3vh; width: 48vh; height: 48vh; margin: 0; z-index: 3;
+  overflow: hidden; background: #111; border: 2px solid rgba(214,180,120,.85); box-shadow: 0 1.7vh 4.6vh rgba(0,0,0,.45); }
+.band-inset-shot { width: 100%; height: 100%; object-fit: cover; object-position: 50% 46%; display: block; }
+.band-inset figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.5vh 2vh; font: 500 2vh "Jost", var(--body-font, system-ui), sans-serif;
+  letter-spacing: .22em; text-transform: uppercase; color: #f3e7d2; background: linear-gradient(transparent, rgba(0,0,0,.7)); }
+
+/* Muestra en foto fija: gira sobre su eje (el círculo recorta las esquinas). */
+.stone-shot.spin { animation: stoneSpin 40s linear infinite; }
+@keyframes stoneSpin { to { transform: rotate(360deg); } }

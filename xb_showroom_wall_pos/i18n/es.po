@@ -1,0 +1,115 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-21 19:05+0000\n"
+"PO-Revision-Date: 2026-10-21 19:05+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: xb_showroom_wall_pos
+#. odoo-javascript
+#: code:addons/xb_showroom_wall_pos/static/src/pos/show_on_wall.xml:0
+msgid "Compare on the wall"
+msgstr "Comparar en el muro"
+
+#. module: xb_showroom_wall_pos
+#: model:ir.model,name:xb_showroom_wall_pos.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: xb_showroom_wall_pos
+#: model:ir.model.fields,field_description:xb_showroom_wall_pos.field_pos_config__display_name
+#: model:ir.model.fields,field_description:xb_showroom_wall_pos.field_product_template__display_name
+#: model:ir.model.fields,field_description:xb_showroom_wall_pos.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: xb_showroom_wall_pos
+#: model:ir.model.fields,field_description:xb_showroom_wall_pos.field_pos_config__id
+#: model:ir.model.fields,field_description:xb_showroom_wall_pos.field_product_template__id
+#: model:ir.model.fields,field_description:xb_showroom_wall_pos.field_res_config_settings__id
+msgid "ID"
+msgstr "ID"
+
+#. module: xb_showroom_wall_pos
+#. odoo-javascript
+#: code:addons/xb_showroom_wall_pos/static/src/pos/show_on_wall.js:0
+msgid "Look at the wall!"
+msgstr "¡Ya está en el muro!"
+
+#. module: xb_showroom_wall_pos
+#. odoo-javascript
+#: code:addons/xb_showroom_wall_pos/static/src/pos/show_on_wall.js:0
+msgid "On the wall: comparing %s."
+msgstr "En el muro: comparando %s."
+
+#. module: xb_showroom_wall_pos
+#: model:ir.model,name:xb_showroom_wall_pos.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr "Configuración del punto de venta"
+
+#. module: xb_showroom_wall_pos
+#: model:ir.model,name:xb_showroom_wall_pos.model_product_template
+msgid "Product"
+msgstr "Producto"
+
+#. module: xb_showroom_wall_pos
+#. odoo-javascript
+#: code:addons/xb_showroom_wall_pos/static/src/pos/show_on_wall.xml:0
+msgid "Show on the wall"
+msgstr "Ver en el muro"
+
+#. module: xb_showroom_wall_pos
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall_pos.res_config_settings_view_form_showroom_pos
+msgid "Showroom wall"
+msgstr "Muro del showroom"
+
+#. module: xb_showroom_wall_pos
+#: model:ir.model.fields,field_description:xb_showroom_wall_pos.field_pos_config__xb_showroom_pos_screen_id
+#: model:ir.model.fields,field_description:xb_showroom_wall_pos.field_res_config_settings__pos_xb_showroom_pos_screen_id
+msgid "Showroom wall (register)"
+msgstr "Muro del showroom (caja)"
+
+#. module: xb_showroom_wall_pos
+#: model_terms:ir.ui.view,arch_db:xb_showroom_wall_pos.res_config_settings_view_form_showroom_pos
+msgid ""
+"The cashier can show a piece on this wall from the register. Only products "
+"ticked 'Show on the showroom wall'."
+msgstr ""
+"Desde la caja se puede mostrar una pieza en este muro. Solo productos con la"
+" casilla «Ver en el muro del showroom»."
+
+#. module: xb_showroom_wall_pos
+#: model:ir.model.fields,help:xb_showroom_wall_pos.field_pos_config__xb_showroom_pos_screen_id
+#: model:ir.model.fields,help:xb_showroom_wall_pos.field_res_config_settings__pos_xb_showroom_pos_screen_id
+msgid ""
+"The register gets a 'Show on the wall' button that sends the piece to this "
+"wall. Only products ticked 'Show on the showroom wall'."
+msgstr ""
+"La caja tiene un botón «Ver en el muro» que manda la pieza a este muro. Solo"
+" productos con la casilla «Ver en el muro del showroom»."
+
+#. module: xb_showroom_wall_pos
+#. odoo-javascript
+#: code:addons/xb_showroom_wall_pos/static/src/pos/show_on_wall.js:0
+msgid "The wall is back to the shop window."
+msgstr "De vuelta a la vitrina."
+
+#. module: xb_showroom_wall_pos
+#. odoo-javascript
+#: code:addons/xb_showroom_wall_pos/static/src/pos/show_on_wall.js:0
+msgid "The wall is not available right now."
+msgstr "El muro no está disponible en este momento."
+
+#. module: xb_showroom_wall_pos
+#. odoo-javascript
+#: code:addons/xb_showroom_wall_pos/static/src/pos/show_on_wall.xml:0
+msgid "Wall back to the shop window"
+msgstr "Muro a la vitrina"

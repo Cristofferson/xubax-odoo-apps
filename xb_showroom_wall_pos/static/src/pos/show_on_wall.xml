@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="xb_showroom_wall_pos.ProductInfoPopup" t-inherit="point_of_sale.ProductInfoPopup" t-inherit-mode="extension">
+        <xpath expr="//t[@t-set-slot='footer']/div" position="after">
+            <!-- A row of its own: next to Close and Edit the labels wrap. -->
+            <div t-if="canShowOnWall" class="d-flex flex-row gap-2 w-100">
+                <button class="btn btn-secondary btn-lg lh-lg w-50 xb-show-on-wall" t-on-click="() => this.showOnWall()">
+                    <i class="fa fa-television me-1" role="img" aria-label="Show on the wall" title="Show on the wall"/> Show on the wall
+                </button>
+                <button class="btn btn-secondary btn-lg lh-lg w-50 xb-compare-on-wall" t-on-click="() => this.showOnWall('compare')">
+                    <i class="fa fa-columns me-1" role="img" aria-label="Compare on the wall" title="Compare on the wall"/> Compare on the wall
+                </button>
+            </div>
+        </xpath>
+    </t>
+    <t t-name="xb_showroom_wall_pos.ControlButtons" t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('control-buttons-modal')]" position="inside">
+            <button t-if="wallLine" t-att-class="buttonClass" class="xb-show-on-wall" t-on-click="() => this.sendLineToWall()">
+                <i class="fa fa-television me-1" role="img" aria-label="Show on the wall" title="Show on the wall"/> Show on the wall
+            </button>
+            <button t-if="wallLine" t-att-class="buttonClass" class="xb-compare-on-wall" t-on-click="() => this.sendLineToWall('compare')">
+                <i class="fa fa-columns me-1" role="img" aria-label="Compare on the wall" title="Compare on the wall"/> Compare on the wall
+            </button>
+        </xpath>
+    </t>
+</templates>

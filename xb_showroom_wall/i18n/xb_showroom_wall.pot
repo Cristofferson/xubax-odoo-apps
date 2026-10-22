@@ -1137,3 +1137,33 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:xb_showroom_wall.view_showroom_screen_form
 msgid "https://…/shop"
 msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Colour"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Clarity"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Cut"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Certificate"
+msgstr ""
+
+#. module: xb_showroom_wall
+#. odoo-python
+#: code:addons/xb_showroom_wall/controllers/wall.py:0
+msgid "Reference image"
+msgstr ""
