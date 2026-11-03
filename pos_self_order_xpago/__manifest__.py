@@ -8,8 +8,6 @@
     'website': 'https://xpago.xubax.com',
     'support': 'hola@xubax.com',
     'license': 'OPL-1',
-    'price': 0.0,
-    'currency': 'USD',
     'depends': ['pos_xpago', 'pos_self_order'],
     'auto_install': True,
     'assets': {

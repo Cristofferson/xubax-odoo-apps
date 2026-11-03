@@ -10,8 +10,6 @@
     'website': 'https://xpago.xubax.com',
     'support': 'hola@xubax.com',
     'license': 'OPL-1',
-    'price': 0.0,
-    'currency': 'USD',
     'depends': ['point_of_sale', 'payment_xpago'],
     'data': [
         'security/ir.model.access.csv',
