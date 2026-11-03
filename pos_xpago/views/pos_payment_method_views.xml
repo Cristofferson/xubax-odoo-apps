@@ -10,6 +10,8 @@
                        options="{'no_create': True}"/>
                 <field name="xpago_terminal_serial" placeholder="N950-123456789" invisible="use_payment_terminal != 'xpago'"
                        required="use_payment_terminal == 'xpago'"/>
+                <field name="xpago_bank_account_id" invisible="use_payment_terminal != 'xpago'" options="{'no_create': True, 'no_open': True}"/>
+                <field name="xpago_choose_account" invisible="use_payment_terminal != 'xpago'"/>
                 <field name="xpago_open_terminal_app" invisible="use_payment_terminal != 'xpago'"/>
             </xpath>
         </field>

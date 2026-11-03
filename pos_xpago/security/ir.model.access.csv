@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_pos_xpago_charge_user,pos.xpago.charge user,model_pos_xpago_charge,point_of_sale.group_pos_user,1,0,0,0
 access_pos_xpago_charge_manager,pos.xpago.charge manager,model_pos_xpago_charge,point_of_sale.group_pos_manager,1,0,0,0
+access_pos_xpago_reconcile_manager,pos.xpago.reconcile manager,model_pos_xpago_reconcile,point_of_sale.group_pos_manager,1,1,1,1
+access_pos_xpago_reconcile_line_manager,pos.xpago.reconcile.line manager,model_pos_xpago_reconcile_line,point_of_sale.group_pos_manager,1,1,1,1

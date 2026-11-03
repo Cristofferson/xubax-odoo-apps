@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-03 08:29+0000\n"
-"PO-Revision-Date: 2026-11-03 08:29+0000\n"
+"POT-Creation-Date: 2026-11-03 08:50+0000\n"
+"PO-Revision-Date: 2026-11-03 08:50+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_MX\n"
@@ -25,6 +25,21 @@ msgid "3, 6, 12"
 msgstr ""
 
 #. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__xpago_invoice_bank_account_id
+msgid "Account for invoice payments"
+msgstr "Cuenta para pagos de facturas"
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__xpago_other_bank_account_id
+msgid "Account for other online payments"
+msgstr "Cuenta para los demás pagos en línea"
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__active
+msgid "Active"
+msgstr "Activa"
+
+#. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__xpago_single_payment
 msgid "Always offer a single payment"
 msgstr "Ofrecer siempre pago de contado"
@@ -32,14 +47,16 @@ msgstr "Ofrecer siempre pago de contado"
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__code
 msgid "Code"
-msgstr ""
+msgstr "Código"
 
 #. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__create_uid
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__create_date
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__create_date
 msgid "Created on"
 msgstr ""
@@ -50,8 +67,16 @@ msgid "Currency"
 msgstr "Moneda"
 
 #. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__xpago_bank_account_ids
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_provider_form
+msgid "Deposit accounts"
+msgstr "Cuentas de depósito"
+
+#. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__display_name
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_token__display_name
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_transaction__display_name
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__display_name
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__display_name
 msgid "Display Name"
 msgstr ""
@@ -68,17 +93,21 @@ msgstr ""
 
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__id
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_token__id
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_transaction__id
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__id
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__id
 msgid "ID"
 msgstr ""
 
 #. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__write_uid
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__write_date
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__write_date
 msgid "Last Updated on"
 msgstr ""
@@ -105,6 +134,11 @@ msgstr ""
 "vacío para ofrecer solo el pago de contado."
 
 #. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__xpago_notify_user_ids
 msgid "Notify payments to"
 msgstr "Avisar los pagos a"
@@ -129,6 +163,11 @@ msgid "Payment Provider"
 msgstr "Proveedor de pago"
 
 #. module: payment_xpago
+#: model:ir.model,name:payment_xpago.model_payment_token
+msgid "Payment Token"
+msgstr "Token de pago"
+
+#. module: payment_xpago
 #: model:ir.model,name:payment_xpago.model_payment_transaction
 msgid "Payment Transaction"
 msgstr "Transacción de pago"
@@ -145,6 +184,7 @@ msgid "Payment received: %s"
 msgstr "Pago recibido: %s"
 
 #. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__provider_id
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__provider_id
 msgid "Provider"
 msgstr "Proveedor"
@@ -161,6 +201,11 @@ msgid "Saved card"
 msgstr "Tarjeta guardada"
 
 #. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: payment_xpago
 #: model:ir.model.fields,help:payment_xpago.field_payment_provider__xpago_api_key
 msgid "The API key XPago gave you when your account was opened."
 msgstr "La llave API que XPago te dio al abrir tu cuenta."
@@ -172,9 +217,28 @@ msgid "The amount of a rule cannot be negative."
 msgstr "El monto de una regla no puede ser negativo."
 
 #. module: payment_xpago
+#. odoo-python
+#: code:addons/payment_xpago/models/payment_transaction.py:0
+msgid "The bank declined the card."
+msgstr "El banco rechazó la tarjeta."
+
+#. module: payment_xpago
+#. odoo-python
+#: code:addons/payment_xpago/models/payment_transaction.py:0
+msgid "The card was not saved in time."
+msgstr "La tarjeta no se guardó a tiempo."
+
+#. module: payment_xpago
+#. odoo-python
+#: code:addons/payment_xpago/models/payment_transaction.py:0
+msgid "The hold was released (%s)."
+msgstr "Se liberó la retención (%s)."
+
+#. module: payment_xpago
 #: model:ir.model.fields,help:payment_xpago.field_payment_xpago_installment_rule__currency_id
 msgid "The main currency of the company, used to display monetary fields."
 msgstr ""
+"La moneda principal de la empresa, usada para mostrar los campos de dinero."
 
 #. module: payment_xpago
 #: model:ir.model.fields,help:payment_xpago.field_payment_xpago_installment_rule__min_amount
@@ -183,9 +247,14 @@ msgstr ""
 "La regla aplica a ventas de este monto o más, hasta la siguiente regla."
 
 #. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_transaction__xpago_card_id
+msgid "The saved card (XPago payment method) this payment was made on."
+msgstr "La tarjeta guardada de XPago con la que se hizo este pago."
+
+#. module: payment_xpago
 #: model:ir.model.fields,help:payment_xpago.field_payment_provider__code
 msgid "The technical code of this payment provider."
-msgstr ""
+msgstr "El código técnico de este proveedor de pago."
 
 #. module: payment_xpago
 #: model:ir.model.constraint,message:payment_xpago.constraint_payment_xpago_installment_rule_provider_min_amount_unique
@@ -200,6 +269,51 @@ msgid ""
 msgstr ""
 "Estos usuarios reciben un aviso en Odoo (bandeja de entrada y ventana "
 "emergente) por cada pago que entra con XPago."
+
+#. module: payment_xpago
+#: model:ir.model.constraint,message:payment_xpago.constraint_payment_xpago_bank_account_xpago_id_unique
+msgid "This XPago account already exists."
+msgstr "Esta cuenta de XPago ya existe."
+
+#. module: payment_xpago
+#. odoo-python
+#: code:addons/payment_xpago/models/payment_transaction.py:0
+msgid ""
+"This payment was not made on a saved card: refund it from XPago's dashboard."
+msgstr ""
+"Este pago no se hizo con tarjeta guardada: reembólsalo desde el portal de "
+"XPago."
+
+#. module: payment_xpago
+#. odoo-python
+#: code:addons/payment_xpago/models/payment_transaction.py:0
+msgid ""
+"To save a card, the customer needs a name, an email and a phone number."
+msgstr ""
+"Para guardar una tarjeta, el cliente necesita nombre, correo y teléfono."
+
+#. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_xpago_bank_account__is_default
+msgid "Where XPago deposits a sale that names no account."
+msgstr "Dónde deposita XPago una venta que no indica cuenta."
+
+#. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_provider__xpago_other_bank_account_id
+msgid ""
+"Where XPago deposits the online store, payment link and subscription "
+"payments. Empty: your XPago account decides."
+msgstr ""
+"Dónde deposita XPago los pagos de la tienda en línea, las ligas de pago y "
+"las suscripciones. Vacío: lo decide tu cuenta de XPago."
+
+#. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_provider__xpago_invoice_bank_account_id
+msgid ""
+"Where XPago deposits the payments of invoices. Empty: your XPago account "
+"decides."
+msgstr ""
+"Dónde deposita XPago los pagos de facturas. Vacío: lo decide tu cuenta de "
+"XPago."
 
 #. module: payment_xpago
 #: model_terms:ir.ui.view,arch_db:payment_xpago.payment_provider_form
@@ -248,6 +362,54 @@ msgid "XPago answered an unknown status: %s"
 msgstr "XPago respondió un estado desconocido: %s"
 
 #. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_provider_form
+msgid ""
+"XPago can deposit each payment in a different account of yours. Odoo reads your accounts from\n"
+"                        XPago every hour; they are added and removed in XPago only. At the point of sale, each terminal\n"
+"                        can have its own account or let the cashier choose it on each charge."
+msgstr ""
+"XPago puede depositar cada pago en una cuenta distinta tuya. Odoo lee tus "
+"cuentas de XPago cada hora; se agregan y se quitan solo en XPago. En el "
+"punto de venta, cada terminal puede tener su propia cuenta o dejar que la "
+"cajera la elija en cada cobro."
+
+#. module: payment_xpago
+#. odoo-python
+#: code:addons/payment_xpago/models/payment_transaction.py:0
+msgid "XPago captures a hold once; the bank frees the rest on its own."
+msgstr ""
+"XPago captura una retención una sola vez; el banco libera el resto por su "
+"cuenta."
+
+#. module: payment_xpago
+#. odoo-python
+#: code:addons/payment_xpago/models/payment_xpago_bank_account.py:0
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__is_default
+msgid "XPago default"
+msgstr "predeterminada en XPago"
+
+#. module: payment_xpago
+#: model:ir.model,name:payment_xpago.model_payment_xpago_bank_account
+msgid "XPago deposit account"
+msgstr "Cuenta de depósito de XPago"
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__xpago_id
+msgid "XPago id"
+msgstr "Id en XPago"
+
+#. module: payment_xpago
+#. odoo-python
+#: code:addons/payment_xpago/models/payment_transaction.py:0
+msgid "XPago releases a hold in full only."
+msgstr "XPago solo libera una retención completa."
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_transaction__xpago_card_id
+msgid "XPago saved card"
+msgstr "Tarjeta guardada de XPago"
+
+#. module: payment_xpago
 #: model:ir.model,name:payment_xpago.model_payment_xpago_installment_rule
 msgid "XPago: months without interest by amount"
 msgstr "XPago: meses sin intereses por monto"
@@ -256,6 +418,11 @@ msgstr "XPago: meses sin intereses por monto"
 #: model:ir.actions.server,name:payment_xpago.ir_cron_sync_pending_ir_actions_server
 msgid "XPago: read back pending online payments"
 msgstr "XPago: leer los pagos en línea pendientes"
+
+#. module: payment_xpago
+#: model:ir.actions.server,name:payment_xpago.ir_cron_sync_bank_accounts_ir_actions_server
+msgid "XPago: read the deposit accounts"
+msgstr "XPago: leer las cuentas de depósito"
 
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_transaction__xpago_notified

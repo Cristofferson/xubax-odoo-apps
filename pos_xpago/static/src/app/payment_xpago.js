@@ -2,6 +2,8 @@ import { _t } from "@web/core/l10n/translation";
 import { PaymentInterface } from "@point_of_sale/app/utils/payment/payment_interface";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { register_payment_method } from "@point_of_sale/app/services/pos_store";
+import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
+import { SelectionPopup } from "@point_of_sale/app/components/popups/selection_popup/selection_popup";
 
 const POLL_DELAY = 2000;
 
@@ -26,6 +28,10 @@ export class PaymentXpago extends PaymentInterface {
             this._showError(_t("XPago terminals only charge positive amounts."));
             return false;
         }
+        const accountId = await this._chooseAccount();
+        if (accountId === false) {
+            return false;
+        }
         line.setPaymentStatus("waitingCapture");
         let charge;
         try {
@@ -34,6 +40,7 @@ export class PaymentXpago extends PaymentInterface {
                     amount: line.amount,
                     session_id: this.pos.config.current_session_id?.id,
                     order_uuid: order.uuid,
+                    bank_account_id: accountId,
                 },
             ]);
         } catch (error) {
@@ -55,6 +62,26 @@ export class PaymentXpago extends PaymentInterface {
             this._showError(_t("The charge expired on the terminal before it was paid."));
         }
         return false;
+    }
+
+    async _chooseAccount() {
+        // When this terminal lets the cashier choose, ask for the deposit account before charging.
+        const method = this.payment_method_id;
+        const accounts = this.pos.models["payment.xpago.bank.account"]?.getAll() || [];
+        if (!method.xpago_choose_account || accounts.length < 2) {
+            return null;
+        }
+        const preset = method.xpago_bank_account_id?.id;
+        const picked = await makeAwaitable(this.env.services.dialog, SelectionPopup, {
+            title: _t("Deposit account"),
+            list: accounts.map((account) => ({
+                id: account.id,
+                label: account.name,
+                isSelected: account.id === preset,
+                item: account.id,
+            })),
+        });
+        return picked || false;
     }
 
     async _waitForResult(uuid, charge) {

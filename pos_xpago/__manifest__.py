@@ -17,6 +17,7 @@
         'security/ir.model.access.csv',
         'views/pos_payment_method_views.xml',
         'views/pos_xpago_charge_views.xml',
+        'wizard/pos_xpago_reconcile_views.xml',
         'data/ir_cron.xml',
     ],
     'assets': {

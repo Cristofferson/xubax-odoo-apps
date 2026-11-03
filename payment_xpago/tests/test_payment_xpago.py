@@ -99,3 +99,36 @@ class TestPaymentXpago(XpagoCommon, PaymentHttpCommon):
     def test_enabling_without_api_key_is_refused(self):
         with self.assertRaises(ValidationError):
             self.provider.write({'xpago_api_key': False, 'state': 'enabled'})
+
+
+@tagged('post_install', '-at_install')
+class TestDepositAccounts(XpagoCommon):
+
+    ACCOUNTS = {'data': [{'id': 'acc-oper', 'name': 'Banorte Operación', 'isDefault': True},
+                         {'id': 'acc-fiscal', 'name': 'BBVA Fiscal', 'isDefault': False}]}
+
+    def sync(self, answer=None):
+        with patch(SEND, return_value=answer or self.ACCOUNTS):
+            self.provider._xpago_sync_bank_accounts()
+        return {a.xpago_id: a for a in self.provider.with_context(active_test=False).xpago_bank_account_ids}
+
+    def test_accounts_are_read_updated_and_archived(self):
+        accounts = self.sync()
+        self.assertEqual(set(accounts), {'acc-oper', 'acc-fiscal'})
+        self.assertTrue(accounts['acc-oper'].is_default)
+        accounts = self.sync({'data': [{'id': 'acc-oper', 'name': 'Banorte', 'isDefault': True}]})
+        self.assertEqual(accounts['acc-oper'].name, 'Banorte')
+        self.assertFalse(accounts['acc-fiscal'].active)
+
+    def test_payment_goes_to_its_account(self):
+        accounts = self.sync()
+        self.provider.xpago_other_bank_account_id = accounts['acc-oper']
+        tx = self._create_transaction('redirect', currency_id=self.currency.id)
+        self.assertEqual(tx._xpago_prepare_checkout_payload()['bankAccountId'], 'acc-oper')
+
+    def test_archived_account_is_not_sent(self):
+        accounts = self.sync()
+        self.provider.xpago_other_bank_account_id = accounts['acc-fiscal']
+        self.sync({'data': [{'id': 'acc-oper', 'name': 'Banorte', 'isDefault': True}]})
+        tx = self._create_transaction('redirect', currency_id=self.currency.id)
+        self.assertNotIn('bankAccountId', tx._xpago_prepare_checkout_payload())

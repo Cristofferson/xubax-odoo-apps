@@ -10,6 +10,8 @@ from odoo.addons.payment.logging import get_payment_logger
 _logger = get_payment_logger(__name__)
 
 FINAL_STATES = ('confirmed', 'cancelled', 'expired')
+# A paid charge gets its sale a moment later, when the cashier validates the order.
+ORPHAN_GRACE = timedelta(minutes=10)
 
 
 class PosXpagoCharge(models.Model):
@@ -35,6 +37,8 @@ class PosXpagoCharge(models.Model):
     session_id = fields.Many2one('pos.session', readonly=True, ondelete='set null')
     config_id = fields.Many2one('pos.config', string="Point of sale", readonly=True, ondelete='set null')
     order_uuid = fields.Char(readonly=True, index=True)
+    pos_order_id = fields.Many2one('pos.order', string="Order", readonly=True, ondelete='set null',
+                                   help="Orders paid at a self-order kiosk, which the charge itself completes.")
     terminal_serial = fields.Char(string="Terminal S/N", readonly=True)
     expires_at = fields.Datetime(readonly=True)
     card_brand = fields.Char(readonly=True)
@@ -49,11 +53,48 @@ class PosXpagoCharge(models.Model):
     tip_amount = fields.Monetary(string="Tip", readonly=True)
     terms = fields.Integer(string="Months without interest", readonly=True)
     notified = fields.Boolean(readonly=True, copy=False)
+    pos_payment_id = fields.Many2one('pos.payment', string="Point of sale payment", compute='_compute_pos_payment')
+    sale_order_id = fields.Many2one('pos.order', string="Sale", compute='_compute_pos_payment')
+    without_sale = fields.Boolean(
+        string="Paid without a sale", compute='_compute_pos_payment', search='_search_without_sale',
+        help="The card was charged but no order of the point of sale holds the payment (for example, the sale was "
+             "reloaded before the order was validated).",
+    )
+    bank_account_id = fields.Many2one('payment.xpago.bank.account', string="Deposit account", readonly=True,
+                                      help="The account this charge was sent to.")
+
+    def _compute_pos_payment(self):
+        payments = self.env['pos.payment'].sudo().search([('transaction_id', 'in', [c.payment_id for c in self if c.payment_id])])
+        for charge in self:
+            payment = payments.filtered(
+                lambda p: charge.payment_id and p.transaction_id == charge.payment_id and p.payment_method_id == charge.payment_method_id)[:1]
+            charge.pos_payment_id = payment
+            charge.sale_order_id = payment.pos_order_id or charge.pos_order_id
+            charge.without_sale = charge.state == 'confirmed' and not charge.sale_order_id
+
+    def _search_without_sale(self, operator, value):
+        if operator not in ('=', '!=') or not isinstance(value, bool):
+            raise UserError(_("Unsupported search on \"Paid without a sale\"."))
+        self.env['pos.payment'].flush_model(['transaction_id', 'payment_method_id'])
+        self.flush_model(['state', 'pos_order_id', 'payment_id', 'payment_method_id', 'create_date'])
+        self.env.cr.execute("""
+            SELECT charge.id
+              FROM pos_xpago_charge charge
+             WHERE charge.state = 'confirmed'
+               AND charge.pos_order_id IS NULL
+               AND charge.create_date < %s
+               AND NOT EXISTS (SELECT 1 FROM pos_payment payment
+                                WHERE payment.transaction_id = charge.payment_id
+                                  AND payment.payment_method_id = charge.payment_method_id)
+        """, [fields.Datetime.now() - ORPHAN_GRACE])
+        ids = [row[0] for row in self.env.cr.fetchall()]
+        positive = (operator == '=') == value
+        return [('id', 'in' if positive else 'not in', ids)]
 
     # === CREATE AND READ BACK === #
 
     @api.model
-    def _xpago_create(self, method, provider, amount, session, order_uuid):
+    def _xpago_create(self, method, provider, amount, session, order_uuid, order=None, account=None):
         if amount <= 0:
             raise UserError(_("XPago terminals only charge positive amounts."))
         config = session.config_id
@@ -70,6 +111,8 @@ class PosXpagoCharge(models.Model):
             'config_id': config.id,
             'order_uuid': order_uuid,
             'terminal_serial': method.xpago_terminal_serial,
+            'pos_order_id': order.id if order else False,
+            'bank_account_id': account.id if account else False,
         })
         body = {
             'amount': charge.amount,
@@ -77,6 +120,8 @@ class PosXpagoCharge(models.Model):
             'externalId': external_id,
             'terminalCode': method.xpago_terminal_serial,
         }
+        if account:
+            body['bankAccountId'] = account.xpago_id
         try:
             remote = provider._send_api_request('POST', '/payment-intent', json=body)
         except ValidationError as error:
@@ -155,6 +200,7 @@ class PosXpagoCharge(models.Model):
         return 'state' in values
 
     def _xpago_on_state_changed(self):
+        self._xpago_complete_orders()
         for charge in self.filtered(lambda c: c.state == 'confirmed' and not c.notified):
             charge.notified = True
             title = _("Payment received: %s", format_amount(self.env, charge.charged_amount or charge.amount, charge.currency_id))
@@ -163,8 +209,26 @@ class PosXpagoCharge(models.Model):
                 _("Terminal at %s", charge.config_id.name) if charge.config_id else charge.payment_method_id.name,
                 card,
                 charge.terms > 1 and _("%s months without interest", charge.terms),
+                charge.bank_account_id and _("Deposited in %s", charge.bank_account_id.name),
             ]
             charge.provider_id._xpago_notify(title, lines)
+
+    def _xpago_complete_orders(self):
+        """Hook for orders a charge pays by itself (self-order kiosk)."""
+
+    def _xpago_payment_values(self):
+        """The card of an approved charge, as the point of sale payment stores it."""
+        self.ensure_one()
+        return {
+            'transaction_id': self.payment_id or '',
+            'payment_ref_no': self.operation_code or '',
+            'payment_method_authcode': self.authorization_code or '',
+            'card_type': self.card_type or '',
+            'card_brand': self.card_brand or '',
+            'card_no': self.card_no or '',
+            'payment_method_issuer_bank': self.issuer_bank or '',
+            'payment_method_payment_mode': self.entry_mode or '',
+        }
 
     def _xpago_public_view(self):
         """What the point of sale sees of the charge."""
@@ -174,16 +238,7 @@ class PosXpagoCharge(models.Model):
             'xpago_id': self.xpago_id,
             'state': self.state,
             'expires_at': fields.Datetime.to_string(self.expires_at) if self.expires_at else False,
-            'payment': {
-                'transaction_id': self.payment_id or '',
-                'payment_ref_no': self.operation_code or '',
-                'payment_method_authcode': self.authorization_code or '',
-                'card_type': self.card_type or '',
-                'card_brand': self.card_brand or '',
-                'card_no': self.card_no or '',
-                'payment_method_issuer_bank': self.issuer_bank or '',
-                'payment_method_payment_mode': self.entry_mode or '',
-            } if self.state == 'confirmed' else {},
+            'payment': self._xpago_payment_values() if self.state == 'confirmed' else {},
         }
 
     @api.model

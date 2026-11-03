@@ -29,6 +29,24 @@
                         <field name="xpago_single_payment"/>
                     </group>
                 </page>
+                <page string="Deposit accounts" name="xpago_accounts" invisible="code != 'xpago'">
+                    <div class="text-muted mb-2">
+                        XPago can deposit each payment in a different account of yours. Odoo reads your accounts from
+                        XPago every hour; they are added and removed in XPago only. At the point of sale, each terminal
+                        can have its own account or let the cashier choose it on each charge.
+                    </div>
+                    <group>
+                        <field name="xpago_invoice_bank_account_id" options="{'no_create': True, 'no_open': True}"/>
+                        <field name="xpago_other_bank_account_id" options="{'no_create': True, 'no_open': True}"/>
+                    </group>
+                    <field name="xpago_bank_account_ids" readonly="1">
+                        <list>
+                            <field name="name"/>
+                            <field name="is_default"/>
+                            <field name="active" widget="boolean_toggle" readonly="1"/>
+                        </list>
+                    </field>
+                </page>
                 <page string="Payment notifications" name="xpago_notify" invisible="code != 'xpago'">
                     <div class="text-muted mb-3">
                         Each payment received with XPago sends these users an Odoo notification: a message in their

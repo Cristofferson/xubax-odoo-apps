@@ -19,12 +19,22 @@ class PosPaymentMethod(models.Model):
         help="Bring the charge app to the front when the point of sale runs on the terminal itself.",
     )
 
+    xpago_bank_account_id = fields.Many2one(
+        'payment.xpago.bank.account', string="Deposit account", domain="[('provider_id', '=', xpago_provider_id)]",
+        help="Where XPago deposits what this terminal charges. Empty: your XPago account decides.",
+    )
+    xpago_choose_account = fields.Boolean(
+        string="The cashier chooses the account",
+        help="Before sending the amount to the terminal, the cashier picks the deposit account; this terminal's account comes selected.",
+    )
+
     def _get_payment_terminal_selection(self):
         return super()._get_payment_terminal_selection() + [('xpago', "XPago")]
 
     @api.model
     def _load_pos_data_fields(self, config):
-        return super()._load_pos_data_fields(config) + ['xpago_open_terminal_app']
+        return super()._load_pos_data_fields(config) + [
+            'xpago_open_terminal_app', 'xpago_choose_account', 'xpago_bank_account_id']
 
     @api.constrains('use_payment_terminal', 'xpago_provider_id', 'xpago_terminal_serial')
     def _check_xpago_terminal(self):
@@ -43,6 +53,15 @@ class PosPaymentMethod(models.Model):
             raise UserError(_("XPago is disabled. An administrator can enable it in the XPago payment provider."))
         return provider
 
+    def _xpago_charge_account(self, provider, chosen_id=None):
+        """The cashier's choice when this terminal lets her choose, else the terminal's account."""
+        Account = self.env['payment.xpago.bank.account'].sudo()
+        chosen = Account.browse(int(chosen_id)).exists() if chosen_id and self.xpago_choose_account else Account
+        for account in (chosen, self.sudo().xpago_bank_account_id):
+            if provider._xpago_bank_account_id(account):
+                return account
+        return Account
+
     def _xpago_charge(self, charge_id):
         charge = self.env['pos.xpago.charge'].sudo().browse(int(charge_id)).exists()
         if not charge or charge.payment_method_id != self:
@@ -55,8 +74,9 @@ class PosPaymentMethod(models.Model):
         """Send the amount to the terminal. Returns the charge as the point of sale sees it."""
         provider = self._xpago_check_access()
         session = self.env['pos.session'].browse(data.get('session_id')).exists()
+        account = self._xpago_charge_account(provider, data.get('bank_account_id'))
         charge = self.env['pos.xpago.charge'].sudo()._xpago_create(
-            self.sudo(), provider, data.get('amount') or 0.0, session, data.get('order_uuid') or '')
+            self.sudo(), provider, data.get('amount') or 0.0, session, data.get('order_uuid') or '', account=account)
         return charge._xpago_public_view()
 
     def xpago_charge_status(self, charge_id):

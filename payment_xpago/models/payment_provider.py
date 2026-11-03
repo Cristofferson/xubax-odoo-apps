@@ -24,6 +24,17 @@ class PaymentProvider(models.Model):
         string="Always offer a single payment", default=True,
         help="Offer paying in one go besides the months without interest of the amount.",
     )
+    xpago_bank_account_ids = fields.One2many(
+        'payment.xpago.bank.account', 'provider_id', string="Deposit accounts", context={'active_test': False},
+    )
+    xpago_invoice_bank_account_id = fields.Many2one(
+        'payment.xpago.bank.account', string="Account for invoice payments", domain="[('provider_id', '=', id)]",
+        help="Where XPago deposits the payments of invoices. Empty: your XPago account decides.",
+    )
+    xpago_other_bank_account_id = fields.Many2one(
+        'payment.xpago.bank.account', string="Account for other online payments", domain="[('provider_id', '=', id)]",
+        help="Where XPago deposits the online store, payment link and subscription payments. Empty: your XPago account decides.",
+    )
     xpago_notify_user_ids = fields.Many2many(
         'res.users', 'payment_xpago_notify_user_rel', 'provider_id', 'user_id', string="Notify payments to",
         domain=[('share', '=', False)],
@@ -33,9 +44,14 @@ class PaymentProvider(models.Model):
     # === COMPUTE METHODS === #
 
     def _compute_feature_support_fields(self):
-        """Override of `payment`: XPago refunds online payments from its own dashboard only."""
+        """Override of `payment`: XPago saves cards, holds and captures once (in full or in part) and refunds the
+        payments made on a saved card in full. A one-time checkout is refunded from XPago's dashboard."""
         super()._compute_feature_support_fields()
-        self.filtered(lambda p: p.code == 'xpago').update({'support_refund': 'none'})
+        self.filtered(lambda p: p.code == 'xpago').update({
+            'support_tokenization': True,
+            'support_manual_capture': 'partial',
+            'support_refund': 'full_only',
+        })
 
     # === CONSTRAINT METHODS === #
 
@@ -64,6 +80,46 @@ class PaymentProvider(models.Model):
         rule = rules.filtered(lambda r: r.min_amount <= amount)[-1:]
         terms = rule._parse_terms() if rule else []
         return sorted({1, *terms} if self.xpago_single_payment or not terms else set(terms))
+
+    def _xpago_sync_bank_accounts(self):
+        """Read the deposit accounts from XPago: new ones are added, renamed ones updated, removed ones archived."""
+        Account = self.env['payment.xpago.bank.account'].sudo().with_context(active_test=False)
+        for provider in self.filtered(lambda p: p.code == 'xpago' and p.state != 'disabled' and p.sudo().xpago_api_key):
+            answer = provider._send_api_request('GET', '/developer/v1/bank-account')
+            existing = {account.xpago_id: account for account in Account.search([('provider_id', '=', provider.id)])}
+            seen = set()
+            for sequence, remote in enumerate(answer.get('data') or []):
+                values = {'name': remote.get('name') or remote['id'], 'is_default': bool(remote.get('isDefault')),
+                          'sequence': sequence, 'active': True}
+                seen.add(remote['id'])
+                if remote['id'] in existing:
+                    existing[remote['id']].write(values)
+                else:
+                    Account.create({**values, 'provider_id': provider.id, 'xpago_id': remote['id']})
+            for xpago_id, account in existing.items():
+                if xpago_id not in seen and account.active:
+                    account.active = False
+
+    def write(self, vals):
+        res = super().write(vals)
+        if {'xpago_api_key', 'state'} & set(vals) and any(p.code == 'xpago' for p in self):
+            # Read the accounts a moment later, outside this request: a network call here could hold the record.
+            self.env.ref('payment_xpago.ir_cron_sync_bank_accounts')._trigger()
+        return res
+
+    @api.model
+    def _xpago_cron_sync_bank_accounts(self):
+        for provider in self.search([('code', '=', 'xpago')]):
+            try:
+                with self.env.cr.savepoint():
+                    provider._xpago_sync_bank_accounts()
+            except Exception as error:  # noqa: BLE001 - one account failing must not stop the others
+                _logger.warning("XPago: could not read the deposit accounts of %s: %s", provider.name, error)
+
+    def _xpago_bank_account_id(self, account):
+        """The XPago id of a deposit account, when it is still active and belongs to this provider."""
+        self.ensure_one()
+        return account.xpago_id if account and account.active and account.provider_id == self else None
 
     # === REQUEST HELPERS === #
 
