@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="payment_provider_form" model="ir.ui.view">
+        <field name="name">XPago Provider Form</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form"/>
+        <field name="arch" type="xml">
+            <group name="provider_credentials" position="inside">
+                <group invisible="code != 'xpago'" name="xpago_credentials">
+                    <field name="xpago_api_key" password="True" required="code == 'xpago' and state != 'disabled'"/>
+                </group>
+            </group>
+            <notebook position="inside">
+                <page string="Months without interest" name="xpago_installments" invisible="code != 'xpago'">
+                    <div class="text-muted mb-2">
+                        Which months without interest the checkout offers, by amount of the sale. Each rule applies
+                        from its amount up to the next one. Your customer pays no interest: the fee of each plan is
+                        paid by your business. Without rules, the checkout offers every plan active in your XPago
+                        account.
+                    </div>
+                    <field name="xpago_installment_rule_ids">
+                        <list editable="bottom">
+                            <field name="currency_id" column_invisible="True"/>
+                            <field name="min_amount"/>
+                            <field name="terms" placeholder="3, 6, 12"/>
+                        </list>
+                    </field>
+                    <group>
+                        <field name="xpago_single_payment"/>
+                    </group>
+                </page>
+                <page string="Payment notifications" name="xpago_notify" invisible="code != 'xpago'">
+                    <div class="text-muted mb-3">
+                        Each payment received with XPago sends these users an Odoo notification: a message in their
+                        inbox and a pop-up while Odoo is open. Leave it empty to send none.
+                    </div>
+                    <group>
+                        <field name="xpago_notify_user_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>

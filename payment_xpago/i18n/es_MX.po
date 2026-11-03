@@ -1,0 +1,283 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-03 08:29+0000\n"
+"PO-Revision-Date: 2026-11-03 08:29+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_MX\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: payment_xpago
+#. odoo-python
+#: code:addons/payment_xpago/models/payment_transaction.py:0
+msgid "%s months without interest"
+msgstr "%s meses sin intereses"
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_provider_form
+msgid "3, 6, 12"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__xpago_single_payment
+msgid "Always offer a single payment"
+msgstr "Ofrecer siempre pago de contado"
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__code
+msgid "Code"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__display_name
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_transaction__display_name
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_provider_form
+msgid ""
+"Each payment received with XPago sends these users an Odoo notification: a message in their\n"
+"                        inbox and a pop-up while Odoo is open. Leave it empty to send none."
+msgstr ""
+"Cada pago que entra con XPago les manda a estos usuarios un aviso en Odoo: "
+"un mensaje en su bandeja de entrada y una ventana emergente mientras tengan "
+"Odoo abierto. Déjalo vacío para no mandar ninguno."
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__id
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_transaction__id
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__id
+msgid "ID"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__terms
+msgid "Months offered"
+msgstr "Meses que se ofrecen"
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__xpago_installment_rule_ids
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_transaction__xpago_terms
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_provider_form
+msgid "Months without interest"
+msgstr "Meses sin intereses"
+
+#. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_xpago_installment_rule__terms
+msgid ""
+"Months without interest separated by commas, for example \"3, 6, 12\". Leave"
+" it empty to offer the single payment only."
+msgstr ""
+"Meses sin intereses separados por comas, por ejemplo \"3, 6, 12\". Déjalo "
+"vacío para ofrecer solo el pago de contado."
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__xpago_notify_user_ids
+msgid "Notify payments to"
+msgstr "Avisar los pagos a"
+
+#. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_provider__xpago_single_payment
+msgid ""
+"Offer paying in one go besides the months without interest of the amount."
+msgstr ""
+"Ofrecer el pago en una sola exhibición además de los meses sin intereses del"
+" monto."
+
+#. module: payment_xpago
+#. odoo-python
+#: code:addons/payment_xpago/models/payment_transaction.py:0
+msgid "Online"
+msgstr "En línea"
+
+#. module: payment_xpago
+#: model:ir.model,name:payment_xpago.model_payment_provider
+msgid "Payment Provider"
+msgstr "Proveedor de pago"
+
+#. module: payment_xpago
+#: model:ir.model,name:payment_xpago.model_payment_transaction
+msgid "Payment Transaction"
+msgstr "Transacción de pago"
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_provider_form
+msgid "Payment notifications"
+msgstr "Avisos de pago"
+
+#. module: payment_xpago
+#. odoo-python
+#: code:addons/payment_xpago/models/payment_transaction.py:0
+msgid "Payment received: %s"
+msgstr "Pago recibido: %s"
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__provider_id
+msgid "Provider"
+msgstr "Proveedor"
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__min_amount
+msgid "Sale from"
+msgstr "Venta desde"
+
+#. module: payment_xpago
+#. odoo-python
+#: code:addons/payment_xpago/models/payment_transaction.py:0
+msgid "Saved card"
+msgstr "Tarjeta guardada"
+
+#. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_provider__xpago_api_key
+msgid "The API key XPago gave you when your account was opened."
+msgstr "La llave API que XPago te dio al abrir tu cuenta."
+
+#. module: payment_xpago
+#. odoo-python
+#: code:addons/payment_xpago/models/payment_xpago_installment_rule.py:0
+msgid "The amount of a rule cannot be negative."
+msgstr "El monto de una regla no puede ser negativo."
+
+#. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_xpago_installment_rule__currency_id
+msgid "The main currency of the company, used to display monetary fields."
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_xpago_installment_rule__min_amount
+msgid "The rule applies to sales of this amount or more, up to the next rule."
+msgstr ""
+"La regla aplica a ventas de este monto o más, hasta la siguiente regla."
+
+#. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_provider__code
+msgid "The technical code of this payment provider."
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.constraint,message:payment_xpago.constraint_payment_xpago_installment_rule_provider_min_amount_unique
+msgid "There is already a rule from this amount."
+msgstr "Ya hay una regla desde este monto."
+
+#. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_provider__xpago_notify_user_ids
+msgid ""
+"These users get an Odoo notification (inbox and pop-up) for each payment "
+"received with XPago."
+msgstr ""
+"Estos usuarios reciben un aviso en Odoo (bandeja de entrada y ventana "
+"emergente) por cada pago que entra con XPago."
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_provider_form
+msgid ""
+"Which months without interest the checkout offers, by amount of the sale. Each rule applies\n"
+"                        from its amount up to the next one. Your customer pays no interest: the fee of each plan is\n"
+"                        paid by your business. Without rules, the checkout offers every plan active in your XPago\n"
+"                        account."
+msgstr ""
+"Qué meses sin intereses ofrece el pago según el monto de la venta. Cada "
+"regla aplica desde su monto hasta la siguiente. Tu cliente no paga "
+"intereses: la comisión de cada plazo la paga tu negocio. Sin reglas, se "
+"ofrecen todos los planes activos en tu cuenta de XPago."
+
+#. module: payment_xpago
+#. odoo-python
+#: code:addons/payment_xpago/models/payment_provider.py:0
+msgid "Write the API key XPago gave you before enabling it."
+msgstr "Escribe la llave API que te dio XPago antes de activarlo."
+
+#. module: payment_xpago
+#. odoo-python
+#: code:addons/payment_xpago/models/payment_xpago_installment_rule.py:0
+msgid ""
+"Write the months as whole numbers from 2 to %(max)s separated by commas, for"
+" example \"3, 6, 12\"."
+msgstr ""
+"Escribe los meses como números enteros del 2 al %(max)s separados por comas,"
+" por ejemplo \"3, 6, 12\"."
+
+#. module: payment_xpago
+#: model:ir.model.fields.selection,name:payment_xpago.selection__payment_provider__code__xpago
+#: model:payment.provider,name:payment_xpago.payment_provider_xpago
+msgid "XPago"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__xpago_api_key
+msgid "XPago API Key"
+msgstr "Llave API de XPago"
+
+#. module: payment_xpago
+#. odoo-python
+#: code:addons/payment_xpago/models/payment_transaction.py:0
+msgid "XPago answered an unknown status: %s"
+msgstr "XPago respondió un estado desconocido: %s"
+
+#. module: payment_xpago
+#: model:ir.model,name:payment_xpago.model_payment_xpago_installment_rule
+msgid "XPago: months without interest by amount"
+msgstr "XPago: meses sin intereses por monto"
+
+#. module: payment_xpago
+#: model:ir.actions.server,name:payment_xpago.ir_cron_sync_pending_ir_actions_server
+msgid "XPago: read back pending online payments"
+msgstr "XPago: leer los pagos en línea pendientes"
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_transaction__xpago_notified
+msgid "Xpago Notified"
+msgstr "Avisado"
+
+#. module: payment_xpago
+#: model_terms:payment.provider,auth_msg:payment_xpago.payment_provider_xpago
+msgid "Your payment has been authorized."
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:payment.provider,cancel_msg:payment_xpago.payment_provider_xpago
+msgid "Your payment has been cancelled."
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:payment.provider,pending_msg:payment_xpago.payment_provider_xpago
+msgid "Your payment has been processed but is waiting for approval."
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:payment.provider,done_msg:payment_xpago.payment_provider_xpago
+msgid "Your payment has been processed."
+msgstr ""

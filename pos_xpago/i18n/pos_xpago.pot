@@ -1,0 +1,367 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* pos_xpago
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-03 08:36+0000\n"
+"PO-Revision-Date: 2026-11-03 08:36+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: pos_xpago
+#. odoo-python
+#: code:addons/pos_xpago/models/pos_xpago_charge.py:0
+msgid "%s months without interest"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__amount
+msgid "Amount"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__authorization_code
+msgid "Authorization Code"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,help:pos_xpago.field_pos_payment_method__xpago_open_terminal_app
+msgid ""
+"Bring the charge app to the front when the point of sale runs on the "
+"terminal itself."
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields.selection,name:pos_xpago.selection__pos_xpago_charge__state__cancelled
+msgid "Cancelled"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__card_no
+msgid "Card (last 4)"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__card_brand
+msgid "Card Brand"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__card_type
+msgid "Card Type"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__charged_amount
+msgid "Charged Amount"
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-python
+#: code:addons/pos_xpago/models/pos_payment_method.py:0
+msgid "Choose the XPago account and write the serial number of the terminal."
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__company_id
+msgid "Company"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: pos_xpago
+#: model_terms:ir.ui.view,arch_db:pos_xpago.pos_xpago_charge_view_list
+#: model_terms:ir.ui.view,arch_db:pos_xpago.pos_xpago_charge_view_search
+msgid "Date"
+msgstr ""
+
+#. module: pos_xpago
+#: model_terms:ir.ui.view,arch_db:pos_xpago.pos_xpago_charge_view_search
+msgid "Day"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_payment_method__display_name
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: pos_xpago
+#: model_terms:ir.actions.act_window,help:pos_xpago.action_pos_xpago_charge
+msgid ""
+"Each charge sent from the point of sale to an XPago terminal shows here, "
+"with its card and operation."
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__entry_mode
+msgid "Entry Mode"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields.selection,name:pos_xpago.selection__pos_xpago_charge__state__expired
+msgid "Expired"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__expires_at
+msgid "Expires At"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_payment_method__id
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__id
+msgid "ID"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__issuer_bank
+msgid "Issuer Bank"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__terms
+msgid "Months without interest"
+msgstr ""
+
+#. module: pos_xpago
+#: model_terms:ir.ui.view,arch_db:pos_xpago.pos_payment_method_view_form
+msgid "N950-123456789"
+msgstr ""
+
+#. module: pos_xpago
+#: model_terms:ir.actions.act_window,help:pos_xpago.action_pos_xpago_charge
+msgid "No charges on XPago terminals yet"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__notified
+msgid "Notified"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_payment_method__xpago_open_terminal_app
+msgid "Odoo runs on this terminal"
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-python
+#: code:addons/pos_xpago/models/pos_payment_method.py:0
+msgid "Only point of sale users can charge on XPago terminals."
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__operation_code
+msgid "Operation"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__order_uuid
+msgid "Order Uuid"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields.selection,name:pos_xpago.selection__pos_xpago_charge__state__confirmed
+#: model_terms:ir.ui.view,arch_db:pos_xpago.pos_xpago_charge_view_search
+msgid "Paid"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__payment_method_id
+msgid "Payment Method"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__payment_id
+msgid "Payment id"
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-python
+#: code:addons/pos_xpago/models/pos_xpago_charge.py:0
+msgid "Payment received: %s"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model,name:pos_xpago.model_pos_payment_method
+msgid "Point of Sale Payment Methods"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__config_id
+#: model_terms:ir.ui.view,arch_db:pos_xpago.pos_xpago_charge_view_search
+msgid "Point of sale"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__provider_id
+msgid "Provider"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__external_id
+msgid "Reference"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__session_id
+msgid "Session"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__state
+msgid "State"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_payment_method__xpago_terminal_serial
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__terminal_serial
+msgid "Terminal S/N"
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-python
+#: code:addons/pos_xpago/models/pos_xpago_charge.py:0
+msgid "Terminal at %s"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,help:pos_xpago.field_pos_payment_method__xpago_provider_id
+msgid ""
+"The XPago account this terminal charges with: its API key and whether it is "
+"in test mode."
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/payment_xpago.js:0
+msgid "The charge expired on the terminal before it was paid."
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,help:pos_xpago.field_pos_payment_method__xpago_terminal_serial
+msgid "The serial number on the back of the terminal (after S/N)."
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-python
+#: code:addons/pos_xpago/models/pos_payment_method.py:0
+msgid "This XPago charge does not exist."
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-python
+#: code:addons/pos_xpago/models/pos_payment_method.py:0
+msgid "This payment method does not use an XPago terminal."
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__tip_amount
+msgid "Tip"
+msgstr ""
+
+#. module: pos_xpago
+#: model_terms:ir.ui.view,arch_db:pos_xpago.pos_xpago_charge_view_list
+msgid "Total"
+msgstr ""
+
+#. module: pos_xpago
+#: model_terms:ir.ui.view,arch_db:pos_xpago.pos_xpago_charge_view_search
+msgid "Waiting"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields.selection,name:pos_xpago.selection__pos_xpago_charge__state__pending
+msgid "Waiting for the card"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,help:pos_xpago.field_pos_xpago_charge__charged_amount
+msgid "What the card was charged in total, the sale plus any tip."
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/payment_xpago.js:0
+msgid "XPago"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_payment_method__xpago_provider_id
+msgid "XPago account"
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-python
+#: code:addons/pos_xpago/models/pos_xpago_charge.py:0
+msgid ""
+"XPago did not send the charge to the terminal.\n"
+"%s"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__xpago_id
+msgid "XPago id"
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-python
+#: code:addons/pos_xpago/models/pos_payment_method.py:0
+msgid ""
+"XPago is disabled. An administrator can enable it in the XPago payment "
+"provider."
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model,name:pos_xpago.model_pos_xpago_charge
+msgid "XPago terminal charge"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.actions.act_window,name:pos_xpago.action_pos_xpago_charge
+#: model:ir.ui.menu,name:pos_xpago.menu_pos_xpago_charge
+msgid "XPago terminal charges"
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-javascript
+#. odoo-python
+#: code:addons/pos_xpago/models/pos_xpago_charge.py:0
+#: code:addons/pos_xpago/static/src/app/payment_xpago.js:0
+msgid "XPago terminals only charge positive amounts."
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.actions.server,name:pos_xpago.ir_cron_refresh_charges_ir_actions_server
+msgid "XPago: read back open terminal charges"
+msgstr ""
