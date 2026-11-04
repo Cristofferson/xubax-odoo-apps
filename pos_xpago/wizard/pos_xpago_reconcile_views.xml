@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_xpago_reconcile_view_form" model="ir.ui.view">
+        <field name="name">pos.xpago.reconcile.form</field>
+        <field name="model">pos.xpago.reconcile</field>
+        <field name="arch" type="xml">
+            <form string="Reconcile with XPago">
+                <p class="text-muted">
+                    Compares each payment XPago took (terminals, online store, payment links, saved cards) with what
+                    Odoo recorded, with the fee, the VAT on the fee and the account it is deposited in.
+                </p>
+                <group>
+                    <field name="provider_id" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                </group>
+                <footer>
+                    <button name="action_reconcile" type="object" string="Reconcile" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="pos_xpago_reconcile_line_view_list" model="ir.ui.view">
+        <field name="name">pos.xpago.reconcile.line.list</field>
+        <field name="model">pos.xpago.reconcile.line</field>
+        <field name="arch" type="xml">
+            <list create="false" edit="false" decoration-danger="status in ('not_paid_in_odoo', 'refunded_in_xpago', 'amount_differs')"
+                  decoration-warning="status in ('xpago_only', 'odoo_only')">
+                <field name="currency_id" column_invisible="True"/>
+                <field name="date"/>
+                <field name="source"/>
+                <field name="reference"/>
+                <field name="operation_code"/>
+                <field name="card" optional="show"/>
+                <field name="bank_account_id" optional="show"/>
+                <field name="terms" optional="hide"/>
+                <field name="xpago_amount" sum="Total"/>
+                <field name="odoo_amount" sum="Total"/>
+                <field name="tip_amount" optional="hide" sum="Total"/>
+                <field name="fee_percent" optional="show"/>
+                <field name="fee_amount" sum="Total"/>
+                <field name="fee_vat" sum="Total"/>
+                <field name="status" widget="badge" decoration-success="status == 'ok'"
+                       decoration-danger="status in ('not_paid_in_odoo', 'refunded_in_xpago', 'amount_differs')"
+                       decoration-warning="status in ('xpago_only', 'odoo_only')"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="pos_xpago_reconcile_line_view_pivot" model="ir.ui.view">
+        <field name="name">pos.xpago.reconcile.line.pivot</field>
+        <field name="model">pos.xpago.reconcile.line</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="bank_account_id" type="row"/>
+                <field name="source" type="col"/>
+                <field name="xpago_amount" type="measure"/>
+                <field name="fee_amount" type="measure"/>
+                <field name="fee_vat" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="pos_xpago_reconcile_line_view_search" model="ir.ui.view">
+        <field name="name">pos.xpago.reconcile.line.search</field>
+        <field name="model">pos.xpago.reconcile.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="reference"/>
+                <field name="operation_code"/>
+                <filter name="problems" string="To review" domain="[('status', '!=', 'ok')]"/>
+                <group>
+                    <filter name="group_status" string="Result" context="{'group_by': 'status'}"/>
+                    <filter name="group_account" string="Deposited in" context="{'group_by': 'bank_account_id'}"/>
+                    <filter name="group_source" string="Source" context="{'group_by': 'source'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_pos_xpago_reconcile" model="ir.actions.act_window">
+        <field name="name">Reconcile with XPago</field>
+        <field name="res_model">pos.xpago.reconcile</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_pos_xpago_reconcile" action="action_pos_xpago_reconcile" parent="point_of_sale.menu_point_of_sale"
+              sequence="41" groups="point_of_sale.group_pos_manager"/>
+</odoo>

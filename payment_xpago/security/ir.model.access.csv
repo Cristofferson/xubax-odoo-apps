@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_payment_xpago_installment_rule_user,payment.xpago.installment.rule user,model_payment_xpago_installment_rule,base.group_user,1,0,0,0
+access_payment_xpago_installment_rule_system,payment.xpago.installment.rule system,model_payment_xpago_installment_rule,base.group_system,1,1,1,1
+access_payment_xpago_bank_account_user,payment.xpago.bank.account user,model_payment_xpago_bank_account,base.group_user,1,0,0,0
+access_payment_xpago_bank_account_system,payment.xpago.bank.account system,model_payment_xpago_bank_account,base.group_system,1,1,1,1
