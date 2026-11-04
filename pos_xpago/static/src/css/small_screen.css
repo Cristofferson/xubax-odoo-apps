@@ -1,0 +1,77 @@
+/* Phone-size screens (Android payment terminals such as Newland N750/N950). Odoo 17 shows the categories as one
+   row that slides sideways, but cuts every name to the width of a small button ("Accesori…"). Here each category
+   is as wide as its name, the row stays low, and the products take the rest of the screen. */
+@media (max-width: 767.98px) {
+    .product-screen .products-widget-control > .overflow-auto {
+        min-width: 0;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+    .product-screen .products-widget-control > .overflow-auto::-webkit-scrollbar {
+        display: none;
+    }
+    .product-screen .products-widget-control .category-button {
+        max-width: none !important;
+        min-height: 40px;
+        padding: 4px 12px !important;
+        flex-direction: row !important;
+        gap: 6px;
+    }
+    .product-screen .products-widget-control .category-button > img {
+        display: none;
+    }
+    .product-screen .products-widget-control .category-button > span {
+        width: auto !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        white-space: nowrap;
+        font-size: 0.95rem !important;
+    }
+}
+
+/* Payment screen on the same terminals: Odoo 17 stacks the payment methods one per line, so with four or more
+   methods the payment line and the summary go out of sight. Here they become compact, three per row. */
+@media (max-width: 767.98px) {
+    .payment-screen .paymentmethods-container {
+        flex-shrink: 0;
+    }
+    .payment-screen .paymentmethods {
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        gap: 4px;
+        padding: 0 4px 4px;
+    }
+    .payment-screen .paymentmethods > .title-category {
+        flex: 0 0 calc(100% + 8px);
+        margin: 0 -4px !important;
+        padding: 8px 12px 6px !important;
+        font-size: 1rem;
+    }
+    .payment-screen .paymentmethod {
+        flex: 0 0 calc((100% - 8px) / 3);
+        min-width: 0;
+        min-height: 0 !important;
+        padding: 6px !important;
+        font-size: 0.82rem !important;
+        line-height: 1.15 !important;
+        border: 1px solid var(--border-color, #dee2e6) !important;
+        border-radius: 4px !important;
+    }
+    .payment-screen .paymentmethod .payment-method-display {
+        flex-direction: column;
+        justify-content: center;
+        gap: 2px;
+        text-align: center;
+        min-width: 0;
+    }
+    .payment-screen .paymentmethod .payment-method-icon {
+        width: 20px;
+        height: 20px;
+        margin: 0 !important;
+        object-fit: contain;
+    }
+    .payment-screen .paymentmethod .payment-name {
+        overflow-wrap: anywhere;
+        margin: 0 !important;
+    }
+}

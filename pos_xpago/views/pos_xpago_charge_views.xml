@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_xpago_charge_view_list" model="ir.ui.view">
+        <field name="name">pos.xpago.charge.list</field>
+        <field name="model">pos.xpago.charge</field>
+        <field name="arch" type="xml">
+            <tree create="false" edit="false" decoration-danger="without_sale" decoration-muted="state in ('cancelled', 'expired')" decoration-info="state == 'pending'">
+                <field name="create_date" string="Date"/>
+                <field name="config_id"/>
+                <field name="sale_order_id"/>
+                <field name="without_sale" optional="show"/>
+                <field name="payment_method_id" optional="hide"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="amount" sum="Total"/>
+                <field name="card_brand"/>
+                <field name="card_no"/>
+                <field name="operation_code"/>
+                <field name="authorization_code" optional="hide"/>
+                <field name="bank_account_id" optional="show"/>
+                <field name="terms" optional="hide"/>
+                <field name="state" widget="badge" decoration-success="state == 'confirmed'" decoration-info="state == 'pending'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="pos_xpago_charge_view_form" model="ir.ui.view">
+        <field name="name">pos.xpago.charge.form</field>
+        <field name="model">pos.xpago.charge</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="external_id"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="amount"/>
+                            <field name="charged_amount"/>
+                            <field name="tip_amount"/>
+                            <field name="terms"/>
+                        </group>
+                        <group>
+                            <field name="config_id"/>
+                            <field name="payment_method_id"/>
+                            <field name="terminal_serial"/>
+                            <field name="card_brand"/>
+                            <field name="card_no"/>
+                            <field name="operation_code"/>
+                            <field name="authorization_code"/>
+                            <field name="bank_account_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="pos_xpago_charge_view_search" model="ir.ui.view">
+        <field name="name">pos.xpago.charge.search</field>
+        <field name="model">pos.xpago.charge</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="external_id"/>
+                <field name="card_no"/>
+                <field name="operation_code"/>
+                <filter name="without_sale" string="Paid without a sale" domain="[('without_sale', '=', True)]"/>
+                <filter name="paid" string="Paid" domain="[('state', '=', 'confirmed')]"/>
+                <filter name="pending" string="Waiting" domain="[('state', '=', 'pending')]"/>
+                <separator/>
+                <filter name="create_date" string="Date" date="create_date"/>
+                <group>
+                    <filter name="group_config" string="Point of sale" context="{'group_by': 'config_id'}"/>
+                    <filter name="group_day" string="Day" context="{'group_by': 'create_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_pos_xpago_charge" model="ir.actions.act_window">
+        <field name="name">XPago terminal charges</field>
+        <field name="res_model">pos.xpago.charge</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No charges on XPago terminals yet</p>
+            <p>Each charge sent from the point of sale to an XPago terminal shows here, with its card and operation.
+               Use the "Paid without a sale" filter to find cards that were charged but have no order.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_pos_xpago_charge" action="action_pos_xpago_charge" parent="point_of_sale.menu_point_of_sale"
+              sequence="40" groups="point_of_sale.group_pos_manager"/>
+</odoo>
