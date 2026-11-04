@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="payment_xpago_rule_view_list" model="ir.ui.view">
+        <field name="name">payment.xpago.rule.list</field>
+        <field name="model">payment.xpago.rule</field>
+        <field name="arch" type="xml">
+            <list string="XPago payment rules">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="msi_mode"/>
+                <field name="terms" invisible="msi_mode != 'terms'"/>
+                <field name="bank_account_id"/>
+                <field name="use_online" optional="show"/>
+                <field name="date_from" optional="hide"/>
+                <field name="date_to" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="active" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="payment_xpago_rule_view_form" model="ir.ui.view">
+        <field name="name">payment.xpago.rule.form</field>
+        <field name="model">payment.xpago.rule</field>
+        <field name="arch" type="xml">
+            <form string="XPago payment rule">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_products" type="object" class="oe_stat_button" icon="fa-cubes"
+                                invisible="not product_count">
+                            <field name="product_count" widget="statinfo" string="Products"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. 12 months on diamonds"/></h1>
+                    </div>
+                    <div class="text-muted small mb-3">
+                        The rules are tried in order, top to bottom. For each product of the sale, the first rule that fits
+                        decides its months and its deposit account. The sale offers only the months that every product allows;
+                        its money goes to the account of the rule placed highest, unless the point of sale splits the charge.
+                    </div>
+                    <group>
+                        <group string="What it decides" name="decides">
+                            <field name="msi_mode" widget="radio"/>
+                            <field name="terms" invisible="msi_mode != 'terms'" required="msi_mode == 'terms'"
+                                   placeholder="3, 6, 12"/>
+                            <field name="bank_account_id" options="{'no_create': True}" placeholder="Does not change the account"/>
+                        </group>
+                        <group string="Where and when" name="where">
+                            <field name="use_online"/>
+                            <label for="date_from" string="Valid"/>
+                            <div class="o_row">
+                                <field name="date_from" placeholder="Always"/>
+                                <span>–</span>
+                                <field name="date_to" placeholder="No end"/>
+                            </div>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="The sale" name="sale">
+                            <label for="amount_min" string="Total of the sale (0 = any)"/>
+                            <div class="o_row">
+                                <field name="amount_min" placeholder="Any"/>
+                                <span>–</span>
+                                <field name="amount_max" placeholder="Any"/>
+                            </div>
+                        </group>
+                        <group string="The products" name="products">
+                            <field name="product_tmpl_ids" widget="many2many_tags" placeholder="Any product"/>
+                            <field name="product_ids" widget="many2many_tags" placeholder="Any variant"/>
+                            <field name="categ_ids" widget="many2many_tags" placeholder="Any category"/>
+                            <field name="tag_ids" widget="many2many_tags" placeholder="Any tag"/>
+                            <label for="price_min" string="Product price (0 = any)"/>
+                            <div class="o_row">
+                                <field name="price_min" placeholder="Any"/>
+                                <span>–</span>
+                                <field name="price_max" placeholder="Any"/>
+                            </div>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="payment_xpago_rule_view_search" model="ir.ui.view">
+        <field name="name">payment.xpago.rule.search</field>
+        <field name="model">payment.xpago.rule</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="bank_account_id"/>
+                <filter name="msi" string="Change the months" domain="[('msi_mode', '!=', 'keep')]"/>
+                <filter name="account" string="Change the account" domain="[('bank_account_id', '!=', False)]"/>
+                <separator/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_payment_xpago_rule" model="ir.actions.act_window">
+        <field name="name">XPago payment rules</field>
+        <field name="res_model">payment.xpago.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Decide months without interest and deposit accounts by what is sold</p>
+            <p>By the total of the sale, the price of each product (after its pricelist), the product or variant, its
+                category or its tags. For example: 12 months on diamonds over $20,000, or the jewelry of a consignor
+                deposited in its own account.</p>
+        </field>
+    </record>
+</odoo>

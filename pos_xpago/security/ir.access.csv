@@ -3,3 +3,5 @@ access_pos_xpago_charge_user,pos.xpago.charge user,pos.xpago.charge,point_of_sal
 access_pos_xpago_charge_manager,pos.xpago.charge manager,pos.xpago.charge,point_of_sale.group_pos_manager,r,
 access_pos_xpago_reconcile_manager,pos.xpago.reconcile manager,pos.xpago.reconcile,point_of_sale.group_pos_manager,crud,
 access_pos_xpago_reconcile_line_manager,pos.xpago.reconcile.line manager,pos.xpago.reconcile.line,point_of_sale.group_pos_manager,crud,
+access_payment_xpago_rule_pos_manager,payment.xpago.rule pos manager,payment.xpago.rule,point_of_sale.group_pos_manager,crud,
+access_pos_xpago_rule_test_manager,pos.xpago.rule.test manager,pos.xpago.rule.test,point_of_sale.group_pos_manager,crud,
