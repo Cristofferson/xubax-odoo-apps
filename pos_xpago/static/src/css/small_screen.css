@@ -57,6 +57,8 @@
     .payment-screen .paymentmethods {
         grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
         gap: 4px !important;
+        /* Odoo 20 caps the list at 120px and scrolls it inside: show every method instead. */
+        max-height: none !important;
         overflow: visible !important;
     }
     .payment-screen .paymentmethod {

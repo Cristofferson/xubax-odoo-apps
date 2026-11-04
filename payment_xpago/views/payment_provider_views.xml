@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <group name="provider_credentials" position="inside">
                 <group invisible="code != 'xpago'" name="xpago_credentials">
-                    <field name="xpago_api_key" password="True" required="code == 'xpago' and state != 'disabled'"/>
+                    <field name="xpago_api_key" password="True" required="code == 'xpago' and is_live"/>
                 </group>
             </group>
             <notebook position="inside">

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0+e\n"
+"Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-03 08:50+0000\n"
-"PO-Revision-Date: 2026-11-03 08:50+0000\n"
+"POT-Creation-Date: 2026-11-04 05:39+0000\n"
+"PO-Revision-Date: 2026-11-04 05:39+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -78,6 +78,13 @@ msgstr ""
 #. module: pos_xpago
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__card_type
 msgid "Card Type"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.module.module,summary:base.module_pos_xpago
+msgid ""
+"Charge on XPago card terminals from the Odoo Point of Sale: the amount goes "
+"to the terminal and the approved card comes back to the order. Mexico."
 msgstr ""
 
 #. module: pos_xpago
@@ -380,7 +387,7 @@ msgstr ""
 
 #. module: pos_xpago
 #: model:ir.model,name:pos_xpago.model_pos_payment_method
-msgid "Point of Sale Payment Methods"
+msgid "Point of Sale Payment Method"
 msgstr ""
 
 #. module: pos_xpago
@@ -694,6 +701,11 @@ msgstr ""
 #: model:ir.model.fields,help:pos_xpago.field_pos_xpago_reconcile_line__fee_percent
 msgid ""
 "XPago's rate before promotions: a promotion can make the real fee lower."
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.module.module,shortdesc:base.module_pos_xpago
+msgid "XPago: Card Terminals in the Point of Sale"
 msgstr ""
 
 #. module: pos_xpago

@@ -1,6 +1,5 @@
-from datetime import datetime, time, timedelta
-
-import pytz
+from datetime import UTC, datetime, time, timedelta
+from zoneinfo import ZoneInfo
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
@@ -46,9 +45,9 @@ class PosXpagoReconcile(models.TransientModel):
         }
 
     def _utc_bounds(self):
-        tz = pytz.timezone(self.env.user.tz or 'America/Mexico_City')
-        start = tz.localize(datetime.combine(self.date_from, time.min)).astimezone(pytz.utc).replace(tzinfo=None)
-        end = tz.localize(datetime.combine(self.date_to, time.max)).astimezone(pytz.utc).replace(tzinfo=None)
+        tz = ZoneInfo(self.env.user.tz or 'America/Mexico_City')
+        start = datetime.combine(self.date_from, time.min, tzinfo=tz).astimezone(UTC).replace(tzinfo=None)
+        end = datetime.combine(self.date_to, time.max, tzinfo=tz).astimezone(UTC).replace(tzinfo=None)
         return start, end
 
     def _fetch_payments(self, start, end):
@@ -198,4 +197,4 @@ def _parse(value):
     if not value:
         return False
     parsed = datetime.fromisoformat(value.replace('Z', '+00:00'))
-    return parsed.astimezone(pytz.utc).replace(tzinfo=None, microsecond=0)
+    return parsed.astimezone(UTC).replace(tzinfo=None, microsecond=0)

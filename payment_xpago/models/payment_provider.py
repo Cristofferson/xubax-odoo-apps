@@ -55,11 +55,11 @@ class PaymentProvider(models.Model):
 
     # === CONSTRAINT METHODS === #
 
-    @api.constrains('state', 'xpago_api_key')
+    @api.constrains('is_live', 'xpago_api_key')
     def _check_xpago_api_key_before_enabling(self):
-        for provider in self.filtered(lambda p: p.code == 'xpago' and p.state != 'disabled'):
+        for provider in self.filtered(lambda p: p.code == 'xpago' and p.is_live):
             if not provider.sudo().xpago_api_key:
-                raise ValidationError(_("Write the API key XPago gave you before enabling it."))
+                raise ValidationError(_("Write the API key XPago gave you before switching it to live."))
 
     # === BUSINESS METHODS === #
 
@@ -84,7 +84,7 @@ class PaymentProvider(models.Model):
     def _xpago_sync_bank_accounts(self):
         """Read the deposit accounts from XPago: new ones are added, renamed ones updated, removed ones archived."""
         Account = self.env['payment.xpago.bank.account'].sudo().with_context(active_test=False)
-        for provider in self.filtered(lambda p: p.code == 'xpago' and p.state != 'disabled' and p.sudo().xpago_api_key):
+        for provider in self.filtered(lambda p: p.code == 'xpago' and p.active and p.sudo().xpago_api_key):
             answer = provider._send_api_request('GET', '/developer/v1/bank-account')
             existing = {account.xpago_id: account for account in Account.search([('provider_id', '=', provider.id)])}
             seen = set()
@@ -102,7 +102,7 @@ class PaymentProvider(models.Model):
 
     def write(self, vals):
         res = super().write(vals)
-        if {'xpago_api_key', 'state'} & set(vals) and any(p.code == 'xpago' for p in self):
+        if {'xpago_api_key', 'is_live', 'active'} & set(vals) and any(p.code == 'xpago' for p in self):
             # Read the accounts a moment later, outside this request: a network call here could hold the record.
             self.env.ref('payment_xpago.ir_cron_sync_bank_accounts')._trigger()
         return res
@@ -127,8 +127,8 @@ class PaymentProvider(models.Model):
         if self.code != 'xpago':
             return super()._build_request_url(endpoint, **kwargs)
         # A system parameter can point to another server (a local sandbox); never set in production.
-        base_url = self.env['ir.config_parameter'].sudo().get_param('payment_xpago.api_url')
-        return (base_url or const.API_URLS.get(self.state, const.API_URLS['test'])).rstrip('/') + endpoint
+        base_url = self.env['ir.config_parameter'].sudo().get_str('payment_xpago.api_url')
+        return (base_url or const.API_URLS['live' if self.is_live else 'test']).rstrip('/') + endpoint
 
     def _build_request_headers(self, method, endpoint, payload, **kwargs):
         if self.code != 'xpago':

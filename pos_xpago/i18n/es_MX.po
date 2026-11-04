@@ -1,10 +1,13 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* pos_xpago
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0+e\n"
+"Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-03 08:50+0000\n"
-"PO-Revision-Date: 2026-11-03 08:50+0000\n"
+"POT-Creation-Date: 2026-11-04 05:39+0000\n"
+"PO-Revision-Date: 2026-11-04 05:39+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_MX\n"
@@ -83,6 +86,15 @@ msgid "Card Type"
 msgstr "Tipo de tarjeta"
 
 #. module: pos_xpago
+#: model:ir.module.module,summary:base.module_pos_xpago
+msgid ""
+"Charge on XPago card terminals from the Odoo Point of Sale: the amount goes "
+"to the terminal and the approved card comes back to the order. Mexico."
+msgstr ""
+"Cobra en terminales XPago desde el Punto de Venta de Odoo: el monto va a la "
+"terminal y la tarjeta aprobada regresa a la orden. México."
+
+#. module: pos_xpago
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__charged_amount
 msgid "Charged Amount"
 msgstr "Monto cobrado"
@@ -123,14 +135,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_reconcile__create_uid
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_reconcile_line__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: pos_xpago
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__create_date
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_reconcile__create_date
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_reconcile_line__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creado el"
 
 #. module: pos_xpago
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__currency_id
@@ -179,7 +191,7 @@ msgstr "Depositado en %s"
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_reconcile__display_name
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_reconcile_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre para mostrar"
 
 #. module: pos_xpago
 #: model_terms:ir.actions.act_window,help:pos_xpago.action_pos_xpago_charge
@@ -229,7 +241,7 @@ msgstr "Desde"
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_reconcile__id
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_reconcile_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: pos_xpago
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_reconcile_line__odoo_amount
@@ -246,14 +258,14 @@ msgstr "Banco emisor"
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_reconcile__write_uid
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_reconcile_line__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última actualización por"
 
 #. module: pos_xpago
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__write_date
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_reconcile__write_date
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_reconcile_line__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualización el"
 
 #. module: pos_xpago
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_reconcile__line_ids
@@ -278,7 +290,7 @@ msgstr "Meses sin intereses"
 #. module: pos_xpago
 #: model_terms:ir.ui.view,arch_db:pos_xpago.pos_payment_method_view_form
 msgid "N950-123456789"
-msgstr ""
+msgstr "N950-123456789"
 
 #. module: pos_xpago
 #: model_terms:ir.actions.act_window,help:pos_xpago.action_pos_xpago_charge
@@ -390,8 +402,8 @@ msgstr "Pago recibido: %s"
 
 #. module: pos_xpago
 #: model:ir.model,name:pos_xpago.model_pos_payment_method
-msgid "Point of Sale Payment Methods"
-msgstr "Métodos de pago del punto de venta"
+msgid "Point of Sale Payment Method"
+msgstr "Método de pago del punto de venta"
 
 #. module: pos_xpago
 #: model:ir.model,name:pos_xpago.model_pos_session
@@ -629,7 +641,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_xpago/static/src/app/payment_xpago.js:0
 msgid "XPago"
-msgstr ""
+msgstr "XPago"
 
 #. module: pos_xpago
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_payment_method__xpago_provider_id
@@ -720,6 +732,11 @@ msgid ""
 msgstr ""
 "La tarifa de XPago antes de promociones: una promoción puede bajar la "
 "comisión real."
+
+#. module: pos_xpago
+#: model:ir.module.module,shortdesc:base.module_pos_xpago
+msgid "XPago: Card Terminals in the Point of Sale"
+msgstr "XPago: Terminales de tarjeta en el Punto de Venta"
 
 #. module: pos_xpago
 #: model:ir.actions.server,name:pos_xpago.ir_cron_refresh_charges_ir_actions_server

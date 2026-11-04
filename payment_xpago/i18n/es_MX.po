@@ -1,10 +1,13 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* payment_xpago
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0+e\n"
+"Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-03 08:50+0000\n"
-"PO-Revision-Date: 2026-11-03 08:50+0000\n"
+"POT-Creation-Date: 2026-11-04 05:39+0000\n"
+"PO-Revision-Date: 2026-11-04 05:39+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_MX\n"
@@ -20,9 +23,13 @@ msgid "%s months without interest"
 msgstr "%s meses sin intereses"
 
 #. module: payment_xpago
-#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_provider_form
-msgid "3, 6, 12"
+#: model:ir.module.module,summary:base.module_payment_xpago
+msgid ""
+"Accept Visa, Mastercard and American Express in your online store, invoices "
+"and payment links, with months without interest by amount. Mexico."
 msgstr ""
+"Acepta Visa, Mastercard y American Express en tu tienda en línea, facturas y"
+" ligas de pago, con meses sin intereses según el monto. México."
 
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__xpago_invoice_bank_account_id
@@ -45,6 +52,16 @@ msgid "Always offer a single payment"
 msgstr "Ofrecer siempre pago de contado"
 
 #. module: payment_xpago
+#: model:payment.method,name:payment_xpago.payment_method_amex
+msgid "American Express"
+msgstr "American Express"
+
+#. module: payment_xpago
+#: model:payment.method,name:payment_xpago.payment_method_card
+msgid "Card"
+msgstr "Tarjeta"
+
+#. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__code
 msgid "Code"
 msgstr "Código"
@@ -53,13 +70,13 @@ msgstr "Código"
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__create_uid
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__create_date
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creado el"
 
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__currency_id
@@ -79,7 +96,7 @@ msgstr "Cuentas de depósito"
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__display_name
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre para mostrar"
 
 #. module: payment_xpago
 #: model_terms:ir.ui.view,arch_db:payment_xpago.payment_provider_form
@@ -98,19 +115,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__id
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__write_uid
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última actualización por"
 
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__write_date
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualización el"
+
+#. module: payment_xpago
+#: model:payment.method,name:payment_xpago.payment_method_mastercard
+msgid "MasterCard"
+msgstr "MasterCard"
 
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__terms
@@ -293,6 +315,11 @@ msgstr ""
 "Para guardar una tarjeta, el cliente necesita nombre, correo y teléfono."
 
 #. module: payment_xpago
+#: model:payment.method,name:payment_xpago.payment_method_visa
+msgid "VISA"
+msgstr "VISA"
+
+#. module: payment_xpago
 #: model:ir.model.fields,help:payment_xpago.field_payment_xpago_bank_account__is_default
 msgid "Where XPago deposits a sale that names no account."
 msgstr "Dónde deposita XPago una venta que no indica cuenta."
@@ -331,8 +358,8 @@ msgstr ""
 #. module: payment_xpago
 #. odoo-python
 #: code:addons/payment_xpago/models/payment_provider.py:0
-msgid "Write the API key XPago gave you before enabling it."
-msgstr "Escribe la llave API que te dio XPago antes de activarlo."
+msgid "Write the API key XPago gave you before switching it to live."
+msgstr "Escribe la llave API que te dio XPago antes de pasarlo a producción."
 
 #. module: payment_xpago
 #. odoo-python
@@ -348,7 +375,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:payment_xpago.selection__payment_provider__code__xpago
 #: model:payment.provider,name:payment_xpago.payment_provider_xpago
 msgid "XPago"
-msgstr ""
+msgstr "XPago"
 
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__xpago_api_key
@@ -410,6 +437,11 @@ msgid "XPago saved card"
 msgstr "Tarjeta guardada de XPago"
 
 #. module: payment_xpago
+#: model:ir.module.module,shortdesc:base.module_payment_xpago
+msgid "XPago: Card Payments"
+msgstr "XPago: Pagos con tarjeta"
+
+#. module: payment_xpago
 #: model:ir.model,name:payment_xpago.model_payment_xpago_installment_rule
 msgid "XPago: months without interest by amount"
 msgstr "XPago: meses sin intereses por monto"
@@ -432,19 +464,19 @@ msgstr "Avisado"
 #. module: payment_xpago
 #: model_terms:payment.provider,auth_msg:payment_xpago.payment_provider_xpago
 msgid "Your payment has been authorized."
-msgstr ""
+msgstr "Tu pago fue autorizado."
 
 #. module: payment_xpago
 #: model_terms:payment.provider,cancel_msg:payment_xpago.payment_provider_xpago
 msgid "Your payment has been cancelled."
-msgstr ""
+msgstr "Tu pago fue cancelado."
 
 #. module: payment_xpago
 #: model_terms:payment.provider,pending_msg:payment_xpago.payment_provider_xpago
 msgid "Your payment has been processed but is waiting for approval."
-msgstr ""
+msgstr "Tu pago fue procesado, pero está esperando aprobación."
 
 #. module: payment_xpago
 #: model_terms:payment.provider,done_msg:payment_xpago.payment_provider_xpago
 msgid "Your payment has been processed."
-msgstr ""
+msgstr "Tu pago fue procesado."

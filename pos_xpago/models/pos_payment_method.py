@@ -28,17 +28,17 @@ class PosPaymentMethod(models.Model):
         help="Before sending the amount to the terminal, the cashier picks the deposit account; this terminal's account comes selected.",
     )
 
-    def _get_payment_terminal_selection(self):
-        return super()._get_payment_terminal_selection() + [('xpago', "XPago")]
+    def _get_terminal_provider_selection(self):
+        return super()._get_terminal_provider_selection() + [('xpago', "XPago")]
 
     @api.model
     def _load_pos_data_fields(self, config):
         return super()._load_pos_data_fields(config) + [
             'xpago_open_terminal_app', 'xpago_choose_account', 'xpago_bank_account_id']
 
-    @api.constrains('use_payment_terminal', 'xpago_provider_id', 'xpago_terminal_serial')
+    @api.constrains('payment_provider', 'xpago_provider_id', 'xpago_terminal_serial')
     def _check_xpago_terminal(self):
-        for method in self.filtered(lambda m: m.use_payment_terminal == 'xpago'):
+        for method in self.filtered(lambda m: m.payment_provider == 'xpago'):
             if not method.xpago_provider_id or not method.xpago_terminal_serial:
                 raise UserError(_("Choose the XPago account and write the serial number of the terminal."))
 
@@ -46,10 +46,10 @@ class PosPaymentMethod(models.Model):
         self.ensure_one()
         if not self.env.user.has_group('point_of_sale.group_pos_user'):
             raise AccessError(_("Only point of sale users can charge on XPago terminals."))
-        if self.use_payment_terminal != 'xpago':
+        if self.payment_provider != 'xpago':
             raise UserError(_("This payment method does not use an XPago terminal."))
         provider = self.sudo().xpago_provider_id
-        if provider.state == 'disabled':
+        if not provider.active:
             raise UserError(_("XPago is disabled. An administrator can enable it in the XPago payment provider."))
         return provider
 

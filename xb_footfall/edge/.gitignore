@@ -1,5 +1,0 @@
-config.yaml
-*.jpg
-__pycache__/
-*.pyc
-venv/

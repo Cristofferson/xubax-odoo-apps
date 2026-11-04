@@ -13,7 +13,7 @@ patch(PaymentPage.prototype, {
     },
 
     async startPayment() {
-        if (this.selectedPaymentMethod?.use_payment_terminal !== "xpago") {
+        if (this.selectedPaymentMethod?.payment_provider !== "xpago") {
             return super.startPayment(...arguments);
         }
         this.selfOrder.paymentError = false;

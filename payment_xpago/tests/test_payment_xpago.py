@@ -17,7 +17,7 @@ class TestPaymentXpago(XpagoCommon, PaymentHttpCommon):
     def test_checkout_is_created_and_customer_sent_to_it(self):
         tx = self._create_transaction('redirect', currency_id=self.currency.id)
         with patch(SEND, return_value=self.checkout) as send:
-            values = tx._get_specific_rendering_values(None)
+            values = self.safe(tx)._get_specific_rendering_values(None)
         method, endpoint = send.call_args.args
         payload = send.call_args.kwargs['json']
         self.assertEqual((method, endpoint), ('POST', '/one-time-payment'))
@@ -29,7 +29,7 @@ class TestPaymentXpago(XpagoCommon, PaymentHttpCommon):
     def test_refused_checkout_marks_the_transaction_in_error(self):
         tx = self._create_transaction('redirect', currency_id=self.currency.id)
         with patch(SEND, side_effect=ValidationError('nope')):
-            self.assertEqual(tx._get_specific_rendering_values(None), {})
+            self.assertEqual(self.safe(tx)._get_specific_rendering_values(None), {})
         self.assertEqual(tx.state, 'error')
 
     def test_months_without_interest_by_amount(self):
@@ -51,17 +51,17 @@ class TestPaymentXpago(XpagoCommon, PaymentHttpCommon):
 
     def test_confirmed_payment_is_done(self):
         tx = self._create_transaction('redirect', currency_id=self.currency.id, provider_reference=self.checkout_id)
-        tx._process('xpago', self.payment_data())
+        self.safe(tx)._process(self.payment_data())
         self.assertEqual(tx.state, 'done')
 
     def test_cancelled_and_expired_checkouts_are_canceled(self):
         tx = self._create_transaction('redirect', currency_id=self.currency.id, provider_reference=self.checkout_id)
-        tx._process('xpago', self.payment_data('PENDING', expired=True))
+        self.safe(tx)._process(self.payment_data('PENDING', expired=True))
         self.assertEqual(tx.state, 'cancel')
 
     def test_pending_checkout_stays_pending(self):
         tx = self._create_transaction('redirect', currency_id=self.currency.id, provider_reference=self.checkout_id)
-        tx._process('xpago', self.payment_data('PENDING'))
+        self.safe(tx)._process(self.payment_data('PENDING'))
         self.assertEqual(tx.state, 'pending')
 
     @mute_logger('odoo.addons.payment_xpago.controllers.main')
@@ -70,6 +70,7 @@ class TestPaymentXpago(XpagoCommon, PaymentHttpCommon):
         url = self._build_url(const.PAYMENT_RETURN_ROUTE)
         with patch(SEND, return_value=self.payment_data()) as send:
             self._make_http_get_request(url, params={'id': self.checkout_id, 'externalId': tx.reference})
+        self._run_processing()
         self.assertEqual(send.call_args.args, ('GET', f'/developer/v1/one-time-payment/{self.checkout_id}'))
         self.assertEqual(tx.state, 'done')
 
@@ -77,28 +78,29 @@ class TestPaymentXpago(XpagoCommon, PaymentHttpCommon):
         tx = self._create_transaction('redirect', currency_id=self.currency.id, provider_reference=self.checkout_id)
         with patch(SEND, return_value=self.payment_data()):
             self.env['payment.transaction']._xpago_cron_sync_pending()
+        self._run_processing()
         self.assertEqual(tx.state, 'done')
 
     def test_paid_payment_notifies_the_chosen_users_once(self):
         boss = self.env['res.users'].create({'name': 'Dueña', 'login': 'duena-xp', 'group_ids': [(4, self.env.ref('base.group_user').id)]})
         self.provider.xpago_notify_user_ids = boss
         tx = self._create_transaction('redirect', currency_id=self.currency.id, provider_reference=self.checkout_id)
-        tx._process('xpago', self.payment_data())
-        tx._set_done()
+        self.safe(tx)._process(self.payment_data())
+        self.safe(tx)._set_done()
         messages = self.env['mail.message'].sudo().search([('notified_partner_ids', 'in', boss.partner_id.ids)])
         self.assertEqual(len(messages), 1)
         self.assertIn('Payment received', messages.subject)
 
     def test_api_key_is_sent_and_environment_follows_the_state(self):
-        self.provider.state = 'test'
+        self.provider.is_live = False
         self.assertTrue(self.provider._build_request_url('/x').startswith(const.API_URLS['test']))
-        self.provider.state = 'enabled'
-        self.assertTrue(self.provider._build_request_url('/x').startswith(const.API_URLS['enabled']))
+        self.provider.is_live = True
+        self.assertTrue(self.provider._build_request_url('/x').startswith(const.API_URLS['live']))
         self.assertEqual(self.provider._build_request_headers('GET', '/x', None)['x-api-key'], 'xp_test_key')
 
     def test_enabling_without_api_key_is_refused(self):
         with self.assertRaises(ValidationError):
-            self.provider.write({'xpago_api_key': False, 'state': 'enabled'})
+            self.provider.write({'xpago_api_key': False, 'is_live': True})
 
 
 @tagged('post_install', '-at_install')

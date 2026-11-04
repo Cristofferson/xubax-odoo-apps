@@ -24,7 +24,7 @@ class TestSavedCards(XpagoCommon):
     def test_saving_the_card_uses_the_card_checkout(self):
         tx = self._create_transaction('redirect', currency_id=self.currency.id, tokenize=True)
         with patch(SEND, return_value={'id': 'pm-1', 'checkoutUrl': 'https://pay.example.com/card/pm-1'}) as send:
-            values = tx._get_specific_rendering_values(None)
+            values = self.safe(tx)._get_specific_rendering_values(None)
         self.assertEqual(send.call_args.args, ('POST', '/payment-method'))
         body = send.call_args.kwargs['json']
         self.assertEqual((body['collectFunds'], body['amount']), ('CHARGE', self.amount))
@@ -35,13 +35,13 @@ class TestSavedCards(XpagoCommon):
         self.partner.phone = False
         tx = self._create_transaction('redirect', currency_id=self.currency.id, tokenize=True, partner_phone=False)
         with patch(SEND) as send:
-            self.assertEqual(tx._get_specific_rendering_values(None), {})
+            self.assertEqual(self.safe(tx)._get_specific_rendering_values(None), {})
         send.assert_not_called()
         self.assertEqual(tx.state, 'error')
 
     def test_paid_card_checkout_creates_the_token(self):
         tx = self._create_transaction('redirect', currency_id=self.currency.id, tokenize=True, xpago_card_id='pm-1')
-        tx._process('xpago', {'externalId': tx.reference, 'xpago_card': self.card(), 'xpago_payment': self.card_payment()})
+        self.safe(tx)._process({'externalId': tx.reference, 'xpago_card': self.card(), 'xpago_payment': self.card_payment()})
         self.assertEqual(tx.state, 'done')
         self.assertEqual((tx.token_id.provider_ref, tx.token_id.payment_details), ('pm-1', '4242'))
 
@@ -49,7 +49,8 @@ class TestSavedCards(XpagoCommon):
         token = self._create_token(provider_ref='pm-1')
         tx = self._create_transaction('token', currency_id=self.currency.id, token_id=token.id, operation='offline')
         with patch(SEND, return_value=self.card_payment()) as send:
-            tx._send_payment_request()
+            tx._charge_with_token()
+        self._run_processing()
         self.assertEqual(send.call_args.args, ('POST', '/payment-method/pm-1/payment'))
         self.assertEqual(send.call_args.kwargs['json']['externalId'], tx.reference)
         self.assertEqual(tx.state, 'done')
@@ -58,12 +59,11 @@ class TestSavedCards(XpagoCommon):
         token = self._create_token(provider_ref='pm-1')
         tx = self._create_transaction('token', currency_id=self.currency.id, token_id=token.id, operation='offline')
         with patch(SEND, side_effect=ValidationError('declined')):
-            tx._send_payment_request()
+            tx._charge_with_token()
+        self._run_processing()
         self.assertEqual(tx.state, 'error')
 
     def hold_mode(self):
-        # Odoo holds only with the generic card method: the card brands do not support it.
-        self.provider.payment_method_ids = self.provider.payment_method_ids.filtered(lambda m: m.code == 'card')
         self.provider.capture_manually = True
 
     def test_hold_then_partial_capture(self):
@@ -71,22 +71,30 @@ class TestSavedCards(XpagoCommon):
         token = self._create_token(provider_ref='pm-1')
         tx = self._create_transaction('token', currency_id=self.currency.id, token_id=token.id, operation='offline')
         with patch(SEND, return_value=self.card_payment('HELD', heldAmount=self.amount)) as send:
-            tx._send_payment_request()
+            tx._charge_with_token()
+        self._run_processing()
         self.assertTrue(send.call_args.kwargs['json']['holdFunds'])
         self.assertEqual(tx.state, 'authorized')
         with patch(SEND, return_value=self.card_payment('CONFIRMED', amount=self.amount / 2)) as send:
             capture = tx._capture(self.amount / 2)
+        self._run_processing()
         self.assertEqual(send.call_args.args[1], '/payment-method/pm-1/payment/cp-1/capture')
         self.assertEqual(capture.state, 'done')
+        # XPago captures once: the rest of the hold is closed, and the hold itself is settled.
+        remainder = tx.child_transaction_ids - capture
+        self.assertEqual((remainder.state, remainder.amount), ('cancel', self.currency.round(self.amount - capture.amount)))
+        self.assertEqual(tx.state, 'done')
 
     def test_hold_is_released(self):
         self.hold_mode()
         token = self._create_token(provider_ref='pm-1')
         tx = self._create_transaction('token', currency_id=self.currency.id, token_id=token.id, operation='offline')
         with patch(SEND, return_value=self.card_payment('HELD', heldAmount=self.amount)):
-            tx._send_payment_request()
+            tx._charge_with_token()
+        self._run_processing()
         with patch(SEND, return_value={}) as send:
             void = tx._void()
+        self._run_processing()
         self.assertEqual(send.call_args.args[1], '/payment-method/pm-1/payment/cp-1/release')
         self.assertEqual(void.state, 'cancel')
 
@@ -94,9 +102,11 @@ class TestSavedCards(XpagoCommon):
         token = self._create_token(provider_ref='pm-1')
         tx = self._create_transaction('token', currency_id=self.currency.id, token_id=token.id, operation='offline')
         with patch(SEND, return_value=self.card_payment()):
-            tx._send_payment_request()
+            tx._charge_with_token()
+        self._run_processing()
         with patch(SEND, return_value={'id': 'cp-1', 'status': 'REFUNDED'}) as send:
             refund = tx._refund()
+        self._run_processing()
         self.assertEqual(send.call_args.args[1], '/payment-method/pm-1/payment/cp-1/refund')
         self.assertEqual(refund.state, 'done')
 
@@ -104,6 +114,7 @@ class TestSavedCards(XpagoCommon):
         tx = self._create_transaction('redirect', currency_id=self.currency.id, provider_reference='otp-1', state='done')
         with patch(SEND) as send:
             refund = tx._refund()
+        self._run_processing()
         send.assert_not_called()
         self.assertEqual(refund.state, 'error')
 

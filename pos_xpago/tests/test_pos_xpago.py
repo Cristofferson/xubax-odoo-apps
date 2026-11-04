@@ -15,12 +15,13 @@ class TestPosXpago(TestPoSCommon):
     def setUpClass(cls):
         super().setUpClass()
         cls.provider = cls.env['payment.provider'].search([('code', '=', 'xpago')], limit=1)
-        cls.provider.write({'xpago_api_key': 'xp_test_key', 'state': 'test', 'company_id': cls.env.company.id})
+        cls.provider.write({'xpago_api_key': 'xp_test_key', 'is_live': False, 'company_id': cls.env.company.id})
         cls.method = cls.env['pos.payment.method'].create({
             'name': 'Tarjeta XPago',
+            'type': 'bank',
             'journal_id': cls.company_data['default_journal_bank'].id,
             'payment_method_type': 'terminal',
-            'use_payment_terminal': 'xpago',
+            'payment_provider': 'xpago',
             'xpago_provider_id': cls.provider.id,
             'xpago_terminal_serial': 'N950-0001',
         })
@@ -94,7 +95,7 @@ class TestPosXpago(TestPoSCommon):
         self.assertIn('VISA •••• 4242', messages.body)
 
     def test_disabled_account_does_not_charge(self):
-        self.provider.state = 'disabled'
+        self.provider.active = False
         with self.assertRaises(UserError):
             self.method.xpago_create_charge({'amount': 10})
 
@@ -141,3 +142,12 @@ class TestPosXpago(TestPoSCommon):
         ok = lines['123456']
         self.assertEqual((ok.status, ok.charge_id, ok.fee_amount, ok.fee_vat), ('ok', charge, 4.5, 0.72))
         self.assertEqual(lines[500.0].status, 'xpago_only')
+
+    def test_point_of_sale_loads_the_accounts_of_its_terminals(self):
+        Account = self.env['payment.xpago.bank.account']
+        mine = Account.create({'provider_id': self.provider.id, 'xpago_id': 'acc-pos', 'name': 'Caja'})
+        config = self.basic_config
+        config.payment_method_ids = [(4, self.method.id)]
+        domain = Account._load_pos_data_domain({'pos.config': config})
+        self.assertIn(mine, Account.search(domain))
+        self.assertIn('payment.xpago.bank.account', self.env['pos.session']._load_pos_data_models(config))

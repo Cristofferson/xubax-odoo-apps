@@ -1,0 +1,5 @@
+id,name,model_id,group_id/id,operation,domain
+access_pos_xpago_charge_user,pos.xpago.charge user,pos.xpago.charge,point_of_sale.group_pos_user,r,
+access_pos_xpago_charge_manager,pos.xpago.charge manager,pos.xpago.charge,point_of_sale.group_pos_manager,r,
+access_pos_xpago_reconcile_manager,pos.xpago.reconcile manager,pos.xpago.reconcile,point_of_sale.group_pos_manager,crud,
+access_pos_xpago_reconcile_line_manager,pos.xpago.reconcile.line manager,pos.xpago.reconcile.line,point_of_sale.group_pos_manager,crud,

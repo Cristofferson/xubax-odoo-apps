@@ -5,14 +5,14 @@
         <field name="model">pos.payment.method</field>
         <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='use_payment_terminal']" position="after">
-                <field name="xpago_provider_id" invisible="use_payment_terminal != 'xpago'" required="use_payment_terminal == 'xpago'"
+            <xpath expr="//field[@name='payment_provider']" position="after">
+                <field name="xpago_provider_id" invisible="payment_provider != 'xpago'" required="payment_provider == 'xpago'"
                        options="{'no_create': True}"/>
-                <field name="xpago_terminal_serial" placeholder="N950-123456789" invisible="use_payment_terminal != 'xpago'"
-                       required="use_payment_terminal == 'xpago'"/>
-                <field name="xpago_bank_account_id" invisible="use_payment_terminal != 'xpago'" options="{'no_create': True, 'no_open': True}"/>
-                <field name="xpago_choose_account" invisible="use_payment_terminal != 'xpago'"/>
-                <field name="xpago_open_terminal_app" invisible="use_payment_terminal != 'xpago'"/>
+                <field name="xpago_terminal_serial" placeholder="N950-123456789" invisible="payment_provider != 'xpago'"
+                       required="payment_provider == 'xpago'"/>
+                <field name="xpago_bank_account_id" invisible="payment_provider != 'xpago'" options="{'no_create': True, 'no_open': True}"/>
+                <field name="xpago_choose_account" invisible="payment_provider != 'xpago'"/>
+                <field name="xpago_open_terminal_app" invisible="payment_provider != 'xpago'"/>
             </xpath>
         </field>
     </record>

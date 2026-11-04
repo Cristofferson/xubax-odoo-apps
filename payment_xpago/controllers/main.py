@@ -20,7 +20,7 @@ class XpagoController(http.Controller):
         tx_sudo = request.env['payment.transaction'].sudo()._search_by_reference('xpago', data)
         if tx_sudo and (not data.get('id') or not tx_sudo.provider_reference or tx_sudo.provider_reference == data['id']):
             try:
-                tx_sudo._process('xpago', tx_sudo._xpago_fetch_payment_data())
+                tx_sudo._record(tx_sudo._xpago_fetch_payment_data())
             except ValidationError:
                 _logger.warning("XPago: could not read back %s on return; the scheduled action will.", tx_sudo.reference)
         return request.redirect('/payment/status')
@@ -36,7 +36,7 @@ class XpagoController(http.Controller):
         ], limit=1)
         if tx_sudo:
             try:
-                tx_sudo._process('xpago', tx_sudo._xpago_fetch_card_data())
+                tx_sudo._record(tx_sudo._xpago_fetch_card_data())
             except ValidationError:
                 _logger.warning("XPago: could not read back %s on return; the scheduled action will.", tx_sudo.reference)
         return request.redirect('/payment/status')

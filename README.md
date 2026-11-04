@@ -1,21 +1,19 @@
-# XUBAX — Odoo Apps
+# XUBAX — Odoo Apps (20.0)
 
-Módulos Odoo 19.0 publicados por **XUBAX** ([xubax.com](https://xubax.com) · soporte@xubax.com).
+Módulos para **Odoo 20.0** publicados por **XUBAX** ([xubax.com](https://xubax.com) · soporte@xubax.com).
 
-La rama `19.0` contiene el código para Odoo 19.0. Cada módulo vive en su propia carpeta en la raíz del repositorio.
+La rama `20.0` contiene el código para Odoo 20.0. Cada módulo vive en su propia carpeta en la raíz del repositorio.
 
 ## Módulos
 
 | Módulo | Versión | Precio | Descripción |
 |---|---|---|---|
-| `special_dates` | 19.0.1.6.3 | 18 USD | Recordatorios de fechas especiales (cumpleaños, aniversarios, renovaciones) desde Contactos y POS, con multi-canal y popups en el Punto de Venta. |
-| `special_dates_whatsapp` | 19.0.1.0.0 | Gratis | Puente `auto_install` que añade WhatsApp como canal a las comunicaciones de `special_dates`. Requiere Odoo Enterprise (`whatsapp`). |
-| `xb_sale_order_from_pos` | 19.0.1.0.5 | 48 USD | Genera órdenes de venta a partir del Punto de Venta (clean-room POS→SO). |
-| `xb_delivery_signature` | 19.0.1.2.0 | 28 USD | Firma de "recibido" del cliente al entregar (albarán, portal web, PDF). Campos nativos de Odoo 19. |
-| `xb_delivery_signature_pos` | 19.0.1.2.1 | Gratis | Puente `auto_install` que captura la firma de entrega desde el POS y la espeja al albarán / orden de venta. |
+| `payment_xpago` | 20.0.1.0.0 | Gratis (OPL-1) | XPago en la tienda en línea, facturas y ligas de pago: meses sin intereses por monto, tarjetas guardadas (suscripciones), retención con cobro total o parcial, reembolsos y hasta 10 cuentas de depósito. |
+| `pos_xpago` | 20.0.1.0.0 | Gratis (OPL-1) | Terminales XPago en el Punto de Venta: el monto va a la terminal y la tarjeta aprobada regresa a la orden; conciliación con comisión e IVA y cobros sin venta; caja en pantalla chica. |
+| `pos_self_order_xpago` | 20.0.1.0.0 | Gratis (OPL-1) | El cliente pide en el kiosco de autoservicio y paga en la terminal XPago de al lado. |
 
 Todos bajo licencia **OPL-1**.
 
 ## Soporte
 
-soporte@xubax.com
+soporte@xubax.com · https://www.xubax.com

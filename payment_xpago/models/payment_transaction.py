@@ -148,7 +148,7 @@ class PaymentTransaction(models.Model):
         for tx in txs:
             try:
                 with self.env.cr.savepoint():
-                    tx._process('xpago', tx._xpago_fetch_payment_data())
+                    tx._record(tx._xpago_fetch_payment_data())
             except ValidationError as error:
                 _logger.warning("XPago: could not read back %s: %s", tx.reference, error)
 
@@ -163,6 +163,8 @@ class PaymentTransaction(models.Model):
     def _extract_amount_data(self, payment_data):
         if self.provider_code != 'xpago':
             return super()._extract_amount_data(payment_data)
+        if 'xpago_operation' in payment_data:
+            return None  # A capture, release or refund of a saved-card payment: XPago answers for that payment.
         if 'xpago_card' in payment_data or 'xpago_payment' in payment_data:
             payment = payment_data.get('xpago_payment')
             if not payment:
@@ -174,6 +176,8 @@ class PaymentTransaction(models.Model):
     def _apply_updates(self, payment_data):
         if self.provider_code != 'xpago':
             return super()._apply_updates(payment_data)
+        if 'xpago_operation' in payment_data:
+            return self._xpago_apply_operation(payment_data['xpago_operation'], payment_data.get('xpago_answer') or {})
         if 'xpago_card' in payment_data or 'xpago_payment' in payment_data:
             return self._xpago_apply_card_updates(payment_data)
         if payment_data.get('id'):
@@ -195,6 +199,8 @@ class PaymentTransaction(models.Model):
     def _xpago_apply_card_updates(self, payment_data):
         method = payment_data.get('xpago_card') or {}
         payment = payment_data.get('xpago_payment')
+        if payment_data.get('xpago_card_id') and not self.xpago_card_id:
+            self.xpago_card_id = payment_data['xpago_card_id']
         if payment and payment.get('id'):
             self.provider_reference = payment['id']
         if self.operation == 'validation' or not payment:
@@ -247,13 +253,9 @@ class PaymentTransaction(models.Model):
         }
         if self.provider_id.capture_manually:
             body['holdFunds'] = True
-        self.xpago_card_id = card_id
-        try:
-            payment = self._send_api_request('POST', f'/payment-method/{card_id}/payment', json=body)
-        except ValidationError as error:
-            self._set_error(str(error))
-            return
-        self._process('xpago', {'externalId': self.reference, 'xpago_payment': payment})
+        # A refused charge raises: `_charge_with_token` puts the transaction in error.
+        payment = self._send_api_request('POST', f'/payment-method/{card_id}/payment', json=body)
+        self._record({'externalId': self.reference, 'xpago_card_id': card_id, 'xpago_payment': payment})
 
     def _xpago_held_payment_path(self):
         source = self.source_transaction_id
@@ -264,33 +266,42 @@ class PaymentTransaction(models.Model):
     def _send_capture_request(self):
         if self.provider_code != 'xpago':
             return super()._send_capture_request()
-        source = self.source_transaction_id
-        partial = self.currency_id.compare_amounts(self.amount, source.amount) < 0
+        partial = self._xpago_is_partial()
         payment = self._send_api_request(
             'POST', self._xpago_held_payment_path() + '/capture',
             json={'amount': self.currency_id.round(self.amount)} if partial else None,
         )
-        self.provider_reference = payment.get('id') or source.provider_reference
-        self._set_done()
-        if partial:
-            # XPago captures a hold only once: the rest of the hold is freed by the bank on its own.
-            remainder = source._create_child_transaction(source.amount - self.amount)
-            remainder._set_canceled(state_message=_("XPago captures a hold once; the bank frees the rest on its own."))
+        self._record({'externalId': self.reference, 'xpago_operation': 'capture', 'xpago_answer': payment})
+
+    def _xpago_is_partial(self):
+        return self.currency_id.compare_amounts(self.amount, self.source_transaction_id.amount) < 0
 
     def _send_void_request(self):
         if self.provider_code != 'xpago':
             return super()._send_void_request()
         if self.currency_id.compare_amounts(self.amount, self.source_transaction_id.amount) < 0:
             raise ValidationError(_("XPago releases a hold in full only."))
-        self._send_api_request('POST', self._xpago_held_payment_path() + '/release')
-        self._set_canceled()
+        released = self._send_api_request('POST', self._xpago_held_payment_path() + '/release')
+        self._record({'externalId': self.reference, 'xpago_operation': 'void', 'xpago_answer': released})
 
     def _send_refund_request(self):
         if self.provider_code != 'xpago':
             return super()._send_refund_request()
         refunded = self._send_api_request('POST', self._xpago_held_payment_path() + '/refund', json={'reason': self.reference})
-        self.provider_reference = refunded.get('id') or self.source_transaction_id.provider_reference
+        self._record({'externalId': self.reference, 'xpago_operation': 'refund', 'xpago_answer': refunded})
+
+    def _xpago_apply_operation(self, operation, answer):
+        """What XPago answered to a capture, release or refund sent from Odoo: the request went through."""
+        source = self.source_transaction_id
+        if operation == 'void':
+            self._set_canceled()
+            return
+        self.provider_reference = (answer or {}).get('id') or source.provider_reference
         self._set_done()
+        if operation == 'capture' and self._xpago_is_partial():
+            # XPago captures a hold only once: the rest of the hold is freed by the bank on its own.
+            remainder = source._create_child_transaction(source.amount - self.amount)
+            remainder._set_canceled(state_message=_("XPago captures a hold once; the bank frees the rest on its own."))
 
     def _set_done(self, **kwargs):
         txs = super()._set_done(**kwargs)

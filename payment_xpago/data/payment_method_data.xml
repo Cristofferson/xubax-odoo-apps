@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Odoo 20 keeps the payment methods per provider: XPago takes Visa, Mastercard and American Express cards,
+         credit and debit. -->
+    <record id="payment_method_card" model="payment.method">
+        <field name="name">Card</field>
+        <field name="code">card</field>
+        <field name="sequence">10</field>
+        <field name="provider_id" ref="payment_provider_xpago"/>
+        <field name="image" type="bytes" file="payment/static/img/card.png"/>
+        <field name="support_tokenization">True</field>
+        <field name="support_manual_capture">partial</field>
+        <field name="support_refund">full_only</field>
+    </record>
+
+    <record id="payment_method_visa" model="payment.method">
+        <field name="name">VISA</field>
+        <field name="code">visa</field>
+        <field name="sequence">50</field>
+        <field name="primary_payment_method_id" ref="payment_method_card"/>
+        <field name="provider_id" ref="payment_provider_xpago"/>
+        <field name="image" type="bytes" file="payment/static/img/visa.png"/>
+    </record>
+
+    <record id="payment_method_mastercard" model="payment.method">
+        <field name="name">MasterCard</field>
+        <field name="code">mastercard</field>
+        <field name="sequence">50</field>
+        <field name="primary_payment_method_id" ref="payment_method_card"/>
+        <field name="provider_id" ref="payment_provider_xpago"/>
+        <field name="image" type="bytes" file="payment/static/img/mastercard.png"/>
+    </record>
+
+    <record id="payment_method_amex" model="payment.method">
+        <field name="name">American Express</field>
+        <field name="code">amex</field>
+        <field name="sequence">50</field>
+        <field name="primary_payment_method_id" ref="payment_method_card"/>
+        <field name="provider_id" ref="payment_provider_xpago"/>
+        <field name="image" type="bytes" file="payment/static/img/amex.png"/>
+    </record>
+</odoo>

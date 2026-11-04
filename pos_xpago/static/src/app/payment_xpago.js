@@ -1,7 +1,7 @@
 import { _t } from "@web/core/l10n/translation";
 import { PaymentInterface } from "@point_of_sale/app/utils/payment/payment_interface";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
-import { register_payment_method } from "@point_of_sale/app/services/pos_store";
+import { registry } from "@web/core/registry";
 import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
 import { SelectionPopup } from "@point_of_sale/app/components/popups/selection_popup/selection_popup";
 
@@ -14,16 +14,13 @@ export class PaymentXpago extends PaymentInterface {
     }
 
     _call(method, args) {
-        return this.env.services.orm.silent.call("pos.payment.method", method, [
-            [this.payment_method_id.id],
-            ...args,
-        ]);
+        return this.callPaymentMethod(method, [[this.payment_method_id.id], ...args]);
     }
 
-    async sendPaymentRequest(uuid) {
+    async sendPaymentRequest(line) {
         await super.sendPaymentRequest(...arguments);
-        const order = this.pos.getOrder();
-        const line = order.getPaymentlineByUuid(uuid);
+        const order = line.pos_order_id;
+        const uuid = line.uuid;
         if (line.amount <= 0) {
             this._showError(_t("XPago terminals only charge positive amounts."));
             return false;
@@ -38,7 +35,7 @@ export class PaymentXpago extends PaymentInterface {
             charge = await this._call("xpago_create_charge", [
                 {
                     amount: line.amount,
-                    session_id: this.pos.config.current_session_id?.id,
+                    session_id: order.session_id?.id || this.pos.config.current_session_id?.id,
                     order_uuid: order.uuid,
                     bank_account_id: accountId,
                 },
@@ -96,9 +93,9 @@ export class PaymentXpago extends PaymentInterface {
         return charge;
     }
 
-    async sendPaymentCancel(order, uuid) {
+    async sendPaymentCancel(line) {
         await super.sendPaymentCancel(...arguments);
-        const pending = this.charges[uuid];
+        const pending = this.charges[line.uuid];
         if (!pending) {
             return true;
         }
@@ -126,4 +123,4 @@ export class PaymentXpago extends PaymentInterface {
     }
 }
 
-register_payment_method("xpago", PaymentXpago);
+registry.category("pos_payment_providers").add("xpago", PaymentXpago);

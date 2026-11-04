@@ -1,8 +1,8 @@
-# API of the XPago processing platform. The provider's state chooses the environment: "Test mode" charges in the
-# demo environment and "Enabled" in production.
+# API of the XPago processing platform. The provider's live mode chooses the environment: out of live mode it
+# charges in the demo environment, in live mode in production.
 API_URLS = {
     'test': 'https://demo-api-harmony.compago.com/api',
-    'enabled': 'https://api-harmony.compago.com/api',
+    'live': 'https://api-harmony.compago.com/api',
 }
 
 PAYMENT_RETURN_ROUTE = '/payment/xpago/return'
