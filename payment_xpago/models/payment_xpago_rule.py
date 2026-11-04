@@ -128,6 +128,9 @@ class PaymentXpagoRule(models.Model):
         """
         date = date or fields.Date.context_today(self)
         Account = self.env['payment.xpago.bank.account']
+        # Only what is sold decides: a free line (shipping at $0, a gift) would otherwise fit every "price up to" rule
+        # and take the months of the whole sale away. Its amount still counts in the total.
+        lines = [line for line in lines if not self._xpago_skip_line(line, config)]
         rules = self.sudo().search([('company_id', 'parent_of', company.id)]).filtered(
             lambda r: r._xpago_fits_sale(channel, config, total, date))
         candidates = {}
@@ -184,6 +187,12 @@ class PaymentXpagoRule(models.Model):
             part['amount'] = currency.round(part['amount'])
         return parts
 
+    @api.model
+    def _xpago_skip_line(self, line, config):
+        """Lines that are not products sold and must not decide the months or the account. The point of sale app
+        adds its tips."""
+        return not line.get('product') or self.env.company.currency_id.is_zero(line.get('amount') or 0.0)
+
     def _xpago_fits_channel(self, channel, config):
         """Whether the rule applies where the sale is made. The point of sale app adds the register and kiosk."""
         self.ensure_one()
@@ -221,7 +230,8 @@ class PaymentXpagoRule(models.Model):
         lines = []
         for record in records:
             if record._name == 'sale.order.line':
-                if record.display_type:
+                # Shipping is not a product sold: it is charged with the rest of the sale.
+                if record.display_type or ('is_delivery' in record._fields and record.is_delivery):
                     continue
                 qty, amount = record.product_uom_qty, record.price_total
             elif record._name == 'account.move.line':
