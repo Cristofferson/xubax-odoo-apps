@@ -5,7 +5,7 @@
     'summary': 'Your customers order at the Odoo kiosk and pay on the XPago terminal beside it. Mexico.',
     'description': ' ',
     'author': 'XUBAX',
-    'website': 'https://xpago.xubax.com',
+    'website': 'https://xpago.mx',
     'support': 'hola@xubax.com',
     'license': 'OPL-1',
     'depends': ['pos_xpago', 'pos_self_order'],
