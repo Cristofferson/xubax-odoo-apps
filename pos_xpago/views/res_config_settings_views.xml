@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.pos_xpago</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//setting[@id='payment_methods_new']" position="after">
+                <setting id="xpago_payment_rules" string="XPago payment rules"
+                         help="Months without interest and deposit accounts by what is sold, on the XPago terminals of this point of sale.">
+                    <div>
+                        <field name="pos_xpago_show_account" class="me-2"/>
+                        <label for="pos_xpago_show_account" string="The cashier sees which account the money goes to"/>
+                    </div>
+                    <div class="mt-2">
+                        <field name="pos_xpago_split" class="me-2"/>
+                        <label for="pos_xpago_split" string="Split the charge when the products go to different accounts or months"/>
+                    </div>
+                    <div class="mt-1">
+                        <button name="%(payment_xpago.action_payment_xpago_rule)d" type="action" class="btn-link" icon="oi-arrow-right" string="XPago payment rules"/>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>
