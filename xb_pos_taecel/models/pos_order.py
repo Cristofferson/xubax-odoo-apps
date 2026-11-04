@@ -82,11 +82,18 @@ class PosOrder(models.Model):
                     ('account_id', '=', account.id),
                     ('code', '=', line.taecel_product_code),
                 ], limit=1) if line.taecel_product_code else Product
+                # A free-amount service (CFE, SKY...) is dispatched with the code of its only catalog entry (CFEON,
+                # SKY000...): RequestTXN always needs 'producto', the amount goes apart. The register sends none.
+                if not product and line.taecel_carrier_id.carrier_type == const.CARRIER_FREE:
+                    product = Product.sudo().with_context(active_test=False).search([
+                        ('account_id', '=', account.id),
+                        ('carrier_id', '=', line.taecel_carrier_id.id),
+                    ], order='active desc, id', limit=1)
                 created |= Txn.create({
                     'account_id': account.id,
                     'carrier_id': line.taecel_carrier_id.id or False,
                     'product_id': product.id or False,
-                    'product_code': line.taecel_product_code,
+                    'product_code': line.taecel_product_code or product.code,
                     'bolsa_id': line.taecel_bolsa_id,
                     'reference': line.taecel_reference or '',
                     'amount': line.price_subtotal_incl - fee,
