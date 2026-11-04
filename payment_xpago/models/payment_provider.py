@@ -157,9 +157,13 @@ class PaymentProvider(models.Model):
         if not response.ok:
             _logger.warning("XPago: %s %s answered %s:\n%s", method, url, response.status_code,
                             pprint.pformat(response.text[:2000]))
-            raise ValidationError("XPago: " + _(
-                "The communication with the API failed. Details: %s", self._xpago_parse_response_error(response),
-            ))
+            try:
+                response.raise_for_status()
+            except requests.exceptions.HTTPError as http_error:
+                # The HTTP error stays behind the ValidationError: its answer tells what XPago refused.
+                raise ValidationError("XPago: " + _(
+                    "The communication with the API failed. Details: %s", self._xpago_parse_response_error(response),
+                )) from http_error
         if not response.content:
             return {}
         try:

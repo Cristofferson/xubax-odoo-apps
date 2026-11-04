@@ -29,9 +29,7 @@ class PaymentTransaction(models.Model):
         if self._xpago_uses_card_checkout():
             return self._xpago_card_checkout()
         try:
-            created = self.provider_id._xpago_make_request(
-                'POST', '/one-time-payment', json=self._xpago_prepare_checkout_payload(),
-            )
+            created = self._xpago_create_checkout(self._xpago_prepare_checkout_payload())
         except ValidationError as error:
             self._set_error(str(error))
             return {}
@@ -39,6 +37,37 @@ class PaymentTransaction(models.Model):
         self.provider_reference = created.get('id') or urlparse(url).path.rstrip('/').rsplit('/', 1)[-1]
         # The form is sent with GET, which drops the query string of its action: keep it as inputs.
         return {'api_url': url, 'url_params': dict(parse_qsl(urlparse(url).query))}
+
+    def _xpago_create_checkout(self, payload):
+        """Create the one-time checkout. When some months of the payload are not active in the XPago account, try
+        once more with the ones that are: the customer is offered those instead of not being able to pay."""
+        try:
+            return self.provider_id._xpago_make_request('POST', '/one-time-payment', json=payload)
+        except ValidationError as error:
+            body = _xpago_error_body(error)
+            available = body.get('availableTerms')
+            if body.get('code') != 'ALLOWED_TERMS_UNAVAILABLE' or not isinstance(available, list) \
+                    or 'allowedTerms' not in payload:
+                raise
+            _logger.warning("XPago: months %s of %s are not active in the XPago account",
+                            body.get('unavailableTerms'), self.reference)
+            terms = [term for term in payload['allowedTerms'] if term in available]
+            payload = {key: value for key, value in payload.items() if key != 'allowedTerms'}
+            if terms:
+                payload['allowedTerms'] = terms
+            return self.provider_id._xpago_make_request('POST', '/one-time-payment', json=payload)
+
+    def _xpago_rule_plan(self):
+        """The payment rules applied to what is being paid (its order or invoice lines), as one part."""
+        tx = self.sudo()  # the customer paying may not read the lines of the order
+        Rule = tx.env['payment.xpago.rule']
+        records = None
+        if 'sale_order_ids' in tx and tx.sale_order_ids:
+            records = tx.sale_order_ids.order_line
+        elif 'invoice_ids' in tx and tx.invoice_ids:
+            records = tx.invoice_ids.invoice_line_ids
+        lines = Rule._xpago_lines_from_records(records) if records else []
+        return Rule._xpago_plan(tx.company_id, 'online', lines, tx.amount)[0]
 
     def _xpago_deposit_account(self):
         """Invoice payments go to the invoice account, the rest to the other account."""
@@ -102,10 +131,15 @@ class PaymentTransaction(models.Model):
         # XPago takes the customer whole or not at all; a partial one is filled in at checkout.
         if all(billing.values()):
             payload['billingInformation'] = billing
-        account = self._xpago_deposit_account()
+        # The payment rules of the products choose the account before the invoice / other payments accounts, and
+        # narrow the months the amount allows.
+        plan = self._xpago_rule_plan()
+        account = self.provider_id._xpago_bank_account_id(plan['account']) or self._xpago_deposit_account()
         if account:
             payload['bankAccountId'] = account
         terms = self.provider_id._xpago_allowed_terms(self.amount)
+        if plan['terms'] is not None:
+            terms = plan['terms'] if terms is None else [t for t in terms if t in plan['terms']] or [1]
         if terms:
             payload['allowedTerms'] = terms
         return payload
@@ -376,3 +410,20 @@ class PaymentTransaction(models.Model):
             ]
             tx.provider_id._xpago_notify(_("Payment received: %s", tx.currency_id.format(tx.amount)), lines, record or None)
         return txs
+
+
+def _xpago_error_body(error):
+    """The JSON body XPago answered with, read from the HTTP error behind a refused request."""
+    seen = error
+    while seen is not None:
+        response = getattr(seen, 'response', None)
+        if response is not None:
+            try:
+                body = response.json()
+            except ValueError:
+                return {}
+            if isinstance(body, dict) and isinstance(body.get('error'), dict):
+                body = {**body, **body['error']}
+            return body if isinstance(body, dict) else {}
+        seen = seen.__cause__ or seen.__context__
+    return {}

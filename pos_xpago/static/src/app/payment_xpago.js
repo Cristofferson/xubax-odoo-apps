@@ -5,9 +5,16 @@ import { patch } from "@web/core/utils/patch";
 import { PaymentInterface } from "@point_of_sale/app/payment/payment_interface";
 import { ErrorPopup } from "@point_of_sale/app/errors/popups/error_popup";
 import { PosStore, register_payment_method } from "@point_of_sale/app/store/pos_store";
+import { Payment } from "@point_of_sale/app/store/models";
 import { SelectionPopup } from "@point_of_sale/app/utils/input_popups/selection_popup";
+import { ConfirmPopup } from "@point_of_sale/app/utils/confirm_popup/confirm_popup";
 
 const POLL_DELAY = 2000;
+
+/** The confirmation of a split charge: one line per part. */
+export class XpagoSplitPopup extends ConfirmPopup {
+    static template = "pos_xpago.XpagoSplitPopup";
+}
 
 patch(PosStore.prototype, {
     async _processData(loadedData) {
@@ -37,9 +44,24 @@ export class PaymentXpago extends PaymentInterface {
             this._showError(_t("XPago terminals only charge positive amounts."));
             return false;
         }
-        const accountId = await this._chooseAccount();
+        // The XPago payment rules decide the account (and the months, only shown here: the terminal does not take
+        // them) of this charge, or split it in parts.
+        if (!line.xpagoPart) {
+            const parts = await this._plan(order, line);
+            if (!parts) {
+                return false;
+            }
+        }
+        const part = line.xpagoPart || {};
+        const accountId = await this._chooseAccount(part);
         if (accountId === false) {
             return false;
+        }
+        if (!accountId && this.pos.config.xpago_show_account && part.account_name) {
+            this.env.services.pos_notification.add(
+                [_t("Deposit: %s", part.account_name), this._termsText(part.terms)].filter(Boolean).join(" · "),
+                4000
+            );
         }
         line.set_payment_status("waitingCapture");
         let charge;
@@ -50,6 +72,7 @@ export class PaymentXpago extends PaymentInterface {
                     session_id: this.pos.pos_session?.id,
                     order_uuid: order.uid,
                     bank_account_id: accountId,
+                    rule_account_id: part.account_id || false,
                 },
             ]);
         } catch (error) {
@@ -69,6 +92,13 @@ export class PaymentXpago extends PaymentInterface {
             if (ticket) {
                 line.set_receipt_info(ticket);
             }
+            // Next part of a split sale: selected, so the cashier only presses Send.
+            const next = order
+                .get_paymentlines()
+                .find((p) => p.xpagoPart && p !== line && p.get_payment_status() === "pending");
+            if (next) {
+                order.select_paymentline(next);
+            }
             return true;
         }
         if (result.state === "expired") {
@@ -77,14 +107,86 @@ export class PaymentXpago extends PaymentInterface {
         return false;
     }
 
-    async _chooseAccount() {
-        // When this terminal lets the cashier choose, ask for the deposit account before charging.
+    _termsText(terms) {
+        if (!terms) {
+            return "";
+        }
+        const months = terms.filter((t) => t > 1);
+        return months.length ? _t("Months without interest: %s", months.join(", ")) : _t("Single payment");
+    }
+
+    /** Ask Odoo how this payment is charged. With several parts (different accounts or months), the cashier
+     *  confirms and the payment line becomes one line per part, each sent to the terminal on its own. */
+    async _plan(order, line) {
+        let plan;
+        try {
+            plan = await this._call("xpago_plan", [
+                {
+                    session_id: this.pos.pos_session?.id,
+                    total: order.get_total_with_tax(),
+                    amount: line.amount,
+                    lines: order.get_orderlines().map((l) => ({
+                        product_id: l.product?.id,
+                        qty: l.get_quantity(),
+                        amount: l.get_price_with_tax(),
+                    })),
+                },
+            ]);
+        } catch {
+            line.xpagoPart = {};
+            return []; // the rules must never stop a charge
+        }
+        const parts = plan.parts || [];
+        if (parts.length <= 1) {
+            line.xpagoPart = parts[0] || {};
+            return parts;
+        }
+        const money = (value) => this.env.utils.formatCurrency(value);
+        const summary = parts
+            .map(
+                (p, i) =>
+                    `${i + 1}. ${money(p.amount)}` +
+                    (plan.show_account && p.account_name ? ` → ${p.account_name}` : "") +
+                    (this._termsText(p.terms) ? ` (${this._termsText(p.terms)})` : "")
+            )
+            .join("\n");
+        const intro = _t(
+            "Its products go to different accounts or allow different months, so the customer pays each part with the card:"
+        );
+        const { confirmed } = await this.env.services.popup.add(XpagoSplitPopup, {
+            title: _t("This sale is charged in %s parts", parts.length),
+            body: `${intro}\n\n${summary}`,
+            confirmText: _t("Charge the first part"),
+            cancelText: _t("Cancel"),
+        });
+        if (!confirmed) {
+            return null;
+        }
+        line.set_amount(parts[0].amount);
+        line.xpagoPart = parts[0];
+        for (const part of parts.slice(1)) {
+            // Not order.add_paymentline: it refuses while this line waits for the terminal.
+            const extra = new Payment(
+                { env: order.env },
+                { order, payment_method: this.payment_method, pos: this.pos }
+            );
+            order.paymentlines.add(extra);
+            extra.set_amount(part.amount);
+            extra.set_payment_status("pending");
+            extra.xpagoPart = part;
+        }
+        return parts;
+    }
+
+    async _chooseAccount(part = {}) {
+        // When this terminal lets the cashier choose, ask for the deposit account before charging; the account of
+        // the payment rules, else the terminal's, comes selected.
         const method = this.payment_method;
         const accounts = this.pos.xpago_bank_accounts || [];
         if (!method.xpago_choose_account || accounts.length < 2) {
             return null;
         }
-        const preset = method.xpago_bank_account_id && method.xpago_bank_account_id[0];
+        const preset = part.account_id || (method.xpago_bank_account_id && method.xpago_bank_account_id[0]);
         const { confirmed, payload } = await this.env.services.popup.add(SelectionPopup, {
             title: _t("Deposit account"),
             list: accounts.map((account) => ({

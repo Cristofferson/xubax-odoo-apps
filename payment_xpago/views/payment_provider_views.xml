@@ -28,6 +28,12 @@
                     <group>
                         <field name="xpago_single_payment"/>
                     </group>
+                    <div class="text-muted mt-3">
+                        To decide the months and the deposit account by product, category, tag or price, use the
+                        payment rules: they narrow the months of the amount above.
+                    </div>
+                    <button name="%(payment_xpago.action_payment_xpago_rule)d" type="action" class="btn-link ps-0"
+                            icon="oi-arrow-right" string="XPago payment rules"/>
                 </page>
                 <page string="Deposit accounts" name="xpago_accounts" invisible="code != 'xpago'">
                     <div class="text-muted mb-2">
