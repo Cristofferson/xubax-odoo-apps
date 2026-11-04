@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-03 08:50+0000\n"
-"PO-Revision-Date: 2026-11-03 08:50+0000\n"
+"POT-Creation-Date: 2026-11-04 07:16+0000\n"
+"PO-Revision-Date: 2026-11-04 07:16+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,13 @@ msgstr ""
 
 #. module: payment_xpago
 #: model_terms:ir.ui.view,arch_db:payment_xpago.payment_provider_form
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
 msgid "3, 6, 12"
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid "<span>–</span>"
 msgstr ""
 
 #. module: payment_xpago
@@ -38,7 +44,13 @@ msgstr ""
 
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__active
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__active
 msgid "Active"
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid "Always"
 msgstr ""
 
 #. module: payment_xpago
@@ -47,25 +59,97 @@ msgid "Always offer a single payment"
 msgstr ""
 
 #. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid "Any"
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid "Any category"
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid "Any product"
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid "Any tag"
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid "Any variant"
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_search
+msgid "Archived"
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.actions.act_window,help:payment_xpago.action_payment_xpago_rule
+msgid ""
+"By the total of the sale, the price of each product (after its pricelist), the product or variant, its\n"
+"                category or its tags. For example: 12 months on diamonds over $20,000, or the jewelry of a consignor\n"
+"                deposited in its own account."
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__categ_ids
+msgid "Categories"
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_search
+msgid "Change the account"
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_search
+msgid "Change the months"
+msgstr ""
+
+#. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__code
 msgid "Code"
 msgstr ""
 
 #. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__company_id
+msgid "Company"
+msgstr ""
+
+#. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__create_uid
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__create_uid
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__create_date
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__create_date
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__create_date
 msgid "Created on"
 msgstr ""
 
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__currency_id
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__currency_id
 msgid "Currency"
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.actions.act_window,help:payment_xpago.action_payment_xpago_rule
+msgid "Decide months without interest and deposit accounts by what is sold"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__bank_account_id
+msgid "Deposit account"
 msgstr ""
 
 #. module: payment_xpago
@@ -80,7 +164,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_transaction__display_name
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__display_name
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__display_name
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid "Does not change the account"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields.selection,name:payment_xpago.selection__payment_xpago_rule__msi_mode__keep
+msgid "Does not change the months"
 msgstr ""
 
 #. module: payment_xpago
@@ -91,34 +186,49 @@ msgid ""
 msgstr ""
 
 #. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_xpago_rule__terms
+msgid "For example \"3, 6, 12\"."
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__date_from
+msgid "From"
+msgstr ""
+
+#. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__id
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_token__id
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_transaction__id
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__id
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__id
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__id
 msgid "ID"
 msgstr ""
 
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__write_uid
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__write_uid
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__write_date
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__write_date
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__write_date
 msgid "Last Updated on"
 msgstr ""
 
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__terms
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__terms
 msgid "Months offered"
 msgstr ""
 
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_provider__xpago_installment_rule_ids
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_transaction__xpago_terms
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__msi_mode
 #: model_terms:ir.ui.view,arch_db:payment_xpago.payment_provider_form
 msgid "Months without interest"
 msgstr ""
@@ -132,7 +242,13 @@ msgstr ""
 
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__name
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__name
 msgid "Name"
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid "No end"
 msgstr ""
 
 #. module: payment_xpago
@@ -149,7 +265,23 @@ msgstr ""
 #. module: payment_xpago
 #. odoo-python
 #: code:addons/payment_xpago/models/payment_transaction.py:0
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__use_online
 msgid "Online"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_xpago_rule__use_online
+msgid "Online store, payment links of orders and invoices."
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_xpago_rule__product_ids
+msgid "Only these variants (for example, the ring in white gold)."
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_xpago_rule__sequence
+msgid "Order of the rules: the first one that fits a product decides."
 msgstr ""
 
 #. module: payment_xpago
@@ -179,6 +311,43 @@ msgid "Payment received: %s"
 msgstr ""
 
 #. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid "Product price (0 = any)"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__price_min
+msgid "Product price from"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__price_max
+msgid "Product price up to"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__product_tmpl_ids
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid "Products"
+msgstr ""
+
+#. module: payment_xpago
+#. odoo-python
+#: code:addons/payment_xpago/models/payment_xpago_rule.py:0
+msgid "Products of %s"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__product_count
+msgid "Products that fit"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_xpago_rule__tag_ids
+msgid "Products with any of these tags."
+msgstr ""
+
+#. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__provider_id
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__provider_id
 msgid "Provider"
@@ -186,7 +355,13 @@ msgstr ""
 
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_installment_rule__min_amount
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__amount_min
 msgid "Sale from"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__amount_max
+msgid "Sale up to"
 msgstr ""
 
 #. module: payment_xpago
@@ -197,7 +372,18 @@ msgstr ""
 
 #. module: payment_xpago
 #: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_bank_account__sequence
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__sequence
 msgid "Sequence"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields.selection,name:payment_xpago.selection__payment_xpago_rule__msi_mode__none
+msgid "Single payment only"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__tag_ids
+msgid "Tags"
 msgstr ""
 
 #. module: payment_xpago
@@ -235,8 +421,32 @@ msgid "The main currency of the company, used to display monetary fields."
 msgstr ""
 
 #. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid "The products"
+msgstr ""
+
+#. module: payment_xpago
+#. odoo-python
+#: code:addons/payment_xpago/models/payment_xpago_rule.py:0
+msgid "The rule \"%s\" changes nothing: choose its months or its deposit account."
+msgstr ""
+
+#. module: payment_xpago
 #: model:ir.model.fields,help:payment_xpago.field_payment_xpago_installment_rule__min_amount
 msgid "The rule applies to sales of this amount or more, up to the next rule."
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid ""
+"The rules are tried in order, top to bottom. For each product of the sale, the first rule that fits\n"
+"                        decides its months and its deposit account. The sale offers only the months that every product allows;\n"
+"                        its money goes to the account of the rule placed highest, unless the point of sale splits the charge."
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid "The sale"
 msgstr ""
 
 #. module: payment_xpago
@@ -250,8 +460,18 @@ msgid "The technical code of this payment provider."
 msgstr ""
 
 #. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_xpago_rule__categ_ids
+msgid "Their subcategories too."
+msgstr ""
+
+#. module: payment_xpago
 #: model:ir.model.constraint,message:payment_xpago.constraint_payment_xpago_installment_rule_provider_min_amount_unique
 msgid "There is already a rule from this amount."
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields.selection,name:payment_xpago.selection__payment_xpago_rule__msi_mode__terms
+msgid "These months"
 msgstr ""
 
 #. module: payment_xpago
@@ -274,10 +494,53 @@ msgid ""
 msgstr ""
 
 #. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_provider_form
+msgid ""
+"To decide the months and the deposit account by product, category, tag or price, use the\n"
+"                        payment rules: they narrow the months of the amount above."
+msgstr ""
+
+#. module: payment_xpago
 #. odoo-python
 #: code:addons/payment_xpago/models/payment_transaction.py:0
 msgid ""
 "To save a card, the customer needs a name, an email and a phone number."
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid "Total of the sale (0 = any)"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_xpago_rule__amount_min
+msgid "Total of the sale, taxes included. Empty: any."
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_xpago_rule__price_min
+msgid ""
+"Unit price in the sale, after its pricelist and discount, taxes included."
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__date_to
+msgid "Until"
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid "Valid"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,field_description:payment_xpago.field_payment_xpago_rule__product_ids
+msgid "Variants"
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid "What it decides"
 msgstr ""
 
 #. module: payment_xpago
@@ -300,6 +563,18 @@ msgid ""
 msgstr ""
 
 #. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid "Where and when"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.model.fields,help:payment_xpago.field_payment_xpago_rule__bank_account_id
+msgid ""
+"Where the money of these products is deposited. Empty: does not change the "
+"account."
+msgstr ""
+
+#. module: payment_xpago
 #: model_terms:ir.ui.view,arch_db:payment_xpago.payment_provider_form
 msgid ""
 "Which months without interest the checkout offers, by amount of the sale. Each rule applies\n"
@@ -317,6 +592,7 @@ msgstr ""
 #. module: payment_xpago
 #. odoo-python
 #: code:addons/payment_xpago/models/payment_xpago_installment_rule.py:0
+#: code:addons/payment_xpago/models/payment_xpago_rule.py:0
 msgid ""
 "Write the months as whole numbers from 2 to %(max)s separated by commas, for"
 " example \"3, 6, 12\"."
@@ -371,6 +647,19 @@ msgid "XPago id"
 msgstr ""
 
 #. module: payment_xpago
+#: model:ir.model,name:payment_xpago.model_payment_xpago_rule
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid "XPago payment rule"
+msgstr ""
+
+#. module: payment_xpago
+#: model:ir.actions.act_window,name:payment_xpago.action_payment_xpago_rule
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_provider_form
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_list
+msgid "XPago payment rules"
+msgstr ""
+
+#. module: payment_xpago
 #. odoo-python
 #: code:addons/payment_xpago/models/payment_transaction.py:0
 msgid "XPago releases a hold in full only."
@@ -419,4 +708,9 @@ msgstr ""
 #. module: payment_xpago
 #: model_terms:payment.provider,done_msg:payment_xpago.payment_provider_xpago
 msgid "Your payment has been processed."
+msgstr ""
+
+#. module: payment_xpago
+#: model_terms:ir.ui.view,arch_db:payment_xpago.payment_xpago_rule_view_form
+msgid "e.g. 12 months on diamonds"
 msgstr ""

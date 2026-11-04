@@ -53,11 +53,17 @@ class PosPaymentMethod(models.Model):
             raise UserError(_("XPago is disabled. An administrator can enable it in the XPago payment provider."))
         return provider
 
-    def _xpago_charge_account(self, provider, chosen_id=None):
-        """The cashier's choice when this terminal lets her choose, else the terminal's account."""
+    def _xpago_charge_account(self, provider, chosen_id=None, rule_account_id=None):
+        """The cashier's choice when this terminal lets her choose, then the account of the payment rules of the
+        sale, then the terminal's account."""
         Account = self.env['payment.xpago.bank.account'].sudo()
         chosen = Account.browse(int(chosen_id)).exists() if chosen_id and self.xpago_choose_account else Account
-        for account in (chosen, self.sudo().xpago_bank_account_id):
+        rule_account = Account.browse(int(rule_account_id)).exists() if rule_account_id else Account
+        # Only an account a payment rule names can come from the plan of the register.
+        if rule_account and not self.env['payment.xpago.rule'].sudo().search_count(
+                [('bank_account_id', '=', rule_account.id)], limit=1):
+            rule_account = Account
+        for account in (chosen, rule_account, self.sudo().xpago_bank_account_id):
             if provider._xpago_bank_account_id(account):
                 return account
         return Account
@@ -74,7 +80,7 @@ class PosPaymentMethod(models.Model):
         """Send the amount to the terminal. Returns the charge as the point of sale sees it."""
         provider = self._xpago_check_access()
         session = self.env['pos.session'].browse(data.get('session_id')).exists()
-        account = self._xpago_charge_account(provider, data.get('bank_account_id'))
+        account = self._xpago_charge_account(provider, data.get('bank_account_id'), data.get('rule_account_id'))
         charge = self.env['pos.xpago.charge'].sudo()._xpago_create(
             self.sudo(), provider, data.get('amount') or 0.0, session, data.get('order_uuid') or '', account=account)
         return charge._xpago_public_view()
@@ -90,3 +96,33 @@ class PosPaymentMethod(models.Model):
         charge = self._xpago_charge(charge_id)
         charge._xpago_cancel()
         return charge._xpago_public_view()
+
+    def xpago_plan(self, data):
+        """How the register charges this sale, by the XPago payment rules: one part, or one per account and months
+        when the point of sale splits the charge. ``data``: ``session_id``, ``lines`` (``product_id``, ``qty``,
+        ``amount`` with taxes), ``total`` (the sale) and ``amount`` (this payment).
+
+        The terminal does not take the months: at the register they are only shown to the cashier."""
+        self._xpago_check_access()
+        session = self.env['pos.session'].browse(data.get('session_id')).exists()
+        config = session.config_id
+        Product = self.env['product.product'].with_context(active_test=False)
+        lines = [{'product': Product.browse(int(line['product_id'])).exists(),
+                  'unit_price': (line.get('amount') or 0.0) / line['qty'], 'amount': line.get('amount') or 0.0}
+                 for line in data.get('lines') or [] if line.get('product_id') and line.get('qty')]
+        total, amount = data.get('total') or 0.0, data.get('amount') or 0.0
+        company = self.company_id or self.env.company
+        # Splitting only makes sense when this payment is the whole sale.
+        split = bool(config.xpago_split) and not company.currency_id.compare_amounts(total, amount)
+        parts = self.env['payment.xpago.rule']._xpago_plan(company, 'pos', lines, total, config=config, split=split)
+        if len(parts) == 1:
+            parts[0]['amount'] = amount
+        provider = self.sudo().xpago_provider_id
+        return {
+            'show_account': bool(config.xpago_show_account),
+            'parts': [{'amount': part['amount'],
+                       'account_id': part['account'].id if provider._xpago_bank_account_id(part['account']) else False,
+                       'account_name': part['account'].name if provider._xpago_bank_account_id(part['account']) else '',
+                       'terms': part['terms'] or False,
+                       'rules': part['rules'].mapped('name')} for part in parts],
+        }
