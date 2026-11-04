@@ -78,6 +78,16 @@ class TestPosPaymentRules(PosXpagoRulesCommon):
         part, = self.plan([self.used], channel='online')
         self.assertEqual(part['account'], self.acc_escrow, 'online does not look at the points of sale')
 
+    def test_tip_is_not_a_product(self):
+        """A tip of $50 fits the "up to $1,000" rule; it goes with the sale instead of becoming its own charge."""
+        tip = self.env['product.product'].create({'name': 'Propina', 'list_price': 0, 'taxes_id': [(6, 0, [])]})
+        self.config.write({'iface_tipproduct': True, 'tip_product_id': tip.id, 'xpago_split': True})
+        session = self.env['pos.session'].create({'config_id': self.config.id, 'user_id': self.env.uid})
+        plan = self.method.xpago_plan({'session_id': session.id, 'total': 30050, 'amount': 30050, 'lines': [
+            {'product_id': self.ring.id, 'qty': 1, 'amount': 30000}, {'product_id': tip.id, 'qty': 1, 'amount': 50}]})
+        part, = plan['parts']
+        self.assertEqual((part['amount'], part['terms']), (30050, [1, 3, 6, 12]))
+
     def test_register_plan(self):
         session = self.env['pos.session'].create({'config_id': self.config.id, 'user_id': self.env.uid})
         data = {'session_id': session.id, 'total': 25200, 'amount': 25200,

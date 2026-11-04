@@ -1,6 +1,6 @@
 {
     'name': 'XPago: Card Terminals in the Point of Sale',
-    'version': '18.0.1.1.0',
+    'version': '18.0.1.1.1',
     'category': 'Sales/Point of Sale',
     'sequence': 6,
     'summary': 'Charge on XPago card terminals from the Odoo Point of Sale: the amount goes to the terminal and the '
