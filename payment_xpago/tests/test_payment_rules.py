@@ -55,6 +55,14 @@ class TestPaymentRules(XpagoRulesCommon):
         part, = self.plan([self.ring, self.cleaner])
         self.assertEqual(part['terms'], [1], 'the cleaner is single payment only')
 
+    def test_free_lines_do_not_decide(self):
+        """Shipping at $0 or a gift fits the "up to $1,000" rule but is not sold: the ring keeps its months."""
+        lines = [{'product': self.ring, 'unit_price': 30000, 'amount': 30000},
+                 {'product': self.cleaner, 'unit_price': 0, 'amount': 0}]
+        part, = self.env['payment.xpago.rule']._xpago_plan(self.env.company, 'online', lines, 30000)
+        self.assertEqual(part['terms'], [1, 3, 6, 12])
+        self.assertFalse(part['account'])
+
     def test_account_by_priority(self):
         part, = self.plan([self.used, self.cleaner])
         self.assertEqual(part['account'], self.acc_escrow, 'the marketplace rule is placed higher')
