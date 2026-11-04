@@ -7,7 +7,7 @@
                'approved card comes back to the order. Mexico.',
     'description': ' ',
     'author': 'XUBAX',
-    'website': 'https://xpago.xubax.com',
+    'website': 'https://xpago.mx',
     'support': 'hola@xubax.com',
     'license': 'OPL-1',
     'depends': ['point_of_sale', 'payment_xpago'],

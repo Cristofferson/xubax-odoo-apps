@@ -7,7 +7,7 @@
                'with months without interest and deposit accounts by amount or by product. Mexico.',
     'description': ' ',
     'author': 'XUBAX',
-    'website': 'https://xpago.xubax.com',
+    'website': 'https://xpago.mx',
     'support': 'hola@xubax.com',
     'license': 'OPL-1',
     'depends': ['payment', 'product'],
