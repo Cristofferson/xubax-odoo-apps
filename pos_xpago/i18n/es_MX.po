@@ -20,7 +20,9 @@ msgid "%s months without interest"
 msgstr "%s meses sin intereses"
 
 #. module: pos_xpago
+#. odoo-javascript
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__amount
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
 msgid "Amount"
 msgstr "Monto"
 
@@ -949,3 +951,153 @@ msgstr ""
 #: model:ir.actions.server,name:pos_xpago.ir_cron_refresh_charges_ir_actions_server
 msgid "XPago: read back open terminal charges"
 msgstr "XPago: leer los cobros en terminal abiertos"
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_config__xpago_voucher_on_receipt
+#: model:ir.model.fields,field_description:pos_xpago.field_res_config_settings__pos_xpago_voucher_on_receipt
+msgid "Print the card voucher in the receipt"
+msgstr "Imprimir el voucher de la tarjeta en el ticket"
+
+#. module: pos_xpago
+#: model:ir.model.fields,help:pos_xpago.field_pos_config__xpago_voucher_on_receipt
+#: model:ir.model.fields,help:pos_xpago.field_res_config_settings__pos_xpago_voucher_on_receipt
+msgid ""
+"When the sale is paid with a card on an XPago terminal, the receipt "
+"(printed, emailed or sent by WhatsApp) carries the card details and the "
+"voucher legend."
+msgstr ""
+"Cuando la venta se paga con tarjeta en una terminal XPago, el ticket "
+"(impreso, por correo o por WhatsApp) lleva los datos de la tarjeta y la "
+"leyenda del voucher."
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_config__xpago_voucher_merchant
+#: model:ir.model.fields,field_description:pos_xpago.field_res_config_settings__pos_xpago_voucher_merchant
+#: model_terms:ir.ui.view,arch_db:pos_xpago.res_config_settings_view_form
+msgid "Merchant number"
+msgstr "Número de afiliación"
+
+#. module: pos_xpago
+#: model:ir.model.fields,help:pos_xpago.field_pos_config__xpago_voucher_merchant
+#: model:ir.model.fields,help:pos_xpago.field_res_config_settings__pos_xpago_voucher_merchant
+msgid ""
+"The affiliation number of the business, printed in the voucher. Optional."
+msgstr "El número de afiliación del negocio, impreso en el voucher. Opcional."
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_config__xpago_voucher_credit_text
+#: model:ir.model.fields,field_description:pos_xpago.field_res_config_settings__pos_xpago_voucher_credit_text
+#: model_terms:ir.ui.view,arch_db:pos_xpago.res_config_settings_view_form
+msgid "Credit card legend"
+msgstr "Leyenda para tarjeta de crédito"
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_config__xpago_voucher_debit_text
+#: model:ir.model.fields,field_description:pos_xpago.field_res_config_settings__pos_xpago_voucher_debit_text
+#: model_terms:ir.ui.view,arch_db:pos_xpago.res_config_settings_view_form
+msgid "Debit card legend"
+msgstr "Leyenda para tarjeta de débito"
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_config__xpago_voucher_signature
+#: model:ir.model.fields,field_description:pos_xpago.field_res_config_settings__pos_xpago_voucher_signature
+msgid "Signature line"
+msgstr "Línea para firma"
+
+#. module: pos_xpago
+#: model:ir.model.fields,help:pos_xpago.field_pos_config__xpago_voucher_signature
+#: model:ir.model.fields,help:pos_xpago.field_res_config_settings__pos_xpago_voucher_signature
+msgid "Prints a line for the customer's signature under the legend."
+msgstr "Imprime una línea para la firma del cliente debajo de la leyenda."
+
+#. module: pos_xpago
+#: model_terms:ir.ui.view,arch_db:pos_xpago.res_config_settings_view_form
+msgid "Card voucher in the receipt"
+msgstr "Voucher de la tarjeta en el ticket"
+
+#. module: pos_xpago
+#: model_terms:ir.ui.view,arch_db:pos_xpago.res_config_settings_view_form
+msgid ""
+"Paid with a card on an XPago terminal: the receipt (printed, emailed or by "
+"WhatsApp) carries the card details and the voucher legend. For terminals "
+"that print with the point of sale, as the N950 or the N750P."
+msgstr ""
+"Pagada con tarjeta en una terminal XPago: el ticket (impreso, por correo o "
+"por WhatsApp) lleva los datos de la tarjeta y la leyenda del voucher. Para "
+"terminales que imprimen con el punto de venta, como la N950 o la N750P."
+
+#. module: pos_xpago
+#: model_terms:ir.ui.view,arch_db:pos_xpago.res_config_settings_view_form
+msgid "Optional"
+msgstr "Opcional"
+
+#. module: pos_xpago
+#: model_terms:ir.ui.view,arch_db:pos_xpago.res_config_settings_view_form
+msgid "Line for the customer's signature"
+msgstr "Línea para la firma del cliente"
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.js:0
+msgid "Credit"
+msgstr "Crédito"
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.js:0
+msgid "Debit"
+msgstr "Débito"
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+msgid "CARD SALE"
+msgstr "VENTA CON TARJETA"
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+msgid "Bank:"
+msgstr "Banco:"
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+msgid "Authorization:"
+msgstr "Autorización:"
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+msgid "Reference:"
+msgstr "Referencia:"
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+msgid "Operation:"
+msgstr "Operación:"
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+msgid "Entry mode:"
+msgstr "Modo de lectura:"
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+msgid "Merchant number:"
+msgstr "Afiliación:"
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+msgid "Date:"
+msgstr "Fecha:"
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+msgid "Customer's signature"
+msgstr "Firma del cliente"

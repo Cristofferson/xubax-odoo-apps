@@ -80,3 +80,16 @@ class TestKioskXpago(TestPoSCommon):
                                          'payment_method_ids': self.config.payment_method_ids.ids}]}}
         domain = self.env['pos.payment.method']._load_pos_self_data_domain(data)
         self.assertIn(self.method, self.env['pos.payment.method'].search(domain))
+
+    def test_kiosk_ticket_carries_the_card_voucher(self):
+        fields = self.env['pos.config']._load_pos_self_data_fields(self.config.id)
+        self.assertIn('xpago_voucher_on_receipt', fields)
+        self.assertIn('xpago_voucher_credit_text', fields)
+        with patch(SEND, return_value=self.intent()):
+            status = self.method._payment_request_from_kiosk(self.order)
+        charge = self.env['pos.xpago.charge'].sudo().browse(status['xpago_charge_id'])
+        with patch(SEND, return_value=self.approved()), \
+                patch.object(type(self.config), '_notify') as notify:
+            charge._xpago_refresh()
+        payments = notify.call_args.args[1]['data']['pos.payment']
+        self.assertEqual([(p['card_no'], p['card_type']) for p in payments], [('4242', 'DEBIT')])

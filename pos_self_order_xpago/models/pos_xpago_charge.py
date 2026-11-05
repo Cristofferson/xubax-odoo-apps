@@ -33,5 +33,7 @@ class PosXpagoCharge(models.Model):
             'data': {
                 'pos.order': order.read(order._load_pos_self_data_fields(config.id), load=False),
                 'pos.order.line': order.lines.read(order.lines._load_pos_self_data_fields(config.id), load=False),
+                # The card of the payment, for the voucher of the ticket the kiosk prints.
+                'pos.payment': order.payment_ids.read(order.payment_ids._load_pos_self_data_fields(config.id), load=False),
             },
         })

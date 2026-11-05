@@ -143,3 +143,29 @@ class TestPosXpago(TestPoSCommon):
         ok = lines['123456']
         self.assertEqual((ok.status, ok.charge_id, ok.fee_amount, ok.fee_vat), ('ok', charge, 4.5, 0.72))
         self.assertEqual(lines[500.0].status, 'xpago_only')
+
+    def test_card_voucher_in_the_receipt(self):
+        config = self.env['pos.config'].create({'name': 'Caja voucher'})
+        # On by default, with the Mexican legends and the signature line.
+        self.assertTrue(config.xpago_voucher_on_receipt)
+        self.assertTrue(config.xpago_voucher_signature)
+        self.assertFalse(config.xpago_voucher_merchant)
+        self.assertIn('pagaré', config.xpago_voucher_credit_text)
+        self.assertIn('Autorizo', config.xpago_voucher_debit_text)
+        # The point of sale reads the settings with the rest of its configuration.
+        loaded = config._load_pos_data_fields(config.id)
+        self.assertTrue(not loaded or 'xpago_voucher_on_receipt' in loaded)
+        # Edited from the point of sale settings.
+        settings = self.env['res.config.settings'].create({'pos_config_id': config.id})
+        self.assertTrue(settings.pos_xpago_voucher_on_receipt)
+        settings.write({
+            'pos_xpago_voucher_on_receipt': False,
+            'pos_xpago_voucher_merchant': '1234567',
+            'pos_xpago_voucher_debit_text': 'Cargo autorizado.',
+            'pos_xpago_voucher_signature': False,
+        })
+        settings.execute()
+        self.assertFalse(config.xpago_voucher_on_receipt)
+        self.assertEqual(config.xpago_voucher_merchant, '1234567')
+        self.assertEqual(config.xpago_voucher_debit_text, 'Cargo autorizado.')
+        self.assertFalse(config.xpago_voucher_signature)
