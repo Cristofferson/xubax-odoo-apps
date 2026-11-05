@@ -141,3 +141,30 @@ class TestPosXpago(TestPoSCommon):
         ok = lines['123456']
         self.assertEqual((ok.status, ok.charge_id, ok.fee_amount, ok.fee_vat), ('ok', charge, 4.5, 0.72))
         self.assertEqual(lines[500.0].status, 'xpago_only')
+
+    def test_card_voucher_in_the_receipt_by_default(self):
+        config = self.env['pos.config'].create({'name': 'Caja voucher'})
+        self.assertTrue(config.xpago_voucher_on_receipt)
+        self.assertTrue(config.xpago_voucher_signature)
+        self.assertFalse(config.xpago_voucher_merchant)
+        self.assertIn('pagaré', config.xpago_voucher_credit_text)
+        self.assertIn('Autorizo que se cargue a mi cuenta', config.xpago_voucher_debit_text)
+        # The point of sale loads them, the receipt reads them there.
+        fields = self.env['pos.config']._load_pos_data_fields(config)
+        self.assertTrue(not fields or {'xpago_voucher_on_receipt', 'xpago_voucher_credit_text'} <= set(fields))
+
+    def test_card_voucher_settings(self):
+        config = self.env['pos.config'].create({'name': 'Caja voucher'})
+        settings = self.env['res.config.settings'].create({'pos_config_id': config.id})
+        self.assertTrue(settings.pos_xpago_voucher_on_receipt)
+        settings.write({
+            'pos_xpago_voucher_on_receipt': False,
+            'pos_xpago_voucher_merchant': '1234567',
+            'pos_xpago_voucher_debit_text': 'Cargo a mi cuenta.',
+            'pos_xpago_voucher_signature': False,
+        })
+        settings.execute()
+        self.assertFalse(config.xpago_voucher_on_receipt)
+        self.assertEqual(config.xpago_voucher_merchant, '1234567')
+        self.assertEqual(config.xpago_voucher_debit_text, 'Cargo a mi cuenta.')
+        self.assertFalse(config.xpago_voucher_signature)

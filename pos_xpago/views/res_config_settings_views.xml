@@ -21,6 +21,30 @@
                     </div>
                 </setting>
             </xpath>
+            <xpath expr="//block[@id='pos_bills_and_receipts_section']" position="inside">
+                <setting id="xpago_voucher_on_receipt" string="Card voucher in the receipt"
+                         help="Paid with a card on an XPago terminal: the receipt (printed, emailed or by WhatsApp) carries the card details and the voucher legend. For terminals that print with the point of sale, such as the N950 or the N750P.">
+                    <field name="pos_xpago_voucher_on_receipt"/>
+                    <div class="content-group mt-2" invisible="not pos_xpago_voucher_on_receipt">
+                        <div class="row">
+                            <label string="Merchant number" for="pos_xpago_voucher_merchant" class="col-lg-4 o_light_label"/>
+                            <field name="pos_xpago_voucher_merchant" placeholder="Optional"/>
+                        </div>
+                        <div class="row mt-2">
+                            <label string="Credit card legend" for="pos_xpago_voucher_credit_text" class="col-lg-4 o_light_label"/>
+                            <field name="pos_xpago_voucher_credit_text"/>
+                        </div>
+                        <div class="row mt-2">
+                            <label string="Debit card legend" for="pos_xpago_voucher_debit_text" class="col-lg-4 o_light_label"/>
+                            <field name="pos_xpago_voucher_debit_text"/>
+                        </div>
+                        <div class="mt-2">
+                            <field name="pos_xpago_voucher_signature" class="me-2"/>
+                            <label for="pos_xpago_voucher_signature" string="Line for the customer's signature"/>
+                        </div>
+                    </div>
+                </setting>
+            </xpath>
         </field>
     </record>
 </odoo>
