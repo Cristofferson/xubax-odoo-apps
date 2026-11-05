@@ -24,6 +24,8 @@ msgid "%s months without interest"
 msgstr ""
 
 #. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__amount
 msgid "Amount"
 msgstr ""
@@ -53,8 +55,19 @@ msgid ""
 msgstr ""
 
 #. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_payment__xpago_authorization
+msgid "Authorization"
+msgstr ""
+
+#. module: pos_xpago
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__authorization_code
 msgid "Authorization Code"
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+msgid "Authorization:"
 msgstr ""
 
 #. module: pos_xpago
@@ -62,6 +75,17 @@ msgstr ""
 #: code:addons/pos_xpago/models/pos_xpago_charge.py:0
 #, python-format
 msgid "Authorization: %s"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_payment__xpago_issuer_bank
+msgid "Bank"
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+msgid "Bank:"
 msgstr ""
 
 #. module: pos_xpago
@@ -95,6 +119,12 @@ msgstr ""
 
 #. module: pos_xpago
 #. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+msgid "CARD SALE"
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-javascript
 #: code:addons/pos_xpago/static/src/app/payment_xpago.js:0
 #: model_terms:ir.ui.view,arch_db:pos_xpago.pos_xpago_reconcile_view_form
 #, python-format
@@ -112,6 +142,7 @@ msgid "Card"
 msgstr ""
 
 #. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_payment__xpago_card_no
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__card_no
 msgid "Card (last 4)"
 msgstr ""
@@ -124,6 +155,16 @@ msgstr ""
 #. module: pos_xpago
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__card_type
 msgid "Card Type"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_payment__xpago_card_brand
+msgid "Card brand"
+msgstr ""
+
+#. module: pos_xpago
+#: model_terms:ir.ui.view,arch_db:pos_xpago.res_config_settings_view_form
+msgid "Card voucher in the receipt"
 msgstr ""
 
 #. module: pos_xpago
@@ -214,10 +255,31 @@ msgid "Created on"
 msgstr ""
 
 #. module: pos_xpago
+#. odoo-javascript
+#. odoo-python
+#: code:addons/pos_xpago/models/pos_payment.py:0
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.js:0
+msgid "Credit"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_config__xpago_voucher_credit_text
+#: model:ir.model.fields,field_description:pos_xpago.field_res_config_settings__pos_xpago_voucher_credit_text
+#: model_terms:ir.ui.view,arch_db:pos_xpago.res_config_settings_view_form
+msgid "Credit card legend"
+msgstr ""
+
+#. module: pos_xpago
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__currency_id
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_reconcile__currency_id
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_reconcile_line__currency_id
 msgid "Currency"
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+msgid "Customer's signature"
 msgstr ""
 
 #. module: pos_xpago
@@ -228,8 +290,29 @@ msgid "Date"
 msgstr ""
 
 #. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+msgid "Date:"
+msgstr ""
+
+#. module: pos_xpago
 #: model_terms:ir.ui.view,arch_db:pos_xpago.pos_xpago_charge_view_search
 msgid "Day"
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-javascript
+#. odoo-python
+#: code:addons/pos_xpago/models/pos_payment.py:0
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.js:0
+msgid "Debit"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_config__xpago_voucher_debit_text
+#: model:ir.model.fields,field_description:pos_xpago.field_res_config_settings__pos_xpago_voucher_debit_text
+#: model_terms:ir.ui.view,arch_db:pos_xpago.res_config_settings_view_form
+msgid "Debit card legend"
 msgstr ""
 
 #. module: pos_xpago
@@ -286,6 +369,17 @@ msgstr ""
 #. module: pos_xpago
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__entry_mode
 msgid "Entry Mode"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_payment__xpago_entry_mode
+msgid "Entry mode"
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+msgid "Entry mode:"
 msgstr ""
 
 #. module: pos_xpago
@@ -380,8 +474,26 @@ msgid "Line"
 msgstr ""
 
 #. module: pos_xpago
+#: model_terms:ir.ui.view,arch_db:pos_xpago.res_config_settings_view_form
+msgid "Line for the customer's signature"
+msgstr ""
+
+#. module: pos_xpago
 #: model:ir.model.fields.selection,name:pos_xpago.selection__pos_xpago_reconcile_line__status__ok
 msgid "Matches"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_config__xpago_voucher_merchant
+#: model:ir.model.fields,field_description:pos_xpago.field_res_config_settings__pos_xpago_voucher_merchant
+#: model_terms:ir.ui.view,arch_db:pos_xpago.res_config_settings_view_form
+msgid "Merchant number"
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+msgid "Merchant number:"
 msgstr ""
 
 #. module: pos_xpago
@@ -392,6 +504,7 @@ msgstr ""
 #. module: pos_xpago
 #. odoo-python
 #: code:addons/pos_xpago/wizard/pos_xpago_rule_test.py:0
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_payment__xpago_terms
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__terms
 #, python-format
 msgid "Months without interest"
@@ -402,6 +515,12 @@ msgstr ""
 msgid ""
 "Months without interest and deposit accounts by what is sold, on the XPago "
 "terminals of this point of sale."
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+msgid "Months without interest:"
 msgstr ""
 
 #. module: pos_xpago
@@ -475,10 +594,21 @@ msgid "Operation"
 msgstr ""
 
 #. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+msgid "Operation:"
+msgstr ""
+
+#. module: pos_xpago
 #. odoo-python
 #: code:addons/pos_xpago/models/pos_xpago_charge.py:0
 #, python-format
 msgid "Operation: %s"
+msgstr ""
+
+#. module: pos_xpago
+#: model_terms:ir.ui.view,arch_db:pos_xpago.res_config_settings_view_form
+msgid "Optional"
 msgstr ""
 
 #. module: pos_xpago
@@ -511,6 +641,14 @@ msgstr ""
 #. module: pos_xpago
 #: model:ir.model.fields.selection,name:pos_xpago.selection__pos_xpago_reconcile_line__status__not_paid_in_odoo
 msgid "Paid in XPago, not in Odoo"
+msgstr ""
+
+#. module: pos_xpago
+#: model_terms:ir.ui.view,arch_db:pos_xpago.res_config_settings_view_form
+msgid ""
+"Paid with a card on an XPago terminal: the receipt (printed or emailed) "
+"carries the card details and the voucher legend. For terminals that print "
+"with the point of sale, such as the N950 or the N750P."
 msgstr ""
 
 #. module: pos_xpago
@@ -570,6 +708,18 @@ msgid "Point of sale payment"
 msgstr ""
 
 #. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_config__xpago_voucher_on_receipt
+#: model:ir.model.fields,field_description:pos_xpago.field_res_config_settings__pos_xpago_voucher_on_receipt
+msgid "Print the card voucher in the receipt"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,help:pos_xpago.field_pos_config__xpago_voucher_signature
+#: model:ir.model.fields,help:pos_xpago.field_res_config_settings__pos_xpago_voucher_signature
+msgid "Prints a line for the customer's signature under the legend."
+msgstr ""
+
+#. module: pos_xpago
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__provider_id
 msgid "Provider"
 msgstr ""
@@ -588,8 +738,15 @@ msgid "Reconcile with XPago"
 msgstr ""
 
 #. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_payment__xpago_reference
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__external_id
 msgid "Reference"
+msgstr ""
+
+#. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+msgid "Reference:"
 msgstr ""
 
 #. module: pos_xpago
@@ -630,6 +787,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_config__xpago_show_account
 #: model:ir.model.fields,field_description:pos_xpago.field_res_config_settings__pos_xpago_show_account
 msgid "Show the deposit account to the cashier"
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_config__xpago_voucher_signature
+#: model:ir.model.fields,field_description:pos_xpago.field_res_config_settings__pos_xpago_voucher_signature
+msgid "Signature line"
 msgstr ""
 
 #. module: pos_xpago
@@ -704,6 +867,13 @@ msgid "The account this charge was sent to."
 msgstr ""
 
 #. module: pos_xpago
+#: model:ir.model.fields,help:pos_xpago.field_pos_config__xpago_voucher_merchant
+#: model:ir.model.fields,help:pos_xpago.field_res_config_settings__pos_xpago_voucher_merchant
+msgid ""
+"The affiliation number of the business, printed in the voucher. Optional."
+msgstr ""
+
+#. module: pos_xpago
 #: model:ir.model.fields,help:pos_xpago.field_pos_xpago_charge__without_sale
 msgid ""
 "The card was charged but no order of the point of sale holds the payment "
@@ -772,6 +942,9 @@ msgid "This sale is charged in %s parts"
 msgstr ""
 
 #. module: pos_xpago
+#. odoo-javascript
+#: code:addons/pos_xpago/static/src/app/order_receipt_voucher.xml:0
+#: model:ir.model.fields,field_description:pos_xpago.field_pos_payment__xpago_tip
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_charge__tip_amount
 #: model:ir.model.fields,field_description:pos_xpago.field_pos_xpago_reconcile_line__tip_amount
 msgid "Tip"
@@ -853,6 +1026,14 @@ msgid ""
 "When the products of a sale go to different accounts or allow different "
 "months without interest (XPago payment rules), the charge is split: one "
 "charge per account, each with its months."
+msgstr ""
+
+#. module: pos_xpago
+#: model:ir.model.fields,help:pos_xpago.field_pos_config__xpago_voucher_on_receipt
+#: model:ir.model.fields,help:pos_xpago.field_res_config_settings__pos_xpago_voucher_on_receipt
+msgid ""
+"When the sale is paid with a card on an XPago terminal, the receipt (printed"
+" or emailed) carries the card details and the voucher legend."
 msgstr ""
 
 #. module: pos_xpago

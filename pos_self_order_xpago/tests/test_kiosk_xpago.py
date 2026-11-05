@@ -64,6 +64,13 @@ class TestKioskXpago(TestPoSCommon):
         self.assertEqual((channel, kind), (f'pos_config-{self.config.access_token}', 'PAYMENT_STATUS'))
         self.assertEqual(payload['payment_result'], 'Success')
         self.assertEqual(payload['order']['id'], self.order.id)
+        # The ticket the kiosk prints carries the card voucher (debit card: the debit legend).
+        [voucher] = [line['xpago_voucher'] for line in payload['order']['payment_lines']]
+        self.assertEqual((voucher['brand'], voucher['card_no'], voucher['authorization'], voucher['reference'],
+                          voucher['operation'], voucher['funding']), ('VISA', '4242', 'K1', '654321', 'pay-k1', 'Debit'))
+        self.assertEqual(voucher['legend'], self.config.xpago_voucher_debit_text)
+        self.config.xpago_voucher_on_receipt = False
+        self.assertFalse(self.order._export_for_self_order()['payment_lines'][0]['xpago_voucher'])
 
     def test_cancelled_kiosk_charge_tells_the_kiosk(self):
         with patch(SEND, return_value=self.intent()):
@@ -90,3 +97,11 @@ class TestKioskXpago(TestPoSCommon):
         charge = self.env['pos.xpago.charge'].sudo().browse(status['xpago_charge_id'])
         self.assertEqual(charge.config_id, self.config)
         self.assertEqual(charge.order_uuid, self.order.access_token or self.order.pos_reference)
+
+    def test_kiosk_assets_carry_the_voucher(self):
+        # The kiosk prints its ticket with the receipt template of the point of sale, and its voucher.
+        bundle = self.env['ir.qweb']._get_asset_bundle('pos_self_order.assets', css=False)
+        self.assertIn('/pos_xpago/static/src/app/order_receipt_voucher.xml', [f['url'] for f in bundle.files])
+        templates = bundle.xml()  # raises when the voucher does not apply to the receipt
+        self.assertIn('xpago-voucher', templates)
+        self.assertIn('line.ticket and !line.xpago_voucher', templates)

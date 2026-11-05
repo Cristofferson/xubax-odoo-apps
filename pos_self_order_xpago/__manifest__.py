@@ -1,6 +1,6 @@
 {
     'name': 'XPago: Self-Order Kiosk',
-    'version': '17.0.1.1.0',
+    'version': '17.0.1.2.0',
     'category': 'Sales/Point of Sale',
     'summary': 'Your customers order at the Odoo kiosk and pay on the XPago terminal beside it. Mexico.',
     'description': ' ',
@@ -13,6 +13,8 @@
     'assets': {
         'pos_self_order.assets': [
             'pos_self_order_xpago/static/src/**/*',
+            # The card voucher of the receipt, which the kiosk prints with the same template.
+            'pos_xpago/static/src/app/order_receipt_voucher.xml',
         ],
     },
     'images': ['static/description/banner.png'],

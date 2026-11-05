@@ -221,12 +221,20 @@ class PosXpagoCharge(models.Model):
     def _xpago_payment_values(self):
         """The card of an approved charge, as the point of sale payment stores it. Odoo 17 keeps only the card
         type and the transaction id on the payment: the rest goes to the payment's receipt info, which the
-        receipt prints."""
+        receipt prints, and to the XPago card fields, which the card voucher of the receipt prints."""
         self.ensure_one()
         return {
             'transaction_id': self.payment_id or '',
             'card_type': ' '.join(part for part in (self.card_brand, self.card_type) if part),
             'ticket': self._xpago_receipt_info(),
+            'xpago_card_brand': self.card_brand or '',
+            'xpago_card_no': self.card_no or '',
+            'xpago_issuer_bank': self.issuer_bank or '',
+            'xpago_authorization': self.authorization_code or '',
+            'xpago_reference': self.operation_code or '',
+            'xpago_entry_mode': self.entry_mode or '',
+            'xpago_terms': self.terms if self.terms > 1 else 0,
+            'xpago_tip': self.tip_amount or 0.0,
         }
 
     def _xpago_receipt_info(self):

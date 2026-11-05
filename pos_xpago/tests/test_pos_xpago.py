@@ -170,3 +170,43 @@ class TestPosXpago(TestPoSCommon):
         self.assertEqual(order.payment_ids.transaction_id, 'pay-1')
         self.assertIn('•••• 4242', order.payment_ids.ticket)
         self.assertEqual((charge.sale_order_id, charge.without_sale), (order, False))
+
+    def test_card_voucher_in_the_receipt_settings(self):
+        config = self.env['pos.config'].create({'name': 'Caja voucher'})
+        self.assertTrue(config.xpago_voucher_on_receipt, 'on by default')
+        self.assertTrue(config.xpago_voucher_signature)
+        self.assertFalse(config.xpago_voucher_merchant)
+        self.assertIn('pagaré', config.xpago_voucher_credit_text)
+        self.assertIn('Autorizo que se cargue a mi cuenta', config.xpago_voucher_debit_text)
+        settings = self.env['res.config.settings'].create({'pos_config_id': config.id})
+        self.assertTrue(settings.pos_xpago_voucher_on_receipt)
+        settings.write({'pos_xpago_voucher_merchant': '1234567', 'pos_xpago_voucher_signature': False,
+                        'pos_xpago_voucher_debit_text': 'Débito'})
+        settings.execute()
+        self.assertEqual((config.xpago_voucher_merchant, config.xpago_voucher_signature, config.xpago_voucher_debit_text),
+                         ('1234567', False, 'Débito'))
+
+    def test_card_voucher_reaches_the_receipt(self):
+        self.config = self.basic_config
+        self.config.write({'payment_method_ids': [(4, self.method.id)], 'xpago_voucher_merchant': '7654321'})
+        self.open_new_session()
+        data = self.pos_session.load_pos_data()
+        self.assertEqual((data['pos.config']['xpago_voucher_on_receipt'], data['pos.config']['xpago_voucher_merchant']),
+                         (True, '7654321'))
+        product = self.create_product('Anillo', self.categ_basic, 150.5)
+        charge = self.paid_charge()
+        values = charge._xpago_payment_values()
+        self.assertEqual(
+            (values['xpago_card_brand'], values['xpago_card_no'], values['xpago_issuer_bank'], values['xpago_authorization'],
+             values['xpago_reference'], values['xpago_entry_mode'], values['xpago_terms']),
+            ('VISA', '4242', 'BBVA', 'A1B2C3', '123456', 'CHIP', 3))
+        ui_order = self.create_ui_order_data([(product, 1)], payments=[(self.method, 150.5)])
+        ui_order['data']['statement_ids'][0][2].update(values)
+        order = self.env['pos.order'].browse(self.env['pos.order'].create_from_ui([ui_order])[0]['id'])
+        payment = order.payment_ids
+        self.assertEqual((payment.xpago_card_no, payment.xpago_authorization, payment.xpago_reference, payment.xpago_terms),
+                         ('4242', 'A1B2C3', '123456', 3))
+        # A receipt printed again (orders list) reads the card back.
+        exported = order.export_for_ui()[0]['statement_ids'][0][2]
+        self.assertEqual((exported['xpago_card_brand'], exported['xpago_issuer_bank'], exported['xpago_entry_mode']),
+                         ('VISA', 'BBVA', 'CHIP'))
