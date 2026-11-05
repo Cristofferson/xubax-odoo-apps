@@ -79,3 +79,8 @@ class TestKioskXpago(TestPoSCommon):
     def test_kiosk_loads_the_xpago_terminal(self):
         domain = self.env['pos.payment.method']._load_pos_self_data_domain({'pos.config': self.config})
         self.assertIn(self.method, self.env['pos.payment.method'].search(domain))
+
+    def test_kiosk_loads_the_card_voucher_settings(self):
+        fields = self.env['pos.config']._load_pos_self_data_fields(self.config.id)
+        self.assertIn('xpago_voucher_on_receipt', fields)
+        self.assertIn('xpago_voucher_credit_text', fields)
