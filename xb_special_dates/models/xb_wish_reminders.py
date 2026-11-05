@@ -301,6 +301,13 @@ class XbWishReminders(models.Model):
         if self.period_type == "year":
             if not self.date:
                 return False
+            # The event itself is not an anniversary: the first one to
+            # celebrate is the year AFTER the captured date. Without this,
+            # a wedding captured before it happens (e.g. ring bought in
+            # advance) fired the "anniversary" greeting before the wedding.
+            first_year = self.date.year + 1
+            if today.year < first_year:
+                today = _date(first_year, 1, 1)
             try:
                 this_year = _date(today.year, self.date.month, self.date.day)
             except ValueError:

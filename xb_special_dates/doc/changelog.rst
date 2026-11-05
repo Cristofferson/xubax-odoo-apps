@@ -1,6 +1,15 @@
 Changelog
 =========
 
+19.0.1.8.1 (2026-11)
+--------------------
+
+* **Fix: yearly reminders no longer fire before the first anniversary.**
+  A date captured ahead of time (for example, a wedding registered when the
+  rings are bought) was treated as an anniversary in its own year, so the
+  greeting was sent days *before* the wedding. A yearly reminder now first
+  fires one year after its date; dates in the past are not affected.
+
 19.0.1.8.0 (2026-08)
 --------------------
 
