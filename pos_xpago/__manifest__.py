@@ -1,6 +1,6 @@
 {
     'name': 'XPago: Card Terminals in the Point of Sale',
-    'version': '20.0.1.1.1',
+    'version': '20.0.1.2.0',
     'category': 'Sales/Point of Sale',
     'sequence': 6,
     'summary': 'Charge on XPago card terminals from the Odoo Point of Sale: the amount goes to the terminal and the '
@@ -18,6 +18,7 @@
         'wizard/pos_xpago_reconcile_views.xml',
         'views/payment_xpago_rule_views.xml',
         'views/res_config_settings_views.xml',
+        'receipt/pos_order_receipt.xml',
         'data/ir_cron.xml',
     ],
     'assets': {
