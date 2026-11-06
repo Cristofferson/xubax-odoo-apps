@@ -25,6 +25,11 @@ patch(OrderReceipt.prototype, {
         }
         return type.includes("CREDIT") ? _t("Credit") : "";
     },
+    /** Chip and contactless cards are verified by PIN or need nothing: only a swiped or keyed card is signed. */
+    xpagoNeedsSignature(line) {
+        const mode = (line.payment_method_payment_mode || "").toUpperCase();
+        return this.order.config.xpago_voucher_signature && !["CHIP", "CONTACTLESS"].includes(mode);
+    },
     xpagoLegend(line) {
         const config = this.order.config;
         return (

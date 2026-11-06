@@ -20,7 +20,7 @@
                         <span t-out="formatCurrency(line.getAmount())" class="font-monospace"/>
                     </div>
                     <div class="mt-2" style="white-space: pre-line; font-size: 90%;" t-esc="xpagoLegend(line)"/>
-                    <div t-if="order.config.xpago_voucher_signature" class="text-center mt-4">
+                    <div t-if="xpagoNeedsSignature(line)" class="text-center mt-4">
                         <div style="border-top: 1px solid currentColor; margin: 0 10%;"/>
                         <div>Customer's signature</div>
                     </div>

@@ -55,6 +55,18 @@ test("XPago card voucher in the receipt", async () => {
     expect(receipt.xpagoFunding(line)).toBe("Debit");
     expect(receipt.xpagoLegend(line)).toBe("Autorizo que se cargue a mi cuenta");
 
+    // Chip and contactless are never signed; a swiped card is, while the option is on.
+    expect(receipt.xpagoNeedsSignature(line)).toBe(true);
+    line.payment_method_payment_mode = "CHIP";
+    expect(receipt.xpagoNeedsSignature(line)).toBe(false);
+    line.payment_method_payment_mode = "CONTACTLESS";
+    expect(receipt.xpagoNeedsSignature(line)).toBe(false);
+    line.payment_method_payment_mode = "SWIPE";
+    expect(receipt.xpagoNeedsSignature(line)).toBe(true);
+    order.config.xpago_voucher_signature = false;
+    expect(receipt.xpagoNeedsSignature(line)).toBe(false);
+    order.config.xpago_voucher_signature = true;
+
     // No voucher when it is turned off, nor for a card that is not XPago's.
     expect(receipt.xpagoVoucherLines).toHaveLength(1);
     order.config.xpago_voucher_on_receipt = false;
