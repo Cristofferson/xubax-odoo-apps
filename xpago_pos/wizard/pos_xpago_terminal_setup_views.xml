@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_xpago_terminal_setup_view_form" model="ir.ui.view">
+        <field name="name">pos.xpago.terminal.setup.form</field>
+        <field name="model">pos.xpago.terminal.setup</field>
+        <field name="arch" type="xml">
+            <form string="XPago terminals">
+                <p class="text-muted">
+                    Which XPago terminal each point of sale charges with. The assistant proposes, warns when one
+                    terminal is on two points of sale, and changes only what you confirm here. A payment method is
+                    created only for the lines marked «Create».
+                </p>
+                <field name="warning_html" nolabel="1" readonly="1"/>
+                <group>
+                    <field name="provider_id" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="journal_id" options="{'no_create': True}"/>
+                </group>
+                <field name="line_ids">
+                    <list editable="bottom" create="false" delete="false">
+                        <field name="config_id"/>
+                        <field name="has_open_session" column_invisible="True"/>
+                        <field name="method_id" options="{'no_create': True}"/>
+                        <field name="terminal_serial"/>
+                        <field name="new_serial" readonly="method_id"/>
+                        <field name="create_method" readonly="method_id or not new_serial"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_apply" type="object" string="Apply" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pos_xpago_terminal_setup" model="ir.actions.act_window">
+        <field name="name">XPago terminals</field>
+        <field name="res_model">pos.xpago.terminal.setup</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

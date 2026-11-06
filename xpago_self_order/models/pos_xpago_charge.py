@@ -1,4 +1,6 @@
-from odoo import models
+from datetime import timedelta
+
+from odoo import api, fields, models
 
 
 class PosXpagoCharge(models.Model):
@@ -37,3 +39,19 @@ class PosXpagoCharge(models.Model):
                 'pos.payment': order.payment_ids.read(order.payment_ids._load_pos_self_data_fields(config.id), load=False),
             },
         })
+
+    @api.model
+    def _xpago_cron_refresh(self):
+        """The kiosk cancels its unpaid charge itself; this catches the kiosks that closed or lost their connection
+        before, so their terminal does not stay waiting for a card."""
+        self._xpago_cancel_abandoned_kiosk_charges()
+        return super()._xpago_cron_refresh()
+
+    @api.model
+    def _xpago_cancel_abandoned_kiosk_charges(self):
+        now = fields.Datetime.now()
+        for charge in self.sudo().search([('state', '=', 'pending'), ('pos_order_id', '!=', False), ('config_id', '!=', False)]):
+            timeout = charge.config_id.xpago_kiosk_timeout
+            # A minute more than the kiosk's own timer: the kiosk normally cancels first.
+            if timeout > 0 and charge.create_date <= now - timedelta(seconds=timeout + 60):
+                charge._xpago_cancel()

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.xpago_self_order</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="xpago_pos.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <setting id="xpago_payment_rules" position="after">
+                <setting id="xpago_kiosk_timeout" string="Kiosk: free the terminal"
+                         invisible="pos_self_ordering_mode != 'kiosk'"
+                         help="When the customer does not pay on the XPago terminal in time, the charge is cancelled and the terminal is free for the next customer.">
+                    <div class="d-flex align-items-center gap-2">
+                        <field name="pos_xpago_kiosk_timeout" class="o_light_label" style="width: 5rem;"/>
+                        <span>seconds (0 never cancels it)</span>
+                    </div>
+                </setting>
+            </setting>
+        </field>
+    </record>
+</odoo>
