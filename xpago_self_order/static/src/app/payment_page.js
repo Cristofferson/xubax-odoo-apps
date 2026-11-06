@@ -1,9 +1,9 @@
 import { patch } from "@web/core/utils/patch";
 import { rpc } from "@web/core/network/rpc";
+import { _t } from "@web/core/l10n/translation";
 import { onWillUnmount } from "@odoo/owl";
 import { PaymentPage } from "@pos_self_order/app/pages/payment_page/payment_page";
-
-const POLL_DELAY = 2000;
+import { waitForCharge } from "@xpago_pos/app/charge_wait";
 
 patch(PaymentPage.prototype, {
     setup() {
@@ -28,6 +28,7 @@ patch(PaymentPage.prototype, {
                 orderId: result.order[0].id,
                 active: true,
             };
+            this.xpagoWatchInactivity(this.xpagoCharge);
             this.xpagoPoll();
         } catch (error) {
             this.selfOrder.handleErrorNotification(error);
@@ -35,27 +36,42 @@ patch(PaymentPage.prototype, {
         }
     },
 
-    async xpagoPoll() {
-        const charge = this.xpagoCharge;
-        while (charge?.active) {
-            await new Promise((resolve) => setTimeout(resolve, POLL_DELAY));
+    /** A customer who walks away must not leave the terminal waiting: after the kiosk's timeout the charge is
+     *  cancelled and the terminal is free for the next one. */
+    xpagoWatchInactivity(charge) {
+        const seconds = this.selfOrder.config.xpago_kiosk_timeout;
+        if (!(seconds > 0)) {
+            return;
+        }
+        charge.timer = setTimeout(async () => {
             if (!charge.active) {
                 return;
             }
-            try {
-                const { state } = await rpc("/pos-self-order/xpago-charge-status/", {
+            await this.xpagoStop(true);
+            this.selfOrder.paymentError = true;
+            this.selfOrder.notification.add(
+                _t("The card was not paid in time. The terminal is free: try again when you are ready."),
+                { type: "warning" }
+            );
+        }, seconds * 1000);
+    },
+
+    async xpagoPoll() {
+        const charge = this.xpagoCharge;
+        // The server pays the order and tells the kiosk through its payment status channel; asking here only
+        // makes the server read the charge back.
+        await waitForCharge(
+            { state: "pending" },
+            () =>
+                rpc("/pos-self-order/xpago-charge-status/", {
                     access_token: this.selfOrder.access_token,
                     order_id: charge.orderId,
                     charge_id: charge.id,
-                });
-                // The server pays the order and tells the kiosk through its payment status channel.
-                if (["confirmed", "cancelled", "expired"].includes(state)) {
-                    charge.active = false;
-                }
-            } catch {
-                // A lost connection is not an answer: keep asking.
-            }
-        }
+                }),
+            () => charge.active
+        );
+        charge.active = false;
+        clearTimeout(charge.timer);
     },
 
     async xpagoStop(cancel) {
@@ -64,6 +80,7 @@ patch(PaymentPage.prototype, {
             return;
         }
         charge.active = false;
+        clearTimeout(charge.timer);
         if (cancel) {
             await rpc("/pos-self-order/xpago-cancel-charge/", {
                 access_token: this.selfOrder.access_token,

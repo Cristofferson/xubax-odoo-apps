@@ -6,7 +6,7 @@ API_URL_PARAM = 'xpago.api_url'
 # The addresses of the API in the order they are tried: the main one (through Cloudflare) and the XPago nodes straight,
 # for when Cloudflare is down (see failover.py). The system parameter `xpago.api_urls` (comma separated) replaces the
 # list; `xpago.api_url`, when set, is the only address used.
-API_URLS = ('https://api.xpago.mx', 'https://n1.xpagoapi.com', 'https://n2.xpagoapi.com', 'https://n3.xpagoapi.com')
+API_URLS = ('https://api.xpago.mx', 'https://n1.xpago.com.mx', 'https://n2.xpago.com.mx', 'https://n3.xpago.com.mx')
 API_URLS_PARAM = 'xpago.api_urls'
 KEY_PREFIXES = {'test': 'xpk_test_', 'enabled': 'xpk_live_'}
 KEY_PREFIX = 'xpk_'
@@ -15,6 +15,10 @@ KEY_PREFIX = 'xpk_'
 # of a former XPago app, no longer charges). The system parameter `xpago.connect_url` points elsewhere.
 CONNECT_URL = 'https://xpago.mx/conectar'
 CONNECT_URL_PARAM = 'xpago.connect_url'
+
+# The connection panel of the provider: a call that worked is written at most this often (every charge asks XPago
+# several times; writing each one would only load the database), a failed one always.
+STATUS_WRITE_SECONDS = 60
 
 PAYMENT_RETURN_ROUTE = '/payment/xpago/return'
 CARD_RETURN_ROUTE = '/payment/xpago/card/return'

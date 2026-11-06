@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-06 06:56+0000\n"
-"PO-Revision-Date: 2026-11-06 06:56+0000\n"
+"POT-Creation-Date: 2026-11-06 09:19+0000\n"
+"PO-Revision-Date: 2026-11-06 09:19+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -40,6 +40,11 @@ msgid "Amount differs"
 msgstr ""
 
 #. module: xpago_pos
+#: model_terms:ir.ui.view,arch_db:xpago_pos.pos_xpago_terminal_setup_view_form
+msgid "Apply"
+msgstr ""
+
+#. module: xpago_pos
 #: model:ir.model.fields,help:xpago_pos.field_pos_xpago_rule_test__split
 msgid "As a point of sale that splits the charge would."
 msgstr ""
@@ -48,6 +53,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/xpago_pos/wizard/pos_xpago_rule_test.py:0
 msgid "As the account offers"
+msgstr ""
+
+#. module: xpago_pos
+#: model_terms:ir.ui.view,arch_db:xpago_pos.res_config_settings_view_form
+msgid "Assign the terminals"
 msgstr ""
 
 #. module: xpago_pos
@@ -112,6 +122,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/xpago_pos/static/src/app/payment_xpago.js:0
 #: model_terms:ir.ui.view,arch_db:xpago_pos.pos_xpago_reconcile_view_form
+#: model_terms:ir.ui.view,arch_db:xpago_pos.pos_xpago_terminal_setup_view_form
 msgid "Cancel"
 msgstr ""
 
@@ -143,6 +154,12 @@ msgstr ""
 #. module: xpago_pos
 #: model_terms:ir.ui.view,arch_db:xpago_pos.res_config_settings_view_form
 msgid "Card voucher in the receipt"
+msgstr ""
+
+#. module: xpago_pos
+#. odoo-python
+#: code:addons/xpago_pos/wizard/pos_xpago_terminal_setup.py:0
+msgid "Card · XPago %s"
 msgstr ""
 
 #. module: xpago_pos
@@ -190,6 +207,12 @@ msgid "Choose the XPago account and write the serial number of the terminal."
 msgstr ""
 
 #. module: xpago_pos
+#. odoo-python
+#: code:addons/xpago_pos/wizard/pos_xpago_terminal_setup.py:0
+msgid "Choose the journal for the new terminals before creating them."
+msgstr ""
+
+#. module: xpago_pos
 #: model_terms:ir.ui.view,arch_db:xpago_pos.pos_xpago_rule_test_view_form
 msgid "Close"
 msgstr ""
@@ -218,10 +241,22 @@ msgid "Connect your XPago account"
 msgstr ""
 
 #. module: xpago_pos
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup_line__create_method
+msgid "Create"
+msgstr ""
+
+#. module: xpago_pos
+#: model:ir.model.fields,help:xpago_pos.field_pos_xpago_terminal_setup_line__create_method
+msgid "Create the payment method of this new terminal."
+msgstr ""
+
+#. module: xpago_pos
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_charge__create_uid
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_reconcile__create_uid
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_reconcile_line__create_uid
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_rule_test__create_uid
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup__create_uid
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup_line__create_uid
 msgid "Created by"
 msgstr ""
 
@@ -230,6 +265,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_reconcile__create_date
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_reconcile_line__create_date
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_rule_test__create_date
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup__create_date
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup_line__create_date
 msgid "Created on"
 msgstr ""
 
@@ -329,6 +366,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_reconcile__display_name
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_reconcile_line__display_name
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_rule_test__display_name
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup__display_name
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup_line__display_name
 #: model:ir.model.fields,field_description:xpago_pos.field_res_config_settings__display_name
 msgid "Display Name"
 msgstr ""
@@ -387,6 +426,11 @@ msgid "From"
 msgstr ""
 
 #. module: xpago_pos
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup_line__has_open_session
+msgid "Has Open Session"
+msgstr ""
+
+#. module: xpago_pos
 #: model:ir.model.fields,field_description:xpago_pos.field_payment_provider__id
 #: model:ir.model.fields,field_description:xpago_pos.field_payment_xpago_bank_account__id
 #: model:ir.model.fields,field_description:xpago_pos.field_payment_xpago_rule__id
@@ -397,6 +441,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_reconcile__id
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_reconcile_line__id
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_rule_test__id
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup__id
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup_line__id
 #: model:ir.model.fields,field_description:xpago_pos.field_res_config_settings__id
 msgid "ID"
 msgstr ""
@@ -420,6 +466,11 @@ msgid ""
 msgstr ""
 
 #. module: xpago_pos
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup__journal_id
+msgid "Journal for new terminals"
+msgstr ""
+
+#. module: xpago_pos
 #: model:ir.model.fields,field_description:xpago_pos.field_payment_xpago_rule__use_kiosk
 #: model:ir.model.fields.selection,name:xpago_pos.selection__pos_xpago_rule_test__channel__kiosk
 msgid "Kiosk"
@@ -430,6 +481,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_reconcile__write_uid
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_reconcile_line__write_uid
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_rule_test__write_uid
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup__write_uid
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup_line__write_uid
 msgid "Last Updated by"
 msgstr ""
 
@@ -438,7 +491,15 @@ msgstr ""
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_reconcile__write_date
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_reconcile_line__write_date
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_rule_test__write_date
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup__write_date
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup_line__write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: xpago_pos
+#. odoo-python
+#: code:addons/xpago_pos/wizard/pos_xpago_terminal_setup.py:0
+msgid "Left as they were (session open): %s."
 msgstr ""
 
 #. module: xpago_pos
@@ -511,6 +572,12 @@ msgid "No charges on XPago terminals yet"
 msgstr ""
 
 #. module: xpago_pos
+#. odoo-python
+#: code:addons/xpago_pos/wizard/pos_xpago_terminal_setup.py:0
+msgid "Nothing to change."
+msgstr ""
+
+#. module: xpago_pos
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_charge__notified
 msgid "Notified"
 msgstr ""
@@ -569,6 +636,13 @@ msgid "Only these points of sale"
 msgstr ""
 
 #. module: xpago_pos
+#: model:ir.model.fields,help:xpago_pos.field_pos_xpago_terminal_setup__journal_id
+msgid ""
+"Only used for the payment methods this assistant creates (lines with "
+"«Create»)."
+msgstr ""
+
+#. module: xpago_pos
 #: model:ir.model.fields,help:xpago_pos.field_pos_xpago_charge__terminal_app_url
 msgid "Opens the charge app when the point of sale runs on the terminal."
 msgstr ""
@@ -588,6 +662,11 @@ msgstr ""
 #. module: xpago_pos
 #: model_terms:ir.ui.view,arch_db:xpago_pos.res_config_settings_view_form
 msgid "Optional"
+msgstr ""
+
+#. module: xpago_pos
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup_line__new_serial
+msgid "Or a new terminal (S/N)"
 msgstr ""
 
 #. module: xpago_pos
@@ -675,6 +754,7 @@ msgstr ""
 #. module: xpago_pos
 #: model:ir.model.fields,field_description:xpago_pos.field_payment_xpago_rule__use_pos
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_charge__config_id
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup_line__config_id
 #: model:ir.model.fields.selection,name:xpago_pos.selection__pos_xpago_rule_test__channel__pos
 #: model_terms:ir.ui.view,arch_db:xpago_pos.pos_xpago_charge_view_search
 msgid "Point of sale"
@@ -688,6 +768,11 @@ msgstr ""
 #. module: xpago_pos
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_charge__pos_payment_id
 msgid "Point of sale payment"
+msgstr ""
+
+#. module: xpago_pos
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup__line_ids
+msgid "Points of sale"
 msgstr ""
 
 #. module: xpago_pos
@@ -760,6 +845,11 @@ msgid "Rules applied"
 msgstr ""
 
 #. module: xpago_pos
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup_line__terminal_serial
+msgid "S/N"
+msgstr ""
+
+#. module: xpago_pos
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_charge__sale_order_id
 msgid "Sale"
 msgstr ""
@@ -827,6 +917,14 @@ msgid "Terminal"
 msgstr ""
 
 #. module: xpago_pos
+#. odoo-python
+#: code:addons/xpago_pos/wizard/pos_xpago_terminal_setup.py:0
+msgid ""
+"Terminal %(serial)s would be on %(registers)s. A terminal shows one charge "
+"at a time: a new charge replaces the one it was waiting for."
+msgstr ""
+
+#. module: xpago_pos
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_charge__terminal_app_url
 msgid "Terminal App Url"
 msgstr ""
@@ -860,6 +958,13 @@ msgstr ""
 msgid ""
 "The XPago account this terminal charges with: its XPago key and whether it "
 "is in test mode."
+msgstr ""
+
+#. module: xpago_pos
+#: model:ir.model.fields,help:xpago_pos.field_pos_xpago_terminal_setup_line__method_id
+msgid ""
+"The XPago terminal payment method this point of sale charges with. Empty: "
+"leave it as it is."
 msgstr ""
 
 #. module: xpago_pos
@@ -910,6 +1015,7 @@ msgstr ""
 
 #. module: xpago_pos
 #: model:ir.model.fields,help:xpago_pos.field_pos_payment_method__xpago_terminal_serial
+#: model:ir.model.fields,help:xpago_pos.field_pos_xpago_terminal_setup_line__terminal_serial
 msgid "The serial number on the back of the terminal (after S/N)."
 msgstr ""
 
@@ -924,6 +1030,14 @@ msgstr ""
 msgid ""
 "The whole charge goes back to the same card. XPago refunds a terminal charge"
 " only the same day it was paid. Continue?"
+msgstr ""
+
+#. module: xpago_pos
+#. odoo-python
+#: code:addons/xpago_pos/wizard/pos_xpago_terminal_setup.py:0
+msgid ""
+"These points of sale have a session open and are left as they are until it "
+"is closed: %s"
 msgstr ""
 
 #. module: xpago_pos
@@ -991,6 +1105,12 @@ msgid "Unsupported search on \"Paid without a sale\"."
 msgstr ""
 
 #. module: xpago_pos
+#. odoo-python
+#: code:addons/xpago_pos/wizard/pos_xpago_terminal_setup.py:0
+msgid "Updated: %s."
+msgstr ""
+
+#. module: xpago_pos
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_reconcile_line__fee_vat
 msgid "VAT on fee"
 msgstr ""
@@ -1003,6 +1123,11 @@ msgstr ""
 #. module: xpago_pos
 #: model:ir.model.fields.selection,name:xpago_pos.selection__pos_xpago_charge__state__pending
 msgid "Waiting for the card"
+msgstr ""
+
+#. module: xpago_pos
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup__warning_html
+msgid "Warning Html"
 msgstr ""
 
 #. module: xpago_pos
@@ -1036,6 +1161,26 @@ msgid ""
 msgstr ""
 
 #. module: xpago_pos
+#: model_terms:ir.ui.view,arch_db:xpago_pos.pos_xpago_terminal_setup_view_form
+msgid ""
+"Which XPago terminal each point of sale charges with. The assistant proposes, warns when one\n"
+"                    terminal is on two points of sale, and changes only what you confirm here. A payment method is\n"
+"                    created only for the lines marked «Create»."
+msgstr ""
+
+#. module: xpago_pos
+#: model_terms:ir.ui.view,arch_db:xpago_pos.res_config_settings_view_form
+msgid ""
+"Which XPago terminal each point of sale charges with; warns when one "
+"terminal is on two points of sale."
+msgstr ""
+
+#. module: xpago_pos
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup_line__wizard_id
+msgid "Wizard"
+msgstr ""
+
+#. module: xpago_pos
 #. odoo-javascript
 #: code:addons/xpago_pos/static/src/app/payment_xpago.js:0
 msgid "XPago"
@@ -1044,6 +1189,7 @@ msgstr ""
 #. module: xpago_pos
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_payment_method__xpago_provider_id
 #: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_reconcile__provider_id
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup__provider_id
 msgid "XPago account"
 msgstr ""
 
@@ -1128,6 +1274,11 @@ msgid "XPago status"
 msgstr ""
 
 #. module: xpago_pos
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup_line__method_id
+msgid "XPago terminal"
+msgstr ""
+
+#. module: xpago_pos
 #: model:ir.model,name:xpago_pos.model_pos_xpago_charge
 msgid "XPago terminal charge"
 msgstr ""
@@ -1136,6 +1287,25 @@ msgstr ""
 #: model:ir.actions.act_window,name:xpago_pos.action_pos_xpago_charge
 #: model:ir.ui.menu,name:xpago_pos.menu_pos_xpago_charge
 msgid "XPago terminal charges"
+msgstr ""
+
+#. module: xpago_pos
+#: model:ir.model,name:xpago_pos.model_pos_xpago_terminal_setup_line
+msgid "XPago terminal of a point of sale"
+msgstr ""
+
+#. module: xpago_pos
+#. odoo-python
+#: code:addons/xpago_pos/wizard/pos_xpago_terminal_setup.py:0
+#: model:ir.actions.act_window,name:xpago_pos.action_pos_xpago_terminal_setup
+#: model_terms:ir.ui.view,arch_db:xpago_pos.pos_xpago_terminal_setup_view_form
+#: model_terms:ir.ui.view,arch_db:xpago_pos.res_config_settings_view_form
+msgid "XPago terminals"
+msgstr ""
+
+#. module: xpago_pos
+#: model:ir.model,name:xpago_pos.model_pos_xpago_terminal_setup
+msgid "XPago terminals and points of sale"
 msgstr ""
 
 #. module: xpago_pos

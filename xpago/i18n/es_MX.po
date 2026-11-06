@@ -815,3 +815,173 @@ msgid ""
 msgstr ""
 "XPago no contestó a tiempo y esta operación pudo haber pasado. Revisa la "
 "terminal o la lista de cobros antes de intentar de nuevo."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
+msgid ""
+"<span class=\"badge text-bg-success fs-6\" invisible=\"xpago_connection_state != 'ok'\">Connected</span>\n"
+"                        <span class=\"badge text-bg-danger fs-6\" invisible=\"xpago_connection_state != 'error'\">Error</span>\n"
+"                        <span class=\"badge text-bg-secondary fs-6\" invisible=\"xpago_connection_state != 'unknown'\">Not checked yet</span>"
+msgstr ""
+"<span class=\"badge text-bg-success fs-6\" invisible=\"xpago_connection_state != 'ok'\">Conectado</span>\n"
+"                        <span class=\"badge text-bg-danger fs-6\" invisible=\"xpago_connection_state != 'error'\">Error</span>\n"
+"                        <span class=\"badge text-bg-secondary fs-6\" invisible=\"xpago_connection_state != 'unknown'\">Sin revisar todavía</span>"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
+msgid ""
+"<strong>Neutralized copy.</strong>\n"
+"                    This database is a copy: XPago was switched off, its key removed and the payments that were waiting\n"
+"                    were cancelled here, without calling XPago. Write a test key (xpk_test_…) to try XPago in this copy."
+msgstr ""
+"<strong>Copia neutralizada.</strong>\n"
+"                    Esta base de datos es una copia: XPago se apagó, se quitó su llave y los pagos que estaban\n"
+"                    esperando se cancelaron aquí, sin llamar a XPago. Escribe una llave de prueba (xpk_test_…) para\n"
+"                    probar XPago en esta copia."
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__payment_provider__xpago_connection_state__ok
+msgid "Connected"
+msgstr "Conectado"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid "Connected to XPago"
+msgstr "Conectado a XPago"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_connection_state
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
+msgid "Connection"
+msgstr "Conexión"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_environment
+msgid "Environment"
+msgstr "Ambiente"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_connection__last_error
+#: model:ir.model.fields.selection,name:xpago.selection__payment_provider__xpago_connection_state__error
+msgid "Error"
+msgstr "Error"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_last_ok_at
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_connection__last_ok_at
+msgid "Last call that worked"
+msgstr "Última llamada que funcionó"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_last_error
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_connection__last_error_at
+msgid "Last error"
+msgstr "Último error"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_last_error_at
+msgid "Last error at"
+msgstr "Último error el"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_neutralized
+msgid "Neutralized copy"
+msgstr "Copia neutralizada"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid "No connection with XPago."
+msgstr "Sin conexión con XPago."
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__payment_provider__xpago_connection_state__unknown
+msgid "Not checked yet"
+msgstr "Sin revisar todavía"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
+msgid ""
+"Odoo writes down how its calls to XPago go: when one worked last and the last error. «Test\n"
+"                        connection» asks XPago for the account of this key right now."
+msgstr ""
+"Odoo anota cómo van sus llamadas a XPago: cuándo funcionó la última y el último error.\n"
+"                        «Probar conexión» le pregunta a XPago ahora mismo por la cuenta de esta llave."
+
+#. module: xpago
+#: model:ir.model.constraint,message:xpago.constraint_payment_xpago_connection_provider_unique
+msgid "One connection status per provider."
+msgstr "Un estado de conexión por proveedor."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_provider__xpago_environment
+msgid "Read from the XPago key: xpk_test_ or xpk_live_."
+msgstr "Se lee de la llave XPago: xpk_test_ o xpk_live_."
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__payment_provider__xpago_environment__live
+msgid "Real"
+msgstr "Real"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__payment_provider__xpago_environment__test
+msgid "Test (charges nothing)"
+msgstr "Prueba (no cobra nada)"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
+msgid "Test connection"
+msgstr "Probar conexión"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid "The key works."
+msgstr "La llave funciona."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid ""
+"The payment provider rejected the request.\n"
+"%s"
+msgstr ""
+"El proveedor de pagos rechazó la solicitud.\n"
+"%s"
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_provider__xpago_neutralized
+msgid ""
+"This database is a neutralized copy: XPago was switched off and its key "
+"removed, so the copy never charges with the real account. Write a test key "
+"to try XPago here."
+msgstr ""
+"Esta base de datos es una copia neutralizada: XPago se apagó y se quitó su "
+"llave, así que la copia nunca cobra con la cuenta real. Escribe una llave de"
+" prueba para probar XPago aquí."
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_account_name
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_connection__account_name
+msgid "XPago account"
+msgstr "Cuenta XPago"
+
+#. module: xpago
+#: model:ir.model,name:xpago.model_payment_xpago_connection
+msgid "XPago connection status"
+msgstr "Estado de la conexión con XPago"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid "XPago did not answer"
+msgstr "XPago no contestó"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid "XPago did not answer in time."
+msgstr "XPago no contestó a tiempo."

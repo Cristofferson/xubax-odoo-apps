@@ -4,8 +4,7 @@ import { AlertDialog, ConfirmationDialog } from "@web/core/confirmation_dialog/c
 import { register_payment_method } from "@point_of_sale/app/services/pos_store";
 import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
 import { SelectionPopup } from "@point_of_sale/app/components/popups/selection_popup/selection_popup";
-
-const POLL_DELAY = 2000;
+import { waitForCharge } from "@xpago_pos/app/charge_wait";
 
 export class PaymentXpago extends PaymentInterface {
     setup() {
@@ -71,7 +70,7 @@ export class PaymentXpago extends PaymentInterface {
         if (this.payment_method_id.xpago_open_terminal_app && charge.terminal_app_url) {
             this._openTerminalApp(charge.terminal_app_url);
         }
-        const result = await this._waitForResult(uuid, charge);
+        const result = await this._waitForResult(uuid, charge, order);
         delete this.charges[uuid];
         if (result.state === "confirmed") {
             Object.assign(line, result.payment);
@@ -189,16 +188,17 @@ export class PaymentXpago extends PaymentInterface {
         return picked || false;
     }
 
-    async _waitForResult(uuid, charge) {
-        while (!["confirmed", "cancelled", "expired"].includes(charge.state)) {
-            await new Promise((resolve) => setTimeout(resolve, POLL_DELAY));
-            try {
-                charge = await this._call("xpago_charge_status", [charge.id]);
-            } catch {
-                // A lost connection is not an answer: keep asking.
-            }
+    async _waitForResult(uuid, charge, order) {
+        // Stop asking once the payment line is gone (removed, or the order was left) or the point of sale closes.
+        const active = () => Boolean(this.charges[uuid] && !this.charges[uuid].stopped && order.getPaymentlineByUuid(uuid));
+        return waitForCharge(charge, (current) => this._call("xpago_charge_status", [current.id]), active);
+    }
+
+    close() {
+        for (const pending of Object.values(this.charges)) {
+            pending.stopped = true;
         }
-        return charge;
+        return super.close(...arguments);
     }
 
     async sendPaymentCancel(order, uuid) {
