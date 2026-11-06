@@ -10,29 +10,29 @@
   <div class="oe_row oe_spaced">
     <h2 class="oe_slogan">Sales, Quotations &amp; Layaway from POS</h2>
     <h3 class="oe_slogan" style="color:#875A7B;">
-      Create quotations, orders and layaways at the till — collect advances,
+      Create quotations, orders and layaways at the till &#8212; collect advances,
       settle the balance, print an enriched receipt with an online-payment QR.
     </h3>
     <div class="oe_span12" style="text-align:center; margin-top:24px;">
       <div style="border:2px dashed #c9c9c9; background:#f6f6f6; padding:90px 20px;
                   color:#9b9b9b; font-size:16px; border-radius:6px;">
-        [ Banner / hero screenshot — POS with the “Order / Layaway” action ]
+        [ Banner / hero screenshot &#8212; POS with the &#8220;Order / Layaway&#8221; action ]
       </div>
     </div>
     <p class="oe_mt32" style="text-align:center; font-size:15px;">
       Built clean-room on native Odoo (<code>point_of_sale</code>,
       <code>pos_sale</code>, <code>sale</code>).
-      It <strong>coexists</strong> with — does not replace — the native
+      It <strong>coexists</strong> with &#8212; does not replace &#8212; the native
       Quotation/Order loader. Every feature is optional and configured per Point of Sale.
     </p>
     <div class="oe_span12" style="text-align:center; margin-top:8px;">
       <p style="display:inline-block; background:#f3eef5; border:1px solid #d7c7df;
                 border-radius:6px; padding:12px 18px; font-size:14px; color:#5a3d52;">
-        🌎 <strong>Works with any localization.</strong> First-class support for
+        &#127758; <strong>Works with any localization.</strong> First-class support for
         <strong>Mexican CFDI&nbsp;4.0</strong> (advances / settlement invoicing, SAT payment
         forms, branch RFC). It does <strong>not</strong> require the Mexican localization:
         the SAT payment forms come with a small free bridge that installs itself when
-        <em>l10n_mx_edi</em> is present — non-MX companies get pure native invoicing.
+        <em>l10n_mx_edi</em> is present &#8212; non-MX companies get pure native invoicing.
       </p>
     </div>
   </div>
@@ -43,15 +43,15 @@
   <h2 class="oe_slogan">What it does</h2>
   <div class="oe_row">
     <div class="oe_span6">
-      <h3 class="oe_slogan" style="text-align:left;">📝 Quotations, Orders &amp; Layaways</h3>
+      <h3 class="oe_slogan" style="text-align:left;">&#128221; Quotations, Orders &amp; Layaways</h3>
       <p class="oe_mt16">
         Create the three document types straight from the POS. None is confirmed on
-        creation — confirmation happens <strong>natively</strong> when the payment is
+        creation &#8212; confirmation happens <strong>natively</strong> when the payment is
         validated.
       </p>
     </div>
     <div class="oe_span6">
-      <h3 class="oe_slogan" style="text-align:left;">💵 Multiple advances</h3>
+      <h3 class="oe_slogan" style="text-align:left;">&#128181; Multiple advances</h3>
       <p class="oe_mt16">
         Collect one or more partial advances (down payments) through the native
         down-payment product. The balance is <strong>payment-based</strong> and always
@@ -61,14 +61,14 @@
   </div>
   <div class="oe_row">
     <div class="oe_span6">
-      <h3 class="oe_slogan" style="text-align:left;">🧾 Enriched receipt</h3>
+      <h3 class="oe_slogan" style="text-align:left;">&#129534; Enriched receipt</h3>
       <p class="oe_mt16">
         State-aware title, payment summary (Total / Advance / Balance), product detail
         on advance tickets, and a consistent cash-rounding line.
       </p>
     </div>
     <div class="oe_span6">
-      <h3 class="oe_slogan" style="text-align:left;">🔗 Online payment QR</h3>
+      <h3 class="oe_slogan" style="text-align:left;">&#128279; Online payment QR</h3>
       <p class="oe_mt16">
         While a balance remains, the receipt prints a portal QR so the customer can
         review and pay online. A configurable self-invoice QR is also supported.
@@ -116,7 +116,7 @@
     <div class="oe_span12" style="text-align:center;">
       <div style="border:2px dashed #c9c9c9; background:#f6f6f6; padding:70px 20px;
                   color:#9b9b9b; border-radius:6px;">
-        [ Screenshot — document-type selector at the POS ]
+        [ Screenshot &#8212; document-type selector at the POS ]
       </div>
     </div>
   </div>
@@ -126,29 +126,29 @@
 <section class="oe_container oe_dark">
   <h2 class="oe_slogan">Required setup (per selling company)</h2>
   <p class="oe_mt16" style="text-align:center;">
-    Configuration requirements learned in the field — the module attributes the invoice
+    Configuration requirements learned in the field &#8212; the module attributes the invoice
     to the right company automatically, but the fiscal/accounting master data must exist
     on each selling company.
   </p>
   <div class="oe_row oe_spaced">
     <ol style="font-size:14px; line-height:1.7; max-width:820px; margin:0 auto;">
-      <li><strong>Down-payment product (native POS)</strong> — set its <em>income account
+      <li><strong>Down-payment product (native POS)</strong> &#8212; set its <em>income account
         for every selling company</em> (on the product or its category). A branch without
-        it fails the advance invoice with <em>“Falta la cuenta requerida.”</em></li>
-      <li><strong>Settle rounding product (optional)</strong> — a 0%-IVA service with
+        it fails the advance invoice with <em>&#8220;Falta la cuenta requerida.&#8221;</em></li>
+      <li><strong>Settle rounding product (optional)</strong> &#8212; a 0%-IVA service with
         <strong><code>Available in POS</code> = OFF</strong> (mandatory; if left visible it
-        can break POS loading), an income account per company, and — in Mexico — a SAT
+        can break POS loading), an income account per company, and &#8212; in Mexico &#8212; a SAT
         <em>ClaveProdServ</em> (placeholder <code>01010101</code> if none applies). If
-        unset, an all-16% settle simply tolerates a ±0.01 residual.</li>
-      <li><strong>POS payment method → SAT “Forma de pago”</strong> (Mexico only, with the
+        unset, an all-16% settle simply tolerates a &#177;0.01 residual.</li>
+      <li><strong>POS payment method &#8594; SAT &#8220;Forma de pago&#8221;</strong> (Mexico only, with the
         bridge <code>xb_sale_order_from_pos_l10n_mx</code>, installed automatically with
-        <code>l10n_mx_edi</code>) — map each method (Cash → 01, Transfer → 03,
-        Debit → 28, Credit → 04) so the CFDI reports the real payment form.</li>
-      <li><strong>Multi-company / branches</strong> — when branches share a sales journal,
-        the invoice is attributed to the order’s company; the CFDI is issued under the
+        <code>l10n_mx_edi</code>) &#8212; map each method (Cash &#8594; 01, Transfer &#8594; 03,
+        Debit &#8594; 28, Credit &#8594; 04) so the CFDI reports the real payment form.</li>
+      <li><strong>Multi-company / branches</strong> &#8212; when branches share a sales journal,
+        the invoice is attributed to the order&#8217;s company; the CFDI is issued under the
         branch RFC if it has one, otherwise under the nearest ancestor with a VAT (native
         <code>l10n_mx_edi</code> behaviour).</li>
-      <li><strong>Cash rounding</strong> — “only on cash” rounding is excluded from the
+      <li><strong>Cash rounding</strong> &#8212; &#8220;only on cash&#8221; rounding is excluded from the
         CFDI automatically; the cash difference stays in the session. Intended behaviour.</li>
     </ol>
   </div>
@@ -158,33 +158,33 @@
 <section class="oe_container">
   <h2 class="oe_slogan">Configuration</h2>
   <p class="oe_mt16" style="text-align:center;">
-    <em>Settings ▸ Point of Sale ▸ “XUBAX – Sale Order / Quotation”.</em>
+    <em>Settings &#9656; Point of Sale &#9656; &#8220;XUBAX &#8211; Sale Order / Quotation&#8221;.</em>
     English source with an <code>es_MX</code> translation. A single master switch enables
     the feature; every sub-option below depends on it.
   </p>
   <div class="oe_row oe_spaced">
     <ul style="font-size:14px; line-height:1.7; max-width:820px; margin:0 auto;">
-      <li><strong>Create Sale Order / Quotation</strong> — master switch.</li>
-      <li><strong>Default document state</strong> — which type is pre-selected by default
+      <li><strong>Create Sale Order / Quotation</strong> &#8212; master switch.</li>
+      <li><strong>Default document state</strong> &#8212; which type is pre-selected by default
         (does not confirm anything on creation).</li>
-      <li><strong>Allow quotations</strong> — let the cashier save a draft quotation.</li>
-      <li><strong>Differentiate Order and Layaway</strong> — separate actions vs. one combined.</li>
-      <li><strong>Show total &amp; pending balance</strong> — in the POS order panel.</li>
-      <li><strong>Detailed order receipt</strong> — product detail, total and balance.</li>
-      <li><strong>Show customer reference</strong> — before the customer name.</li>
+      <li><strong>Allow quotations</strong> &#8212; let the cashier save a draft quotation.</li>
+      <li><strong>Differentiate Order and Layaway</strong> &#8212; separate actions vs. one combined.</li>
+      <li><strong>Show total &amp; pending balance</strong> &#8212; in the POS order panel.</li>
+      <li><strong>Detailed order receipt</strong> &#8212; product detail, total and balance.</li>
+      <li><strong>Show customer reference</strong> &#8212; before the customer name.</li>
       <li><strong>Auto-print receipt on create</strong>.</li>
-      <li><strong>Show online portal link on receipt</strong> — the payment QR
+      <li><strong>Show online portal link on receipt</strong> &#8212; the payment QR
         (needs <em>Detailed order receipt</em>).</li>
-      <li><strong>Self-invoice QR only when settled</strong> — avoids a double QR on
+      <li><strong>Self-invoice QR only when settled</strong> &#8212; avoids a double QR on
         advances (needs <em>Self-Invoicing</em>).</li>
-      <li><strong>Settle rounding product</strong> — absorbs the rounding cent.</li>
+      <li><strong>Settle rounding product</strong> &#8212; absorbs the rounding cent.</li>
     </ul>
   </div>
   <div class="oe_row oe_spaced">
     <div class="oe_span12" style="text-align:center;">
       <div style="border:2px dashed #c9c9c9; background:#f6f6f6; padding:70px 20px;
                   color:#9b9b9b; border-radius:6px;">
-        [ Screenshot — POS settings section, two columns ]
+        [ Screenshot &#8212; POS settings section, two columns ]
       </div>
     </div>
   </div>
@@ -197,15 +197,15 @@
     <div class="oe_span6">
       <div style="border:2px dashed #c9c9c9; background:#f6f6f6; padding:90px 20px;
                   color:#9b9b9b; text-align:center; border-radius:6px;">
-        [ Screenshot — advance ticket with balance + payment QR ]
+        [ Screenshot &#8212; advance ticket with balance + payment QR ]
       </div>
     </div>
     <div class="oe_span6">
       <p class="oe_mt16" style="font-size:14px; line-height:1.7;">
         Title by document state, a Total / Advance / Balance summary, the payment QR while
-        a balance remains, a configurable self-invoice QR, the advance’s product detail,
+        a balance remains, a configurable self-invoice QR, the advance&#8217;s product detail,
         and a cash-rounding line that always reconciles
-        (Total + Rounding = To&nbsp;Pay; Cash − To&nbsp;Pay = Change).
+        (Total + Rounding = To&nbsp;Pay; Cash &#8722; To&nbsp;Pay = Change).
       </p>
       <p class="oe_mt16" style="font-size:13px; color:#777;">
         <strong>Note for implementers:</strong> installing over existing data recomputes
@@ -229,14 +229,14 @@
           itself with <code>l10n_mx_edi</code>.</li>
         <li>Soft dep: order-level internal note maps to
           <code>sale.order.internal_note</code> only when <code>sale_subscription</code>
-          is present — guarded, no error otherwise.</li>
+          is present &#8212; guarded, no error otherwise.</li>
       </ul>
     </div>
     <div class="oe_span6">
       <h3 class="oe_slogan" style="text-align:left;">Known limitations</h3>
       <ul style="font-size:14px; line-height:1.7;">
         <li>Only a single rounding currency (MXN) tested.</li>
-        <li>SO header <code>delivery_status</code> stays empty — delivery is fulfilled
+        <li>SO header <code>delivery_status</code> stays empty &#8212; delivery is fulfilled
           through the POS picking, not an SO picking (by design).</li>
         <li>No in-POS customer signature yet (roadmap).</li>
       </ul>
@@ -249,9 +249,9 @@
   <div class="oe_row oe_spaced" style="text-align:center;">
     <h2 class="oe_slogan">XUBAX</h2>
     <p class="oe_mt16">
-      Support: <a href="mailto:soporte@xubax.com">soporte@xubax.com</a> ·
+      Support: <a href="mailto:soporte@xubax.com">soporte@xubax.com</a> &#183;
       <a href="https://www.xubax.com">www.xubax.com</a><br/>
-      License: OPL-1 · Odoo 19.0 Enterprise
+      License: OPL-1 &#183; Odoo 19.0 Enterprise
     </p>
   </div>
 </section>
