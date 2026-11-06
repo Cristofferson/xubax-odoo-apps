@@ -16,6 +16,9 @@ patch(GeneratePrinterData.prototype, {
                     Boolean(line.card_no || line.transaction_id),
                 xpago_debit: cardType.includes("DEBIT"),
                 xpago_credit: cardType.includes("CREDIT") && !cardType.includes("DEBIT"),
+                xpago_signature:
+                    Boolean(this.config.xpago_voucher_signature) &&
+                    !["CHIP", "CONTACTLESS"].includes((line.payment_method_payment_mode || "").toUpperCase()),
             });
         });
         return data;

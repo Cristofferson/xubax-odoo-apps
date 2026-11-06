@@ -18,4 +18,8 @@ class PosOrderReceipt(models.AbstractModel):
                 and (payment.card_no or payment.transaction_id))
             data['xpago_debit'] = 'DEBIT' in card_type
             data['xpago_credit'] = 'CREDIT' in card_type and 'DEBIT' not in card_type
+            # Chip and contactless are verified by PIN or need nothing: only a swiped or keyed card is signed.
+            data['xpago_signature'] = bool(
+                self.config_id.xpago_voucher_signature
+                and (payment and payment.payment_method_payment_mode or '').upper() not in ('CHIP', 'CONTACTLESS'))
         return payments

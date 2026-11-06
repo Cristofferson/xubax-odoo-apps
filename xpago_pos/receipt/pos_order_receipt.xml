@@ -34,7 +34,7 @@
                     </table>
                     <div t-if="payment.get('xpago_debit')" class="mt-2" style="white-space: pre-line;" t-out="config.get('xpago_voucher_debit_text') or ''"/>
                     <div t-else="" class="mt-2" style="white-space: pre-line;" t-out="config.get('xpago_voucher_credit_text') or ''"/>
-                    <div t-if="config.get('xpago_voucher_signature')" class="w-100 text-center mt-4">
+                    <div t-if="payment.get('xpago_signature')" class="w-100 text-center mt-4">
                         <div style="border-top: 1px solid black; margin: 0 10%;"/>
                         <div>Customer's signature</div>
                     </div>
