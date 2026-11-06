@@ -50,5 +50,7 @@ class PosPayment(models.Model):
             'terms': self.xpago_terms if self.xpago_terms > 1 else False,
             'tip': self.xpago_tip or 0.0,
             'legend': (config.xpago_voucher_debit_text if debit else config.xpago_voucher_credit_text) or '',
-            'signature': bool(config.xpago_voucher_signature),
+            # Chip and contactless are verified by PIN or need nothing: only a swiped or keyed card is signed.
+            'signature': bool(config.xpago_voucher_signature)
+                         and (self.xpago_entry_mode or '').upper() not in ('CHIP', 'CONTACTLESS'),
         }

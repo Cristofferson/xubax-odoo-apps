@@ -63,7 +63,10 @@ patch(Payment.prototype, {
             terms: this.xpago_terms > 1 ? this.xpago_terms : false,
             tip: this.xpago_tip || 0,
             legend: (debit ? config.xpago_voucher_debit_text : config.xpago_voucher_credit_text) || "",
-            signature: Boolean(config.xpago_voucher_signature),
+            // Chip and contactless are verified by PIN or need nothing: only a swiped or keyed card is signed.
+            signature:
+                Boolean(config.xpago_voucher_signature) &&
+                !["CHIP", "CONTACTLESS"].includes((this.xpago_entry_mode || "").toUpperCase()),
         };
     },
 });
