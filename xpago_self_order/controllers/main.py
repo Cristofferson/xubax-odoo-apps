@@ -21,7 +21,8 @@ class PosSelfOrderXpagoController(PosSelfOrderController):
         """Asked by the kiosk while the customer pays: reading the charge back also pays the order."""
         charge = self._xpago_kiosk_charge(access_token, order_id, charge_id)
         charge._xpago_refresh()
-        return {'state': charge.state}
+        view = charge._xpago_public_view()
+        return {'state': view['state'], 'expires_at': view['expires_at']}
 
     @http.route('/pos-self-order/xpago-cancel-charge/', auth='public', type='jsonrpc', website=True)
     def xpago_cancel_charge(self, access_token, order_id, charge_id):

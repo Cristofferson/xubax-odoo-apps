@@ -5,3 +5,4 @@ access_payment_xpago_bank_account_user,payment.xpago.bank.account user,payment.x
 access_payment_xpago_bank_account_system,payment.xpago.bank.account system,payment.xpago.bank.account,base.group_system,crud,
 access_payment_xpago_rule_user,payment.xpago.rule user,payment.xpago.rule,base.group_user,r,
 access_payment_xpago_rule_system,payment.xpago.rule system,payment.xpago.rule,base.group_system,crud,
+access_payment_xpago_connection_system,payment.xpago.connection system,payment.xpago.connection,base.group_system,crud,

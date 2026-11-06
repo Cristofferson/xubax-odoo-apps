@@ -16,6 +16,7 @@
         'views/pos_payment_method_views.xml',
         'views/pos_xpago_charge_views.xml',
         'wizard/pos_xpago_reconcile_views.xml',
+        'wizard/pos_xpago_terminal_setup_views.xml',
         'views/pos_payment_xpago_rule_views.xml',
         'views/res_config_settings_views.xml',
         'receipt/pos_order_receipt.xml',

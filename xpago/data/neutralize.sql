@@ -1,2 +1,11 @@
--- a neutralized copy must never charge with the real XPago account
-UPDATE payment_provider SET xpago_api_key = NULL WHERE code = 'xpago';
+-- A neutralized copy (a test database made from production) must never charge with the real XPago account, nor read
+-- back or finish anything that was waiting on it: no key, out of live mode and unpublished, the copy says so on the
+-- provider, and what was waiting is cancelled here, locally, without calling XPago.
+UPDATE payment_provider
+   SET xpago_api_key = NULL, is_live = FALSE, is_published = FALSE, xpago_neutralized = TRUE
+ WHERE code = 'xpago';
+UPDATE payment_transaction
+   SET state = 'cancel', state_message = 'Copia neutralizada: cancelada sin llamar a XPago.'
+ WHERE state IN ('draft', 'pending', 'authorized')
+   AND provider_id IN (SELECT id FROM payment_provider WHERE code = 'xpago');
+DELETE FROM payment_xpago_connection;

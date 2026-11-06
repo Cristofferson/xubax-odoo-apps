@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-06 07:59+0000\n"
-"PO-Revision-Date: 2026-11-06 07:59+0000\n"
+"POT-Creation-Date: 2026-11-06 09:46+0000\n"
+"PO-Revision-Date: 2026-11-06 09:46+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,26 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: xpago_self_order
+#: model_terms:ir.ui.view,arch_db:xpago_self_order.res_config_settings_view_form
+msgid "<span>seconds (0 never cancels it)</span>"
+msgstr ""
+
+#. module: xpago_self_order
+#: model:ir.model.fields,field_description:xpago_self_order.field_pos_config__xpago_kiosk_timeout
+#: model:ir.model.fields,field_description:xpago_self_order.field_res_config_settings__pos_xpago_kiosk_timeout
+msgid "Cancel an unpaid card charge after (seconds)"
+msgstr ""
+
+#. module: xpago_self_order
+#: model:ir.model,name:xpago_self_order.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: xpago_self_order
 #: model:ir.model.fields,field_description:xpago_self_order.field_pos_config__display_name
 #: model:ir.model.fields,field_description:xpago_self_order.field_pos_payment_method__display_name
 #: model:ir.model.fields,field_description:xpago_self_order.field_pos_xpago_charge__display_name
+#: model:ir.model.fields,field_description:xpago_self_order.field_res_config_settings__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -26,6 +43,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:xpago_self_order.field_pos_config__id
 #: model:ir.model.fields,field_description:xpago_self_order.field_pos_payment_method__id
 #: model:ir.model.fields,field_description:xpago_self_order.field_pos_xpago_charge__id
+#: model:ir.model.fields,field_description:xpago_self_order.field_res_config_settings__id
 msgid "ID"
 msgstr ""
 
@@ -37,6 +55,11 @@ msgid ""
 msgstr ""
 
 #. module: xpago_self_order
+#: model_terms:ir.ui.view,arch_db:xpago_self_order.res_config_settings_view_form
+msgid "Kiosk: free the terminal"
+msgstr ""
+
+#. module: xpago_self_order
 #: model:ir.model,name:xpago_self_order.model_pos_config
 msgid "Point of Sale Configuration"
 msgstr ""
@@ -44,6 +67,30 @@ msgstr ""
 #. module: xpago_self_order
 #: model:ir.model,name:xpago_self_order.model_pos_payment_method
 msgid "Point of Sale Payment Method"
+msgstr ""
+
+#. module: xpago_self_order
+#. odoo-javascript
+#: code:addons/xpago_self_order/static/src/app/payment_page.js:0
+msgid ""
+"The card was not paid in time. The terminal is free: try again when you are "
+"ready."
+msgstr ""
+
+#. module: xpago_self_order
+#: model:ir.model.fields,help:xpago_self_order.field_pos_config__xpago_kiosk_timeout
+#: model:ir.model.fields,help:xpago_self_order.field_res_config_settings__pos_xpago_kiosk_timeout
+msgid ""
+"When nobody pays on the XPago terminal of the kiosk within this time, the "
+"charge is cancelled and the terminal is free for the next customer. 0 never "
+"cancels it."
+msgstr ""
+
+#. module: xpago_self_order
+#: model_terms:ir.ui.view,arch_db:xpago_self_order.res_config_settings_view_form
+msgid ""
+"When the customer does not pay on the XPago terminal in time, the charge is "
+"cancelled and the terminal is free for the next customer."
 msgstr ""
 
 #. module: xpago_self_order
