@@ -37,11 +37,13 @@ class TestTerminalSetup(TestPoSCommon):
     def line_of(self, wizard, config):
         return wizard.line_ids.filtered(lambda line: line.config_id == config)
 
-    def test_a_free_terminal_is_proposed_and_applied_only_when_confirmed(self):
-        config = self.basic_config
-        config.payment_method_ids -= self.method
+    def test_a_free_terminal_is_proposed_once_and_applied_only_when_confirmed(self):
+        for config in self.env['pos.config'].search([]).filtered(lambda c: self.method in c.payment_method_ids):
+            config.payment_method_ids -= self.method
         wizard = self.wizard()
-        self.assertEqual(self.line_of(wizard, config).method_id, self.method)
+        proposed = wizard.line_ids.filtered(lambda line: line.method_id == self.method)
+        self.assertEqual(len(proposed), 1, 'a free terminal is proposed to one point of sale only')
+        config = proposed.config_id
         self.assertNotIn(self.method, config.payment_method_ids, 'nothing changes before Apply')
         wizard.action_apply()
         self.assertIn(self.method, config.payment_method_ids)
