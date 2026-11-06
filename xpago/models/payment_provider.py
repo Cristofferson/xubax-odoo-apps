@@ -93,8 +93,7 @@ class PaymentProvider(models.Model):
             status = statuses.get(provider.id)
             key = provider.sudo().xpago_api_key or ''
             provider.xpago_environment = (
-                'test' if key.startswith(const.KEY_PREFIXES['test'])
-                else 'live' if key.startswith(const.KEY_PREFIXES['enabled']) else False
+                'test' if key.startswith('xpk_test_') else 'live' if key.startswith('xpk_live_') else False
             )
             provider.xpago_account_name = status.account_name if status else False
             provider.xpago_last_ok_at = status.last_ok_at if status else False

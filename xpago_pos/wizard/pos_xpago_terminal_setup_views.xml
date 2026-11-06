@@ -18,6 +18,7 @@
                 <field name="line_ids">
                     <list editable="bottom" create="false" delete="false">
                         <field name="config_id"/>
+                        <field name="config_company_id" column_invisible="1"/>
                         <field name="has_open_session" column_invisible="True"/>
                         <field name="method_id" options="{'no_create': True}"/>
                         <field name="terminal_serial"/>

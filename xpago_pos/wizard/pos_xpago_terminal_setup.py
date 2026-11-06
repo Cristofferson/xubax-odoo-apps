@@ -34,8 +34,13 @@ class PosXpagoTerminalSetup(models.TransientModel):
         lines = []
         for config in configs:
             current = config.payment_method_ids.filtered(lambda m: m.use_payment_terminal == 'xpago')[:1]
-            # A point of sale without a terminal is offered one nobody uses yet, each one once.
-            proposed = current or (free.pop(0) if free else self.env['pos.payment.method'])
+            # A point of sale without a terminal is offered one of its company that nobody uses yet, each one once.
+            proposed = current
+            if not proposed:
+                proposed = next((m for m in free if not m.company_id or m.company_id == config.company_id),
+                                self.env['pos.payment.method'])
+                if proposed:
+                    free.remove(proposed)
             lines.append((0, 0, {'config_id': config.id, 'method_id': proposed.id}))
         values['line_ids'] = lines
         return values
@@ -113,8 +118,10 @@ class PosXpagoTerminalSetupLine(models.TransientModel):
 
     wizard_id = fields.Many2one('pos.xpago.terminal.setup', required=True, ondelete='cascade')
     config_id = fields.Many2one('pos.config', string="Point of sale", required=True, readonly=True)
+    config_company_id = fields.Many2one(related='config_id.company_id')
     method_id = fields.Many2one(
-        'pos.payment.method', string="XPago terminal", domain="[('use_payment_terminal', '=', 'xpago')]",
+        'pos.payment.method', string="XPago terminal",
+        domain="[('use_payment_terminal', '=', 'xpago'), ('company_id', 'in', [config_company_id, False])]",
         help="The XPago terminal payment method this point of sale charges with. Empty: leave it as it is.",
     )
     terminal_serial = fields.Char(related='method_id.xpago_terminal_serial', string="S/N")
