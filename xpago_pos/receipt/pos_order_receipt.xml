@@ -20,8 +20,7 @@
                     </table>
                     <div t-if="payment['payment_method_issuer_bank']">Bank: <t t-out="payment['payment_method_issuer_bank']"/></div>
                     <div t-if="payment['payment_method_authcode']">Authorization: <t t-out="payment['payment_method_authcode']"/></div>
-                    <div t-if="payment['payment_ref_no']">Reference: <t t-out="payment['payment_ref_no']"/></div>
-                    <div t-if="payment['transaction_id']" class="text-break">Operation: <t t-out="payment['transaction_id']"/></div>
+                    <div t-if="payment['payment_ref_no']">Operation: <t t-out="payment['payment_ref_no']"/></div>
                     <div t-if="payment['payment_method_payment_mode']">Entry mode: <t t-out="payment['payment_method_payment_mode']"/></div>
                     <div t-if="config.get('xpago_voucher_merchant')">Merchant number: <t t-out="config['xpago_voucher_merchant']"/></div>
                     <div t-if="extra_data.get('formated_date_order')">Date: <t t-out="extra_data['formated_date_order']"/></div>

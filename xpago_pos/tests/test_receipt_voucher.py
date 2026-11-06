@@ -57,9 +57,13 @@ class TestPosXpagoVoucher(TestPoSCommon):
         self.assertTrue(payment['xpago_voucher'])
         self.assertTrue(payment['xpago_credit'])
         html = str(order.order_receipt_generate_html())
-        for text in ('CARD SALE', '**** 4242', 'A1B2C3', '123456', 'pay-1', 'BBVA', 'CHIP', '7654321', 'pagaré',
+        for text in ('CARD SALE', '**** 4242', 'A1B2C3', 'Operation: 123456', 'BBVA', 'CHIP', '7654321', 'pagaré',
                      "Customer's signature"):
             self.assertIn(text, html)
+        # The processor's internal id stays stored, but out of the customer's ticket.
+        self.assertEqual(order.payment_ids.transaction_id, 'pay-1')
+        self.assertNotIn('pay-1', html)
+        self.assertNotIn('Reference:', html)
 
     def test_debit_legend(self):
         order = self.paid_order('DEBIT')

@@ -759,11 +759,6 @@ msgid "Reference"
 msgstr "Referencia"
 
 #. module: xpago_pos
-#: model_terms:ir.ui.view,arch_db:xpago_pos.pos_order_receipt
-msgid "Reference:"
-msgstr "Referencia:"
-
-#. module: xpago_pos
 #: model_terms:ir.ui.view,arch_db:xpago_pos.pos_xpago_charge_view_form
 msgid "Refund to the card"
 msgstr "Devolver a la tarjeta"

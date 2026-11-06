@@ -3,6 +3,11 @@
 # never set in production.
 API_URL = 'https://api.xpago.mx'
 API_URL_PARAM = 'xpago.api_url'
+# The addresses of the API in the order they are tried: the main one (through Cloudflare) and the XPago nodes straight,
+# for when Cloudflare is down (see failover.py). The system parameter `xpago.api_urls` (comma separated) replaces the
+# list; `xpago.api_url`, when set, is the only address used.
+API_URLS = ('https://api.xpago.mx', 'https://n1.xpagoapi.com', 'https://n2.xpagoapi.com', 'https://n3.xpagoapi.com')
+API_URLS_PARAM = 'xpago.api_urls'
 # Out of live mode the key must be a test key, in live mode a live key.
 KEY_PREFIXES = {False: 'xpk_test_', True: 'xpk_live_'}
 KEY_PREFIX = 'xpk_'

@@ -1,10 +1,11 @@
+import requests
 from markupsafe import Markup
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 from odoo.addons.payment.logging import get_payment_logger
-from odoo.addons.xpago import const
+from odoo.addons.xpago import const, failover
 
 _logger = get_payment_logger(__name__)
 
@@ -159,11 +160,54 @@ class PaymentProvider(models.Model):
 
     # === REQUEST HELPERS === #
 
+    def _xpago_api_urls(self):
+        """The addresses of the XPago API, in the order they are tried."""
+        params = self.env['ir.config_parameter'].sudo()
+        single = (params.get_str(const.API_URL_PARAM) or '').strip()
+        if single:
+            return [single.rstrip('/')]
+        listed = params.get_str(const.API_URLS_PARAM) or ''
+        urls = [url.strip().rstrip('/') for url in listed.split(',') if url.strip()]
+        return urls or list(const.API_URLS)
+
     def _build_request_url(self, endpoint, **kwargs):
         if self.code != 'xpago':
             return super()._build_request_url(endpoint, **kwargs)
-        base_url = self.env['ir.config_parameter'].sudo().get_str(const.API_URL_PARAM) or const.API_URL
-        return base_url.rstrip('/') + endpoint
+        return self._xpago_api_urls()[0] + endpoint
+
+    def _send_api_request(self, method, endpoint, *, params=None, data=None, json=None, reference=None, **kwargs):
+        """As the payment module's, but over the list of XPago addresses (failover.py)."""
+        if self.code != 'xpago':
+            return super()._send_api_request(
+                method, endpoint, params=params, data=data, json=json, reference=reference, **kwargs
+            )
+        self.ensure_one()
+        payload = params or data or json
+        headers = self._build_request_headers(method, endpoint, payload, **kwargs)
+        urls = self._xpago_api_urls()
+        self._log_request(method, urls[0] + endpoint, payload, reference=reference)
+        try:
+            response, _url = failover.send(
+                method, urls, endpoint, memo_key=self.env.cr.dbname, headers=headers, params=params, json=json,
+                data=data,
+            )
+        except failover.OutcomeUnknown:
+            raise ValidationError(_(
+                "XPago did not answer in time and this operation may have gone through. Check the terminal or the "
+                "list of charges before trying again."
+            )) from None
+        except failover.Unreachable:
+            raise ValidationError(_("No connection with XPago. Check the internet or try again in a moment.")) from None
+        self._log_response(response, reference=reference)
+        try:
+            response.raise_for_status()
+        except requests.exceptions.HTTPError:
+            try:
+                error_msg = self._parse_response_error(response)
+            except ValueError:
+                error_msg = response.text
+            raise ValidationError(self.env._("The payment provider rejected the request.\n%s", error_msg))
+        return self._parse_response_content(response, **kwargs)
 
     def _build_request_headers(self, method, endpoint, payload, **kwargs):
         if self.code != 'xpago':
