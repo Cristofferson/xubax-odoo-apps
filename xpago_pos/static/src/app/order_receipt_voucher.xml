@@ -11,8 +11,7 @@
                     </div>
                     <div t-if="voucher.bank">Bank: <t t-esc="voucher.bank"/></div>
                     <div t-if="voucher.authorization">Authorization: <t t-esc="voucher.authorization"/></div>
-                    <div t-if="voucher.reference">Reference: <t t-esc="voucher.reference"/></div>
-                    <div t-if="voucher.operation" class="text-break">Operation: <t t-esc="voucher.operation"/></div>
+                    <div t-if="voucher.operation">Operation: <t t-esc="voucher.operation"/></div>
                     <div t-if="voucher.entry_mode">Entry mode: <t t-esc="voucher.entry_mode"/></div>
                     <div t-if="voucher.merchant">Merchant number: <t t-esc="voucher.merchant"/></div>
                     <div t-if="props.data.date">Date: <t t-esc="props.data.date"/></div>

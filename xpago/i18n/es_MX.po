@@ -835,3 +835,18 @@ msgstr "Tu pago se procesó con éxito."
 #: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
 msgid "e.g. 12 months on diamonds"
 msgstr "p. ej. 12 meses en diamantes"
+
+#. module: xpago
+#: code:addons/xpago/models/payment_provider.py:0
+msgid "No connection with XPago. Check the internet or try again in a moment."
+msgstr ""
+"No hay conexión con XPago. Revisa el internet o intenta en un momento."
+
+#. module: xpago
+#: code:addons/xpago/models/payment_provider.py:0
+msgid ""
+"XPago did not answer in time and this operation may have gone through. Check"
+" the terminal or the list of charges before trying again."
+msgstr ""
+"XPago no contestó a tiempo y esta operación pudo haber pasado. Revisa la "
+"terminal o la lista de cobros antes de intentar de nuevo."

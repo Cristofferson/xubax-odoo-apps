@@ -34,8 +34,8 @@ patch(PosOrder.prototype, {
                     funding: debit ? _t("Debit") : type.includes("CREDIT") ? _t("Credit") : "",
                     bank: line.payment_method_issuer_bank || "",
                     authorization: line.payment_method_authcode || "",
-                    reference: line.payment_ref_no || "",
-                    operation: line.transaction_id || "",
+                    // The operation the processor gave; its internal id (transaction_id) stays out of the ticket.
+                    operation: line.payment_ref_no || "",
                     entry_mode: line.payment_method_payment_mode || "",
                     merchant: config.xpago_voucher_merchant || "",
                     amount: line.get_amount(),
