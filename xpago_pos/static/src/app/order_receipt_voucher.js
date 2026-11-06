@@ -56,8 +56,8 @@ patch(Payment.prototype, {
             funding: debit ? _t("Debit") : type.includes("CREDIT") ? _t("Credit") : "",
             bank: this.xpago_issuer_bank || "",
             authorization: this.xpago_authorization || "",
-            reference: this.xpago_reference || "",
-            operation: this.transaction_id || "",
+            // The operation the processor gave; its internal id (transaction_id) stays out of the ticket.
+            operation: this.xpago_reference || "",
             entry_mode: this.xpago_entry_mode || "",
             merchant: config.xpago_voucher_merchant || "",
             terms: this.xpago_terms > 1 ? this.xpago_terms : false,

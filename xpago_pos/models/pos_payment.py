@@ -43,8 +43,8 @@ class PosPayment(models.Model):
             'funding': _("Debit") if debit else _("Credit") if 'CREDIT' in card_type else '',
             'bank': self.xpago_issuer_bank or '',
             'authorization': self.xpago_authorization or '',
-            'reference': self.xpago_reference or '',
-            'operation': self.transaction_id or '',
+            # The operation the processor gave; its internal id (transaction_id) stays out of the ticket.
+            'operation': self.xpago_reference or '',
             'entry_mode': self.xpago_entry_mode or '',
             'merchant': config.xpago_voucher_merchant or '',
             'terms': self.xpago_terms if self.xpago_terms > 1 else False,

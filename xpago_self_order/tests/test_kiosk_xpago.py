@@ -65,8 +65,9 @@ class TestKioskXpago(TestPoSCommon):
         self.assertEqual(payload['order']['id'], self.order.id)
         # The ticket the kiosk prints carries the card voucher (debit card: the debit legend).
         [voucher] = [line['xpago_voucher'] for line in payload['order']['payment_lines']]
-        self.assertEqual((voucher['brand'], voucher['card_no'], voucher['authorization'], voucher['reference'],
-                          voucher['operation'], voucher['funding']), ('VISA', '4242', 'K1', '654321', 'pay-k1', 'Debit'))
+        self.assertEqual((voucher['brand'], voucher['card_no'], voucher['authorization'], voucher['operation'],
+                          voucher['funding']), ('VISA', '4242', 'K1', '654321', 'Debit'))
+        self.assertNotIn('reference', voucher)
         self.assertEqual(voucher['legend'], self.config.xpago_voucher_debit_text)
         self.config.xpago_voucher_on_receipt = False
         self.assertFalse(self.order._export_for_self_order()['payment_lines'][0]['xpago_voucher'])

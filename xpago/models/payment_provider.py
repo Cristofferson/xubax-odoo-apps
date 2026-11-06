@@ -7,7 +7,7 @@ from markupsafe import Markup
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from odoo.addons.xpago import const
+from odoo.addons.xpago import const, failover
 
 _logger = logging.getLogger(__name__)
 
@@ -159,11 +159,21 @@ class PaymentProvider(models.Model):
 
     # === REQUEST HELPERS === #
 
+    def _xpago_api_urls(self):
+        """The addresses of the XPago API, in the order they are tried. The key says the environment, so both use
+        the same addresses."""
+        params = self.env['ir.config_parameter'].sudo()
+        single = (params.get_param(const.API_URL_PARAM) or '').strip()
+        if single:
+            return [single.rstrip('/')]
+        listed = params.get_param(const.API_URLS_PARAM) or ''
+        urls = [url.strip().rstrip('/') for url in listed.split(',') if url.strip()]
+        return urls or list(const.API_URLS)
+
     def _xpago_api_url(self, endpoint):
-        """The URL of an endpoint of the XPago API. The key says the environment, so both use the same address."""
+        """The URL of an endpoint on the main address of the XPago API."""
         self.ensure_one()
-        base_url = self.env['ir.config_parameter'].sudo().get_param(const.API_URL_PARAM) or const.API_URL
-        return base_url.rstrip('/') + endpoint
+        return self._xpago_api_urls()[0] + endpoint
 
     def _xpago_request_headers(self, idempotency_key=None):
         self.ensure_one()
@@ -182,14 +192,23 @@ class PaymentProvider(models.Model):
 
         :raise ValidationError: When XPago cannot be reached or refuses the request."""
         self.ensure_one()
-        url = self._xpago_api_url(endpoint)
+        # Over the list of XPago addresses (failover.py): the next one only when this one surely did not serve it.
         try:
-            response = requests.request(
-                method, url, json=json, params=params, headers=self._xpago_request_headers(idempotency_key), timeout=30,
+            response, url = failover.send(
+                method, self._xpago_api_urls(), endpoint, memo_key=self.env.cr.dbname, json=json, params=params,
+                headers=self._xpago_request_headers(idempotency_key),
             )
-        except requests.exceptions.RequestException as error:
-            _logger.warning("XPago: unable to reach %s: %s", url, error)
-            raise ValidationError("XPago: " + _("Could not establish the connection to the API.")) from error
+        except failover.OutcomeUnknown as error:
+            _logger.warning("XPago: no answer in time for %s %s: %s", method, endpoint, error)
+            raise ValidationError("XPago: " + _(
+                "XPago did not answer in time and this operation may have gone through. Check the terminal or the "
+                "list of charges before trying again."
+            )) from error
+        except failover.Unreachable as error:
+            _logger.warning("XPago: unable to reach %s: %s", endpoint, error)
+            raise ValidationError(
+                "XPago: " + _("No connection with XPago. Check the internet or try again in a moment.")
+            ) from error
         if not response.ok:
             _logger.warning("XPago: %s %s answered %s:\n%s", method, url, response.status_code,
                             pprint.pformat(response.text[:2000]))
