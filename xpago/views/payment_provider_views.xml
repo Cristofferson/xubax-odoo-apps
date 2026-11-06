@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="payment_provider_form" model="ir.ui.view">
+        <field name="name">XPago Provider Form</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form"/>
+        <field name="arch" type="xml">
+            <div id="provider_creation_warning" position="after">
+                <div class="alert alert-warning d-flex align-items-center justify-content-between gap-3" role="alert"
+                     invisible="not xpago_needs_connect">
+                    <field name="xpago_needs_connect" invisible="1"/>
+                    <div>
+                        <strong>Connect your XPago account.</strong>
+                        Write the XPago key (it starts with xpk_) that you get when you connect your account: until
+                        then, payments with XPago do not go through.
+                    </div>
+                    <button name="action_xpago_connect" type="object" class="btn btn-primary text-nowrap"
+                            string="Connect your XPago account"/>
+                </div>
+            </div>
+            <group name="provider_credentials" position="inside">
+                <group invisible="code != 'xpago'" name="xpago_credentials">
+                    <field name="xpago_api_key" password="True" required="code == 'xpago' and state != 'disabled'"/>
+                </group>
+            </group>
+            <notebook position="inside">
+                <page string="Months without interest" name="xpago_installments" invisible="code != 'xpago'">
+                    <div class="text-muted mb-2">
+                        Which months without interest the checkout offers, by amount of the sale. Each rule applies
+                        from its amount up to the next one. Your customer pays no interest: the fee of each plan is
+                        paid by your business. Without rules, the checkout offers every plan active in your XPago
+                        account.
+                    </div>
+                    <field name="xpago_installment_rule_ids">
+                        <list editable="bottom">
+                            <field name="currency_id" column_invisible="True"/>
+                            <field name="min_amount"/>
+                            <field name="terms" placeholder="3, 6, 12"/>
+                        </list>
+                    </field>
+                    <group>
+                        <field name="xpago_single_payment"/>
+                    </group>
+                    <div class="text-muted mt-3">
+                        To decide the months and the deposit account by product, category, tag or price, use the
+                        payment rules: they narrow the months of the amount above.
+                    </div>
+                    <button name="%(xpago.action_payment_xpago_rule)d" type="action" class="btn-link ps-0"
+                            icon="oi-arrow-right" string="XPago payment rules"/>
+                </page>
+                <page string="Deposit accounts" name="xpago_accounts" invisible="code != 'xpago'">
+                    <div class="text-muted mb-2">
+                        XPago can deposit each payment in a different account of yours. Odoo reads your accounts from
+                        XPago every hour; they are added and removed in XPago only. At the point of sale, each terminal
+                        can have its own account or let the cashier choose it on each charge.
+                    </div>
+                    <group>
+                        <field name="xpago_invoice_bank_account_id" options="{'no_create': True, 'no_open': True}"/>
+                        <field name="xpago_other_bank_account_id" options="{'no_create': True, 'no_open': True}"/>
+                    </group>
+                    <field name="xpago_bank_account_ids" readonly="1">
+                        <list>
+                            <field name="name"/>
+                            <field name="is_default"/>
+                            <field name="active" widget="boolean_toggle" readonly="1"/>
+                        </list>
+                    </field>
+                </page>
+                <page string="Payment notifications" name="xpago_notify" invisible="code != 'xpago'">
+                    <div class="text-muted mb-3">
+                        Each payment received with XPago sends these users an Odoo notification: a message in their
+                        inbox and a pop-up while Odoo is open. Leave it empty to send none.
+                    </div>
+                    <group>
+                        <field name="xpago_notify_user_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <record id="payment_provider_kanban" model="ir.ui.view">
+        <field name="name">XPago Provider Kanban</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_kanban"/>
+        <field name="arch" type="xml">
+            <field name="module_to_buy" position="after">
+                <field name="code"/>
+                <field name="xpago_needs_connect"/>
+            </field>
+            <xpath expr="//main/field[@name='name']" position="after">
+                <span t-if="record.code.raw_value == 'xpago' and record.xpago_needs_connect.raw_value"
+                      class="badge text-bg-warning mb-1">Connect your XPago account</span>
+            </xpath>
+        </field>
+    </record>
+</odoo>
