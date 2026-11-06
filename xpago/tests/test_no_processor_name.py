@@ -12,7 +12,7 @@ class TestNoProcessorName(TransactionCase):
 
     def test_processor_is_not_named_anywhere(self):
         found = []
-        for module in ('xpago', 'xpago_self_order'):
+        for module in ('xpago', 'xpago_pos', 'xpago_self_order'):
             root = get_module_path(module)
             if not root:
                 continue

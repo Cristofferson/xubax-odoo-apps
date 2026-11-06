@@ -109,6 +109,21 @@ class TestPaymentXpago(XpagoCommon, PaymentHttpCommon):
         with self.assertRaises(ValidationError):
             self.provider.write({'xpago_api_key': 'xpk_test_key'})
 
+    def test_a_key_that_is_not_an_xpago_key_asks_to_connect(self):
+        self.assertFalse(self.provider.xpago_needs_connect)
+        self.env.cr.execute("UPDATE payment_provider SET xpago_api_key = 'old-processor-key' WHERE id = %s", [self.provider.id])
+        self.provider.invalidate_recordset()
+        self.assertTrue(self.provider.xpago_needs_connect)
+        self.assertIn(self.provider, self.env['payment.provider']._xpago_providers_to_connect(self.provider.company_id))
+        self.assertEqual(self.provider.state, 'test', 'nothing is disabled')
+        with patch(SEND) as send:
+            self.provider._xpago_sync_bank_accounts()
+        send.assert_not_called()
+        action = self.provider.action_xpago_connect()
+        self.assertEqual((action['type'], action['url']), ('ir.actions.act_url', const.CONNECT_URL))
+        self.env['ir.config_parameter'].sudo().set_param(const.CONNECT_URL_PARAM, 'https://example.mx/conectar')
+        self.assertEqual(self.provider.action_xpago_connect()['url'], 'https://example.mx/conectar')
+
     def test_error_message_of_the_api_is_shown(self):
         response = requests.Response()
         response.status_code = 403

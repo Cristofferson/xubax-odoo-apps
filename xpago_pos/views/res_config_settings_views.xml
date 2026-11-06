@@ -6,6 +6,14 @@
         <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//setting[@id='payment_methods_new']" position="after">
+                <setting id="xpago_connect" string="Connect your XPago account" invisible="not xpago_needs_connect"
+                         help="The XPago account of a terminal has no XPago key (it starts with xpk_): its card charges do not go through until it is connected.">
+                    <field name="xpago_needs_connect" invisible="1"/>
+                    <div class="alert alert-warning mt-2 mb-0" role="alert">
+                        <button name="action_xpago_connect" type="object" class="btn btn-primary"
+                                string="Connect your XPago account"/>
+                    </div>
+                </setting>
                 <setting id="xpago_payment_rules" string="XPago payment rules"
                          help="Months without interest and deposit accounts by what is sold, on the XPago terminals of this point of sale.">
                     <div>

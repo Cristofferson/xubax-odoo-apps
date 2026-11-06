@@ -218,3 +218,13 @@ class TestPosXpago(TestPoSCommon):
         self.assertEqual(send.call_args.args, ('POST', '/v1/terminal-charges/pi-1/refund'))
         self.assertEqual(charge.state, 'refunded')
         self.assertFalse(charge.without_sale, 'a refunded charge is not a missing sale')
+
+    def test_settings_ask_to_connect_a_terminal_account_without_xpago_key(self):
+        settings = self.env['res.config.settings'].create({'pos_config_id': self.basic_config.id})
+        self.assertFalse(settings.xpago_needs_connect)
+        self.provider.state = 'disabled'
+        self.env.cr.execute("UPDATE payment_provider SET xpago_api_key = 'old-processor-key' WHERE id = %s", [self.provider.id])
+        self.provider.invalidate_recordset()
+        settings = self.env['res.config.settings'].create({'pos_config_id': self.basic_config.id})
+        self.assertTrue(settings.xpago_needs_connect, 'the terminal uses it even if it is disabled online')
+        self.assertEqual(settings.action_xpago_connect()['type'], 'ir.actions.act_url')

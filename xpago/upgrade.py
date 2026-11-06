@@ -1,11 +1,13 @@
-"""XPago used to ship as three apps. Their records move to the single app so that nothing is recreated or deleted:
+"""XPago used to ship as three apps. Their records move to the new modules (xpago, and the xpago_pos and
+xpago_self_order bridges that install by themselves) so that nothing is recreated or deleted:
 settings, deposit accounts, payment rules, terminal charges and payments stay as they were."""
 import logging
 
 _logger = logging.getLogger(__name__)
 
 FOLDED_MODULES = {
-    'xpago': ('payment_xpago', 'pos_xpago'),
+    'xpago': ('payment_xpago',),
+    'xpago_pos': ('pos_xpago',),
     'xpago_self_order': ('pos_self_order_xpago',),
 }
 

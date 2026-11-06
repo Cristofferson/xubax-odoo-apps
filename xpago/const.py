@@ -4,6 +4,12 @@
 API_URL = 'https://api.xpago.mx'
 API_URL_PARAM = 'xpago.api_url'
 KEY_PREFIXES = {'test': 'xpk_test_', 'enabled': 'xpk_live_'}
+KEY_PREFIX = 'xpk_'
+
+# Where a merchant connects its XPago account and gets its XPago key (a key that does not start with xpk_, as the one
+# of a former XPago app, no longer charges). The system parameter `xpago.connect_url` points elsewhere.
+CONNECT_URL = 'https://xpago.mx/conectar'
+CONNECT_URL_PARAM = 'xpago.connect_url'
 
 PAYMENT_RETURN_ROUTE = '/payment/xpago/return'
 CARD_RETURN_ROUTE = '/payment/xpago/card/return'

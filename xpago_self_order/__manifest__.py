@@ -9,13 +9,13 @@
     'website': 'https://xpago.mx',
     'support': 'hola@xubax.com',
     'license': 'OPL-1',
-    'depends': ['xpago', 'pos_self_order'],
+    'depends': ['xpago_pos', 'pos_self_order'],
     'auto_install': True,
     'assets': {
         'pos_self_order.assets': [
             # The card voucher in the kiosk's receipt, the same as at the register.
-            'xpago/static/src/app/order_receipt_voucher.js',
-            'xpago/static/src/app/order_receipt_voucher.xml',
+            'xpago_pos/static/src/app/order_receipt_voucher.js',
+            'xpago_pos/static/src/app/order_receipt_voucher.xml',
             'xpago_self_order/static/src/**/*',
         ],
     },

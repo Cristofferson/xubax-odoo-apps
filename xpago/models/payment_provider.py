@@ -42,7 +42,18 @@ class PaymentProvider(models.Model):
         help="These users get an Odoo notification (inbox and pop-up) for each payment received with XPago.",
     )
 
+    xpago_needs_connect = fields.Boolean(
+        compute='_compute_xpago_needs_connect',
+        help="The key is not an XPago key (xpk_…): payments do not go through until the XPago account is connected.",
+    )
+
     # === COMPUTE METHODS === #
+
+    @api.depends('code', 'xpago_api_key')
+    def _compute_xpago_needs_connect(self):
+        for provider in self:
+            key = provider.sudo().xpago_api_key or ''
+            provider.xpago_needs_connect = provider.code == 'xpago' and not key.startswith(const.KEY_PREFIX)
 
     def _compute_feature_support_fields(self):
         """Override of `payment`: XPago saves cards, holds and captures once (in full or in part) and refunds a
@@ -88,10 +99,25 @@ class PaymentProvider(models.Model):
         terms = rule._parse_terms() if rule else []
         return sorted({1, *terms} if self.xpago_single_payment or not terms else set(terms))
 
+    @api.model
+    def _xpago_connect_url(self):
+        return self.env['ir.config_parameter'].sudo().get_param(const.CONNECT_URL_PARAM) or const.CONNECT_URL
+
+    def action_xpago_connect(self):
+        return {'type': 'ir.actions.act_url', 'url': self._xpago_connect_url(), 'target': 'new'}
+
+    @api.model
+    def _xpago_providers_to_connect(self, company=None):
+        """The XPago providers of the company in use (enabled, in test, or holding a key) whose key is not an XPago
+        key, for the warnings of the settings."""
+        company = company or self.env.company
+        providers = self.sudo().search([('code', '=', 'xpago'), ('company_id', 'in', company.parent_ids.ids)])
+        return providers.filtered(lambda p: p.xpago_needs_connect and (p.state != 'disabled' or p.xpago_api_key))
+
     def _xpago_sync_bank_accounts(self):
         """Read the deposit accounts from XPago: new ones are added, renamed ones updated, removed ones archived."""
         Account = self.env['payment.xpago.bank.account'].sudo().with_context(active_test=False)
-        for provider in self.filtered(lambda p: p.code == 'xpago' and p.state != 'disabled' and p.sudo().xpago_api_key):
+        for provider in self.filtered(lambda p: p.code == 'xpago' and p.state != 'disabled' and not p.xpago_needs_connect):
             answer = provider._send_api_request('GET', '/v1/deposit-accounts')
             existing = {account.xpago_id: account for account in Account.search([('provider_id', '=', provider.id)])}
             seen = set()

@@ -31,13 +31,17 @@ class TestFoldOldModules(TransactionCase):
         provider.module_id = payment
         self.env.flush_all()
 
+        pos_bridge = self.env['ir.module.module'].search([('name', '=', 'xpago_pos')])
+        if not pos_bridge:
+            pos_bridge = self.env['ir.module.module'].create({'name': 'xpago_pos', 'shortdesc': 'xpago_pos'})
         with patch('odoo.addons.xpago.upgrade.RENAMED', {('pos_xpago', 'xp_fold_shared_name'): 'xp_fold_shared_name_pos'}):
             fold_old_modules(self.env.cr, 'xpago')
+            fold_old_modules(self.env.cr, 'xpago_pos')
         self.env.invalidate_all()
 
         self.assertEqual(self.env.ref('xpago.xp_fold_record'), partner)
-        self.assertEqual(self.env.ref('xpago.xp_fold_shared_name_pos'), partner,
-                         'a name both former apps used is renamed')
+        self.assertEqual(self.env.ref('xpago_pos.xp_fold_shared_name_pos'), partner,
+                         'the point of sale records go to the point of sale bridge, renamed when the name clashed')
         self.assertFalse(Data.search([('module', 'in', ('payment_xpago', 'pos_xpago'))]))
         self.assertEqual(view.key, 'xpago.xp_fold_template')
         self.assertEqual((payment.state, pos.state), ('uninstalled', 'uninstalled'))
@@ -48,9 +52,13 @@ class TestFoldOldModules(TransactionCase):
         fold_old_modules(self.env.cr, 'xpago')
         self.assertEqual(self.env['ir.model.data'].search_count([('module', '=', 'xpago')]), before)
 
-    def test_kiosk_is_never_forced(self):
-        xpago = self.env['ir.module.module'].search([('name', '=', 'xpago')])
-        self.assertNotIn('pos_self_order', xpago.dependencies_id.mapped('name'))
-        bridge = self.env['ir.module.module'].search([('name', '=', 'xpago_self_order')])
-        self.assertTrue(bridge.auto_install)
-        self.assertEqual(set(bridge.dependencies_id.mapped('name')), {'xpago', 'pos_self_order'})
+    def test_point_of_sale_and_kiosk_are_never_forced(self):
+        Module = self.env['ir.module.module']
+        xpago = Module.search([('name', '=', 'xpago')])
+        self.assertFalse({'point_of_sale', 'pos_self_order'} & set(xpago.dependencies_id.mapped('name')))
+        pos = Module.search([('name', '=', 'xpago_pos')])
+        self.assertTrue(pos.auto_install)
+        self.assertEqual(set(pos.dependencies_id.mapped('name')), {'xpago', 'point_of_sale'})
+        kiosk = Module.search([('name', '=', 'xpago_self_order')])
+        self.assertTrue(kiosk.auto_install)
+        self.assertEqual(set(kiosk.dependencies_id.mapped('name')), {'xpago_pos', 'pos_self_order'})

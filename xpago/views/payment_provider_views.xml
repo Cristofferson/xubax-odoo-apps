@@ -5,6 +5,19 @@
         <field name="model">payment.provider</field>
         <field name="inherit_id" ref="payment.payment_provider_form"/>
         <field name="arch" type="xml">
+            <div id="provider_creation_warning" position="after">
+                <div class="alert alert-warning d-flex align-items-center justify-content-between gap-3" role="alert"
+                     invisible="not xpago_needs_connect">
+                    <field name="xpago_needs_connect" invisible="1"/>
+                    <div>
+                        <strong>Connect your XPago account.</strong>
+                        Write the XPago key (it starts with xpk_) that you get when you connect your account: until
+                        then, payments with XPago do not go through.
+                    </div>
+                    <button name="action_xpago_connect" type="object" class="btn btn-primary text-nowrap"
+                            string="Connect your XPago account"/>
+                </div>
+            </div>
             <group name="provider_credentials" position="inside">
                 <group invisible="code != 'xpago'" name="xpago_credentials">
                     <field name="xpago_api_key" password="True" required="code == 'xpago' and state != 'disabled'"/>
@@ -63,6 +76,22 @@
                     </group>
                 </page>
             </notebook>
+        </field>
+    </record>
+
+    <record id="payment_provider_kanban" model="ir.ui.view">
+        <field name="name">XPago Provider Kanban</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_kanban"/>
+        <field name="arch" type="xml">
+            <field name="module_to_buy" position="after">
+                <field name="code"/>
+                <field name="xpago_needs_connect"/>
+            </field>
+            <field name="company_id" position="after">
+                <span t-if="record.code.raw_value == 'xpago' and record.xpago_needs_connect.raw_value"
+                      class="badge text-bg-warning mb-1">Connect your XPago account</span>
+            </field>
         </field>
     </record>
 </odoo>
