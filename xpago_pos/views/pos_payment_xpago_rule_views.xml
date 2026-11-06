@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_payment_xpago_rule_view_list" model="ir.ui.view">
+        <field name="name">payment.xpago.rule.list.inherit.xpago_pos</field>
+        <field name="model">payment.xpago.rule</field>
+        <field name="inherit_id" ref="xpago.payment_xpago_rule_view_list"/>
+        <field name="arch" type="xml">
+            <field name="use_online" position="before">
+                <field name="use_pos" optional="show"/>
+                <field name="use_kiosk" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="pos_payment_xpago_rule_view_form" model="ir.ui.view">
+        <field name="name">payment.xpago.rule.form.inherit.xpago_pos</field>
+        <field name="model">payment.xpago.rule</field>
+        <field name="inherit_id" ref="xpago.payment_xpago_rule_view_form"/>
+        <field name="arch" type="xml">
+            <field name="use_online" position="before">
+                <field name="use_pos"/>
+                <field name="use_kiosk"/>
+            </field>
+            <field name="use_online" position="after">
+                <field name="config_ids" widget="many2many_tags" invisible="not use_pos and not use_kiosk"
+                       placeholder="Every point of sale"/>
+            </field>
+            <group name="decides" position="inside">
+                <div class="text-muted small" colspan="2" invisible="msi_mode == 'keep'">
+                    At the register and the kiosk the months are only shown to the cashier: the terminal offers the
+                    months of your XPago account. Online, the checkout offers only these.
+                </div>
+            </group>
+        </field>
+    </record>
+
+    <record id="pos_xpago_rule_test_view_form" model="ir.ui.view">
+        <field name="name">pos.xpago.rule.test.form</field>
+        <field name="model">pos.xpago.rule.test</field>
+        <field name="arch" type="xml">
+            <form string="Try the payment rules">
+                <group>
+                    <group>
+                        <field name="pos_order_id" options="{'no_create': True}"/>
+                        <field name="channel"/>
+                        <field name="split"/>
+                        <field name="company_id" invisible="1"/>
+                    </group>
+                </group>
+                <field name="result" nolabel="1"/>
+                <footer>
+                    <button string="Close" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pos_xpago_rule_test" model="ir.actions.act_window">
+        <field name="name">Try the payment rules</field>
+        <field name="res_model">pos.xpago.rule.test</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_payment_xpago_rule" name="XPago payment rules"
+              parent="point_of_sale.menu_point_config_product" action="xpago.action_payment_xpago_rule"
+              sequence="60" groups="point_of_sale.group_pos_manager"/>
+    <menuitem id="menu_pos_xpago_rule_test" name="Try the XPago payment rules"
+              parent="point_of_sale.menu_point_config_product" action="action_pos_xpago_rule_test"
+              sequence="61" groups="point_of_sale.group_pos_manager"/>
+</odoo>
