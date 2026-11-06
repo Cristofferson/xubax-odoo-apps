@@ -1,15 +1,23 @@
 import logging
 import pprint
+import threading
+import time
 
 import requests
 from markupsafe import Markup
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.modules import module as odoo_module
+from odoo.tools import SQL
 
 from odoo.addons.xpago import const, failover
 
 _logger = logging.getLogger(__name__)
+
+# When each provider's connection status was last written by this worker, and whether that call worked.
+_status_written = {}
+_status_lock = threading.Lock()
 
 
 class PaymentProvider(models.Model):
@@ -45,6 +53,24 @@ class PaymentProvider(models.Model):
         help="These users get an Odoo notification (inbox and pop-up) for each payment received with XPago.",
     )
 
+    xpago_neutralized = fields.Boolean(
+        string="Neutralized copy", readonly=True, copy=False,
+        help="This database is a neutralized copy: XPago was switched off and its key removed, so the copy never "
+             "charges with the real account. Write a test key to try XPago here.",
+    )
+    xpago_connection_state = fields.Selection(
+        [('unknown', "Not checked yet"), ('ok', "Connected"), ('error', "Error")], string="Connection",
+        compute='_compute_xpago_connection',
+    )
+    xpago_environment = fields.Selection(
+        [('test', "Test (charges nothing)"), ('live', "Real")], string="Environment",
+        compute='_compute_xpago_connection', help="Read from the XPago key: xpk_test_ or xpk_live_.",
+    )
+    xpago_account_name = fields.Char(string="XPago account", compute='_compute_xpago_connection')
+    xpago_last_ok_at = fields.Datetime(string="Last call that worked", compute='_compute_xpago_connection')
+    xpago_last_error_at = fields.Datetime(string="Last error at", compute='_compute_xpago_connection')
+    xpago_last_error = fields.Char(string="Last error", compute='_compute_xpago_connection')
+
     xpago_needs_connect = fields.Boolean(
         compute='_compute_xpago_needs_connect',
         help="The key is not an XPago key (xpk_…): payments do not go through until the XPago account is connected.",
@@ -57,6 +83,28 @@ class PaymentProvider(models.Model):
         for provider in self:
             key = provider.sudo().xpago_api_key or ''
             provider.xpago_needs_connect = provider.code == 'xpago' and not key.startswith(const.KEY_PREFIX)
+
+    @api.depends('xpago_api_key')
+    def _compute_xpago_connection(self):
+        statuses = {
+            status.provider_id.id: status
+            for status in self.env['payment.xpago.connection'].sudo().search([('provider_id', 'in', self.ids)])
+        }
+        for provider in self:
+            status = statuses.get(provider.id)
+            key = provider.sudo().xpago_api_key or ''
+            provider.xpago_environment = (
+                'test' if key.startswith('xpk_test_') else 'live' if key.startswith('xpk_live_') else False
+            )
+            provider.xpago_account_name = status.account_name if status else False
+            provider.xpago_last_ok_at = status.last_ok_at if status else False
+            provider.xpago_last_error_at = status.last_error_at if status else False
+            provider.xpago_last_error = status.last_error if status else False
+            # A call that works clears the error: the error shows only while it is the latest news.
+            if not status or not (status.last_ok_at or status.last_error_at):
+                provider.xpago_connection_state = 'unknown'
+            else:
+                provider.xpago_connection_state = 'error' if status.last_error else 'ok'
 
     def _compute_feature_support_fields(self):
         """Override of `payment`: XPago saves cards, holds and captures once (in full or in part) and refunds a
@@ -137,6 +185,8 @@ class PaymentProvider(models.Model):
                     account.active = False
 
     def write(self, vals):
+        if vals.get('xpago_api_key'):
+            vals = {**vals, 'xpago_neutralized': False}
         res = super().write(vals)
         if {'xpago_api_key', 'state'} & set(vals) and any(p.code == 'xpago' for p in self):
             # Read the accounts a moment later, outside this request: a network call here could hold the record.
@@ -156,6 +206,70 @@ class PaymentProvider(models.Model):
         """The XPago id of a deposit account, when it is still active and belongs to this provider."""
         self.ensure_one()
         return account.xpago_id if account and account.active and account.provider_id == self else None
+
+    # === CONNECTION STATUS === #
+
+    def action_xpago_test_connection(self):
+        """Ask XPago for the account of this key: proves the key, the environment and the way to XPago."""
+        self.ensure_one()
+        try:
+            account = self._xpago_make_request('GET', '/v1/account')
+        except ValidationError as error:
+            self._xpago_save_status(ok=False, error=str(error))
+            return self._xpago_notification(_("XPago did not answer"), str(error), 'danger')
+        name = account.get('name') or account.get('legal_name') or ''
+        self._xpago_save_status(ok=True, account_name=name)
+        return self._xpago_notification(_("Connected to XPago"), name or _("The key works."), 'success')
+
+    def _xpago_notification(self, title, message, kind):
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {'title': title, 'message': message, 'type': kind, 'sticky': kind == 'danger',
+                       'next': {'type': 'ir.actions.client', 'tag': 'soft_reload'}},
+        }
+
+    def _xpago_save_status(self, ok, error=None, account_name=None):
+        """Write the connection status in this transaction (the «Test connection» button)."""
+        self.ensure_one()
+        Status = self.env['payment.xpago.connection'].sudo()
+        status = Status.search([('provider_id', '=', self.id)], limit=1) or Status.create({'provider_id': self.id})
+        now = fields.Datetime.now()
+        values = {'last_ok_at': now, 'last_error': False} if ok else {
+            'last_error_at': now, 'last_error': (error or '')[:500] or _("Error")}
+        if account_name is not None:
+            values['account_name'] = account_name
+        status.write(values)
+
+    def _xpago_note_call(self, ok, error=None):
+        """Remember how a call to XPago went, for the connection panel. Written apart from the request's own
+        transaction (so it survives when the request fails and never holds anything a cashier needs), a call that
+        worked at most once a minute per worker. Never stops a payment."""
+        if odoo_module.current_test or not self.id:
+            return
+        key = (self.env.cr.dbname, self.id)
+        now = time.monotonic()
+        with _status_lock:
+            last = _status_written.get(key)
+            if ok and last and last[1] and now - last[0] < const.STATUS_WRITE_SECONDS:
+                return
+            _status_written[key] = (now, ok)
+        column = SQL.identifier('last_ok_at' if ok else 'last_error_at')
+        try:
+            with self.env.registry.cursor() as cr:
+                cr.execute(SQL(
+                    """INSERT INTO payment_xpago_connection
+                              (provider_id, %(column)s, last_error, create_date, write_date)
+                       VALUES (%(provider)s, now() at time zone 'utc', %(error)s,
+                               now() at time zone 'utc', now() at time zone 'utc')
+                  ON CONFLICT (provider_id) DO UPDATE
+                          SET %(column)s = EXCLUDED.%(column)s,
+                              last_error = EXCLUDED.last_error,
+                              write_date = EXCLUDED.write_date""",
+                    column=column, provider=self.id, error=None if ok else ((error or '')[:500] or 'Error'),
+                ))
+        except Exception as write_error:  # noqa: BLE001 - the panel never stops a payment
+            _logger.info("XPago: could not write the connection status of %s: %s", self.id, write_error)
 
     # === REQUEST HELPERS === #
 
@@ -199,12 +313,14 @@ class PaymentProvider(models.Model):
                 headers=self._xpago_request_headers(idempotency_key),
             )
         except failover.OutcomeUnknown as error:
+            self._xpago_note_call(False, _("XPago did not answer in time."))
             _logger.warning("XPago: no answer in time for %s %s: %s", method, endpoint, error)
             raise ValidationError("XPago: " + _(
                 "XPago did not answer in time and this operation may have gone through. Check the terminal or the "
                 "list of charges before trying again."
             )) from error
         except failover.Unreachable as error:
+            self._xpago_note_call(False, _("No connection with XPago."))
             _logger.warning("XPago: unable to reach %s: %s", endpoint, error)
             raise ValidationError(
                 "XPago: " + _("No connection with XPago. Check the internet or try again in a moment.")
@@ -212,6 +328,9 @@ class PaymentProvider(models.Model):
         if not response.ok:
             _logger.warning("XPago: %s %s answered %s:\n%s", method, url, response.status_code,
                             pprint.pformat(response.text[:2000]))
+            # A refused key or XPago failing is a connection problem; a refused request (a bad amount) is not.
+            broken = response.status_code in (401, 403) or response.status_code >= 500
+            self._xpago_note_call(not broken, self._xpago_parse_response_error(response) if broken else None)
             try:
                 response.raise_for_status()
             except requests.exceptions.HTTPError as http_error:
@@ -219,6 +338,7 @@ class PaymentProvider(models.Model):
                 raise ValidationError("XPago: " + _(
                     "The communication with the API failed. Details: %s", self._xpago_parse_response_error(response),
                 )) from http_error
+        self._xpago_note_call(True)
         if not response.content:
             return {}
         try:

@@ -9,7 +9,7 @@ import { Payment } from "@point_of_sale/app/store/models";
 import { SelectionPopup } from "@point_of_sale/app/utils/input_popups/selection_popup";
 import { ConfirmPopup } from "@point_of_sale/app/utils/confirm_popup/confirm_popup";
 
-const POLL_DELAY = 2000;
+import { waitForCharge } from "@xpago_pos/app/charge_wait";
 
 /** The confirmation of a split charge: one line per part. */
 export class XpagoSplitPopup extends ConfirmPopup {
@@ -82,12 +82,12 @@ export class PaymentXpago extends PaymentInterface {
             this._showError(error.data?.message || error.message || String(error));
             return false;
         }
-        this.charges[cid] = { id: charge.id };
+        this.charges[cid] = { id: charge.id, stopped: false };
         line.set_payment_status("waitingCard");
         if (this.payment_method.xpago_open_terminal_app && charge.terminal_app_url) {
             this._openTerminalApp(charge.terminal_app_url);
         }
-        const result = await this._waitForResult(charge);
+        const result = await this._waitForResult(cid, charge, order);
         delete this.charges[cid];
         if (result.state === "confirmed") {
             const { ticket, ...payment } = result.payment;
@@ -202,16 +202,17 @@ export class PaymentXpago extends PaymentInterface {
         return (confirmed && payload) || false;
     }
 
-    async _waitForResult(charge) {
-        while (!["confirmed", "cancelled", "expired"].includes(charge.state)) {
-            await new Promise((resolve) => setTimeout(resolve, POLL_DELAY));
-            try {
-                charge = await this._call("xpago_charge_status", [charge.id]);
-            } catch {
-                // A lost connection is not an answer: keep asking.
-            }
+    async _waitForResult(cid, charge, order) {
+        // Stop asking once the payment line is gone (removed, or the order was left) or the point of sale closes.
+        const active = () => Boolean(this.charges[cid] && !this.charges[cid].stopped && order.get_paymentline(cid));
+        return waitForCharge(charge, (current) => this._call("xpago_charge_status", [current.id]), active);
+    }
+
+    close() {
+        for (const pending of Object.values(this.charges)) {
+            pending.stopped = true;
         }
-        return charge;
+        return super.close(...arguments);
     }
 
     async send_payment_cancel(order, cid) {

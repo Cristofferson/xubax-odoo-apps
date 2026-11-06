@@ -5,3 +5,5 @@ access_pos_xpago_reconcile_manager,pos.xpago.reconcile manager,model_pos_xpago_r
 access_pos_xpago_reconcile_line_manager,pos.xpago.reconcile.line manager,model_pos_xpago_reconcile_line,point_of_sale.group_pos_manager,1,1,1,1
 access_payment_xpago_rule_pos_manager,payment.xpago.rule pos manager,xpago.model_payment_xpago_rule,point_of_sale.group_pos_manager,1,1,1,1
 access_pos_xpago_rule_test_manager,pos.xpago.rule.test manager,model_pos_xpago_rule_test,point_of_sale.group_pos_manager,1,1,1,1
+access_pos_xpago_terminal_setup_manager,pos.xpago.terminal.setup manager,model_pos_xpago_terminal_setup,point_of_sale.group_pos_manager,1,1,1,1
+access_pos_xpago_terminal_setup_line_manager,pos.xpago.terminal.setup.line manager,model_pos_xpago_terminal_setup_line,point_of_sale.group_pos_manager,1,1,1,1

@@ -6,6 +6,12 @@
         <field name="inherit_id" ref="payment.payment_provider_form"/>
         <field name="arch" type="xml">
             <div id="provider_creation_warning" position="after">
+                <div class="alert alert-info" role="alert" invisible="not xpago_neutralized">
+                    <field name="xpago_neutralized" invisible="1"/>
+                    <strong>Neutralized copy.</strong>
+                    This database is a copy: XPago was switched off, its key removed and the payments that were waiting
+                    were cancelled here, without calling XPago. Write a test key (xpk_test_…) to try XPago in this copy.
+                </div>
                 <div class="alert alert-warning d-flex align-items-center justify-content-between gap-3" role="alert"
                      invisible="not xpago_needs_connect">
                     <field name="xpago_needs_connect" invisible="1"/>
@@ -65,6 +71,31 @@
                             <field name="active" widget="boolean_toggle" readonly="1"/>
                         </tree>
                     </field>
+                </page>
+                <page string="Connection" name="xpago_connection" invisible="code != 'xpago'">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <span class="badge text-bg-success fs-6" invisible="xpago_connection_state != 'ok'">Connected</span>
+                        <span class="badge text-bg-danger fs-6" invisible="xpago_connection_state != 'error'">Error</span>
+                        <span class="badge text-bg-secondary fs-6" invisible="xpago_connection_state != 'unknown'">Not checked yet</span>
+                        <button name="action_xpago_test_connection" type="object" class="btn btn-secondary"
+                                string="Test connection" invisible="not xpago_api_key"/>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="xpago_connection_state" invisible="1"/>
+                            <field name="xpago_environment"/>
+                            <field name="xpago_account_name"/>
+                        </group>
+                        <group>
+                            <field name="xpago_last_ok_at"/>
+                            <field name="xpago_last_error_at" invisible="not xpago_last_error"/>
+                            <field name="xpago_last_error" invisible="not xpago_last_error"/>
+                        </group>
+                    </group>
+                    <div class="text-muted">
+                        Odoo writes down how its calls to XPago go: when one worked last and the last error. «Test
+                        connection» asks XPago for the account of this key right now.
+                    </div>
                 </page>
                 <page string="Payment notifications" name="xpago_notify" invisible="code != 'xpago'">
                     <div class="text-muted mb-3">

@@ -14,6 +14,10 @@
                                 string="Connect your XPago account"/>
                     </div>
                 </setting>
+                <setting id="xpago_terminals" string="XPago terminals"
+                         help="Which XPago terminal each point of sale charges with; warns when one terminal is on two points of sale.">
+                    <button name="%(xpago_pos.action_pos_xpago_terminal_setup)d" type="action" class="btn-link" icon="oi-arrow-right" string="Assign the terminals"/>
+                </setting>
                 <setting id="xpago_payment_rules" string="XPago payment rules"
                          help="Months without interest and deposit accounts by what is sold, on the XPago terminals of this point of sale.">
                     <div>

@@ -1328,3 +1328,178 @@ msgstr "XPago: leer los cobros en terminal abiertos"
 #: model:ir.model.fields,field_description:xpago_pos.field_res_config_settings__xpago_needs_connect
 msgid "Xpago Needs Connect"
 msgstr "Falta conectar XPago"
+
+#. module: xpago_pos
+#: model_terms:ir.ui.view,arch_db:xpago_pos.pos_xpago_terminal_setup_view_form
+msgid "Apply"
+msgstr "Aplicar"
+
+#. module: xpago_pos
+#: model_terms:ir.ui.view,arch_db:xpago_pos.res_config_settings_view_form
+msgid "Assign the terminals"
+msgstr "Asignar las terminales"
+
+#. module: xpago_pos
+#. odoo-python
+#: code:addons/xpago_pos/wizard/pos_xpago_terminal_setup.py:0
+#, python-format
+msgid "Card · XPago %s"
+msgstr "Tarjeta · XPago %s"
+
+#. module: xpago_pos
+#. odoo-python
+#: code:addons/xpago_pos/wizard/pos_xpago_terminal_setup.py:0
+#, python-format
+msgid "Choose the journal for the new terminals before creating them."
+msgstr "Elige el diario de las terminales nuevas antes de crearlas."
+
+#. module: xpago_pos
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup_line__create_method
+msgid "Create"
+msgstr "Crear"
+
+#. module: xpago_pos
+#: model:ir.model.fields,help:xpago_pos.field_pos_xpago_terminal_setup_line__create_method
+msgid "Create the payment method of this new terminal."
+msgstr "Crear la forma de pago de esta terminal nueva."
+
+#. module: xpago_pos
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup_line__has_open_session
+msgid "Has Open Session"
+msgstr "Tiene sesión abierta"
+
+#. module: xpago_pos
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup__journal_id
+msgid "Journal for new terminals"
+msgstr "Diario para terminales nuevas"
+
+#. module: xpago_pos
+#. odoo-python
+#: code:addons/xpago_pos/wizard/pos_xpago_terminal_setup.py:0
+#, python-format
+msgid "Left as they were (session open): %s."
+msgstr "Se quedaron como estaban (sesión abierta): %s."
+
+#. module: xpago_pos
+#. odoo-python
+#: code:addons/xpago_pos/wizard/pos_xpago_terminal_setup.py:0
+#, python-format
+msgid "Nothing to change."
+msgstr "Nada que cambiar."
+
+#. module: xpago_pos
+#: model:ir.model.fields,help:xpago_pos.field_pos_xpago_terminal_setup__journal_id
+msgid ""
+"Only used for the payment methods this assistant creates (lines with "
+"«Create»)."
+msgstr ""
+"Solo se usa para las formas de pago que crea este asistente (renglones con "
+"«Crear»)."
+
+#. module: xpago_pos
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup_line__new_serial
+msgid "Or a new terminal (S/N)"
+msgstr "O una terminal nueva (S/N)"
+
+#. module: xpago_pos
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup__line_ids
+msgid "Points of sale"
+msgstr "Puntos de venta"
+
+#. module: xpago_pos
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup_line__terminal_serial
+msgid "S/N"
+msgstr "S/N"
+
+#. module: xpago_pos
+#. odoo-python
+#: code:addons/xpago_pos/wizard/pos_xpago_terminal_setup.py:0
+#, python-format
+msgid ""
+"Terminal %(serial)s would be on %(registers)s. A terminal shows one charge "
+"at a time: a new charge replaces the one it was waiting for."
+msgstr ""
+"La terminal %(serial)s quedaría en %(registers)s. Una terminal muestra un "
+"cobro a la vez: un cobro nuevo reemplaza al que estaba esperando."
+
+#. module: xpago_pos
+#: model:ir.model.fields,help:xpago_pos.field_pos_xpago_terminal_setup_line__method_id
+msgid ""
+"The XPago terminal payment method this point of sale charges with. Empty: "
+"leave it as it is."
+msgstr ""
+"La forma de pago de terminal XPago con la que cobra este punto de venta. "
+"Vacío: se queda como está."
+
+#. module: xpago_pos
+#. odoo-python
+#: code:addons/xpago_pos/wizard/pos_xpago_terminal_setup.py:0
+#, python-format
+msgid ""
+"These points of sale have a session open and are left as they are until it "
+"is closed: %s"
+msgstr ""
+"Estos puntos de venta tienen una sesión abierta y se quedan como están hasta"
+" que se cierre: %s"
+
+#. module: xpago_pos
+#. odoo-python
+#: code:addons/xpago_pos/wizard/pos_xpago_terminal_setup.py:0
+#, python-format
+msgid "Updated: %s."
+msgstr "Actualizados: %s."
+
+#. module: xpago_pos
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup__warning_html
+msgid "Warning Html"
+msgstr "Avisos"
+
+#. module: xpago_pos
+#: model_terms:ir.ui.view,arch_db:xpago_pos.pos_xpago_terminal_setup_view_form
+msgid ""
+"Which XPago terminal each point of sale charges with. The assistant proposes, warns when one\n"
+"                    terminal is on two points of sale, and changes only what you confirm here. A payment method is\n"
+"                    created only for the lines marked «Create»."
+msgstr ""
+"Con qué terminal XPago cobra cada punto de venta. El asistente propone, avisa cuando una\n"
+"                    terminal está en dos puntos de venta y cambia solo lo que confirmes aquí. Solo se crea una forma de\n"
+"                    pago en los renglones marcados con «Crear»."
+
+#. module: xpago_pos
+#: model_terms:ir.ui.view,arch_db:xpago_pos.res_config_settings_view_form
+msgid ""
+"Which XPago terminal each point of sale charges with; warns when one "
+"terminal is on two points of sale."
+msgstr ""
+"Con qué terminal XPago cobra cada punto de venta; avisa cuando una terminal "
+"está en dos puntos de venta."
+
+#. module: xpago_pos
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup_line__wizard_id
+msgid "Wizard"
+msgstr "Asistente"
+
+#. module: xpago_pos
+#: model:ir.model.fields,field_description:xpago_pos.field_pos_xpago_terminal_setup_line__method_id
+msgid "XPago terminal"
+msgstr "Terminal XPago"
+
+#. module: xpago_pos
+#: model:ir.model,name:xpago_pos.model_pos_xpago_terminal_setup_line
+msgid "XPago terminal of a point of sale"
+msgstr "Terminal XPago de un punto de venta"
+
+#. module: xpago_pos
+#. odoo-python
+#: code:addons/xpago_pos/wizard/pos_xpago_terminal_setup.py:0
+#: model:ir.actions.act_window,name:xpago_pos.action_pos_xpago_terminal_setup
+#: model_terms:ir.ui.view,arch_db:xpago_pos.pos_xpago_terminal_setup_view_form
+#: model_terms:ir.ui.view,arch_db:xpago_pos.res_config_settings_view_form
+#, python-format
+msgid "XPago terminals"
+msgstr "Terminales XPago"
+
+#. module: xpago_pos
+#: model:ir.model,name:xpago_pos.model_pos_xpago_terminal_setup
+msgid "XPago terminals and points of sale"
+msgstr "Terminales XPago y puntos de venta"
