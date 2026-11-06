@@ -232,28 +232,35 @@ class PaymentProvider(models.Model):
         }
 
     def _xpago_save_status(self, ok, error=None, account_name=None):
-        """Write the connection status in this transaction (the «Test connection» button)."""
-        self.ensure_one()
-        Status = self.env['payment.xpago.connection'].sudo()
-        status = Status.search([('provider_id', '=', self.id)], limit=1) or Status.create({'provider_id': self.id})
-        now = fields.Datetime.now()
-        values = {'last_ok_at': now, 'last_error': False} if ok else {
-            'last_error_at': now, 'last_error': (error or '')[:500] or _("Error")}
-        if account_name is not None:
-            values['account_name'] = account_name
-        status.write(values)
+        """The «Test connection» button: written at once, whatever the request does after."""
+        self._xpago_store_status(ok, error=error, account_name=account_name, throttle=False)
 
     def _xpago_note_call(self, ok, error=None):
-        """Remember how a call to XPago went, for the connection panel. Written apart from the request's own
-        transaction (so it survives when the request fails and never holds anything a cashier needs), a call that
-        worked at most once a minute per worker. Never stops a payment."""
-        if odoo_module.current_test or not self.id:
+        """Remember how a call to XPago went, for the connection panel: a call that worked at most once a minute per
+        worker, a failed one always. Never stops a payment."""
+        self._xpago_store_status(ok, error=error, throttle=True)
+
+    def _xpago_store_status(self, ok, error=None, account_name=None, throttle=True):
+        """Write the connection status in its own short transaction, apart from the request's: it survives when the
+        request fails, and it never holds or collides with anything a cashier needs. Tests use their own cursor."""
+        self.ensure_one()
+        if not self.id:
+            return
+        error = None if ok else ((error or '')[:500] or 'Error')
+        if odoo_module.current_test:
+            Status = self.env['payment.xpago.connection'].sudo()
+            status = Status.search([('provider_id', '=', self.id)], limit=1) or Status.create({'provider_id': self.id})
+            values = {'last_ok_at': fields.Datetime.now(), 'last_error': False} if ok else {
+                'last_error_at': fields.Datetime.now(), 'last_error': error}
+            if account_name is not None:
+                values['account_name'] = account_name
+            status.write(values)
             return
         key = (self.env.cr.dbname, self.id)
         now = time.monotonic()
         with _status_lock:
             last = _status_written.get(key)
-            if ok and last and last[1] and now - last[0] < const.STATUS_WRITE_SECONDS:
+            if throttle and ok and last and last[1] and now - last[0] < const.STATUS_WRITE_SECONDS:
                 return
             _status_written[key] = (now, ok)
         column = SQL.identifier('last_ok_at' if ok else 'last_error_at')
@@ -261,14 +268,15 @@ class PaymentProvider(models.Model):
             with self.env.registry.cursor() as cr:
                 cr.execute(SQL(
                     """INSERT INTO payment_xpago_connection
-                              (provider_id, %(column)s, last_error, create_date, write_date)
-                       VALUES (%(provider)s, now() at time zone 'utc', %(error)s,
+                              (provider_id, %(column)s, last_error, account_name, create_date, write_date)
+                       VALUES (%(provider)s, now() at time zone 'utc', %(error)s, %(account)s,
                                now() at time zone 'utc', now() at time zone 'utc')
                   ON CONFLICT (provider_id) DO UPDATE
                           SET %(column)s = EXCLUDED.%(column)s,
                               last_error = EXCLUDED.last_error,
+                              account_name = COALESCE(EXCLUDED.account_name, payment_xpago_connection.account_name),
                               write_date = EXCLUDED.write_date""",
-                    column=column, provider=self.id, error=None if ok else ((error or '')[:500] or 'Error'),
+                    column=column, provider=self.id, error=error, account=account_name,
                 ))
         except Exception as write_error:  # noqa: BLE001 - the panel never stops a payment
             _logger.info("XPago: could not write the connection status of %s: %s", self.id, write_error)
