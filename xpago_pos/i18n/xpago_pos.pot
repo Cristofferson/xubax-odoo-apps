@@ -726,12 +726,6 @@ msgid "Reference"
 msgstr ""
 
 #. module: xpago_pos
-#. odoo-javascript
-#: code:addons/xpago_pos/static/src/app/order_receipt_voucher.xml:0
-msgid "Reference:"
-msgstr ""
-
-#. module: xpago_pos
 #: model_terms:ir.ui.view,arch_db:xpago_pos.pos_xpago_charge_view_form
 msgid "Refund to the card"
 msgstr ""

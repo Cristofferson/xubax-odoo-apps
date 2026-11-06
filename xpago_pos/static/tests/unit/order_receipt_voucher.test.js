@@ -27,6 +27,7 @@ async function paidWithXpago(cardType) {
         payment_method_authcode: "A1B2C3",
         payment_method_issuer_bank: "BBVA",
         transaction_id: "pay-1",
+        payment_ref_no: "888002",
     });
     return order;
 }
@@ -40,6 +41,10 @@ test("XPago card voucher in the receipt", async () => {
     expect(".xpago-voucher").toHaveText(/VISA \*\*\*\* 4242/);
     expect(".xpago-voucher").toHaveText(/Credit/);
     expect(".xpago-voucher").toHaveText(/Authorization: A1B2C3/);
+    // The operation the processor gave; its internal id stays out of the customer's ticket.
+    expect(".xpago-voucher").toHaveText(/Operation: 888002/);
+    expect(".xpago-voucher").not.toHaveText(/pay-1/);
+    expect(".xpago-voucher").not.toHaveText(/Reference/);
     expect(".xpago-voucher").toHaveText(/Merchant number: 1234567/);
     expect(".xpago-voucher").toHaveText(/Por este pagaré me obligo/);
     expect(".xpago-voucher").toHaveText(/Customer's signature/);

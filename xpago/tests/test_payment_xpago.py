@@ -10,7 +10,7 @@ from odoo.addons.payment.tests.http_common import PaymentHttpCommon
 from odoo.addons.xpago import const
 from odoo.addons.xpago.tests.common import XpagoCommon
 
-SEND = 'odoo.addons.payment.models.payment_provider.PaymentProvider._send_api_request'
+SEND = 'odoo.addons.xpago.models.payment_provider.PaymentProvider._send_api_request'
 
 
 @tagged('post_install', '-at_install')

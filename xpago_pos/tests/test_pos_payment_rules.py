@@ -4,7 +4,7 @@ from odoo.tests import tagged
 
 from odoo.addons.point_of_sale.tests.common import TestPoSCommon
 
-SEND = 'odoo.addons.payment.models.payment_provider.PaymentProvider._send_api_request'
+SEND = 'odoo.addons.xpago.models.payment_provider.PaymentProvider._send_api_request'
 
 
 class PosXpagoRulesCommon(TestPoSCommon):

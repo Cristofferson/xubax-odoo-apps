@@ -7,7 +7,7 @@ from odoo.tests import tagged
 
 from odoo.addons.xpago.tests.common import XpagoCommon
 
-SEND = 'odoo.addons.payment.models.payment_provider.PaymentProvider._send_api_request'
+SEND = 'odoo.addons.xpago.models.payment_provider.PaymentProvider._send_api_request'
 
 
 class XpagoRulesCommon(XpagoCommon):
