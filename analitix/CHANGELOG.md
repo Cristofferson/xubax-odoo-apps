@@ -3,6 +3,13 @@
 All notable changes to Analitix. Versions follow Odoo's convention:
 `19.0.<phase>.<minor>.<patch>`.
 
+## 19.0.13.0.1 — Store activations reach the audit log
+
+Activating a store (by code or trial) wrote its audit entry with an action the
+log did not accept, so the entry was dropped and only a server error said so.
+`store_activate` is now a valid action: every activation is in the audit log
+with who did it and how.
+
 ## 19.0.8.2.0 — The camera that sees nothing, and showing how any of this works
 
 **A blind camera is now detected.** An offline device is visible: the heartbeat

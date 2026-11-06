@@ -7536,3 +7536,8 @@ msgstr "Analíticos visuales"
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_store__plan__actions
 msgid "Actions"
 msgstr "Acciones"
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_audit_log__action__store_activate
+msgid "Store activated"
+msgstr "Tienda activada"

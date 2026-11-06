@@ -38,6 +38,7 @@ class AnalitixAuditLog(models.Model):
             ("elevated", "Elevated-control decision"),
             ("watchlist_add", "Watch-list entry created"),
             ("watchlist_confirm", "Watch-list entry confirmed"),
+            ("store_activate", "Store activated"),
         ],
         required=True, index=True, readonly=True)
     user_id = fields.Many2one(

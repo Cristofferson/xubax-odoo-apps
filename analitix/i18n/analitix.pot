@@ -8564,3 +8564,8 @@ msgstr ""
 #: model:ir.model.fields.selection,name:analitix.selection__analitix_store__plan__actions
 msgid "Actions"
 msgstr ""
+
+#. module: analitix
+#: model:ir.model.fields.selection,name:analitix.selection__analitix_audit_log__action__store_activate
+msgid "Store activated"
+msgstr ""
