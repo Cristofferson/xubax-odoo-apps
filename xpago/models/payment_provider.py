@@ -157,7 +157,11 @@ class PaymentProvider(models.Model):
         except ValueError:
             return response.text
         error = body.get('error') if isinstance(body, dict) and isinstance(body.get('error'), dict) else {}
-        return error.get('message') or error.get('code') or response.text
+        message = error.get('message') or error.get('code') or response.text
+        fields = (error.get('details') or {}).get('fields') or []
+        if fields:
+            message += ' ' + '; '.join(f"{f.get('field')}: {f.get('message')}" for f in fields if isinstance(f, dict))
+        return message
 
     # === NOTIFICATIONS === #
 

@@ -114,6 +114,10 @@ class TestPaymentXpago(XpagoCommon, PaymentHttpCommon):
         response.status_code = 403
         response._content = b'{"error": {"code": "merchant_suspended", "message": "This XPago account is suspended."}}'
         self.assertEqual(self.provider._parse_response_error(response), 'This XPago account is suspended.')
+        response._content = (b'{"error": {"code": "invalid_request", "message": "The request is not valid.",'
+                              b' "details": {"fields": [{"field": "currency", "message": "Input should be MXN"}]}}}')
+        self.assertEqual(self.provider._parse_response_error(response),
+                         'The request is not valid. currency: Input should be MXN')
 
     def test_enabling_without_api_key_is_refused(self):
         with self.assertRaises(ValidationError):
