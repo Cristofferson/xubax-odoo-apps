@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="payment_provider_xpago" model="payment.provider">
+        <field name="name">XPago</field>
+        <field name="code">xpago</field>
+        <field name="image_128" type="base64" file="xpago/static/description/icon.png"/>
+        <field name="module_id" ref="base.module_xpago"/>
+        <field name="redirect_form_view_id" ref="redirect_form"/>
+        <field name="available_currency_ids" eval="[Command.set([ref('base.MXN')])]"/>
+        <field name="payment_method_ids"
+               eval="[Command.set([
+                         ref('payment.payment_method_card'),
+                         ref('payment.payment_method_visa'),
+                         ref('payment.payment_method_mastercard'),
+                         ref('payment.payment_method_amex'),
+                     ])]"/>
+    </record>
+</odoo>
