@@ -1,6 +1,6 @@
 {
     'name': 'XPago: Card Payments and Terminals',
-    'version': '17.0.2.0.0',
+    'version': '17.0.2.1.0',
     'category': 'Accounting/Payment Providers',
     'sequence': 350,
     'summary': 'Accept Visa, Mastercard and American Express in Mexico: online store, invoices, payment links and '
@@ -11,7 +11,7 @@
     'website': 'https://xpago.mx',
     'support': 'hola@xubax.com',
     'license': 'OPL-1',
-    'depends': ['payment', 'product'],
+    'depends': ['payment', 'product', 'point_of_sale', 'pos_self_order'],
     'data': [
         'security/ir.model.access.csv',
         'views/payment_xpago_templates.xml',
@@ -19,7 +19,25 @@
         'views/payment_provider_views.xml',
         'data/payment_provider_data.xml',
         'data/ir_cron.xml',
+        'views/pos_payment_method_views.xml',
+        'views/pos_xpago_charge_views.xml',
+        'wizard/pos_xpago_reconcile_views.xml',
+        'wizard/pos_xpago_terminal_setup_views.xml',
+        'views/pos_payment_xpago_rule_views.xml',
+        'views/res_config_settings_views.xml',
+        'data/pos_ir_cron.xml',
+        'views/self_order_res_config_settings_views.xml',
     ],
+    'assets': {
+        'point_of_sale._assets_pos': [
+            'xpago/static/src/pos/**/*',
+        ],
+        'pos_self_order.assets': [
+            'xpago/static/src/pos/app/charge_wait.js',
+            'xpago/static/src/self_order/**/*',
+            'xpago/static/src/pos/app/order_receipt_voucher.xml',
+        ],
+    },
     'pre_init_hook': 'pre_init_hook',
     'post_init_hook': 'post_init_hook',
     'uninstall_hook': 'uninstall_hook',

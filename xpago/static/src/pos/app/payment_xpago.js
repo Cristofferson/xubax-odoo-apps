@@ -9,11 +9,11 @@ import { Payment } from "@point_of_sale/app/store/models";
 import { SelectionPopup } from "@point_of_sale/app/utils/input_popups/selection_popup";
 import { ConfirmPopup } from "@point_of_sale/app/utils/confirm_popup/confirm_popup";
 
-import { waitForCharge } from "@xpago_pos/app/charge_wait";
+import { waitForCharge } from "@xpago/pos/app/charge_wait";
 
 /** The confirmation of a split charge: one line per part. */
 export class XpagoSplitPopup extends ConfirmPopup {
-    static template = "xpago_pos.XpagoSplitPopup";
+    static template = "xpago.XpagoSplitPopup";
 }
 
 patch(PosStore.prototype, {

@@ -3,7 +3,7 @@
 
     <!-- The card voucher of XPago payments, after the footer of the receipt. It carries the card, so the
          receipt info of the same payment is not printed again. -->
-    <t t-name="xpago_pos.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+    <t t-name="xpago.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
         <xpath expr="//div[hasclass('after-footer')]//t[@t-if='line.ticket']" position="attributes">
             <attribute name="t-if">line.ticket and !line.xpago_voucher</attribute>
         </xpath>

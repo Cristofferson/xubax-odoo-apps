@@ -101,7 +101,7 @@ class TestKioskXpago(TestPoSCommon):
     def test_kiosk_assets_carry_the_voucher(self):
         # The kiosk prints its ticket with the receipt template of the point of sale, and its voucher.
         bundle = self.env['ir.qweb']._get_asset_bundle('pos_self_order.assets', css=False)
-        self.assertIn('/xpago_pos/static/src/app/order_receipt_voucher.xml', [f['url'] for f in bundle.files])
+        self.assertIn('/xpago/static/src/pos/app/order_receipt_voucher.xml', [f['url'] for f in bundle.files])
         templates = bundle.xml()  # raises when the voucher does not apply to the receipt
         self.assertIn('xpago-voucher', templates)
         self.assertIn('line.ticket and !line.xpago_voucher', templates)

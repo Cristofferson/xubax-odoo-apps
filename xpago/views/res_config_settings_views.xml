@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="res_config_settings_view_form" model="ir.ui.view">
-        <field name="name">res.config.settings.view.form.inherit.xpago_pos</field>
+        <field name="name">res.config.settings.view.form.inherit.xpago.pos</field>
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
         <field name="arch" type="xml">
@@ -16,7 +16,7 @@
                 </setting>
                 <setting id="xpago_terminals" string="XPago terminals"
                          help="Which XPago terminal each point of sale charges with; warns when one terminal is on two points of sale.">
-                    <button name="%(xpago_pos.action_pos_xpago_terminal_setup)d" type="action" class="btn-link" icon="oi-arrow-right" string="Assign the terminals"/>
+                    <button name="%(xpago.action_pos_xpago_terminal_setup)d" type="action" class="btn-link" icon="oi-arrow-right" string="Assign the terminals"/>
                 </setting>
                 <setting id="xpago_payment_rules" string="XPago payment rules"
                          help="Months without interest and deposit accounts by what is sold, on the XPago terminals of this point of sale.">
