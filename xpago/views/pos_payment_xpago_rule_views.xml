@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="pos_payment_xpago_rule_view_list" model="ir.ui.view">
-        <field name="name">payment.xpago.rule.list.inherit.xpago_pos</field>
+        <field name="name">payment.xpago.rule.list.inherit.xpago.pos</field>
         <field name="model">payment.xpago.rule</field>
         <field name="inherit_id" ref="xpago.payment_xpago_rule_view_list"/>
         <field name="arch" type="xml">
@@ -13,7 +13,7 @@
     </record>
 
     <record id="pos_payment_xpago_rule_view_form" model="ir.ui.view">
-        <field name="name">payment.xpago.rule.form.inherit.xpago_pos</field>
+        <field name="name">payment.xpago.rule.form.inherit.xpago.pos</field>
         <field name="model">payment.xpago.rule</field>
         <field name="inherit_id" ref="xpago.payment_xpago_rule_view_form"/>
         <field name="arch" type="xml">

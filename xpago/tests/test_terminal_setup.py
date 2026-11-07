@@ -91,7 +91,7 @@ class TestTerminalSetup(TestPoSCommon):
             view = self.method.xpago_create_charge({'amount': 10.0, 'order_uuid': 'abcdef12-3456'})
         self.env.flush_all()
         with patch(SEND) as send:
-            for query in get_neutralization_queries(['xpago_pos']):
+            for query in get_neutralization_queries(['xpago']):
                 self.env.cr.execute(query)
         send.assert_not_called()
         self.env.invalidate_all()

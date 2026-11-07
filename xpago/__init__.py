@@ -1,5 +1,6 @@
 from . import controllers
 from . import models
+from . import wizard
 
 import odoo.addons.payment as payment  # Prevent circular import error with payment (res.country).
 

@@ -5,7 +5,7 @@ import { register_payment_method } from "@point_of_sale/app/store/pos_store";
 import { makeAwaitable } from "@point_of_sale/app/store/make_awaitable_dialog";
 import { SelectionPopup } from "@point_of_sale/app/utils/input_popups/selection_popup";
 
-import { waitForCharge } from "@xpago_pos/app/charge_wait";
+import { waitForCharge } from "@xpago/pos/app/charge_wait";
 
 export class PaymentXpago extends PaymentInterface {
     setup() {

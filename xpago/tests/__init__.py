@@ -5,3 +5,9 @@ from . import test_fold_old_modules
 from . import test_no_processor_name
 from . import test_failover
 from . import test_connection
+from . import test_pos_xpago
+from . import test_terminal_setup
+from . import test_pos_payment_rules
+from . import test_kiosk_rules
+from . import test_kiosk_xpago
+from . import test_kiosk_timeout

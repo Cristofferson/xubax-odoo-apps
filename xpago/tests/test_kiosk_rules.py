@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 from odoo.tests import tagged
 
-from odoo.addons.xpago_pos.tests.test_pos_payment_rules import SEND, PosXpagoRulesCommon
+from odoo.addons.xpago.tests.test_pos_payment_rules import SEND, PosXpagoRulesCommon
 
 
 @tagged('post_install', '-at_install')

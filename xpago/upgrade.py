@@ -1,26 +1,26 @@
-"""XPago used to ship as three apps. Their records move to the new modules (xpago, and the xpago_pos and
-xpago_self_order bridges that install by themselves) so that nothing is recreated or deleted:
-settings, deposit accounts, payment rules, terminal charges and payments stay as they were."""
+"""XPago used to ship as three apps, and then as one app with two bridges (xpago_pos, xpago_self_order). All their
+records move to the single app so that nothing is recreated or deleted: settings, deposit accounts, payment rules,
+terminal charges and payments stay as they were."""
 import logging
 
 _logger = logging.getLogger(__name__)
 
 FOLDED_MODULES = {
-    'xpago': ('payment_xpago',),
-    'xpago_pos': ('pos_xpago',),
-    'xpago_self_order': ('pos_self_order_xpago',),
+    'xpago': ('payment_xpago', 'pos_xpago', 'pos_self_order_xpago', 'xpago_pos', 'xpago_self_order'),
 }
 
 # Records whose name was used by more than one of the former apps.
 RENAMED = {
     ('pos_xpago', 'payment_xpago_rule_view_list'): 'pos_payment_xpago_rule_view_list',
     ('pos_xpago', 'payment_xpago_rule_view_form'): 'pos_payment_xpago_rule_view_form',
+    ('pos_self_order_xpago', 'res_config_settings_view_form'): 'self_order_res_config_settings_view_form',
+    ('xpago_self_order', 'res_config_settings_view_form'): 'self_order_res_config_settings_view_form',
 }
 
 
 def fold_old_modules(cr, target):
-    """Run before ``target`` loads its data (pre_init_hook). Moves the records of the former apps to ``target`` and
-    retires those apps, whose code is gone."""
+    """Run before ``target`` loads its data (pre_init_hook on install, pre-migration on upgrade). Moves the records
+    of the former apps to ``target`` and retires those apps, whose code is gone."""
     old_modules = FOLDED_MODULES[target]
     cr.execute("SELECT name FROM ir_module_module WHERE name IN %s AND state IN ('installed', 'to upgrade', 'to remove')",
                [old_modules])

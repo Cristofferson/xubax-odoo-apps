@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
-    <t t-name="xpago_pos.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+    <t t-name="xpago.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
         <xpath expr="//div[hasclass('after-footer')]" position="inside">
             <t t-foreach="props.data.xpago_vouchers or []" t-as="voucher" t-key="voucher.uuid">
                 <div class="xpago-voucher text-start mt-3 pt-2" style="border-top: 1px dashed currentColor; font-size: 85%;">

@@ -3,7 +3,7 @@ import { rpc } from "@web/core/network/rpc";
 import { _t } from "@web/core/l10n/translation";
 import { onWillUnmount } from "@odoo/owl";
 import { PaymentPage } from "@pos_self_order/app/pages/payment_page/payment_page";
-import { waitForCharge } from "@xpago_pos/app/charge_wait";
+import { waitForCharge } from "@xpago/pos/app/charge_wait";
 
 patch(PaymentPage.prototype, {
     setup() {
