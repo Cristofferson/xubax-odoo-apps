@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.xpago.pos</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//setting[@id='payment_methods_new']" position="after">
+                <setting id="xpago_connect" string="Connect your XPago account" invisible="not xpago_needs_connect"
+                         help="The XPago account of a terminal has no XPago key (it starts with xpk_): its card charges do not go through until it is connected.">
+                    <field name="xpago_needs_connect" invisible="1"/>
+                    <div class="alert alert-warning mt-2 mb-0" role="alert">
+                        <button name="action_xpago_connect" type="object" class="btn btn-primary"
+                                string="Connect your XPago account"/>
+                    </div>
+                </setting>
+                <setting id="xpago_terminals" string="XPago terminals"
+                         help="Which XPago terminal each point of sale charges with; warns when one terminal is on two points of sale.">
+                    <button name="%(xpago.action_pos_xpago_terminal_setup)d" type="action" class="btn-link" icon="oi-arrow-right" string="Assign the terminals"/>
+                </setting>
+                <setting id="xpago_payment_rules" string="XPago payment rules"
+                         help="Months without interest and deposit accounts by what is sold, on the XPago terminals of this point of sale.">
+                    <div>
+                        <field name="pos_xpago_show_account" class="me-2"/>
+                        <label for="pos_xpago_show_account" string="The cashier sees which account the money goes to"/>
+                    </div>
+                    <div class="mt-2">
+                        <field name="pos_xpago_split" class="me-2"/>
+                        <label for="pos_xpago_split" string="Split the charge when the products go to different accounts or months"/>
+                    </div>
+                    <div class="mt-1">
+                        <button name="%(xpago.action_payment_xpago_rule)d" type="action" class="btn-link" icon="oi-arrow-right" string="XPago payment rules"/>
+                    </div>
+                </setting>
+            </xpath>
+            <xpath expr="//block[@id='pos_bills_and_receipts_section']" position="inside">
+                <setting id="xpago_voucher_on_receipt" string="Card voucher in the receipt"
+                         help="Paid with a card on an XPago terminal: the receipt (printed, emailed or by WhatsApp) carries the card details and the voucher legend. For terminals that print with the point of sale, such as the N950 or the N750P.">
+                    <field name="pos_xpago_voucher_on_receipt"/>
+                    <div class="content-group mt-2" invisible="not pos_xpago_voucher_on_receipt">
+                        <div class="row">
+                            <label string="Merchant number" for="pos_xpago_voucher_merchant" class="col-lg-4 o_light_label"/>
+                            <field name="pos_xpago_voucher_merchant" placeholder="Optional"/>
+                        </div>
+                        <div class="row mt-2">
+                            <label string="Credit card legend" for="pos_xpago_voucher_credit_text" class="col-lg-4 o_light_label"/>
+                            <field name="pos_xpago_voucher_credit_text"/>
+                        </div>
+                        <div class="row mt-2">
+                            <label string="Debit card legend" for="pos_xpago_voucher_debit_text" class="col-lg-4 o_light_label"/>
+                            <field name="pos_xpago_voucher_debit_text"/>
+                        </div>
+                        <div class="mt-2">
+                            <field name="pos_xpago_voucher_signature" class="me-2"/>
+                            <label for="pos_xpago_voucher_signature" string="Line for the customer's signature"/>
+                        </div>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>
