@@ -9,3 +9,6 @@ UPDATE payment_transaction
  WHERE state IN ('draft', 'pending', 'authorized')
    AND provider_id IN (SELECT id FROM payment_provider WHERE code = 'xpago');
 DELETE FROM payment_xpago_connection;
+-- A neutralized copy cancels, locally and without calling XPago, the terminal charges that were waiting: nobody reads
+-- them back against the real account, and no kiosk order gets paid by a charge of production.
+UPDATE pos_xpago_charge SET state = 'cancelled' WHERE state = 'pending';

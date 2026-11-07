@@ -31,20 +31,21 @@ class TestFoldOldModules(TransactionCase):
         provider.module_id = payment
         self.env.flush_all()
 
-        pos_bridge = self.env['ir.module.module'].search([('name', '=', 'xpago_pos')])
-        if not pos_bridge:
-            pos_bridge = self.env['ir.module.module'].create({'name': 'xpago_pos', 'shortdesc': 'xpago_pos'})
+        bridge = self.old_module('xpago_self_order')
+        Data.create({'module': 'xpago_self_order', 'name': 'xp_fold_bridge_record', 'model': 'res.partner',
+                     'res_id': partner.id})
+        self.env.flush_all()
         with patch('odoo.addons.xpago.upgrade.RENAMED', {('pos_xpago', 'xp_fold_shared_name'): 'xp_fold_shared_name_pos'}):
             fold_old_modules(self.env.cr, 'xpago')
-            fold_old_modules(self.env.cr, 'xpago_pos')
         self.env.invalidate_all()
 
         self.assertEqual(self.env.ref('xpago.xp_fold_record'), partner)
-        self.assertEqual(self.env.ref('xpago_pos.xp_fold_shared_name_pos'), partner,
-                         'the point of sale records go to the point of sale bridge, renamed when the name clashed')
-        self.assertFalse(Data.search([('module', 'in', ('payment_xpago', 'pos_xpago'))]))
+        self.assertEqual(self.env.ref('xpago.xp_fold_shared_name_pos'), partner,
+                         'a name used by two former apps is renamed instead of lost')
+        self.assertEqual(self.env.ref('xpago.xp_fold_bridge_record'), partner, 'the former bridges join the app too')
+        self.assertFalse(Data.search([('module', 'in', ('payment_xpago', 'pos_xpago', 'xpago_self_order'))]))
         self.assertEqual(view.key, 'xpago.xp_fold_template')
-        self.assertEqual((payment.state, pos.state), ('uninstalled', 'uninstalled'))
+        self.assertEqual((payment.state, pos.state, bridge.state), ('uninstalled', 'uninstalled', 'uninstalled'))
         self.assertEqual(provider.module_id.name, 'xpago')
 
     def test_nothing_happens_without_the_former_apps(self):
@@ -52,13 +53,6 @@ class TestFoldOldModules(TransactionCase):
         fold_old_modules(self.env.cr, 'xpago')
         self.assertEqual(self.env['ir.model.data'].search_count([('module', '=', 'xpago')]), before)
 
-    def test_point_of_sale_and_kiosk_are_never_forced(self):
-        Module = self.env['ir.module.module']
-        xpago = Module.search([('name', '=', 'xpago')])
-        self.assertFalse({'point_of_sale', 'pos_self_order'} & set(xpago.dependencies_id.mapped('name')))
-        pos = Module.search([('name', '=', 'xpago_pos')])
-        self.assertTrue(pos.auto_install)
-        self.assertEqual(set(pos.dependencies_id.mapped('name')), {'xpago', 'point_of_sale'})
-        kiosk = Module.search([('name', '=', 'xpago_self_order')])
-        self.assertTrue(kiosk.auto_install)
-        self.assertEqual(set(kiosk.dependencies_id.mapped('name')), {'xpago_pos', 'pos_self_order'})
+    def test_one_app_brings_the_point_of_sale_and_the_kiosk(self):
+        xpago = self.env['ir.module.module'].search([('name', '=', 'xpago')])
+        self.assertLessEqual({'payment', 'point_of_sale', 'pos_self_order'}, set(xpago.dependencies_id.mapped('name')))

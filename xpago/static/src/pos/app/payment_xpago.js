@@ -5,7 +5,7 @@ import { registry } from "@web/core/registry";
 import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
 import { SelectionPopup } from "@point_of_sale/app/components/popups/selection_popup/selection_popup";
 
-import { waitForCharge } from "@xpago_pos/app/charge_wait";
+import { waitForCharge } from "@xpago/pos/app/charge_wait";
 
 export class PaymentXpago extends PaymentInterface {
     setup() {

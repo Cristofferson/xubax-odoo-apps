@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="res_config_settings_view_form" model="ir.ui.view">
-        <field name="name">res.config.settings.view.form.inherit.xpago_self_order</field>
+    <record id="self_order_res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.xpago.self_order</field>
         <field name="model">res.config.settings</field>
-        <field name="inherit_id" ref="xpago_pos.res_config_settings_view_form"/>
+        <field name="inherit_id" ref="xpago.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <setting id="xpago_payment_rules" position="after">
                 <setting id="xpago_kiosk_timeout" string="Kiosk: free the terminal"
