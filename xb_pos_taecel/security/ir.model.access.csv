@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_taecel_account_user,taecel.account.user,model_xb_taecel_account,point_of_sale.group_pos_user,1,0,0,0
+access_taecel_account_manager,taecel.account.manager,model_xb_taecel_account,point_of_sale.group_pos_manager,1,1,1,1
+access_taecel_wallet_user,taecel.wallet.user,model_xb_taecel_wallet,point_of_sale.group_pos_user,1,0,0,0
+access_taecel_wallet_manager,taecel.wallet.manager,model_xb_taecel_wallet,point_of_sale.group_pos_manager,1,1,1,1
+access_taecel_carrier_user,taecel.carrier.user,model_xb_taecel_carrier,point_of_sale.group_pos_user,1,0,0,0
+access_taecel_carrier_manager,taecel.carrier.manager,model_xb_taecel_carrier,point_of_sale.group_pos_manager,1,1,1,1
+access_taecel_product_user,taecel.product.user,model_xb_taecel_product,point_of_sale.group_pos_user,1,0,0,0
+access_taecel_product_manager,taecel.product.manager,model_xb_taecel_product,point_of_sale.group_pos_manager,1,1,1,1
+access_taecel_txn_user,taecel.txn.user,model_xb_taecel_transaction,point_of_sale.group_pos_user,1,1,1,0
+access_taecel_txn_manager,taecel.txn.manager,model_xb_taecel_transaction,point_of_sale.group_pos_manager,1,1,1,1

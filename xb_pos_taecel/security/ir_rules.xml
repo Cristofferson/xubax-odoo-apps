@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Multi-company isolation.
+
+        A TAECEL account holds live API credentials and real money, so a
+        company must not see another company's account, catalog or sales. The
+        one legitimate exception is a group that funds a single TAECEL account
+        for several of its companies: those companies are listed explicitly on
+        the account (``shared_company_ids``), which is also exactly what the
+        POS loader and the order hook check before selling. One rule, one
+        meaning, front and back.
+
+        Every child model carries ``company_id`` as a stored related field of
+        its account, so the common case hits an indexed column and only the
+        shared-account case walks the relation.
+    -->
+
+    <record id="rule_taecel_account_company" model="ir.rule">
+        <field name="name">TAECEL account: own company or explicitly shared</field>
+        <field name="model_id" ref="model_xb_taecel_account"/>
+        <field name="domain_force">['|', ('company_id', 'in', company_ids), ('shared_company_ids', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_taecel_wallet_company" model="ir.rule">
+        <field name="name">TAECEL wallet: own company or explicitly shared</field>
+        <field name="model_id" ref="model_xb_taecel_wallet"/>
+        <field name="domain_force">['|', ('company_id', 'in', company_ids), ('account_id.shared_company_ids', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_taecel_carrier_company" model="ir.rule">
+        <field name="name">TAECEL carrier: own company or explicitly shared</field>
+        <field name="model_id" ref="model_xb_taecel_carrier"/>
+        <field name="domain_force">['|', ('company_id', 'in', company_ids), ('account_id.shared_company_ids', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_taecel_product_company" model="ir.rule">
+        <field name="name">TAECEL product: own company or explicitly shared</field>
+        <field name="model_id" ref="model_xb_taecel_product"/>
+        <field name="domain_force">['|', ('company_id', 'in', company_ids), ('account_id.shared_company_ids', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_taecel_transaction_company" model="ir.rule">
+        <field name="name">TAECEL transaction: own company or explicitly shared</field>
+        <field name="model_id" ref="model_xb_taecel_transaction"/>
+        <field name="domain_force">['|', ('company_id', 'in', company_ids), ('account_id.shared_company_ids', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+</odoo>

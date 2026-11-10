@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Multi-company isolation, same contract as the base module.
+
+        A network record carries another business's credentials and its whole
+        sales history, so it must not leak across companies. Every child holds
+        company_id as a stored related field of its affiliate's distributor
+        account, so the check hits an indexed column.
+
+        No cashier-level rule here on purpose: the network is not POS data.
+        It is reachable only by POS managers (see ir.model.access), and the
+        credentials themselves are further restricted on the field.
+    -->
+
+    <record id="rule_taecel_affiliate_company" model="ir.rule">
+        <field name="name">TAECEL affiliate: own company</field>
+        <field name="model_id" ref="model_xb_taecel_affiliate"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_taecel_affiliate_wallet_company" model="ir.rule">
+        <field name="name">TAECEL affiliate wallet: own company</field>
+        <field name="model_id" ref="model_xb_taecel_affiliate_wallet"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_taecel_affiliate_sale_company" model="ir.rule">
+        <field name="name">TAECEL affiliate sale: own company</field>
+        <field name="model_id" ref="model_xb_taecel_affiliate_sale"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+</odoo>
