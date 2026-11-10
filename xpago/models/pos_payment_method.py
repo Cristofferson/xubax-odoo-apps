@@ -107,8 +107,14 @@ class PosPaymentMethod(models.Model):
         orders = self.env['pos.order'].browse(data.get('refunded_order_ids') or []).exists()
         payments = orders.sudo().payment_ids.filtered(lambda p: p.payment_method_id == self and p.transaction_id)
         Charge = self.env['pos.xpago.charge'].sudo()
-        charges = Charge.search([('payment_method_id', '=', self.id), ('state', '=', 'confirmed'), '|',
+        charges = Charge.search([('payment_method_id', '=', self.id), ('state', 'in', ('confirmed', 'refunded')), '|',
                                  ('payment_id', 'in', payments.mapped('transaction_id')), ('pos_order_id', 'in', orders.ids)])
+        # A charge refunded outside Odoo (terminal app, dashboard) is paid back here once: its refund order links it.
+        linked = self.env['pos.payment'].sudo().search([
+            ('payment_method_id', '=', self.id), ('amount', '<', 0),
+            ('transaction_id', 'in', charges.filtered(lambda c: c.state == 'refunded').mapped('payment_id')),
+        ]).mapped('transaction_id')
+        charges = charges.filtered(lambda c: c.state == 'confirmed' or c.payment_id not in linked)
         currency = self.company_id.currency_id or self.env.company.currency_id
         charge = charges.filtered(lambda c: not currency.compare_amounts(c.amount, amount))[:1]
         if not charge:
@@ -117,8 +123,36 @@ class PosPaymentMethod(models.Model):
                     "XPago gives back a card payment in full only. Refund %(amounts)s, or pay this refund another way.",
                     amounts=", ".join(currency.format(c.amount) for c in charges)))
             raise UserError(_("No card payment of this method was found in the original sale."))
-        charge._xpago_refund()
+        if charge.state == 'confirmed':
+            try:
+                charge._xpago_refund()
+            except UserError as error:
+                if getattr(error, 'xpago_code', None) != 'refund_fee_not_covered':
+                    raise
+                # The processor keeps its fee and today's card sales do not cover it; its terminal app refunds
+                # anyway. The register waits for that refund (xpago_refund_status) and completes the line.
+                return {'state': charge.state, 'wait_on_terminal': True, 'charge_id': charge.id, 'message': _(
+                    "The processor does not accept this refund from Odoo: today's card sales do not cover its fee. "
+                    "Refund it on the terminal (Transactions › the charge › Refund charge). The register is waiting "
+                    "and completes it on its own; then press Validate."), 'stop_label': _("Stop waiting")}
         return {'state': charge.state, 'payment': charge._xpago_payment_values()}
+
+    def xpago_refund_status(self, data):
+        """The register waiting for a refund made on the terminal: ``refunded`` with the card once it is done."""
+        self._xpago_check_access()
+        charge = self.env['pos.xpago.charge'].sudo().search(
+            [('id', '=', int(data.get('charge_id') or 0)), ('payment_method_id', '=', self.id)], limit=1)
+        if not charge:
+            raise UserError(_("No card payment of this method was found in the original sale."))
+        if charge.state == 'confirmed':
+            charge._xpago_read_refunded()
+        if charge.state != 'refunded':
+            return {'state': charge.state}
+        linked = self.env['pos.payment'].sudo().search_count([
+            ('payment_method_id', '=', self.id), ('amount', '<', 0), ('transaction_id', '=', charge.payment_id)])
+        if linked:
+            raise UserError(_("This charge was already refunded."))
+        return {'state': 'refunded', 'payment': charge._xpago_payment_values()}
 
     def xpago_plan(self, data):
         """How the register charges this sale, by the XPago payment rules: one part, or one per account and months
