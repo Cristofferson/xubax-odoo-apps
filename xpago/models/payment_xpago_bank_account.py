@@ -15,9 +15,7 @@ class PaymentXpagoBankAccount(models.Model):
     sequence = fields.Integer(readonly=True)
     active = fields.Boolean(default=True, readonly=True)
 
-    _sql_constraints = [
-        ('xpago_id_unique', 'unique(provider_id, xpago_id)', "This XPago account already exists."),
-    ]
+    _xpago_id_unique = models.Constraint('unique(provider_id, xpago_id)', "This XPago account already exists.")
 
     def _compute_display_name(self):
         for account in self:

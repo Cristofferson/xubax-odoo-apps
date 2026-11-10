@@ -339,6 +339,11 @@ class PaymentProvider(models.Model):
             # A refused key or XPago failing is a connection problem; a refused request (a bad amount) is not.
             broken = response.status_code in (401, 403) or response.status_code >= 500
             self._xpago_note_call(not broken, self._xpago_parse_response_error(response) if broken else None)
+            known = self._xpago_known_refusal(response)
+            if known:
+                error = ValidationError(known)
+                error.xpago_code = self._xpago_error_code(response)
+                raise error
             try:
                 response.raise_for_status()
             except requests.exceptions.HTTPError as http_error:
@@ -353,6 +358,45 @@ class PaymentProvider(models.Model):
             return response.json()
         except ValueError as error:
             raise ValidationError("XPago: " + _("The API answered something that is not JSON.")) from error
+
+    def _xpago_error_code(self, response):
+        try:
+            error = (response.json() or {}).get('error') or {}
+        except (ValueError, AttributeError):
+            return None
+        return error.get('code') if isinstance(error, dict) else None
+
+    def _xpago_known_refusal(self, response):
+        """The words for a refusal the cashier can act on, or None. Refunds: Compago keeps its fee and takes it from
+        what the business has pending to settle; the terminal follows the same rule."""
+        try:
+            error = (response.json() or {}).get('error') or {}
+        except (ValueError, AttributeError):
+            return None
+        if not isinstance(error, dict):
+            return None
+        code, details = error.get('code'), error.get('details') or {}
+        currency = self.company_id.currency_id or self.env.company.currency_id
+        if code == 'refund_fee_not_covered':
+            required, missing = details.get('required'), details.get('missing')
+            if isinstance(required, (int, float)) and isinstance(missing, (int, float)):
+                return _(
+                    "The processor does not accept this refund: it keeps its fee of %(required)s and the card sales "
+                    "pending to settle do not cover it (%(missing)s missing). Nothing was charged back. It will go "
+                    "through once there are more card sales today, or ask the processor for a refund allowance.",
+                    required=currency.format(required), missing=currency.format(missing))
+            return _(
+                "The processor does not accept this refund: the card sales pending to settle do not cover its fee. "
+                "Nothing was charged back. It will go through once there are more card sales today, or ask the "
+                "processor for a refund allowance.")
+        if code == 'refund_window_expired':
+            return _("This charge can no longer be refunded: card refunds are accepted the same day only, before "
+                     "10:30 PM (10:00 PM with American Express).")
+        if code == 'already_refunded':
+            return _("This charge was already refunded.")
+        if code == 'refund_declined':
+            return _("The customer's bank did not accept the refund. Nothing was charged back.")
+        return None
 
     def _xpago_parse_response_error(self, response):
         try:

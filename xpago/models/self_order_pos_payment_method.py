@@ -24,7 +24,7 @@ class PosPaymentMethod(models.Model):
     @api.model
     def _load_pos_self_data_domain(self, data):
         domain = super()._load_pos_self_data_domain(data)
-        config = data['pos.config']['data'][0]
+        config = data['pos.config'][0]
         if config['self_ordering_mode'] == 'kiosk':
             domain = expression.OR([
                 [('use_payment_terminal', '=', 'xpago'), ('id', 'in', config['payment_method_ids'])],

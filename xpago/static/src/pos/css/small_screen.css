@@ -1,16 +1,14 @@
-/* Phone-size screens (Android payment terminals such as Newland N750/N950): Odoo shows the categories as a grid
-   of big buttons, which fills the screen and squeezes the products out of sight. Here the categories become one
+/* Phone-size screens (Android payment terminals such as Newland N750/N950): Odoo stacks every category as a
+   big button, which fills the screen and squeezes the products out of sight. Here the categories become one
    row that slides sideways, and the products take the rest of the screen. */
 @media (max-width: 767.98px) {
-    .product-screen .rightpane .category-list {
+    .product-screen .rightpane > div > div:has(> .category-button) {
         display: flex !important;
         flex-wrap: nowrap;
         flex-shrink: 0;
         width: 100%;
         min-width: 0;
         max-width: 100vw;
-        max-height: none;
-        margin-bottom: 0;
         overflow-x: auto;
         overflow-y: hidden;
         gap: 6px !important;
@@ -24,7 +22,7 @@
         min-width: 0;
         max-width: 100vw;
     }
-    .product-screen .rightpane .category-list::-webkit-scrollbar {
+    .product-screen .rightpane > div > div:has(> .category-button)::-webkit-scrollbar {
         display: none;
     }
     .product-screen .rightpane .category-button {
@@ -33,13 +31,6 @@
         min-height: 0 !important;
         width: auto !important;
         padding: 0 14px !important;
-    }
-    .product-screen .rightpane .category-button > .ratio {
-        display: none;
-    }
-    .product-screen .rightpane .category-button .line-clamp-3 {
-        width: auto !important;
-        display: block;
     }
     .product-screen .rightpane .category-button span {
         font-size: 0.95rem !important;
@@ -68,9 +59,7 @@
         gap: 4px !important;
         overflow: visible !important;
     }
-    .payment-screen .paymentmethod,
-    .payment-screen .paymentmethod:nth-child(odd):last-child {
-        grid-column: auto;
+    .payment-screen .paymentmethod {
         min-height: 0 !important;
         height: auto !important;
         padding: 6px 6px !important;
@@ -98,15 +87,10 @@
     }
     .payment-screen .paymentlines-container .total {
         font-size: 1.6rem !important;
-        padding-top: 4px !important;
-        padding-bottom: 4px !important;
     }
-    .payment-screen .text-center.py-4.fs-4 {
+    .payment-screen .text-bg-light.border.text-center.py-4.fs-4 {
         padding: 8px !important;
         font-size: 0.95rem !important;
-    }
-    .payment-screen .payment-status-container {
-        font-size: 1.1rem !important;
     }
     .payment-screen .payment-buttons > .d-flex {
         flex-direction: row !important;

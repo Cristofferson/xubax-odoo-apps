@@ -1,10 +1,9 @@
 import { _t } from "@web/core/l10n/translation";
-import { PaymentInterface } from "@point_of_sale/app/payment/payment_interface";
+import { PaymentInterface } from "@point_of_sale/app/utils/payment/payment_interface";
 import { AlertDialog, ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
-import { register_payment_method } from "@point_of_sale/app/store/pos_store";
-import { makeAwaitable } from "@point_of_sale/app/store/make_awaitable_dialog";
-import { SelectionPopup } from "@point_of_sale/app/utils/input_popups/selection_popup";
-
+import { register_payment_method } from "@point_of_sale/app/services/pos_store";
+import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
+import { SelectionPopup } from "@point_of_sale/app/components/popups/selection_popup/selection_popup";
 import { waitForCharge } from "@xpago/pos/app/charge_wait";
 
 export class PaymentXpago extends PaymentInterface {
@@ -20,10 +19,10 @@ export class PaymentXpago extends PaymentInterface {
         ]);
     }
 
-    async send_payment_request(uuid) {
-        await super.send_payment_request(...arguments);
-        const order = this.pos.get_order();
-        const line = order.get_paymentline_by_uuid(uuid);
+    async sendPaymentRequest(uuid) {
+        await super.sendPaymentRequest(...arguments);
+        const order = this.pos.getOrder();
+        const line = order.getPaymentlineByUuid(uuid);
         if (line.amount < 0) {
             return this._refund(order, line);
         }
@@ -50,13 +49,13 @@ export class PaymentXpago extends PaymentInterface {
                 { type: "info" }
             );
         }
-        line.set_payment_status("waitingCapture");
+        line.setPaymentStatus("waitingCapture");
         let charge;
         try {
             charge = await this._call("xpago_create_charge", [
                 {
                     amount: line.amount,
-                    session_id: this.pos.session?.id,
+                    session_id: this.pos.config.current_session_id?.id,
                     order_uuid: order.uuid,
                     bank_account_id: accountId,
                     rule_account_id: part.account_id || false,
@@ -67,7 +66,7 @@ export class PaymentXpago extends PaymentInterface {
             return false;
         }
         this.charges[uuid] = { id: charge.id, cancelled: false };
-        line.set_payment_status("waitingCard");
+        line.setPaymentStatus("waitingCard");
         if (this.payment_method_id.xpago_open_terminal_app && charge.terminal_app_url) {
             this._openTerminalApp(charge.terminal_app_url);
         }
@@ -77,10 +76,10 @@ export class PaymentXpago extends PaymentInterface {
             Object.assign(line, result.payment);
             // Next part of a split sale: selected, so the cashier only presses Send.
             const next = order.payment_ids.find(
-                (p) => p.xpagoPart && p !== line && p.get_payment_status() === "pending"
+                (p) => p.xpagoPart && p !== line && p.getPaymentStatus() === "pending"
             );
             if (next) {
-                order.select_paymentline(next);
+                order.selectPaymentline(next);
             }
             return true;
         }
@@ -105,13 +104,13 @@ export class PaymentXpago extends PaymentInterface {
         try {
             plan = await this._call("xpago_plan", [
                 {
-                    session_id: this.pos.session?.id,
-                    total: order.get_total_with_tax(),
+                    session_id: this.pos.config.current_session_id?.id,
+                    total: order.totalDue,
                     amount: line.amount,
                     lines: order.lines.map((l) => ({
                         product_id: l.product_id?.id,
                         qty: l.qty,
-                        amount: l.get_price_with_tax(),
+                        amount: l.priceIncl,
                     })),
                 },
             ]);
@@ -154,15 +153,15 @@ export class PaymentXpago extends PaymentInterface {
         if (!ok) {
             return null;
         }
-        line.set_amount(parts[0].amount);
+        line.setAmount(parts[0].amount);
         line.xpagoPart = parts[0];
         for (const part of parts.slice(1)) {
             const extra = this.pos.models["pos.payment"].create({
                 pos_order_id: order,
                 payment_method_id: this.payment_method_id,
             });
-            extra.set_amount(part.amount);
-            extra.set_payment_status("pending");
+            extra.setAmount(part.amount);
+            extra.setPaymentStatus("pending");
             extra.xpagoPart = part;
         }
         return parts;
@@ -191,8 +190,7 @@ export class PaymentXpago extends PaymentInterface {
 
     async _waitForResult(uuid, charge, order) {
         // Stop asking once the payment line is gone (removed, or the order was left) or the point of sale closes.
-        const active = () =>
-            Boolean(this.charges[uuid] && !this.charges[uuid].stopped && order.get_paymentline_by_uuid(uuid));
+        const active = () => Boolean(this.charges[uuid] && !this.charges[uuid].stopped && order.getPaymentlineByUuid(uuid));
         return waitForCharge(charge, (current) => this._call("xpago_charge_status", [current.id]), active);
     }
 
@@ -203,10 +201,14 @@ export class PaymentXpago extends PaymentInterface {
         return super.close(...arguments);
     }
 
-    async send_payment_cancel(order, uuid) {
-        await super.send_payment_cancel(...arguments);
+    async sendPaymentCancel(order, uuid) {
+        await super.sendPaymentCancel(...arguments);
         const pending = this.charges[uuid];
         if (!pending) {
+            return true;
+        }
+        if (pending.refundWait) {
+            pending.stopped = true; // only stop waiting: there is nothing to cancel on the processor
             return true;
         }
         try {
@@ -225,17 +227,70 @@ export class PaymentXpago extends PaymentInterface {
         const refundedOrderIds = [
             ...new Set(order.lines.map((l) => l.refunded_orderline_id?.order_id?.id).filter(Boolean)),
         ];
-        line.set_payment_status("waitingCard");
+        line.setPaymentStatus("waitingCard");
         try {
             const result = await this._call("xpago_refund_charge", [
                 { amount: line.amount, refunded_order_ids: refundedOrderIds },
             ]);
+            if (result.wait_on_terminal) {
+                return this._waitForTerminalRefund(order, line, result);
+            }
             Object.assign(line, result.payment || {});
             return true;
         } catch (error) {
             this._showError(error.data?.message || error.message || String(error));
             return false;
         }
+    }
+
+    /** The processor refused the refund for its fee: the cashier refunds on the terminal, and the register asks
+     *  until that refund shows, then completes the line. «Cancel» on the line (or leaving it) stops asking. */
+    async _waitForTerminalRefund(order, line, result) {
+        const uuid = line.uuid;
+        this.charges[uuid] = { id: result.charge_id, refundWait: true };
+        // A refund line shows no Cancel while it waits: the notice carries the way out, and the wait has a limit.
+        const stop = () => {
+            if (this.charges[uuid]) {
+                this.charges[uuid].stopped = true;
+            }
+        };
+        const closeNotice = this.env.services.notification.add(result.message, {
+            type: "warning",
+            sticky: true,
+            buttons: [{ name: result.stop_label, onClick: stop }],
+        });
+        const deadline = Date.now() + 15 * 60 * 1000;
+        const active = () =>
+            Boolean(this.charges[uuid] && !this.charges[uuid].stopped && order.getPaymentlineByUuid(uuid)) &&
+            Date.now() < deadline;
+        let done = false;
+        try {
+            while (active()) {
+                await new Promise((resolve) => setTimeout(resolve, 3000));
+                if (!active()) {
+                    break;
+                }
+                let status;
+                try {
+                    status = await this._call("xpago_refund_status", [{ charge_id: result.charge_id }]);
+                } catch (error) {
+                    if (error.data?.message) {
+                        this._showError(error.data.message);
+                        break;
+                    }
+                    continue; // offline: keep asking
+                }
+                if (status.state === "refunded") {
+                    Object.assign(line, status.payment || {});
+                    done = true;
+                    break;
+                }
+            }
+        } finally {
+            delete this.charges[uuid];
+            closeNotice();
+        }
+        return done;
     }
 
     _openTerminalApp(url) {

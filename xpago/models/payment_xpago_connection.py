@@ -13,4 +13,4 @@ class PaymentXpagoConnection(models.Model):
     last_error = fields.Char(string="Error", readonly=True)
     account_name = fields.Char(string="XPago account", readonly=True)
 
-    _sql_constraints = [('provider_unique', 'UNIQUE(provider_id)', "One connection status per provider.")]
+    _provider_unique = models.Constraint('UNIQUE(provider_id)', "One connection status per provider.")

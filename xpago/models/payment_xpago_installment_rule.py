@@ -21,9 +21,8 @@ class PaymentXpagoInstallmentRule(models.Model):
              "single payment only.",
     )
 
-    _sql_constraints = [
-        ('provider_min_amount_unique', 'unique(provider_id, min_amount)', "There is already a rule from this amount."),
-    ]
+    _provider_min_amount_unique = models.Constraint(
+        'unique(provider_id, min_amount)', "There is already a rule from this amount.")
 
     def _parse_terms(self):
         self.ensure_one()
