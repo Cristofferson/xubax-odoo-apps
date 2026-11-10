@@ -205,7 +205,7 @@ msgid ""
 "Could not read the deposit reference:\n"
 "\n"
 "%s"
-msgstr "No se pudo leer la referencia de depósito:\\n\\n%s"
+msgstr "No se pudo leer la referencia de depósito:\n\n%s"
 
 #. module: xb_taecel_network
 #: model:ir.model.fields,field_description:xb_taecel_network.field_xb_taecel_affiliate__create_uid
@@ -352,7 +352,7 @@ msgid ""
 "No credentials for %s yet.\n"
 "\n"
 "TAECEL issues its own ws key and NIP to each affiliate when you register it in MI RED; they are mailed to the address on the account. Ask for them as a PDF: the portal truncates the key on screen and a copied key is rejected with a 403."
-msgstr "Todavía no hay credenciales de %s.\\n\\nTAECEL le emite a cada afiliado su propia clave y NIP de ws al registrarlo en MI RED, y se las manda al correo de la cuenta. Pídelas en PDF: el portal corta la clave en pantalla y una clave copiada se rechaza con un 403."
+msgstr "Todavía no hay credenciales de %s.\n\nTAECEL le emite a cada afiliado su propia clave y NIP de ws al registrarlo en MI RED, y se las manda al correo de la cuenta. Pídelas en PDF: el portal corta la clave en pantalla y una clave copiada se rechaza con un 403."
 
 #. module: xb_taecel_network
 #: model:ir.model.fields.selection,name:xb_taecel_network.selection__xb_taecel_affiliate__state__draft
@@ -519,7 +519,7 @@ msgid ""
 "TAECEL refused the connection:\n"
 "\n"
 "%s"
-msgstr "TAECEL rechazó la conexión:\\n\\n%s"
+msgstr "TAECEL rechazó la conexión:\n\n%s"
 
 #. module: xb_taecel_network
 #: model:ir.actions.server,name:xb_taecel_network.cron_taecel_network_refresh_ir_actions_server
