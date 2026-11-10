@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import html
+from datetime import timedelta
 import logging
 import re
 
@@ -437,13 +438,23 @@ class XbTaecelAccount(models.Model):
     # -- Cron --------------------------------------------------------------
     @api.model
     def _cron_sync_catalog(self):
-        """Read the catalog once a day, so what the provider charges per payment is never stale."""
+        """Read the catalog once a day, so what the provider charges per payment is never stale.
+
+        If an account cannot be read (TAECEL does not always answer at night), try again in an hour, and every hour
+        after that until it works: a missed read leaves bill payments without the provider charge."""
+        failed = False
         for account in self.search([('active', '=', True), ('state', '!=', 'draft')]):
             try:
                 with self.env.cr.savepoint():
                     account.action_sync_catalog()
             except Exception as error:  # One account failing must not stop the others.
-                _logger.warning('Recharges: could not sync the catalog of %s: %s', account.name, error)
+                failed = True
+                _logger.warning('Recharges: could not sync the catalog of %s, retrying in 1 hour: %s',
+                                account.name, ' '.join(str(error).split()))
+        if failed:
+            cron = self.env.ref('xb_pos_taecel.cron_taecel_catalog', raise_if_not_found=False)
+            if cron:
+                cron._trigger(at=fields.Datetime.now() + timedelta(hours=1))
 
     @api.model
     def _cron_refresh_balance(self):

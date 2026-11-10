@@ -9,7 +9,7 @@ La rama `18.0` contiene el código para Odoo 18.0. Cada módulo vive en su propi
 | Módulo | Versión | Precio | Descripción |
 |---|---|---|---|
 | `xb_product_pricelist_rules` | 18.0.1.0.0 | Gratis (LGPL-3) | Muestra **todas** las reglas de lista de precio (incl. fórmula y porcentaje) en el smart button del producto, y agrega un menú buscable de reglas. Corrige el límite de Odoo 18 que solo contaba reglas de precio fijo. |
-| `xb_pos_taecel` | 1.1.3 | 249 USD (OPL-1) | Venta de tiempo aire, paquetes de datos, pago de servicios y pines electrónicos desde el Punto de Venta, contra la red **TAECEL** (México): 30+ operadoras, saldo en vivo y conciliación automática de ventas interrumpidas. |
+| `xb_pos_taecel` | 1.1.4 | 249 USD (OPL-1) | Venta de tiempo aire, paquetes de datos, pago de servicios y pines electrónicos desde el Punto de Venta, contra la red **TAECEL** (México): 30+ operadoras, saldo en vivo y conciliación automática de ventas interrumpidas. |
 | `payment_xpago` | 18.0.1.0.0 | Gratis (OPL-1) | XPago en la tienda en línea, facturas y ligas de pago: meses sin intereses por monto, tarjetas guardadas (suscripciones), retención con cobro total o parcial, reembolsos y hasta 10 cuentas de depósito. |
 | `pos_xpago` | 18.0.1.0.0 | Gratis (OPL-1) | Terminales XPago en el Punto de Venta: el monto va a la terminal y la tarjeta aprobada regresa a la orden; conciliación con comisión e IVA y cobros sin venta; caja en pantalla chica. |
 | `pos_self_order_xpago` | 18.0.1.0.0 | Gratis (OPL-1) | El cliente pide en el kiosco de autoservicio y paga en la terminal XPago de al lado. |
