@@ -165,7 +165,7 @@ msgid ""
 "\n"
 "Do NOT refund it and do NOT sell it again: it is still being verified and may go through. It will be settled under Recharges > Transactions."
 msgstr ""
-"%(what)s todavía no tiene confirmación.\\n\\nNO la devuelvas y NO la vuelvas"
+"%(what)s todavía no tiene confirmación.\n\nNO la devuelvas y NO la vuelvas"
 " a vender: se está verificando y puede completarse. Quedará resuelta en "
 "Recargas > Transacciones."
 
@@ -178,7 +178,7 @@ msgid ""
 "\n"
 "The customer paid %(amount)s for it. Refund that line."
 msgstr ""
-"%(what)s NO se entregó.\\nMotivo: %(reason)s\\n\\nEl cliente pagó %(amount)s"
+"%(what)s NO se entregó.\nMotivo: %(reason)s\n\nEl cliente pagó %(amount)s"
 " por ella. Devuélvele esa línea."
 
 #. module: xb_pos_taecel
@@ -760,7 +760,7 @@ msgid ""
 "Could not read the deposit reference:\n"
 "\n"
 "%s"
-msgstr "No se pudo leer la referencia de depósito:\\\\n\\\\n%s"
+msgstr "No se pudo leer la referencia de depósito:\n\n%s"
 
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_search
