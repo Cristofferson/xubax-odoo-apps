@@ -212,6 +212,73 @@ class TestPosXpago(TestPoSCommon):
             self.method.xpago_refund_charge({'amount': -150.5, 'refunded_order_ids': order.ids})
         self.assertEqual(charge.state, 'confirmed')
 
+    def test_refund_the_fee_does_not_cover_waits_on_the_terminal(self):
+        self.basic_config.payment_method_ids |= self.method
+        charge = self.paid_charge()
+        order = self.refund_order(charge)
+        refused = ValidationError('The fee is not covered.')
+        refused.xpago_code = 'refund_fee_not_covered'
+
+        def processor(method, endpoint, **kwargs):
+            if method == 'POST':
+                raise refused
+            return self.approved()
+        with patch(SEND, side_effect=processor):
+            result = self.method.xpago_refund_charge({'amount': -150.5, 'refunded_order_ids': order.ids})
+        self.assertTrue(result['wait_on_terminal'])
+        self.assertEqual((result['charge_id'], charge.state), (charge.id, 'confirmed'))
+        with patch(SEND, return_value=self.approved()):
+            self.assertEqual(self.method.xpago_refund_status({'charge_id': charge.id}), {'state': 'confirmed'})
+        with patch(SEND, return_value={**self.approved(), 'status': 'refunded'}):
+            status = self.method.xpago_refund_status({'charge_id': charge.id})
+        self.assertEqual((status['state'], status['payment']['card_no'], charge.state), ('refunded', '4242', 'refunded'))
+
+    def test_other_refusals_still_tell_the_cashier(self):
+        self.basic_config.payment_method_ids |= self.method
+        charge = self.paid_charge()
+        order = self.refund_order(charge)
+        declined = ValidationError('The bank did not accept the refund.')
+        declined.xpago_code = 'refund_declined'
+
+        def processor(method, endpoint, **kwargs):
+            if method == 'POST':
+                raise declined
+            return self.approved()
+        with patch(SEND, side_effect=processor), self.assertRaises(UserError):
+            self.method.xpago_refund_charge({'amount': -150.5, 'refunded_order_ids': order.ids})
+        self.assertEqual(charge.state, 'confirmed')
+
+    def test_refund_made_on_the_terminal_links_to_one_refund_order(self):
+        self.basic_config.payment_method_ids |= self.method
+        charge = self.paid_charge()
+        order = self.refund_order(charge)
+        with patch(SEND, return_value={**self.approved(), 'status': 'refunded'}):
+            self.env['pos.xpago.charge']._xpago_cron_refresh()
+        self.assertEqual(charge.state, 'refunded', 'the scheduled action reads the paid charges of the day')
+        with patch(SEND) as send:
+            result = self.method.xpago_refund_charge({'amount': -150.5, 'refunded_order_ids': order.ids})
+        send.assert_not_called()
+        self.assertEqual((result['state'], result['payment']['card_no']), ('refunded', '4242'))
+        self.env['pos.payment'].create({
+            'pos_order_id': order.id, 'payment_method_id': self.method.id, 'amount': -150.5,
+            'transaction_id': charge.payment_id})
+        with patch(SEND), self.assertRaises(UserError):
+            self.method.xpago_refund_charge({'amount': -150.5, 'refunded_order_ids': order.ids})
+
+    def test_refund_refusals_in_words_the_cashier_acts_on(self):
+        class Answer:
+            def __init__(self, body):
+                self.body = body
+
+            def json(self):
+                return self.body
+        refusal = self.provider._xpago_known_refusal(Answer({'error': {
+            'code': 'refund_fee_not_covered', 'details': {'required': 3.48, 'missing': 2.28}}}))
+        self.assertIn('3.48', refusal)
+        self.assertIn('2.28', refusal)
+        self.assertEqual(self.provider._xpago_error_code(Answer({'error': {'code': 'refund_declined'}})), 'refund_declined')
+        self.assertIsNone(self.provider._xpago_known_refusal(Answer({'error': {'code': 'not_found'}})))
+
     def test_back_office_refund(self):
         charge = self.paid_charge()
         with patch(SEND, return_value={'id': 'pi-1', 'status': 'refunded'}) as send:

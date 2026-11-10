@@ -204,13 +204,11 @@ class PosXpagoCharge(models.Model):
         self.ensure_one()
         if self.state != 'confirmed':
             raise UserError(_("Only a paid terminal charge can be refunded."))
-        # Refunded on the terminal already (its own app can, when the API cannot): take it as done, nothing to send.
-        if self._xpago_read_refunded():
-            return {}
         try:
             answer = self.provider_id._xpago_make_request('POST', f'/v1/terminal-charges/{self.xpago_id}/refund',
                                                         idempotency_key=f'refund-{self.external_id}')
         except ValidationError as error:
+            # Refunded meanwhile on the terminal app or the dashboard: done, nothing more to send.
             if self._xpago_read_refunded():
                 return {}
             refusal = UserError(_("XPago did not refund the charge.\n%s", error))
@@ -220,7 +218,7 @@ class PosXpagoCharge(models.Model):
         return answer
 
     def _xpago_read_refunded(self):
-        """Ask XPago whether this paid charge was refunded meanwhile (on the terminal). True when it was."""
+        """Ask XPago whether this paid charge was refunded outside Odoo (terminal app, dashboard). True when it was."""
         self.ensure_one()
         if not self.xpago_id:
             return False
@@ -293,7 +291,7 @@ class PosXpagoCharge(models.Model):
         open_charges = self.search([('state', '=', 'pending'), ('create_date', '>', fields.Datetime.now() - timedelta(days=2))])
         open_charges._xpago_refresh()
         # The paid ones of the last day too: a refund made on the terminal shows up here.
-        for charge in self.search([('state', '=', 'confirmed'), ('create_date', '>', fields.Datetime.now() - timedelta(days=1))]):
+        for charge in self.sudo().search([('state', '=', 'confirmed'), ('create_date', '>', fields.Datetime.now() - timedelta(days=1))]):
             charge._xpago_read_refunded()
         self.search([('state', '=', 'pending'), ('create_date', '<=', fields.Datetime.now() - timedelta(days=2))]).write(
             {'state': 'expired'})
