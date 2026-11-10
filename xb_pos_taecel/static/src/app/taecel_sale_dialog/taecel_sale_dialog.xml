@@ -84,9 +84,9 @@
                             <span>Amount</span>
                             <span t-esc="formatCurrency(state.amount)"/>
                         </div>
-                        <div t-if="customerFee" class="d-flex justify-content-between">
-                            <span>Fee</span>
-                            <span t-esc="formatCurrency(customerFee)"/>
+                        <div t-foreach="feeParts" t-as="part" t-key="part[0]" class="d-flex justify-content-between">
+                            <span t-esc="part[0]"/>
+                            <span t-esc="formatCurrency(part[1])"/>
                         </div>
                         <div class="d-flex justify-content-between fw-bolder xb-taecel-total">
                             <span>Total</span>

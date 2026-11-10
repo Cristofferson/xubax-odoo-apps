@@ -45,11 +45,72 @@ class XbTaecelCarrier(models.Model):
         (const.CARRIER_FREE, 'Free amount'),
     ], default=const.CARRIER_CATALOG)
     active = fields.Boolean(default=True)
-    customer_fee = fields.Monetary(
-        string='Customer Fee',
-        help='Fee charged to the customer on top of the amount, as agreed '
-             'with your provider. Typically 0 for airtime; set for services.')
     currency_id = fields.Many2one(related='account_id.currency_id')
+
+    # -- What a bill payment costs, and who keeps each part ------------------
+    # The provider charges the account a fixed amount on every bill payment
+    # (CargoTrans; $5 on most services), on top of the bill, and pays no
+    # commission on them. Selling a bill at its face value therefore loses that
+    # charge: the customer pays it as the service cost (which, on accounts of
+    # the XPago network, already carries the XPago fee), plus whatever the
+    # business adds for itself.
+    provider_fee = fields.Monetary(
+        string='Provider Charge', readonly=True,
+        help='Fixed amount the provider takes from your wallet on every payment, '
+             'on top of the bill. Read from the catalog.')
+    provider_fee_list = fields.Monetary(
+        string='Provider List Charge', readonly=True,
+        help="The provider's standard charge. When your charge is higher, the "
+             'difference goes to your distributor (it already includes the XPago fee).')
+    provider_client_fee = fields.Monetary(
+        string='Provider Customer Fee', readonly=True,
+        help='Fee the provider itself asks to charge the customer. Read from the catalog.')
+    provider_commission = fields.Float(
+        string='Provider Commission (%)', readonly=True,
+        help='What the provider pays you on each sale of this carrier (gift cards).')
+    is_bill_payment = fields.Boolean(
+        string='Bill Payment', compute='_compute_is_bill_payment', store=True,
+        help='A service payment (light, water, TV...). Gift cards and airtime are not.')
+    merchant_fee = fields.Monetary(
+        string='My Fee',
+        help='What you add on top for each payment. It is all yours and is kept '
+             'when the catalog is synchronized. Empty: the account default.')
+    xpago_fee = fields.Monetary(
+        string='XPago Fee', compute='_compute_customer_fee', store=True,
+        help='XPago fee on each bill payment. The customer pays it inside the '
+             'service cost; it is never shown as a line of its own.')
+    fee_provider_part = fields.Monetary(
+        string='Service Cost', compute='_compute_customer_fee', store=True,
+        help='What the customer pays for the service, on top of the amount.')
+    fee_merchant_part = fields.Monetary(
+        string='Business Fee', compute='_compute_customer_fee', store=True,
+        help='Part of the customer fee that is yours.')
+    customer_fee = fields.Monetary(
+        string='Customer Fee', compute='_compute_customer_fee', store=True,
+        help='Everything the customer pays on top of the amount: the service '
+             'cost and your fee. Shown on the receipt.')
+
+    @api.depends('bolsa_id', 'category', 'provider_fee')
+    def _compute_is_bill_payment(self):
+        for carrier in self:
+            carrier.is_bill_payment = (carrier.bolsa_id == const.BOLSA_SERVICES
+                                       and 'gift' not in (carrier.category or '').lower())
+
+    @api.depends('provider_fee', 'provider_fee_list', 'provider_client_fee', 'merchant_fee', 'is_bill_payment',
+                 'account_id.xpago_fee', 'account_id.merchant_fee')
+    def _compute_customer_fee(self):
+        for carrier in self:
+            xpago = carrier.account_id.xpago_fee if carrier.is_bill_payment else 0.0
+            # Part of the XPago fee the provider already collects through a higher charge.
+            collected = min(max(carrier.provider_fee - carrier.provider_fee_list, 0.0), xpago) \
+                if carrier.provider_fee_list else 0.0
+            mine = carrier.merchant_fee if carrier.merchant_fee else (
+                carrier.account_id.merchant_fee if carrier.is_bill_payment else 0.0)
+            carrier.xpago_fee = xpago
+            # The customer sees one service cost: the provider part with the XPago fee inside it.
+            carrier.fee_provider_part = carrier.provider_fee + carrier.provider_client_fee - collected + xpago
+            carrier.fee_merchant_part = mine
+            carrier.customer_fee = carrier.fee_provider_part + mine
 
     product_ids = fields.One2many('xb.taecel.product', 'carrier_id')
     product_count = fields.Integer(compute='_compute_product_count')
@@ -117,12 +178,24 @@ class XbTaecelCarrier(models.Model):
         campos = row.get(const.K_CARRIER_FIELDS) or []
         field = campos[0] if campos else {}
         comision = row.get('Comision') or {}
-        try:
-            fee = float(comision.get('ComisionCliente') or 0.0)
-        except (TypeError, ValueError):
-            fee = 0.0
+
+        def number(key):
+            try:
+                return float(comision.get(key) or 0.0)
+            except (TypeError, ValueError):
+                return 0.0
+        # TipoCargo / TipoAbono: 1 = percent, 2 = fixed amount. Only a fixed
+        # charge can be passed on to the customer as a fee.
+        fixed = str(comision.get('TipoCargo') or '') == const.COMMISSION_FIXED
+        if not fixed and number('CargoTrans'):
+            _logger.warning('TAECEL: carrier %s has a percent charge; not passed on to the customer.',
+                            row.get(const.K_CARRIER_NAME))
         return {
-            'customer_fee': fee,
+            'provider_fee': number('CargoTrans') if fixed else 0.0,
+            'provider_fee_list': number('def_CargoTrans') if fixed else 0.0,
+            'provider_client_fee': number('ComisionCliente'),
+            'provider_commission': number('AbonoTrans')
+            if str(comision.get('TipoAbono') or '') == const.COMMISSION_PERCENT else 0.0,
             'account_id': account.id,
             'carrier_uid': str(row.get(const.K_CARRIER_ID) or '').strip(),
             'name': row.get(const.K_CARRIER_NAME) or '',
@@ -148,6 +221,7 @@ class XbTaecelCarrier(models.Model):
     @api.model
     def _load_pos_data_fields(self, config=None):
         return ['id', 'carrier_uid', 'name', 'logo_url', 'bolsa_id', 'category',
-                'category_uid', 'carrier_type', 'customer_fee', 'field_label',
+                'category_uid', 'carrier_type', 'customer_fee', 'provider_fee', 'xpago_fee',
+                'fee_provider_part', 'fee_merchant_part', 'is_bill_payment', 'field_label',
                 'field_key', 'field_min', 'field_max', 'field_format',
                 'field_required', 'field_confirm', 'account_id', 'currency_id']

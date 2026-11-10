@@ -20,6 +20,8 @@ class PosOrderLine(models.Model):
         help='Phone number or bill reference the recharge is dispatched to.')
     taecel_bolsa_id = fields.Char(string='Wallet', copy=False)
     taecel_fee = fields.Monetary(string='Customer Fee', copy=False)
+    taecel_fee_xpago = fields.Monetary(string='XPago Fee', copy=False)
+    taecel_fee_merchant = fields.Monetary(string='Business Fee', copy=False)
     taecel_transaction_ids = fields.One2many(
         'xb.taecel.transaction', 'pos_order_line_id', copy=False)
 
@@ -32,5 +34,6 @@ class PosOrderLine(models.Model):
             fields_ += [
                 'taecel_is_taecel', 'taecel_carrier_id', 'taecel_product_code',
                 'taecel_reference', 'taecel_bolsa_id', 'taecel_fee',
+                'taecel_fee_xpago', 'taecel_fee_merchant',
             ]
         return fields_

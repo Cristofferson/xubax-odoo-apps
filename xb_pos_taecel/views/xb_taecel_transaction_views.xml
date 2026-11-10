@@ -10,7 +10,9 @@
                 <field name="product_id"/>
                 <field name="reference"/>
                 <field name="amount"/>
-                <field name="customer_fee"/>
+                <field name="customer_fee" sum="Total"/>
+                <field name="xpago_fee" sum="Total" optional="show" groups="base.group_no_one"/>
+                <field name="merchant_fee" sum="Total" optional="show"/>
                 <field name="total_charged"/>
                 <field name="folio"/>
                 <field name="pos_order_id"/>
@@ -52,6 +54,8 @@
                             <field name="reference"/>
                             <field name="amount"/>
                             <field name="customer_fee"/>
+                            <field name="xpago_fee" groups="base.group_no_one"/>
+                            <field name="merchant_fee"/>
                             <field name="total_charged"/>
                         </group>
                         <group string="Dispatch">

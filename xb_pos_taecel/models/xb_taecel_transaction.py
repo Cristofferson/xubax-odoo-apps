@@ -45,6 +45,10 @@ class XbTaecelTransaction(models.Model):
         string='Customer Service Fee',
         help='Fee charged to the customer on top of the amount, as configured '
              'with your provider. Must appear on the receipt.')
+    xpago_fee = fields.Monetary(
+        string='XPago Fee', help='Part of the customer fee that is the XPago fee.')
+    merchant_fee = fields.Monetary(
+        string='Business Fee', help='Part of the customer fee that the business keeps.')
     total_charged = fields.Monetary(compute='_compute_total_charged', store=True)
 
     state = fields.Selection([

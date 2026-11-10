@@ -15,8 +15,9 @@ Features
 --------
 * **Airtime and data packages** for 30+ Mexican carriers (Telcel, Movistar,
   AT&T, Unefon, Bait, Virgin, Weex and more) sold as ordinary POS lines.
-* **Bill payments** with the customer service fee you configured, printed on
-  the receipt as TAECEL requires.
+* **Bill payments** that never lose money: the customer pays the provider charge
+  of each service (read from the catalog), the network fee and your own fee,
+  itemised on the receipt.
 * **Electronic PINs** delivered by SMS to the customer.
 * **Two live wallets** — airtime and services are funded separately by TAECEL
   and are not transferable, so both are tracked and guarded independently. The
@@ -26,7 +27,7 @@ Features
   recharge to the customer's phone.
 * **Full audit trail**: every request, folio and authorization code kept
   against its POS order.
-* Catalog synchronised from TAECEL on demand and on a schedule.
+* Catalog synchronised from TAECEL on demand and every day.
 
 Requirements
 ------------
@@ -37,8 +38,8 @@ transactions. A distributor account on its own does not include API access.
 Runs on Odoo 18.0 and 19.0.
 """,
     'category': 'Sales/Point of Sale',
-    'version': '19.0.1.0.13',
-    'author': 'XUBAX',
+    'version': '19.0.1.1.2',
+    'author': 'Cristofferson Reyes',
     'website': 'https://xubax.com',
     'license': 'OPL-1',
     'price': 249.00,

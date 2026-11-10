@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Odoo 18 / 19 compatibility shim.
+"""Odoo 18 / 19 / 20 compatibility shim.
 
 This module ships for both Odoo 18 and Odoo 19 from a single codebase. The POS
 loading API changed between them, in two ways that reach our models:
@@ -9,6 +9,9 @@ loading API changed between them, in two ways that reach our models:
     _load_pos_data_domain(self, data)        _load_pos_data_domain(self, data, config)
     _load_pos_data_fields(self, config_id)   _load_pos_data_fields(self, config)
     `config_id` is an int (the id)           `config` is a pos.config recordset
+
+Odoo 20 went back to ``_load_pos_data_domain(self, data)`` (no config) and
+keeps ``_load_pos_data_fields(self, config)`` with a recordset.
 
 Both are absorbed here so no other Python file needs a version check:
 
@@ -37,15 +40,26 @@ IS_ODOO_18 = ODOO_VERSION <= 18
 HAS_MODEL_CONSTRAINT = hasattr(models, 'Constraint')
 
 
-def pos_config_record(env, config):
+def pos_config_record(env, config, data=None):
     """Return a ``pos.config`` recordset from whatever the POS handed us.
 
     Accepts an id (Odoo 18), a recordset (Odoo 19), or nothing at all, and
     always returns a recordset -- empty rather than None, so callers can chain
     without guarding.
+
+    Odoo 18 and 20 call ``_load_pos_data_domain(data)`` without the config;
+    it is then read back from ``data['pos.config']``, which holds the register
+    already loaded: a recordset on Odoo 20, ``{'data': [{'id': ...}]}`` on 18.
     """
     if isinstance(config, BaseModel):
         return config
     if isinstance(config, int):
         return env['pos.config'].browse(config)
+    loaded = (data or {}).get('pos.config')
+    if isinstance(loaded, BaseModel):
+        return loaded
+    if isinstance(loaded, dict):
+        ids = [rec['id'] for rec in loaded.get('data') or loaded.get('records') or []
+               if isinstance(rec, dict) and rec.get('id')]
+        return env['pos.config'].browse(ids)
     return env['pos.config']
