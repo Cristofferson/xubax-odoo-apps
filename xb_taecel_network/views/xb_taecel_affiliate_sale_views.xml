@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_taecel_affiliate_sale_list" model="ir.ui.view">
+        <field name="name">xb.taecel.affiliate.sale.list</field>
+        <field name="model">xb.taecel.affiliate.sale</field>
+        <field name="arch" type="xml">
+            <list string="Network Sales" create="false">
+                <field name="date"/>
+                <field name="affiliate_id"/>
+                <field name="carrier"/>
+                <field name="reference"/>
+                <field name="amount" sum="Volume"/>
+                <field name="commission" sum="Commission"/>
+                <field name="folio"/>
+                <field name="trans_id" optional="hide"/>
+                <field name="final_balance" optional="hide"/>
+                <field name="note" optional="hide"/>
+                <field name="status" widget="badge"
+                       decoration-success="status == 'ok'"
+                       decoration-danger="status == 'ko'"
+                       decoration-warning="status == 'pending'"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_taecel_affiliate_sale_form" model="ir.ui.view">
+        <field name="name">xb.taecel.affiliate.sale.form</field>
+        <field name="model">xb.taecel.affiliate.sale</field>
+        <field name="arch" type="xml">
+            <form string="Sale" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="affiliate_id"/>
+                            <field name="date"/>
+                            <field name="carrier"/>
+                            <field name="reference"/>
+                            <field name="status"/>
+                        </group>
+                        <group>
+                            <field name="trans_id"/>
+                            <field name="folio"/>
+                            <field name="bolsa_id"/>
+                            <field name="amount"/>
+                            <field name="commission"/>
+                            <field name="final_balance"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="note" readonly="1" invisible="not note"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_taecel_affiliate_sale_search" model="ir.ui.view">
+        <field name="name">xb.taecel.affiliate.sale.search</field>
+        <field name="model">xb.taecel.affiliate.sale</field>
+        <field name="arch" type="xml">
+            <search string="Network Sales">
+                <field name="affiliate_id"/>
+                <field name="carrier"/>
+                <field name="reference"/>
+                <field name="folio"/>
+                <field name="trans_id"/>
+                <filter name="ok" string="Successful" domain="[('status', '=', 'ok')]"/>
+                <filter name="ko" string="Failed" domain="[('status', '=', 'ko')]"/>
+                <filter name="pending" string="In Progress" domain="[('status', '=', 'pending')]"/>
+                <separator/>
+                <filter name="today" string="Today"
+                        domain="[('date', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)))]"/>
+                <group>
+                    <filter name="group_affiliate" string="Affiliate"
+                            context="{'group_by': 'affiliate_id'}"/>
+                    <filter name="group_carrier" string="Carrier"
+                            context="{'group_by': 'carrier'}"/>
+                    <filter name="group_status" string="Status"
+                            context="{'group_by': 'status'}"/>
+                    <filter name="group_date" string="Date"
+                            context="{'group_by': 'date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_taecel_affiliate_sale" model="ir.actions.act_window">
+        <field name="name">Network Sales</field>
+        <field name="res_model">xb.taecel.affiliate.sale</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_group_affiliate': 1}</field>
+    </record>
+
+</odoo>

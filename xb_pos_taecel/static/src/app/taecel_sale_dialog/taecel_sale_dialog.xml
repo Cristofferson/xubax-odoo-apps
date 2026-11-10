@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!-- Odoo 20 (Owl 3): component members are always read through "this.",
+         and t-model on a proxy() state needs the ".proxy" modifier. -->
+    <t t-name="xb_pos_taecel.SaleDialog">
+        <Dialog title="this.dialogTitle" size="'lg'">
+            <div class="xb-taecel-dialog">
+
+                <!-- Step 1: carrier -->
+                <t t-if="this.state.step === 'carrier'">
+                    <t t-foreach="this.carrierGroups" t-as="group" t-key="group.name">
+                        <div class="xb-taecel-group-title" t-out="group.name"/>
+                        <div class="xb-taecel-grid">
+                            <t t-foreach="group.carriers" t-as="carrier" t-key="carrier.id">
+                                <button class="xb-taecel-card"
+                                        t-att-class="{ 'xb-taecel-card-blocked': this.isCarrierBlocked(carrier) }"
+                                        t-att-disabled="this.isCarrierBlocked(carrier) or false"
+                                        t-on-click="() => this.selectCarrier(carrier)">
+                                    <img t-if="carrier.logo_url" t-att-src="carrier.logo_url"
+                                         class="xb-taecel-logo" t-att-alt="carrier.name"/>
+                                    <span t-out="carrier.name"/>
+                                    <small t-if="this.isCarrierBlocked(carrier)" class="xb-taecel-card-note">
+                                        No balance
+                                    </small>
+                                </button>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+
+                <!-- Step 2: amount (catalog carriers) -->
+                <t t-if="this.state.step === 'amount'">
+                    <div class="xb-taecel-header">
+                        <button class="btn btn-link p-0" t-on-click="() => this.back()">&#8592; Back</button>
+                        <span class="fw-bolder" t-out="this.state.carrier.name"/>
+                    </div>
+                    <div class="xb-taecel-grid">
+                        <t t-foreach="this.products" t-as="product" t-key="product.id">
+                            <button class="xb-taecel-amount"
+                                    t-att-class="{ 'xb-taecel-card-blocked': this.isAmountBlocked(product.amount) }"
+                                    t-att-disabled="this.isAmountBlocked(product.amount) or false"
+                                    t-on-click="() => this.selectProduct(product)">
+                                <span class="xb-taecel-amount-value"
+                                      t-out="this.formatCurrency(product.amount)"/>
+                                <small t-if="product.validity" t-out="product.validity"/>
+                            </button>
+                        </t>
+                    </div>
+                    <p t-if="!this.products.length" class="text-muted">
+                        No amounts available for this carrier.
+                    </p>
+                </t>
+
+                <!-- Step 3: reference -->
+                <t t-if="this.state.step === 'reference'">
+                    <div class="xb-taecel-header">
+                        <button class="btn btn-link p-0" t-on-click="() => this.back()">&#8592; Back</button>
+                        <span class="fw-bolder" t-out="this.state.carrier.name"/>
+                    </div>
+
+                    <div t-if="!this.isCatalog" class="mb-2">
+                        <label class="form-label">Amount</label>
+                        <input type="number" min="0" step="1" class="form-control form-control-lg"
+                               t-model.proxy.number="this.state.amount"/>
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label" t-out="this.state.carrier.field_label || 'Reference'"/>
+                        <input type="text" class="form-control form-control-lg"
+                               t-att-inputmode="this.state.carrier.field_format === '1' ? 'numeric' : 'text'"
+                               t-att-maxlength="this.state.carrier.field_max or false"
+                               t-model.proxy="this.state.reference" autofocus="autofocus"/>
+                    </div>
+
+                    <div t-if="this.state.carrier.field_confirm" class="mb-2">
+                        <label class="form-label">Confirm</label>
+                        <input type="text" class="form-control form-control-lg"
+                               t-att-inputmode="this.state.carrier.field_format === '1' ? 'numeric' : 'text'"
+                               t-att-maxlength="this.state.carrier.field_max or false"
+                               t-model.proxy="this.state.referenceConfirm"/>
+                    </div>
+
+                    <div class="xb-taecel-summary">
+                        <div class="d-flex justify-content-between">
+                            <span>Amount</span>
+                            <span t-out="this.formatCurrency(this.state.amount)"/>
+                        </div>
+                        <div t-foreach="this.feeParts" t-as="part" t-key="part[0]" class="d-flex justify-content-between">
+                            <span t-out="part[0]"/>
+                            <span t-out="this.formatCurrency(part[1])"/>
+                        </div>
+                        <div class="d-flex justify-content-between fw-bolder xb-taecel-total">
+                            <span>Total</span>
+                            <span t-out="this.formatCurrency(this.total)"/>
+                        </div>
+                    </div>
+
+                    <div t-if="this.walletShortfall" class="alert alert-danger py-1 my-2"
+                         t-out="this.walletShortfall"/>
+                    <div t-elif="this.walletWarning" class="alert alert-warning py-1 my-2"
+                         t-out="this.walletWarning"/>
+                    <div t-if="this.state.error" class="alert alert-danger py-1 my-2" t-out="this.state.error"/>
+                </t>
+            </div>
+
+            <t t-set-slot="footer">
+                <button t-if="this.state.step === 'reference'" class="btn btn-primary btn-lg"
+                        t-att-disabled="this.walletShortfall and true"
+                        t-on-click="() => this.confirm()">
+                    Add to order
+                </button>
+                <button class="btn btn-secondary btn-lg" t-on-click="() => this.props.close()">
+                    Cancel
+                </button>
+            </t>
+        </Dialog>
+    </t>
+
+</templates>

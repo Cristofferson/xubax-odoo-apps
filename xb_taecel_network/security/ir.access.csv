@@ -1,0 +1,7 @@
+id,name,model_id,group_id/id,operation,domain
+access_taecel_affiliate_manager,taecel.affiliate.manager,xb.taecel.affiliate,point_of_sale.group_pos_manager,crud,
+access_taecel_affiliate_wallet_manager,taecel.affiliate.wallet.manager,xb.taecel.affiliate.wallet,point_of_sale.group_pos_manager,crud,
+access_taecel_affiliate_sale_manager,taecel.affiliate.sale.manager,xb.taecel.affiliate.sale,point_of_sale.group_pos_manager,crud,
+rule_taecel_affiliate_company,TAECEL affiliate: own company,xb.taecel.affiliate,,crud,"[('company_id', 'in', company_ids)]"
+rule_taecel_affiliate_wallet_company,TAECEL affiliate wallet: own company,xb.taecel.affiliate.wallet,,crud,"[('company_id', 'in', company_ids)]"
+rule_taecel_affiliate_sale_company,TAECEL affiliate sale: own company,xb.taecel.affiliate.sale,,crud,"[('company_id', 'in', company_ids)]"

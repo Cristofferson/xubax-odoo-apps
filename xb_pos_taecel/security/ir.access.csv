@@ -1,0 +1,16 @@
+id,name,model_id,group_id/id,operation,domain
+access_taecel_account_user,taecel.account.user,xb.taecel.account,point_of_sale.group_pos_user,r,
+access_taecel_account_manager,taecel.account.manager,xb.taecel.account,point_of_sale.group_pos_manager,crud,
+access_taecel_wallet_user,taecel.wallet.user,xb.taecel.wallet,point_of_sale.group_pos_user,r,
+access_taecel_wallet_manager,taecel.wallet.manager,xb.taecel.wallet,point_of_sale.group_pos_manager,crud,
+access_taecel_carrier_user,taecel.carrier.user,xb.taecel.carrier,point_of_sale.group_pos_user,r,
+access_taecel_carrier_manager,taecel.carrier.manager,xb.taecel.carrier,point_of_sale.group_pos_manager,crud,
+access_taecel_product_user,taecel.product.user,xb.taecel.product,point_of_sale.group_pos_user,r,
+access_taecel_product_manager,taecel.product.manager,xb.taecel.product,point_of_sale.group_pos_manager,crud,
+access_taecel_txn_user,taecel.txn.user,xb.taecel.transaction,point_of_sale.group_pos_user,cru,
+access_taecel_txn_manager,taecel.txn.manager,xb.taecel.transaction,point_of_sale.group_pos_manager,crud,
+rule_taecel_account_company,TAECEL account: own company or explicitly shared,xb.taecel.account,,crud,"['|', ('company_id', 'in', company_ids), ('shared_company_ids', 'in', company_ids)]"
+rule_taecel_wallet_company,TAECEL wallet: own company or explicitly shared,xb.taecel.wallet,,crud,"['|', ('company_id', 'in', company_ids), ('account_id.shared_company_ids', 'in', company_ids)]"
+rule_taecel_carrier_company,TAECEL carrier: own company or explicitly shared,xb.taecel.carrier,,crud,"['|', ('company_id', 'in', company_ids), ('account_id.shared_company_ids', 'in', company_ids)]"
+rule_taecel_product_company,TAECEL product: own company or explicitly shared,xb.taecel.product,,crud,"['|', ('company_id', 'in', company_ids), ('account_id.shared_company_ids', 'in', company_ids)]"
+rule_taecel_transaction_company,TAECEL transaction: own company or explicitly shared,xb.taecel.transaction,,crud,"['|', ('company_id', 'in', company_ids), ('account_id.shared_company_ids', 'in', company_ids)]"
