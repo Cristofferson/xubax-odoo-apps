@@ -18,9 +18,9 @@ msgstr ""
 #. module: xpago
 #. odoo-python
 #: code:addons/xpago/models/payment_transaction.py:0
+#: code:addons/xpago/models/pos_xpago_charge.py:0
+#: code:addons/xpago/models/pos_xpago_charge.py:0
 #, python-format
-#: code:addons/xpago/models/pos_xpago_charge.py:0
-#: code:addons/xpago/models/pos_xpago_charge.py:0
 msgid "%s months without interest"
 msgstr ""
 
@@ -436,8 +436,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/xpago/models/payment_transaction.py:0
 #: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__use_online
-#, python-format
 #: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__source__online
+#, python-format
 msgid "Online"
 msgstr ""
 
@@ -479,8 +479,8 @@ msgstr ""
 #. module: xpago
 #. odoo-python
 #: code:addons/xpago/models/payment_transaction.py:0
-#, python-format
 #: code:addons/xpago/models/pos_xpago_charge.py:0
+#, python-format
 msgid "Payment received: %s"
 msgstr ""
 
@@ -2341,4 +2341,61 @@ msgstr ""
 msgid ""
 "When the customer does not pay on the XPago terminal in time, the charge is "
 "cancelled and the terminal is free for the next customer."
+msgstr ""
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid ""
+"The processor does not accept this refund: it keeps its fee of %(required)s "
+"and the card sales pending to settle do not cover it (%(missing)s missing). "
+"Nothing was charged back. It will go through once there are more card sales "
+"today, or ask the processor for a refund allowance."
+msgstr ""
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid ""
+"The processor does not accept this refund: the card sales pending to settle "
+"do not cover its fee. Nothing was charged back. It will go through once "
+"there are more card sales today, or ask the processor for a refund "
+"allowance."
+msgstr ""
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid ""
+"This charge can no longer be refunded: card refunds are accepted the same "
+"day only, before 10:30 PM (10:00 PM with American Express)."
+msgstr ""
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid "This charge was already refunded."
+msgstr ""
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid ""
+"The customer's bank did not accept the refund. Nothing was charged back."
+msgstr ""
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/pos_payment_method.py:0
+msgid ""
+"The processor does not accept this refund from Odoo: today's card sales do "
+"not cover its fee. Refund it on the terminal (Transactions › the charge › "
+"Refund charge). The register is waiting and completes it on its own; then "
+"press Validate."
+msgstr ""
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/pos_payment_method.py:0
+msgid "Stop waiting"
 msgstr ""

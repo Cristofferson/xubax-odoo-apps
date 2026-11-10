@@ -221,6 +221,10 @@ export class PaymentXpago extends PaymentInterface {
         if (!pending) {
             return true;
         }
+        if (pending.refundWait) {
+            pending.stopped = true; // only stop waiting: there is nothing to cancel on the processor
+            return true;
+        }
         try {
             const charge = await this._call("xpago_cancel_charge", [pending.id]);
             // A card approved before the cancel arrived stays paid: the waiting loop keeps it.
@@ -247,6 +251,9 @@ export class PaymentXpago extends PaymentInterface {
             const result = await this._call("xpago_refund_charge", [
                 { amount: line.amount, refunded_order_ids: refundedOrderIds },
             ]);
+            if (result.wait_on_terminal) {
+                return this._waitForTerminalRefund(order, line, result);
+            }
             const { ticket, ...payment } = result.payment || {};
             Object.assign(line, payment);
             if (ticket) {
@@ -257,6 +264,59 @@ export class PaymentXpago extends PaymentInterface {
             this._showError(error.data?.message || error.message || String(error));
             return false;
         }
+    }
+
+    /** The processor refused the refund for its fee: the cashier refunds on the terminal, and the register asks
+     *  until that refund shows, then completes the line. A refund line shows no Cancel while it waits, so the notice
+     *  carries the way out, and the wait has a limit. */
+    async _waitForTerminalRefund(order, line, result) {
+        const key = line.cid;
+        this.charges[key] = { id: result.charge_id, refundWait: true };
+        const stop = () => {
+            if (this.charges[key]) {
+                this.charges[key].stopped = true;
+            }
+        };
+        const closeNotice = this.env.services.notification.add(result.message, {
+            type: "warning",
+            sticky: true,
+            buttons: [{ name: result.stop_label, onClick: stop }],
+        });
+        const deadline = Date.now() + 15 * 60 * 1000;
+        const active = () =>
+            Boolean(this.charges[key] && !this.charges[key].stopped && order.get_paymentline(key)) && Date.now() < deadline;
+        let done = false;
+        try {
+            while (active()) {
+                await new Promise((resolve) => setTimeout(resolve, 3000));
+                if (!active()) {
+                    break;
+                }
+                let status;
+                try {
+                    status = await this._call("xpago_refund_status", [{ charge_id: result.charge_id }]);
+                } catch (error) {
+                    if (error.data?.message) {
+                        this._showError(error.data.message);
+                        break;
+                    }
+                    continue; // offline: keep asking
+                }
+                if (status.state === "refunded") {
+                    const { ticket, ...payment } = status.payment || {};
+                    Object.assign(line, payment);
+                    if (ticket) {
+                        line.set_receipt_info(ticket);
+                    }
+                    done = true;
+                    break;
+                }
+            }
+        } finally {
+            delete this.charges[key];
+            closeNotice();
+        }
+        return done;
     }
 
     _openTerminalApp(url) {
