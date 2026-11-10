@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'POS Airtime & Bill Payments (TAECEL — Mexico)',
-    'summary': 'Sell mobile airtime, data packages, bill payments and '
-               'electronic PINs straight from the Point of Sale, through the '
-               'TAECEL network: 30+ carriers, live balance and automatic '
-               'reconciliation of interrupted sales.',
+    'name': 'Tiempo Aire, Recargas y Pago de Servicios en TPV (TAECEL México) - POS Airtime & Bill Payments',
+    'summary': 'Vende tiempo aire, recargas, paquetes de datos, pago de servicios (CFE, Telmex, SKY...) y PINes desde el Punto de Venta con TAECEL. Sell mobile airtime, data packages, bill payments and electronic PINs straight from the Point of Sale: 30+ carriers, live balance and automatic reconciliation of interrupted sales.',
     'description': """
 POS Airtime & Bill Payments (TAECEL)
 ====================================
@@ -35,11 +32,11 @@ A TAECEL integrator account. TAECEL issues API credentials after approving the
 "Levantamiento Tecnologico" (cc@taecel.com) and validating your test
 transactions. A distributor account on its own does not include API access.
 
-Runs on Odoo 18.0 and 19.0.
+Runs on Odoo 17.0, 18.0, 19.0 and 20.0.
 """,
     'category': 'Sales/Point of Sale',
-    'version': '1.1.2',
-    'author': 'Cristofferson Reyes',
+    'version': '1.1.3',
+    'author': 'XUBAX',
     'website': 'https://xubax.com',
     'license': 'OPL-1',
     'price': 249.00,

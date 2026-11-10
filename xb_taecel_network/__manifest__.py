@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'TAECEL Distributor Network (Mexico)',
-    'summary': 'Watch the balance, sales and margin of every affiliate in your '
-               'TAECEL distributor network from Odoo, and hand each one the '
-               'bank reference that funds it.',
+    'name': 'Red de Distribuidores TAECEL (México) - TAECEL Distributor Network',
+    'summary': 'Para distribuidores de tiempo aire y recargas TAECEL: saldo, ventas y margen de cada afiliado de tu red, y su referencia de depósito. Watch the balance, sales and margin of every affiliate in your TAECEL distributor network from Odoo, and hand each one the bank reference that funds it.',
     'description': """
 TAECEL Distributor Network
 ==========================
@@ -35,11 +33,11 @@ change its commission or list your network: those live only in the MI RED
 portal. This module reads what the API does expose and computes the rest; it
 does not pretend to replace the portal.
 
-Runs on Odoo 18.0 and 19.0.
+Runs on Odoo 17.0, 18.0, 19.0 and 20.0.
 """,
     'category': 'Sales/Point of Sale',
-    'version': '1.0.6',
-    'author': 'Cristofferson Reyes',
+    'version': '1.0.7',
+    'author': 'XUBAX',
     'website': 'https://xubax.com',
     'license': 'OPL-1',
     'price': 149.00,
