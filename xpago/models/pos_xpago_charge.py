@@ -208,9 +208,31 @@ class PosXpagoCharge(models.Model):
             answer = self.provider_id._xpago_make_request('POST', f'/v1/terminal-charges/{self.xpago_id}/refund',
                                                         idempotency_key=f'refund-{self.external_id}')
         except ValidationError as error:
-            raise UserError(_("XPago did not refund the charge.\n%s", error)) from error
+            # Refunded meanwhile on the terminal app or the dashboard: done, nothing more to send.
+            if self._xpago_read_refunded():
+                return {}
+            refusal = UserError(_("XPago did not refund the charge.\n%s", error))
+            refusal.xpago_code = getattr(error, 'xpago_code', None)
+            raise refusal from error
         self.write({'state': 'refunded', 'refunded_at': fields.Datetime.now()})
         return answer
+
+    def _xpago_read_refunded(self):
+        """Ask XPago whether this paid charge was refunded outside Odoo (terminal app, dashboard). True when it was."""
+        self.ensure_one()
+        if not self.xpago_id:
+            return False
+        try:
+            remote = self.provider_id._xpago_make_request('GET', f'/v1/terminal-charges/{self.xpago_id}')
+        except ValidationError as error:
+            _logger.warning("XPago: could not read the charge %s: %s", self.external_id, error)
+            return False
+        if remote.get('status') != 'refunded':
+            return False
+        self._xpago_apply(remote)
+        if not self.refunded_at:
+            self.refunded_at = fields.Datetime.now()
+        return self.state == 'refunded'
 
     def action_xpago_refund(self):
         """Back office: refund a charge paid today, for example a sale cancelled after paying."""
@@ -268,6 +290,9 @@ class PosXpagoCharge(models.Model):
         """Read back the charges left open (a closed browser, a lost connection), and expire the old ones."""
         open_charges = self.search([('state', '=', 'pending'), ('create_date', '>', fields.Datetime.now() - timedelta(days=2))])
         open_charges._xpago_refresh()
+        # The paid ones of the last day too: a refund made on the terminal app shows up here.
+        for charge in self.sudo().search([('state', '=', 'confirmed'), ('create_date', '>', fields.Datetime.now() - timedelta(days=1))]):
+            charge._xpago_read_refunded()
         self.search([('state', '=', 'pending'), ('create_date', '<=', fields.Datetime.now() - timedelta(days=2))]).write(
             {'state': 'expired'})
 

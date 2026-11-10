@@ -2302,3 +2302,78 @@ msgid ""
 msgstr ""
 "Si el cliente no paga a tiempo en la terminal XPago, el cobro se cancela y "
 "la terminal queda libre para el siguiente cliente."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid ""
+"The processor does not accept this refund: it keeps its fee of %(required)s "
+"and the card sales pending to settle do not cover it (%(missing)s missing). "
+"Nothing was charged back. It will go through once there are more card sales "
+"today, or ask the processor for a refund allowance."
+msgstr ""
+"El procesador no acepta esta devolución: se queda con su comisión de "
+"%(required)s y las ventas con tarjeta pendientes por liquidar no la cubren "
+"(faltan %(missing)s). No se regresó nada a la tarjeta. Se podrá cuando haya "
+"más ventas con tarjeta hoy, o pide al procesador un margen para "
+"devoluciones."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid ""
+"The processor does not accept this refund: the card sales pending to settle "
+"do not cover its fee. Nothing was charged back. It will go through once "
+"there are more card sales today, or ask the processor for a refund "
+"allowance."
+msgstr ""
+"El procesador no acepta esta devolución: las ventas con tarjeta pendientes "
+"por liquidar no cubren su comisión. No se regresó nada a la tarjeta. Se "
+"podrá cuando haya más ventas con tarjeta hoy, o pide al procesador un margen"
+" para devoluciones."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid ""
+"This charge can no longer be refunded: card refunds are accepted the same "
+"day only, before 10:30 PM (10:00 PM with American Express)."
+msgstr ""
+"Este cobro ya no se puede devolver: las devoluciones con tarjeta solo se "
+"aceptan el mismo día, antes de las 10:30 p.m. (10:00 p.m. con American "
+"Express)."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid "This charge was already refunded."
+msgstr "Este cobro ya se había devuelto."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid ""
+"The customer's bank did not accept the refund. Nothing was charged back."
+msgstr ""
+"El banco del cliente no aceptó la devolución. No se regresó nada a la "
+"tarjeta."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/pos_payment_method.py:0
+msgid ""
+"The processor does not accept this refund from Odoo: today's card sales do "
+"not cover its fee. Refund it on the terminal (Transactions › the charge › "
+"Refund charge). The register is waiting and completes it on its own; then "
+"press Validate."
+msgstr ""
+"El procesador no acepta esta devolución desde Odoo: las ventas con tarjeta "
+"de hoy no cubren su comisión. Devuélvela en la terminal (Transacciones › el "
+"cobro › Devolver cobro). La caja está esperando y la completa sola; después "
+"presiona Validar."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/pos_payment_method.py:0
+msgid "Stop waiting"
+msgstr "Dejar de esperar"
