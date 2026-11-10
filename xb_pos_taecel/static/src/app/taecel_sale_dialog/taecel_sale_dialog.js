@@ -70,6 +70,24 @@ export class XbTaecelSaleDialog extends Component {
         return this.state.carrier?.customer_fee || 0;
     }
 
+    /** The customer fee split as the receipt shows it: service cost (the XPago fee, if any, is inside it) and
+     *  business fee. */
+    get feeParts() {
+        const c = this.state.carrier;
+        if (!c || !this.customerFee) {
+            return [];
+        }
+        return [
+            [_t("Service cost"), c.fee_provider_part || 0],
+            [_t("Business fee"), c.fee_merchant_part || 0],
+        ].filter(([, value]) => value);
+    }
+
+    /** What the wallet pays: the amount plus the provider charge (not the XPago or business fee). */
+    get walletCharge() {
+        return (this.state.amount || 0) + (this.state.carrier?.provider_fee || 0);
+    }
+
     get total() {
         return (this.state.amount || 0) + this.customerFee;
     }
@@ -113,7 +131,7 @@ export class XbTaecelSaleDialog extends Component {
 
     isAmountBlocked(amount) {
         const left = this.available(this.state.carrier?.bolsa_id);
-        return left !== null && amount + this.customerFee > left;
+        return left !== null && amount + (this.state.carrier?.provider_fee || 0) > left;
     }
 
     /** Hard stop: the wallet cannot cover this sale. */
@@ -123,7 +141,7 @@ export class XbTaecelSaleDialog extends Component {
             return null;
         }
         const left = this.available(carrier.bolsa_id);
-        if (left === null || this.total <= left) {
+        if (left === null || this.walletCharge <= left) {
             return null;
         }
         const info = this.walletInfo(carrier.bolsa_id);
@@ -134,7 +152,7 @@ export class XbTaecelSaleDialog extends Component {
             {
                 wallet: info.name,
                 left: this.formatCurrency(Math.max(left, 0)),
-                needed: this.formatCurrency(this.total),
+                needed: this.formatCurrency(this.walletCharge),
             }
         );
     }
@@ -147,12 +165,12 @@ export class XbTaecelSaleDialog extends Component {
         }
         const info = this.walletInfo(carrier.bolsa_id);
         const left = this.available(carrier.bolsa_id);
-        if (left === null || !info.low_threshold || left - this.total > info.low_threshold) {
+        if (left === null || !info.low_threshold || left - this.walletCharge > info.low_threshold) {
             return null;
         }
         return _t("%(wallet)s: %(left)s left after this sale.", {
             wallet: info.name,
-            left: this.formatCurrency(left - this.total),
+            left: this.formatCurrency(left - this.walletCharge),
         });
     }
 
@@ -279,6 +297,8 @@ export class XbTaecelSaleDialog extends Component {
                 taecel_reference: reference,
                 taecel_bolsa_id: carrier.bolsa_id,
                 taecel_fee: this.customerFee,
+                taecel_fee_xpago: this.state.carrier?.xpago_fee || 0,
+                taecel_fee_merchant: this.state.carrier?.fee_merchant_part || 0,
             },
             {}
         );
@@ -291,7 +311,9 @@ export class XbTaecelSaleDialog extends Component {
             // takes no argument in Odoo 19: it recomputes the name from the
             // product and would silently drop the label.
             line.full_product_name = label;
-            const note = `${carrier.name} · ${reference}`;
+            // The receipt shows what the fee is made of: service cost and business fee.
+            const parts = this.feeParts.map(([name, value]) => `${name} ${this.formatCurrency(value)}`);
+            const note = `${carrier.name} · ${reference}` + (parts.length ? `\n${parts.join(" · ")}` : "");
             if (line.setCustomerNote) {
                 line.setCustomerNote(note);
             } else {

@@ -98,6 +98,8 @@ class PosOrder(models.Model):
                     'reference': line.taecel_reference or '',
                     'amount': line.price_subtotal_incl - fee,
                     'customer_fee': fee,
+                    'xpago_fee': line.taecel_fee_xpago,
+                    'merchant_fee': line.taecel_fee_merchant,
                     'pos_order_id': order.id,
                     'pos_order_line_id': line.id,
                     'pos_session_id': order.session_id.id,

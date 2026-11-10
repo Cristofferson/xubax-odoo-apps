@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-29 23:20+0000\n"
-"PO-Revision-Date: 2026-07-29 23:20+0000\n"
+"POT-Creation-Date: 2026-11-04 04:42+0000\n"
+"PO-Revision-Date: 2026-11-04 04:42+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -236,6 +236,12 @@ msgid "A recharge that has been sent cannot be cancelled or refunded"
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__is_bill_payment
+msgid ""
+"A service payment (light, water, TV...). Gift cards and airtime are not."
+msgstr ""
+
+#. module: xb_pos_taecel
 #. odoo-python
 #: code:addons/xb_pos_taecel/manual.py:0
 msgid "A top-up and a bill payment on the same order"
@@ -441,6 +447,11 @@ msgid "Before you start"
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__is_bill_payment
+msgid "Bill Payment"
+msgstr ""
+
+#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
 msgid "Bill Payments"
 msgstr ""
@@ -467,6 +478,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__bolsa_id
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_wallet__bolsa_id
 msgid "Bolsa"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_fee_merchant
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__fee_merchant_part
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__merchant_fee
+msgid "Business Fee"
+msgstr ""
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid "Business fee"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -613,6 +637,14 @@ msgstr ""
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__category_uid
 msgid "Category Uid"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__xpago_fee
+msgid ""
+"Charged to the customer on every bill payment, on top of the provider "
+"charge, for the businesses of the XPago network (XUBAX affiliates: $2). "
+"Leave it at 0 otherwise."
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -890,6 +922,13 @@ msgid ""
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__customer_fee
+msgid ""
+"Everything the customer pays on top of the amount: the service cost and your "
+"fee. Shown on the receipt."
+msgstr ""
+
+#. module: xb_pos_taecel
 #. odoo-python
 #: code:addons/xb_pos_taecel/manual.py:0
 #: model:ir.model.fields.selection,name:xb_pos_taecel.selection__xb_taecel_transaction__state__failed
@@ -904,17 +943,16 @@ msgid "Fee"
 msgstr ""
 
 #. module: xb_pos_taecel
-#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__customer_fee
-msgid ""
-"Fee charged to the customer on top of the amount, as agreed with your "
-"provider. Typically 0 for airtime; set for services."
-msgstr ""
-
-#. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__customer_fee
 msgid ""
 "Fee charged to the customer on top of the amount, as configured with your "
 "provider. Must appear on the receipt."
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__provider_client_fee
+msgid ""
+"Fee the provider itself asks to charge the customer. Read from the catalog."
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -950,6 +988,13 @@ msgstr ""
 #. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
 msgid "Fixed Amount"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__provider_fee
+msgid ""
+"Fixed amount the provider takes from your wallet on every payment, on top of"
+" the bill. Read from the catalog."
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -1116,6 +1161,16 @@ msgid "My Commission (%)"
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__merchant_fee
+msgid "My Fee"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__merchant_fee
+msgid "My Fee on Bill Payments"
+msgstr ""
+
+#. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__name
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__name
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_product__name
@@ -1203,6 +1258,26 @@ msgstr ""
 #. module: xb_pos_taecel
 #: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__field_key
 msgid "Parameter name the provider expects, e.g. \"referencia\"."
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__xpago_fee
+msgid "Part of the customer fee that is the XPago fee."
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__fee_merchant_part
+msgid "Part of the customer fee that is yours."
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__fee_provider_part
+msgid "What the customer pays for the service, on top of the amount."
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_transaction__merchant_fee
+msgid "Part of the customer fee that the business keeps."
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -1326,8 +1401,28 @@ msgid "Provider Account ID"
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__provider_fee
+msgid "Provider Charge"
+msgstr ""
+
+#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
 msgid "Provider Code"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__provider_commission
+msgid "Provider Commission (%)"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__provider_client_fee
+msgid "Provider Customer Fee"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__provider_fee_list
+msgid "Provider List Charge"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -1487,6 +1582,11 @@ msgid "Recharges: refresh wallet balances"
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model:ir.actions.server,name:xb_pos_taecel.cron_taecel_catalog_ir_actions_server
+msgid "Recharges: sync catalog"
+msgstr ""
+
+#. module: xb_pos_taecel
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_form
 msgid "Reconcile Now"
 msgstr ""
@@ -1589,6 +1689,17 @@ msgstr ""
 #. module: xb_pos_taecel
 #: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__sent_date
 msgid "Sent Date"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__fee_provider_part
+msgid "Service Cost"
+msgstr ""
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid "Service cost"
 msgstr ""
 
 #. module: xb_pos_taecel
@@ -1836,6 +1947,13 @@ msgid "The provider returned no deposit reference."
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__provider_fee_list
+msgid ""
+"The provider's standard charge. When your charge is higher, the difference "
+"goes to your distributor (it already includes the XPago fee)."
+msgstr ""
+
+#. module: xb_pos_taecel
 #. odoo-python
 #: code:addons/xb_pos_taecel/manual.py:0
 msgid "The recharge as an order line"
@@ -1916,6 +2034,7 @@ msgstr ""
 #. module: xb_pos_taecel
 #. odoo-javascript
 #: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.xml:0
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_transaction_list
 msgid "Total"
 msgstr ""
 
@@ -2074,6 +2193,30 @@ msgid "What the cashier is asked for, e.g. \"Numero Celular\"."
 msgstr ""
 
 #. module: xb_pos_taecel
+#: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_form
+msgid "What the customer pays on top"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__provider_commission
+msgid "What the provider pays you on each sale of this carrier (gift cards)."
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__merchant_fee
+msgid ""
+"What you add on top for each payment. It is all yours and is kept when the "
+"catalog is synchronized. Empty: the account default."
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_account__merchant_fee
+msgid ""
+"What you add on top of every bill payment, unless a service has its own. It "
+"is all yours."
+msgstr ""
+
+#. module: xb_pos_taecel
 #. odoo-python
 #: code:addons/xb_pos_taecel/manual.py:0
 msgid "What you do"
@@ -2104,6 +2247,27 @@ msgstr ""
 msgid ""
 "With the order open, tap the three-dot button under the order, next to "
 "%(customer)s and %(note)s. %(recharges)s is in there."
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_pos_order_line__taecel_fee_xpago
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_account__xpago_fee
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__xpago_fee
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_transaction__xpago_fee
+msgid "XPago Fee"
+msgstr ""
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid "XPago fee"
+msgstr ""
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__xpago_fee
+msgid ""
+"XPago fee on each bill payment. The customer pays it inside the service cost;"
+" it is never shown as a line of its own."
 msgstr ""
 
 #. module: xb_pos_taecel

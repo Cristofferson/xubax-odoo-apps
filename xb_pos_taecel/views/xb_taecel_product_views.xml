@@ -5,15 +5,21 @@
         <field name="name">xb.taecel.carrier.list</field>
         <field name="model">xb.taecel.carrier</field>
         <field name="arch" type="xml">
-            <list string="Carriers">
-                <field name="name"/>
-                <field name="category"/>
-                <field name="bolsa_id"/>
-                <field name="carrier_type"/>
-                <field name="field_label"/>
-                <field name="field_min"/>
-                <field name="field_max"/>
-                <field name="product_count"/>
+            <list string="Carriers" editable="bottom" create="0">
+                <field name="name" readonly="1"/>
+                <field name="category" readonly="1"/>
+                <field name="bolsa_id" readonly="1"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="fee_provider_part" optional="show"/>
+                <field name="xpago_fee" optional="show" groups="base.group_no_one"/>
+                <field name="merchant_fee" optional="show"/>
+                <field name="customer_fee" optional="show" sum="0"/>
+                <field name="provider_commission" optional="hide"/>
+                <field name="carrier_type" readonly="1" optional="hide"/>
+                <field name="field_label" readonly="1" optional="hide"/>
+                <field name="field_min" readonly="1" optional="hide"/>
+                <field name="field_max" readonly="1" optional="hide"/>
+                <field name="product_count" optional="hide"/>
             </list>
         </field>
     </record>
@@ -34,6 +40,17 @@
                             <field name="bolsa_id"/>
                             <field name="carrier_type"/>
                             <field name="active"/>
+                        </group>
+                        <group string="What the customer pays on top">
+                            <field name="currency_id" invisible="1"/>
+                            <field name="is_bill_payment"/>
+                            <field name="provider_fee"/>
+                            <field name="provider_fee_list" invisible="not provider_fee_list or provider_fee_list == provider_fee"/>
+                            <field name="fee_provider_part"/>
+                            <field name="xpago_fee" invisible="not is_bill_payment" groups="base.group_no_one"/>
+                            <field name="merchant_fee"/>
+                            <field name="customer_fee"/>
+                            <field name="provider_commission" invisible="not provider_commission"/>
                         </group>
                         <group string="Cashier Input (Campos)">
                             <field name="field_label"/>

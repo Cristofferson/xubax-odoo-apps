@@ -95,6 +95,10 @@ BOLSA_AIRTIME = '1'      # Tiempo Aire
 BOLSA_SERVICES = '2'     # Pago de Servicios
 BOLSA_CFDI = '3'         # Timbres CFDI
 
+# getProducts.data.comisionTipo: how a carrier's charge (TipoCargo) or commission (TipoAbono) is expressed.
+COMMISSION_PERCENT = '1'
+COMMISSION_FIXED = '2'
+
 BOLSA_NAMES = {
     BOLSA_AIRTIME: 'Tiempo Aire',
     BOLSA_SERVICES: 'Pago de Servicios',

@@ -35,6 +35,9 @@
                             <field name="role"/>
                             <field name="taecel_uid" placeholder="e.g. 300000"/>
                             <field name="commission_rate"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="xpago_fee" groups="base.group_no_one"/>
+                            <field name="merchant_fee"/>
                             <field name="active"/>
                         </group>
                         <group string="Catalog">

@@ -111,6 +111,13 @@ class XbTaecelAccount(models.Model):
         string='Provider Account ID',
         help='Account number the provider assigned you, as shown in the portal. '
              'A distributor looks its affiliates up by this number in MI RED.')
+    xpago_fee = fields.Monetary(
+        string='XPago Fee', default=0.0,
+        help='Charged to the customer on every bill payment, on top of the provider charge, for the businesses '
+             'of the XPago network (XUBAX affiliates: $2). Leave it at 0 otherwise.')
+    merchant_fee = fields.Monetary(
+        string='My Fee on Bill Payments', default=0.0,
+        help='What you add on top of every bill payment, unless a service has its own. It is all yours.')
     commission_rate = fields.Float(
         string='My Commission (%)', default=6.5,
         help='Commission granted on THIS account, not the one you grant to '
@@ -401,7 +408,7 @@ class XbTaecelAccount(models.Model):
 
     @api.model
     def _load_pos_data_domain(self, data, config=None):
-        return self._serving_domain(pos_config_record(self.env, config))
+        return self._serving_domain(pos_config_record(self.env, config, data))
 
     @api.model
     def _load_pos_data_fields(self, config=None):
@@ -428,6 +435,16 @@ class XbTaecelAccount(models.Model):
         }
 
     # -- Cron --------------------------------------------------------------
+    @api.model
+    def _cron_sync_catalog(self):
+        """Read the catalog once a day, so what the provider charges per payment is never stale."""
+        for account in self.search([('active', '=', True), ('state', '!=', 'draft')]):
+            try:
+                with self.env.cr.savepoint():
+                    account.action_sync_catalog()
+            except Exception as error:  # One account failing must not stop the others.
+                _logger.warning('Recharges: could not sync the catalog of %s: %s', account.name, error)
+
     @api.model
     def _cron_refresh_balance(self):
         self.search([('active', '=', True)]).action_refresh_balance()

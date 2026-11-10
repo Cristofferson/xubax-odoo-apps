@@ -78,7 +78,12 @@ patch(PosStore.prototype, {
         const lines = order?.lines || [];
         return lines
             .filter((l) => l.taecel_is_taecel && String(l.taecel_bolsa_id) === String(bolsaId))
-            .reduce((sum, l) => sum + ((l.price_unit || 0) - (l.taecel_fee || 0)), 0);
+            // The wallet pays the amount plus the provider charge; the XPago and business fees stay in the till.
+            .reduce(
+                (sum, l) =>
+                    sum + (l.price_unit || 0) - (l.taecel_fee || 0) + (l.taecel_carrier_id?.provider_fee || 0),
+                0
+            );
     },
 
     /** The generic product every TAECEL line hangs off (see product_data.xml).
