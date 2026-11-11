@@ -4,6 +4,9 @@
 
 import { patch } from "@web/core/utils/patch";
 import { PosOrder } from "@point_of_sale/app/models/pos_order";
+import { deserializeDateTime, formatDate } from "@web/core/l10n/dates";
+
+const { DateTime } = luxon;
 
 patch(PosOrder.prototype, {
     /**
@@ -28,6 +31,10 @@ patch(PosOrder.prototype, {
                 type: stash.type || null,
                 state: stash.state || null,
                 partnerRef: stash.partner_ref || null,
+                // A day already ("YYYY-MM-DD"), in the shop's time zone.
+                deliveryDate: stash.commitment_date
+                    ? DateTime.fromISO(stash.commitment_date)
+                    : null,
             };
         } else {
             const so = this.lines?.find((l) => l.sale_order_origin_id)
@@ -56,6 +63,7 @@ patch(PosOrder.prototype, {
                     type: so.xb_so_kind || null,
                     state: so.state || null,
                     partnerRef: null,
+                    deliveryDate: this.xbAsDateTime(so.commitment_date),
                 };
             }
         }
@@ -66,6 +74,22 @@ patch(PosOrder.prototype, {
         if (!data.partnerRef) {
             data.partnerRef = this.getPartner()?.ref || null;
         }
-        return { ...data, paid: data.total - data.balance };
+        const deliveryDate =
+            data.deliveryDate && data.deliveryDate.isValid ? formatDate(data.deliveryDate) : null;
+        return { ...data, deliveryDate, paid: data.total - data.balance };
+    },
+    // commitment_date of a loaded SO: a luxon DateTime, or the server's UTC string.
+    xbAsDateTime(value) {
+        if (!value) {
+            return null;
+        }
+        if (typeof value === "string") {
+            try {
+                return deserializeDateTime(value);
+            } catch {
+                return null;
+            }
+        }
+        return value;
     },
 });

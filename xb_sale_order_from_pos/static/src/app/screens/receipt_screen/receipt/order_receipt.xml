@@ -129,6 +129,9 @@
                 </span>
                 <t t-esc="' ' + xbSoHdr.name"/>
             </div>
+            <div t-if="xbSoHdr and xbSoHdr.deliveryDate" class="xb-so-delivery-date text-center fw-bolder">
+                Delivery date: <t t-esc="xbSoHdr.deliveryDate"/>
+            </div>
         </xpath>
 
         <xpath expr="//span[@t-esc='order.partner_id.name']" position="replace">

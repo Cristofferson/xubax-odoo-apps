@@ -1260,3 +1260,31 @@ msgstr "de"
 #: model:mail.template,subject:xb_sale_order_from_pos.mail_template_pos_quotation_ticket
 msgid "{{ object.company_id.name }} - Quotation {{ object.name }}"
 msgstr "{{ object.company_id.name }} - Cotización {{ object.name }}"
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/components/xb_delivery_date_popup/xb_delivery_date_popup.js:0
+msgid "Delivery date"
+msgstr "Fecha de entrega"
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.xml:0
+msgid "Delivery date:"
+msgstr "Fecha de entrega:"
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/components/xb_delivery_date_popup/xb_delivery_date_popup.xml:0
+msgid "No date"
+msgstr "Sin fecha"
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/components/xb_delivery_date_popup/xb_delivery_date_popup.xml:0
+msgid ""
+"Probable date, from the manufacturing days of the products. Change it if you"
+" agreed on another one."
+msgstr ""
+"Fecha probable, según los días de fabricación de los productos. Cámbiala si "
+"acordaron otra."

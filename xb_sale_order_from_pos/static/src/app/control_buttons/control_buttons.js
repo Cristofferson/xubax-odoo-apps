@@ -15,6 +15,7 @@ import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { OrderReceipt } from "@point_of_sale/app/screens/receipt_screen/receipt/order_receipt";
 import { XbQuotationDeliveryPopup } from "@xb_sale_order_from_pos/app/components/xb_quotation_delivery_popup/xb_quotation_delivery_popup";
 import { SelectCreateDialog } from "@web/views/view_dialogs/select_create_dialog";
+import { XbDeliveryDatePopup } from "@xb_sale_order_from_pos/app/components/xb_delivery_date_popup/xb_delivery_date_popup";
 
 patch(ControlButtons.prototype, {
     /**
@@ -293,6 +294,18 @@ patch(PosStore.prototype, {
             return;
         }
 
+        // Delivery date, for orders and layaways only (a quotation commits to
+        // nothing yet): proposed with Odoo's probable date and editable; "No date"
+        // leaves it empty. Closing the window cancels, like the quotation-delivery
+        // question below, with the cart intact.
+        if (payload.type !== "quotation") {
+            const deliveryDate = await this.xbAskDeliveryDate(payload);
+            if (deliveryDate === undefined) {
+                return;
+            }
+            payload = { ...payload, commitment_date: deliveryDate || false };
+        }
+
         // Quotation delivery: ask, for THIS quotation, how the customer wants it
         // (printed / WhatsApp / email, any combination). Asked BEFORE creating, so
         // "Cancel" leaves the cart intact and nothing is created.
@@ -328,6 +341,7 @@ patch(PosStore.prototype, {
                     amount_unpaid: result.amount_unpaid,
                     portal_url: result.portal_url,
                     partner_ref: result.partner_ref,
+                    commitment_date: result.commitment_date || false,
                     type: payload.type,
                 };
                 // Reuse the native receipt printer. Gated by the per-POS toggle
@@ -404,6 +418,27 @@ patch(PosStore.prototype, {
                 body: message,
             });
         }
+    },
+
+    /**
+     * Ask the delivery date. Resolves to "YYYY-MM-DD", "" for no date, or undefined
+     * when the cashier closes the window. Starts on the probable date Odoo computes
+     * from the products' lead times; if that cannot be read, on today.
+     */
+    async xbAskDeliveryDate(payload) {
+        let probable = "";
+        try {
+            probable = await this.env.services.orm.call(
+                "sale.order",
+                "xb_pos_expected_delivery_date",
+                [payload.lines.map((line) => line.product_id)]
+            );
+        } catch (error) {
+            console.warn("[xb] could not compute the probable delivery date:", error);
+        }
+        return makeAwaitable(this.dialog, XbDeliveryDatePopup, {
+            ...(probable ? { defaultDate: probable } : {}),
+        });
     },
 
     /**

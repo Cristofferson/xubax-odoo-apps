@@ -39,6 +39,8 @@ All features are optional and configured per Point of Sale.
             "xb_sale_order_from_pos/static/src/app/components/xb_quotation_delivery_popup/xb_quotation_delivery_popup.js",
             "xb_sale_order_from_pos/static/src/app/components/xb_quotation_delivery_popup/xb_quotation_delivery_popup.xml",
             "xb_sale_order_from_pos/static/src/app/components/xb_quotation_delivery_popup/xb_quotation_delivery_popup.css",
+            "xb_sale_order_from_pos/static/src/app/components/xb_delivery_date_popup/xb_delivery_date_popup.js",
+            "xb_sale_order_from_pos/static/src/app/components/xb_delivery_date_popup/xb_delivery_date_popup.xml",
             "xb_sale_order_from_pos/static/src/app/models/pos_order.js",
             "xb_sale_order_from_pos/static/src/app/models/pos_order_line.js",
             "xb_sale_order_from_pos/static/src/app/services/pos_store_settle.js",

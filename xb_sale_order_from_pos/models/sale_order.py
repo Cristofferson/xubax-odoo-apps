@@ -4,6 +4,9 @@
 # down payment / advance) is based exclusively on native Odoo
 # (point_of_sale, pos_sale, sale) plus original design.
 import logging
+from datetime import datetime, time, timedelta
+
+import pytz
 
 from markupsafe import Markup
 
@@ -103,7 +106,9 @@ class SaleOrder(models.Model):
         #    quotation prints PEDIDO). pos_sale already loads 'state', kept explicit.
         #  - access_token: build the SO portal URL (payment QR) for recovered SOs,
         #    where xbCreateOrderFromPos's stashed portal_url is absent (Phase 3 receipt).
-        return super()._load_pos_data_fields(config) + ["xb_so_kind", "state", "access_token"]
+        #  - commitment_date: the delivery date printed on the ticket of a recovered SO.
+        return super()._load_pos_data_fields(config) + [
+            "xb_so_kind", "state", "access_token", "commitment_date"]
 
     def action_confirm(self):
         # Phase 4: never create a delivery when confirming OUR POS-originated orders
@@ -140,6 +145,27 @@ class SaleOrder(models.Model):
             sale_order.amount_unpaid = max(sale_order.amount_total - total_invoices_paid - total_pos_orders_paid - sale_order.amount_paid, 0.0)
 
     @api.model
+    @api.model
+    def xb_pos_expected_delivery_date(self, product_ids):
+        """Probable delivery day ("YYYY-MM-DD") for a POS cart: today plus the
+        longest customer lead time (product "Customer Lead Time", sale_delay) of
+        its goods, as Odoo's own expected date does when the order ships all at
+        once. Services do not count, like in Odoo."""
+        products = self.env["product.product"].browse(product_ids or []).exists()
+        goods = products.filtered(lambda p: p.type == "consu")
+        days = max(goods.mapped("sale_delay") or [0.0])
+        return fields.Date.to_string(fields.Date.context_today(self) + timedelta(days=days))
+
+    @api.model
+    def _xb_noon_utc(self, day, partner):
+        tz = pytz.timezone(
+            partner.tz or self.env.company.partner_id.tz or self.env.user.tz
+            or "America/Mexico_City"
+        )
+        noon = tz.localize(datetime.combine(day, time(12, 0)))
+        return noon.astimezone(pytz.utc).replace(tzinfo=None)
+
+    @api.model
     def xb_create_order_from_pos(self, payload):
         """Create a Quotation / Sale Order / Layaway from the POS.
 
@@ -168,6 +194,8 @@ class SaleOrder(models.Model):
                                         clean text on the client (getStrNotes);
                                         written to sale.order.internal_note when
                                         non-empty and the field exists.
+            commitment_date (str, opt.) Delivery day "YYYY-MM-DD" chosen by the
+                                        cashier; empty leaves Odoo's date empty.
             type (str, optional)        Chosen kind: "quotation" / "order" /
                                         "layaway" / "order_layaway". Used only for
                                         the chatter origin log label.
@@ -293,6 +321,13 @@ class SaleOrder(models.Model):
         if internal_note and "internal_note" in self._fields:
             order_vals["internal_note"] = plaintext2html(internal_note)
 
+        # Delivery date chosen at the POS (a day, "YYYY-MM-DD"), into Odoo's own
+        # "Delivery Date". Stored at noon in the customer's time zone so the day
+        # reads the same for the shop, the customer and every printout.
+        delivery_day = fields.Date.to_date(payload.get("commitment_date") or False)
+        if delivery_day:
+            order_vals["commitment_date"] = self._xb_noon_utc(delivery_day, partner)
+
         order = order_env.create(order_vals)
 
         # Defensive reconciliation: guarantee the stored line taxes are exactly
@@ -374,6 +409,7 @@ class SaleOrder(models.Model):
             "amount_unpaid": order.amount_unpaid,
             "portal_url": portal_url,
             "partner_ref": partner.ref or "",
+            "commitment_date": fields.Date.to_string(delivery_day) if delivery_day else False,
             "down_payment_product_id": down_payment_product.id or False,
         }
 
