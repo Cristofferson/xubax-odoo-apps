@@ -2641,3 +2641,52 @@ msgstr "Terminales en tu cuenta XPago"
 msgid "The serial numbers XPago has for this account. A terminal not yet in Odoo is proposed on a point of sale that has none."
 msgstr "Los números de serie que XPago tiene en esta cuenta. Una terminal que aún no está en Odoo se propone en una caja que no tiene ninguna."
 
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_config__xpago_tip_mode
+#: model:ir.model.fields,field_description:xpago.field_res_config_settings__pos_xpago_tip_mode
+msgid "XPago tip"
+msgstr "Propina XPago"
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_config__xpago_tip_mode
+#: model:ir.model.fields,help:xpago.field_res_config_settings__pos_xpago_tip_mode
+msgid "No tip: nothing changes. The terminal asks: on every card charge the terminal shows the customer its tip screen (10, 15, 20%, another amount or none), unless the cashier already added a tip in Odoo; the processor must have tips turned on for the business. The cashier enters it: with Odoo's «Tip» button on the payment screen; the terminal charges sale and tip together without asking. In both cases the tip is a line of the order, so the closing matches what the terminal charged."
+msgstr "Sin propina: nada cambia. La pide la terminal: en cada cobro con tarjeta la terminal le muestra al cliente su pantalla de propina (10, 15, 20 %, otro monto o nada), salvo que la cajera ya haya agregado una propina en Odoo; el procesador debe tener activadas las propinas del negocio. La captura la cajera: con el botón «Propina» de Odoo en la pantalla de pago; la terminal cobra venta y propina juntas sin preguntar. En los dos casos la propina es un renglón del pedido, así el corte cuadra con lo que cobró la terminal."
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_config__xpago_tip_mode__none
+msgid "No tip"
+msgstr "Sin propina"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_config__xpago_tip_mode__terminal
+msgid "The terminal asks the customer"
+msgstr "La pide la terminal"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_config__xpago_tip_mode__cashier
+msgid "The cashier enters it"
+msgstr "La captura la cajera"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
+msgid "Tip with the XPago terminal"
+msgstr "Propina con la terminal XPago"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
+msgid "Who asks for the tip. The terminal asks: the customer chooses on the terminal (the processor must turn tips on for your business). The cashier enters it: Odoo's «Tip» button on the payment screen, for card and cash. The tip goes on its own line of the order."
+msgstr "Quién pide la propina. La pide la terminal: el cliente la elige en la terminal (el procesador debe activar las propinas de tu negocio). La captura la cajera: el botón «Propina» de Odoo en la pantalla de pago, para tarjeta y efectivo. La propina va en su propio renglón del pedido."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid "The terminal cannot ask for a tip: the processor has not turned tips on for this business. Ask XPago to turn them on, or set this point of sale's tip to «The cashier enters it»."
+msgstr "La terminal no puede pedir propina: el procesador no tiene activadas las propinas de este negocio. Pide a XPago que las active, o cambia la propina de esta caja a «La captura la cajera»."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid "The tip is too high: it can be at most 30% of the sale."
+msgstr "La propina es muy alta: puede ser como máximo el 30 % de la venta."
+

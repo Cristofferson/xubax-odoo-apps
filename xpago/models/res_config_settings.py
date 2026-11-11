@@ -6,6 +6,7 @@ class ResConfigSettings(models.TransientModel):
 
     pos_xpago_show_account = fields.Boolean(related='pos_config_id.xpago_show_account', readonly=False)
     pos_xpago_split = fields.Boolean(related='pos_config_id.xpago_split', readonly=False)
+    pos_xpago_tip_mode = fields.Selection(related='pos_config_id.xpago_tip_mode', readonly=False, required=True)
     pos_xpago_print_on_terminal = fields.Boolean(related='pos_config_id.xpago_print_on_terminal', readonly=False)
     pos_xpago_voucher_on_receipt = fields.Boolean(related='pos_config_id.xpago_voucher_on_receipt', readonly=False)
     pos_xpago_voucher_merchant = fields.Char(related='pos_config_id.xpago_voucher_merchant', readonly=False)

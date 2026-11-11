@@ -34,6 +34,10 @@
                 </setting>
             </xpath>
             <xpath expr="//block[@id='pos_bills_and_receipts_section']" position="inside">
+                <setting id="xpago_tip_mode" string="Tip with the XPago terminal"
+                         help="Who asks for the tip. The terminal asks: the customer chooses on the terminal (the processor must turn tips on for your business). The cashier enters it: Odoo's «Tip» button on the payment screen, for card and cash. The tip goes on its own line of the order.">
+                    <field name="pos_xpago_tip_mode" widget="radio"/>
+                </setting>
                 <setting id="xpago_print_on_terminal" string="Odoo prints on the XPago terminal"
                          help="This point of sale runs on the XPago terminal and prints on its printer: add an Epson printer with the IP 127.0.0.1:8008 and turn on «Impresora para Odoo» in the terminal's payment app. The card voucher comes out right under Odoo's receipt, on the same paper.">
                     <field name="pos_xpago_print_on_terminal"/>
