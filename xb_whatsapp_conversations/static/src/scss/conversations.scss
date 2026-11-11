@@ -1,0 +1,5 @@
+// XUBAX - WhatsApp Conversations: chats awaiting a reply must stand out.
+.o_xb_wac_list .o_data_row.fw-bold > td {
+    font-weight: 700;
+    color: $o-main-text-color;
+}
