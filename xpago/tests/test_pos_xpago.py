@@ -62,6 +62,52 @@ class TestPosXpago(TestPoSCommon):
             self.method.xpago_create_charge({'amount': 10.0, 'order_uuid': 'abcdef12-3456', 'session_id': session.id})
         self.assertIs(send.call_args.kwargs['json']['print_voucher'], False)
 
+    def _session_with(self, **config_values):
+        self.config = self.basic_config
+        self.config.payment_method_ids = [(4, self.method.id)]
+        self.config.write(config_values)
+        return self.open_new_session()
+
+    def test_tip_from_the_till_goes_apart_and_the_terminal_does_not_ask(self):
+        session = self._session_with(xpago_tip_mode='terminal')
+        self.assertTrue(self.config.iface_tipproduct, 'a tip mode turns on the tip product')
+        with patch(SEND, return_value=self.intent()) as send:
+            self.method.xpago_create_charge({'amount': 285.0, 'tip_amount': 30.0, 'order_uuid': 'abcdef12-3456',
+                                             'session_id': session.id})
+        body = send.call_args.kwargs['json']
+        self.assertEqual((body['amount'], body['tip_amount']), (285.0, 30.0))
+        self.assertNotIn('collect_tip', body)
+
+    def test_the_terminal_asks_for_the_tip_only_when_set(self):
+        session = self._session_with(xpago_tip_mode='terminal')
+        with patch(SEND, return_value=self.intent()) as send:
+            self.method.xpago_create_charge({'amount': 1000.0, 'order_uuid': 'abcdef12-3456', 'session_id': session.id})
+        self.assertIs(send.call_args.kwargs['json']['collect_tip'], True)
+        with patch(SEND, return_value=self.intent()) as send:
+            self.method.xpago_create_charge({'amount': 500.0, 'order_uuid': 'abcdef12-3456', 'session_id': session.id,
+                                             'ask_tip': False})
+        self.assertNotIn('collect_tip', send.call_args.kwargs['json'], 'second part of a split sale')
+        self.config.xpago_tip_mode = 'cashier'
+        with patch(SEND, return_value=self.intent()) as send:
+            self.method.xpago_create_charge({'amount': 1000.0, 'order_uuid': 'abcdef12-3456', 'session_id': session.id})
+        self.assertNotIn('collect_tip', send.call_args.kwargs['json'])
+
+    def test_months_go_to_the_terminal(self):
+        with patch(SEND, return_value=self.intent()) as send:
+            self.method.xpago_create_charge({'amount': 3000.0, 'order_uuid': 'abcdef12-3456', 'terms': [6, 1, 3, 3]})
+        self.assertEqual(send.call_args.kwargs['json']['installments'], [1, 3, 6])
+        with patch(SEND, return_value=self.intent()) as send:
+            self.method.xpago_create_charge({'amount': 3000.0, 'order_uuid': 'abcdef12-3456', 'terms': False})
+        self.assertNotIn('installments', send.call_args.kwargs['json'], 'no rule: the terminal offers its plans')
+
+    def test_tip_chosen_on_the_terminal_comes_back(self):
+        view, _send = self.create_charge()
+        paid = self.approved()
+        paid['payment'].update({'tip_amount': 150.0, 'charged_amount': 1150.0})
+        with patch(SEND, return_value=paid):
+            view = self.method.xpago_charge_status(view['id'])
+        self.assertEqual((view['tip_amount'], view['charged_amount']), (150.0, 1150.0))
+
     def test_approved_card_comes_back_to_the_order(self):
         view, _send = self.create_charge()
         with patch(SEND, return_value=self.approved()) as send:
