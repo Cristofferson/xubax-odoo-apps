@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class PosConfig(models.Model):
@@ -15,6 +15,19 @@ class PosConfig(models.Model):
              "(XPago payment rules), the charge is split: one charge per account, each with its months.",
     )
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('xpago_tip_mode') in ('terminal', 'cashier'):
+                vals['iface_tipproduct'] = True
+        return super().create(vals_list)
+
+    def write(self, vals):
+        # A tip needs Odoo's tip product: turned on with the tip mode, so the tip lands on its own line.
+        if vals.get('xpago_tip_mode') in ('terminal', 'cashier'):
+            vals = {**vals, 'iface_tipproduct': True}
+        return super().write(vals)
+
     # Odoo open on the terminal itself, printing on the terminal's printer (the processor's POS app answers as an Epson
     # ePOS printer on 127.0.0.1:8008). The terminal then prints its certified card voucher right under Odoo's receipt.
     xpago_print_on_terminal = fields.Boolean(
@@ -22,6 +35,16 @@ class PosConfig(models.Model):
         help="This point of sale runs on the XPago terminal and prints Odoo's receipt on the terminal's printer "
              "(Epson printer at 127.0.0.1:8008). The terminal prints the card voucher right under the receipt, on "
              "the same paper, instead of on its own; Odoo then leaves the voucher out of its receipt.",
+    )
+
+    xpago_tip_mode = fields.Selection(
+        [('none', "No tip"), ('terminal', "The terminal asks the customer"), ('cashier', "The cashier enters it")],
+        string="XPago tip", default='none', required=True,
+        help="No tip: nothing changes. The terminal asks: on every card charge the terminal shows the customer its "
+             "tip screen (10, 15, 20%, another amount or none), unless the cashier already added a tip in Odoo; the "
+             "processor must have tips turned on for the business. The cashier enters it: with Odoo's «Tip» button "
+             "on the payment screen; the terminal charges sale and tip together without asking. In both cases the "
+             "tip is a line of the order, so the closing matches what the terminal charged.",
     )
 
     # The card voucher printed in the sale's own receipt (terminals that print with the point of sale, as the
