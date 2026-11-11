@@ -52,6 +52,17 @@ class TestPosXpago(TestPoSCommon):
         self.assertEqual((view['xpago_id'], view['state']), ('pi-1', 'pending'))
         self.assertEqual(view['terminal_app_url'], 'xpago-terminal://charge/pi-1', 'the app link comes from XPago')
 
+    def test_printing_on_the_terminal_leaves_the_voucher_to_it(self):
+        _view, send = self.create_charge()
+        self.assertNotIn('print_voucher', send.call_args.kwargs['json'], 'by default the terminal prints its voucher')
+        self.config = self.basic_config
+        self.config.payment_method_ids = [(4, self.method.id)]
+        self.config.xpago_print_on_terminal = True
+        session = self.open_new_session()
+        with patch(SEND, return_value=self.intent()) as send:
+            self.method.xpago_create_charge({'amount': 10.0, 'order_uuid': 'abcdef12-3456', 'session_id': session.id})
+        self.assertIs(send.call_args.kwargs['json']['print_voucher'], False)
+
     def test_approved_card_comes_back_to_the_order(self):
         view, _send = self.create_charge()
         with patch(SEND, return_value=self.approved()) as send:
@@ -140,15 +151,58 @@ class TestPosXpago(TestPoSCommon):
              'card': {'brand': 'VISA', 'last4': '4242'}},
             {'id': 'pay-9', 'amount': 500.0, 'fee_percent': 2.99, 'status': 'paid', 'created_at': '2026-11-02T19:00:00.000Z'},
         ], 'next_cursor': None}
+        deposits = {'data': [
+            {'id': 'po-0', 'status': 'returned', 'tracking_key': 'OLD'},
+            {'id': 'po-1', 'status': 'paid', 'tracking_key': 'CMPG2026110300001', 'paid_at': '2026-11-03T15:01:00.000Z'},
+        ], 'next_cursor': None}
+        deposit_lines = {
+            'po-0': {'data': [{'type': 'payment', 'payment_id': 'pay-1', 'net': 145.0, 'fee': 4.5, 'tax': 0.72}]},
+            'po-1': {'data': [{'type': 'payment', 'payment_id': 'pay-1', 'amount': 150.5, 'fee': 3.9, 'tax': 0.62,
+                               'net': 145.98}, {'type': 'balance_recovery', 'net': -20}]},
+        }
+        calls = []
+
+        def answer(method, endpoint, **kwargs):
+            calls.append((endpoint, kwargs.get('params')))
+            if endpoint == '/v1/payments':
+                return payments
+            if endpoint == '/v1/deposits':
+                return deposits
+            return deposit_lines[endpoint.split('/')[3]]
+
         wizard = self.env['pos.xpago.reconcile'].create({'provider_id': self.provider.id})
-        with patch(SEND, return_value=payments) as send:
+        with patch(SEND, side_effect=answer):
             wizard.action_reconcile()
-        self.assertEqual(send.call_args.args, ('GET', '/v1/payments'))
-        self.assertEqual(send.call_args.kwargs['params']['status'], ['paid', 'refunded'])
+        self.assertEqual(calls[0][0], '/v1/payments')
+        self.assertEqual(calls[0][1]['status'], ['paid', 'refunded'])
+        self.assertEqual([c[0] for c in calls[1:]], ['/v1/deposits', '/v1/deposits/po-0/lines', '/v1/deposits/po-1/lines'])
         lines = {line.operation_code or line.xpago_amount: line for line in wizard.line_ids}
         ok = lines['123456']
-        self.assertEqual((ok.status, ok.charge_id, ok.fee_amount, ok.fee_vat), ('ok', charge, 4.5, 0.72))
+        self.assertEqual((ok.status, ok.charge_id), ('ok', charge))
+        # The paid deposit wins over the returned attempt, and its real fee over the one estimated from the rate.
+        self.assertEqual((ok.deposit_status, ok.deposit_tracking_key, ok.net_amount, ok.fee_amount, ok.fee_vat),
+                         ('paid', 'CMPG2026110300001', 145.98, 3.9, 0.62))
+        self.assertTrue(ok.deposit_date)
+        self.assertEqual(lines[500.0].deposit_status, 'pending', 'paid and in no deposit yet')
         self.assertEqual(lines[500.0].status, 'xpago_only')
+
+    def test_reconciliation_runs_without_deposits(self):
+        """An XPago that does not know deposits yet: the reconciliation still runs, with the fee from the rate."""
+        self.paid_charge()
+        payments = {'data': [{'id': 'pay-1', 'terminal_charge_id': 'pi-1', 'amount': 150.5, 'charged_amount': 150.5,
+                              'fee_percent': 2.99, 'status': 'paid', 'created_at': '2026-11-02T18:00:00.000Z',
+                              'operation_code': '123456'}], 'next_cursor': None}
+
+        def answer(method, endpoint, **kwargs):
+            if endpoint == '/v1/payments':
+                return payments
+            raise ValidationError('not_found')
+
+        wizard = self.env['pos.xpago.reconcile'].create({'provider_id': self.provider.id})
+        with patch(SEND, side_effect=answer):
+            wizard.action_reconcile()
+        line = wizard.line_ids
+        self.assertEqual((line.fee_amount, line.fee_vat, line.deposit_status), (4.5, 0.72, 'pending'))
 
     def test_terminal_fields_reach_the_point_of_sale(self):
         self.config = self.basic_config

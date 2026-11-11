@@ -1,7 +1,11 @@
+import logging
+
 from markupsafe import Markup
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
+
+_logger = logging.getLogger(__name__)
 
 
 class PosXpagoTerminalSetup(models.TransientModel):
@@ -20,6 +24,10 @@ class PosXpagoTerminalSetup(models.TransientModel):
         help="Only used for the payment methods this assistant creates (lines with «Create»).",
     )
     line_ids = fields.One2many('pos.xpago.terminal.setup.line', 'wizard_id', string="Points of sale")
+    account_serials = fields.Char(
+        string="Terminals in your XPago account", readonly=True,
+        help="The serial numbers XPago has for this account. A terminal not yet in Odoo is proposed on a point of "
+             "sale that has none.")
     warning_html = fields.Html(compute='_compute_warning_html', sanitize=False)
 
     @api.model
@@ -27,6 +35,11 @@ class PosXpagoTerminalSetup(models.TransientModel):
         values = super().default_get(fields_list)
         if 'line_ids' not in fields_list:
             return values
+        provider = self.env['payment.provider'].browse(values.get('provider_id')).exists()
+        serials = self._xpago_account_serials(provider)
+        values['account_serials'] = ', '.join(serials) or False
+        known = set(self.env['pos.payment.method'].with_context(active_test=False).search([('use_payment_terminal', '=', 'xpago')]).mapped('xpago_terminal_serial'))
+        new_serials = [serial for serial in serials if serial not in known]
         configs = self.env['pos.config'].search([('company_id', 'in', self.env.company.parent_ids.ids + self.env.company.child_ids.ids)])
         methods = self.env['pos.payment.method'].search([('use_payment_terminal', '=', 'xpago')])
         used = configs.payment_method_ids.filtered(lambda m: m.use_payment_terminal == 'xpago')
@@ -41,9 +54,25 @@ class PosXpagoTerminalSetup(models.TransientModel):
                                 self.env['pos.payment.method'])
                 if proposed:
                     free.remove(proposed)
-            lines.append((0, 0, {'config_id': config.id, 'method_id': proposed.id}))
+            line = {'config_id': config.id, 'method_id': proposed.id}
+            # Still nothing: a terminal of the account that Odoo does not have yet, to create with «Create».
+            if not proposed and new_serials:
+                line['new_serial'] = new_serials.pop(0)
+            lines.append((0, 0, line))
         values['line_ids'] = lines
         return values
+
+    @api.model
+    def _xpago_account_serials(self, provider):
+        """The terminals XPago has for this account; an empty list when it does not answer (the user types them)."""
+        if not provider or not provider.xpago_api_key:
+            return []
+        try:
+            answer = provider.sudo()._send_api_request('GET', '/v1/terminals')
+        except (ValidationError, UserError) as error:
+            _logger.info("XPago terminals not listed: %s", error)
+            return []
+        return [t['serial'] for t in answer.get('data') or [] if t.get('serial')]
 
     @api.depends('line_ids.method_id', 'line_ids.new_serial', 'line_ids.has_open_session')
     def _compute_warning_html(self):

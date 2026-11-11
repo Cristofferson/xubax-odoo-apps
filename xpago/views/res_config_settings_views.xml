@@ -34,7 +34,11 @@
                 </setting>
             </xpath>
             <xpath expr="//block[@id='pos_bills_and_receipts_section']" position="inside">
-                <setting id="xpago_voucher_on_receipt" string="Card voucher in the receipt"
+                <setting id="xpago_print_on_terminal" string="Odoo prints on the XPago terminal"
+                         help="This point of sale runs on the XPago terminal and prints on its printer: add an Epson printer with the IP 127.0.0.1:8008 and turn on «Impresora para Odoo» in the terminal's payment app. The card voucher comes out right under Odoo's receipt, on the same paper.">
+                    <field name="pos_xpago_print_on_terminal"/>
+                </setting>
+                <setting id="xpago_voucher_on_receipt" string="Card voucher in the receipt" invisible="pos_xpago_print_on_terminal"
                          help="Paid with a card on an XPago terminal: the receipt (printed or emailed) carries the card details and the voucher legend. For terminals that print with the point of sale, such as the N950 or the N750P.">
                     <field name="pos_xpago_voucher_on_receipt"/>
                     <div class="content-group mt-2" invisible="not pos_xpago_voucher_on_receipt">

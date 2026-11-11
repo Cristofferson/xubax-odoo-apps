@@ -14,6 +14,7 @@
                 <group>
                     <field name="provider_id" options="{'no_create': True, 'no_open': True}"/>
                     <field name="journal_id" options="{'no_create': True}"/>
+                    <field name="account_serials" invisible="not account_serials"/>
                 </group>
                 <field name="line_ids">
                     <tree editable="bottom" create="false" delete="false">

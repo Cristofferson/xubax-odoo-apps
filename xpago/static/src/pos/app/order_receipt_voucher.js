@@ -39,8 +39,10 @@ patch(Payment.prototype, {
      *  false: only positive card payments of XPago terminals. */
     xpagoVoucher() {
         const config = this.pos.config;
+        // On the terminal's own printer the terminal adds its certified voucher under this receipt.
         if (
             !config.xpago_voucher_on_receipt ||
+            config.xpago_print_on_terminal ||
             this.payment_method?.use_payment_terminal !== "xpago" ||
             !(this.amount > 0) ||
             !(this.xpago_card_no || this.xpago_authorization)
