@@ -2360,3 +2360,105 @@ msgstr ""
 #: code:addons/xpago/models/pos_payment_method.py:0
 msgid "Stop waiting"
 msgstr "Dejar de esperar"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_config__xpago_print_on_terminal
+#: model:ir.model.fields,field_description:xpago.field_res_config_settings__pos_xpago_print_on_terminal
+#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
+msgid "Odoo prints on the XPago terminal"
+msgstr "Odoo imprime en la terminal XPago"
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_config__xpago_print_on_terminal
+#: model:ir.model.fields,help:xpago.field_res_config_settings__pos_xpago_print_on_terminal
+msgid "This point of sale runs on the XPago terminal and prints Odoo's receipt on the terminal's printer (Epson printer at 127.0.0.1:8008). The terminal prints the card voucher right under the receipt, on the same paper, instead of on its own; Odoo then leaves the voucher out of its receipt."
+msgstr "Esta caja se usa en la terminal XPago e imprime el ticket de Odoo en la impresora de la terminal (impresora Epson en 127.0.0.1:8008). La terminal imprime el voucher de la tarjeta justo debajo del ticket, en el mismo papel, en lugar de imprimirlo aparte; por eso Odoo ya no lo pone en su ticket."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
+msgid "This point of sale runs on the XPago terminal and prints on its printer: add an Epson printer with the IP 127.0.0.1:8008 and turn on «Impresora para Odoo» in the terminal's payment app. The card voucher comes out right under Odoo's receipt, on the same paper."
+msgstr "Esta caja se usa en la terminal XPago e imprime en su impresora: agrega una impresora Epson con la IP 127.0.0.1:8008 y enciende «Impresora para Odoo» en la app de cobro de la terminal. El voucher de la tarjeta sale justo debajo del ticket de Odoo, en el mismo papel."
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__deposit_status
+#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_reconcile_line_view_search
+msgid "Deposit"
+msgstr "Depósito"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__pending
+#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_reconcile_line_view_search
+msgid "Not deposited yet"
+msgstr "Aún sin depositar"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__scheduled
+msgid "Deposit scheduled"
+msgstr "Depósito programado"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__in_transit
+msgid "On its way to the bank"
+msgstr "En camino al banco"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__paid
+msgid "Deposited"
+msgstr "Depositado"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__failed
+msgid "Refused by the bank (sent again)"
+msgstr "Rechazado por el banco (se vuelve a enviar)"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__returned
+msgid "Returned by the bank (sent again)"
+msgstr "Devuelto por el banco (se vuelve a enviar)"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__in_review
+msgid "Deposit under review"
+msgstr "Depósito en revisión"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__deposit_date
+msgid "Deposited on"
+msgstr "Depositado el"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__deposit_tracking_key
+#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_reconcile_line_view_search
+msgid "SPEI tracking key"
+msgstr "Clave de rastreo SPEI"
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_xpago_reconcile_line__deposit_tracking_key
+msgid "The clave de rastreo on the bank statement; Banxico's CEP is looked up with it."
+msgstr "La clave de rastreo que aparece en el estado de cuenta; con ella se consulta el CEP en Banxico."
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__net_amount
+msgid "You receive"
+msgstr "Recibes"
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_xpago_reconcile_line__net_amount
+msgid "What this sale added to the deposit: the sale minus the fee and its VAT."
+msgstr "Lo que esta venta sumó al depósito: la venta menos la comisión y su IVA."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_reconcile_line_view_search
+msgid "Deposit refused or returned"
+msgstr "Depósito rechazado o devuelto"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup__account_serials
+msgid "Terminals in your XPago account"
+msgstr "Terminales en tu cuenta XPago"
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_xpago_terminal_setup__account_serials
+msgid "The serial numbers XPago has for this account. A terminal not yet in Odoo is proposed on a point of sale that has none."
+msgstr "Los números de serie que XPago tiene en esta cuenta. Una terminal que aún no está en Odoo se propone en una caja que no tiene ninguna."
+

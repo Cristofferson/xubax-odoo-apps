@@ -72,6 +72,10 @@ test("XPago card voucher in the receipt", async () => {
     order.config.xpago_voucher_on_receipt = false;
     expect(receipt.xpagoVoucherLines).toHaveLength(0);
     order.config.xpago_voucher_on_receipt = true;
+    // Printed on the terminal: the terminal adds its own voucher under the receipt.
+    order.config.xpago_print_on_terminal = true;
+    expect(receipt.xpagoVoucherLines).toHaveLength(0);
+    order.config.xpago_print_on_terminal = false;
     line.payment_method_id.use_payment_terminal = false;
     expect(receipt.xpagoVoucherLines).toHaveLength(0);
 });

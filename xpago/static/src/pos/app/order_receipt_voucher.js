@@ -5,7 +5,8 @@ import { OrderReceipt } from "@point_of_sale/app/screens/receipt_screen/receipt/
 patch(OrderReceipt.prototype, {
     /** Card payments of XPago terminals, whose voucher goes in this receipt. */
     get xpagoVoucherLines() {
-        if (!this.order.config.xpago_voucher_on_receipt) {
+        // On the terminal's own printer the terminal adds its certified voucher under this receipt.
+        if (!this.order.config.xpago_voucher_on_receipt || this.order.config.xpago_print_on_terminal) {
             return [];
         }
         return this.paymentLines.filter(
