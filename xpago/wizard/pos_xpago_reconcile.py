@@ -1,10 +1,18 @@
 from datetime import UTC, datetime, time, timedelta
 from zoneinfo import ZoneInfo
 
+import logging
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
+_logger = logging.getLogger(__name__)
+
 PAGE_SIZE = 100
+# A sale is deposited the next business day, or later when the day's total is under the minimum transfer.
+DEPOSIT_LOOKAHEAD_DAYS = 15
+# A failed or returned transfer is sent again in a new deposit: the best attempt is the one to show.
+DEPOSIT_RANK = {'paid': 5, 'in_transit': 4, 'scheduled': 3, 'in_review': 2, 'returned': 1, 'failed': 0}
 MAX_PAGES = 100  # 10,000 payments: a month of a busy shop.
 STATUSES = ['paid', 'refunded']
 VAT_ON_FEE = 0.16
@@ -34,7 +42,8 @@ class PosXpagoReconcile(models.TransientModel):
             payments = self._fetch_payments(start, end)
         except ValidationError as error:
             raise UserError(_("XPago did not answer: %s", error)) from error
-        self.line_ids = [fields.Command.clear()] + [fields.Command.create(values) for values in self._lines(payments, start, end)]
+        deposits = self._fetch_deposits(start, end)
+        self.line_ids = [fields.Command.clear()] + [fields.Command.create(values) for values in self._lines(payments, start, end, deposits)]
         return {
             'type': 'ir.actions.act_window',
             'name': _("XPago reconciliation %(start)s – %(end)s", start=self.date_from, end=self.date_to),
@@ -68,7 +77,43 @@ class PosXpagoReconcile(models.TransientModel):
             params = {**params, 'cursor': cursor}
         raise UserError(_("Too many payments in these days: choose fewer days."))
 
-    def _lines(self, payments, start, end):
+    def _fetch_deposits(self, start, end):
+        """{payment id: (deposit, line)} for the deposits that paid the sales of these days. Without an answer the
+        reconciliation still runs, only without the deposit columns."""
+        provider = self.provider_id.sudo()
+        params = {
+            'limit': PAGE_SIZE,
+            'created_from': start.strftime('%Y-%m-%dT%H:%M:%S.000Z'),
+            'created_to': (end + timedelta(days=DEPOSIT_LOOKAHEAD_DAYS)).strftime('%Y-%m-%dT%H:%M:%S.999Z'),
+        }
+        by_payment = {}
+        try:
+            deposits = []
+            for _page in range(MAX_PAGES):
+                answer = provider._send_api_request('GET', '/v1/deposits', params=params)
+                deposits += answer.get('data') or []
+                if not answer.get('next_cursor'):
+                    break
+                params = {**params, 'cursor': answer['next_cursor']}
+            for deposit in deposits:
+                line_params = {'limit': PAGE_SIZE}
+                for _page in range(MAX_PAGES):
+                    answer = provider._send_api_request('GET', f"/v1/deposits/{deposit['id']}/lines", params=line_params)
+                    for line in answer.get('data') or []:
+                        if not line.get('payment_id'):
+                            continue
+                        known = by_payment.get(line['payment_id'])
+                        if not known or DEPOSIT_RANK.get(deposit.get('status'), 0) > DEPOSIT_RANK.get(known[0].get('status'), 0):
+                            by_payment[line['payment_id']] = (deposit, line)
+                    if not answer.get('next_cursor'):
+                        break
+                    line_params = {**line_params, 'cursor': answer['next_cursor']}
+        except ValidationError as error:
+            _logger.info("XPago reconciliation without deposits: %s", error)
+            return {}
+        return by_payment
+
+    def _lines(self, payments, start, end, deposits=None):
         """One line per payment XPago took, matched to its Odoo record, plus one per Odoo record XPago does not
         know."""
         provider = self.provider_id
@@ -88,7 +133,9 @@ class PosXpagoReconcile(models.TransientModel):
             tx = Tx if charge else (txs_by_ref.get(payment.get('id')) or txs_by_ref.get(payment.get('checkout_id')) or Tx)
             seen_charges |= charge
             seen_txs |= tx
-            lines.append(self._line_from_payment(payment, charge, tx, accounts))
+            values = self._line_from_payment(payment, charge, tx, accounts)
+            values.update(self._deposit_values(payment, (deposits or {}).get(payment.get('id'))))
+            lines.append(values)
         for charge in Charge.search([('provider_id', '=', provider.id), ('state', '=', 'confirmed'),
                                      ('create_date', '>=', start), ('create_date', '<=', end)]) - seen_charges:
             lines.append(self._line_odoo_only(charge.create_date, charge.amount, 'pos', charge=charge))
@@ -143,6 +190,24 @@ class PosXpagoReconcile(models.TransientModel):
             'reference': (tx.reference if tx else '') or (charge.sale_order_id.name if charge else '') or (charge.external_id if charge else ''),
         }
 
+    def _deposit_values(self, payment, found):
+        if not found:
+            # Paid and not in any deposit yet: on its way, unless it was given back before being deposited.
+            return {'deposit_status': 'pending'} if payment.get('status') == 'paid' else {}
+        deposit, line = found
+        values = {
+            'deposit_status': deposit.get('status') or 'in_review',
+            'deposit_date': _parse(deposit.get('paid_at')),
+            'deposit_tracking_key': deposit.get('tracking_key') or False,
+            'net_amount': float(line.get('net') or 0),
+        }
+        # The fee the deposit really kept (after promotions) beats the one estimated from the rate.
+        if isinstance(line.get('fee'), (int, float)):
+            values['fee_amount'] = line['fee']
+        if isinstance(line.get('tax'), (int, float)):
+            values['fee_vat'] = line['tax']
+        return values
+
     def _line_odoo_only(self, date, amount, source, charge=None, tx=None):
         return {
             'date': date,
@@ -188,6 +253,20 @@ class PosXpagoReconcileLine(models.TransientModel):
     terms = fields.Integer(string="Months", readonly=True)
     card = fields.Char(readonly=True)
     bank_account_id = fields.Many2one('payment.xpago.bank.account', string="Deposited in", readonly=True)
+    deposit_status = fields.Selection([
+        ('pending', "Not deposited yet"),
+        ('scheduled', "Deposit scheduled"),
+        ('in_transit', "On its way to the bank"),
+        ('paid', "Deposited"),
+        ('failed', "Refused by the bank (sent again)"),
+        ('returned', "Returned by the bank (sent again)"),
+        ('in_review', "Deposit under review"),
+    ], string="Deposit", readonly=True)
+    deposit_date = fields.Datetime(string="Deposited on", readonly=True)
+    deposit_tracking_key = fields.Char(string="SPEI tracking key", readonly=True,
+                                       help="The clave de rastreo on the bank statement; Banxico's CEP is looked up with it.")
+    net_amount = fields.Monetary(string="You receive", readonly=True,
+                                 help="What this sale added to the deposit: the sale minus the fee and its VAT.")
     charge_id = fields.Many2one('pos.xpago.charge', string="Terminal charge", readonly=True)
     transaction_id = fields.Many2one('payment.transaction', string="Online payment", readonly=True)
     pos_order_id = fields.Many2one('pos.order', string="Order", readonly=True)

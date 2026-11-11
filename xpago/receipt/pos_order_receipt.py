@@ -8,7 +8,8 @@ class PosOrderReceipt(models.AbstractModel):
         """The card voucher of the XPago terminals (mirrored by payment_xpago_voucher.js for the receipt the point
         of sale prints)."""
         payments = super()._order_receipt_generate_payment_data()
-        voucher = self.config_id.xpago_voucher_on_receipt
+        # On the terminal's own printer the terminal adds its certified voucher under this receipt.
+        voucher = self.config_id.xpago_voucher_on_receipt and not self.config_id.xpago_print_on_terminal
         payment_by_id = {payment.id: payment for payment in self.payment_ids}
         for data in payments:
             payment = payment_by_id.get(data['id'])

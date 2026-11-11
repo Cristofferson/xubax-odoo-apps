@@ -79,3 +79,10 @@ class TestPosXpagoVoucher(TestPoSCommon):
         order = self.paid_order()
         self.assertFalse(order.order_receipt_generate_data()['payments'][0]['xpago_voucher'])
         self.assertNotIn('CARD SALE', str(order.order_receipt_generate_html()))
+
+    def test_no_voucher_when_odoo_prints_on_the_terminal(self):
+        """The terminal prints its certified voucher right under Odoo's receipt: Odoo leaves its own out."""
+        self.config.xpago_print_on_terminal = True
+        order = self.paid_order()
+        self.assertFalse(order.order_receipt_generate_data()['payments'][0]['xpago_voucher'])
+        self.assertNotIn('CARD SALE', str(order.order_receipt_generate_html()))

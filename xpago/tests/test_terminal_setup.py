@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.modules.neutralize import get_neutralization_queries
 from odoo.tests import tagged
 
@@ -30,8 +30,28 @@ class TestTerminalSetup(TestPoSCommon):
     def intent(self):
         return {'id': 'pi-1', 'status': 'pending', 'expires_at': '2099-01-01T00:10:00.000Z'}
 
-    def wizard(self):
-        return self.env['pos.xpago.terminal.setup'].create({})
+    def wizard(self, serials=()):
+        terminals = {'data': [{'id': f't{n}', 'serial': serial} for n, serial in enumerate(serials)]}
+        with patch(SEND, return_value=terminals) as send:
+            wizard = self.env['pos.xpago.terminal.setup'].create({})
+        self.assertEqual(send.call_args.args, ('GET', '/v1/terminals'))
+        return wizard
+
+    def test_terminals_of_the_account_are_offered_without_typing(self):
+        for config in self.env['pos.config'].search([]):
+            config.payment_method_ids = [(3, m.id) for m in config.payment_method_ids if m.payment_provider == 'xpago']
+        self.method.active = False  # no free method to propose: the account's terminals come next
+        wizard = self.wizard(serials=['N950-0001', 'NDB400005405'])
+        self.assertEqual(wizard.account_serials, 'N950-0001, NDB400005405')
+        proposed = wizard.line_ids.filtered('new_serial')
+        self.assertEqual(proposed.mapped('new_serial'), ['NDB400005405'], 'only the one Odoo does not have, once')
+        self.assertFalse(proposed.create_method, 'created only when the user ticks «Create»')
+
+    def test_without_an_answer_the_serial_is_typed(self):
+        with patch(SEND, side_effect=ValidationError('down')):
+            wizard = self.env['pos.xpago.terminal.setup'].create({})
+        self.assertFalse(wizard.account_serials)
+        self.assertTrue(wizard.line_ids)
 
     def line_of(self, wizard, config):
         return wizard.line_ids.filtered(lambda line: line.config_id == config)

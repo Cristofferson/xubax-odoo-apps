@@ -1,6 +1,6 @@
 {
     'name': 'XPago: Card Payments and Terminals',
-    'version': '20.0.2.1.0',
+    'version': '20.0.2.2.0',
     'category': 'Accounting/Payment Providers',
     'sequence': 350,
     'summary': 'Accept Visa, Mastercard and American Express in Mexico: online store, invoices, payment links and '

@@ -125,6 +125,8 @@ class PosXpagoCharge(models.Model):
         }
         if account:
             body['deposit_account_id'] = account.xpago_id
+        if config.xpago_print_on_terminal:
+            body['print_voucher'] = False
         try:
             remote = provider._send_api_request('POST', '/v1/terminal-charges', json=body, idempotency_key=external_id)
         except ValidationError as error:
