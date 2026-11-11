@@ -15,6 +15,15 @@ class PosConfig(models.Model):
              "(XPago payment rules), the charge is split: one charge per account, each with its months.",
     )
 
+    # Odoo open on the terminal itself, printing on the terminal's printer (the processor's POS app answers as an Epson
+    # ePOS printer on 127.0.0.1:8008). The terminal then prints its certified card voucher right under Odoo's receipt.
+    xpago_print_on_terminal = fields.Boolean(
+        string="Odoo prints on the XPago terminal",
+        help="This point of sale runs on the XPago terminal and prints Odoo's receipt on the terminal's printer "
+             "(Epson printer at 127.0.0.1:8008). The terminal prints the card voucher right under the receipt, on "
+             "the same paper, instead of on its own; Odoo then leaves the voucher out of its receipt.",
+    )
+
     # The card voucher printed in the sale's own receipt (terminals that print with the point of sale, as the
     # N950 or the N750P, so the customer gets one ticket instead of two).
     xpago_voucher_on_receipt = fields.Boolean(

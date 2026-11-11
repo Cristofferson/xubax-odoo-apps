@@ -13,7 +13,8 @@ patch(PosOrder.prototype, {
 
     xpagoVouchers() {
         const config = this.config;
-        if (!config.xpago_voucher_on_receipt) {
+        // On the terminal's own printer the terminal adds its certified voucher under this receipt.
+        if (!config.xpago_voucher_on_receipt || config.xpago_print_on_terminal) {
             return [];
         }
         return this.payment_ids

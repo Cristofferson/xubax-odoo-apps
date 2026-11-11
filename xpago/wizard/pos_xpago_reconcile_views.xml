@@ -42,6 +42,13 @@
                 <field name="fee_percent" optional="show"/>
                 <field name="fee_amount" sum="Total"/>
                 <field name="fee_vat" sum="Total"/>
+                <field name="net_amount" sum="Total" optional="show"/>
+                <field name="deposit_status" widget="badge" optional="show"
+                       decoration-success="deposit_status == 'paid'"
+                       decoration-info="deposit_status in ('pending', 'scheduled', 'in_transit')"
+                       decoration-danger="deposit_status in ('failed', 'returned', 'in_review')"/>
+                <field name="deposit_date" optional="show"/>
+                <field name="deposit_tracking_key" optional="hide"/>
                 <field name="status" widget="badge" decoration-success="status == 'ok'"
                        decoration-danger="status in ('not_paid_in_odoo', 'refunded_in_xpago', 'amount_differs')"
                        decoration-warning="status in ('xpago_only', 'odoo_only')"/>
@@ -59,6 +66,7 @@
                 <field name="xpago_amount" type="measure"/>
                 <field name="fee_amount" type="measure"/>
                 <field name="fee_vat" type="measure"/>
+                <field name="net_amount" type="measure"/>
             </pivot>
         </field>
     </record>
@@ -70,10 +78,14 @@
             <search>
                 <field name="reference"/>
                 <field name="operation_code"/>
+                <field name="deposit_tracking_key"/>
+                <filter name="not_deposited" string="Not deposited yet" domain="[('deposit_status', 'in', ('pending', 'scheduled', 'in_transit'))]"/>
+                <filter name="deposit_problems" string="Deposit refused or returned" domain="[('deposit_status', 'in', ('failed', 'returned', 'in_review'))]"/>
                 <filter name="problems" string="To review" domain="[('status', '!=', 'ok')]"/>
                 <group>
                     <filter name="group_status" string="Result" context="{'group_by': 'status'}"/>
                     <filter name="group_account" string="Deposited in" context="{'group_by': 'bank_account_id'}"/>
+                    <filter name="group_deposit" string="Deposit" context="{'group_by': 'deposit_tracking_key'}"/>
                     <filter name="group_source" string="Source" context="{'group_by': 'source'}"/>
                 </group>
             </search>
