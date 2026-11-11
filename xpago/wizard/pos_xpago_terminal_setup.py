@@ -68,7 +68,7 @@ class PosXpagoTerminalSetup(models.TransientModel):
         if not provider or not provider.xpago_api_key:
             return []
         try:
-            answer = provider.sudo()._send_api_request('GET', '/v1/terminals')
+            answer = provider.sudo()._xpago_make_request('GET', '/v1/terminals')
         except (ValidationError, UserError) as error:
             _logger.info("XPago terminals not listed: %s", error)
             return []

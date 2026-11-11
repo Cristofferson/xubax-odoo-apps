@@ -91,7 +91,7 @@ class PosXpagoReconcile(models.TransientModel):
         try:
             deposits = []
             for _page in range(MAX_PAGES):
-                answer = provider._send_api_request('GET', '/v1/deposits', params=params)
+                answer = provider._xpago_make_request('GET', '/v1/deposits', params=params)
                 deposits += answer.get('data') or []
                 if not answer.get('next_cursor'):
                     break
@@ -99,7 +99,7 @@ class PosXpagoReconcile(models.TransientModel):
             for deposit in deposits:
                 line_params = {'limit': PAGE_SIZE}
                 for _page in range(MAX_PAGES):
-                    answer = provider._send_api_request('GET', f"/v1/deposits/{deposit['id']}/lines", params=line_params)
+                    answer = provider._xpago_make_request('GET', f"/v1/deposits/{deposit['id']}/lines", params=line_params)
                     for line in answer.get('data') or []:
                         if not line.get('payment_id'):
                             continue

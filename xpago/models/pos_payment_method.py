@@ -81,8 +81,11 @@ class PosPaymentMethod(models.Model):
         provider = self._xpago_check_access()
         session = self.env['pos.session'].browse(data.get('session_id')).exists()
         account = self._xpago_charge_account(provider, data.get('bank_account_id'), data.get('rule_account_id'))
+        terms = [int(t) for t in data.get('terms') or [] if isinstance(t, (int, float)) and int(t) >= 1]
         charge = self.env['pos.xpago.charge'].sudo()._xpago_create(
-            self.sudo(), provider, data.get('amount') or 0.0, session, data.get('order_uuid') or '', account=account)
+            self.sudo(), provider, data.get('amount') or 0.0, session, data.get('order_uuid') or '', account=account,
+            tip_amount=data.get('tip_amount') or 0.0, terms=terms,
+            collect_tip=session.config_id.xpago_tip_mode == 'terminal' and data.get('ask_tip', True) is not False)
         return charge._xpago_public_view()
 
     def xpago_charge_status(self, charge_id):
@@ -159,7 +162,7 @@ class PosPaymentMethod(models.Model):
         when the point of sale splits the charge. ``data``: ``session_id``, ``lines`` (``product_id``, ``qty``,
         ``amount`` with taxes), ``total`` (the sale) and ``amount`` (this payment).
 
-        The terminal does not take the months: at the register they are only shown to the cashier."""
+        The months go to the terminal with the charge: it only offers those (one fixes the plan)."""
         self._xpago_check_access()
         session = self.env['pos.session'].browse(data.get('session_id')).exists()
         config = session.config_id

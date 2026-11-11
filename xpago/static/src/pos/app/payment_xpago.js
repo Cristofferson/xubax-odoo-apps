@@ -31,8 +31,7 @@ export class PaymentXpago extends PaymentInterface {
             this._showError(_t("XPago terminals only charge positive amounts."));
             return false;
         }
-        // The XPago payment rules decide the account (and the months, only shown here: the terminal does not take
-        // them) of this charge, or split it in parts.
+        // The XPago payment rules decide the account and the months of this charge, or split it in parts.
         if (!line.xpagoPart) {
             const parts = await this._plan(order, line);
             if (!parts) {
@@ -50,12 +49,18 @@ export class PaymentXpago extends PaymentInterface {
                 { type: "info" }
             );
         }
+        // A tip the cashier already added goes as a tip (the terminal shows it apart and does not ask), when this card
+        // pays the whole order; otherwise the tip mode of the point of sale decides whether the terminal asks.
+        const tillTip = this._tillTip(order, line);
         line.set_payment_status("waitingCapture");
         let charge;
         try {
             charge = await this._call("xpago_create_charge", [
                 {
-                    amount: line.amount,
+                    amount: line.amount - tillTip,
+                    tip_amount: tillTip,
+                    ask_tip: !line.xpagoNoTipScreen,
+                    terms: part.terms || false,
                     session_id: this.pos.session?.id,
                     order_uuid: order.uuid,
                     bank_account_id: accountId,
@@ -75,6 +80,13 @@ export class PaymentXpago extends PaymentInterface {
         delete this.charges[uuid];
         if (result.state === "confirmed") {
             Object.assign(line, result.payment);
+            // The customer chose a tip on the terminal: it becomes the order's tip line, and this payment the amount
+            // the card was really charged, so the closing matches the terminal.
+            const tip = result.tip_amount || 0;
+            if (!tillTip && tip > 0 && this.pos.config.tip_product_id) {
+                await this.pos.set_tip(tip);
+                line.set_amount(result.charged_amount || line.amount + tip);
+            }
             // Next part of a split sale: selected, so the cashier only presses Send.
             const next = order.payment_ids.find(
                 (p) => p.xpagoPart && p !== line && p.get_payment_status() === "pending"
@@ -88,6 +100,15 @@ export class PaymentXpago extends PaymentInterface {
             this._showError(_t("The charge expired on the terminal before it was paid."));
         }
         return false;
+    }
+
+    /** The tip line of the order, when this payment line pays the whole order (no other payment, no split). */
+    _tillTip(order, line) {
+        const tip = order.get_tip?.() || 0;
+        if (tip <= 0 || order.payment_ids.some((p) => p !== line)) {
+            return 0;
+        }
+        return line.amount > tip ? tip : 0;
     }
 
     _termsText(terms) {
@@ -164,6 +185,7 @@ export class PaymentXpago extends PaymentInterface {
             extra.set_amount(part.amount);
             extra.set_payment_status("pending");
             extra.xpagoPart = part;
+            extra.xpagoNoTipScreen = true; // the terminal asks for the tip on the first part only
         }
         return parts;
     }

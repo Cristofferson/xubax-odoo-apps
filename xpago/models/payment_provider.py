@@ -394,6 +394,11 @@ class PaymentProvider(models.Model):
                      "10:30 PM (10:00 PM with American Express).")
         if code == 'already_refunded':
             return _("This charge was already refunded.")
+        if code == 'tips_disabled':
+            return _("The terminal cannot ask for a tip: the processor has not turned tips on for this business. Ask "
+                     "XPago to turn them on, or set this point of sale's tip to «The cashier enters it».")
+        if code == 'tip_too_high':
+            return _("The tip is too high: it can be at most 30% of the sale.")
         if code == 'refund_declined':
             return _("The customer's bank did not accept the refund. Nothing was charged back.")
         return None

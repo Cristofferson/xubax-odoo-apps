@@ -97,7 +97,10 @@ class PosXpagoCharge(models.Model):
     # === CREATE AND READ BACK === #
 
     @api.model
-    def _xpago_create(self, method, provider, amount, session, order_uuid, order=None, account=None):
+    def _xpago_create(self, method, provider, amount, session, order_uuid, order=None, account=None, tip_amount=0.0,
+                      terms=None, collect_tip=False):
+        """amount is the sale; tip_amount a tip the till already took (charged on top, no tip screen); collect_tip
+        has the terminal ask the customer instead. terms: the months the terminal may offer (1 = single payment)."""
         if amount <= 0:
             raise UserError(_("XPago terminals only charge positive amounts."))
         config = session.config_id
@@ -127,6 +130,12 @@ class PosXpagoCharge(models.Model):
             body['deposit_account_id'] = account.xpago_id
         if config.xpago_print_on_terminal:
             body['print_voucher'] = False
+        if tip_amount and tip_amount > 0:
+            body['tip_amount'] = currency.round(tip_amount)
+        elif collect_tip:
+            body['collect_tip'] = True
+        if terms:
+            body['installments'] = sorted(set(terms))
         try:
             remote = provider._xpago_make_request('POST', '/v1/terminal-charges', json=body, idempotency_key=external_id)
         except ValidationError as error:
@@ -285,6 +294,8 @@ class PosXpagoCharge(models.Model):
             'terminal_app_url': self.terminal_app_url or False,
             'expires_at': fields.Datetime.to_string(self.expires_at) if self.expires_at else False,
             'payment': self._xpago_payment_values() if self.state == 'confirmed' else {},
+            'tip_amount': self.tip_amount or 0.0,
+            'charged_amount': self.charged_amount or 0.0,
         }
 
     @api.model
