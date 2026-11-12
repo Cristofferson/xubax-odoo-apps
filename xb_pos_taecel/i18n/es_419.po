@@ -374,6 +374,7 @@ msgstr "Afiliado"
 #: code:addons/xb_pos_taecel/static/src/app/control_button/taecel_control_button.xml:0
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_product_search
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
 msgid "Airtime"
 msgstr "Tiempo aire"
 
@@ -495,7 +496,9 @@ msgid "Before you start"
 msgstr "Antes de empezar"
 
 #. module: xb_pos_taecel
+#. odoo-javascript
 #: model_terms:ir.ui.view,arch_db:xb_pos_taecel.view_taecel_carrier_search
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
 msgid "Bill Payments"
 msgstr "Pagos de servicio"
 
@@ -2532,3 +2535,49 @@ msgid ""
 msgstr ""
 "Cuota XPago en cada pago de servicio. El cliente la paga dentro del costo del"
 " servicio; nunca sale como renglón aparte."
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid "Data Packages"
+msgstr "Paquetes"
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid "Gift Cards"
+msgstr "Tarjetas de regalo"
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid "Results"
+msgstr "Resultados"
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.js:0
+msgid "Most Sold"
+msgstr "Más vendidas"
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.xml:0
+msgid "Search company or service..."
+msgstr "Buscar compañía o servicio..."
+
+#. module: xb_pos_taecel
+#. odoo-javascript
+#: code:addons/xb_pos_taecel/static/src/app/taecel_sale_dialog/taecel_sale_dialog.xml:0
+msgid "Nothing found. Try another word."
+msgstr "No se encontró nada. Prueba con otra palabra."
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,field_description:xb_pos_taecel.field_xb_taecel_carrier__recent_sale_count
+msgid "Recent Sales"
+msgstr "Ventas recientes"
+
+#. module: xb_pos_taecel
+#: model:ir.model.fields,help:xb_pos_taecel.field_xb_taecel_carrier__recent_sale_count
+msgid "Successful sales in the last 90 days. The register lists the most sold carriers first."
+msgstr "Ventas exitosas de los últimos 90 días. La caja muestra primero las compañías más vendidas."

@@ -14,6 +14,19 @@ import { usePos } from "../compat";
 
 const FORMAT_NUMERIC = "1";
 const FORMAT_EMAIL = "3";
+const TOP_CARRIERS = 8;
+// Provider category names, in the order the tabs are shown. Anything else
+// the catalog brings goes after them, by name.
+const CATEGORY_ORDER = ["Tiempo Aire", "Paquetes", "Servicios", "GiftCards"];
+
+/** Lowercase and without accents, so "electrica" finds "Eléctrica". */
+function normalize(text) {
+    return (text || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+}
 
 export class XbTaecelSaleDialog extends Component {
     static template = "xb_pos_taecel.SaleDialog";
@@ -30,6 +43,8 @@ export class XbTaecelSaleDialog extends Component {
             reference: "",
             referenceConfirm: "",
             error: "",
+            search: "",
+            tab: null, // category shown when not searching
             balances: null, // bolsa id -> {name, balance, low_threshold}
         });
         // Balances are re-read every time the dialog opens: TAECEL funds each
@@ -49,14 +64,85 @@ export class XbTaecelSaleDialog extends Component {
         return this.pos.xbTaecelCarriers;
     }
 
-    /** Carriers grouped by their category, for a tidy picker. */
-    get carrierGroups() {
-        const groups = {};
-        for (const carrier of this.carriers) {
-            const key = carrier.category || _t("Other");
-            (groups[key] ||= []).push(carrier);
+    categoryLabel(category) {
+        const labels = {
+            "Tiempo Aire": _t("Airtime"),
+            Paquetes: _t("Data Packages"),
+            Servicios: _t("Bill Payments"),
+            GiftCards: _t("Gift Cards"),
+        };
+        return labels[category] || category || _t("Other");
+    }
+
+    /** One tab per category, in a fixed order the cashier gets used to. */
+    get categories() {
+        const found = new Set(this.carriers.map((c) => c.category || ""));
+        const known = CATEGORY_ORDER.filter((c) => found.has(c));
+        const rest = [...found].filter((c) => !CATEGORY_ORDER.includes(c)).sort();
+        return [...known, ...rest];
+    }
+
+    get activeTab() {
+        const tabs = this.categories;
+        return tabs.includes(this.state.tab) ? this.state.tab : tabs[0];
+    }
+
+    selectTab(category) {
+        this.state.tab = category;
+    }
+
+    get isSearching() {
+        return Boolean(normalize(this.state.search));
+    }
+
+    /** Carriers whose name has every word typed, from any category. */
+    get searchResults() {
+        const words = normalize(this.state.search).split(/\s+/);
+        return this.carriers.filter((c) => {
+            const name = normalize(c.name);
+            return words.every((w) => name.includes(w));
+        });
+    }
+
+    /** What this store sold most in the last 90 days, most sold first. */
+    get topCarriers() {
+        return this.carriers
+            .filter((c) => (c.recent_sale_count || 0) > 0)
+            .sort((a, b) => b.recent_sale_count - a.recent_sale_count)
+            .slice(0, TOP_CARRIERS);
+    }
+
+    get tabCarriers() {
+        const tab = this.activeTab;
+        return this.carriers.filter((c) => (c.category || "") === tab);
+    }
+
+    /** What the picker shows, top to bottom. Searching looks in every
+     *  category; otherwise: most sold, then the tabs and the open tab. */
+    get carrierSections() {
+        if (this.isSearching) {
+            return [{ key: "search", title: _t("Results"), carriers: this.searchResults }];
         }
-        return Object.entries(groups).map(([name, carriers]) => ({ name, carriers }));
+        const sections = [];
+        const top = this.topCarriers;
+        if (top.length) {
+            sections.push({ key: "top", title: _t("Most Sold"), carriers: top });
+        }
+        sections.push({ key: "tab", tabs: true, carriers: this.tabCarriers });
+        return sections;
+    }
+
+    /** On a touch screen the search box must not take the focus when the
+     *  dialog opens (the dialog focuses its first field): the on-screen
+     *  keyboard would cover half the picker. It opens when the cashier taps
+     *  the box. With a physical keyboard the box keeps the focus. */
+    get searchTabIndex() {
+        const coarse = window.matchMedia?.("(pointer: coarse)").matches;
+        return coarse || this.env.isSmall ? "-1" : false;
+    }
+
+    clearSearch() {
+        this.state.search = "";
     }
 
     get products() {

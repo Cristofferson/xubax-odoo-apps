@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
+from datetime import timedelta
 
 from odoo import api, fields, models
 
@@ -8,6 +9,8 @@ from .pos_compat import HAS_MODEL_CONSTRAINT
 from .. import const
 
 _logger = logging.getLogger(__name__)
+
+RECENT_SALES_DAYS = 90
 
 
 class XbTaecelCarrier(models.Model):
@@ -113,6 +116,10 @@ class XbTaecelCarrier(models.Model):
 
     product_ids = fields.One2many('xb.taecel.product', 'carrier_id')
     product_count = fields.Integer(compute='_compute_product_count')
+    recent_sale_count = fields.Integer(
+        string='Recent Sales', compute='_compute_recent_sale_count',
+        help='Successful sales in the last 90 days. The register lists the '
+             'most sold carriers first.')
 
     # -- Input field spec (the carrier's single Campos entry) --------------
     field_label = fields.Char(help='What the cashier is asked for, e.g. "Numero Celular".')
@@ -147,6 +154,18 @@ class XbTaecelCarrier(models.Model):
     def _compute_product_count(self):
         for carrier in self:
             carrier.product_count = len(carrier.product_ids)
+
+    def _compute_recent_sale_count(self):
+        counts = {}
+        if self.ids:
+            since = fields.Datetime.now() - timedelta(days=RECENT_SALES_DAYS)
+            groups = self.env['xb.taecel.transaction'].sudo()._read_group(
+                [('carrier_id', 'in', self.ids), ('state', '=', const.STATE_DONE),
+                 ('create_date', '>=', since)],
+                ['carrier_id'], ['__count'])
+            counts = {carrier.id: count for carrier, count in groups}
+        for carrier in self:
+            carrier.recent_sale_count = counts.get(carrier.id, 0)
 
     # -- Sync --------------------------------------------------------------
     @api.model
@@ -223,4 +242,5 @@ class XbTaecelCarrier(models.Model):
                 'category_uid', 'carrier_type', 'customer_fee', 'provider_fee', 'xpago_fee',
                 'fee_provider_part', 'fee_merchant_part', 'is_bill_payment', 'field_label',
                 'field_key', 'field_min', 'field_max', 'field_format',
-                'field_required', 'field_confirm', 'account_id', 'currency_id']
+                'field_required', 'field_confirm', 'account_id', 'currency_id',
+                'recent_sale_count']
