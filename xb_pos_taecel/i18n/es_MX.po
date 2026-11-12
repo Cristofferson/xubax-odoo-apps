@@ -1756,15 +1756,8 @@ msgstr "Transacción TAECEL"
 #. module: xb_pos_taecel
 #. odoo-python
 #: code:addons/xb_pos_taecel/manual.py:0
-msgid ""
-"Taking a bill is the same flow with one change. In the list, next to the "
-"mobile carriers, are the services: power, water, gas, cable, internet, pay "
-"TV and several government offices. Pick the one on the customer's bill."
-msgstr ""
-"Cobrar un recibo es el mismo flujo, con un solo cambio. En la lista, además "
-"de las compañías de celular, están los servicios: luz, agua, gas, cable, "
-"internet, televisión de paga y varios gobiernos. Elige el que trae el recibo"
-" del cliente."
+msgid "Taking a bill is the same flow with one change. The services -- power, water, gas, cable, internet, pay TV and several government offices -- are under the bill payments tab. Pick the one on the customer's bill, or type its name in the search box."
+msgstr "Cobrar un recibo es el mismo proceso con un solo cambio. Los servicios (luz, agua, gas, cable, internet, televisión de paga y varias dependencias de gobierno) están en la pestaña de pagos de servicio. Elige el que dice el recibo del cliente, o escribe su nombre en el buscador."
 
 #. module: xb_pos_taecel
 #. odoo-python
@@ -1915,14 +1908,8 @@ msgstr ""
 #. module: xb_pos_taecel
 #. odoo-python
 #: code:addons/xb_pos_taecel/manual.py:0
-msgid ""
-"The full list opens: mobile carriers at the top, services (power, cable, "
-"internet, pay TV) further down. It is the catalog your provider publishes, "
-"so if it shows here, it can be sold."
-msgstr ""
-"Se abre la lista completa: las compañías de celular arriba y los servicios "
-"(luz, cable, internet, televisión de paga) más abajo. Es el catálogo que "
-"publica tu proveedor, así que si aparece aquí, se puede vender."
+msgid "At the top are the carriers this shop sells most. Below them, one tab per group: airtime, data packages, bill payments and gift cards. To go straight to one, type part of its name in the search box -- \"telcel\", \"cfe\" --, accents or not. It is the catalog your provider publishes, so if it shows here, it can be sold."
+msgstr "Arriba aparecen las compañías que más vende esta tienda. Abajo hay una pestaña por grupo: tiempo aire, paquetes, pagos de servicio y tarjetas de regalo. Para ir directo a una, escribe parte de su nombre en el buscador (\"telcel\", \"cfe\"), con o sin acentos. Es el catálogo que publica tu proveedor, así que si aparece aquí, se puede vender."
 
 #. module: xb_pos_taecel
 #. odoo-python

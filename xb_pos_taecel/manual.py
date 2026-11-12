@@ -20,7 +20,8 @@ from odoo.tools.translate import _
 _logger = logging.getLogger(__name__)
 
 ARTICLE_XMLID = 'xb_pos_taecel.article_cashier_manual'
-CHECKSUM_PARAM = 'xb_pos_taecel.manual_checksum'
+CHECKSUM_PARAM = 'xb_pos_taecel.manual_checksum'        # body as stored
+SOURCE_PARAM = 'xb_pos_taecel.manual_source_checksum'    # body as generated
 IMG_BASE = '/xb_pos_taecel/static/src/img/manual'
 
 
@@ -90,9 +91,11 @@ def build_body(env):
 
     add('<h2>%s</h2>' % _("2 - Pick the carrier or the service"))
     add(_p(_(
-        "The full list opens: mobile carriers at the top, services (power, "
-        "cable, internet, pay TV) further down. It is the catalog your provider "
-        "publishes, so if it shows here, it can be sold.")))
+        "At the top are the carriers this shop sells most. Below them, one tab "
+        "per group: airtime, data packages, bill payments and gift cards. To go "
+        "straight to one, type part of its name in the search box -- \"telcel\", "
+        "\"cfe\" --, accents or not. It is the catalog your provider publishes, "
+        "so if it shows here, it can be sold.")))
     add(_img(folder, '02_companias', _("List of carriers and services")))
 
     add('<h2>%s</h2>' % _("3 - Tap the amount the customer asked for"))
@@ -135,10 +138,10 @@ def build_body(env):
 
     add('<h2>%s</h2>' % _("Bill payments: power, water, cable..."))
     add(_p(_(
-        "Taking a bill is the same flow with one change. In the list, next to "
-        "the mobile carriers, are the services: power, water, gas, cable, "
-        "internet, pay TV and several government offices. Pick the one on the "
-        "customer's bill.")))
+        "Taking a bill is the same flow with one change. The services -- power, "
+        "water, gas, cable, internet, pay TV and several government offices -- "
+        "are under the bill payments tab. Pick the one on the customer's bill, "
+        "or type its name in the search box.")))
     add(_img(folder, '06_servicios', _("List of services")))
     add(_p(_(
         "The difference: a service has %(no_fixed)s. Instead you type two "
@@ -313,12 +316,19 @@ def install_manual(env):
     if article:
         # Refresh only what the customer has not touched: an edited manual is
         # theirs, and stomping it on every upgrade would be worse than stale.
+        # Two checksums. CHECKSUM_PARAM is of the body AS STORED: the html
+        # sanitizer rewrites what we hand it, so comparing against the body we
+        # generated never matched and every manual looked edited. A body last
+        # written by the superuser (this function) was not edited by a person
+        # either. SOURCE_PARAM is of the body as generated: when it has not
+        # changed there is nothing new to write.
         previous = params.get_param(CHECKSUM_PARAM)
         current = hashlib.sha256((article.body or '').encode()).hexdigest()
-        if previous and previous != current:
+        by_us = article.write_uid.id == SUPERUSER_ID
+        if previous and previous != current and not by_us:
             _logger.info('xb_pos_taecel: cashier manual edited locally, left as is.')
             return article
-        if previous == digest:
+        if params.get_param(SOURCE_PARAM) == digest:
             return article
         article.write({'body': body})
     else:
@@ -349,6 +359,7 @@ def install_manual(env):
     # behind an ORM write is what makes an article revert in the browser.
     if 'html_field_history' in article._fields:
         article.write({'html_field_history': False})
-    params.set_param(CHECKSUM_PARAM, digest)
+    params.set_param(CHECKSUM_PARAM, hashlib.sha256((article.body or '').encode()).hexdigest())
+    params.set_param(SOURCE_PARAM, digest)
     _logger.info('xb_pos_taecel: cashier manual ready (article %s, %s).', article.id, lang)
     return article

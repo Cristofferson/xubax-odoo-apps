@@ -35,7 +35,7 @@ transactions. A distributor account on its own does not include API access.
 Runs on Odoo 17.0, 18.0, 19.0 and 20.0.
 """,
     'category': 'Sales/Point of Sale',
-    'version': '19.0.1.1.6',
+    'version': '19.0.1.1.7',
     'author': 'XUBAX',
     'website': 'https://xubax.com',
     'license': 'OPL-1',
