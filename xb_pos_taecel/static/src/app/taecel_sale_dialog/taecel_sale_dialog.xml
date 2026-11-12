@@ -7,10 +7,26 @@
 
                 <!-- Step 1: carrier -->
                 <t t-if="state.step === 'carrier'">
-                    <t t-foreach="carrierGroups" t-as="group" t-key="group.name">
-                        <div class="xb-taecel-group-title" t-esc="group.name"/>
+                    <div class="xb-taecel-search">
+                        <input type="text" inputmode="search" autocomplete="off" class="form-control form-control-lg"
+                               t-att-tabindex="searchTabIndex"
+                               placeholder="Search company or service..."
+                               t-model="state.search"/>
+                        <button t-if="state.search" class="btn btn-link xb-taecel-search-clear"
+                                t-on-click="clearSearch">&#215;</button>
+                    </div>
+                    <t t-foreach="carrierSections" t-as="section" t-key="section.key">
+                        <div t-if="section.title" class="xb-taecel-group-title" t-esc="section.title"/>
+                        <div t-if="section.tabs" class="xb-taecel-tabs">
+                            <t t-foreach="categories" t-as="category" t-key="category">
+                                <button class="btn"
+                                        t-att-class="category === activeTab ? 'btn-primary' : 'btn-outline-secondary'"
+                                        t-on-click="() => this.selectTab(category)"
+                                        t-esc="categoryLabel(category)"/>
+                            </t>
+                        </div>
                         <div class="xb-taecel-grid">
-                            <t t-foreach="group.carriers" t-as="carrier" t-key="carrier.id">
+                            <t t-foreach="section.carriers" t-as="carrier" t-key="carrier.id">
                                 <button class="xb-taecel-card"
                                         t-att-class="{ 'xb-taecel-card-blocked': isCarrierBlocked(carrier) }"
                                         t-att-disabled="isCarrierBlocked(carrier) or false"
@@ -24,6 +40,9 @@
                                 </button>
                             </t>
                         </div>
+                        <p t-if="section.key === 'search' and !section.carriers.length" class="text-muted my-2">
+                            Nothing found. Try another word.
+                        </p>
                     </t>
                 </t>
 
