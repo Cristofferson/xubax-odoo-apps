@@ -94,4 +94,4 @@ the full traceback when reporting a problem.
 Credits
 -------
 
-Author: Cristofferson Reyes — XUBAX
+Author: XUBAX

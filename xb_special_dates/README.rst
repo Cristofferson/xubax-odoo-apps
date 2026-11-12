@@ -5,7 +5,7 @@ Never miss a customer's birthday, anniversary or special day.
 Automatic Email / SMS / WhatsApp reminders, auto-activities, and
 Point of Sale popups for Odoo 19.
 
-* Author: **Cristofferson Reyes** (XUBAX)
+* Author: **XUBAX**
 * License: OPL-1 (proprietary)
 * Compatible with: **Odoo 19 Enterprise** and **Community**
 
