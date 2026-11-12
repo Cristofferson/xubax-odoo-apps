@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- WhatsApp › Conversations: one row per chat; a click opens the whole chat. -->
+    <record id="discuss_channel_view_list_xb_wac" model="ir.ui.view">
+        <field name="name">discuss.channel.list.xb.whatsapp.conversations</field>
+        <field name="model">discuss.channel</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <tree string="Conversations" class="o_xb_wac_list" create="0" edit="0" delete="0" default_order="xb_wac_last_dt desc"
+                  action="action_xb_wac_open" type="object"
+                  decoration-bf="xb_wac_waiting">
+                <field name="name" string="Conversation"/>
+                <field name="whatsapp_number" string="Number"/>
+                <field name="wa_account_id" string="Business number" optional="show"/>
+                <field name="xb_wac_last_text"/>
+                <field name="xb_wac_last_dt"/>
+                <field name="xb_wac_waiting" widget="boolean" readonly="1" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="discuss_channel_view_search_xb_wac" model="ir.ui.view">
+        <field name="name">discuss.channel.search.xb.whatsapp.conversations</field>
+        <field name="model">discuss.channel</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <search string="Conversations">
+                <field name="name" string="Conversation"/>
+                <field name="whatsapp_number" string="Number"/>
+                <field name="whatsapp_partner_id" string="Contact"/>
+                <field name="wa_account_id" string="Business number"/>
+                <filter name="waiting" string="Awaiting reply" domain="[('xb_wac_waiting', '=', True)]"/>
+                <separator/>
+                <filter name="last_dt" string="Last message" date="xb_wac_last_dt"/>
+                <group>
+                    <filter name="group_account" string="Business number" context="{'group_by': 'wa_account_id'}"/>
+                    <filter name="group_partner" string="Contact" context="{'group_by': 'whatsapp_partner_id'}"/>
+                    <filter name="group_day" string="Day of the last message" context="{'group_by': 'xb_wac_last_dt:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_xb_wac_conversations" model="ir.actions.act_window">
+        <field name="name">Conversations</field>
+        <field name="res_model">discuss.channel</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="discuss_channel_view_list_xb_wac"/>
+        <field name="search_view_id" ref="discuss_channel_view_search_xb_wac"/>
+        <field name="domain">[("channel_type", "=", "whatsapp"), ("xb_wac_last_dt", "!=", False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No WhatsApp conversations yet.</p>
+            <p>Every chat with a customer shows up here, newest first.
+               The ones in bold are waiting for your reply. Click one to read it all and answer.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_xb_wac_conversations" name="Conversations"
+              parent="whatsapp.whatsapp_menu_main" action="action_xb_wac_conversations" sequence="-1"/>
+
+    <!-- The native one-message-per-row list becomes a report. -->
+    <menuitem id="menu_xb_wac_reports" name="Reports" parent="whatsapp.whatsapp_menu_main"
+              sequence="8" groups="whatsapp.group_whatsapp_admin"/>
+    <record id="whatsapp.whatsapp_message_menu" model="ir.ui.menu">
+        <field name="parent_id" ref="menu_xb_wac_reports"/>
+        <field name="name">Messages one by one</field>
+        <field name="sequence">1</field>
+    </record>
+</odoo>
