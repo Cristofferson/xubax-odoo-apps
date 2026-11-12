@@ -1,0 +1,122 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_whatsapp_conversations
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-11 22:35+0000\n"
+"PO-Revision-Date: 2026-11-11 22:35+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: xb_whatsapp_conversations
+#: model:ir.model.fields,field_description:xb_whatsapp_conversations.field_discuss_channel__xb_wac_waiting
+#: model_terms:ir.ui.view,arch_db:xb_whatsapp_conversations.discuss_channel_view_search_xb_wac
+msgid "Awaiting reply"
+msgstr "Esperando respuesta"
+
+#. module: xb_whatsapp_conversations
+#: model_terms:ir.ui.view,arch_db:xb_whatsapp_conversations.discuss_channel_view_list_xb_wac
+#: model_terms:ir.ui.view,arch_db:xb_whatsapp_conversations.discuss_channel_view_search_xb_wac
+msgid "Business number"
+msgstr "Número de la empresa"
+
+#. module: xb_whatsapp_conversations
+#: model_terms:ir.ui.view,arch_db:xb_whatsapp_conversations.discuss_channel_view_search_xb_wac
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: xb_whatsapp_conversations
+#: model_terms:ir.ui.view,arch_db:xb_whatsapp_conversations.discuss_channel_view_list_xb_wac
+#: model_terms:ir.ui.view,arch_db:xb_whatsapp_conversations.discuss_channel_view_search_xb_wac
+msgid "Conversation"
+msgstr "Conversación"
+
+#. module: xb_whatsapp_conversations
+#: model:ir.actions.act_window,name:xb_whatsapp_conversations.action_xb_wac_conversations
+#: model:ir.ui.menu,name:xb_whatsapp_conversations.menu_xb_wac_conversations
+#: model_terms:ir.ui.view,arch_db:xb_whatsapp_conversations.discuss_channel_view_list_xb_wac
+#: model_terms:ir.ui.view,arch_db:xb_whatsapp_conversations.discuss_channel_view_search_xb_wac
+msgid "Conversations"
+msgstr "Conversaciones"
+
+#. module: xb_whatsapp_conversations
+#: model:ir.model.fields,help:xb_whatsapp_conversations.field_discuss_channel__xb_wac_last_dt
+msgid ""
+"Date of the last WhatsApp message of the conversation, sent or received."
+msgstr ""
+"Fecha del último mensaje de WhatsApp de la conversación, enviado o recibido."
+
+#. module: xb_whatsapp_conversations
+#: model_terms:ir.ui.view,arch_db:xb_whatsapp_conversations.discuss_channel_view_search_xb_wac
+msgid "Day of the last message"
+msgstr "Día del último mensaje"
+
+#. module: xb_whatsapp_conversations
+#: model:ir.model,name:xb_whatsapp_conversations.model_discuss_channel
+msgid "Discussion Channel"
+msgstr "Canal de conversación"
+
+#. module: xb_whatsapp_conversations
+#: model:ir.model.fields,field_description:xb_whatsapp_conversations.field_discuss_channel__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: xb_whatsapp_conversations
+#: model_terms:ir.actions.act_window,help:xb_whatsapp_conversations.action_xb_wac_conversations
+msgid ""
+"Every chat with a customer shows up here, newest first.\n"
+"               The ones in bold are waiting for your reply. Click one to read it all and answer."
+msgstr ""
+"Aquí aparece cada plática con un cliente, la más reciente arriba.\n"
+"               Las que están en negritas esperan tu respuesta. Dale clic a una para leerla completa y contestar."
+
+#. module: xb_whatsapp_conversations
+#: model:ir.model.fields,field_description:xb_whatsapp_conversations.field_discuss_channel__id
+msgid "ID"
+msgstr "ID"
+
+#. module: xb_whatsapp_conversations
+#: model:ir.model.fields,field_description:xb_whatsapp_conversations.field_discuss_channel__xb_wac_last_dt
+#: model_terms:ir.ui.view,arch_db:xb_whatsapp_conversations.discuss_channel_view_search_xb_wac
+msgid "Last message"
+msgstr "Último mensaje"
+
+#. module: xb_whatsapp_conversations
+#: model:ir.model.fields,field_description:xb_whatsapp_conversations.field_discuss_channel__xb_wac_last_text
+msgid "Last message text"
+msgstr "Texto del último mensaje"
+
+#. module: xb_whatsapp_conversations
+#: model_terms:ir.actions.act_window,help:xb_whatsapp_conversations.action_xb_wac_conversations
+msgid "No WhatsApp conversations yet."
+msgstr "Todavía no hay conversaciones de WhatsApp."
+
+#. module: xb_whatsapp_conversations
+#: model_terms:ir.ui.view,arch_db:xb_whatsapp_conversations.discuss_channel_view_list_xb_wac
+#: model_terms:ir.ui.view,arch_db:xb_whatsapp_conversations.discuss_channel_view_search_xb_wac
+msgid "Number"
+msgstr "Número"
+
+#. module: xb_whatsapp_conversations
+#: model:ir.ui.menu,name:xb_whatsapp_conversations.menu_xb_wac_reports
+msgid "Reports"
+msgstr "Reportes"
+
+#. module: xb_whatsapp_conversations
+#: model:ir.model.fields,help:xb_whatsapp_conversations.field_discuss_channel__xb_wac_waiting
+msgid "The customer wrote the last message and nobody has answered yet."
+msgstr "El cliente escribió el último mensaje y nadie le ha contestado."
+
+#. module: xb_whatsapp_conversations
+#. odoo-python
+#: code:addons/xb_whatsapp_conversations/models/discuss_channel.py:0
+msgid "📎 File or image"
+msgstr "📎 Archivo o imagen"
