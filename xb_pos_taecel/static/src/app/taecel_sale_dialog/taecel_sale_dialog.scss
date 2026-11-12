@@ -1,6 +1,42 @@
 .xb-taecel-dialog {
-    min-width: 32rem;
+    // Never wider than the screen: on small terminals (N750) a fixed minimum
+    // pushed the cards off the side and the cashier had to scroll sideways.
+    width: 100%;
     max-width: 100%;
+    overflow-x: hidden;
+
+    .xb-taecel-search {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background: var(--bs-body-bg, #fff);
+        padding-bottom: 0.25rem;
+
+        input {
+            padding-right: 2.5rem;
+        }
+
+        .xb-taecel-search-clear {
+            position: absolute;
+            right: 0.25rem;
+            top: 0;
+            font-size: 1.5rem;
+            line-height: 1;
+            text-decoration: none;
+        }
+    }
+
+    .xb-taecel-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        margin: 0.75rem 0 0.5rem;
+
+        .btn {
+            flex: 1 1 auto;
+            white-space: nowrap;
+        }
+    }
 
     .xb-taecel-group-title {
         font-weight: 700;
@@ -12,7 +48,7 @@
 
     .xb-taecel-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
         gap: 0.5rem;
     }
 
@@ -79,6 +115,29 @@
         .xb-taecel-total {
             font-size: 1.15rem;
             margin-top: 0.25rem;
+        }
+    }
+
+    // Small terminals: three cards per row and a bit less padding. The
+    // height is kept steady so the search box does not jump while typing.
+    @media (max-width: 575.98px) {
+        min-height: 70vh;
+
+        .xb-taecel-tabs .btn {
+            flex: 1 1 45%;
+        }
+
+        .xb-taecel-grid {
+            grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+            gap: 0.35rem;
+        }
+
+        .xb-taecel-card,
+        .xb-taecel-amount {
+            padding: 0.5rem 0.25rem;
+            min-height: 4rem;
+            font-size: 0.85rem;
+            word-break: break-word;
         }
     }
 }
