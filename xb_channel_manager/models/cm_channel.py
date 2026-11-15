@@ -72,7 +72,11 @@ class CmChannel(models.Model):
         string="Channex base URL", default="https://staging.channex.io",
         help="https://staging.channex.io for the sandbox, "
              "https://app.channex.io for production.")
-    channex_api_key = fields.Char(string="Channex API key")
+    channex_api_key = fields.Char(
+        string="Channex API key", groups="base.group_system", copy=False,
+        help="Only administrators can read or change it.")
+    channex_api_key_set = fields.Boolean(
+        string="API key set", compute="_compute_channex_api_key_set")
     channex_property_id = fields.Char(string="Channex property ID")
     webhook_token = fields.Char(
         readonly=True, copy=False,
@@ -119,6 +123,10 @@ class CmChannel(models.Model):
             rec.reservation_count = len(rec.reservation_ids)
             rec.pending_count = len(rec.reservation_ids.filtered(
                 lambda r: r.state in ("new", "conflict", "error")))
+
+    def _compute_channex_api_key_set(self):
+        for rec in self:
+            rec.channex_api_key_set = bool(rec.sudo().channex_api_key)
 
     def _compute_webhook_url(self):
         base = self.env["ir.config_parameter"].sudo().get_param(
@@ -227,11 +235,12 @@ class CmChannel(models.Model):
 
     def _channex_client(self):
         self.ensure_one()
-        if not (self.channex_api_key and self.channex_property_id):
+        key = self.sudo().channex_api_key
+        if not (key and self.channex_property_id):
             raise UserError(_(
                 "Set the Channex API key and property ID first."))
         from .channex_client import ChannexClient
-        return ChannexClient(self.channex_base_url, self.channex_api_key)
+        return ChannexClient(self.channex_base_url, key)
 
     def _channex_test_connection(self):
         self.ensure_one()

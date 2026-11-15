@@ -80,6 +80,7 @@
                         <group>
                             <field name="channex_base_url"/>
                             <field name="channex_api_key" password="True"/>
+                            <field name="channex_api_key_set"/>
                             <field name="channex_property_id"/>
                         </group>
                         <group>

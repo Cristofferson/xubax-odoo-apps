@@ -3,6 +3,8 @@
 stay and several rate plans per room."""
 from datetime import date, timedelta
 
+from odoo.exceptions import AccessError
+from odoo.fields import Command
 from odoo.tests.common import TransactionCase, tagged
 
 from ..models import ical_utils
@@ -403,3 +405,19 @@ class TestChannelV11(TransactionCase):
             commission="0.00", checkout=self.checkout + timedelta(days=1)))
         self.assertAlmostEqual(resa.commission_amount, 45.0)
         self.assertAlmostEqual(resa.net_amount, 255.0)
+
+    def test_160_api_key_only_for_admins(self):
+        """A channel manager who is not an administrator cannot read the
+        Channex key, but the channel still syncs with it."""
+        self.channel.channex_api_key = "secret-key"
+        user = self.env["res.users"].create({
+            "name": "CM manager", "login": "cm.manager.test",
+            "group_ids": [Command.set([
+                self.env.ref("base.group_user").id,
+                self.env.ref("xb_channel_manager.group_cm_manager").id])],
+        })
+        channel = self.channel.with_user(user)
+        self.assertTrue(channel.channex_api_key_set)
+        with self.assertRaises(AccessError):
+            channel.read(["channex_api_key"])
+        self.assertEqual(channel._channex_client().api_key, "secret-key")

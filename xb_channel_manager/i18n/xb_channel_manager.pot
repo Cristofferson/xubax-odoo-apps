@@ -1760,3 +1760,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:xb_channel_manager.view_cm_channel_kanban
 msgid "rooms ·"
 msgstr ""
+
+#. module: xb_channel_manager
+#: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_channel__channex_api_key_set
+msgid "API key set"
+msgstr ""
+
+#. module: xb_channel_manager
+#: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_channel__channex_api_key
+msgid "Only administrators can read or change it."
+msgstr ""
