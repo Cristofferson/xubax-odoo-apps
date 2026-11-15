@@ -12,6 +12,10 @@
                     <button name="action_open_order" type="object"
                             string="Open order"
                             invisible="not sale_order_id"/>
+                    <button name="action_apply_changes" type="object"
+                            string="Apply changes to order"
+                            class="btn-primary"
+                            invisible="not pending_changes or not sale_order_id"/>
                     <button name="action_ignore" type="object"
                             string="Ignore"
                             invisible="state in ('imported', 'ignored', 'cancelled')"/>
@@ -21,6 +25,11 @@
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="not pending_changes">
+                        The guest changed this reservation on the platform.
+                        Review it and press «Apply changes to order».
+                    </div>
                     <div class="oe_title">
                         <h1><field name="display_label" readonly="1"/></h1>
                     </div>
@@ -39,15 +48,22 @@
                             <field name="guest_email"/>
                             <field name="guest_phone"/>
                             <field name="guests"/>
+                        </group>
+                        <group string="Money">
+                            <field name="currency_id"/>
                             <field name="price_total"/>
-                            <field name="currency_id"
-                                   groups="base.group_multi_currency"/>
+                            <field name="commission_amount"/>
+                            <field name="net_amount"/>
+                            <field name="rate_plan_id"
+                                   invisible="not rate_plan_id"/>
                         </group>
                     </group>
                     <group>
                         <field name="external_uid"/>
                         <field name="name"/>
                         <field name="sale_order_id"/>
+                        <field name="revision_id" invisible="not revision_id"/>
+                        <field name="pending_changes" invisible="1"/>
                         <field name="error_msg"
                                invisible="not error_msg"/>
                     </group>
@@ -74,7 +90,10 @@
                 <field name="date_from"/>
                 <field name="date_to"/>
                 <field name="nights"/>
-                <field name="price_total" optional="show"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="price_total" optional="show" sum="Total"/>
+                <field name="commission_amount" optional="show" sum="Total"/>
+                <field name="net_amount" optional="show" sum="Total"/>
                 <field name="sale_order_id" optional="show"/>
                 <field name="kind" optional="hide"/>
                 <field name="state" widget="badge"
@@ -94,11 +113,13 @@
                 <field name="external_uid"/>
                 <field name="guest_name"/>
                 <filter string="Needs attention" name="attention"
-                        domain="[('state', 'in', ('new', 'conflict', 'error'))]"/>
+                        domain="['|', ('state', 'in', ('new', 'conflict', 'error')), ('pending_changes', '=', True)]"/>
                 <filter string="Imported" name="imported"
                         domain="[('state', '=', 'imported')]"/>
                 <filter string="Cancelled" name="cancelled"
                         domain="[('state', '=', 'cancelled')]"/>
+                <filter string="Changed on the platform" name="pending_changes"
+                        domain="[('pending_changes', '=', True)]"/>
                 <group>
                     <filter string="Channel" name="by_channel"
                             context="{'group_by': 'channel_id'}"/>

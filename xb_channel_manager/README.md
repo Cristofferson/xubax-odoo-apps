@@ -23,7 +23,21 @@ Connects the Odoo 19 Hotel/Rental booking flow with OTA platforms.
   `x_resource_ids`): assigns a free physical room per import and runs
   the native availability recompute. Falls back to plain-Rental
   occupancy counting (capacity per listing) otherwise.
+- `xb.cm.season` — date rules per channel: nightly price (fixed or %),
+  minimum stay, closed to arrival, stop sell, weekdays, rooms, priority.
+- `xb.cm.rate.plan` — several Channex rate plans per room, each with a
+  % / amount adjustment and its own minimum stay.
 - `xb.cm.log` — sync log with auto-vacuum (30 days).
+
+Money: reservations keep the OTA currency (inactive currencies are
+activated) and the order uses a pricelist in that currency; the platform
+commission (`ota_commission`, or the channel default %) is stored on the
+reservation and the order (gross / commission / net). Rates are converted
+to the channel currency and sent as decimal strings.
+
+Modifications: a new revision of an imported booking updates the order
+(dates, room type, price, room re-assignment) after an availability check
+that ignores the order's own nights; policy *manual* only flags it.
 
 HTTP endpoints (`auth=public`, token-gated):
 - `GET /cm/ical/<token>.ics` — per-listing busy-dates feed.
@@ -35,7 +49,10 @@ Cron: one sync worker every 10 minutes (per-channel interval throttle).
 
 `odoo-bin -d <db> -i xb_channel_manager --test-enable --test-tags /xb_channel_manager`
 
-15 tests: iCal parser/generator (Airbnb + Booking fixtures, folding,
+28 tests: currencies, commission (reported, default %, multi-room
+split), modifications (auto, conflict, manual, iCal date change, contact
+data kept), seasons + weekdays + rate plans + currency conversion,
+revisions feed with acknowledge, ARI push; and iCal parser/generator (Airbnb + Booking fixtures, folding,
 escaping, garbage), staging idempotency, order creation (price honoured,
 draft/confirm policies), overbooking guard, full-dates export,
 auto-cancellation, blocks, Channex payload mapping + cancellation.

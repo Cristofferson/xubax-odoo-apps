@@ -79,6 +79,34 @@ class CmChannel(models.Model):
         default=lambda self: secrets.token_urlsafe(24))
     webhook_url = fields.Char(compute="_compute_webhook_url")
 
+    # --- Money ---------------------------------------------------------
+    company_currency_id = fields.Many2one(
+        related="company_id.currency_id", string="Company currency")
+    currency_id = fields.Many2one(
+        "res.currency", string="Channel currency",
+        help="Currency of the property on the channel (Channex). Rates are "
+             "converted from the company currency before being sent. "
+             "Leave empty to use the company currency.")
+    commission_percent = fields.Float(
+        string="Default commission (%)",
+        help="Platform commission used when the channel does not report it "
+             "(iCal calendars, or OTAs that do not send it).")
+
+    # --- Modifications & restrictions --------------------------------
+    modification_policy = fields.Selection([
+        ("auto", "Apply changes to the order automatically"),
+        ("manual", "Flag for manual review"),
+    ], default="auto", required=True, tracking=True,
+        help="What to do when the guest changes dates, room or price of an "
+             "already imported reservation on the platform.")
+    min_stay_type = fields.Selection([
+        ("arrival", "On arrival date"),
+        ("through", "On every night of the stay"),
+    ], string="Minimum stay applies", default="arrival", required=True,
+        help="How the channel checks the minimum stay: only for the "
+             "check-in night, or for every night of the stay.")
+    season_ids = fields.One2many("xb.cm.season", "channel_id")
+
     export_horizon_days = fields.Integer(
         string="Export horizon (days)", default=365,
         help="How many days ahead of today to publish/push.")
@@ -139,6 +167,17 @@ class CmChannel(models.Model):
             "type": "ir.actions.act_window",
             "name": _("Room mappings"),
             "res_model": "xb.cm.listing",
+            "view_mode": "list,form",
+            "domain": [("channel_id", "=", self.id)],
+            "context": {"default_channel_id": self.id},
+        }
+
+    def action_view_seasons(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Seasons and minimum stay"),
+            "res_model": "xb.cm.season",
             "view_mode": "list,form",
             "domain": [("channel_id", "=", self.id)],
             "context": {"default_channel_id": self.id},

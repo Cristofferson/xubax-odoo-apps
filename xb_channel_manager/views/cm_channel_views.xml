@@ -20,6 +20,10 @@
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
+                        <button name="action_view_seasons" type="object"
+                                class="oe_stat_button" icon="fa-sun-o"
+                                string="Seasons"
+                                invisible="channel_type != 'channex'"/>
                         <button name="action_view_listings" type="object"
                                 class="oe_stat_button" icon="fa-bed">
                             <field name="listing_count" widget="statinfo"
@@ -53,8 +57,22 @@
                             <field name="import_policy"/>
                             <field name="auto_import"/>
                             <field name="cancel_policy"/>
+                            <field name="modification_policy"/>
                             <field name="sync_interval"/>
                             <field name="export_horizon_days"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Money">
+                            <field name="company_currency_id" invisible="1"/>
+                            <field name="currency_id"
+                                   placeholder="Same as the company"
+                                   invisible="channel_type != 'channex'"/>
+                            <field name="commission_percent"/>
+                        </group>
+                        <group string="Rates"
+                               invisible="channel_type != 'channex'">
+                            <field name="min_stay_type"/>
                         </group>
                     </group>
                     <group string="Channex API"
@@ -84,9 +102,29 @@
                                            optional="show"/>
                                     <field name="channex_room_type_id"
                                            optional="hide"/>
-                                    <field name="channex_rate_plan_id"
+                                    <field name="base_price"
                                            optional="hide"/>
                                     <field name="last_pull"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Seasons and minimum stay" name="seasons"
+                              invisible="channel_type != 'channex'">
+                            <field name="season_ids"
+                                   context="{'default_channel_id': id}">
+                                <list>
+                                    <field name="priority" optional="hide"/>
+                                    <field name="name"/>
+                                    <field name="date_from"/>
+                                    <field name="date_to"/>
+                                    <field name="price_type"/>
+                                    <field name="price"
+                                           invisible="price_type != 'fixed'"/>
+                                    <field name="percent"
+                                           invisible="price_type != 'percent'"/>
+                                    <field name="min_stay"/>
+                                    <field name="stop_sell" optional="hide"/>
+                                    <field name="currency_id" column_invisible="1"/>
                                 </list>
                             </field>
                         </page>

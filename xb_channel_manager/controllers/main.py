@@ -57,10 +57,15 @@ class ChannelManagerController(http.Controller):
                     client = channel._channex_client()
                 except Exception:  # noqa: BLE001 — keys may be missing
                     pass
-                request.env["xb.cm.reservation"].sudo() \
-                    ._channex_stage_event(
-                        channel, client,
-                        payload.get("payload") or payload)
+                body = payload.get("payload") or payload
+                Reservation = request.env["xb.cm.reservation"].sudo()
+                if client and "rooms" not in body:
+                    # The feed is the source of truth: it returns every
+                    # pending revision (new, modified, cancelled) in order
+                    # and acknowledges them.
+                    Reservation._channex_pull_feed(channel, client)
+                else:
+                    Reservation._channex_stage_event(channel, client, body)
         except Exception as exc:  # noqa: BLE001
             _logger.exception("CM webhook processing failed")
             request.env["xb.cm.log"].sudo().log(

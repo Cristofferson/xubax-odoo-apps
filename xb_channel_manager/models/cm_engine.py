@@ -16,7 +16,9 @@ Two integration levels, detected at runtime:
 import logging
 from datetime import date, datetime, time, timedelta
 
-from odoo import _, api, models
+import pytz
+
+from odoo import _, api, fields, models
 from odoo.fields import Command
 
 _logger = logging.getLogger(__name__)
@@ -44,6 +46,29 @@ class CmEngine(models.AbstractModel):
         sale_planning installed."""
         return ("planning.slot" in self.env
                 and "sale_line_id" in self.env["planning.slot"]._fields)
+
+    @api.model
+    def _property_tz(self, company=None):
+        """Timezone the check-in/out hours are expressed in: the
+        company's website, then the company partner, then the user."""
+        company = company or self.env.company
+        tz = False
+        if "website" in self.env:
+            website = self.env["website"].sudo().search(
+                [("company_id", "=", company.id)], limit=1)
+            tz = website.tz if website and "tz" in website._fields else False
+        tz = tz or company.partner_id.tz or self.env.user.tz or "UTC"
+        try:
+            return pytz.timezone(tz)
+        except pytz.UnknownTimeZoneError:
+            return pytz.utc
+
+    @api.model
+    def _local_to_utc(self, day, hour, company=None):
+        """Naive UTC datetime for ``day`` at local float ``hour``."""
+        local = datetime.combine(day, time(int(hour), int(hour % 1 * 60)))
+        return self._property_tz(company).localize(local).astimezone(
+            pytz.utc).replace(tzinfo=None)
 
     @api.model
     def _checkin_checkout_hours(self):
@@ -154,10 +179,41 @@ class CmEngine(models.AbstractModel):
                       if total - used <= 0)
 
     @api.model
-    def check_free(self, listing, date_from, date_to, units=1):
-        """True if ``units`` are free every night of [date_from, date_to)."""
+    def check_free(self, listing, date_from, date_to, units=1,
+                   exclude_order=None):
+        """True if ``units`` are free every night of [date_from, date_to).
+        ``exclude_order``: nights already held by this (confirmed) order do
+        not count — used when the guest changes an existing stay."""
         occ = self.get_occupancy(listing, date_from, date_to)
+        if exclude_order and exclude_order.state == "sale":
+            for line in exclude_order.order_line.filtered(
+                    lambda l: l.is_rental and l.product_template_id
+                    == listing.product_tmpl_id
+                    and l.start_date and l.return_date):
+                start = line.start_date.date()
+                for i in range(max((line.return_date.date() - start).days, 1)):
+                    d = start + timedelta(days=i)
+                    if d in occ:
+                        total, used = occ[d]
+                        occ[d] = (total, max(used - 1, 0))
         return all(total - used >= units for total, used in occ.values())
+
+    @api.model
+    def _pricelist_for(self, currency, company):
+        """Pricelist in the reservation currency (the order currency comes
+        from its pricelist). Created on the fly for OTA bookings."""
+        Pricelist = self.env["product.pricelist"].sudo()
+        pricelist = Pricelist.search([
+            ("currency_id", "=", currency.id),
+            ("company_id", "in", (company.id, False)),
+        ], order="company_id desc, sequence, id", limit=1)
+        if not pricelist:
+            pricelist = Pricelist.create({
+                "name": _("OTA bookings (%s)", currency.name),
+                "currency_id": currency.id,
+                "company_id": company.id,
+            })
+        return pricelist
 
     # ------------------------------------------------------------------
     # Booking creation
@@ -197,11 +253,10 @@ class CmEngine(models.AbstractModel):
                 _("No unit free for %(tmpl)s between %(ci)s and %(co)s",
                   tmpl=tmpl.display_name, ci=checkin, co=checkout))
 
+        company = listing.company_id or self.env.company
         pickup_h, return_h = self._checkin_checkout_hours()
-        start_dt = datetime.combine(
-            checkin, time(int(pickup_h), int(pickup_h % 1 * 60)))
-        return_dt = datetime.combine(
-            checkout, time(int(return_h), int(return_h % 1 * 60)))
+        start_dt = self._local_to_utc(checkin, pickup_h, company)
+        return_dt = self._local_to_utc(checkout, return_h, company)
 
         partner = self._find_partner(
             reservation.guest_name, reservation.guest_email,
@@ -217,12 +272,26 @@ class CmEngine(models.AbstractModel):
         }
         # OTA-reported price wins (it is the contractual amount, taxes
         # included); without it the Odoo pricing engine computes it.
+        # The room's own taxes are kept when they are all price-included
+        # (the total stays exact and the invoice breaks VAT/lodging tax
+        # down); otherwise they are cleared so the total is not inflated.
         if reservation.price_total:
+            taxes = variant.taxes_id.filtered(
+                lambda t: t.company_id == company)
+            keep = taxes and all(t.price_include for t in taxes)
             line_vals.update({
                 "price_unit": reservation.price_total,
-                "tax_ids": [Command.clear()],
+                "tax_ids": ([Command.set(taxes.ids)] if keep
+                            else [Command.clear()]),
             })
+        order_vals = {}
+        currency = reservation.currency_id
+        if reservation.price_total and currency and \
+                currency != company.currency_id:
+            order_vals["pricelist_id"] = self._pricelist_for(
+                currency, company).id
         order = self.env["sale.order"].sudo().create({
+            **order_vals,
             "partner_id": partner.id,
             "company_id": listing.company_id.id,
             "is_rental_order": True,
@@ -230,6 +299,7 @@ class CmEngine(models.AbstractModel):
             "rental_return_date": return_dt,
             "origin": "%s %s" % (channel.name, reservation.external_uid),
             "client_order_ref": reservation.external_uid[:60],
+            "cm_reservation_id": reservation.id,
             "order_line": [Command.create(line_vals)],
         })
         note = _(
@@ -244,6 +314,14 @@ class CmEngine(models.AbstractModel):
         if channel.import_policy == "confirm":
             order.action_confirm()
             self._assign_room(order, checkin, checkout)
+        # Hotel industry automations reset rental prices whenever the
+        # period or the room slot is written (create, confirm, room
+        # assignment): re-apply the OTA amount last.
+        if reservation.price_total:
+            order.order_line.filtered("is_rental").write({
+                "price_unit": line_vals["price_unit"],
+                "tax_ids": line_vals["tax_ids"],
+            })
         return order
 
     # ------------------------------------------------------------------
@@ -281,10 +359,8 @@ class CmEngine(models.AbstractModel):
         if not self._has_hotel_industry():
             return False
         pickup_h, return_h = self._checkin_checkout_hours()
-        start_dt = datetime.combine(
-            checkin, time(int(pickup_h), int(pickup_h % 1 * 60)))
-        end_dt = datetime.combine(
-            checkout, time(int(return_h), int(return_h % 1 * 60)))
+        start_dt = self._local_to_utc(checkin, pickup_h, order.company_id)
+        end_dt = self._local_to_utc(checkout, return_h, order.company_id)
         Slot = self.env["planning.slot"].sudo()
         for line in order.order_line.filtered("is_rental"):
             tmpl = line.product_template_id
@@ -334,6 +410,87 @@ class CmEngine(models.AbstractModel):
                 action.run()
             except Exception:  # noqa: BLE001 — never break an import
                 _logger.exception("CM: availability recompute failed")
+
+    # ------------------------------------------------------------------
+    # Modifications made by the guest on the platform
+    # ------------------------------------------------------------------
+    @api.model
+    def update_booking(self, reservation):
+        """Bring the linked order in line with the reservation (dates, room
+        type, price, currency). Raises UserWarningConflict when the new
+        stay is not available."""
+        order = reservation.sale_order_id.sudo()
+        if not order or order.state == "cancel":
+            return order
+        listing = reservation.listing_id
+        tmpl = listing.product_tmpl_id
+        checkin, checkout = reservation.date_from, reservation.date_to
+        lines = order.order_line.filtered("is_rental")
+        line = lines[:1]
+        if not line:
+            return order
+        if not self.check_free(listing, checkin, checkout,
+                               exclude_order=order):
+            raise UserWarningConflict(
+                _("No unit free for %(tmpl)s between %(ci)s and %(co)s",
+                  tmpl=tmpl.display_name, ci=checkin, co=checkout))
+        company = order.company_id
+        pickup_h, return_h = self._checkin_checkout_hours()
+        start_dt = self._local_to_utc(checkin, pickup_h, company)
+        return_dt = self._local_to_utc(checkout, return_h, company)
+        before = "%s → %s, %s" % (
+            line.start_date and line.start_date.date(),
+            line.return_date and line.return_date.date(),
+            line.product_template_id.display_name)
+        if line.product_template_id != tmpl:
+            line.write({"product_id": tmpl.product_variant_id.id})
+            # changing the product drops the rental flag
+            line.write({"is_rental": True})
+        order.write({"rental_start_date": start_dt,
+                     "rental_return_date": return_dt})
+        line.write({"start_date": start_dt, "return_date": return_dt})
+        currency = reservation.currency_id
+        if reservation.price_total and currency and \
+                currency != order.currency_id and order.state == "draft":
+            order.pricelist_id = self._pricelist_for(currency, company)
+        if order.state == "sale" and self._has_hotel_industry():
+            if self._slot_sale_link():
+                self.env["planning.slot"].sudo().search([
+                    ("sale_line_id", "in", order.order_line.ids)]).unlink()
+            self._assign_room(order, checkin, checkout)
+        if reservation.price_total:
+            taxes = tmpl.product_variant_id.taxes_id.filtered(
+                lambda t: t.company_id == company)
+            keep = taxes and all(t.price_include for t in taxes)
+            line.write({
+                "price_unit": reservation.price_total,
+                "tax_ids": ([Command.set(taxes.ids)] if keep
+                            else [Command.clear()]),
+            })
+        self._sync_order_money(reservation)
+        order.message_post(body=_(
+            "The guest changed the reservation on %(channel)s.<br/>"
+            "Before: %(before)s<br/>Now: %(ci)s → %(co)s, %(room)s, "
+            "total %(total)s %(cur)s",
+            channel=reservation.channel_id.name, before=before,
+            ci=checkin, co=checkout, room=tmpl.display_name,
+            total=reservation.price_total or order.amount_total,
+            cur=order.currency_id.name))
+        return order
+
+    @api.model
+    def _sync_order_money(self, reservation):
+        """Copy the platform commission to the order (order currency)."""
+        order = reservation.sale_order_id.sudo()
+        if not order:
+            return
+        commission = reservation.commission_amount or 0.0
+        cur = reservation.currency_id
+        if commission and cur and cur != order.currency_id:
+            commission = cur._convert(
+                commission, order.currency_id, order.company_id,
+                reservation.date_from or fields.Date.today())
+        order.cm_commission_amount = commission
 
     # ------------------------------------------------------------------
     # Cancellation

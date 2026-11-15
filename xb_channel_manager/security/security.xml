@@ -28,6 +28,15 @@
         </field>
     </record>
 
+    <record id="rule_cm_season_company" model="ir.rule">
+        <field name="name">CM Season: multi-company</field>
+        <field name="model_id" ref="model_xb_cm_season"/>
+        <field name="domain_force">
+            ['|', ('company_id', '=', False),
+                  ('company_id', 'in', company_ids)]
+        </field>
+    </record>
+
     <record id="rule_cm_reservation_company" model="ir.rule">
         <field name="name">CM Reservation: multi-company</field>
         <field name="model_id" ref="model_xb_cm_reservation"/>

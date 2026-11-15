@@ -51,10 +51,10 @@ class CmListing(models.Model):
 
     # --- Channex ------------------------------------------------------
     channex_room_type_id = fields.Char(string="Channex room type ID")
-    channex_rate_plan_id = fields.Char(string="Channex rate plan ID")
     rate_push = fields.Boolean(
-        string="Push nightly rate", default=True,
-        help="Push the product rental price to the channel (Channex only).")
+        string="Push rates", default=True,
+        help="Send prices, minimum stay and restrictions of every rate "
+             "plan to the channel (Channex only).")
 
     reservation_ids = fields.One2many("xb.cm.reservation", "listing_id")
     reservation_count = fields.Integer(compute="_compute_reservation_count")
@@ -221,25 +221,18 @@ class CmListing(models.Model):
         if values:
             client.post("/api/v1/availability", {"values": values})
 
-        # Nightly rate from the rental pricing engine
-        if self.rate_push and self.channex_rate_plan_id:
-            price = self._nightly_price()
-            if price:
-                client.post("/api/v1/restrictions", {"values": [{
-                    "property_id": channel.channex_property_id,
-                    "rate_plan_id": self.channex_rate_plan_id,
-                    "date_from": date_from.isoformat(),
-                    "date_to": date_to.isoformat(),
-                    "rate": int(round(price * 100)),
-                }]})
+        # Prices, minimum stay and restrictions of every rate plan
+        rate_values = []
+        if self.rate_push and self.rate_plan_ids:
+            rate_values = self._plan_values(date_from, date_to)
+            for i in range(0, len(rate_values), 500):
+                client.post("/api/v1/restrictions",
+                            {"values": rate_values[i:i + 500]})
         self.last_push = fields.Datetime.now()
         self.env["xb.cm.log"].sudo().log(
             self.channel_id, "info", "ari_push",
-            "%s: pushed %s availability ranges%s" % (
-                self.name, len(values),
-                ", rate %.2f" % price
-                if self.rate_push and self.channex_rate_plan_id and price
-                else ""),
+            "%s: pushed %s availability ranges, %s rate ranges"
+            % (self.name, len(values), len(rate_values)),
             listing=self)
 
     def _nightly_price(self):

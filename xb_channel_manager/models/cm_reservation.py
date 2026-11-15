@@ -36,14 +36,31 @@ class CmReservation(models.Model):
     guest_email = fields.Char()
     guest_phone = fields.Char()
     guests = fields.Char(string="Guests (adults/children)")
-    date_from = fields.Date(string="Check-in", required=True)
-    date_to = fields.Date(string="Check-out", required=True)
+    date_from = fields.Date(string="Check-in", required=True, tracking=True)
+    date_to = fields.Date(string="Check-out", required=True, tracking=True)
     nights = fields.Integer(compute="_compute_nights", store=True)
-    price_total = fields.Float(
+    price_total = fields.Monetary(
+        string="Total (gross)", currency_field="currency_id", tracking=True,
         help="Total amount reported by the OTA (taxes included). "
              "0 = let Odoo compute the price.")
     currency_id = fields.Many2one(
-        "res.currency", default=lambda self: self.env.company.currency_id)
+        "res.currency", default=lambda self: self.env.company.currency_id,
+        help="Currency the guest paid in on the platform.")
+    commission_amount = fields.Monetary(
+        string="Platform commission", currency_field="currency_id",
+        tracking=True)
+    net_amount = fields.Monetary(
+        string="Net income", currency_field="currency_id",
+        compute="_compute_net_amount", store=True)
+    rate_plan_id = fields.Many2one(
+        "xb.cm.rate.plan", string="Rate plan", ondelete="set null")
+    revision_id = fields.Char(
+        string="Last revision", readonly=True,
+        help="Identifier of the last version received from the channel.")
+    pending_changes = fields.Boolean(
+        readonly=True,
+        help="The platform changed this reservation and the changes are "
+             "not applied to the order yet.")
     raw_payload = fields.Text(readonly=True)
 
     state = fields.Selection([
@@ -68,6 +85,12 @@ class CmReservation(models.Model):
             rec.display_label = (rec.guest_name or rec.name
                                  or rec.external_uid or "?")
 
+    @api.depends("price_total", "commission_amount")
+    def _compute_net_amount(self):
+        for rec in self:
+            rec.net_amount = (rec.price_total or 0) - (rec.commission_amount
+                                                       or 0)
+
     @api.depends("date_from", "date_to")
     def _compute_nights(self):
         for rec in self:
@@ -85,7 +108,9 @@ class CmReservation(models.Model):
             try:
                 order = engine.create_booking(rec)
                 rec.write({"state": "imported", "sale_order_id": order.id,
-                           "error_msg": False})
+                           "error_msg": False, "pending_changes": False})
+                rec._default_commission()
+                engine._sync_order_money(rec)
             except UserWarningConflict as exc:
                 rec.write({"state": "conflict", "error_msg": str(exc)})
                 rec._notify_manager(_(
@@ -94,6 +119,81 @@ class CmReservation(models.Model):
                 _logger.exception("CM import failed for %s",
                                   rec.external_uid)
                 rec.write({"state": "error", "error_msg": str(exc)})
+        return True
+
+    def _default_commission(self):
+        """Commission from the channel percentage when the OTA did not
+        report one."""
+        for rec in self:
+            pct = rec.channel_id.commission_percent
+            if rec.commission_amount or not pct:
+                continue
+            total = rec.price_total
+            if not total and rec.sale_order_id:
+                total = rec.sale_order_id.amount_total
+                if not rec.price_total:
+                    rec.currency_id = rec.sale_order_id.currency_id
+            if total:
+                rec.commission_amount = rec.currency_id.round(
+                    total * pct / 100.0)
+
+    def action_apply_changes(self):
+        """Apply the changes received from the platform to the order."""
+        engine = self.env["xb.cm.engine"]
+        for rec in self:
+            if not rec.sale_order_id:
+                continue
+            try:
+                engine.update_booking(rec)
+                rec.write({"state": "imported", "pending_changes": False,
+                           "error_msg": False})
+            except UserWarningConflict as exc:
+                rec.write({"state": "conflict", "error_msg": str(exc)})
+                rec._notify_manager(_(
+                    "The guest changed the reservation on the platform but "
+                    "the new dates are not available"))
+        return True
+
+    def _apply_modification(self, vals):
+        """The platform changed this reservation: store the new values and
+        update the order according to the channel policy."""
+        self.ensure_one()
+        tracked = ("date_from", "date_to", "listing_id", "price_total",
+                   "currency_id", "commission_amount", "rate_plan_id",
+                   "guests")
+        changed = {}
+        for key, value in vals.items():
+            current = self[key]
+            if key in ("listing_id", "currency_id", "rate_plan_id"):
+                current = current.id
+            elif key in ("date_from", "date_to") and value:
+                value = fields.Date.to_date(value)
+            if key in ("guest_name", "guest_email", "guest_phone") \
+                    and not value:
+                continue  # contact data is wiped by some OTAs afterwards
+            if current != value:
+                changed[key] = value
+        if not changed:
+            return False
+        self.write(changed)
+        if not any(k in tracked for k in changed):
+            return False
+        if self.state in ("conflict", "error") and not self.sale_order_id:
+            self.state = "new"
+            if self.channel_id.auto_import:
+                self.action_import()
+            return True
+        if not self.sale_order_id or self.state == "cancelled":
+            return True
+        if self.channel_id.modification_policy == "auto":
+            self.pending_changes = True
+            self.action_apply_changes()
+        else:
+            self.pending_changes = True
+            self._notify_manager(_(
+                "The guest changed the reservation on the platform — review "
+                "and apply the changes to order %s",
+                self.sale_order_id.name))
         return True
 
     def action_ignore(self):
@@ -169,18 +269,10 @@ class CmReservation(models.Model):
                 "raw_payload": ev.get("description") or "",
             }
             if existing:
-                # Dates changed on the OTA → update if not imported yet;
-                # imported orders get flagged for manual review.
-                if (existing.date_from != ev["start"]
-                        or existing.date_to != ev["end"]):
-                    if existing.state == "imported":
-                        existing._notify_manager(_(
-                            "Dates changed on the OTA for an imported "
-                            "reservation — review order %s",
-                            existing.sale_order_id.name))
-                    else:
-                        existing.write({"date_from": ev["start"],
-                                        "date_to": ev["end"]})
+                if existing.kind == "reservation" and \
+                        existing.state not in ("cancelled", "ignored"):
+                    existing._apply_modification({
+                        "date_from": ev["start"], "date_to": ev["end"]})
                 continue
             rec = self.create(vals)
             if is_block:
@@ -203,38 +295,71 @@ class CmReservation(models.Model):
         return stats
 
     # ------------------------------------------------------------------
-    # Channex bookings feed
+    # Channex booking revisions feed
     # ------------------------------------------------------------------
     @api.model
     def _channex_pull_feed(self, channel, client):
-        """Consume the Channex bookings feed (with acknowledge)."""
-        feed = client.get(
-            "/api/v1/bookings_feed",
-            params={"filter[property_id]": channel.channex_property_id})
+        """Consume the Channex booking revisions feed (oldest first) and
+        acknowledge every revision once it is staged."""
+        feed = client.get("/api/v1/booking_revisions/feed", params={
+            "filter[property_id]": channel.channex_property_id,
+            "order[inserted_at]": "asc",
+        })
         for item in feed.get("data", []):
             try:
-                self._channex_stage_event(channel, client, item)
-                client.post("/api/v1/bookings_feed/%s/ack" % item.get("id"))
+                with self.env.cr.savepoint():
+                    self._channex_stage_event(channel, client, item)
+                client.post("/api/v1/booking_revisions/%s/ack"
+                            % item.get("id"))
             except Exception as exc:  # noqa: BLE001
                 _logger.exception("CM channex feed item failed")
                 self.env["xb.cm.log"].sudo().log(
                     channel, "error", "webhook",
-                    "feed item %s: %s" % (item.get("id"), exc))
+                    "revision %s: %s" % (item.get("id"), exc))
 
     @api.model
     def _channex_stage_event(self, channel, client, item):
         attrs = item.get("attributes", item) or {}
         booking_id = (attrs.get("booking_id")
                       or item.get("booking_id") or item.get("id"))
-        booking = attrs
+        booking = dict(attrs)
         if client and booking_id and "rooms" not in attrs:
             data = client.get("/api/v1/bookings/%s" % booking_id)
             booking = (data.get("data") or {}).get("attributes", {})
+        booking.setdefault("revision_id", item.get("id")
+                           if item.get("type") == "booking_revision"
+                           else attrs.get("revision_id"))
         return self._channex_upsert_booking(channel, booking, booking_id)
 
     @api.model
+    def _channex_currency(self, code, channel):
+        """res.currency for an ISO code; inactive currencies are activated
+        (the guest really paid in it)."""
+        if not code:
+            return channel.company_id.currency_id
+        currency = self.env["res.currency"].sudo().with_context(
+            active_test=False).search([("name", "=", code.upper())], limit=1)
+        if not currency:
+            raise ValueError(_("Unknown currency %s", code))
+        if not currency.active:
+            currency.active = True
+            self.env["xb.cm.log"].sudo().log(
+                channel, "info", "webhook",
+                "Currency %s activated for OTA bookings" % currency.name)
+        return currency
+
+    @staticmethod
+    def _amount(value):
+        try:
+            return float(value or 0)
+        except (TypeError, ValueError):
+            return 0.0
+
+    @api.model
     def _channex_upsert_booking(self, channel, booking, booking_id):
-        """Map one Channex booking payload into the staging inbox."""
+        """Map one Channex booking (revision) into the staging inbox:
+        new rooms are created, changed ones are modified, removed or
+        cancelled ones are cancelled."""
         status = (booking.get("status") or "new").lower()
         uid = str(booking.get("unique_id")
                   or booking.get("ota_reservation_code")
@@ -243,7 +368,26 @@ class CmReservation(models.Model):
         guest_name = " ".join(filter(None, [
             customer.get("name"), customer.get("surname")])) or None
         rooms = booking.get("rooms") or []
-        created = self.env["xb.cm.reservation"]
+        currency = self._channex_currency(booking.get("currency"), channel)
+        booking_amount = self._amount(booking.get("amount"))
+        commission = booking.get("ota_commission")
+        commission = (self._amount(commission)
+                      if commission not in (None, "") else None)
+        room_amounts = [self._amount(r.get("amount")) for r in rooms]
+        rooms_total = sum(room_amounts) or booking_amount
+        existing_all = self.search([
+            ("channel_id", "=", channel.id),
+            "|", ("external_uid", "=", uid),
+            ("external_uid", "=like", uid + "-%")])
+
+        if status in ("cancelled", "canceled"):
+            existing_all._mark_cancelled()
+            for rec in existing_all:
+                rec.revision_id = booking.get("revision_id") or rec.revision_id
+            return existing_all
+
+        result = self.browse()
+        seen = self.browse()
         for i, room in enumerate(rooms):
             room_type = str(room.get("room_type_id") or "")
             listing = channel.listing_ids.filtered(
@@ -251,33 +395,34 @@ class CmReservation(models.Model):
             if not listing:
                 self.env["xb.cm.log"].sudo().log(
                     channel, "warning", "webhook",
-                    "Booking %s: no listing mapped for room type %s"
+                    "Booking %s: no room mapped for Channex room type %s"
                     % (uid, room_type))
                 continue
-            ext_uid = uid if len(rooms) == 1 else "%s-%s" % (uid, i)
-            existing = self.search([
-                ("channel_id", "=", channel.id),
-                ("external_uid", "=", ext_uid)], limit=1)
-            if status in ("cancelled", "canceled"):
-                if existing:
-                    existing._mark_cancelled()
-                continue
-            if existing:
-                continue
-            amount = float(room.get("amount")
-                           or booking.get("amount") or 0)
-            occupancy = room.get("occupancy") or {}
-            rec = self.create({
-                "channel_id": channel.id,
+            # Keep the identifiers stable when a modification adds or
+            # removes rooms: «uid» for a single room, «uid-N» otherwise.
+            has_plain = bool(existing_all.filtered(
+                lambda r: r.external_uid == uid))
+            has_suffix = bool(existing_all - existing_all.filtered(
+                lambda r: r.external_uid == uid))
+            if i == 0 and (has_plain or (len(rooms) == 1
+                                         and not has_suffix)):
+                ext_uid = uid
+            else:
+                ext_uid = "%s-%s" % (uid, i)
+            amount = room_amounts[i] or (
+                booking_amount if len(rooms) == 1 else 0.0)
+            room_commission = None
+            if commission is not None:
+                share = (amount / rooms_total) if rooms_total else (
+                    1.0 / len(rooms))
+                room_commission = currency.round(commission * share)
+            plan_ext = str(room.get("rate_plan_id") or "")
+            plan = listing.rate_plan_ids.filtered(
+                lambda p, pe=plan_ext: p.channex_rate_plan_id == pe)[:1]
+            occupancy = room.get("occupancy") or booking.get(
+                "occupancy") or {}
+            vals = {
                 "listing_id": listing.id,
-                "external_uid": ext_uid,
-                "kind": "reservation",
-                "name": "%s (%s)" % (
-                    booking.get("ota_name") or "Channex", status),
-                "guest_name": guest_name,
-                "guest_email": customer.get("mail")
-                or customer.get("email"),
-                "guest_phone": customer.get("phone"),
                 "guests": "%s adults, %s children" % (
                     occupancy.get("adults", "?"),
                     occupancy.get("children", 0)),
@@ -286,9 +431,43 @@ class CmReservation(models.Model):
                 "date_to": room.get("checkout_date")
                 or booking.get("departure_date"),
                 "price_total": amount,
+                "currency_id": currency.id,
+                "rate_plan_id": plan.id or False,
+                "guest_name": guest_name,
+                "guest_email": customer.get("mail") or customer.get("email"),
+                "guest_phone": customer.get("phone"),
+            }
+            if room_commission is not None:
+                vals["commission_amount"] = room_commission
+            existing = existing_all.filtered(
+                lambda r, e=ext_uid: r.external_uid == e)[:1]
+            if existing:
+                seen |= existing
+                existing.write({
+                    "revision_id": booking.get("revision_id")
+                    or existing.revision_id,
+                    "raw_payload": str(booking)[:5000],
+                })
+                if existing.state != "cancelled":
+                    existing._apply_modification(vals)
+                result |= existing
+                continue
+            vals.update({
+                "channel_id": channel.id,
+                "external_uid": ext_uid,
+                "kind": "reservation",
+                "name": "%s (%s)" % (
+                    booking.get("ota_name") or "Channex", status),
+                "revision_id": booking.get("revision_id"),
                 "raw_payload": str(booking)[:5000],
             })
-            created |= rec
+            rec = self.create(vals)
+            result |= rec
             if channel.auto_import:
                 rec.action_import()
-        return created
+        # rooms removed from a modified booking
+        gone = (existing_all - seen).filtered(
+            lambda r: r.state != "cancelled")
+        if gone and rooms:
+            gone._mark_cancelled()
+        return result

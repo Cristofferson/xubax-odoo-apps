@@ -76,7 +76,12 @@ class TestChannelFlow(TransactionCase):
         self.assertEqual(line.product_template_id, self.room)
         self.assertEqual(line.start_date.date(), self.checkin)
         self.assertEqual(line.return_date.date(), self.checkout)
-        # OTA price honoured exactly (taxes cleared)
+        # check-in hour is the property's local hour, stored in UTC
+        engine = self.env["xb.cm.engine"]
+        pickup_h, _return_h = engine._checkin_checkout_hours()
+        self.assertEqual(line.start_date,
+                         engine._local_to_utc(self.checkin, pickup_h))
+        # OTA price honoured exactly (included taxes kept, others cleared)
         self.assertAlmostEqual(order.amount_total, 450.0)
         self.assertEqual(order.partner_id.name, "John Doe")
 

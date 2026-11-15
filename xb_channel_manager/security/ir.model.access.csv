@@ -7,3 +7,9 @@ access_cm_reservation_user,cm.reservation user,model_xb_cm_reservation,group_cm_
 access_cm_reservation_manager,cm.reservation manager,model_xb_cm_reservation,group_cm_manager,1,1,1,1
 access_cm_log_user,cm.log user,model_xb_cm_log,group_cm_user,1,0,0,0
 access_cm_log_manager,cm.log manager,model_xb_cm_log,group_cm_manager,1,1,1,1
+access_cm_season_user,cm.season user,model_xb_cm_season,group_cm_user,1,0,0,0
+access_cm_season_manager,cm.season manager,model_xb_cm_season,group_cm_manager,1,1,1,1
+access_cm_rate_plan_user,cm.rate.plan user,model_xb_cm_rate_plan,group_cm_user,1,0,0,0
+access_cm_rate_plan_manager,cm.rate.plan manager,model_xb_cm_rate_plan,group_cm_manager,1,1,1,1
+access_cm_rate_preview_user,cm.rate.preview user,model_xb_cm_rate_preview,group_cm_user,1,1,1,1
+access_cm_rate_preview_line_user,cm.rate.preview.line user,model_xb_cm_rate_preview_line,group_cm_user,1,1,1,1

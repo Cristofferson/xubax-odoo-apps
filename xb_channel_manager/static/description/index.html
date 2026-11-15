@@ -80,8 +80,22 @@
     <ul style="line-height:1.9;">
         <li>Two-way iCal (RFC 5545) &#8212; export busy dates, import
             reservations and "not available" blocks.</li>
-        <li>Channex driver: availability + nightly rate push, bookings
-            feed with acknowledge, signed webhook endpoint.</li>
+        <li>Channex driver: availability push, booking revisions feed
+            with acknowledge, secret webhook endpoint.</li>
+        <li><b>Seasons and minimum stay</b>: a different nightly price
+            (fixed or %) for high season, holidays or weekends, minimum
+            stay, closed to arrival and stop sell, sent night by night.</li>
+        <li><b>Several rate plans per room</b> (standard, non-refundable,
+            weekly&#8230;), each with its own adjustment and minimum stay.</li>
+        <li><b>Multi-currency</b>: each reservation keeps the currency the
+            guest paid in (USD, EUR, PYG&#8230;) and the rates are converted
+            to the currency of the channel.</li>
+        <li><b>Platform commission</b>: reported by the OTA or a default
+            percentage per channel; gross, commission and net income on the
+            reservation and the order.</li>
+        <li><b>Modifications</b>: when the guest changes dates, room or
+            price on the platform, the order is updated (or flagged for
+            review), with availability check.</li>
         <li>Reservation inbox: import / ignore / retry, conflict and
             error states, links to the Sales Order, full chatter.</li>
         <li>Policies per channel: auto-import, draft vs. confirmed
@@ -98,7 +112,11 @@
     <p>Conecta el flujo de reservas de hotel de Odoo con las plataformas
     de hospedaje: sincronizaci&#243;n <b>iCal bidireccional</b> (Airbnb,
     Booking.com, Vrbo) y <b>API Channex</b> (Booking.com, Expedia, Airbnb
-    y m&#225;s de 100 canales). Las reservas OTA se convierten en &#243;rdenes de
+    y m&#225;s de 100 canales). Env&#237;a precio por noche con
+    temporadas, estad&#237;a m&#237;nima y varias tarifas por departamento; las
+    reservas guardan su moneda (USD, PYG&#8230;) y la comisi&#243;n de la
+    plataforma, y las modificaciones del hu&#233;sped se aplican solas a la
+    orden. Las reservas OTA se convierten en &#243;rdenes de
     venta confirmadas, con habitaci&#243;n f&#237;sica asignada y bloqueo nativo de
     disponibilidad; con protecci&#243;n contra sobreventa y manejo de
     cancelaciones. Bandeja de reservas, bit&#225;cora completa y pol&#237;ticas por
