@@ -22,6 +22,7 @@ import logging
 from datetime import date, datetime, time, timedelta
 
 import pytz
+from markupsafe import Markup
 
 from odoo import _, api, fields, models
 from odoo.fields import Command
@@ -127,14 +128,18 @@ class CmEngine(models.AbstractModel):
     @api.model
     def _property_tz(self, company=None):
         """Timezone the check-in/out hours are expressed in: the
-        company's website, then the company partner, then the user."""
+        company's website, then the company partner, then the
+        administrator. Never the acting user: the webhook runs as the
+        public user and the cron as the system user."""
         company = company or self.env.company
         tz = False
         if "website" in self.env:
             website = self.env["website"].sudo().search(
                 [("company_id", "=", company.id)], limit=1)
             tz = website.tz if website and "tz" in website._fields else False
-        tz = tz or company.partner_id.tz or self.env.user.tz or "UTC"
+        admin = self.env.ref("base.user_admin", raise_if_not_found=False)
+        tz = (tz or company.partner_id.tz or (admin and admin.sudo().tz)
+              or "UTC")
         try:
             return pytz.timezone(tz)
         except pytz.UnknownTimeZoneError:
@@ -305,7 +310,6 @@ class CmEngine(models.AbstractModel):
                 "name": name or _("OTA Guest"),
                 "email": email or False,
                 "phone": phone or False,
-                "company_type": "person",
                 "comment": _("Created by OTA Channel Manager (%s)",
                              channel and channel.name or "iCal"),
             })
@@ -316,10 +320,12 @@ class CmEngine(models.AbstractModel):
         """Engine and reservation working in the channel company: orders
         of a company other than the main one fail the multi-company
         check otherwise (webhook and cron run in the main company)."""
-        company = reservation.channel_id.company_id
-        if not company:
-            return self, reservation
-        return self.with_company(company), reservation.with_company(company)
+        company = reservation.channel_id.company_id or self.env.company
+        # Dates written in the property timezone (rental descriptions,
+        # reports), whoever runs the import: webhook, cron or a user.
+        tz = self._property_tz(company).zone
+        return (self.with_company(company).with_context(tz=tz),
+                reservation.with_company(company).with_context(tz=tz))
 
     @api.model
     def create_booking(self, reservation):
@@ -382,13 +388,14 @@ class CmEngine(models.AbstractModel):
             "cm_reservation_id": reservation.id,
             "order_line": [Command.create(line_vals)],
         })
-        note = _(
+        # Markup: the <br/> stay HTML, the values are escaped
+        note = Markup(_(
             "OTA reservation imported by Channel Manager.<br/>"
             "Channel: %(channel)s<br/>UID: %(uid)s<br/>"
-            "Guests: %(guests)s<br/>Raw summary: %(summary)s",
-            channel=channel.name, uid=reservation.external_uid,
-            guests=reservation.guests or "-",
-            summary=reservation.name or "-")
+            "Guests: %(guests)s<br/>Raw summary: %(summary)s")) % {
+            "channel": channel.name, "uid": reservation.external_uid,
+            "guests": reservation.guests or "-",
+            "summary": reservation.name or "-"}
         order.message_post(body=note)
 
         if channel.import_policy == "confirm":
@@ -548,14 +555,14 @@ class CmEngine(models.AbstractModel):
             if price is not None:
                 line.price_unit = price
         self._sync_order_money(reservation)
-        order.message_post(body=_(
+        order.message_post(body=Markup(_(
             "The guest changed the reservation on %(channel)s.<br/>"
             "Before: %(before)s<br/>Now: %(ci)s → %(co)s, %(room)s, "
-            "total %(total)s %(cur)s",
-            channel=reservation.channel_id.name, before=before,
-            ci=checkin, co=checkout, room=tmpl.display_name,
-            total=reservation.price_total or order.amount_total,
-            cur=order.currency_id.name))
+            "total %(total)s %(cur)s")) % {
+            "channel": reservation.channel_id.name, "before": before,
+            "ci": checkin, "co": checkout, "room": tmpl.display_name,
+            "total": reservation.price_total or order.amount_total,
+            "cur": order.currency_id.name})
         return order
 
     @api.model

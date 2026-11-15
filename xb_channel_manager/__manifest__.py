@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Hotel OTA Channel Manager (Airbnb, Booking.com, Expedia)',
-    'summary': 'Sync rooms, availability, rates and reservations with OTA '
-               'platforms: universal iCal (Airbnb, Booking.com, Vrbo) and '
-               'Channex API (Booking.com, Expedia, Airbnb and 100+ channels).',
+    'summary': 'Channel manager for hotels and rentals: Airbnb, Booking.com, '
+               'Expedia by iCal and Channex. Gestor de canales para hoteles y '
+               'alquileres: reservas, disponibilidad, tarifas y temporadas.',
     'description': """
 Hotel OTA Channel Manager
 =========================
@@ -22,7 +22,7 @@ industry with the main hospitality platforms (OTAs):
   *xb_channel_manager_renting* bridge installs itself.
 * Overbooking guard, cancellation handling, full sync log.
 """,
-    'category': 'Sales/Rental',
+    'category': 'Sales/Sales',
     'version': '19.0.1.2.0',
     'author': 'XUBAX',
     'website': 'https://xubax.com',

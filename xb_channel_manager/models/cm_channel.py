@@ -129,8 +129,7 @@ class CmChannel(models.Model):
             rec.channex_api_key_set = bool(rec.sudo().channex_api_key)
 
     def _compute_webhook_url(self):
-        base = self.env["ir.config_parameter"].sudo().get_param(
-            "web.base.url") or ""
+        base = self.browse().get_base_url() or ""
         for rec in self:
             rec.webhook_url = (
                 "%s/cm/channex/webhook/%s" % (base, rec.webhook_token)

@@ -94,3 +94,4 @@ class TestChannelRenting(TransactionCase):
         _post_init_stay_dates(self.env)
         self.assertEqual(line.cm_checkin, self.checkin)
         self.assertEqual(line.cm_checkout, self.checkout)
+

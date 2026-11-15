@@ -17,6 +17,16 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: xb_channel_manager
+#. odoo-python
+#: code:addons/xb_channel_manager/models/cm_engine.py:0
+msgid ""
+"%(room)s\n"
+"%(nights)s night(s): %(ci)s → %(co)s"
+msgstr ""
+"%(room)s\n"
+"%(nights)s noche(s): %(ci)s → %(co)s"
+
+#. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_season__percent
 msgid "+20 = 20 % more expensive, -15 = 15 % cheaper."
 msgstr "+20 = 20 % más caro, -15 = 15 % más barato."
@@ -25,6 +35,11 @@ msgstr "+20 = 20 % más caro, -15 = 15 % más barato."
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_season__min_stay
 msgid "0 = no minimum. Sent to the channel for every night of the season."
 msgstr "0 = sin mínimo. Se envía al canal para cada noche de la temporada."
+
+#. module: xb_channel_manager
+#: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_channel__channex_api_key_set
+msgid "API key set"
+msgstr "Clave configurada"
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_channel__message_needaction
@@ -87,12 +102,8 @@ msgstr "Todas las habitaciones del canal"
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_rate_plan__percent
-msgid ""
-"Applied over the price of each night: -10 for a non-refundable rate 10 % "
-"cheaper."
-msgstr ""
-"Se aplica sobre el precio de cada noche: -10 para una tarifa no reembolsable"
-" 10 % más barata."
+msgid "Applied over the price of each night: -10 for a non-refundable rate 10 % cheaper."
+msgstr "Se aplica sobre el precio de cada noche: -10 para una tarifa no reembolsable 10 % más barata."
 
 #. module: xb_channel_manager
 #: model_terms:ir.ui.view,arch_db:xb_channel_manager.view_cm_reservation_form
@@ -109,6 +120,11 @@ msgstr "Aplicar los cambios a la orden automáticamente"
 #: model_terms:ir.ui.view,arch_db:xb_channel_manager.view_cm_season_form
 msgid "Archived"
 msgstr "Archivado"
+
+#. module: xb_channel_manager
+#: model:ir.model.fields,help:xb_channel_manager.field_sale_order_line__cm_checkin
+msgid "Arrival date of the stay. With the dates set, the line occupies the room on the channels every night until the check-out (not included)."
+msgstr "Fecha de llegada de la estancia. Con las fechas puestas, la línea ocupa la habitación en los canales cada noche hasta la salida (sin incluirla)."
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_channel__message_attachment_count
@@ -280,11 +296,13 @@ msgid "Channex room type ID"
 msgstr "ID de tipo de habitación en Channex"
 
 #. module: xb_channel_manager
+#: model:ir.model.fields,field_description:xb_channel_manager.field_sale_order_line__cm_checkin
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_reservation__date_from
 msgid "Check-in"
 msgstr "Llegada"
 
 #. module: xb_channel_manager
+#: model:ir.model.fields,field_description:xb_channel_manager.field_sale_order_line__cm_checkout
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_reservation__date_to
 msgid "Check-out"
 msgstr "Salida"
@@ -359,12 +377,8 @@ msgstr "Conectado"
 #. module: xb_channel_manager
 #. odoo-python
 #: code:addons/xb_channel_manager/models/cm_channel.py:0
-msgid ""
-"Connected to Channex, but property %s was not found in the account (found: "
-"%s)."
-msgstr ""
-"Conectado a Channex, pero la propiedad %s no está en la cuenta (encontradas:"
-" %s)."
+msgid "Connected to Channex, but property %s was not found in the account (found: %s)."
+msgstr "Conectado a Channex, pero la propiedad %s no está en la cuenta (encontradas: %s)."
 
 #. module: xb_channel_manager
 #: model:ir.model.fields.selection,name:xb_channel_manager.selection__xb_cm_log__kind__connect
@@ -436,14 +450,8 @@ msgstr "Moneda"
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_channel__currency_id
-msgid ""
-"Currency of the property on the channel (Channex). Rates are converted from "
-"the company currency before being sent. Leave empty to use the company "
-"currency."
-msgstr ""
-"Moneda de la propiedad en el canal (Channex). Las tarifas se convierten "
-"desde la moneda de la compañía antes de enviarse. Déjala vacía para usar la "
-"moneda de la compañía."
+msgid "Currency of the property on the channel (Channex). Rates are converted from the company currency before being sent. Leave empty to use the company currency."
+msgstr "Moneda de la propiedad en el canal (Channex). Las tarifas se convierten desde la moneda de la compañía antes de enviarse. Déjala vacía para usar la moneda de la compañía."
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_reservation__currency_id
@@ -485,6 +493,7 @@ msgstr "Etiqueta"
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,field_description:xb_channel_manager.field_sale_order__display_name
+#: model:ir.model.fields,field_description:xb_channel_manager.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_channel__display_name
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_engine__display_name
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_listing__display_name
@@ -632,15 +641,12 @@ msgstr "Cuántos días hacia adelante se publican/envían."
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_channel__min_stay_type
-msgid ""
-"How the channel checks the minimum stay: only for the check-in night, or for"
-" every night of the stay."
-msgstr ""
-"Cómo revisa el canal la estadía mínima: solo para la noche de llegada o para"
-" cada noche de la estadía."
+msgid "How the channel checks the minimum stay: only for the check-in night, or for every night of the stay."
+msgstr "Cómo revisa el canal la estadía mínima: solo para la noche de llegada o para cada noche de la estadía."
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,field_description:xb_channel_manager.field_sale_order__id
+#: model:ir.model.fields,field_description:xb_channel_manager.field_sale_order_line__id
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_channel__id
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_engine__id
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_listing__id
@@ -711,12 +717,8 @@ msgstr "URL de importación (de la OTA)"
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_channel__auto_import
-msgid ""
-"Import new reservations automatically on each sync. When disabled they stay "
-"in the inbox for manual review."
-msgstr ""
-"Importa las reservas nuevas automáticamente en cada sincronización. Si se "
-"desactiva, se quedan en la bandeja para revisión manual."
+msgid "Import new reservations automatically on each sync. When disabled they stay in the inbox for manual review."
+msgstr "Importa las reservas nuevas automáticamente en cada sincronización. Si se desactiva, se quedan en la bandeja para revisión manual."
 
 #. module: xb_channel_manager
 #: model:ir.model.fields.selection,name:xb_channel_manager.selection__xb_cm_reservation__state__imported
@@ -890,12 +892,8 @@ msgstr "La estadía mínima aplica"
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_rate_plan__min_stay
-msgid ""
-"Minimum stay of this rate (e.g. 7 for a weekly rate). The highest of the "
-"season and the rate is sent."
-msgstr ""
-"Estadía mínima de esta tarifa (p. ej. 7 para una tarifa semanal). Se envía "
-"la mayor entre la de la temporada y la de la tarifa."
+msgid "Minimum stay of this rate (e.g. 7 for a weekly rate). The highest of the season and the rate is sent."
+msgstr "Estadía mínima de esta tarifa (p. ej. 7 para una tarifa semanal). Se envía la mayor entre la de la temporada y la de la tarifa."
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_channel__modification_policy
@@ -997,14 +995,8 @@ msgstr "Número de errores"
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_listing__capacity
-msgid ""
-"Number of identical units sold on the channel. With the Hotel industry "
-"installed this is taken from the physical rooms linked to the offer; set it "
-"only as an override for plain Rental databases."
-msgstr ""
-"Número de unidades idénticas que se venden en el canal. Con la industria "
-"Hotel instalada se toma de las habitaciones físicas ligadas a la oferta; "
-"llénalo solo para bases con Alquiler simple."
+msgid "Number of identical units sold on the channel. With the Hotel industry installed this is taken from the physical rooms linked to the offer."
+msgstr "Cantidad de unidades iguales que se venden en el canal. Con la industria Hotel instalada se toma de las habitaciones físicas ligadas a la oferta."
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_channel__message_needaction_counter
@@ -1076,14 +1068,8 @@ msgstr "Reserva de OTA cancelada en el canal — revisa la orden ligada %s"
 #. module: xb_channel_manager
 #. odoo-python
 #: code:addons/xb_channel_manager/models/cm_engine.py:0
-msgid ""
-"OTA reservation imported by Channel Manager.<br/>Channel: "
-"%(channel)s<br/>UID: %(uid)s<br/>Guests: %(guests)s<br/>Raw summary: "
-"%(summary)s"
-msgstr ""
-"Reserva de OTA importada por el Channel Manager.<br/>Canal: "
-"%(channel)s<br/>UID: %(uid)s<br/>Huéspedes: %(guests)s<br/>Resumen original:"
-" %(summary)s"
+msgid "OTA reservation imported by Channel Manager.<br/>Channel: %(channel)s<br/>UID: %(uid)s<br/>Guests: %(guests)s<br/>Raw summary: %(summary)s"
+msgstr "Reserva de OTA importada por el Channel Manager.<br/>Canal: %(channel)s<br/>UID: %(uid)s<br/>Huéspedes: %(guests)s<br/>Resumen original: %(summary)s"
 
 #. module: xb_channel_manager
 #: model:ir.actions.act_window,name:xb_channel_manager.action_cm_reservation
@@ -1113,6 +1099,11 @@ msgstr ""
 "                                (estándar, no reembolsable, semanal…). Cada noche\n"
 "                                se calcula con el precio base y las temporadas\n"
 "                                del canal, y luego se ajusta según la tarifa."
+
+#. module: xb_channel_manager
+#: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_channel__channex_api_key
+msgid "Only administrators can read or change it."
+msgstr "Solo los administradores pueden verla o cambiarla."
 
 #. module: xb_channel_manager
 #: model_terms:ir.ui.view,arch_db:xb_channel_manager.view_cm_reservation_form
@@ -1167,12 +1158,8 @@ msgstr "Comisión de la plataforma"
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_channel__commission_percent
-msgid ""
-"Platform commission used when the channel does not report it (iCal "
-"calendars, or OTAs that do not send it)."
-msgstr ""
-"Comisión de la plataforma que se usa cuando el canal no la reporta "
-"(calendarios iCal u OTAs que no la envían)."
+msgid "Platform commission used when the channel does not report it (iCal calendars, or OTAs that do not send it)."
+msgstr "Comisión de la plataforma que se usa cuando el canal no la reporta (calendarios iCal u OTAs que no la envían)."
 
 #. module: xb_channel_manager
 #: model_terms:ir.ui.view,arch_db:xb_channel_manager.view_cm_channel_form
@@ -1211,12 +1198,8 @@ msgstr "Tipo de precio"
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_listing__base_price
-msgid ""
-"Price per night sent to the channels before seasons and rate plans. Leave 0 "
-"to use the rental price of the product."
-msgstr ""
-"Precio por noche que se envía a los canales antes de temporadas y tarifas. "
-"Déjalo en 0 para usar el precio de alquiler del producto."
+msgid "Price per night sent to the channels before seasons and rate plans. Leave 0 to use the price of the product."
+msgstr "Precio por noche que se envía a los canales antes de temporadas y tarifas. Deje 0 para usar el precio del producto."
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_season__priority
@@ -1381,6 +1364,11 @@ msgid "Sales Order"
 msgstr "Orden de venta"
 
 #. module: xb_channel_manager
+#: model:ir.model,name:xb_channel_manager.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de pedido de venta"
+
+#. module: xb_channel_manager
 #: model_terms:ir.ui.view,arch_db:xb_channel_manager.view_cm_channel_form
 msgid "Same as the company"
 msgstr "La misma de la compañía"
@@ -1414,12 +1402,8 @@ msgstr "Temporadas y estadía mínima"
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_listing__rate_push
-msgid ""
-"Send prices, minimum stay and restrictions of every rate plan to the channel"
-" (Channex only)."
-msgstr ""
-"Envía precios, estadía mínima y restricciones de cada tarifa al canal (solo "
-"Channex)."
+msgid "Send prices, minimum stay and restrictions of every rate plan to the channel (Channex only)."
+msgstr "Envía precios, estadía mínima y restricciones de cada tarifa al canal (solo Channex)."
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_channel__sequence
@@ -1480,6 +1464,11 @@ msgid "Stay"
 msgstr "Estadía"
 
 #. module: xb_channel_manager
+#: model:ir.model.fields,field_description:xb_channel_manager.field_sale_order_line__cm_nights
+msgid "Stay nights"
+msgstr "Noches de estancia"
+
+#. module: xb_channel_manager
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_rate_preview_line__stop_sell
 msgid "Stop Sell"
 msgstr "Cerrar venta"
@@ -1535,33 +1524,27 @@ msgstr "Sincronización terminada."
 
 #. module: xb_channel_manager
 #. odoo-python
+#: code:addons/xb_channel_manager/models/sale_order.py:0
+msgid "The check-out must be after the check-in (%s)."
+msgstr "La salida debe ser posterior a la llegada (%s)."
+
+#. module: xb_channel_manager
+#. odoo-python
 #: code:addons/xb_channel_manager/models/cm_engine.py:0
-msgid ""
-"The guest changed the reservation on %(channel)s.<br/>Before: "
-"%(before)s<br/>Now: %(ci)s → %(co)s, %(room)s, total %(total)s %(cur)s"
-msgstr ""
-"El huésped modificó la reserva en %(channel)s.<br/>Antes: "
-"%(before)s<br/>Ahora: %(ci)s → %(co)s, %(room)s, total %(total)s %(cur)s"
+msgid "The guest changed the reservation on %(channel)s.<br/>Before: %(before)s<br/>Now: %(ci)s → %(co)s, %(room)s, total %(total)s %(cur)s"
+msgstr "El huésped modificó la reserva en %(channel)s.<br/>Antes: %(before)s<br/>Ahora: %(ci)s → %(co)s, %(room)s, total %(total)s %(cur)s"
 
 #. module: xb_channel_manager
 #. odoo-python
 #: code:addons/xb_channel_manager/models/cm_reservation.py:0
-msgid ""
-"The guest changed the reservation on the platform but the new dates are not "
-"available"
-msgstr ""
-"El huésped modificó la reserva en la plataforma, pero las nuevas fechas no "
-"están disponibles"
+msgid "The guest changed the reservation on the platform but the new dates are not available"
+msgstr "El huésped modificó la reserva en la plataforma, pero las nuevas fechas no están disponibles"
 
 #. module: xb_channel_manager
 #. odoo-python
 #: code:addons/xb_channel_manager/models/cm_reservation.py:0
-msgid ""
-"The guest changed the reservation on the platform — review and apply the "
-"changes to order %s"
-msgstr ""
-"El huésped modificó la reserva en la plataforma — revisa y aplica los "
-"cambios a la orden %s"
+msgid "The guest changed the reservation on the platform — review and apply the changes to order %s"
+msgstr "El huésped modificó la reserva en la plataforma — revisa y aplica los cambios a la orden %s"
 
 #. module: xb_channel_manager
 #: model_terms:ir.ui.view,arch_db:xb_channel_manager.view_cm_reservation_form
@@ -1574,12 +1557,8 @@ msgstr ""
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_listing__ical_import_url
-msgid ""
-"The iCal/ics export URL provided by the platform (e.g. the Airbnb listing "
-"calendar export link)."
-msgstr ""
-"La URL de exportación iCal/ics que da la plataforma (p. ej. el enlace para "
-"exportar el calendario del anuncio de Airbnb)."
+msgid "The iCal/ics export URL provided by the platform (e.g. the Airbnb listing calendar export link)."
+msgstr "La URL de exportación iCal/ics que da la plataforma (p. ej. el enlace para exportar el calendario del anuncio de Airbnb)."
 
 #. module: xb_channel_manager
 #. odoo-python
@@ -1589,18 +1568,14 @@ msgstr "La estadía mínima no puede ser negativa."
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_reservation__pending_changes
-msgid ""
-"The platform changed this reservation and the changes are not applied to the"
-" order yet."
-msgstr ""
-"La plataforma modificó esta reserva y los cambios todavía no se aplican a la"
-" orden."
+msgid "The platform changed this reservation and the changes are not applied to the order yet."
+msgstr "La plataforma modificó esta reserva y los cambios todavía no se aplican a la orden."
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_listing__product_tmpl_id
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_reservation__product_tmpl_id
-msgid "The rental product that represents this room type."
-msgstr "El producto de alquiler que representa este tipo de habitación."
+msgid "The product that represents this room type."
+msgstr "El producto que representa este tipo de habitación."
 
 #. module: xb_channel_manager
 #. odoo-python
@@ -1641,12 +1616,8 @@ msgstr "Total (bruto)"
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_reservation__price_total
-msgid ""
-"Total amount reported by the OTA (taxes included). 0 = let Odoo compute the "
-"price."
-msgstr ""
-"Importe total reportado por la OTA (impuestos incluidos). 0 = que Odoo "
-"calcule el precio."
+msgid "Total amount reported by the OTA (taxes included). 0 = let Odoo compute the price."
+msgstr "Importe total reportado por la OTA (impuestos incluidos). 0 = que Odoo calcule el precio."
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_season__tue
@@ -1721,21 +1692,13 @@ msgstr "Mié"
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_channel__cancel_policy
-msgid ""
-"What to do when a reservation disappears from the channel or a cancellation "
-"webhook arrives."
-msgstr ""
-"Qué hacer cuando una reserva desaparece del canal o llega un aviso de "
-"cancelación."
+msgid "What to do when a reservation disappears from the channel or a cancellation webhook arrives."
+msgstr "Qué hacer cuando una reserva desaparece del canal o llega un aviso de cancelación."
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_channel__modification_policy
-msgid ""
-"What to do when the guest changes dates, room or price of an already "
-"imported reservation on the platform."
-msgstr ""
-"Qué hacer cuando el huésped cambia fechas, habitación o precio de una "
-"reserva ya importada en la plataforma."
+msgid "What to do when the guest changes dates, room or price of an already imported reservation on the platform."
+msgstr "Qué hacer cuando el huésped cambia fechas, habitación o precio de una reserva ya importada en la plataforma."
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_channel__import_policy
@@ -1749,12 +1712,8 @@ msgstr "Cuándo"
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_season__priority
-msgid ""
-"When several rules apply to the same night, the highest priority wins (e.g. "
-"a holiday inside the high season)."
-msgstr ""
-"Cuando varias reglas aplican a la misma noche, gana la de mayor prioridad "
-"(p. ej. un feriado dentro de la temporada alta)."
+msgid "When several rules apply to the same night, the highest priority wins (e.g. a holiday inside the high season)."
+msgstr "Cuando varias reglas aplican a la misma noche, gana la de mayor prioridad (p. ej. un feriado dentro de la temporada alta)."
 
 #. module: xb_channel_manager
 #. odoo-python
@@ -1774,12 +1733,8 @@ msgstr "p. ej. Temporada alta, Semana Santa, Fin de semana"
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_channel__channex_base_url
-msgid ""
-"https://staging.channex.io for the sandbox, https://app.channex.io for "
-"production."
-msgstr ""
-"https://staging.channex.io para pruebas, https://app.channex.io para "
-"producción."
+msgid "https://staging.channex.io for the sandbox, https://app.channex.io for production."
+msgstr "https://staging.channex.io para pruebas, https://app.channex.io para producción."
 
 #. module: xb_channel_manager
 #: model_terms:ir.ui.view,arch_db:xb_channel_manager.view_cm_listing_form
@@ -1821,13 +1776,3 @@ msgstr "pendientes"
 #: model_terms:ir.ui.view,arch_db:xb_channel_manager.view_cm_channel_kanban
 msgid "rooms ·"
 msgstr "habitaciones ·"
-
-#. module: xb_channel_manager
-#: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_channel__channex_api_key_set
-msgid "API key set"
-msgstr "Clave configurada"
-
-#. module: xb_channel_manager
-#: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_channel__channex_api_key
-msgid "Only administrators can read or change it."
-msgstr "Solo los administradores pueden verla o cambiarla."

@@ -87,8 +87,7 @@ class CmListing(models.Model):
                 rec.effective_capacity = rec.capacity or 1
 
     def _compute_ical_export_url(self):
-        base = self.env["ir.config_parameter"].sudo().get_param(
-            "web.base.url") or ""
+        base = self.browse().get_base_url() or ""
         for rec in self:
             rec.ical_export_url = "%s/cm/ical/%s.ics" % (
                 base, rec.export_token)
@@ -148,8 +147,7 @@ class CmListing(models.Model):
         payload = [{
             "uid": "cm-%s-%s@%s" % (
                 self.id, ev["start"].strftime("%Y%m%d"),
-                (self.env["ir.config_parameter"].sudo()
-                 .get_param("web.base.url") or "odoo")
+                (self.browse().get_base_url() or "odoo")
                 .split("//")[-1]),
             "start": ev["start"],
             "end": ev["end"],

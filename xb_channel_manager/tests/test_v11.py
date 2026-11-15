@@ -484,3 +484,33 @@ class TestChannelV11(TransactionCase):
         self.assertEqual(line.cm_checkin, self.checkin)
         # 150 (season) + 100 + 100
         self.assertAlmostEqual(line.price_unit, 350.0)
+
+    def test_190_chatter_note_is_html(self):
+        """The import note keeps its line breaks (not escaped <br/>)."""
+        self._upsert(self._booking(uid="HTML-1"))
+        order = self._resa("HTML-1").sale_order_id
+        bodies = " ".join(str(b) for b in order.message_ids.mapped("body"))
+        self.assertIn("OTA reservation imported", bodies)
+        self.assertNotIn("&lt;br", bodies)
+
+    def test_200_timezone_does_not_depend_on_the_user(self):
+        """Check-in hours use the property timezone even when the
+        webhook (public user) imports the booking."""
+        self.env.company.partner_id.tz = "America/Asuncion"
+        engine = self.env["xb.cm.engine"]
+        public = self.env.ref("base.public_user")
+        public.sudo().tz = "Asia/Tokyo"
+        self.assertEqual(
+            engine.with_user(public)._property_tz(self.env.company).zone,
+            "America/Asuncion")
+
+    def test_210_orders_written_in_property_timezone(self):
+        """Orders are created in the property timezone (rental line
+        descriptions, reports), whoever runs the import."""
+        self.env.company.partner_id.tz = "America/Asuncion"
+        self._upsert(self._booking(uid="TZ-1"))
+        resa = self._resa("TZ-1")
+        engine, rec = self.env["xb.cm.engine"].with_context(
+            tz="Asia/Tokyo")._in_company(resa)
+        self.assertEqual(engine.env.context.get("tz"), "America/Asuncion")
+        self.assertEqual(rec.env.context.get("tz"), "America/Asuncion")

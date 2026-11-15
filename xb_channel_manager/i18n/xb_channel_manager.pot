@@ -4,16 +4,24 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0+e\n"
+"Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-15 04:51+0000\n"
-"PO-Revision-Date: 2026-11-15 04:51+0000\n"
+"POT-Creation-Date: 2026-11-15 15:17+0000\n"
+"PO-Revision-Date: 2026-11-15 15:17+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: xb_channel_manager
+#. odoo-python
+#: code:addons/xb_channel_manager/models/cm_engine.py:0
+msgid ""
+"%(room)s\n"
+"%(nights)s night(s): %(ci)s → %(co)s"
+msgstr ""
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_season__percent
@@ -23,6 +31,11 @@ msgstr ""
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_season__min_stay
 msgid "0 = no minimum. Sent to the channel for every night of the season."
+msgstr ""
+
+#. module: xb_channel_manager
+#: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_channel__channex_api_key_set
+msgid "API key set"
 msgstr ""
 
 #. module: xb_channel_manager
@@ -105,6 +118,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:xb_channel_manager.view_cm_channel_form
 #: model_terms:ir.ui.view,arch_db:xb_channel_manager.view_cm_season_form
 msgid "Archived"
+msgstr ""
+
+#. module: xb_channel_manager
+#: model:ir.model.fields,help:xb_channel_manager.field_sale_order_line__cm_checkin
+msgid ""
+"Arrival date of the stay. With the dates set, the line occupies the room on "
+"the channels every night until the check-out (not included)."
 msgstr ""
 
 #. module: xb_channel_manager
@@ -277,11 +297,13 @@ msgid "Channex room type ID"
 msgstr ""
 
 #. module: xb_channel_manager
+#: model:ir.model.fields,field_description:xb_channel_manager.field_sale_order_line__cm_checkin
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_reservation__date_from
 msgid "Check-in"
 msgstr ""
 
 #. module: xb_channel_manager
+#: model:ir.model.fields,field_description:xb_channel_manager.field_sale_order_line__cm_checkout
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_reservation__date_to
 msgid "Check-out"
 msgstr ""
@@ -474,6 +496,7 @@ msgstr ""
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,field_description:xb_channel_manager.field_sale_order__display_name
+#: model:ir.model.fields,field_description:xb_channel_manager.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_channel__display_name
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_engine__display_name
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_listing__display_name
@@ -628,6 +651,7 @@ msgstr ""
 
 #. module: xb_channel_manager
 #: model:ir.model.fields,field_description:xb_channel_manager.field_sale_order__id
+#: model:ir.model.fields,field_description:xb_channel_manager.field_sale_order_line__id
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_channel__id
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_engine__id
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_listing__id
@@ -982,8 +1006,7 @@ msgstr ""
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_listing__capacity
 msgid ""
 "Number of identical units sold on the channel. With the Hotel industry "
-"installed this is taken from the physical rooms linked to the offer; set it "
-"only as an override for plain Rental databases."
+"installed this is taken from the physical rooms linked to the offer."
 msgstr ""
 
 #. module: xb_channel_manager
@@ -1088,6 +1111,11 @@ msgid ""
 msgstr ""
 
 #. module: xb_channel_manager
+#: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_channel__channex_api_key
+msgid "Only administrators can read or change it."
+msgstr ""
+
+#. module: xb_channel_manager
 #: model_terms:ir.ui.view,arch_db:xb_channel_manager.view_cm_reservation_form
 msgid "Open order"
 msgstr ""
@@ -1184,7 +1212,7 @@ msgstr ""
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_listing__base_price
 msgid ""
 "Price per night sent to the channels before seasons and rate plans. Leave 0 "
-"to use the rental price of the product."
+"to use the price of the product."
 msgstr ""
 
 #. module: xb_channel_manager
@@ -1350,6 +1378,11 @@ msgid "Sales Order"
 msgstr ""
 
 #. module: xb_channel_manager
+#: model:ir.model,name:xb_channel_manager.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: xb_channel_manager
 #: model_terms:ir.ui.view,arch_db:xb_channel_manager.view_cm_channel_form
 msgid "Same as the company"
 msgstr ""
@@ -1441,6 +1474,11 @@ msgid "Stay"
 msgstr ""
 
 #. module: xb_channel_manager
+#: model:ir.model.fields,field_description:xb_channel_manager.field_sale_order_line__cm_nights
+msgid "Stay nights"
+msgstr ""
+
+#. module: xb_channel_manager
 #: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_rate_preview_line__stop_sell
 msgid "Stop Sell"
 msgstr ""
@@ -1492,6 +1530,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/xb_channel_manager/models/cm_channel.py:0
 msgid "Synchronization finished."
+msgstr ""
+
+#. module: xb_channel_manager
+#. odoo-python
+#: code:addons/xb_channel_manager/models/sale_order.py:0
+msgid "The check-out must be after the check-in (%s)."
 msgstr ""
 
 #. module: xb_channel_manager
@@ -1548,7 +1592,7 @@ msgstr ""
 #. module: xb_channel_manager
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_listing__product_tmpl_id
 #: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_reservation__product_tmpl_id
-msgid "The rental product that represents this room type."
+msgid "The product that represents this room type."
 msgstr ""
 
 #. module: xb_channel_manager
@@ -1759,14 +1803,4 @@ msgstr ""
 #. module: xb_channel_manager
 #: model_terms:ir.ui.view,arch_db:xb_channel_manager.view_cm_channel_kanban
 msgid "rooms ·"
-msgstr ""
-
-#. module: xb_channel_manager
-#: model:ir.model.fields,field_description:xb_channel_manager.field_xb_cm_channel__channex_api_key_set
-msgid "API key set"
-msgstr ""
-
-#. module: xb_channel_manager
-#: model:ir.model.fields,help:xb_channel_manager.field_xb_cm_channel__channex_api_key
-msgid "Only administrators can read or change it."
 msgstr ""
