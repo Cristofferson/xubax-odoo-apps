@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cm_season_form" model="ir.ui.view">
+        <field name="name">xb.cm.season.form</field>
+        <field name="model">xb.cm.season</field>
+        <field name="arch" type="xml">
+            <form string="Season">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived"
+                            bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <h1><field name="name"
+                                   placeholder="e.g. High season, Easter, Weekend"/></h1>
+                    </div>
+                    <group>
+                        <group string="When">
+                            <field name="active" invisible="1"/>
+                            <field name="channel_id"/>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="priority"/>
+                        </group>
+                        <group string="Price">
+                            <field name="currency_id" invisible="1"/>
+                            <field name="price_type" widget="radio"/>
+                            <field name="price"
+                                   invisible="price_type != 'fixed'"/>
+                            <field name="percent"
+                                   invisible="price_type != 'percent'"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Restrictions">
+                            <field name="min_stay"/>
+                            <field name="closed_to_arrival"/>
+                            <field name="stop_sell"/>
+                        </group>
+                        <group string="Rooms">
+                            <field name="listing_ids" widget="many2many_tags"
+                                   placeholder="All the rooms of the channel"/>
+                        </group>
+                    </group>
+                    <group string="Days of the week">
+                        <div class="d-flex flex-wrap gap-3" colspan="2">
+                            <span><field name="mon"/> Mon</span>
+                            <span><field name="tue"/> Tue</span>
+                            <span><field name="wed"/> Wed</span>
+                            <span><field name="thu"/> Thu</span>
+                            <span><field name="fri"/> Fri</span>
+                            <span><field name="sat"/> Sat</span>
+                            <span><field name="sun"/> Sun</span>
+                        </div>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cm_season_list" model="ir.ui.view">
+        <field name="name">xb.cm.season.list</field>
+        <field name="model">xb.cm.season</field>
+        <field name="arch" type="xml">
+            <list string="Seasons">
+                <field name="priority" optional="hide"/>
+                <field name="channel_id"/>
+                <field name="name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="price_type"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="price" invisible="price_type != 'fixed'"/>
+                <field name="percent" invisible="price_type != 'percent'"/>
+                <field name="min_stay"/>
+                <field name="stop_sell" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_cm_season" model="ir.actions.act_window">
+        <field name="name">Seasons and minimum stay</field>
+        <field name="res_model">xb.cm.season</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first season
+            </p>
+            <p>
+                Set a different nightly price or a minimum stay for some dates
+                (high season, holidays, weekends) and send it to the channels.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_order_form_cm" model="ir.ui.view">
+        <field name="name">sale.order.form.xb.channel.manager</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_uom_qty']"
+                   position="before">
+                <field name="cm_checkin" optional="show"/>
+                <field name="cm_checkout" optional="show"/>
+            </xpath>
+            <xpath expr="//page[@name='other_information']" position="inside">
+                <group name="cm_ota" string="OTA channel"
+                       invisible="not cm_reservation_id">
+                    <group>
+                        <field name="cm_reservation_id"/>
+                        <field name="cm_channel_id"/>
+                    </group>
+                    <group>
+                        <field name="cm_commission_amount"/>
+                        <field name="cm_net_amount"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

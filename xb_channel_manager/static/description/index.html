@@ -1,0 +1,149 @@
+<section style="max-width: 920px; margin: 0 auto; font-family: sans-serif; color: #333;">
+    <div style="background:#1c1c1c; border-radius:12px; padding:32px; text-align:center; margin-bottom:24px;">
+        <img src="banner.png" alt="Hotel OTA Channel Manager" style="max-width:100%; border-radius:8px;"/>
+    </div>
+
+    <h1 style="color:#b4301a; text-align:center;">Hotel OTA Channel Manager</h1>
+    <p style="text-align:center; font-size:18px; color:#666;">
+        Sell your rooms and apartments on <b>Airbnb, Booking.com, Expedia,
+        Vrbo</b> and 100+ channels and keep Odoo as the single source of
+        truth &#8212; availability, rates and reservations, both ways.
+    </p>
+    <p style="text-align:center;">
+        <span style="display:inline-block; background:#e8f5ee; color:#1e7a4c; border-radius:20px; padding:6px 16px; margin:4px;"><b>Odoo Community &amp; Enterprise</b></span>
+        <span style="display:inline-block; background:#e8f5ee; color:#1e7a4c; border-radius:20px; padding:6px 16px; margin:4px;"><b>Tested against a live Channex property</b></span>
+        <span style="display:inline-block; background:#e8f5ee; color:#1e7a4c; border-radius:20px; padding:6px 16px; margin:4px;"><b>Multi-currency &amp; multi-company</b></span>
+    </p>
+
+    <div style="display:flex; flex-wrap:wrap; gap:16px; margin:32px 0;">
+        <div style="flex:1 1 260px; background:#f7f5f2; border-radius:10px; padding:20px;">
+            <h3 style="color:#b4301a;">&#128279; Universal iCal sync</h3>
+            <p>Two-way calendar sync with any platform that supports iCal
+            (Airbnb, Booking.com, Vrbo, Lodgify&#8230;). Publish a secure feed
+            of your occupancy per room type and import OTA reservations
+            automatically &#8212; no API account needed.</p>
+        </div>
+        <div style="flex:1 1 260px; background:#f7f5f2; border-radius:10px; padding:20px;">
+            <h3 style="color:#b4301a;">&#9889; Channex API driver</h3>
+            <p>Through <a href="https://channex.io">Channex.io</a>:
+            availability, nightly rates, minimum stay and restrictions pushed
+            to <b>Booking.com, Expedia, Airbnb, Agoda and 100+ channels</b>;
+            new, modified and cancelled bookings arrive in seconds by
+            webhook.</p>
+        </div>
+    </div>
+    <div style="display:flex; flex-wrap:wrap; gap:16px; margin:24px 0;">
+        <div style="flex:1 1 260px; background:#f7f5f2; border-radius:10px; padding:20px;">
+            <h3 style="color:#b4301a;">&#128197; Seasons, rate plans, minimum stay</h3>
+            <p>A different nightly price (fixed or %) for high season,
+            holidays or weekends; several rate plans per room (standard,
+            non-refundable, weekly&#8230;); minimum stay, closed to arrival
+            and stop sell &#8212; sent night by night.</p>
+        </div>
+        <div style="flex:1 1 260px; background:#f7f5f2; border-radius:10px; padding:20px;">
+            <h3 style="color:#b4301a;">&#128176; Currency and commission</h3>
+            <p>Each reservation keeps the currency the guest paid in (USD,
+            EUR, PYG&#8230;). The platform commission is stored apart, so you
+            see <b>gross, commission and net income</b> on the reservation
+            and on the sales order.</p>
+        </div>
+    </div>
+    <div style="display:flex; flex-wrap:wrap; gap:16px; margin:24px 0;">
+        <div style="flex:1 1 260px; background:#f7f5f2; border-radius:10px; padding:20px;">
+            <h3 style="color:#b4301a;">&#128260; Modifications and cancellations</h3>
+            <p>When the guest changes dates, room or price on the platform,
+            the sales order is updated automatically (or flagged for your
+            review), always after checking availability. Cancellations
+            cancel the order and free the nights.</p>
+        </div>
+        <div style="flex:1 1 260px; background:#f7f5f2; border-radius:10px; padding:20px;">
+            <h3 style="color:#b4301a;">&#128737;&#65039; Overbooking guard</h3>
+            <p>Every import checks real availability first &#8212; including
+            the stays sold at your front desk. Conflicts land in the
+            reservation inbox with an activity for the manager, never a
+            silent double booking.</p>
+        </div>
+    </div>
+
+    <h2 style="color:#b4301a;">Which Odoo do I need?</h2>
+    <ul style="line-height:1.9;">
+        <li><b>Odoo Community or Enterprise, just with Sales.</b> Each stay is
+            a sales order line with its <b>check-in and check-out</b> dates.
+            Reservations sold at the front desk occupy the room the same way.</li>
+        <li><b>Using the Rental app (Enterprise)?</b> Put the check-in and check-out dates on the rental order lines sold at the front desk and they block the room on every channel too.</li>
+        <li>Each property needs its own <a href="https://channex.io">Channex</a>
+            account for the API channels (Booking.com, Expedia&#8230;). The iCal
+            channels (Airbnb, Vrbo&#8230;) work without it.</li>
+    </ul>
+
+    <h2 style="color:#b4301a;">How it works</h2>
+    <ol style="line-height:1.9;">
+        <li>Create a <b>Channel</b> per platform (e.g. "Booking.com &#8212; via Channex").</li>
+        <li>Map each Odoo room type to its listing on the platform
+            (<b>Room mappings</b>) and, for Channex, its rate plans.</li>
+        <li>Set the base price, the <b>seasons</b> and the minimum stay;
+            check the result with <b>Preview rates sent</b>.</li>
+        <li>Reservations flow into the <b>inbox</b> and become sales orders
+            with the guest as customer and the OTA price honoured to the
+            cent.</li>
+        <li>Follow everything in the <b>Sync log</b>.</li>
+    </ol>
+
+    <h2 style="color:#b4301a;">Screenshots</h2>
+    <div style="margin:16px 0;">
+        <img src="shot_inbox.png" alt="Reservation inbox" style="max-width:100%; border:1px solid #ddd; border-radius:8px;"/>
+        <p style="text-align:center; color:#888;">Reservation inbox: USD, EUR and PYG bookings with gross, platform commission and net income; a conflict waiting for review.</p>
+        <img src="shot_order_ota.png" alt="Sales order with OTA data" style="max-width:100%; border:1px solid #ddd; border-radius:8px;"/>
+        <p style="text-align:center; color:#888;">The sales order created from a Booking.com reservation, with its commission and net income.</p>
+        <img src="shot_order_community.png" alt="Front desk sale on Community" style="max-width:100%; border:1px solid #ddd; border-radius:8px;"/>
+        <p style="text-align:center; color:#888;">Odoo Community: a front-desk sale with check-in and check-out on each line blocks those nights on every channel.</p>
+        <img src="shot_seasons.png" alt="Seasons" style="max-width:100%; border:1px solid #ddd; border-radius:8px;"/>
+        <p style="text-align:center; color:#888;">Seasons with price adjustment and minimum stay per channel.</p>
+        <img src="shot_rate_plans.png" alt="Rate plans" style="max-width:100%; border:1px solid #ddd; border-radius:8px;"/>
+        <p style="text-align:center; color:#888;">Several rate plans per room: standard, non-refundable (-10 %), weekly (-15 %, 7 nights minimum).</p>
+        <img src="shot_rates_preview.png" alt="Rates preview" style="max-width:100%; border:1px solid #ddd; border-radius:8px;"/>
+        <p style="text-align:center; color:#888;">Preview of exactly what is sent to the channel, night by night, in the channel currency.</p>
+        <img src="shot_channel.png" alt="Channex channel" style="max-width:100%; border:1px solid #ddd; border-radius:8px;"/>
+        <p style="text-align:center; color:#888;">A Channex channel: policies, currency, default commission and minimum stay mode.</p>
+        <img src="shot_reservation.png" alt="Reservation" style="max-width:100%; border:1px solid #ddd; border-radius:8px;"/>
+        <p style="text-align:center; color:#888;">A reservation with its guest, stay, rate plan and money.</p>
+        
+    </div>
+
+    <h2 style="color:#b4301a;">Feature list</h2>
+    <ul style="line-height:1.9;">
+        <li>Two-way iCal (RFC 5545): export busy dates, import reservations and "not available" blocks.</li>
+        <li>Channex: availability and restrictions push, booking revisions feed with acknowledge, secret webhook.</li>
+        <li>Seasons with priority, weekdays, rooms, fixed or % price, minimum stay (on arrival or through), closed to arrival, stop sell.</li>
+        <li>Several rate plans per room with % or amount adjustment and their own minimum stay.</li>
+        <li>Rates converted to the channel currency; currencies without cents (PYG) supported.</li>
+        <li>Platform commission reported by the OTA, or a default percentage per channel, recomputed when the stay changes.</li>
+        <li>Guest modifications applied to the order automatically or after review; contact data never wiped.</li>
+        <li>Multi-company: every channel creates its orders in its own company.</li>
+        <li>Check-in and check-out hours in the property's timezone, whoever runs the import.</li>
+        <li>Policies per channel: auto-import, draft or confirmed orders, manual or automatic cancellation.</li>
+        <li>Channex API key visible only to administrators.</li>
+        <li>User and manager access groups, sync every 10 minutes, log auto-vacuum. No extra Python dependencies.</li>
+    </ul>
+
+    <h2 style="color:#b4301a;">Espa&#241;ol</h2>
+    <p>Vende tus habitaciones y departamentos en <b>Airbnb, Booking.com,
+    Expedia, Vrbo</b> y m&#225;s de 100 canales con Odoo como fuente
+    &#250;nica. Funciona con <b>Odoo Community o Enterprise</b>, solo con
+    Ventas: cada estancia es una l&#237;nea de pedido con su fecha de
+    llegada y de salida. Calendario <b>iCal bidireccional</b> y conexi&#243;n
+    por API con <b>Channex</b> (probada contra una propiedad real).
+    Env&#237;a el precio por noche con <b>temporadas</b>, estad&#237;a
+    m&#237;nima y <b>varias tarifas</b> por habitaci&#243;n; cada reserva
+    guarda su <b>moneda</b> (USD, PYG&#8230;) y la <b>comisi&#243;n</b> de la
+    plataforma (bruto, comisi&#243;n y neto). Las modificaciones y
+    cancelaciones del hu&#233;sped se aplican solas a la orden, siempre
+    revisando la disponibilidad, incluidas las ventas de recepci&#243;n.
+    Varias compa&#241;&#237;as, bandeja de reservas, bit&#225;cora y
+    pol&#237;ticas por canal. Interfaz en espa&#241;ol.</p>
+
+    <div style="background:#1c1c1c; color:#eee; border-radius:10px; padding:24px; text-align:center; margin:32px 0;">
+        <p style="margin:0; font-size:16px;">Questions or a channel you need supported?</p>
+        <p style="margin:8px 0 0;"><b>cristofferson28@gmail.com</b></p>
+    </div>
+</section>
