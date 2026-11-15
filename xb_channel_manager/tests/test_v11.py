@@ -37,7 +37,6 @@ class TestChannelV11(TransactionCase):
         cls.room = cls.env["product.template"].create({
             "name": "Apartment Centro",
             "type": "service",
-            "rent_ok": True,
             "list_price": 100.0,
         })
         cls.channel = cls.env["xb.cm.channel"].create({
@@ -175,9 +174,9 @@ class TestChannelV11(TransactionCase):
         self.assertEqual(resa.state, "imported")
         self.assertFalse(resa.pending_changes)
         self.assertEqual(resa.sale_order_id, order, "same order, updated")
-        line = order.order_line.filtered("is_rental")
-        self.assertEqual(line.start_date.date(), new_in)
-        self.assertEqual(line.return_date.date(), new_out)
+        line = order.order_line.filtered("cm_checkin")
+        self.assertEqual(line.cm_checkin, new_in)
+        self.assertEqual(line.cm_checkout, new_out)
         self.assertAlmostEqual(order.amount_total, 420.0)
         self.assertIn("changed the reservation",
                       " ".join(order.message_ids.mapped("body")))
@@ -195,8 +194,8 @@ class TestChannelV11(TransactionCase):
                                    checkout=later_in + timedelta(days=1)))
         self.assertEqual(a.state, "conflict")
         self.assertTrue(a.pending_changes)
-        line = order.order_line.filtered("is_rental")
-        self.assertEqual(line.start_date.date(), self.checkin,
+        line = order.order_line.filtered("cm_checkin")
+        self.assertEqual(line.cm_checkin, self.checkin,
                          "order untouched")
 
     def test_060_modification_manual_policy(self):
@@ -207,11 +206,11 @@ class TestChannelV11(TransactionCase):
         self._upsert(self._booking(status="modified", checkout=new_out,
                                    amount="400.00"))
         self.assertTrue(resa.pending_changes)
-        line = resa.sale_order_id.order_line.filtered("is_rental")
-        self.assertEqual(line.return_date.date(), self.checkout)
+        line = resa.sale_order_id.order_line.filtered("cm_checkin")
+        self.assertEqual(line.cm_checkout, self.checkout)
         resa.action_apply_changes()
         self.assertFalse(resa.pending_changes)
-        self.assertEqual(line.return_date.date(), new_out)
+        self.assertEqual(line.cm_checkout, new_out)
         self.assertAlmostEqual(resa.sale_order_id.amount_total, 400.0)
 
     def test_070_ical_date_change_updates_order(self):
@@ -234,8 +233,8 @@ class TestChannelV11(TransactionCase):
         self.assertEqual(resa.state, "imported")
         new_out = self.checkout + timedelta(days=2)
         Resa._upsert_from_ical(listing, feed(self.checkin, new_out))
-        line = resa.sale_order_id.order_line.filtered("is_rental")
-        self.assertEqual(line.return_date.date(), new_out)
+        line = resa.sale_order_id.order_line.filtered("cm_checkin")
+        self.assertEqual(line.cm_checkout, new_out)
         self.assertEqual(resa.date_to, new_out)
         # no OTA price: gross = order total, commission follows it
         total = resa.sale_order_id.amount_total
@@ -370,7 +369,7 @@ class TestChannelV11(TransactionCase):
         cron run in the main company) still creates its order."""
         company2 = self.env["res.company"].create({"name": "Second Co CM"})
         room2 = self.env["product.template"].create({
-            "name": "Apartment Lake", "type": "service", "rent_ok": True,
+            "name": "Apartment Lake", "type": "service",
             "list_price": 80.0, "company_id": company2.id})
         channel2 = self.env["xb.cm.channel"].create({
             "name": "Channex Co2", "channel_type": "channex",
@@ -421,3 +420,67 @@ class TestChannelV11(TransactionCase):
         with self.assertRaises(AccessError):
             channel.read(["channex_api_key"])
         self.assertEqual(channel._channex_client().api_key, "secret-key")
+
+    # ------------------------------------------------------------------
+    # Plain Sales (Community): stays as order lines with dates
+    # ------------------------------------------------------------------
+    def _bridge_installed(self):
+        return bool(self.env["ir.module.module"].sudo().search([
+            ("name", "=", "xb_channel_manager_renting"),
+            ("state", "=", "installed")]))
+
+    def test_170_front_desk_order_blocks_the_room(self):
+        """A sale made at the front desk (order line with check-in and
+        check-out) occupies the room on the channels."""
+        order = self.env["sale.order"].create({
+            "partner_id": self.env["res.partner"].create({"name": "Walk-in"}).id,
+            "order_line": [Command.create({
+                "product_id": self.room.product_variant_id.id,
+                "cm_checkin": self.checkin,
+                "cm_checkout": self.checkout,
+            })],
+        })
+        engine = self.env["xb.cm.engine"]
+        self.assertTrue(engine.check_free(
+            self.listing, self.checkin, self.checkout), "quotation: free")
+        order.action_confirm()
+        self.assertFalse(engine.check_free(
+            self.listing, self.checkin, self.checkout))
+        self.assertEqual(
+            engine.get_full_dates(self.listing, self.checkin,
+                                  self.checkout + timedelta(days=1)),
+            [self.checkin + timedelta(days=i) for i in range(3)])
+        # an OTA booking on those nights is a conflict
+        self._upsert(self._booking(uid="BDC-CLASH"))
+        self.assertEqual(self._resa("BDC-CLASH").state, "conflict")
+
+    def test_180_unpriced_stay_uses_seasons(self):
+        """Without an OTA price (iCal), the stay is priced with the
+        nightly rates of the room, seasons included."""
+        if self._bridge_installed():
+            self.skipTest("Rental prices the period with the bridge")
+        self.env["xb.cm.season"].create({
+            "channel_id": self.channel.id, "name": "High",
+            "date_from": self.checkin, "date_to": self.checkin,
+            "price_type": "fixed", "price": 150.0})
+        channel = self.env["xb.cm.channel"].create({
+            "name": "Airbnb Co", "channel_type": "ical",
+            "state": "connected", "auto_import": True})
+        listing = self.env["xb.cm.listing"].create({
+            "channel_id": channel.id, "product_tmpl_id": self.room.id,
+            "capacity": 1, "base_price": 100.0})
+        self.env["xb.cm.season"].create({
+            "channel_id": channel.id, "name": "High",
+            "date_from": self.checkin, "date_to": self.checkin,
+            "price_type": "fixed", "price": 150.0})
+        events = ical_utils.parse(ical_utils.generate([{
+            "uid": "air-p", "start": self.checkin, "end": self.checkout,
+            "summary": "Reserved"}]))
+        self.env["xb.cm.reservation"]._upsert_from_ical(listing, events)
+        resa = self.env["xb.cm.reservation"].search([
+            ("external_uid", "=", "air-p")])
+        self.assertEqual(resa.state, "imported", resa.error_msg)
+        line = resa.sale_order_id.order_line
+        self.assertEqual(line.cm_checkin, self.checkin)
+        # 150 (season) + 100 + 100
+        self.assertAlmostEqual(line.price_unit, 350.0)

@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 """Availability & booking engine shared by all channel drivers.
 
-Two integration levels, detected at runtime:
+Works with plain Sales (Odoo Community): every stay is an order line of
+the room product with its own check-in / check-out dates
+(``cm_checkin`` / ``cm_checkout``). The free ``xb_channel_manager_renting``
+bridge plugs the Rental app in through the ``_stay_*`` hooks below.
+
+Integration levels, detected at runtime:
 
 * **Hotel industry** (Odoo Online "Hotel" industry / booking_engine):
   room offers are ``product.template`` records linked to physical rooms
@@ -10,8 +15,8 @@ Two integration levels, detected at runtime:
   The engine assigns a free room on import and triggers the native
   recompute, so the website widget and the OTA export stay consistent.
 
-* **Plain Rental** fallback: occupancy is counted from confirmed rental
-  order lines of the mapped product; capacity comes from the listing.
+* **Plain Sales / Rental** fallback: occupancy is counted from confirmed
+  stay lines of the mapped product; capacity comes from the listing.
 """
 import logging
 from datetime import date, datetime, time, timedelta
@@ -38,6 +43,78 @@ class CmEngine(models.AbstractModel):
             and "planning.slot" in self.env
             and "x_resource_ids" in self.env["product.template"]._fields
         )
+
+    # ------------------------------------------------------------------
+    # Stay lines (hooks overridden by the Rental bridge)
+    # ------------------------------------------------------------------
+    @api.model
+    def _stay_lines(self, order):
+        """Order lines that hold a stay."""
+        return order.order_line.filtered(
+            lambda l: l.cm_checkin and l.cm_checkout)
+
+    @api.model
+    def _line_dates(self, line):
+        """(check-in date, check-out date) of a stay line."""
+        return line.cm_checkin, line.cm_checkout
+
+    @api.model
+    def _line_units(self, line):
+        """Units (rooms) a stay line occupies every night."""
+        return 1
+
+    @api.model
+    def _stay_lines_domain(self, tmpl, date_from, date_to):
+        """Domain of the stay lines of ``tmpl`` overlapping
+        [date_from, date_to) — any order state."""
+        return [
+            ("product_template_id", "=", tmpl.id),
+            ("cm_checkin", "<", date_to),
+            ("cm_checkout", ">", date_from),
+        ]
+
+    @api.model
+    def _stay_line_vals(self, tmpl, checkin, checkout, start_dt, return_dt):
+        nights = max((checkout - checkin).days, 1)
+        variant = tmpl.product_variant_id
+        return {
+            "product_id": variant.id,
+            "product_uom_qty": 1,
+            "name": _("%(room)s\n%(nights)s night(s): %(ci)s → %(co)s",
+                      room=variant.display_name, nights=nights,
+                      ci=checkin, co=checkout),
+            "cm_checkin": checkin,
+            "cm_checkout": checkout,
+        }
+
+    @api.model
+    def _stay_order_vals(self, start_dt, return_dt):
+        return {}
+
+    @api.model
+    def _stay_computed_price(self, listing, checkin, checkout):
+        """Price of a stay the platform did not price (iCal): the nightly
+        rates of the room, seasons included. ``None`` lets the Rental
+        pricing engine compute it (bridge)."""
+        return sum(info["price"] for info in listing._daily_rates(
+            checkin, checkout).values())
+
+    @api.model
+    def _stay_set_period(self, order, line, checkin, checkout, start_dt,
+                         return_dt):
+        """Move an existing stay line to new dates."""
+        nights = max((checkout - checkin).days, 1)
+        line.write({
+            "cm_checkin": checkin,
+            "cm_checkout": checkout,
+            "name": _("%(room)s\n%(nights)s night(s): %(ci)s → %(co)s",
+                      room=line.product_id.display_name, nights=nights,
+                      ci=checkin, co=checkout),
+        })
+
+    @api.model
+    def _stay_set_product(self, line, tmpl):
+        line.write({"product_id": tmpl.product_variant_id.id})
 
 
     @api.model
@@ -74,10 +151,13 @@ class CmEngine(models.AbstractModel):
     def _checkin_checkout_hours(self):
         """(pickup_hour, return_hour) floats, from the nightly recurrence."""
         try:
-            rec = self.env.ref("sale_renting.recurrence_nightly")
-            return rec.pickup_time or 15.0, rec.return_time or 12.0
+            rec = self.env.ref("sale_renting.recurrence_nightly",
+                               raise_if_not_found=False)
         except ValueError:
-            return 15.0, 12.0
+            rec = None
+        if rec and "pickup_time" in rec._fields:
+            return rec.pickup_time or 15.0, rec.return_time or 12.0
+        return 15.0, 12.0
 
     # ------------------------------------------------------------------
     # Occupancy / availability
@@ -85,28 +165,21 @@ class CmEngine(models.AbstractModel):
     @api.model
     def _confirmed_order_nights(self, tmpl, date_from, date_to,
                                 exclude_order=None):
-        """{date: n_orders} for confirmed rental lines of ``tmpl`` whose
-        stay overlaps [date_from, date_to) — checkout day exclusive."""
-        domain = [
-            ("order_id.state", "=", "sale"),
-            ("product_template_id", "=", tmpl.id),
-            ("start_date", "<", datetime.combine(date_to, time.max)),
-            ("return_date", ">", datetime.combine(date_from, time.min)),
-        ]
+        """{date: units} for confirmed stay lines of ``tmpl`` whose stay
+        overlaps [date_from, date_to) — checkout day exclusive."""
+        domain = [("order_id.state", "=", "sale")] + self._stay_lines_domain(
+            tmpl, date_from, date_to)
         if exclude_order:
             domain.append(("order_id", "!=", exclude_order.id))
         counts = {}
         for line in self.env["sale.order.line"].sudo().search(domain):
-            if not (line.start_date and line.return_date):
+            start, end = self._line_dates(line)
+            if not (start and end):
                 continue
-            start = line.start_date.date()
-            end = line.return_date.date()
-            nights = max((end - start).days, 1)
-            for i in range(nights):
+            for i in range(max((end - start).days, 1)):
                 d = start + timedelta(days=i)
                 if date_from <= d < date_to:
-                    counts[d] = counts.get(d, 0) + int(line.product_uom_qty
-                                                       or 1)
+                    counts[d] = counts.get(d, 0) + self._line_units(line)
         return counts
 
     @api.model
@@ -142,15 +215,13 @@ class CmEngine(models.AbstractModel):
             slotted = self._slotted_line_ids(tmpl)
             domain_extra = [
                 ("order_id.state", "=", "sale"),
-                ("product_template_id", "=", tmpl.id),
                 ("id", "not in", list(slotted) or [0]),
-                ("start_date", "!=", False),
-                ("return_date", "!=", False),
-            ]
+            ] + self._stay_lines_domain(tmpl, date_from, date_to)
             for line in self.env["sale.order.line"].sudo().search(
                     domain_extra):
-                start, end = (line.start_date.date(),
-                              line.return_date.date())
+                start, end = self._line_dates(line)
+                if not (start and end):
+                    continue
                 for i in range(max((end - start).days, 1)):
                     d = start + timedelta(days=i)
                     if d in result:
@@ -186,16 +257,18 @@ class CmEngine(models.AbstractModel):
         not count — used when the guest changes an existing stay."""
         occ = self.get_occupancy(listing, date_from, date_to)
         if exclude_order and exclude_order.state == "sale":
-            for line in exclude_order.order_line.filtered(
-                    lambda l: l.is_rental and l.product_template_id
-                    == listing.product_tmpl_id
-                    and l.start_date and l.return_date):
-                start = line.start_date.date()
-                for i in range(max((line.return_date.date() - start).days, 1)):
+            for line in self._stay_lines(exclude_order).filtered(
+                    lambda l: l.product_template_id
+                    == listing.product_tmpl_id):
+                start, end = self._line_dates(line)
+                if not (start and end):
+                    continue
+                for i in range(max((end - start).days, 1)):
                     d = start + timedelta(days=i)
                     if d in occ:
                         total, used = occ[d]
-                        occ[d] = (total, max(used - 1, 0))
+                        occ[d] = (total, max(
+                            used - self._line_units(line), 0))
         return all(total - used >= units for total, used in occ.values())
 
     @api.model
@@ -274,13 +347,8 @@ class CmEngine(models.AbstractModel):
             reservation.guest_phone, channel)
 
         variant = tmpl.product_variant_id
-        line_vals = {
-            "product_id": variant.id,
-            "product_uom_qty": 1,
-            "is_rental": True,
-            "start_date": start_dt,
-            "return_date": return_dt,
-        }
+        line_vals = self._stay_line_vals(
+            tmpl, checkin, checkout, start_dt, return_dt)
         # OTA-reported price wins (it is the contractual amount, taxes
         # included); without it the Odoo pricing engine computes it.
         # The room's own taxes are kept when they are all price-included
@@ -295,7 +363,11 @@ class CmEngine(models.AbstractModel):
                 "tax_ids": ([Command.set(taxes.ids)] if keep
                             else [Command.clear()]),
             })
-        order_vals = {}
+        else:
+            price = self._stay_computed_price(listing, checkin, checkout)
+            if price is not None:
+                line_vals["price_unit"] = price
+        order_vals = self._stay_order_vals(start_dt, return_dt)
         currency = reservation.currency_id
         if reservation.price_total and currency and \
                 currency != company.currency_id:
@@ -305,9 +377,6 @@ class CmEngine(models.AbstractModel):
             **order_vals,
             "partner_id": partner.id,
             "company_id": listing.company_id.id,
-            "is_rental_order": True,
-            "rental_start_date": start_dt,
-            "rental_return_date": return_dt,
             "origin": "%s %s" % (channel.name, reservation.external_uid),
             "client_order_ref": reservation.external_uid[:60],
             "cm_reservation_id": reservation.id,
@@ -329,7 +398,7 @@ class CmEngine(models.AbstractModel):
         # period or the room slot is written (create, confirm, room
         # assignment): re-apply the OTA amount last.
         if reservation.price_total:
-            order.order_line.filtered("is_rental").write({
+            self._stay_lines(order).write({
                 "price_unit": line_vals["price_unit"],
                 "tax_ids": line_vals["tax_ids"],
             })
@@ -373,7 +442,7 @@ class CmEngine(models.AbstractModel):
         start_dt = self._local_to_utc(checkin, pickup_h, order.company_id)
         end_dt = self._local_to_utc(checkout, return_h, order.company_id)
         Slot = self.env["planning.slot"].sudo()
-        for line in order.order_line.filtered("is_rental"):
+        for line in self._stay_lines(order):
             tmpl = line.product_template_id
             if not tmpl.x_resource_ids:
                 continue
@@ -437,8 +506,7 @@ class CmEngine(models.AbstractModel):
         listing = reservation.listing_id
         tmpl = listing.product_tmpl_id
         checkin, checkout = reservation.date_from, reservation.date_to
-        lines = order.order_line.filtered("is_rental")
-        line = lines[:1]
+        line = self._stay_lines(order)[:1]
         if not line:
             return order
         if not self.check_free(listing, checkin, checkout,
@@ -450,17 +518,13 @@ class CmEngine(models.AbstractModel):
         pickup_h, return_h = self._checkin_checkout_hours()
         start_dt = self._local_to_utc(checkin, pickup_h, company)
         return_dt = self._local_to_utc(checkout, return_h, company)
+        old_in, old_out = self._line_dates(line)
         before = "%s → %s, %s" % (
-            line.start_date and line.start_date.date(),
-            line.return_date and line.return_date.date(),
-            line.product_template_id.display_name)
+            old_in, old_out, line.product_template_id.display_name)
         if line.product_template_id != tmpl:
-            line.write({"product_id": tmpl.product_variant_id.id})
-            # changing the product drops the rental flag
-            line.write({"is_rental": True})
-        order.write({"rental_start_date": start_dt,
-                     "rental_return_date": return_dt})
-        line.write({"start_date": start_dt, "return_date": return_dt})
+            self._stay_set_product(line, tmpl)
+        self._stay_set_period(order, line, checkin, checkout, start_dt,
+                              return_dt)
         currency = reservation.currency_id
         if reservation.price_total and currency and \
                 currency != order.currency_id and order.state == "draft":
@@ -479,6 +543,10 @@ class CmEngine(models.AbstractModel):
                 "tax_ids": ([Command.set(taxes.ids)] if keep
                             else [Command.clear()]),
             })
+        else:
+            price = self._stay_computed_price(listing, checkin, checkout)
+            if price is not None:
+                line.price_unit = price
         self._sync_order_money(reservation)
         order.message_post(body=_(
             "The guest changed the reservation on %(channel)s.<br/>"

@@ -96,6 +96,11 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_uom_qty']"
+                   position="before">
+                <field name="cm_checkin" optional="show"/>
+                <field name="cm_checkout" optional="show"/>
+            </xpath>
             <xpath expr="//page[@name='other_information']" position="inside">
                 <group name="cm_ota" string="OTA channel"
                        invisible="not cm_reservation_id">

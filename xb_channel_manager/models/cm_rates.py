@@ -119,7 +119,7 @@ class CmListingRates(models.Model):
     base_price = fields.Monetary(
         string="Base nightly price", currency_field="company_currency_id",
         help="Price per night sent to the channels before seasons and rate "
-             "plans. Leave 0 to use the rental price of the product.")
+             "plans. Leave 0 to use the price of the product.")
     company_currency_id = fields.Many2one(
         related="channel_id.company_currency_id")
     rate_plan_ids = fields.One2many("xb.cm.rate.plan", "listing_id")

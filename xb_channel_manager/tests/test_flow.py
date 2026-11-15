@@ -20,7 +20,6 @@ class TestChannelFlow(TransactionCase):
         cls.room = cls.env["product.template"].create({
             "name": "Test Double Room",
             "type": "service",
-            "rent_ok": True,
             "list_price": 100.0,
         })
         cls.channel = cls.env["xb.cm.channel"].create({
@@ -70,17 +69,11 @@ class TestChannelFlow(TransactionCase):
         order = resa.sale_order_id
         self.assertTrue(order)
         self.assertEqual(order.state, "sale")
-        self.assertTrue(order.is_rental_order)
         line = order.order_line
         self.assertEqual(len(line), 1)
         self.assertEqual(line.product_template_id, self.room)
-        self.assertEqual(line.start_date.date(), self.checkin)
-        self.assertEqual(line.return_date.date(), self.checkout)
-        # check-in hour is the property's local hour, stored in UTC
-        engine = self.env["xb.cm.engine"]
-        pickup_h, _return_h = engine._checkin_checkout_hours()
-        self.assertEqual(line.start_date,
-                         engine._local_to_utc(self.checkin, pickup_h))
+        self.assertEqual(line.cm_checkin, self.checkin)
+        self.assertEqual(line.cm_checkout, self.checkout)
         # OTA price honoured exactly (included taxes kept, others cleared)
         self.assertAlmostEqual(order.amount_total, 450.0)
         self.assertEqual(order.partner_id.name, "John Doe")

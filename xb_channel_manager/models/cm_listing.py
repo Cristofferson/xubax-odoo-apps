@@ -26,14 +26,13 @@ class CmListing(models.Model):
     company_id = fields.Many2one(related="channel_id.company_id", store=True)
     product_tmpl_id = fields.Many2one(
         "product.template", string="Room type / offer", required=True,
-        domain=[("rent_ok", "=", True)],
-        help="The rental product that represents this room type.")
+        domain=[("sale_ok", "=", True)],
+        help="The product that represents this room type.")
     capacity = fields.Integer(
         string="Units (capacity)",
         help="Number of identical units sold on the channel. With the "
              "Hotel industry installed this is taken from the physical "
-             "rooms linked to the offer; set it only as an override for "
-             "plain Rental databases.")
+             "rooms linked to the offer.")
     effective_capacity = fields.Integer(
         compute="_compute_effective_capacity")
 
@@ -236,12 +235,7 @@ class CmListing(models.Model):
             listing=self)
 
     def _nightly_price(self):
-        """Best nightly price from the rental pricing of the product."""
+        """Nightly price of the room: the sales price of the product
+        (the Rental bridge reads the nightly rental pricing)."""
         self.ensure_one()
-        tmpl = self.product_tmpl_id
-        pricing = tmpl.product_pricing_ids.filtered(
-            lambda p: p.recurrence_id.unit in ("day", "night")
-            or "night" in (p.recurrence_id.name or "").lower())
-        if not pricing:
-            pricing = tmpl.product_pricing_ids
-        return pricing[:1].price or tmpl.list_price
+        return self.product_tmpl_id.list_price

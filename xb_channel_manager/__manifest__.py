@@ -7,8 +7,8 @@
     'description': """
 Hotel OTA Channel Manager
 =========================
-Connect the Odoo Hotel / Rental booking flow with the main hospitality
-platforms (OTAs):
+Connect Odoo Sales (Community or Enterprise), Rental and the Hotel
+industry with the main hospitality platforms (OTAs):
 
 * Universal **iCal two-way sync** (Airbnb, Booking.com, Vrbo and any
   platform supporting calendar import/export).
@@ -16,11 +16,14 @@ platforms (OTAs):
   reservation webhooks for Booking.com, Expedia, Airbnb, Agoda and 100+
   channels through a single connection.
 * Reservation inbox with automatic Sales Order creation, room assignment
-  and native availability blocking (Hotel industry / Rental).
+  and native availability blocking (Sales, Rental, Hotel industry).
+* Works with Odoo Community: the stays are sale order lines with check-in
+  and check-out dates. With the Rental app, the free
+  *xb_channel_manager_renting* bridge installs itself.
 * Overbooking guard, cancellation handling, full sync log.
 """,
     'category': 'Sales/Rental',
-    'version': '19.0.1.1.3',
+    'version': '19.0.1.2.0',
     'author': 'XUBAX',
     'website': 'https://xubax.com',
     'license': 'OPL-1',
@@ -28,7 +31,7 @@ platforms (OTAs):
     'currency': 'USD',
     'support': 'cristofferson28@gmail.com',
     'depends': [
-        'sale_renting',
+        'sale',
         'mail',
     ],
     'data': [

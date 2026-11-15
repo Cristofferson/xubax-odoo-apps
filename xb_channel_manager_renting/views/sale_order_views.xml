@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- With Rental the period lives in the rental dates: hide the
+         Channel Manager stay columns by default. -->
+    <record id="view_order_form_cm_renting" model="ir.ui.view">
+        <field name="name">sale.order.form.xb.channel.manager.renting</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="xb_channel_manager.view_order_form_cm"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='cm_checkin']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='cm_checkout']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
