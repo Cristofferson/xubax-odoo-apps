@@ -239,9 +239,20 @@ class CmEngine(models.AbstractModel):
         return partner
 
     @api.model
+    def _in_company(self, reservation):
+        """Engine and reservation working in the channel company: orders
+        of a company other than the main one fail the multi-company
+        check otherwise (webhook and cron run in the main company)."""
+        company = reservation.channel_id.company_id
+        if not company:
+            return self, reservation
+        return self.with_company(company), reservation.with_company(company)
+
+    @api.model
     def create_booking(self, reservation):
         """Create (and per policy confirm) the sale.order for a staged
         OTA reservation. Returns the sale.order. Raises on conflict."""
+        self, reservation = self._in_company(reservation)
         listing = reservation.listing_id
         channel = reservation.channel_id
         tmpl = listing.product_tmpl_id
@@ -419,6 +430,7 @@ class CmEngine(models.AbstractModel):
         """Bring the linked order in line with the reservation (dates, room
         type, price, currency). Raises UserWarningConflict when the new
         stay is not available."""
+        self, reservation = self._in_company(reservation)
         order = reservation.sale_order_id.sudo()
         if not order or order.state == "cancel":
             return order
@@ -481,6 +493,7 @@ class CmEngine(models.AbstractModel):
     @api.model
     def _sync_order_money(self, reservation):
         """Copy the platform commission to the order (order currency)."""
+        self, reservation = self._in_company(reservation)
         order = reservation.sale_order_id.sudo()
         if not order:
             return
@@ -497,6 +510,7 @@ class CmEngine(models.AbstractModel):
     # ------------------------------------------------------------------
     @api.model
     def cancel_booking(self, reservation):
+        self, reservation = self._in_company(reservation)
         order = reservation.sale_order_id
         if not order:
             return

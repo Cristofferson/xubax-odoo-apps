@@ -359,3 +359,47 @@ class TestChannelV11(TransactionCase):
                  if p == "/api/v1/restrictions"][0]["values"]
         self.assertEqual({v["rate_plan_id"] for v in restr},
                          {"rp-std", "rp-nr"})
+
+    # ------------------------------------------------------------------
+    # Multi-company
+    # ------------------------------------------------------------------
+    def test_140_booking_in_secondary_company(self):
+        """A channel of a company that is not the current one (webhook and
+        cron run in the main company) still creates its order."""
+        company2 = self.env["res.company"].create({"name": "Second Co CM"})
+        room2 = self.env["product.template"].create({
+            "name": "Apartment Lake", "type": "service", "rent_ok": True,
+            "list_price": 80.0, "company_id": company2.id})
+        channel2 = self.env["xb.cm.channel"].create({
+            "name": "Channex Co2", "channel_type": "channex",
+            "company_id": company2.id, "state": "connected",
+            "auto_import": True, "import_policy": "confirm",
+            "channex_property_id": "prop-2"})
+        self.env["xb.cm.listing"].create({
+            "channel_id": channel2.id, "product_tmpl_id": room2.id,
+            "capacity": 1, "channex_room_type_id": "rt-2"})
+        booking = self._booking(uid="CO2-1", amount="240.00",
+                                currency=company2.currency_id.name)
+        booking["rooms"][0]["room_type_id"] = "rt-2"
+        env = self.env(context={"allowed_company_ids": [self.company.id]})
+        env["xb.cm.reservation"]._channex_upsert_booking(
+            channel2.with_env(env), booking, "CO2-1")
+        resa = self.env["xb.cm.reservation"].search([
+            ("channel_id", "=", channel2.id), ("external_uid", "=", "CO2-1")])
+        self.assertEqual(resa.state, "imported", resa.error_msg)
+        self.assertEqual(resa.sale_order_id.company_id, company2)
+
+    def test_150_zero_commission_uses_channel_percent_on_change(self):
+        """Channex sends ota_commission "0.00" when the OTA reports none:
+        the channel percentage applies, also to the modified total."""
+        self.channel.commission_percent = 15.0
+        self._upsert(self._booking(uid="ZC-1", amount="200.00",
+                                   commission="0.00"))
+        resa = self._resa("ZC-1")
+        self.assertEqual(resa.state, "imported", resa.error_msg)
+        self.assertAlmostEqual(resa.commission_amount, 30.0)
+        self._upsert(self._booking(
+            uid="ZC-1", status="modified", amount="300.00",
+            commission="0.00", checkout=self.checkout + timedelta(days=1)))
+        self.assertAlmostEqual(resa.commission_amount, 45.0)
+        self.assertAlmostEqual(resa.net_amount, 255.0)

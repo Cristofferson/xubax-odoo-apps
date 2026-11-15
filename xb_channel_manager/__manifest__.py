@@ -20,7 +20,7 @@ platforms (OTAs):
 * Overbooking guard, cancellation handling, full sync log.
 """,
     'category': 'Sales/Rental',
-    'version': '19.0.1.1.1',
+    'version': '19.0.1.1.2',
     'author': 'XUBAX',
     'website': 'https://xubax.com',
     'license': 'OPL-1',

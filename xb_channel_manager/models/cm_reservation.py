@@ -381,6 +381,10 @@ class CmReservation(models.Model):
         commission = booking.get("ota_commission")
         commission = (self._amount(commission)
                       if commission not in (None, "") else None)
+        # Channex sends "0.00" when the OTA reports no commission: use the
+        # channel percentage then, also on modifications (new total).
+        if not commission:
+            commission = None
         room_amounts = [self._amount(r.get("amount")) for r in rooms]
         rooms_total = sum(room_amounts) or booking_amount
         existing_all = self.search([
@@ -424,6 +428,9 @@ class CmReservation(models.Model):
                 share = (amount / rooms_total) if rooms_total else (
                     1.0 / len(rooms))
                 room_commission = currency.round(commission * share)
+            elif channel.commission_percent and amount:
+                room_commission = currency.round(
+                    amount * channel.commission_percent / 100.0)
             plan_ext = str(room.get("rate_plan_id") or "")
             plan = listing.rate_plan_ids.filtered(
                 lambda p, pe=plan_ext: p.channex_rate_plan_id == pe)[:1]
