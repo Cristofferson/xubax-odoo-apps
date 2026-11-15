@@ -1,0 +1,18 @@
+id,name,model_id,group_id/id,operation,domain
+access_cm_channel_user,cm.channel user,xb.cm.channel,xb_channel_manager.group_cm_user,r,
+access_cm_channel_manager,cm.channel manager,xb.cm.channel,xb_channel_manager.group_cm_manager,crud,
+access_cm_listing_user,cm.listing user,xb.cm.listing,xb_channel_manager.group_cm_user,r,
+access_cm_listing_manager,cm.listing manager,xb.cm.listing,xb_channel_manager.group_cm_manager,crud,
+access_cm_reservation_user,cm.reservation user,xb.cm.reservation,xb_channel_manager.group_cm_user,ru,
+access_cm_reservation_manager,cm.reservation manager,xb.cm.reservation,xb_channel_manager.group_cm_manager,crud,
+access_cm_log_user,cm.log user,xb.cm.log,xb_channel_manager.group_cm_user,r,
+access_cm_log_manager,cm.log manager,xb.cm.log,xb_channel_manager.group_cm_manager,crud,
+access_cm_season_user,cm.season user,xb.cm.season,xb_channel_manager.group_cm_user,r,
+access_cm_season_manager,cm.season manager,xb.cm.season,xb_channel_manager.group_cm_manager,crud,
+access_cm_rate_plan_user,cm.rate.plan user,xb.cm.rate.plan,xb_channel_manager.group_cm_user,r,
+access_cm_rate_plan_manager,cm.rate.plan manager,xb.cm.rate.plan,xb_channel_manager.group_cm_manager,crud,
+access_cm_rate_preview_user,cm.rate.preview user,xb.cm.rate.preview,xb_channel_manager.group_cm_user,crud,
+access_cm_rate_preview_line_user,cm.rate.preview.line user,xb.cm.rate.preview.line,xb_channel_manager.group_cm_user,crud,
+rule_cm_channel_company,Channel: multi-company,xb.cm.channel,,crud,"['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]"
+rule_cm_season_company,CM Season: multi-company,xb.cm.season,,crud,"['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]"
+rule_cm_reservation_company,CM Reservation: multi-company,xb.cm.reservation,,crud,"['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]"
