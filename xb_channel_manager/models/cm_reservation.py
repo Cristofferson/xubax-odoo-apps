@@ -85,11 +85,14 @@ class CmReservation(models.Model):
             rec.display_label = (rec.guest_name or rec.name
                                  or rec.external_uid or "?")
 
-    @api.depends("price_total", "commission_amount")
+    @api.depends("price_total", "commission_amount",
+                 "sale_order_id.amount_total")
     def _compute_net_amount(self):
         for rec in self:
-            rec.net_amount = (rec.price_total or 0) - (rec.commission_amount
-                                                       or 0)
+            # iCal reservations carry no price: the order total is the gross
+            gross = rec.price_total or (rec.sale_order_id.amount_total
+                                        if rec.sale_order_id else 0.0)
+            rec.net_amount = gross - (rec.commission_amount or 0)
 
     @api.depends("date_from", "date_to")
     def _compute_nights(self):
@@ -147,6 +150,11 @@ class CmReservation(models.Model):
                 engine.update_booking(rec)
                 rec.write({"state": "imported", "pending_changes": False,
                            "error_msg": False})
+                if not rec.price_total and rec.channel_id.commission_percent:
+                    # priced by Odoo: the commission follows the new total
+                    rec.commission_amount = 0.0
+                    rec._default_commission()
+                    engine._sync_order_money(rec)
             except UserWarningConflict as exc:
                 rec.write({"state": "conflict", "error_msg": str(exc)})
                 rec._notify_manager(_(

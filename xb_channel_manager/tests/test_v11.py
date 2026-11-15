@@ -215,7 +215,8 @@ class TestChannelV11(TransactionCase):
     def test_070_ical_date_change_updates_order(self):
         channel = self.env["xb.cm.channel"].create({
             "name": "Airbnb PY", "channel_type": "ical",
-            "state": "connected", "auto_import": True})
+            "state": "connected", "auto_import": True,
+            "commission_percent": 10})
         listing = self.env["xb.cm.listing"].create({
             "channel_id": channel.id, "product_tmpl_id": self.room.id,
             "capacity": 3})
@@ -234,6 +235,12 @@ class TestChannelV11(TransactionCase):
         line = resa.sale_order_id.order_line.filtered("is_rental")
         self.assertEqual(line.return_date.date(), new_out)
         self.assertEqual(resa.date_to, new_out)
+        # no OTA price: gross = order total, commission follows it
+        total = resa.sale_order_id.amount_total
+        self.assertTrue(total)
+        self.assertAlmostEqual(resa.commission_amount, total * 0.10,
+                               places=2)
+        self.assertAlmostEqual(resa.net_amount, total * 0.90, places=2)
 
     def test_080_contact_data_not_wiped(self):
         self._upsert(self._booking())
