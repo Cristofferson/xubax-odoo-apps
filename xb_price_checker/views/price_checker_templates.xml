@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="page" name="Price checker">
+        <t t-call="web.layout">
+            <t t-set="title">Price checker</t>
+            <t t-set="head">
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+                <t t-call-assets="xb_price_checker.assets" t-js="false"/>
+                <t t-call-assets="xb_price_checker.assets" t-css="false"/>
+            </t>
+            <main id="xb_price_checker" t-att-data-config="config.id" t-att-data-token="token" t-att-data-idle="idle">
+                <section class="xpc-wait xpc-show">
+                    <img t-if="company.logo" class="xpc-logo" t-att-src="'/web/image/res.company/%s/logo' % company.id" alt=""/>
+                    <svg class="xpc-icon" viewBox="0 0 100 100" aria-hidden="true">
+                        <path d="M14 50L35 26H84V74H35Z" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>
+                        <circle cx="31" cy="50" r="5" fill="currentColor"/>
+                        <text x="60" y="63" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="900" font-size="36" fill="currentColor">$</text>
+                    </svg>
+                    <h1>Check the price</h1>
+                    <p class="xpc-hint">Scan the barcode of the product</p>
+                    <button type="button" class="xpc-type">Type the code</button>
+                    <small t-out="config.name"/>
+                </section>
+                <section class="xpc-result" aria-live="polite">
+                    <img class="xpc-photo" alt=""/>
+                    <h2 class="xpc-name"/>
+                    <p class="xpc-ref"/>
+                    <p class="xpc-before-row"><s class="xpc-before"/> <span class="xpc-discount"/></p>
+                    <p class="xpc-price"/>
+                    <p class="xpc-months"/>
+                    <p class="xpc-stock"/>
+                    <p class="xpc-again">Scan another product whenever you like</p>
+                </section>
+                <section class="xpc-message" aria-live="polite">
+                    <p class="xpc-mark">?</p>
+                    <h2 class="xpc-message-title"/>
+                    <p>Ask a sales associate</p>
+                </section>
+                <form class="xpc-form" autocomplete="off">
+                    <input class="xpc-input" name="code" inputmode="none" autocomplete="off" aria-label="Barcode"/>
+                </form>
+                <div class="xpc-texts" hidden="hidden">
+                    <span data-key="searching">Searching…</span>
+                    <span data-key="notFound">We could not find this product</span>
+                    <span data-key="offline">No connection, try again</span>
+                    <span data-key="prompt">Type the code of the product</span>
+                    <span data-key="hint">Scan the barcode of the product</span>
+                </div>
+            </main>
+        </t>
+    </template>
+</odoo>

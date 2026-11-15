@@ -1,0 +1,220 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* xb_price_checker
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-15 05:09+0000\n"
+"PO-Revision-Date: 2026-11-15 05:09+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: xb_price_checker
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.page
+msgid ""
+"<text x=\"60\" y=\"63\" text-anchor=\"middle\" font-"
+"family=\"Arial,Helvetica,sans-serif\" font-weight=\"900\" font-size=\"36\" "
+"fill=\"currentColor\">$</text>"
+msgstr ""
+
+#. module: xb_price_checker
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
+msgid ""
+"A screen where customers scan a product and see its price, with the prices, "
+"taxes and stock of this Point of Sale. Open the link on a tablet with a "
+"barcode scanner and leave it there: no user is needed."
+msgstr ""
+
+#. module: xb_price_checker
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.page
+msgid "Ask a sales associate"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/models/pos_config.py:0
+msgid "Available in this store"
+msgstr ""
+
+#. module: xb_price_checker
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
+msgid "Available or out of stock in this store, without the number of pieces."
+msgstr ""
+
+#. module: xb_price_checker
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
+msgid "Back to the start"
+msgstr ""
+
+#. module: xb_price_checker
+#: model:ir.model.fields,field_description:xb_price_checker.field_pos_config__price_checker_idle
+#: model:ir.model.fields,field_description:xb_price_checker.field_res_config_settings__pos_price_checker_idle
+msgid "Back to the start after (seconds)"
+msgstr ""
+
+#. module: xb_price_checker
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.page
+msgid "Barcode"
+msgstr ""
+
+#. module: xb_price_checker
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.page
+msgid "Check the price"
+msgstr ""
+
+#. module: xb_price_checker
+#: model:ir.model,name:xb_price_checker.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: xb_price_checker
+#: model:ir.model.fields,field_description:xb_price_checker.field_pos_config__display_name
+#: model:ir.model.fields,field_description:xb_price_checker.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: xb_price_checker
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
+msgid "From the payment rules, when the XPago app is installed."
+msgstr ""
+
+#. module: xb_price_checker
+#: model:ir.model.fields,field_description:xb_price_checker.field_pos_config__id
+#: model:ir.model.fields,field_description:xb_price_checker.field_res_config_settings__id
+msgid "ID"
+msgstr ""
+
+#. module: xb_price_checker
+#: model:ir.model.fields,help:xb_price_checker.field_pos_config__price_checker_show_months
+#: model:ir.model.fields,help:xb_price_checker.field_res_config_settings__pos_price_checker_show_months
+msgid ""
+"Months without interest of the payment rules, when a module that has them is"
+" installed (XPago)."
+msgstr ""
+
+#. module: xb_price_checker
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
+msgid "New link"
+msgstr ""
+
+#. module: xb_price_checker
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
+msgid "Open the price checker"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/models/pos_config.py:0
+msgid "Out of stock in this store"
+msgstr ""
+
+#. module: xb_price_checker
+#: model:ir.model,name:xb_price_checker.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr ""
+
+#. module: xb_price_checker
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.page
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
+msgid "Price checker"
+msgstr ""
+
+#. module: xb_price_checker
+#: model:ir.model.fields,field_description:xb_price_checker.field_pos_config__price_checker_token
+msgid "Price checker key"
+msgstr ""
+
+#. module: xb_price_checker
+#: model:ir.model.fields,field_description:xb_price_checker.field_pos_config__price_checker_url
+#: model:ir.model.fields,field_description:xb_price_checker.field_res_config_settings__pos_price_checker_url
+msgid "Price checker link"
+msgstr ""
+
+#. module: xb_price_checker
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.page
+msgid "Scan another product whenever you like"
+msgstr ""
+
+#. module: xb_price_checker
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.page
+msgid "Scan the barcode of the product"
+msgstr ""
+
+#. module: xb_price_checker
+#: model:ir.model.fields,help:xb_price_checker.field_pos_config__price_checker_idle
+#: model:ir.model.fields,help:xb_price_checker.field_res_config_settings__pos_price_checker_idle
+msgid ""
+"Seconds a product stays on screen before the welcome screen comes back."
+msgstr ""
+
+#. module: xb_price_checker
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
+msgid "Seconds a product stays on screen."
+msgstr ""
+
+#. module: xb_price_checker
+#: model:ir.model.fields,help:xb_price_checker.field_pos_config__price_checker_token
+msgid ""
+"Secret part of the link of the price checker. Change it to stop the screens "
+"that have the old link."
+msgstr ""
+
+#. module: xb_price_checker
+#: model:ir.model.fields,field_description:xb_price_checker.field_pos_config__price_checker_show_months
+#: model:ir.model.fields,field_description:xb_price_checker.field_res_config_settings__pos_price_checker_show_months
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
+msgid "Show months without interest"
+msgstr ""
+
+#. module: xb_price_checker
+#: model:ir.model.fields,field_description:xb_price_checker.field_pos_config__price_checker_show_stock
+#: model:ir.model.fields,field_description:xb_price_checker.field_res_config_settings__pos_price_checker_show_stock
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
+msgid "Show stock"
+msgstr ""
+
+#. module: xb_price_checker
+#: model:ir.model.fields,help:xb_price_checker.field_pos_config__price_checker_show_stock
+#: model:ir.model.fields,help:xb_price_checker.field_res_config_settings__pos_price_checker_show_stock
+msgid ""
+"Tell the customer whether this store has the product (without the number of "
+"pieces)."
+msgstr ""
+
+#. module: xb_price_checker
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
+msgid "The screens that have the current link stop working. Continue?"
+msgstr ""
+
+#. module: xb_price_checker
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.page
+msgid "Type the code"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/models/pos_config.py:0
+msgid "Up to %(months)s months without interest of %(amount)s"
+msgstr ""
+
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.page
+msgid "Searching…"
+msgstr ""
+
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.page
+msgid "We could not find this product"
+msgstr ""
+
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.page
+msgid "No connection, try again"
+msgstr ""
+
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.page
+msgid "Type the code of the product"
+msgstr ""
