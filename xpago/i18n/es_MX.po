@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-06 07:59+0000\n"
-"PO-Revision-Date: 2026-11-06 07:59+0000\n"
+"POT-Creation-Date: 2026-11-16 02:23+0000\n"
+"PO-Revision-Date: 2026-11-16 02:23+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_MX\n"
@@ -24,6 +24,22 @@ msgid "%s months without interest"
 msgstr "%s meses sin intereses"
 
 #. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
+msgid ""
+"<span class=\"badge text-bg-success fs-6\" invisible=\"xpago_connection_state != 'ok'\">Connected</span>\n"
+"                        <span class=\"badge text-bg-danger fs-6\" invisible=\"xpago_connection_state != 'error'\">Error</span>\n"
+"                        <span class=\"badge text-bg-secondary fs-6\" invisible=\"xpago_connection_state != 'unknown'\">Not checked yet</span>"
+msgstr ""
+"<span class=\"badge text-bg-success fs-6\" invisible=\"xpago_connection_state != 'ok'\">Conectado</span>\n"
+"                        <span class=\"badge text-bg-danger fs-6\" invisible=\"xpago_connection_state != 'error'\">Error</span>\n"
+"                        <span class=\"badge text-bg-secondary fs-6\" invisible=\"xpago_connection_state != 'unknown'\">Sin revisar todavía</span>"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.self_order_res_config_settings_view_form
+msgid "<span>seconds (0 never cancels it)</span>"
+msgstr "<span>segundos (0 nunca lo cancela)</span>"
+
+#. module: xpago
 #: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
 msgid "<span>–</span>"
 msgstr "<span>–</span>"
@@ -38,6 +54,50 @@ msgstr ""
 "<strong>Conecta tu cuenta XPago.</strong>\n"
 "                        Escribe la llave XPago (empieza con xpk_) que recibes al conectar tu cuenta: mientras\n"
 "                        tanto, los cobros con XPago no pasan."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
+msgid ""
+"<strong>Neutralized copy.</strong>\n"
+"                    This database is a copy: XPago was switched off, its key removed and the payments that were waiting\n"
+"                    were cancelled here, without calling XPago. Write a test key (xpk_test_…) to try XPago in this copy."
+msgstr ""
+"<strong>Copia neutralizada.</strong>\n"
+"                    Esta base de datos es una copia: XPago se apagó, se quitó su llave y los pagos que estaban\n"
+"                    esperando se cancelaron aquí, sin llamar a XPago. Escribe una llave de prueba (xpk_test_…) para\n"
+"                    probar XPago en esta copia."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/force_done.js:0
+msgid ""
+"A refund is only completed when XPago confirms it. Wait for it, or press "
+"Cancel and pay it back another way."
+msgstr ""
+"Una devolución solo se completa cuando XPago la confirma. Espérala, o toca "
+"Cancelar y devuelve el dinero de otra forma."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/pos_payment_method.py:0
+msgid "A refund is paid back with a negative amount."
+msgstr "Una devolución se paga con un monto negativo."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/pos_xpago_transfer.py:0
+msgid "A transfer only pays positive amounts."
+msgstr "Una transferencia solo paga montos positivos."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/payment_xpago_transfer.js:0
+msgid ""
+"A transfer only pays positive amounts. Give refunds back another way (cash "
+"or a bank transfer from the business)."
+msgstr ""
+"Una transferencia solo paga montos positivos. Devuelve el dinero de otra "
+"forma (efectivo o una transferencia desde la cuenta del negocio)."
 
 #. module: xpago
 #: model:ir.module.module,summary:base.module_xpago
@@ -83,6 +143,18 @@ msgid "American Express"
 msgstr "American Express"
 
 #. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__amount
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__amount
+#: model_terms:ir.ui.view,arch_db:xpago.pos_order_receipt
+msgid "Amount"
+msgstr "Monto"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__status__amount_differs
+msgid "Amount differs"
+msgstr "El monto no coincide"
+
+#. module: xpago
 #: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
 msgid "Any"
 msgstr "Cualquiera"
@@ -108,996 +180,25 @@ msgid "Any variant"
 msgstr "Cualquier variante"
 
 #. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid ""
+"Anything that arrived goes back to who sent it. Make a new CLABE for the "
+"same sale."
+msgstr ""
+"Lo que haya llegado se le regresa a quien lo mandó. Haz una CLABE nueva para"
+" la misma venta."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_terminal_setup_view_form
+msgid "Apply"
+msgstr "Aplicar"
+
+#. module: xpago
 #: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
 #: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_search
 msgid "Archived"
 msgstr "Archivada"
-
-#. module: xpago
-#: model_terms:ir.actions.act_window,help:xpago.action_payment_xpago_rule
-msgid ""
-"By the total of the sale, the price of each product (after its pricelist), the product or variant, its\n"
-"                category or its tags. For example: 12 months on diamonds over $20,000, or the jewelry of a consignor\n"
-"                deposited in its own account."
-msgstr ""
-"Por el total de la venta, el precio de cada producto (después de su lista de"
-" precios), el producto o la variante, su categoría o sus etiquetas. Por "
-"ejemplo: 12 meses en diamantes de más de $20,000, o la joyería de un "
-"consignatario depositada en su propia cuenta."
-
-#. module: xpago
-#: model:payment.method,name:xpago.payment_method_card
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__card
-msgid "Card"
-msgstr "Tarjeta"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__categ_ids
-msgid "Categories"
-msgstr "Categorías"
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_search
-msgid "Change the account"
-msgstr "Cambian la cuenta"
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_search
-msgid "Change the months"
-msgstr "Cambian los meses"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_provider__code
-msgid "Code"
-msgstr "Código"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__company_id
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__company_id
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_rule_test__company_id
-msgid "Company"
-msgstr "Empresa"
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
-#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_kanban
-#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
-msgid "Connect your XPago account"
-msgstr "Conecta tu cuenta XPago"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__create_uid
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__create_uid
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__create_uid
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__create_uid
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__create_uid
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__create_uid
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_rule_test__create_uid
-msgid "Created by"
-msgstr "Creado por"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__create_date
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__create_date
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__create_date
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__create_date
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__create_date
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__create_date
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_rule_test__create_date
-msgid "Created on"
-msgstr "Creado el"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__currency_id
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__currency_id
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__currency_id
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__currency_id
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__currency_id
-msgid "Currency"
-msgstr "Moneda"
-
-#. module: xpago
-#: model_terms:ir.actions.act_window,help:xpago.action_payment_xpago_rule
-msgid "Decide months without interest and deposit accounts by what is sold"
-msgstr ""
-"Decide meses sin intereses y cuentas de depósito según lo que se vende"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__bank_account_id
-#: code:addons/xpago/static/src/pos/app/payment_xpago.js:0
-#: code:addons/xpago/wizard/pos_xpago_rule_test.py:0
-#: model:ir.model.fields,field_description:xpago.field_pos_payment_method__xpago_bank_account_id
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__bank_account_id
-msgid "Deposit account"
-msgstr "Cuenta de depósito"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_bank_account_ids
-#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
-msgid "Deposit accounts"
-msgstr "Cuentas de depósito"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_provider__display_name
-#: model:ir.model.fields,field_description:xpago.field_payment_token__display_name
-#: model:ir.model.fields,field_description:xpago.field_payment_transaction__display_name
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__display_name
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__display_name
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__display_name
-#: model:ir.model.fields,field_description:xpago.field_pos_config__display_name
-#: model:ir.model.fields,field_description:xpago.field_pos_order_receipt__display_name
-#: model:ir.model.fields,field_description:xpago.field_pos_payment_method__display_name
-#: model:ir.model.fields,field_description:xpago.field_pos_session__display_name
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__display_name
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__display_name
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__display_name
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_rule_test__display_name
-#: model:ir.model.fields,field_description:xpago.field_res_config_settings__display_name
-msgid "Display Name"
-msgstr "Nombre para mostrar"
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
-msgid "Does not change the account"
-msgstr "No cambia la cuenta"
-
-#. module: xpago
-#: model:ir.model.fields.selection,name:xpago.selection__payment_xpago_rule__msi_mode__keep
-msgid "Does not change the months"
-msgstr "No cambia los meses"
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
-msgid ""
-"Each payment received with XPago sends these users an Odoo notification: a message in their\n"
-"                        inbox and a pop-up while Odoo is open. Leave it empty to send none."
-msgstr ""
-"Cada pago que entra con XPago les manda a estos usuarios un aviso en Odoo: "
-"un mensaje en su bandeja de entrada y una ventana emergente mientras tengan "
-"Odoo abierto. Déjalo vacío para no mandar ninguno."
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_xpago_rule__terms
-msgid "For example \"3, 6, 12\"."
-msgstr "Por ejemplo \"3, 6, 12\"."
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__date_from
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__date_from
-msgid "From"
-msgstr "Desde"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_provider__id
-#: model:ir.model.fields,field_description:xpago.field_payment_token__id
-#: model:ir.model.fields,field_description:xpago.field_payment_transaction__id
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__id
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__id
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__id
-#: model:ir.model.fields,field_description:xpago.field_pos_config__id
-#: model:ir.model.fields,field_description:xpago.field_pos_order_receipt__id
-#: model:ir.model.fields,field_description:xpago.field_pos_payment_method__id
-#: model:ir.model.fields,field_description:xpago.field_pos_session__id
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__id
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__id
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__id
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_rule_test__id
-#: model:ir.model.fields,field_description:xpago.field_res_config_settings__id
-msgid "ID"
-msgstr "ID"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__write_uid
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__write_uid
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__write_uid
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__write_uid
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__write_uid
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__write_uid
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_rule_test__write_uid
-msgid "Last Updated by"
-msgstr "Última actualización por"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__write_date
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__write_date
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__write_date
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__write_date
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__write_date
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__write_date
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_rule_test__write_date
-msgid "Last Updated on"
-msgstr "Última actualización el"
-
-#. module: xpago
-#: model:payment.method,name:xpago.payment_method_mastercard
-msgid "MasterCard"
-msgstr "MasterCard"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__terms
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__terms
-msgid "Months offered"
-msgstr "Meses que se ofrecen"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_installment_rule_ids
-#: model:ir.model.fields,field_description:xpago.field_payment_transaction__xpago_terms
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__msi_mode
-#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
-#: code:addons/xpago/wizard/pos_xpago_rule_test.py:0
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__terms
-msgid "Months without interest"
-msgstr "Meses sin intereses"
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_xpago_installment_rule__terms
-msgid ""
-"Months without interest separated by commas, for example \"3, 6, 12\". Leave"
-" it empty to offer the single payment only."
-msgstr ""
-"Meses sin intereses separados por comas, por ejemplo \"3, 6, 12\". Déjalo "
-"vacío para ofrecer solo el pago de contado."
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__name
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__name
-msgid "Name"
-msgstr "Nombre"
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
-msgid "No end"
-msgstr "Sin fin"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_notify_user_ids
-msgid "Notify payments to"
-msgstr "Avisar los pagos a"
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_provider__xpago_single_payment
-msgid ""
-"Offer paying in one go besides the months without interest of the amount."
-msgstr ""
-"Ofrecer el pago en una sola exhibición además de los meses sin intereses del"
-" monto."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_transaction.py:0
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__use_online
-#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__source__online
-msgid "Online"
-msgstr "En línea"
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_xpago_rule__use_online
-msgid "Online store, payment links of orders and invoices."
-msgstr "Tienda en línea, ligas de pago de pedidos y facturas."
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_xpago_rule__product_ids
-msgid "Only these variants (for example, the ring in white gold)."
-msgstr "Solo estas variantes (por ejemplo, el anillo en oro blanco)."
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_xpago_rule__sequence
-msgid "Order of the rules: the first one that fits a product decides."
-msgstr "Orden de las reglas: la primera que le queda a un producto decide."
-
-#. module: xpago
-#: model:ir.model,name:xpago.model_payment_provider
-msgid "Payment Provider"
-msgstr "Proveedor de pago"
-
-#. module: xpago
-#: model:ir.model,name:xpago.model_payment_token
-msgid "Payment Token"
-msgstr "Token de pago"
-
-#. module: xpago
-#: model:ir.model,name:xpago.model_payment_transaction
-msgid "Payment Transaction"
-msgstr "Transacción de pago"
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
-msgid "Payment notifications"
-msgstr "Avisos de pago"
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_transaction.py:0
-#: code:addons/xpago/models/pos_xpago_charge.py:0
-msgid "Payment received: %s"
-msgstr "Pago recibido: %s"
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
-msgid "Product price (0 = any)"
-msgstr "Precio del producto (0 = cualquiera)"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__price_min
-msgid "Product price from"
-msgstr "Precio del producto desde"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__price_max
-msgid "Product price up to"
-msgstr "Precio del producto hasta"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__product_tmpl_ids
-#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
-msgid "Products"
-msgstr "Productos"
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_xpago_rule.py:0
-msgid "Products of %s"
-msgstr "Productos de %s"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__product_count
-msgid "Products that fit"
-msgstr "Productos que aplican"
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_xpago_rule__tag_ids
-msgid "Products with any of these tags."
-msgstr "Productos con cualquiera de estas etiquetas."
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__provider_id
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__provider_id
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__provider_id
-msgid "Provider"
-msgstr "Proveedor"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__min_amount
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__amount_min
-msgid "Sale from"
-msgstr "Venta desde"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__amount_max
-msgid "Sale up to"
-msgstr "Venta hasta"
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_transaction.py:0
-msgid "Saved card"
-msgstr "Tarjeta guardada"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__sequence
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__sequence
-msgid "Sequence"
-msgstr "Secuencia"
-
-#. module: xpago
-#: model:ir.model.fields.selection,name:xpago.selection__payment_xpago_rule__msi_mode__none
-msgid "Single payment only"
-msgstr "Solo de contado"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__tag_ids
-msgid "Tags"
-msgstr "Etiquetas"
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_xpago_installment_rule.py:0
-msgid "The amount of a rule cannot be negative."
-msgstr "El monto de una regla no puede ser negativo."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_transaction.py:0
-msgid "The bank declined the card."
-msgstr "El banco rechazó la tarjeta."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_transaction.py:0
-msgid "The card was not saved in time."
-msgstr "La tarjeta no se guardó a tiempo."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_transaction.py:0
-msgid "The hold was released."
-msgstr "Se liberó la retención."
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_provider__xpago_api_key
-msgid ""
-"The key XPago gave you when your account was opened: xpk_test_… charges "
-"nothing (test mode), xpk_live_… charges for real (enabled)."
-msgstr ""
-"La llave que XPago te dio al abrir tu cuenta: xpk_test_… no cobra nada (modo"
-" de prueba), xpk_live_… cobra de verdad (activado)."
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_provider__xpago_needs_connect
-msgid ""
-"The key is not an XPago key (xpk_…): payments do not go through until the "
-"XPago account is connected."
-msgstr ""
-"La llave no es una llave XPago (xpk_…): los cobros no pasan hasta que "
-"conectes la cuenta XPago."
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_xpago_installment_rule__currency_id
-#: model:ir.model.fields,help:xpago.field_pos_xpago_reconcile__currency_id
-#: model:ir.model.fields,help:xpago.field_pos_xpago_reconcile_line__currency_id
-msgid "The main currency of the company, used to display monetary fields."
-msgstr ""
-"La moneda principal de la empresa, usada para mostrar los campos de dinero."
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
-msgid "The products"
-msgstr "Los productos"
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_xpago_rule.py:0
-msgid "The rule \"%s\" changes nothing: choose its months or its deposit account."
-msgstr "La regla \"%s\" no cambia nada: elige sus meses o su cuenta de depósito."
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_xpago_installment_rule__min_amount
-msgid "The rule applies to sales of this amount or more, up to the next rule."
-msgstr ""
-"La regla aplica a ventas de este monto o más, hasta la siguiente regla."
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
-msgid ""
-"The rules are tried in order, top to bottom. For each product of the sale, the first rule that fits\n"
-"                        decides its months and its deposit account. The sale offers only the months that every product allows;\n"
-"                        its money goes to the account of the rule placed highest, unless the point of sale splits the charge."
-msgstr ""
-"Las reglas se prueban en orden, de arriba hacia abajo. Para cada producto de"
-" la venta, la primera regla que le queda decide sus meses y su cuenta de "
-"depósito. La venta ofrece solo los meses que permiten todos los productos; "
-"su dinero va a la cuenta de la regla de más arriba, salvo que la caja divida"
-" el cobro."
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
-msgid "The sale"
-msgstr "La venta"
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_transaction__xpago_card_id
-msgid "The saved card (XPago payment method) this payment was made on."
-msgstr "La tarjeta guardada de XPago con la que se hizo este pago."
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_provider__code
-msgid "The technical code of this payment provider."
-msgstr "El código técnico de este proveedor de pago."
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_xpago_rule__categ_ids
-msgid "Their subcategories too."
-msgstr "También sus subcategorías."
-
-#. module: xpago
-#: model:ir.model.constraint,message:xpago.constraint_payment_xpago_installment_rule_provider_min_amount_unique
-msgid "There is already a rule from this amount."
-msgstr "Ya hay una regla desde este monto."
-
-#. module: xpago
-#: model:ir.model.fields.selection,name:xpago.selection__payment_xpago_rule__msi_mode__terms
-msgid "These months"
-msgstr "Estos meses"
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_provider__xpago_notify_user_ids
-msgid ""
-"These users get an Odoo notification (inbox and pop-up) for each payment "
-"received with XPago."
-msgstr ""
-"Estos usuarios reciben un aviso en Odoo (bandeja de entrada y ventana "
-"emergente) por cada pago que entra con XPago."
-
-#. module: xpago
-#: model:ir.model.constraint,message:xpago.constraint_payment_xpago_bank_account_xpago_id_unique
-msgid "This XPago account already exists."
-msgstr "Esta cuenta de XPago ya existe."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_provider.py:0
-msgid ""
-"This XPago key does not match the mode: out of live mode it takes a key that"
-" starts with xpk_test_, in live mode one that starts with xpk_live_."
-msgstr ""
-"Esta clave de XPago no corresponde al modo: fuera del modo en vivo lleva una"
-" clave que empieza con xpk_test_ y en modo en vivo una que empieza con "
-"xpk_live_."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_transaction.py:0
-msgid "This payment was not made on a saved card."
-msgstr "Este pago no se hizo con una tarjeta guardada."
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
-msgid ""
-"To decide the months and the deposit account by product, category, tag or price, use the\n"
-"                        payment rules: they narrow the months of the amount above."
-msgstr ""
-"Para decidir los meses y la cuenta de depósito por producto, categoría, "
-"etiqueta o precio, usa las reglas de cobro: acotan los meses del monto de "
-"arriba."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_transaction.py:0
-msgid ""
-"To save a card, the customer needs a name, an email and a phone number."
-msgstr ""
-"Para guardar una tarjeta, el cliente necesita nombre, correo y teléfono."
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
-msgid "Total of the sale (0 = any)"
-msgstr "Total de la venta (0 = cualquiera)"
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_xpago_rule__amount_min
-msgid "Total of the sale, taxes included. Empty: any."
-msgstr "Total de la venta, con impuestos. Vacío: cualquiera."
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_xpago_rule__price_min
-msgid ""
-"Unit price in the sale, after its pricelist and discount, taxes included."
-msgstr ""
-"Precio unitario en la venta, después de su lista de precios y descuento, con"
-" impuestos."
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__date_to
-msgid "Until"
-msgstr "Hasta"
-
-#. module: xpago
-#: model:payment.method,name:xpago.payment_method_visa
-msgid "VISA"
-msgstr "VISA"
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
-msgid "Valid"
-msgstr "Vigencia"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__product_ids
-msgid "Variants"
-msgstr "Variantes"
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
-msgid "What it decides"
-msgstr "Qué decide"
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_xpago_bank_account__is_default
-msgid "Where XPago deposits a sale that names no account."
-msgstr "Dónde deposita XPago una venta que no indica cuenta."
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_provider__xpago_other_bank_account_id
-msgid ""
-"Where XPago deposits the online store, payment link and subscription "
-"payments. Empty: your XPago account decides."
-msgstr ""
-"Dónde deposita XPago los pagos de la tienda en línea, las ligas de pago y "
-"las suscripciones. Vacío: lo decide tu cuenta de XPago."
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_provider__xpago_invoice_bank_account_id
-msgid ""
-"Where XPago deposits the payments of invoices. Empty: your XPago account "
-"decides."
-msgstr ""
-"Dónde deposita XPago los pagos de facturas. Vacío: lo decide tu cuenta de "
-"XPago."
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
-msgid "Where and when"
-msgstr "Dónde y cuándo"
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_xpago_rule__bank_account_id
-msgid ""
-"Where the money of these products is deposited. Empty: does not change the "
-"account."
-msgstr ""
-"Dónde se deposita el dinero de estos productos. Vacío: no cambia la cuenta."
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
-msgid ""
-"Which months without interest the checkout offers, by amount of the sale. Each rule applies\n"
-"                        from its amount up to the next one. Your customer pays no interest: the fee of each plan is\n"
-"                        paid by your business. Without rules, the checkout offers every plan active in your XPago\n"
-"                        account."
-msgstr ""
-"Qué meses sin intereses ofrece el pago según el monto de la venta. Cada "
-"regla aplica desde su monto hasta la siguiente. Tu cliente no paga "
-"intereses: la comisión de cada plazo la paga tu negocio. Sin reglas, se "
-"ofrecen todos los planes activos en tu cuenta de XPago."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_provider.py:0
-msgid "Write the key XPago gave you before switching it to live."
-msgstr "Escribe la clave que te dio XPago antes de pasarlo a modo en vivo."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_xpago_installment_rule.py:0
-#: code:addons/xpago/models/payment_xpago_rule.py:0
-msgid ""
-"Write the months as whole numbers from 2 to %(max)s separated by commas, for"
-" example \"3, 6, 12\"."
-msgstr ""
-"Escribe los meses como números enteros del 2 al %(max)s separados por comas,"
-" por ejemplo \"3, 6, 12\"."
-
-#. module: xpago
-#: model:ir.model.fields.selection,name:xpago.selection__payment_provider__code__xpago
-#: model:payment.provider,name:xpago.payment_provider_xpago
-#: code:addons/xpago/static/src/pos/app/payment_xpago.js:0
-msgid "XPago"
-msgstr "XPago"
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_transaction.py:0
-msgid "XPago answered an unknown status: %s"
-msgstr "XPago respondió un estado desconocido: %s"
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
-msgid ""
-"XPago can deposit each payment in a different account of yours. Odoo reads your accounts from\n"
-"                        XPago every hour; they are added and removed in XPago only. At the point of sale, each terminal\n"
-"                        can have its own account or let the cashier choose it on each charge."
-msgstr ""
-"XPago puede depositar cada pago en una cuenta distinta tuya. Odoo lee tus "
-"cuentas de XPago cada hora; se agregan y se quitan solo en XPago. En el "
-"punto de venta, cada terminal puede tener su propia cuenta o dejar que la "
-"cajera la elija en cada cobro."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_transaction.py:0
-msgid "XPago captures a hold once; the bank frees the rest on its own."
-msgstr ""
-"XPago captura una retención una sola vez; el banco libera el resto por su "
-"cuenta."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_xpago_bank_account.py:0
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__is_default
-msgid "XPago default"
-msgstr "predeterminada en XPago"
-
-#. module: xpago
-#: model:ir.model,name:xpago.model_payment_xpago_bank_account
-msgid "XPago deposit account"
-msgstr "Cuenta de depósito de XPago"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__xpago_id
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__xpago_id
-msgid "XPago id"
-msgstr "Id en XPago"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_api_key
-msgid "XPago key"
-msgstr "Llave XPago"
-
-#. module: xpago
-#: model:ir.model,name:xpago.model_payment_xpago_rule
-#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
-msgid "XPago payment rule"
-msgstr "Regla de cobro XPago"
-
-#. module: xpago
-#: model:ir.actions.act_window,name:xpago.action_payment_xpago_rule
-#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
-#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_list
-#: model:ir.ui.menu,name:xpago.menu_payment_xpago_rule
-#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
-msgid "XPago payment rules"
-msgstr "Reglas de cobro XPago"
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_transaction.py:0
-msgid "XPago releases a hold in full only."
-msgstr "XPago solo libera una retención completa."
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_transaction__xpago_card_id
-msgid "XPago saved card"
-msgstr "Tarjeta guardada de XPago"
-
-#. module: xpago
-#: model:ir.module.module,shortdesc:base.module_xpago
-msgid "XPago: Card Payments and Terminals"
-msgstr "XPago: cobros con tarjeta y terminales"
-
-#. module: xpago
-#: model:ir.model,name:xpago.model_payment_xpago_installment_rule
-msgid "XPago: months without interest by amount"
-msgstr "XPago: meses sin intereses por monto"
-
-#. module: xpago
-#: model:ir.actions.server,name:xpago.ir_cron_sync_pending_ir_actions_server
-msgid "XPago: read back pending online payments"
-msgstr "XPago: leer los pagos en línea pendientes"
-
-#. module: xpago
-#: model:ir.actions.server,name:xpago.ir_cron_sync_bank_accounts_ir_actions_server
-msgid "XPago: read the deposit accounts"
-msgstr "XPago: leer las cuentas de depósito"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_needs_connect
-#: model:ir.model.fields,field_description:xpago.field_res_config_settings__xpago_needs_connect
-msgid "Xpago Needs Connect"
-msgstr "Falta conectar XPago"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_transaction__xpago_notified
-msgid "Xpago Notified"
-msgstr "Avisado"
-
-#. module: xpago
-#: model_terms:payment.provider,auth_msg:xpago.payment_provider_xpago
-msgid "Your payment has been authorized."
-msgstr "Tu pago fue autorizado."
-
-#. module: xpago
-#: model_terms:payment.provider,cancel_msg:xpago.payment_provider_xpago
-msgid "Your payment has been cancelled."
-msgstr "Tu pago fue cancelado."
-
-#. module: xpago
-#: model_terms:payment.provider,pending_msg:xpago.payment_provider_xpago
-msgid "Your payment has been processed but is waiting for approval."
-msgstr "Tu pago fue procesado, pero está esperando aprobación."
-
-#. module: xpago
-#: model_terms:payment.provider,done_msg:xpago.payment_provider_xpago
-msgid "Your payment has been processed."
-msgstr "Tu pago fue procesado."
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
-msgid "e.g. 12 months on diamonds"
-msgstr "p. ej. 12 meses en diamantes"
-
-#. module: xpago
-#: code:addons/xpago/models/payment_provider.py:0
-msgid "No connection with XPago. Check the internet or try again in a moment."
-msgstr ""
-"No hay conexión con XPago. Revisa el internet o intenta en un momento."
-
-#. module: xpago
-#: code:addons/xpago/models/payment_provider.py:0
-msgid ""
-"XPago did not answer in time and this operation may have gone through. Check"
-" the terminal or the list of charges before trying again."
-msgstr ""
-"XPago no contestó a tiempo y esta operación pudo haber pasado. Revisa la "
-"terminal o la lista de cobros antes de intentar de nuevo."
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
-msgid ""
-"<span class=\"badge text-bg-success fs-6\" invisible=\"xpago_connection_state != 'ok'\">Connected</span>\n"
-"                        <span class=\"badge text-bg-danger fs-6\" invisible=\"xpago_connection_state != 'error'\">Error</span>\n"
-"                        <span class=\"badge text-bg-secondary fs-6\" invisible=\"xpago_connection_state != 'unknown'\">Not checked yet</span>"
-msgstr ""
-"<span class=\"badge text-bg-success fs-6\" invisible=\"xpago_connection_state != 'ok'\">Conectado</span>\n"
-"                        <span class=\"badge text-bg-danger fs-6\" invisible=\"xpago_connection_state != 'error'\">Error</span>\n"
-"                        <span class=\"badge text-bg-secondary fs-6\" invisible=\"xpago_connection_state != 'unknown'\">Sin revisar todavía</span>"
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
-msgid ""
-"<strong>Neutralized copy.</strong>\n"
-"                    This database is a copy: XPago was switched off, its key removed and the payments that were waiting\n"
-"                    were cancelled here, without calling XPago. Write a test key (xpk_test_…) to try XPago in this copy."
-msgstr ""
-"<strong>Copia neutralizada.</strong>\n"
-"                    Esta base de datos es una copia: XPago se apagó, se quitó su llave y los pagos que estaban\n"
-"                    esperando se cancelaron aquí, sin llamar a XPago. Escribe una llave de prueba (xpk_test_…) para\n"
-"                    probar XPago en esta copia."
-
-#. module: xpago
-#: model:ir.model.fields.selection,name:xpago.selection__payment_provider__xpago_connection_state__ok
-msgid "Connected"
-msgstr "Conectado"
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_provider.py:0
-msgid "Connected to XPago"
-msgstr "Conectado a XPago"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_connection_state
-#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
-msgid "Connection"
-msgstr "Conexión"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_environment
-msgid "Environment"
-msgstr "Ambiente"
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_provider.py:0
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_connection__last_error
-#: model:ir.model.fields.selection,name:xpago.selection__payment_provider__xpago_connection_state__error
-msgid "Error"
-msgstr "Error"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_last_ok_at
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_connection__last_ok_at
-msgid "Last call that worked"
-msgstr "Última llamada que funcionó"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_last_error
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_connection__last_error_at
-msgid "Last error"
-msgstr "Último error"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_last_error_at
-msgid "Last error at"
-msgstr "Último error el"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_neutralized
-msgid "Neutralized copy"
-msgstr "Copia neutralizada"
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_provider.py:0
-msgid "No connection with XPago."
-msgstr "Sin conexión con XPago."
-
-#. module: xpago
-#: model:ir.model.fields.selection,name:xpago.selection__payment_provider__xpago_connection_state__unknown
-msgid "Not checked yet"
-msgstr "Sin revisar todavía"
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
-msgid ""
-"Odoo writes down how its calls to XPago go: when one worked last and the last error. «Test\n"
-"                        connection» asks XPago for the account of this key right now."
-msgstr ""
-"Odoo anota cómo van sus llamadas a XPago: cuándo funcionó la última y el último error.\n"
-"                        «Probar conexión» le pregunta a XPago ahora mismo por la cuenta de esta llave."
-
-#. module: xpago
-#: model:ir.model.constraint,message:xpago.constraint_payment_xpago_connection_provider_unique
-msgid "One connection status per provider."
-msgstr "Un estado de conexión por proveedor."
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_provider__xpago_environment
-msgid "Read from the XPago key: xpk_test_ or xpk_live_."
-msgstr "Se lee de la llave XPago: xpk_test_ o xpk_live_."
-
-#. module: xpago
-#: model:ir.model.fields.selection,name:xpago.selection__payment_provider__xpago_environment__live
-msgid "Real"
-msgstr "Real"
-
-#. module: xpago
-#: model:ir.model.fields.selection,name:xpago.selection__payment_provider__xpago_environment__test
-msgid "Test (charges nothing)"
-msgstr "Prueba (no cobra nada)"
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
-msgid "Test connection"
-msgstr "Probar conexión"
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_provider.py:0
-msgid "The key works."
-msgstr "La llave funciona."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_provider.py:0
-msgid ""
-"The payment provider rejected the request.\n"
-"%s"
-msgstr ""
-"El proveedor de pagos rechazó la solicitud.\n"
-"%s"
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_payment_provider__xpago_neutralized
-msgid ""
-"This database is a neutralized copy: XPago was switched off and its key "
-"removed, so the copy never charges with the real account. Write a test key "
-"to try XPago here."
-msgstr ""
-"Esta base de datos es una copia neutralizada: XPago se apagó y se quitó su "
-"llave, así que la copia nunca cobra con la cuenta real. Escribe una llave de"
-" prueba para probar XPago aquí."
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_account_name
-#: model:ir.model.fields,field_description:xpago.field_payment_xpago_connection__account_name
-#: model:ir.model.fields,field_description:xpago.field_pos_payment_method__xpago_provider_id
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__provider_id
-msgid "XPago account"
-msgstr "Cuenta XPago"
-
-#. module: xpago
-#: model:ir.model,name:xpago.model_payment_xpago_connection
-msgid "XPago connection status"
-msgstr "Estado de la conexión con XPago"
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_provider.py:0
-msgid "XPago did not answer"
-msgstr "XPago no contestó"
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_provider.py:0
-msgid "XPago did not answer in time."
-msgstr "XPago no contestó a tiempo."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/pos_payment_method.py:0
-msgid "A refund is paid back with a negative amount."
-msgstr "Una devolución se paga con un monto negativo."
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__amount
-#: model_terms:ir.ui.view,arch_db:xpago.pos_order_receipt
-msgid "Amount"
-msgstr "Monto"
-
-#. module: xpago
-#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__status__amount_differs
-msgid "Amount differs"
-msgstr "El monto no coincide"
 
 #. module: xpago
 #: model:ir.model.fields,help:xpago.field_pos_xpago_rule_test__split
@@ -1109,6 +210,17 @@ msgstr "Como lo haría una caja que divide el cobro."
 #: code:addons/xpago/wizard/pos_xpago_rule_test.py:0
 msgid "As the account offers"
 msgstr "Los que ofrezca la cuenta"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
+msgid "Assign the terminals"
+msgstr "Asignar las terminales"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/pos_xpago_transfer.py:0
+msgid "At %s"
+msgstr "En %s"
 
 #. module: xpago
 #: model_terms:ir.ui.view,arch_db:xpago.pos_payment_xpago_rule_view_form
@@ -1131,6 +243,14 @@ msgid "Authorization:"
 msgstr "Autorización:"
 
 #. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__bank
+msgid "Bank"
+msgstr "Banco"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.pos_clabe_receipt
 #: model_terms:ir.ui.view,arch_db:xpago.pos_order_receipt
 msgid "Bank:"
 msgstr "Banco:"
@@ -1155,6 +275,18 @@ msgstr ""
 "depósito; la de esta terminal ya viene marcada."
 
 #. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__beneficiary
+msgid "Beneficiary"
+msgstr "Beneficiario"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.pos_clabe_receipt
+msgid "Beneficiary:"
+msgstr "Beneficiario:"
+
+#. module: xpago
 #: model:ir.model.fields,help:xpago.field_pos_payment_method__xpago_open_terminal_app
 msgid ""
 "Bring the charge app to the front when the point of sale runs on the "
@@ -1170,21 +302,102 @@ msgid "By the terminal"
 msgstr "Según la terminal"
 
 #. module: xpago
+#: model_terms:ir.actions.act_window,help:xpago.action_payment_xpago_rule
+msgid ""
+"By the total of the sale, the price of each product (after its pricelist), the product or variant, its\n"
+"                category or its tags. For example: 12 months on diamonds over $20,000, or the jewelry of a consignor\n"
+"                deposited in its own account."
+msgstr ""
+"Por el total de la venta, el precio de cada producto (después de su lista de"
+" precios), el producto o la variante, su categoría o sus etiquetas. Por "
+"ejemplo: 12 meses en diamantes de más de $20,000, o la joyería de un "
+"consignatario depositada en su propia cuenta."
+
+#. module: xpago
 #: model_terms:ir.ui.view,arch_db:xpago.pos_order_receipt
 msgid "CARD SALE"
 msgstr "VENTA CON TARJETA"
 
 #. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__clabe
+#: model_terms:ir.ui.view,arch_db:xpago.pos_clabe_receipt
+msgid "CLABE"
+msgstr "CLABE"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__clabe_last4
+msgid "CLABE (last 4)"
+msgstr "CLABE (últimos 4)"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.js:0
+msgid "CLABE copied"
+msgstr "CLABE copiada"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/pos_xpago_transfer.py:0
+msgid "CLABE ending in %s"
+msgstr "CLABE terminada en %s"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_transfer__state__expired
+msgid "CLABE expired"
+msgstr "CLABE vencida"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__expires_at
+msgid "CLABE valid until"
+msgstr "CLABE vigente hasta"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.pos_order_receipt
+msgid "CLABE: ****"
+msgstr "CLABE: ****"
+
+#. module: xpago
 #. odoo-javascript
 #: code:addons/xpago/static/src/pos/app/payment_xpago.js:0
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
 #: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_reconcile_view_form
+#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_terminal_setup_view_form
 msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_config__xpago_kiosk_timeout
+#: model:ir.model.fields,field_description:xpago.field_res_config_settings__pos_xpago_kiosk_timeout
+msgid "Cancel an unpaid card charge after (seconds)"
+msgstr "Cancelar un cobro con tarjeta no pagado después de (segundos)"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_payment_method__xpago_card_timeout
+msgid "Cancel the charge after (seconds)"
+msgstr "Cancelar el cobro si no pasan la tarjeta en (segundos)"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "Cancel the transfer"
+msgstr "Cancelar la transferencia"
+
+#. module: xpago
 #: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_charge__state__cancelled
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_transfer__state__cancelled
 msgid "Cancelled"
 msgstr "Cancelado"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__timed_out
+msgid "Cancelled for lack of a card"
+msgstr "Cancelado: no pasaron la tarjeta"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__card
+#: model:payment.method,name:xpago.payment_method_card
+msgid "Card"
+msgstr "Tarjeta"
 
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__card_no
@@ -1205,6 +418,27 @@ msgstr "Tipo de tarjeta"
 #: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
 msgid "Card voucher in the receipt"
 msgstr "Voucher de la tarjeta en el ticket"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/wizard/pos_xpago_terminal_setup.py:0
+msgid "Card · XPago %s"
+msgstr "Tarjeta · XPago %s"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__categ_ids
+msgid "Categories"
+msgstr "Categorías"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_search
+msgid "Change the account"
+msgstr "Cambian la cuenta"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_search
+msgid "Change the months"
+msgstr "Cambian los meses"
 
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_rule_test__channel
@@ -1251,9 +485,37 @@ msgid "Choose the XPago account and write the serial number of the terminal."
 msgstr "Elige la cuenta de XPago y escribe el número de serie de la terminal."
 
 #. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/pos_payment_method_transfer.py:0
+msgid "Choose the XPago account the transfers are paid to."
+msgstr "Elige la cuenta XPago a la que se pagan las transferencias."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/wizard/pos_xpago_terminal_setup.py:0
+msgid "Choose the journal for the new terminals before creating them."
+msgstr "Elige el diario de las terminales nuevas antes de crearlas."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/backend/reader.xml:0
 #: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_rule_test_view_form
 msgid "Close"
 msgstr "Cerrar"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__code
+msgid "Code"
+msgstr "Código"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__company_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__company_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_rule_test__company_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__config_company_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__company_id
+msgid "Company"
+msgstr "Empresa"
 
 #. module: xpago
 #: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_reconcile_view_form
@@ -1266,9 +528,121 @@ msgstr ""
 "de la comisión y la cuenta donde se deposita."
 
 #. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__concept
+msgid "Concept"
+msgstr "Concepto"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "Concept (optional)"
+msgstr "Concepto (opcional)"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.pos_clabe_receipt
+msgid "Concept:"
+msgstr "Concepto:"
+
+#. module: xpago
 #: model:ir.model,name:xpago.model_res_config_settings
 msgid "Config Settings"
 msgstr "Ajustes de configuración"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_kanban
+#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
+msgid "Connect your XPago account"
+msgstr "Conecta tu cuenta XPago"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__payment_provider__xpago_connection_state__ok
+msgid "Connected"
+msgstr "Conectado"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid "Connected to XPago"
+msgstr "Conectado a XPago"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_connection_state
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
+msgid "Connection"
+msgstr "Conexión"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "Copy the CLABE"
+msgstr "Copiar la CLABE"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/force_done_transfer.js:0
+msgid ""
+"Could not ask XPago whether the transfer arrived. Check the connection and "
+"try again."
+msgstr ""
+"No se pudo preguntar a XPago si llegó la transferencia. Revisa la conexión e"
+" intenta otra vez."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/force_done.js:0
+msgid ""
+"Could not ask XPago whether this card was paid. Check the connection and try"
+" again."
+msgstr ""
+"No se pudo preguntar a XPago si esta tarjeta se pagó. Revisa la conexión e "
+"inténtalo de nuevo."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.js:0
+msgid "Could not copy: dictate it or print it."
+msgstr "No se pudo copiar: díctala o imprímela."
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__create_method
+msgid "Create"
+msgstr "Crear"
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_xpago_terminal_setup_line__create_method
+msgid "Create the payment method of this new terminal."
+msgstr "Crear la forma de pago de esta terminal nueva."
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__create_uid
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_connection__create_uid
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__create_uid
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__create_uid
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__create_uid
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__create_uid
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__create_uid
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_rule_test__create_uid
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup__create_uid
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__create_uid
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__create_date
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_connection__create_date
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__create_date
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__create_date
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__create_date
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__create_date
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__create_date
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_rule_test__create_date
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup__create_date
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__create_date
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__create_date
+msgid "Created on"
+msgstr "Creado el"
 
 #. module: xpago
 #: model_terms:ir.ui.view,arch_db:xpago.pos_order_receipt
@@ -1283,6 +657,31 @@ msgid "Credit card legend"
 msgstr "Leyenda para tarjeta de crédito"
 
 #. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__currency_id
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__currency_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__currency_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__currency_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__currency_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__customer_email
+msgid "Customer Email"
+msgstr "Correo del cliente"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__customer_name
+msgid "Customer Name"
+msgstr "Nombre del cliente"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__customer_phone
+msgid "Customer Phone"
+msgstr "Teléfono del cliente"
+
+#. module: xpago
 #: model_terms:ir.ui.view,arch_db:xpago.pos_order_receipt
 msgid "Customer's signature"
 msgstr "Firma del cliente"
@@ -1291,6 +690,8 @@ msgstr "Firma del cliente"
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__date
 #: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_charge_view_list
 #: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_charge_view_search
+#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_transfer_view_list
+#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_transfer_view_search
 msgid "Date"
 msgstr "Fecha"
 
@@ -1301,6 +702,7 @@ msgstr "Fecha:"
 
 #. module: xpago
 #: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_charge_view_search
+#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_transfer_view_search
 msgid "Day"
 msgstr "Día"
 
@@ -1317,10 +719,60 @@ msgid "Debit card legend"
 msgstr "Leyenda para tarjeta de débito"
 
 #. module: xpago
+#: model_terms:ir.actions.act_window,help:xpago.action_payment_xpago_rule
+msgid "Decide months without interest and deposit accounts by what is sold"
+msgstr ""
+"Decide meses sin intereses y cuentas de depósito según lo que se vende"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__deposit_status
+#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_reconcile_line_view_search
+msgid "Deposit"
+msgstr "Depósito"
+
+#. module: xpago
+#. odoo-javascript
+#. odoo-python
+#: code:addons/xpago/static/src/pos/app/payment_xpago.js:0
+#: code:addons/xpago/wizard/pos_xpago_rule_test.py:0
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__bank_account_id
+#: model:ir.model.fields,field_description:xpago.field_pos_payment_method__xpago_bank_account_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__bank_account_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__bank_account_id
+msgid "Deposit account"
+msgstr "Cuenta de depósito"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_bank_account_ids
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
+msgid "Deposit accounts"
+msgstr "Cuentas de depósito"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_reconcile_line_view_search
+msgid "Deposit refused or returned"
+msgstr "Depósito rechazado o devuelto"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__scheduled
+msgid "Deposit scheduled"
+msgstr "Depósito programado"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__in_review
+msgid "Deposit under review"
+msgstr "Depósito en revisión"
+
+#. module: xpago
 #. odoo-javascript
 #: code:addons/xpago/static/src/pos/app/payment_xpago.js:0
 msgid "Deposit: %s"
 msgstr "Depósito: %s"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__paid
+msgid "Deposited"
+msgstr "Depositado"
 
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__bank_account_id
@@ -1331,8 +783,48 @@ msgstr "Depositado en"
 #. module: xpago
 #. odoo-python
 #: code:addons/xpago/models/pos_xpago_charge.py:0
+#: code:addons/xpago/models/pos_xpago_transfer.py:0
 msgid "Deposited in %s"
 msgstr "Depositado en %s"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__deposit_date
+msgid "Deposited on"
+msgstr "Depositado el"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_ir_ui_view__display_name
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__display_name
+#: model:ir.model.fields,field_description:xpago.field_payment_token__display_name
+#: model:ir.model.fields,field_description:xpago.field_payment_transaction__display_name
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__display_name
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_connection__display_name
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__display_name
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__display_name
+#: model:ir.model.fields,field_description:xpago.field_pos_config__display_name
+#: model:ir.model.fields,field_description:xpago.field_pos_order_receipt__display_name
+#: model:ir.model.fields,field_description:xpago.field_pos_payment_method__display_name
+#: model:ir.model.fields,field_description:xpago.field_pos_session__display_name
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__display_name
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__display_name
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__display_name
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_rule_test__display_name
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup__display_name
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__display_name
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__display_name
+#: model:ir.model.fields,field_description:xpago.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
+msgid "Does not change the account"
+msgstr "No cambia la cuenta"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__payment_xpago_rule__msi_mode__keep
+msgid "Does not change the months"
+msgstr "No cambia los meses"
 
 #. module: xpago
 #: model_terms:ir.actions.act_window,help:xpago.action_pos_xpago_charge
@@ -1343,6 +835,32 @@ msgstr ""
 "Aquí aparece cada cobro que el punto de venta manda a una terminal XPago, "
 "con su tarjeta y su operación. Usa el filtro «Pagado sin venta» para "
 "encontrar tarjetas cobradas que no tienen pedido."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
+msgid ""
+"Each payment received with XPago sends these users an Odoo notification: a message in their\n"
+"                        inbox and a pop-up while Odoo is open. Leave it empty to send none."
+msgstr ""
+"Cada pago que entra con XPago les manda a estos usuarios un aviso en Odoo: "
+"un mensaje en su bandeja de entrada y una ventana emergente mientras tengan "
+"Odoo abierto. Déjalo vacío para no mandar ninguno."
+
+#. module: xpago
+#: model_terms:ir.actions.act_window,help:xpago.action_pos_xpago_transfer
+msgid ""
+"Each sale the point of sale charges with a one-time CLABE shows here, with who paid and when the money\n"
+"               arrived. Use the \"Paid without a sale\" filter to find transfers that arrived but have no order."
+msgstr ""
+"Aquí aparece cada venta que la caja cobra con una CLABE de un solo uso, con "
+"quién pagó y cuándo llegó el dinero. Usa el filtro «Pagado sin venta» para "
+"encontrar transferencias que llegaron pero no tienen orden."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "Email"
+msgstr "Correo"
 
 #. module: xpago
 #: model:ir.model.fields,help:xpago.field_payment_xpago_rule__config_ids
@@ -1358,6 +876,17 @@ msgstr "Modo de lectura"
 #: model_terms:ir.ui.view,arch_db:xpago.pos_order_receipt
 msgid "Entry mode:"
 msgstr "Modo de lectura:"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_environment
+msgid "Environment"
+msgstr "Ambiente"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_connection__last_error
+#: model:ir.model.fields.selection,name:xpago.selection__payment_provider__xpago_connection_state__error
+msgid "Error"
+msgstr "Error"
 
 #. module: xpago
 #: model_terms:ir.ui.view,arch_db:xpago.pos_payment_xpago_rule_view_form
@@ -1385,19 +914,73 @@ msgid "Fee %"
 msgstr "% comisión"
 
 #. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_xpago_rule__terms
+msgid "For example \"3, 6, 12\"."
+msgstr "Por ejemplo \"3, 6, 12\"."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.pos_clabe_receipt
+msgid "For:"
+msgstr "Para:"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__date_from
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__date_from
+msgid "From"
+msgstr "Desde"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/backend/reader.xml:0
+msgid ""
+"From then on, every code scanned on the terminal reaches the Odoo screen open in this browser\n"
+"                    (Barcode, Inventory, Manufacturing…), as if it was scanned on this computer. For the Point of Sale,\n"
+"                    pair it from the register's menu."
+msgstr ""
+"A partir de ahí, cada código que escanees en la terminal llega a la pantalla"
+" de Odoo abierta en este navegador (Código de barras, Inventario, "
+"Fabricación…), como si lo escanearas en esta computadora. Para el punto de "
+"venta, vincúlala desde el menú de la caja."
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__has_open_session
+msgid "Has Open Session"
+msgstr "Tiene sesión abierta"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_ir_ui_view__id
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__id
+#: model:ir.model.fields,field_description:xpago.field_payment_token__id
+#: model:ir.model.fields,field_description:xpago.field_payment_transaction__id
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__id
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_connection__id
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__id
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__id
+#: model:ir.model.fields,field_description:xpago.field_pos_config__id
+#: model:ir.model.fields,field_description:xpago.field_pos_order_receipt__id
+#: model:ir.model.fields,field_description:xpago.field_pos_payment_method__id
+#: model:ir.model.fields,field_description:xpago.field_pos_session__id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_rule_test__id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup__id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__id
+#: model:ir.model.fields,field_description:xpago.field_res_config_settings__id
+msgid "ID"
+msgstr "ID"
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__odoo_amount
 msgid "In Odoo"
 msgstr "En Odoo"
 
 #. module: xpago
-#: model:ir.module.module,summary:base.module_xpago_pos
-msgid ""
-"Installs by itself with XPago when you use the Odoo Point of Sale: the "
-"amount goes to the XPago card terminal and the approved card comes back to "
-"the order. Mexico."
-msgstr ""
-"Se instala sola con XPago cuando usas el Punto de Venta de Odoo: el monto va"
-" a la terminal XPago y la tarjeta aprobada regresa al pedido. México."
+#. odoo-javascript
+#: code:addons/xpago/static/src/backend/reader.xml:0
+msgid "Inventory 001"
+msgstr "Inventario 001"
 
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__issuer_bank
@@ -1415,10 +998,79 @@ msgstr ""
 " cliente paga cada parte con la tarjeta:"
 
 #. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup__journal_id
+msgid "Journal for new terminals"
+msgstr "Diario para terminales nuevas"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "Keep waiting and close"
+msgstr "Cerrar y seguir esperando"
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__use_kiosk
 #: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_rule_test__channel__kiosk
 msgid "Kiosk"
 msgstr "Kiosco"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.self_order_res_config_settings_view_form
+msgid "Kiosk: free the terminal"
+msgstr "Kiosco: liberar la terminal"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__write_uid
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_connection__write_uid
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__write_uid
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__write_uid
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__write_uid
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__write_uid
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__write_uid
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_rule_test__write_uid
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup__write_uid
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__write_uid
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__write_date
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_connection__write_date
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__write_date
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__write_date
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__write_date
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__write_date
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__write_date
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_rule_test__write_date
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup__write_date
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__write_date
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_last_ok_at
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_connection__last_ok_at
+msgid "Last call that worked"
+msgstr "Última llamada que funcionó"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_last_error
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_connection__last_error_at
+msgid "Last error"
+msgstr "Último error"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_last_error_at
+msgid "Last error at"
+msgstr "Último error el"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/wizard/pos_xpago_terminal_setup.py:0
+msgid "Left as they were (session open): %s."
+msgstr "Se quedaron como estaban (sesión abierta): %s."
 
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__line_ids
@@ -1429,6 +1081,23 @@ msgstr "Línea"
 #: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
 msgid "Line for the customer's signature"
 msgstr "Línea para la firma del cliente"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "Make a new CLABE"
+msgstr "Hacer una CLABE nueva"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "Make the CLABE"
+msgstr "Hacer la CLABE"
+
+#. module: xpago
+#: model:payment.method,name:xpago.payment_method_mastercard
+msgid "MasterCard"
+msgstr "MasterCard"
 
 #. module: xpago
 #: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__status__ok
@@ -1448,9 +1117,31 @@ msgid "Merchant number:"
 msgstr "Afiliación:"
 
 #. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__amount_due
+msgid "Missing"
+msgstr "Falta"
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__terms
 msgid "Months"
 msgstr "Meses"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__terms
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__terms
+msgid "Months offered"
+msgstr "Meses que se ofrecen"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/wizard/pos_xpago_rule_test.py:0
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_installment_rule_ids
+#: model:ir.model.fields,field_description:xpago.field_payment_transaction__xpago_terms
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__msi_mode
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__terms
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
+msgid "Months without interest"
+msgstr "Meses sin intereses"
 
 #. module: xpago
 #: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
@@ -1462,6 +1153,15 @@ msgstr ""
 "terminales XPago de esta caja."
 
 #. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_xpago_installment_rule__terms
+msgid ""
+"Months without interest separated by commas, for example \"3, 6, 12\". Leave"
+" it empty to offer the single payment only."
+msgstr ""
+"Meses sin intereses separados por comas, por ejemplo \"3, 6, 12\". Déjalo "
+"vacío para ofrecer solo el pago de contado."
+
+#. module: xpago
 #. odoo-javascript
 #: code:addons/xpago/static/src/pos/app/payment_xpago.js:0
 msgid "Months without interest: %s"
@@ -1471,6 +1171,25 @@ msgstr "Meses sin intereses: %s"
 #: model_terms:ir.ui.view,arch_db:xpago.pos_payment_method_view_form
 msgid "N950-123456789"
 msgstr "N950-123456789"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__name
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/backend/reader.xml:0
+msgid "Name of this screen on the terminal"
+msgstr "Nombre de esta pantalla en la terminal"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_neutralized
+msgid "Neutralized copy"
+msgstr "Copia neutralizada"
 
 #. module: xpago
 #. odoo-python
@@ -1485,9 +1204,92 @@ msgid "No charges on XPago terminals yet"
 msgstr "Todavía no hay cobros en terminales XPago"
 
 #. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid "No connection with XPago."
+msgstr "Sin conexión con XPago."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid "No connection with XPago. Check the internet or try again in a moment."
+msgstr ""
+"No hay conexión con XPago. Revisa el internet o intenta en un momento."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
+msgid "No end"
+msgstr "Sin fin"
+
+#. module: xpago
+#: model_terms:ir.actions.act_window,help:xpago.action_pos_xpago_transfer
+msgid "No sales paid by XPago transfer yet"
+msgstr "Todavía no hay ventas pagadas con transferencia XPago"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_config__xpago_tip_mode__none
+msgid "No tip"
+msgstr "Sin propina"
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_config__xpago_tip_mode
+#: model:ir.model.fields,help:xpago.field_res_config_settings__pos_xpago_tip_mode
+msgid ""
+"No tip: nothing changes. The terminal asks: on every card charge the "
+"terminal shows the customer its tip screen (10, 15, 20%, another amount or "
+"none), unless the cashier already added a tip in Odoo; the processor must "
+"have tips turned on for the business. The cashier enters it: with Odoo's "
+"«Tip» button on the payment screen; the terminal charges sale and tip "
+"together without asking. In both cases the tip is a line of the order, so "
+"the closing matches what the terminal charged."
+msgstr ""
+"Sin propina: nada cambia. La pide la terminal: en cada cobro con tarjeta la "
+"terminal le muestra al cliente su pantalla de propina (10, 15, 20 %, otro "
+"monto o nada), salvo que la cajera ya haya agregado una propina en Odoo; el "
+"procesador debe tener activadas las propinas del negocio. La captura la "
+"cajera: con el botón «Propina» de Odoo en la pantalla de pago; la terminal "
+"cobra venta y propina juntas sin preguntar. En los dos casos la propina es "
+"un renglón del pedido, así el corte cuadra con lo que cobró la terminal."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_xpago_charge__timed_out
+msgid "Nobody presented the card in the time the payment method allows."
+msgstr "Nadie pasó la tarjeta en el tiempo que permite el método de pago."
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__payment_provider__xpago_connection_state__unknown
+msgid "Not checked yet"
+msgstr "Sin revisar todavía"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__pending
+#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_reconcile_line_view_search
+msgid "Not deposited yet"
+msgstr "Aún sin depositar"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/wizard/pos_xpago_terminal_setup.py:0
+msgid "Nothing to change."
+msgstr "Nada que cambiar."
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__notified
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__notified
 msgid "Notified"
 msgstr "Avisado"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_notify_user_ids
+msgid "Notify payments to"
+msgstr "Avisar los pagos a"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_config__xpago_print_on_terminal
+#: model:ir.model.fields,field_description:xpago.field_res_config_settings__pos_xpago_print_on_terminal
+#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
+msgid "Odoo prints on the XPago terminal"
+msgstr "Odoo imprime en la terminal XPago"
 
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__reference
@@ -1500,15 +1302,72 @@ msgid "Odoo runs on this terminal"
 msgstr "Odoo corre en esta terminal"
 
 #. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
+msgid ""
+"Odoo writes down how its calls to XPago go: when one worked last and the last error. «Test\n"
+"                        connection» asks XPago for the account of this key right now."
+msgstr ""
+"Odoo anota cómo van sus llamadas a XPago: cuándo funcionó la última y el último error.\n"
+"                        «Probar conexión» le pregunta a XPago ahora mismo por la cuenta de esta llave."
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_offer_bank_transfer
+msgid "Offer bank transfer (one-time CLABE)"
+msgstr "Ofrecer transferencia (CLABE de un solo uso)"
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_provider__xpago_single_payment
+msgid ""
+"Offer paying in one go besides the months without interest of the amount."
+msgstr ""
+"Ofrecer el pago en una sola exhibición además de los meses sin intereses del"
+" monto."
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__in_transit
+msgid "On its way to the bank"
+msgstr "En camino al banco"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/backend/reader.xml:0
+msgid "On the terminal, open the Odoo app, choose"
+msgstr "En la terminal, abre la app Odoo, elige"
+
+#. module: xpago
+#: model:ir.model.constraint,message:xpago.constraint_payment_xpago_connection_provider_unique
+msgid "One connection status per provider."
+msgstr "Un estado de conexión por proveedor."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_transaction.py:0
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__use_online
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__source__online
+msgid "Online"
+msgstr "En línea"
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__transaction_id
 msgid "Online payment"
 msgstr "Pago en línea"
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_xpago_rule__use_online
+msgid "Online store, payment links of orders and invoices."
+msgstr "Tienda en línea, ligas de pago de pedidos y facturas."
 
 #. module: xpago
 #. odoo-python
 #: code:addons/xpago/models/pos_xpago_charge.py:0
 msgid "Only a paid terminal charge can be refunded."
 msgstr "Solo se puede devolver un cobro de terminal pagado."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/pos_xpago_transfer.py:0
+msgid "Only an expired CLABE is replaced."
+msgstr "Solo se reemplaza una CLABE vencida."
 
 #. module: xpago
 #: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__status__odoo_only
@@ -1529,6 +1388,13 @@ msgstr ""
 
 #. module: xpago
 #. odoo-python
+#: code:addons/xpago/models/pos_payment_method_transfer.py:0
+msgid "Only point of sale users can charge by XPago transfer."
+msgstr ""
+"Solo los usuarios del punto de venta pueden cobrar con transferencia XPago."
+
+#. module: xpago
+#. odoo-python
 #: code:addons/xpago/models/pos_payment_method.py:0
 msgid "Only point of sale users can charge on XPago terminals."
 msgstr ""
@@ -1540,6 +1406,25 @@ msgid "Only these points of sale"
 msgstr "Solo estas cajas"
 
 #. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_xpago_rule__product_ids
+msgid "Only these variants (for example, the ring in white gold)."
+msgstr "Solo estas variantes (por ejemplo, el anillo en oro blanco)."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_xpago_terminal_setup__journal_id
+msgid ""
+"Only used for the payment methods this assistant creates (lines with "
+"«Create»)."
+msgstr ""
+"Solo se usa para las formas de pago que crea este asistente (renglones con "
+"«Crear»)."
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_payment_method__xpago_wake_terminal
+msgid "Open the charge app on the terminal"
+msgstr "Abrir la app de cobro en la terminal"
+
+#. module: xpago
 #: model:ir.model.fields,help:xpago.field_pos_xpago_charge__terminal_app_url
 msgid "Opens the charge app when the point of sale runs on the terminal."
 msgstr "Abre la app de cobro cuando el punto de venta corre en la terminal."
@@ -1547,6 +1432,7 @@ msgstr "Abre la app de cobro cuando el punto de venta corre en la terminal."
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__operation_code
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__operation_code
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__operation_code
 msgid "Operation"
 msgstr "Operación"
 
@@ -1561,6 +1447,11 @@ msgid "Optional"
 msgstr "Opcional"
 
 #. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__new_serial
+msgid "Or a new terminal (S/N)"
+msgstr "O una terminal nueva (S/N)"
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__pos_order_id
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__pos_order_id
 msgid "Order"
@@ -1568,8 +1459,14 @@ msgstr "Pedido"
 
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__order_uuid
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__order_uuid
 msgid "Order Uuid"
 msgstr "Uuid del pedido"
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_xpago_rule__sequence
+msgid "Order of the rules: the first one that fits a product decides."
+msgstr "Orden de las reglas: la primera que le queda a un producto decide."
 
 #. module: xpago
 #: model:ir.model.fields,help:xpago.field_pos_xpago_charge__pos_order_id
@@ -1583,10 +1480,32 @@ msgid "Other (dashboard, links)"
 msgstr "Otro (portal, ligas)"
 
 #. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.pos_order_receipt
+msgid "PAID BY TRANSFER (SPEI)"
+msgstr "PAGADO POR TRANSFERENCIA (SPEI)"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.pos_clabe_receipt
+msgid "PAYMENT BY TRANSFER (SPEI)"
+msgstr "PAGO POR TRANSFERENCIA (SPEI)"
+
+#. module: xpago
 #: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_charge__state__confirmed
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_transfer__state__paid
 #: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_charge_view_search
+#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_transfer_view_search
 msgid "Paid"
 msgstr "Pagado"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__paid_at
+msgid "Paid At"
+msgstr "Pagado el"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.pos_order_receipt
+msgid "Paid by:"
+msgstr "Pagó:"
 
 #. module: xpago
 #: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__status__not_paid_in_odoo
@@ -1606,19 +1525,86 @@ msgstr ""
 
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__without_sale
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__without_sale
 #: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_charge_view_search
+#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_transfer_view_search
 msgid "Paid without a sale"
 msgstr "Pagado sin venta"
 
 #. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/backend/reader.js:0
+#: code:addons/xpago/static/src/backend/reader.xml:0
+msgid "Pair XPago reader"
+msgstr "Vincular lector XPago"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/backend/reader.xml:0
+msgid "Pairing code"
+msgstr "Código para vincular"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "Pay by transfer: who pays?"
+msgstr "Pago por transferencia: ¿quién paga?"
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__payment_method_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__payment_method_id
 msgid "Payment Method"
 msgstr "Método de pago"
 
 #. module: xpago
+#: model:ir.model,name:xpago.model_payment_provider
+msgid "Payment Provider"
+msgstr "Proveedor de pago"
+
+#. module: xpago
+#: model:ir.model,name:xpago.model_payment_token
+msgid "Payment Token"
+msgstr "Token de pago"
+
+#. module: xpago
+#: model:ir.model,name:xpago.model_payment_transaction
+msgid "Payment Transaction"
+msgstr "Transacción de pago"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "Payment by transfer (SPEI)"
+msgstr "Pago por transferencia (SPEI)"
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__payment_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__payment_id
 msgid "Payment id"
 msgstr "Id de pago"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
+msgid "Payment notifications"
+msgstr "Avisos de pago"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__checkout_url
+msgid "Payment page"
+msgstr "Página de pago"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_transaction.py:0
+#: code:addons/xpago/models/pos_xpago_charge.py:0
+msgid "Payment received: %s"
+msgstr "Pago recibido: %s"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "Phone (10 digits)"
+msgstr "Teléfono (10 dígitos)"
 
 #. module: xpago
 #: model:ir.model,name:xpago.model_pos_config
@@ -1641,10 +1627,15 @@ msgid "Point of Sale Session"
 msgstr "Sesión del punto de venta"
 
 #. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/pos_xpago_transfer.py:0
 #: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__use_pos
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__config_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__config_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__config_id
 #: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_rule_test__channel__pos
 #: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_charge_view_search
+#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_transfer_view_search
 msgid "Point of sale"
 msgstr "Punto de venta"
 
@@ -1655,8 +1646,20 @@ msgstr "Venta de la caja"
 
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__pos_payment_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__pos_payment_id
 msgid "Point of sale payment"
 msgstr "Pago del punto de venta"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup__line_ids
+msgid "Points of sale"
+msgstr "Puntos de venta"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "Print"
+msgstr "Imprimir"
 
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_config__xpago_voucher_on_receipt
@@ -1669,6 +1672,79 @@ msgstr "Imprimir el voucher de la tarjeta en el ticket"
 #: model:ir.model.fields,help:xpago.field_res_config_settings__pos_xpago_voucher_signature
 msgid "Prints a line for the customer's signature under the legend."
 msgstr "Imprime una línea para la firma del cliente debajo de la leyenda."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
+msgid "Product price (0 = any)"
+msgstr "Precio del producto (0 = cualquiera)"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__price_min
+msgid "Product price from"
+msgstr "Precio del producto desde"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__price_max
+msgid "Product price up to"
+msgstr "Precio del producto hasta"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__product_tmpl_ids
+#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
+msgid "Products"
+msgstr "Productos"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_xpago_rule.py:0
+msgid "Products of %s"
+msgstr "Productos de %s"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__product_count
+msgid "Products that fit"
+msgstr "Productos que aplican"
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_xpago_rule__tag_ids
+msgid "Products with any of these tags."
+msgstr "Productos con cualquiera de estas etiquetas."
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__provider_id
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_connection__provider_id
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__provider_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__provider_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__provider_id
+msgid "Provider"
+msgstr "Proveedor"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "QR"
+msgstr "QR"
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_provider__xpago_environment
+msgid "Read from the XPago key: xpk_test_ or xpk_live_."
+msgstr "Se lee de la llave XPago: xpk_test_ o xpk_live_."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/backend/reader.xml:0
+msgid "Reader for the computer"
+msgstr "Lector para la computadora"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__payment_provider__xpago_environment__live
+msgid "Real"
+msgstr "Real"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__amount_received
+msgid "Received"
+msgstr "Recibido"
 
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__reconcile_id
@@ -1685,6 +1761,7 @@ msgstr "Conciliar con XPago"
 
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__external_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__external_id
 msgid "Reference"
 msgstr "Referencia"
 
@@ -1710,11 +1787,26 @@ msgid "Refunded in XPago, not in Odoo"
 msgstr "Reembolsado en XPago, no en Odoo"
 
 #. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__failed
+msgid "Refused by the bank (sent again)"
+msgstr "Rechazado por el banco (se vuelve a enviar)"
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__status
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_rule_test__result
 #: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_reconcile_line_view_search
 msgid "Result"
 msgstr "Resultado"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_transfer__state__returned
+msgid "Returned"
+msgstr "Devuelto"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__returned
+msgid "Returned by the bank (sent again)"
+msgstr "Devuelto por el banco (se vuelve a enviar)"
 
 #. module: xpago
 #. odoo-python
@@ -1723,9 +1815,26 @@ msgid "Rules applied"
 msgstr "Reglas aplicadas"
 
 #. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__terminal_serial
+msgid "S/N"
+msgstr "S/N"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__deposit_tracking_key
+msgid "SPEI tracking key"
+msgstr "Clave de rastreo SPEI"
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__sale_order_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__sale_order_id
 msgid "Sale"
 msgstr "Venta"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_installment_rule__min_amount
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__amount_min
+msgid "Sale from"
+msgstr "Venta desde"
 
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__xpago_amount
@@ -1733,7 +1842,31 @@ msgid "Sale in XPago"
 msgstr "Venta en XPago"
 
 #. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__amount_max
+msgid "Sale up to"
+msgstr "Venta hasta"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_transaction.py:0
+msgid "Saved card"
+msgstr "Tarjeta guardada"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/payment_xpago_transfer.js:0
+msgid "See the CLABE"
+msgstr "Ver la CLABE"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__sequence
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__session_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__session_id
 msgid "Session"
 msgstr "Sesión"
 
@@ -1756,6 +1889,11 @@ msgstr "Línea para firma"
 #: code:addons/xpago/wizard/pos_xpago_rule_test.py:0
 msgid "Single payment"
 msgstr "De contado"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__payment_xpago_rule__msi_mode__none
+msgid "Single payment only"
+msgstr "Solo de contado"
 
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__source
@@ -1781,13 +1919,35 @@ msgstr "Dividir el cobro cuando los productos van a cuentas o meses distintos"
 
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__state
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__state
 msgid "State"
 msgstr "Estado"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/pos_payment_method.py:0
+msgid "Stop waiting"
+msgstr "Dejar de esperar"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__tag_ids
+msgid "Tags"
+msgstr "Etiquetas"
 
 #. module: xpago
 #: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__source__pos
 msgid "Terminal"
 msgstr "Terminal"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/wizard/pos_xpago_terminal_setup.py:0
+msgid ""
+"Terminal %(serial)s would be on %(registers)s. A terminal shows one charge "
+"at a time: a new charge replaces the one it was waiting for."
+msgstr ""
+"La terminal %(serial)s quedaría en %(registers)s. Una terminal muestra un "
+"cobro a la vez: un cobro nuevo reemplaza al que estaba esperando."
 
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__terminal_app_url
@@ -1812,6 +1972,27 @@ msgid "Terminal charge"
 msgstr "Cobro en terminal"
 
 #. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup__account_serials
+msgid "Terminals in your XPago account"
+msgstr "Terminales en tu cuenta XPago"
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__payment_provider__xpago_environment__test
+msgid "Test (charges nothing)"
+msgstr "Prueba (no cobra nada)"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
+msgid "Test connection"
+msgstr "Probar conexión"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "The CLABE expired before the money arrived."
+msgstr "La CLABE venció antes de que llegara el dinero."
+
+#. module: xpago
 #: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
 msgid ""
 "The XPago account of a terminal has no XPago key (it starts with xpk_): its "
@@ -1830,6 +2011,34 @@ msgstr ""
 "en modo de prueba."
 
 #. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_provider__xpago_offer_bank_transfer
+msgid ""
+"The XPago payment page of the online store, payment links and invoices also "
+"offers paying by SPEI transfer to a CLABE made for that payment alone. The "
+"payment is confirmed by itself when the money arrives. Your XPago account "
+"must have transfers turned on; small amounts may only be paid by card."
+msgstr ""
+"La página de pago XPago de la tienda en línea, las ligas de pago y las "
+"facturas también ofrece pagar por transferencia SPEI a una CLABE hecha solo "
+"para ese pago. El pago se confirma solo cuando llega el dinero. Tu cuenta "
+"XPago debe tener las transferencias activadas; los montos chicos quizá solo "
+"se puedan pagar con tarjeta."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_xpago_transfer__xpago_id
+msgid "The XPago payment page of this sale; the CLABE belongs to it."
+msgstr "La página de pago XPago de esta venta; la CLABE es de ella."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_xpago_terminal_setup_line__method_id
+msgid ""
+"The XPago terminal payment method this point of sale charges with. Empty: "
+"leave it as it is."
+msgstr ""
+"La forma de pago de terminal XPago con la que cobra este punto de venta. "
+"Vacío: se queda como está."
+
+#. module: xpago
 #: model:ir.model.fields,help:xpago.field_pos_xpago_charge__bank_account_id
 msgid "The account this charge was sent to."
 msgstr "La cuenta a la que se mandó este cobro."
@@ -1842,6 +2051,18 @@ msgid ""
 msgstr "El número de afiliación del negocio, impreso en el voucher. Opcional."
 
 #. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_xpago_installment_rule.py:0
+msgid "The amount of a rule cannot be negative."
+msgstr "El monto de una regla no puede ser negativo."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_transaction.py:0
+msgid "The bank declined the card."
+msgstr "El banco rechazó la tarjeta."
+
+#. module: xpago
 #: model:ir.model.fields,help:xpago.field_pos_xpago_charge__without_sale
 msgid ""
 "The card was charged but no order of the point of sale holds the payment "
@@ -1851,14 +2072,57 @@ msgstr ""
 " ejemplo, la venta se recargó antes de validar el pedido)."
 
 #. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.js:0
+msgid ""
+"The card was not paid in time. The terminal is free: try again when you are "
+"ready."
+msgstr ""
+"No se pagó con la tarjeta a tiempo. La terminal quedó libre: inténtalo de "
+"nuevo cuando estés listo."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/payment_xpago.js:0
+msgid ""
+"The card was not presented in %s seconds, so the charge was cancelled on the"
+" terminal. When the customer is ready, press Send again."
+msgstr ""
+"No pasaron la tarjeta en %s segundos y se canceló el cobro en la terminal. "
+"Cuando el cliente esté listo, vuelve a presionar Enviar."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_transaction.py:0
+msgid "The card was not saved in time."
+msgstr "La tarjeta no se guardó a tiempo."
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_payment_method__xpago_choose_account
 msgid "The cashier chooses the account"
 msgstr "La cajera elige la cuenta"
 
 #. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_config__xpago_tip_mode__cashier
+msgid "The cashier enters it"
+msgstr "La captura la cajera"
+
+#. module: xpago
 #: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
 msgid "The cashier sees which account the money goes to"
 msgstr "La cajera ve a qué cuenta va el dinero"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.pos_payment_method_view_form
+msgid ""
+"The cashier shows the customer a CLABE made for this sale alone. The customer transfers from any\n"
+"                    bank (SPEI) and the sale is paid by itself when the money arrives. The CLABE lasts 60 minutes; if\n"
+"                    it expires, the register makes a new one for the same sale."
+msgstr ""
+"La cajera le muestra al cliente una CLABE hecha solo para esta venta. El "
+"cliente transfiere desde cualquier banco (SPEI) y la venta se paga sola "
+"cuando llega el dinero. La CLABE dura 60 minutos; si vence, la caja hace "
+"otra para la misma venta."
 
 #. module: xpago
 #. odoo-javascript
@@ -1867,21 +2131,265 @@ msgid "The charge expired on the terminal before it was paid."
 msgstr "El cobro venció en la terminal antes de pagarse."
 
 #. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_xpago_reconcile_line__deposit_tracking_key
+msgid ""
+"The clave de rastreo on the bank statement; Banxico's CEP is looked up with "
+"it."
+msgstr ""
+"La clave de rastreo que aparece en el estado de cuenta; con ella se consulta"
+" el CEP en Banxico."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid ""
+"The customer's bank did not accept the refund. Nothing was charged back."
+msgstr ""
+"El banco del cliente no aceptó la devolución. No se regresó nada a la "
+"tarjeta."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid ""
+"The customer's bank shows the beneficiary when it checks the CLABE: it is XPago's bank, on behalf of\n"
+"                        this business. The sale is paid by itself as soon as the money arrives."
+msgstr ""
+"El banco del cliente muestra el beneficiario al revisar la CLABE: es el "
+"banco de XPago, a nombre de este negocio. La venta se paga sola en cuanto "
+"llegue el dinero."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_transaction.py:0
+msgid "The hold was released."
+msgstr "Se liberó la retención."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_provider__xpago_api_key
+msgid ""
+"The key XPago gave you when your account was opened: xpk_test_… charges "
+"nothing (test mode), xpk_live_… charges for real (enabled)."
+msgstr ""
+"La llave que XPago te dio al abrir tu cuenta: xpk_test_… no cobra nada (modo"
+" de prueba), xpk_live_… cobra de verdad (activado)."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_provider__xpago_needs_connect
+msgid ""
+"The key is not an XPago key (xpk_…): payments do not go through until the "
+"XPago account is connected."
+msgstr ""
+"La llave no es una llave XPago (xpk_…): los cobros no pasan hasta que "
+"conectes la cuenta XPago."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid "The key works."
+msgstr "La llave funciona."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_xpago_installment_rule__currency_id
+#: model:ir.model.fields,help:xpago.field_pos_xpago_reconcile__currency_id
+#: model:ir.model.fields,help:xpago.field_pos_xpago_reconcile_line__currency_id
+msgid "The main currency of the company, used to display monetary fields."
+msgstr ""
+"La moneda principal de la empresa, usada para mostrar los campos de dinero."
+
+#. module: xpago
 #: model:ir.model.fields,help:xpago.field_pos_xpago_reconcile_line__operation_code
 msgid "The number printed on the voucher and shown in the XPago dashboard."
 msgstr ""
 "El número impreso en el comprobante y que aparece en el portal de XPago."
 
 #. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid ""
+"The payment provider rejected the request.\n"
+"%s"
+msgstr ""
+"El proveedor de pagos rechazó la solicitud.\n"
+"%s"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/pos_payment_method.py:0
+msgid ""
+"The processor does not accept this refund from Odoo: today's card sales do "
+"not cover its fee. Refund it on the terminal (Transactions › the charge › "
+"Refund charge). The register is waiting and completes it on its own; then "
+"press Validate."
+msgstr ""
+"El procesador no acepta esta devolución desde Odoo: las ventas con tarjeta "
+"de hoy no cubren su comisión. Devuélvela en la terminal (Transacciones › el "
+"cobro › Devolver cobro). La caja está esperando y la completa sola; después "
+"presiona Validar."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid ""
+"The processor does not accept this refund: it keeps its fee of %(required)s "
+"and the card sales pending to settle do not cover it (%(missing)s missing). "
+"Nothing was charged back. It will go through once there are more card sales "
+"today, or ask the processor for a refund allowance."
+msgstr ""
+"El procesador no acepta esta devolución: se queda con su comisión de "
+"%(required)s y las ventas con tarjeta pendientes por liquidar no la cubren "
+"(faltan %(missing)s). No se regresó nada a la tarjeta. Se podrá cuando haya "
+"más ventas con tarjeta hoy, o pide al procesador un margen para "
+"devoluciones."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid ""
+"The processor does not accept this refund: the card sales pending to settle "
+"do not cover its fee. Nothing was charged back. It will go through once "
+"there are more card sales today, or ask the processor for a refund "
+"allowance."
+msgstr ""
+"El procesador no acepta esta devolución: las ventas con tarjeta pendientes "
+"por liquidar no cubren su comisión. No se regresó nada a la tarjeta. Se "
+"podrá cuando haya más ventas con tarjeta hoy, o pide al procesador un margen"
+" para devoluciones."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
+msgid "The products"
+msgstr "Los productos"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_xpago_rule.py:0
+msgid "The rule \"%s\" changes nothing: choose its months or its deposit account."
+msgstr "La regla \"%s\" no cambia nada: elige sus meses o su cuenta de depósito."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_xpago_installment_rule__min_amount
+msgid "The rule applies to sales of this amount or more, up to the next rule."
+msgstr ""
+"La regla aplica a ventas de este monto o más, hasta la siguiente regla."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
+msgid ""
+"The rules are tried in order, top to bottom. For each product of the sale, the first rule that fits\n"
+"                        decides its months and its deposit account. The sale offers only the months that every product allows;\n"
+"                        its money goes to the account of the rule placed highest, unless the point of sale splits the charge."
+msgstr ""
+"Las reglas se prueban en orden, de arriba hacia abajo. Para cada producto de"
+" la venta, la primera regla que le queda decide sus meses y su cuenta de "
+"depósito. La venta ofrece solo los meses que permiten todos los productos; "
+"su dinero va a la cuenta de la regla de más arriba, salvo que la caja divida"
+" el cobro."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
+msgid "The sale"
+msgstr "La venta"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid ""
+"The sale has no customer with email or phone: the business's details come filled in. Write the\n"
+"                customer's if they want the transfer details by email."
+msgstr ""
+"La venta no tiene un cliente con correo o teléfono: vienen los datos del "
+"negocio. Escribe los del cliente si quiere recibir los datos de la "
+"transferencia por correo."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_xpago_transfer__checkout_url
+msgid ""
+"The same CLABE on XPago's page, for a customer who would rather open it on "
+"the phone."
+msgstr ""
+"La misma CLABE en la página de XPago, para el cliente que prefiera abrirla "
+"en su celular."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_transaction__xpago_card_id
+msgid "The saved card (XPago payment method) this payment was made on."
+msgstr "La tarjeta guardada de XPago con la que se hizo este pago."
+
+#. module: xpago
 #: model:ir.model.fields,help:xpago.field_pos_payment_method__xpago_terminal_serial
+#: model:ir.model.fields,help:xpago.field_pos_xpago_terminal_setup_line__terminal_serial
 msgid "The serial number on the back of the terminal (after S/N)."
 msgstr "El número de serie que viene atrás de la terminal (después de S/N)."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_xpago_terminal_setup__account_serials
+msgid ""
+"The serial numbers XPago has for this account. A terminal not yet in Odoo is"
+" proposed on a point of sale that has none."
+msgstr ""
+"Los números de serie que XPago tiene en esta cuenta. Una terminal que aún no"
+" está en Odoo se propone en una caja que no tiene ninguna."
 
 #. module: xpago
 #. odoo-python
 #: code:addons/xpago/wizard/pos_xpago_reconcile.py:0
 msgid "The start date is after the end date."
 msgstr "La fecha de inicio es posterior a la de fin."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_provider__code
+msgid "The technical code of this payment provider."
+msgstr "El código técnico de este proveedor de pago."
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_config__xpago_tip_mode__terminal
+msgid "The terminal asks the customer"
+msgstr "La pide la terminal"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid ""
+"The terminal cannot ask for a tip: the processor has not turned tips on for "
+"this business. Ask XPago to turn them on, or set this point of sale's tip to"
+" «The cashier enters it»."
+msgstr ""
+"La terminal no puede pedir propina: el procesador no tiene activadas las "
+"propinas de este negocio. Pide a XPago que las active, o cambia la propina "
+"de esta caja a «La captura la cajera»."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid "The tip is too high: it can be at most 30% of the sale."
+msgstr "La propina es muy alta: puede ser como máximo el 30 % de la venta."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_xpago_transfer__without_sale
+msgid ""
+"The transfer arrived but no order of the point of sale holds the payment "
+"(for example, the sale was reloaded before the order was validated)."
+msgstr ""
+"La transferencia llegó pero ninguna orden del punto de venta tiene el pago "
+"(por ejemplo, la venta se recargó antes de validar la orden)."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/payment_xpago_transfer.js:0
+msgid "The transfer arrived: %s"
+msgstr "Llegó la transferencia: %s"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/force_done_transfer.js:0
+msgid "The transfer has not arrived yet. Wait for it, or press Cancel."
+msgstr "La transferencia todavía no llega. Espérala o presiona Cancelar."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_xpago_transfer__clabe
+msgid "The whole CLABE, only while it takes money."
+msgstr "La CLABE completa, solo mientras recibe dinero."
 
 #. module: xpago
 #: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_charge_view_form
@@ -1893,6 +2401,59 @@ msgstr ""
 "terminal solo el mismo día en que se pagó. ¿Continuar?"
 
 #. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_xpago_rule__categ_ids
+msgid "Their subcategories too."
+msgstr "También sus subcategorías."
+
+#. module: xpago
+#: model:ir.model.constraint,message:xpago.constraint_payment_xpago_installment_rule_provider_min_amount_unique
+msgid "There is already a rule from this amount."
+msgstr "Ya hay una regla desde este monto."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/force_done_transfer.js:0
+msgid "There is already an electronic payment in progress."
+msgstr "Ya hay un pago electrónico en progreso."
+
+#. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__payment_xpago_rule__msi_mode__terms
+msgid "These months"
+msgstr "Estos meses"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/wizard/pos_xpago_terminal_setup.py:0
+msgid ""
+"These points of sale have a session open and are left as they are until it "
+"is closed: %s"
+msgstr ""
+"Estos puntos de venta tienen una sesión abierta y se quedan como están hasta"
+" que se cierre: %s"
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_provider__xpago_notify_user_ids
+msgid ""
+"These users get an Odoo notification (inbox and pop-up) for each payment "
+"received with XPago."
+msgstr ""
+"Estos usuarios reciben un aviso en Odoo (bandeja de entrada y ventana "
+"emergente) por cada pago que entra con XPago."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.pos_clabe_receipt
+msgid ""
+"This CLABE is for this purchase only. Once the CLABE expires it no longer "
+"takes money."
+msgstr ""
+"Esta CLABE es solo para esta compra. Cuando vence ya no recibe dinero."
+
+#. module: xpago
+#: model:ir.model.constraint,message:xpago.constraint_payment_xpago_bank_account_xpago_id_unique
+msgid "This XPago account already exists."
+msgstr "Esta cuenta de XPago ya existe."
+
+#. module: xpago
 #. odoo-python
 #: code:addons/xpago/models/pos_payment_method.py:0
 msgid "This XPago charge does not exist."
@@ -1900,9 +2461,106 @@ msgstr "Este cobro de XPago no existe."
 
 #. module: xpago
 #. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid ""
+"This XPago key does not match the mode: out of live mode it takes a key that"
+" starts with xpk_test_, in live mode one that starts with xpk_live_."
+msgstr ""
+"Esta clave de XPago no corresponde al modo: fuera del modo en vivo lleva una"
+" clave que empieza con xpk_test_ y en modo en vivo una que empieza con "
+"xpk_live_."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/pos_payment_method_transfer.py:0
+msgid "This XPago transfer does not exist."
+msgstr "Esta transferencia XPago no existe."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid ""
+"This charge can no longer be refunded: card refunds are accepted the same "
+"day only, before 10:30 PM (10:00 PM with American Express)."
+msgstr ""
+"Este cobro ya no se puede devolver: las devoluciones con tarjeta solo se "
+"aceptan el mismo día, antes de las 10:30 p.m. (10:00 p.m. con American "
+"Express)."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+#: code:addons/xpago/models/pos_payment_method.py:0
+msgid "This charge was already refunded."
+msgstr "Este cobro ya se había devuelto."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/controllers/reader.py:0
+msgid ""
+"This code links an XPago terminal to the Odoo screen open in your browser. "
+"Scan it from the Odoo app on the terminal, in “Reader for the computer” "
+"mode."
+msgstr ""
+"Este código vincula una terminal XPago con la pantalla de Odoo abierta en tu"
+" navegador. Escanéalo desde la app Odoo de la terminal, en el modo «Lector "
+"para la computadora»."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_provider__xpago_neutralized
+msgid ""
+"This database is a neutralized copy: XPago was switched off and its key "
+"removed, so the copy never charges with the real account. Write a test key "
+"to try XPago here."
+msgstr ""
+"Esta base de datos es una copia neutralizada: XPago se apagó y se quitó su "
+"llave, así que la copia nunca cobra con la cuenta real. Escribe una llave de"
+" prueba para probar XPago aquí."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/pos_payment_method_transfer.py:0
+msgid "This payment method does not take XPago transfers."
+msgstr "Este método de pago no recibe transferencias XPago."
+
+#. module: xpago
+#. odoo-python
 #: code:addons/xpago/models/pos_payment_method.py:0
 msgid "This payment method does not use an XPago terminal."
 msgstr "Este método de pago no usa una terminal XPago."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_transaction.py:0
+msgid "This payment was not made on a saved card."
+msgstr "Este pago no se hizo con una tarjeta guardada."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_config__xpago_print_on_terminal
+#: model:ir.model.fields,help:xpago.field_res_config_settings__pos_xpago_print_on_terminal
+msgid ""
+"This point of sale runs on the XPago terminal and prints Odoo's receipt on "
+"the terminal's printer (Epson printer at 127.0.0.1:8008). The terminal "
+"prints the card voucher right under the receipt, on the same paper, instead "
+"of on its own; Odoo then leaves the voucher out of its receipt."
+msgstr ""
+"Esta caja se usa en la terminal XPago e imprime el ticket de Odoo en la "
+"impresora de la terminal (impresora Epson en 127.0.0.1:8008). La terminal "
+"imprime el voucher de la tarjeta justo debajo del ticket, en el mismo papel,"
+" en lugar de imprimirlo aparte; por eso Odoo ya no lo pone en su ticket."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
+msgid ""
+"This point of sale runs on the XPago terminal and prints on its printer: add"
+" an Epson printer with the IP 127.0.0.1:8008 and turn on «Impresora para "
+"Odoo» in the terminal's payment app. The card voucher comes out right under "
+"Odoo's receipt, on the same paper."
+msgstr ""
+"Esta caja se usa en la terminal XPago e imprime en su impresora: agrega una "
+"impresora Epson con la IP 127.0.0.1:8008 y enciende «Impresora para Odoo» en"
+" la app de cobro de la terminal. El voucher de la tarjeta sale justo debajo "
+"del ticket de Odoo, en el mismo papel."
 
 #. module: xpago
 #. odoo-javascript
@@ -1917,14 +2575,49 @@ msgid "Tip"
 msgstr "Propina"
 
 #. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
+msgid "Tip with the XPago terminal"
+msgstr "Propina con la terminal XPago"
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__date_to
 msgid "To"
 msgstr "Hasta"
 
 #. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
+msgid ""
+"To decide the months and the deposit account by product, category, tag or price, use the\n"
+"                        payment rules: they narrow the months of the amount above."
+msgstr ""
+"Para decidir los meses y la cuenta de depósito por producto, categoría, "
+"etiqueta o precio, usa las reglas de cobro: acotan los meses del monto de "
+"arriba."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/pos_xpago_transfer.py:0
+msgid "To make the CLABE, XPago needs who pays: %s."
+msgstr "Para hacer la CLABE, XPago necesita saber quién paga: %s."
+
+#. module: xpago
 #: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_reconcile_line_view_search
 msgid "To review"
 msgstr "Por revisar"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_transaction.py:0
+msgid ""
+"To save a card, the customer needs a name, an email and a phone number."
+msgstr ""
+"Para guardar una tarjeta, el cliente necesita nombre, correo y teléfono."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "To see these details on the phone"
+msgstr "Para ver estos datos en el celular"
 
 #. module: xpago
 #. odoo-python
@@ -1935,8 +2628,32 @@ msgstr "Demasiados pagos en estos días: elige menos días."
 #. module: xpago
 #: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_charge_view_list
 #: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_reconcile_line_view_list
+#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_transfer_view_list
 msgid "Total"
 msgstr "Total"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
+msgid "Total of the sale (0 = any)"
+msgstr "Total de la venta (0 = cualquiera)"
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_xpago_rule__amount_min
+msgid "Total of the sale, taxes included. Empty: any."
+msgstr "Total de la venta, con impuestos. Vacío: cualquiera."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+#: model_terms:ir.ui.view,arch_db:xpago.pos_clabe_receipt
+msgid "Transfer exactly"
+msgstr "Transferir exactamente"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/pos_xpago_transfer.py:0
+msgid "Transfer received: %s"
+msgstr "Transferencia recibida: %s"
 
 #. module: xpago
 #: model:ir.model,name:xpago.model_pos_xpago_rule_test
@@ -1951,10 +2668,30 @@ msgid "Try the payment rules"
 msgstr "Probar las reglas de cobro"
 
 #. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_xpago_rule__price_min
+msgid ""
+"Unit price in the sale, after its pricelist and discount, taxes included."
+msgstr ""
+"Precio unitario en la venta, después de su lista de precios y descuento, con"
+" impuestos."
+
+#. module: xpago
 #. odoo-python
 #: code:addons/xpago/models/pos_xpago_charge.py:0
+#: code:addons/xpago/models/pos_xpago_transfer.py:0
 msgid "Unsupported search on \"Paid without a sale\"."
 msgstr "Búsqueda no soportada en «Pagado sin venta»."
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__date_to
+msgid "Until"
+msgstr "Hasta"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/wizard/pos_xpago_terminal_setup.py:0
+msgid "Updated: %s."
+msgstr "Actualizados: %s."
 
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__fee_vat
@@ -1962,7 +2699,39 @@ msgid "VAT on fee"
 msgstr "IVA de la comisión"
 
 #. module: xpago
+#: model:payment.method,name:xpago.payment_method_visa
+msgid "VISA"
+msgstr "VISA"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
+msgid "Valid"
+msgstr "Vigencia"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "Valid for"
+msgstr "Vence en"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.pos_clabe_receipt
+msgid "Valid until:"
+msgstr "Vigente hasta:"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__product_ids
+msgid "Variants"
+msgstr "Variantes"
+
+#. module: xpago
+#: model:ir.model,name:xpago.model_ir_ui_view
+msgid "View"
+msgstr "Vista"
+
+#. module: xpago
 #: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_charge_view_search
+#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_transfer_view_search
 msgid "Waiting"
 msgstr "Esperando"
 
@@ -1972,10 +2741,106 @@ msgid "Waiting for the card"
 msgstr "Esperando la tarjeta"
 
 #. module: xpago
+#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_transfer__state__awaiting
+msgid "Waiting for the transfer"
+msgstr "Esperando la transferencia"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/payment_xpago_transfer.js:0
+msgid ""
+"Waiting for the transfer of %s: the sale is paid by itself when it arrives."
+msgstr ""
+"Esperando la transferencia de %s: la venta se paga sola cuando llegue."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "Waiting for the transfer…"
+msgstr "Esperando la transferencia…"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup__warning_html
+msgid "Warning Html"
+msgstr "Avisos"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_transaction.py:0
+msgid ""
+"We are waiting for your transfer to the CLABE ending in %s. Your order is "
+"confirmed by itself as soon as the money arrives."
+msgstr ""
+"Estamos esperando tu transferencia a la CLABE terminada en %s. Tu pedido se "
+"confirma solo en cuanto llegue el dinero."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_xpago_transfer__amount_received
+msgid "What has arrived so far: the customer may pay in several transfers."
+msgstr ""
+"Lo que ha llegado hasta ahora: el cliente puede pagar en varias "
+"transferencias."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
+msgid "What it decides"
+msgstr "Qué decide"
+
+#. module: xpago
 #: model:ir.model.fields,help:xpago.field_pos_xpago_charge__charged_amount
 msgid "What the card was charged in total, the sale plus any tip."
 msgstr ""
 "Lo que se cobró en total a la tarjeta: la venta más la propina, si hubo."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_xpago_reconcile_line__net_amount
+msgid ""
+"What this sale added to the deposit: the sale minus the fee and its VAT."
+msgstr ""
+"Lo que esta venta sumó al depósito: la venta menos la comisión y su IVA."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_config__xpago_kiosk_timeout
+#: model:ir.model.fields,help:xpago.field_res_config_settings__pos_xpago_kiosk_timeout
+msgid ""
+"When nobody pays on the XPago terminal of the kiosk within this time, the "
+"charge is cancelled and the terminal is free for the next customer. 0 never "
+"cancels it."
+msgstr ""
+"Si nadie paga en la terminal XPago del kiosco en este tiempo, el cobro se "
+"cancela y la terminal queda libre para el siguiente cliente. 0 nunca lo "
+"cancela."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.self_order_res_config_settings_view_form
+msgid ""
+"When the customer does not pay on the XPago terminal in time, the charge is "
+"cancelled and the terminal is free for the next customer."
+msgstr ""
+"Si el cliente no paga a tiempo en la terminal XPago, el cobro se cancela y "
+"la terminal queda libre para el siguiente cliente."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_payment_method__xpago_card_timeout
+msgid ""
+"When the customer does not present the card in this time, the charge is "
+"cancelled on the terminal and the cashier is told. 0: wait until the "
+"terminal gives up."
+msgstr ""
+"Si el cliente no pasa la tarjeta en este tiempo, el cobro se cancela en la "
+"terminal y se le avisa a la cajera. 0: esperar hasta que la terminal se "
+"rinda."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_payment_method__xpago_wake_terminal
+msgid ""
+"When the point of sale sends an amount, the terminal opens its charge app by"
+" itself, whatever it is showing. Needs the XPago app on the terminal, with "
+"«Open the charge app by itself» turned on in its menu."
+msgstr ""
+"Cuando la caja manda un cobro, la terminal abre sola su app de cobro, esté "
+"en lo que esté. Necesita la app Odoo de XPago en la terminal, con «Abrir la "
+"app de cobro sola» prendido en su menú ☰."
 
 #. module: xpago
 #: model:ir.model.fields,help:xpago.field_pos_config__xpago_split
@@ -2002,6 +2867,29 @@ msgstr ""
 "leyenda del voucher."
 
 #. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_xpago_bank_account__is_default
+msgid "Where XPago deposits a sale that names no account."
+msgstr "Dónde deposita XPago una venta que no indica cuenta."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_provider__xpago_other_bank_account_id
+msgid ""
+"Where XPago deposits the online store, payment link and subscription "
+"payments. Empty: your XPago account decides."
+msgstr ""
+"Dónde deposita XPago los pagos de la tienda en línea, las ligas de pago y "
+"las suscripciones. Vacío: lo decide tu cuenta de XPago."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_provider__xpago_invoice_bank_account_id
+msgid ""
+"Where XPago deposits the payments of invoices. Empty: your XPago account "
+"decides."
+msgstr ""
+"Dónde deposita XPago los pagos de facturas. Vacío: lo decide tu cuenta de "
+"XPago."
+
+#. module: xpago
 #: model:ir.model.fields,help:xpago.field_pos_payment_method__xpago_bank_account_id
 msgid ""
 "Where XPago deposits what this terminal charges. Empty: your XPago account "
@@ -2011,10 +2899,192 @@ msgstr ""
 "de XPago."
 
 #. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
+msgid "Where and when"
+msgstr "Dónde y cuándo"
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_payment_xpago_rule__bank_account_id
+msgid ""
+"Where the money of these products is deposited. Empty: does not change the "
+"account."
+msgstr ""
+"Dónde se deposita el dinero de estos productos. Vacío: no cambia la cuenta."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_terminal_setup_view_form
+msgid ""
+"Which XPago terminal each point of sale charges with. The assistant proposes, warns when one\n"
+"                    terminal is on two points of sale, and changes only what you confirm here. A payment method is\n"
+"                    created only for the lines marked «Create»."
+msgstr ""
+"Con qué terminal XPago cobra cada punto de venta. El asistente propone, avisa cuando una\n"
+"                    terminal está en dos puntos de venta y cambia solo lo que confirmes aquí. Solo se crea una forma de\n"
+"                    pago en los renglones marcados con «Crear»."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
+msgid ""
+"Which XPago terminal each point of sale charges with; warns when one "
+"terminal is on two points of sale."
+msgstr ""
+"Con qué terminal XPago cobra cada punto de venta; avisa cuando una terminal "
+"está en dos puntos de venta."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
+msgid ""
+"Which months without interest the checkout offers, by amount of the sale. Each rule applies\n"
+"                        from its amount up to the next one. Your customer pays no interest: the fee of each plan is\n"
+"                        paid by your business. Without rules, the checkout offers every plan active in your XPago\n"
+"                        account."
+msgstr ""
+"Qué meses sin intereses ofrece el pago según el monto de la venta. Cada "
+"regla aplica desde su monto hasta la siguiente. Tu cliente no paga "
+"intereses: la comisión de cada plazo la paga tu negocio. Sin reglas, se "
+"ofrecen todos los planes activos en tu cuenta de XPago."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
+msgid ""
+"Who asks for the tip. The terminal asks: the customer chooses on the "
+"terminal (the processor must turn tips on for your business). The cashier "
+"enters it: Odoo's «Tip» button on the payment screen, for card and cash. The"
+" tip goes on its own line of the order."
+msgstr ""
+"Quién pide la propina. La pide la terminal: el cliente la elige en la "
+"terminal (el procesador debe activar las propinas de tu negocio). La captura"
+" la cajera: el botón «Propina» de Odoo en la pantalla de pago, para tarjeta "
+"y efectivo. La propina va en su propio renglón del pedido."
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__wizard_id
+msgid "Wizard"
+msgstr "Asistente"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid "Write the key XPago gave you before switching it to live."
+msgstr "Escribe la clave que te dio XPago antes de pasarlo a modo en vivo."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_xpago_installment_rule.py:0
+#: code:addons/xpago/models/payment_xpago_rule.py:0
+msgid ""
+"Write the months as whole numbers from 2 to %(max)s separated by commas, for"
+" example \"3, 6, 12\"."
+msgstr ""
+"Escribe los meses como números enteros del 2 al %(max)s separados por comas,"
+" por ejemplo \"3, 6, 12\"."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/force_done.js:0
+#: code:addons/xpago/static/src/pos/app/payment_xpago.js:0
+#: code:addons/xpago/static/src/pos/app/transfer/force_done_transfer.js:0
+#: code:addons/xpago/static/src/pos/app/transfer/payment_xpago_transfer.js:0
+#: model:ir.model.fields.selection,name:xpago.selection__payment_provider__code__xpago
+#: model:payment.provider,name:xpago.payment_provider_xpago
+msgid "XPago"
+msgstr "XPago"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_account_name
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_connection__account_name
+#: model:ir.model.fields,field_description:xpago.field_pos_payment_method__xpago_provider_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile__provider_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup__provider_id
+msgid "XPago account"
+msgstr "Cuenta XPago"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_transaction.py:0
+msgid "XPago answered an unknown status: %s"
+msgstr "XPago respondió un estado desconocido: %s"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/force_done.js:0
+msgid "XPago approved this charge: it is completed in a moment."
+msgstr "XPago aprobó este cobro: se completa en un momento."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
+msgid ""
+"XPago can deposit each payment in a different account of yours. Odoo reads your accounts from\n"
+"                        XPago every hour; they are added and removed in XPago only. At the point of sale, each terminal\n"
+"                        can have its own account or let the cashier choose it on each charge."
+msgstr ""
+"XPago puede depositar cada pago en una cuenta distinta tuya. Odoo lee tus "
+"cuentas de XPago cada hora; se agregan y se quitan solo en XPago. En el "
+"punto de venta, cada terminal puede tener su propia cuenta o dejar que la "
+"cajera la elija en cada cobro."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_transaction.py:0
+msgid "XPago captures a hold once; the bank frees the rest on its own."
+msgstr ""
+"XPago captura una retención una sola vez; el banco libera el resto por su "
+"cuenta."
+
+#. module: xpago
+#: model:ir.model,name:xpago.model_payment_xpago_connection
+msgid "XPago connection status"
+msgstr "Estado de la conexión con XPago"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_xpago_bank_account.py:0
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__is_default
+msgid "XPago default"
+msgstr "predeterminada en XPago"
+
+#. module: xpago
+#: model:ir.model,name:xpago.model_payment_xpago_bank_account
+msgid "XPago deposit account"
+msgstr "Cuenta de depósito de XPago"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid "XPago did not answer"
+msgstr "XPago no contestó"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid ""
+"XPago did not answer in time and this operation may have gone through. Check"
+" the terminal or the list of charges before trying again."
+msgstr ""
+"XPago no contestó a tiempo y esta operación pudo haber pasado. Revisa la "
+"terminal o la lista de cobros antes de intentar de nuevo."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_provider.py:0
+msgid "XPago did not answer in time."
+msgstr "XPago no contestó a tiempo."
+
+#. module: xpago
 #. odoo-python
 #: code:addons/xpago/wizard/pos_xpago_reconcile.py:0
 msgid "XPago did not answer: %s"
 msgstr "XPago no respondió: %s"
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/pos_xpago_transfer.py:0
+msgid ""
+"XPago did not make the CLABE.\n"
+"%s"
+msgstr ""
+"XPago no hizo la CLABE.\n"
+"%s"
 
 #. module: xpago
 #. odoo-python
@@ -2047,14 +3117,72 @@ msgstr ""
 "paga esta devolución de otra forma."
 
 #. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/force_done_transfer.js:0
+msgid ""
+"XPago has no transfer of this amount for this sale. It is not marked as "
+"paid."
+msgstr ""
+"XPago no tiene una transferencia de este monto para esta venta. No se marca "
+"como pagada."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/force_done.js:0
+msgid ""
+"XPago has not received the payment of this charge yet. Wait for the customer"
+" to pay, or press Cancel."
+msgstr ""
+"XPago todavía no recibe el pago de este cobro. Espera a que el cliente "
+"pague, o toca Cancelar."
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__xpago_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__xpago_id
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__xpago_id
+msgid "XPago id"
+msgstr "Id en XPago"
+
+#. module: xpago
 #. odoo-python
 #: code:addons/xpago/models/pos_payment_method.py:0
+#: code:addons/xpago/models/pos_payment_method_transfer.py:0
 msgid ""
 "XPago is disabled. An administrator can enable it in the XPago payment "
 "provider."
 msgstr ""
 "XPago está desactivado. Un administrador puede activarlo en el proveedor de "
 "pago XPago."
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_api_key
+msgid "XPago key"
+msgstr "Llave XPago"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid ""
+"XPago makes a CLABE for this sale alone, in the name of who pays, and emails"
+" them the transfer details."
+msgstr ""
+"XPago hace una CLABE solo para esta venta, a nombre de quien paga, y le "
+"manda por correo los datos de la transferencia."
+
+#. module: xpago
+#: model:ir.model,name:xpago.model_payment_xpago_rule
+#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
+msgid "XPago payment rule"
+msgstr "Regla de cobro XPago"
+
+#. module: xpago
+#: model:ir.actions.act_window,name:xpago.action_payment_xpago_rule
+#: model:ir.ui.menu,name:xpago.menu_payment_xpago_rule
+#: model_terms:ir.ui.view,arch_db:xpago.payment_provider_form
+#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_list
+#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
+msgid "XPago payment rules"
+msgstr "Reglas de cobro XPago"
 
 #. module: xpago
 #: model:ir.model,name:xpago.model_pos_xpago_reconcile
@@ -2073,9 +3201,35 @@ msgid "XPago reconciliation line"
 msgstr "Línea de conciliación con XPago"
 
 #. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/payment_transaction.py:0
+msgid "XPago releases a hold in full only."
+msgstr "XPago solo libera una retención completa."
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_transaction__xpago_card_id
+msgid "XPago saved card"
+msgstr "Tarjeta guardada de XPago"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/force_done.js:0
+msgid ""
+"XPago says this charge was not paid. It is not marked as paid: charge it "
+"again or take another payment."
+msgstr ""
+"XPago dice que este cobro no se pagó. No se marca como pagado: cóbralo de "
+"nuevo o recibe otra forma de pago."
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__xpago_status
 msgid "XPago status"
 msgstr "Estado en XPago"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__method_id
+msgid "XPago terminal"
+msgstr "Terminal XPago"
 
 #. module: xpago
 #: model:ir.model,name:xpago.model_pos_xpago_charge
@@ -2087,180 +3241,6 @@ msgstr "Cobro en terminal XPago"
 #: model:ir.ui.menu,name:xpago.menu_pos_xpago_charge
 msgid "XPago terminal charges"
 msgstr "Cobros en terminal XPago"
-
-#. module: xpago
-#. odoo-javascript
-#. odoo-python
-#: code:addons/xpago/models/pos_xpago_charge.py:0
-#: code:addons/xpago/static/src/pos/app/payment_xpago.js:0
-msgid "XPago terminals only charge positive amounts."
-msgstr "Las terminales XPago solo cobran montos positivos."
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_pos_xpago_reconcile_line__fee_percent
-msgid ""
-"XPago's rate before promotions: a promotion can make the real fee lower."
-msgstr ""
-"La tarifa de XPago antes de promociones: una promoción puede bajar la "
-"comisión real."
-
-#. module: xpago
-#: model:ir.module.module,shortdesc:base.module_xpago_pos
-msgid "XPago: Point of Sale"
-msgstr "XPago: Punto de Venta"
-
-#. module: xpago
-#: model:ir.actions.server,name:xpago.ir_cron_refresh_charges_ir_actions_server
-msgid "XPago: read back open terminal charges"
-msgstr "XPago: leer los cobros en terminal abiertos"
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_terminal_setup_view_form
-msgid "Apply"
-msgstr "Aplicar"
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
-msgid "Assign the terminals"
-msgstr "Asignar las terminales"
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/wizard/pos_xpago_terminal_setup.py:0
-msgid "Card · XPago %s"
-msgstr "Tarjeta · XPago %s"
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/wizard/pos_xpago_terminal_setup.py:0
-msgid "Choose the journal for the new terminals before creating them."
-msgstr "Elige el diario de las terminales nuevas antes de crearlas."
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__create_method
-msgid "Create"
-msgstr "Crear"
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_pos_xpago_terminal_setup_line__create_method
-msgid "Create the payment method of this new terminal."
-msgstr "Crear la forma de pago de esta terminal nueva."
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__has_open_session
-msgid "Has Open Session"
-msgstr "Tiene sesión abierta"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup__journal_id
-msgid "Journal for new terminals"
-msgstr "Diario para terminales nuevas"
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/wizard/pos_xpago_terminal_setup.py:0
-msgid "Left as they were (session open): %s."
-msgstr "Se quedaron como estaban (sesión abierta): %s."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/wizard/pos_xpago_terminal_setup.py:0
-msgid "Nothing to change."
-msgstr "Nada que cambiar."
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_pos_xpago_terminal_setup__journal_id
-msgid ""
-"Only used for the payment methods this assistant creates (lines with "
-"«Create»)."
-msgstr ""
-"Solo se usa para las formas de pago que crea este asistente (renglones con "
-"«Crear»)."
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__new_serial
-msgid "Or a new terminal (S/N)"
-msgstr "O una terminal nueva (S/N)"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup__line_ids
-msgid "Points of sale"
-msgstr "Puntos de venta"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__terminal_serial
-msgid "S/N"
-msgstr "S/N"
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/wizard/pos_xpago_terminal_setup.py:0
-msgid ""
-"Terminal %(serial)s would be on %(registers)s. A terminal shows one charge "
-"at a time: a new charge replaces the one it was waiting for."
-msgstr ""
-"La terminal %(serial)s quedaría en %(registers)s. Una terminal muestra un "
-"cobro a la vez: un cobro nuevo reemplaza al que estaba esperando."
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_pos_xpago_terminal_setup_line__method_id
-msgid ""
-"The XPago terminal payment method this point of sale charges with. Empty: "
-"leave it as it is."
-msgstr ""
-"La forma de pago de terminal XPago con la que cobra este punto de venta. "
-"Vacío: se queda como está."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/wizard/pos_xpago_terminal_setup.py:0
-msgid ""
-"These points of sale have a session open and are left as they are until it "
-"is closed: %s"
-msgstr ""
-"Estos puntos de venta tienen una sesión abierta y se quedan como están hasta"
-" que se cierre: %s"
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/wizard/pos_xpago_terminal_setup.py:0
-msgid "Updated: %s."
-msgstr "Actualizados: %s."
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup__warning_html
-msgid "Warning Html"
-msgstr "Avisos"
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_terminal_setup_view_form
-msgid ""
-"Which XPago terminal each point of sale charges with. The assistant proposes, warns when one\n"
-"                    terminal is on two points of sale, and changes only what you confirm here. A payment method is\n"
-"                    created only for the lines marked «Create»."
-msgstr ""
-"Con qué terminal XPago cobra cada punto de venta. El asistente propone, avisa cuando una\n"
-"                    terminal está en dos puntos de venta y cambia solo lo que confirmes aquí. Solo se crea una forma de\n"
-"                    pago en los renglones marcados con «Crear»."
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
-msgid ""
-"Which XPago terminal each point of sale charges with; warns when one "
-"terminal is on two points of sale."
-msgstr ""
-"Con qué terminal XPago cobra cada punto de venta; avisa cuando una terminal "
-"está en dos puntos de venta."
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__wizard_id
-msgid "Wizard"
-msgstr "Asistente"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup_line__method_id
-msgid "XPago terminal"
-msgstr "Terminal XPago"
 
 #. module: xpago
 #: model:ir.model,name:xpago.model_pos_xpago_terminal_setup_line
@@ -2282,241 +3262,12 @@ msgid "XPago terminals and points of sale"
 msgstr "Terminales XPago y puntos de venta"
 
 #. module: xpago
-#: model:ir.module.module,summary:base.module_xpago_self_order
-msgid ""
-"Installs by itself with XPago when you use the Odoo kiosk: your customers "
-"order at the kiosk and pay on the XPago terminal beside it. Mexico."
-msgstr ""
-"Se instala sola con XPago cuando usas el kiosco de Odoo: tus clientes piden "
-"en el kiosco y pagan en la terminal XPago de al lado. México."
-
-#. module: xpago
-#: model:ir.module.module,shortdesc:base.module_xpago_self_order
-msgid "XPago: Self-Order Kiosk"
-msgstr "XPago: Kiosco de autoservicio"
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.self_order_res_config_settings_view_form
-msgid "<span>seconds (0 never cancels it)</span>"
-msgstr "<span>segundos (0 nunca lo cancela)</span>"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_pos_config__xpago_kiosk_timeout
-#: model:ir.model.fields,field_description:xpago.field_res_config_settings__pos_xpago_kiosk_timeout
-msgid "Cancel an unpaid card charge after (seconds)"
-msgstr "Cancelar un cobro con tarjeta no pagado después de (segundos)"
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.self_order_res_config_settings_view_form
-msgid "Kiosk: free the terminal"
-msgstr "Kiosco: liberar la terminal"
-
-#. module: xpago
 #. odoo-javascript
-#: code:addons/xpago/static/src/self_order/app/payment_page.js:0
-msgid ""
-"The card was not paid in time. The terminal is free: try again when you are "
-"ready."
-msgstr ""
-"No se pagó con la tarjeta a tiempo. La terminal quedó libre: inténtalo de "
-"nuevo cuando estés listo."
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_pos_config__xpago_kiosk_timeout
-#: model:ir.model.fields,help:xpago.field_res_config_settings__pos_xpago_kiosk_timeout
-msgid ""
-"When nobody pays on the XPago terminal of the kiosk within this time, the "
-"charge is cancelled and the terminal is free for the next customer. 0 never "
-"cancels it."
-msgstr ""
-"Si nadie paga en la terminal XPago del kiosco en este tiempo, el cobro se "
-"cancela y la terminal queda libre para el siguiente cliente. 0 nunca lo "
-"cancela."
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.self_order_res_config_settings_view_form
-msgid ""
-"When the customer does not pay on the XPago terminal in time, the charge is "
-"cancelled and the terminal is free for the next customer."
-msgstr ""
-"Si el cliente no paga a tiempo en la terminal XPago, el cobro se cancela y "
-"la terminal queda libre para el siguiente cliente."
-
-#. module: xpago
 #. odoo-python
-#: code:addons/xpago/models/payment_provider.py:0
-msgid ""
-"The processor does not accept this refund: it keeps its fee of %(required)s "
-"and the card sales pending to settle do not cover it (%(missing)s missing). "
-"Nothing was charged back. It will go through once there are more card sales "
-"today, or ask the processor for a refund allowance."
-msgstr ""
-"El procesador no acepta esta devolución: se queda con su comisión de "
-"%(required)s y las ventas con tarjeta pendientes por liquidar no la cubren "
-"(faltan %(missing)s). No se regresó nada a la tarjeta. Se podrá cuando haya "
-"más ventas con tarjeta hoy, o pide al procesador un margen para "
-"devoluciones."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_provider.py:0
-msgid ""
-"The processor does not accept this refund: the card sales pending to settle "
-"do not cover its fee. Nothing was charged back. It will go through once "
-"there are more card sales today, or ask the processor for a refund "
-"allowance."
-msgstr ""
-"El procesador no acepta esta devolución: las ventas con tarjeta pendientes "
-"por liquidar no cubren su comisión. No se regresó nada a la tarjeta. Se "
-"podrá cuando haya más ventas con tarjeta hoy, o pide al procesador un margen"
-" para devoluciones."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_provider.py:0
-msgid ""
-"This charge can no longer be refunded: card refunds are accepted the same "
-"day only, before 10:30 PM (10:00 PM with American Express)."
-msgstr ""
-"Este cobro ya no se puede devolver: las devoluciones con tarjeta solo se "
-"aceptan el mismo día, antes de las 10:30 p.m. (10:00 p.m. con American "
-"Express)."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_provider.py:0
-msgid "This charge was already refunded."
-msgstr "Este cobro ya se había devuelto."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/payment_provider.py:0
-msgid ""
-"The customer's bank did not accept the refund. Nothing was charged back."
-msgstr ""
-"El banco del cliente no aceptó la devolución. No se regresó nada a la "
-"tarjeta."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/pos_payment_method.py:0
-msgid ""
-"The processor does not accept this refund from Odoo: today's card sales do "
-"not cover its fee. Refund it on the terminal (Transactions › the charge › "
-"Refund charge). The register is waiting and completes it on its own; then "
-"press Validate."
-msgstr ""
-"El procesador no acepta esta devolución desde Odoo: las ventas con tarjeta "
-"de hoy no cubren su comisión. Devuélvela en la terminal (Transacciones › el "
-"cobro › Devolver cobro). La caja está esperando y la completa sola; después "
-"presiona Validar."
-
-#. module: xpago
-#. odoo-python
-#: code:addons/xpago/models/pos_payment_method.py:0
-msgid "Stop waiting"
-msgstr "Dejar de esperar"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_pos_config__xpago_print_on_terminal
-#: model:ir.model.fields,field_description:xpago.field_res_config_settings__pos_xpago_print_on_terminal
-#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
-msgid "Odoo prints on the XPago terminal"
-msgstr "Odoo imprime en la terminal XPago"
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_pos_config__xpago_print_on_terminal
-#: model:ir.model.fields,help:xpago.field_res_config_settings__pos_xpago_print_on_terminal
-msgid "This point of sale runs on the XPago terminal and prints Odoo's receipt on the terminal's printer (Epson printer at 127.0.0.1:8008). The terminal prints the card voucher right under the receipt, on the same paper, instead of on its own; Odoo then leaves the voucher out of its receipt."
-msgstr "Esta caja se usa en la terminal XPago e imprime el ticket de Odoo en la impresora de la terminal (impresora Epson en 127.0.0.1:8008). La terminal imprime el voucher de la tarjeta justo debajo del ticket, en el mismo papel, en lugar de imprimirlo aparte; por eso Odoo ya no lo pone en su ticket."
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
-msgid "This point of sale runs on the XPago terminal and prints on its printer: add an Epson printer with the IP 127.0.0.1:8008 and turn on «Impresora para Odoo» in the terminal's payment app. The card voucher comes out right under Odoo's receipt, on the same paper."
-msgstr "Esta caja se usa en la terminal XPago e imprime en su impresora: agrega una impresora Epson con la IP 127.0.0.1:8008 y enciende «Impresora para Odoo» en la app de cobro de la terminal. El voucher de la tarjeta sale justo debajo del ticket de Odoo, en el mismo papel."
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__deposit_status
-#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_reconcile_line_view_search
-msgid "Deposit"
-msgstr "Depósito"
-
-#. module: xpago
-#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__pending
-#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_reconcile_line_view_search
-msgid "Not deposited yet"
-msgstr "Aún sin depositar"
-
-#. module: xpago
-#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__scheduled
-msgid "Deposit scheduled"
-msgstr "Depósito programado"
-
-#. module: xpago
-#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__in_transit
-msgid "On its way to the bank"
-msgstr "En camino al banco"
-
-#. module: xpago
-#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__paid
-msgid "Deposited"
-msgstr "Depositado"
-
-#. module: xpago
-#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__failed
-msgid "Refused by the bank (sent again)"
-msgstr "Rechazado por el banco (se vuelve a enviar)"
-
-#. module: xpago
-#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__returned
-msgid "Returned by the bank (sent again)"
-msgstr "Devuelto por el banco (se vuelve a enviar)"
-
-#. module: xpago
-#: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__deposit_status__in_review
-msgid "Deposit under review"
-msgstr "Depósito en revisión"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__deposit_date
-msgid "Deposited on"
-msgstr "Depositado el"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__deposit_tracking_key
-#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_reconcile_line_view_search
-msgid "SPEI tracking key"
-msgstr "Clave de rastreo SPEI"
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_pos_xpago_reconcile_line__deposit_tracking_key
-msgid "The clave de rastreo on the bank statement; Banxico's CEP is looked up with it."
-msgstr "La clave de rastreo que aparece en el estado de cuenta; con ella se consulta el CEP en Banxico."
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__net_amount
-msgid "You receive"
-msgstr "Recibes"
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_pos_xpago_reconcile_line__net_amount
-msgid "What this sale added to the deposit: the sale minus the fee and its VAT."
-msgstr "Lo que esta venta sumó al depósito: la venta menos la comisión y su IVA."
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_reconcile_line_view_search
-msgid "Deposit refused or returned"
-msgstr "Depósito rechazado o devuelto"
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup__account_serials
-msgid "Terminals in your XPago account"
-msgstr "Terminales en tu cuenta XPago"
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_pos_xpago_terminal_setup__account_serials
-msgid "The serial numbers XPago has for this account. A terminal not yet in Odoo is proposed on a point of sale that has none."
-msgstr "Los números de serie que XPago tiene en esta cuenta. Una terminal que aún no está en Odoo se propone en una caja que no tiene ninguna."
+#: code:addons/xpago/models/pos_xpago_charge.py:0
+#: code:addons/xpago/static/src/pos/app/payment_xpago.js:0
+msgid "XPago terminals only charge positive amounts."
+msgstr "Las terminales XPago solo cobran montos positivos."
 
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_config__xpago_tip_mode
@@ -2525,45 +3276,147 @@ msgid "XPago tip"
 msgstr "Propina XPago"
 
 #. module: xpago
-#: model:ir.model.fields,help:xpago.field_pos_config__xpago_tip_mode
-#: model:ir.model.fields,help:xpago.field_res_config_settings__pos_xpago_tip_mode
-msgid "No tip: nothing changes. The terminal asks: on every card charge the terminal shows the customer its tip screen (10, 15, 20%, another amount or none), unless the cashier already added a tip in Odoo; the processor must have tips turned on for the business. The cashier enters it: with Odoo's «Tip» button on the payment screen; the terminal charges sale and tip together without asking. In both cases the tip is a line of the order, so the closing matches what the terminal charged."
-msgstr "Sin propina: nada cambia. La pide la terminal: en cada cobro con tarjeta la terminal le muestra al cliente su pantalla de propina (10, 15, 20 %, otro monto o nada), salvo que la cajera ya haya agregado una propina en Odoo; el procesador debe tener activadas las propinas del negocio. La captura la cajera: con el botón «Propina» de Odoo en la pantalla de pago; la terminal cobra venta y propina juntas sin preguntar. En los dos casos la propina es un renglón del pedido, así el corte cuadra con lo que cobró la terminal."
+#: model:ir.model,name:xpago.model_pos_xpago_transfer
+msgid "XPago transfer (one-time CLABE)"
+msgstr "Transferencia XPago (CLABE de un solo uso)"
 
 #. module: xpago
-#: model:ir.model.fields.selection,name:xpago.selection__pos_config__xpago_tip_mode__none
-msgid "No tip"
-msgstr "Sin propina"
+#: model:ir.actions.act_window,name:xpago.action_pos_xpago_transfer
+#: model:ir.ui.menu,name:xpago.menu_pos_xpago_transfer
+msgid "XPago transfers"
+msgstr "Transferencias XPago"
 
 #. module: xpago
-#: model:ir.model.fields.selection,name:xpago.selection__pos_config__xpago_tip_mode__terminal
-msgid "The terminal asks the customer"
-msgstr "La pide la terminal"
+#: model:ir.model.fields,help:xpago.field_pos_xpago_reconcile_line__fee_percent
+msgid ""
+"XPago's rate before promotions: a promotion can make the real fee lower."
+msgstr ""
+"La tarifa de XPago antes de promociones: una promoción puede bajar la "
+"comisión real."
 
 #. module: xpago
-#: model:ir.model.fields.selection,name:xpago.selection__pos_config__xpago_tip_mode__cashier
-msgid "The cashier enters it"
-msgstr "La captura la cajera"
+#: model:ir.module.module,shortdesc:base.module_xpago
+msgid "XPago: Card Payments and Terminals"
+msgstr "XPago: cobros con tarjeta y terminales"
 
 #. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
-msgid "Tip with the XPago terminal"
-msgstr "Propina con la terminal XPago"
+#: model:ir.model,name:xpago.model_payment_xpago_installment_rule
+msgid "XPago: months without interest by amount"
+msgstr "XPago: meses sin intereses por monto"
 
 #. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
-msgid "Who asks for the tip. The terminal asks: the customer chooses on the terminal (the processor must turn tips on for your business). The cashier enters it: Odoo's «Tip» button on the payment screen, for card and cash. The tip goes on its own line of the order."
-msgstr "Quién pide la propina. La pide la terminal: el cliente la elige en la terminal (el procesador debe activar las propinas de tu negocio). La captura la cajera: el botón «Propina» de Odoo en la pantalla de pago, para tarjeta y efectivo. La propina va en su propio renglón del pedido."
+#: model:ir.actions.server,name:xpago.ir_cron_refresh_charges_ir_actions_server
+msgid "XPago: read back open terminal charges"
+msgstr "XPago: leer los cobros en terminal abiertos"
+
+#. module: xpago
+#: model:ir.actions.server,name:xpago.ir_cron_refresh_transfers_ir_actions_server
+msgid "XPago: read back open transfers"
+msgstr "XPago: revisar transferencias abiertas"
+
+#. module: xpago
+#: model:ir.actions.server,name:xpago.ir_cron_sync_pending_ir_actions_server
+msgid "XPago: read back pending online payments"
+msgstr "XPago: leer los pagos en línea pendientes"
+
+#. module: xpago
+#: model:ir.actions.server,name:xpago.ir_cron_sync_bank_accounts_ir_actions_server
+msgid "XPago: read the deposit accounts"
+msgstr "XPago: leer las cuentas de depósito"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_provider__xpago_needs_connect
+#: model:ir.model.fields,field_description:xpago.field_res_config_settings__xpago_needs_connect
+msgid "Xpago Needs Connect"
+msgstr "Falta conectar XPago"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_payment_transaction__xpago_notified
+msgid "Xpago Notified"
+msgstr "Avisado"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__net_amount
+msgid "You receive"
+msgstr "Recibes"
+
+#. module: xpago
+#: model_terms:payment.provider,auth_msg:xpago.payment_provider_xpago
+msgid "Your payment has been authorized."
+msgstr "Tu pago fue autorizado."
+
+#. module: xpago
+#: model_terms:payment.provider,cancel_msg:xpago.payment_provider_xpago
+msgid "Your payment has been cancelled."
+msgstr "Tu pago fue cancelado."
+
+#. module: xpago
+#: model_terms:payment.provider,pending_msg:xpago.payment_provider_xpago
+msgid "Your payment has been processed but is waiting for approval."
+msgstr "Tu pago fue procesado, pero está esperando aprobación."
+
+#. module: xpago
+#: model_terms:payment.provider,done_msg:xpago.payment_provider_xpago
+msgid "Your payment has been processed."
+msgstr "Tu pago fue procesado."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/backend/reader.xml:0
+msgid "and scan this code with the terminal's reader."
+msgstr "y escanea este código con el lector de la terminal."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "arrived,"
+msgstr "llegaron,"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.payment_xpago_rule_view_form
+msgid "e.g. 12 months on diamonds"
+msgstr "p. ej. 12 meses en diamantes"
 
 #. module: xpago
 #. odoo-python
-#: code:addons/xpago/models/payment_provider.py:0
-msgid "The terminal cannot ask for a tip: the processor has not turned tips on for this business. Ask XPago to turn them on, or set this point of sale's tip to «The cashier enters it»."
-msgstr "La terminal no puede pedir propina: el procesador no tiene activadas las propinas de este negocio. Pide a XPago que las active, o cambia la propina de esta caja a «La captura la cajera»."
+#: code:addons/xpago/models/pos_xpago_transfer.py:0
+msgid "email"
+msgstr "correo"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "min"
+msgstr "min"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid ""
+"missing:\n"
+"                        the customer can send the rest to the same CLABE."
+msgstr "faltan: el cliente puede mandar el resto a la misma CLABE."
 
 #. module: xpago
 #. odoo-python
-#: code:addons/xpago/models/payment_provider.py:0
-msgid "The tip is too high: it can be at most 30% of the sale."
-msgstr "La propina es muy alta: puede ser como máximo el 30 % de la venta."
+#: code:addons/xpago/models/pos_xpago_transfer.py:0
+msgid "name"
+msgstr "nombre"
 
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/pos_xpago_transfer.py:0
+msgid "phone"
+msgstr "teléfono"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "to the CLABE"
+msgstr "a la CLABE"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "· for"
+msgstr "· para"

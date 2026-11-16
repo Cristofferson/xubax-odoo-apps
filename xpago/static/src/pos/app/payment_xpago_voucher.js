@@ -1,7 +1,7 @@
 import { patch } from "@web/core/utils/patch";
 import { GeneratePrinterData } from "@point_of_sale/app/utils/printer/generate_printer_data";
 
-/** The card voucher of the XPago terminals in the receipt: a copy of the Python side (receipt/pos_order_receipt.py). */
+/** The card voucher of the XPago terminals and the CLABE of the XPago transfers in the receipt: a copy of the Python side (receipt/pos_order_receipt.py). */
 patch(GeneratePrinterData.prototype, {
     generatePaymentData() {
         const data = super.generatePaymentData(...arguments);
@@ -14,6 +14,10 @@ patch(GeneratePrinterData.prototype, {
                 xpago_voucher:
                     voucher &&
                     line.payment_method_id?.payment_provider === "xpago" &&
+                    line.amount > 0 &&
+                    Boolean(line.card_no || line.transaction_id),
+                xpago_transfer:
+                    line.payment_method_id?.payment_provider === "xpago_spei" &&
                     line.amount > 0 &&
                     Boolean(line.card_no || line.transaction_id),
                 xpago_debit: cardType.includes("DEBIT"),

@@ -12,3 +12,5 @@ from . import test_pos_payment_rules
 from . import test_kiosk_rules
 from . import test_kiosk_xpago
 from . import test_kiosk_timeout
+from . import test_reader
+from . import test_pos_transfer

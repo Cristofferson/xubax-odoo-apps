@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- The card voucher of the XPago terminals, after the footer. The receipt is rendered by Odoo (emailed,
+    <!-- The card voucher of the XPago terminals and the CLABE of the XPago transfers, after the footer. The receipt is rendered by Odoo (emailed,
          WhatsApp) and by the point of sale (printed), so only plain expressions. -->
     <template id="pos_order_receipt" inherit_id="point_of_sale.pos_order_receipt">
         <xpath expr="//t[@t-call='point_of_sale.pos_order_receipt_footer']" position="after">
@@ -38,6 +38,21 @@
                         <div style="border-top: 1px solid black; margin: 0 10%;"/>
                         <div>Customer's signature</div>
                     </div>
+                </div>
+                <!-- A sale paid by XPago transfer: which CLABE and operation it was. -->
+                <div t-if="payment.get('xpago_transfer')" class="xpago-transfer-receipt w-100 text-start mt-3 pt-2 text-small" style="border-top: 1px dashed black;">
+                    <div class="w-100 text-center text-bold">PAID BY TRANSFER (SPEI)</div>
+                    <div t-if="payment['card_no']">CLABE: **** <t t-out="payment['card_no']"/></div>
+                    <div t-if="payment['payment_ref_no']">Operation: <t t-out="payment['payment_ref_no']"/></div>
+                    <div t-if="payment['cardholder_name']">Paid by: <t t-out="payment['cardholder_name']"/></div>
+                    <table class="w-100">
+                        <tbody>
+                            <tr class="text-bold">
+                                <td class="text-start w-70">Amount</td>
+                                <td class="text-end w-30 font-monospace" t-out="payment['amount']"/>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </t>
         </xpath>

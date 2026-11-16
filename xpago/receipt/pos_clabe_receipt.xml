@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- A slip with the one-time CLABE of a sale paid by XPago transfer, for a customer who would rather take it on
+         paper. Printed by the point of sale (payment_xpago_transfer.js). -->
+    <template id="pos_clabe_receipt">
+        <html id="pos-receipt">
+            <head>
+                <meta charset="UTF-8"></meta>
+                <t t-call="point_of_sale.pos_order_receipt_style"/>
+            </head>
+            <body>
+                <div class="pos-receipt">
+                    <div class="w-100 text-center mb-3" name="logo">
+                        <img t-if="image.get('logo')" t-att-src="image['logo']" style="max-height: 75px"/>
+                    </div>
+                    <div class="text-center text-bold">PAYMENT BY TRANSFER (SPEI)</div>
+                    <table class="w-100 mt-2">
+                        <tbody>
+                            <tr class="text-bold">
+                                <td class="text-start">Transfer exactly</td>
+                                <td class="text-end" t-out="extra_data.get('xpago_amount') or ''"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="mt-2">CLABE</div>
+                    <div class="w-100 text-center text-bold text-large" t-out="extra_data.get('xpago_clabe') or ''"/>
+                    <div>Bank: <t t-out="extra_data.get('xpago_bank') or ''"/></div>
+                    <div>Beneficiary: <t t-out="extra_data.get('xpago_beneficiary') or ''"/></div>
+                    <div>For: <t t-out="extra_data.get('xpago_business') or ''"/></div>
+                    <div t-if="extra_data.get('xpago_concept')">Concept: <t t-out="extra_data['xpago_concept']"/></div>
+                    <div t-if="extra_data.get('xpago_expires')">Valid until: <t t-out="extra_data['xpago_expires']"/></div>
+                    <div class="mt-2 text-small">
+                        This CLABE is for this purchase only. Once the CLABE expires it no longer takes money.
+                    </div>
+                </div>
+            </body>
+        </html>
+    </template>
+</odoo>

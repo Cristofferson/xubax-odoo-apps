@@ -10,5 +10,5 @@ class PaymentProvider(models.Model):
         providers = super()._xpago_providers_to_connect(company)
         company = company or self.env.company
         terminals = self.env['pos.payment.method'].sudo().search([
-            ('payment_provider', '=', 'xpago'), ('company_id', 'in', company.parent_ids.ids)])
+            ('payment_provider', 'in', ('xpago', 'xpago_spei')), ('company_id', 'in', company.parent_ids.ids)])
         return providers | terminals.xpago_provider_id.filtered('xpago_needs_connect')
