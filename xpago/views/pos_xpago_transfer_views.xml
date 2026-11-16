@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_xpago_transfer_view_list" model="ir.ui.view">
+        <field name="name">pos.xpago.transfer.list</field>
+        <field name="model">pos.xpago.transfer</field>
+        <field name="arch" type="xml">
+            <tree create="false" edit="false" decoration-danger="without_sale" decoration-muted="state in ('cancelled', 'returned')" decoration-info="state in ('awaiting', 'expired')">
+                <field name="create_date" string="Date"/>
+                <field name="config_id"/>
+                <field name="sale_order_id"/>
+                <field name="without_sale" optional="show"/>
+                <field name="customer_name"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="amount" sum="Total"/>
+                <field name="amount_received" optional="show"/>
+                <field name="clabe_last4"/>
+                <field name="operation_code" optional="show"/>
+                <field name="bank_account_id" optional="hide"/>
+                <field name="state" widget="badge" decoration-success="state == 'paid'" decoration-info="state == 'awaiting'" decoration-warning="state == 'expired'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="pos_xpago_transfer_view_form" model="ir.ui.view">
+        <field name="name">pos.xpago.transfer.form</field>
+        <field name="model">pos.xpago.transfer</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="awaiting,paid"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="external_id"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="amount"/>
+                            <field name="amount_received"/>
+                            <field name="amount_due"/>
+                            <field name="customer_name"/>
+                            <field name="customer_email"/>
+                            <field name="customer_phone"/>
+                        </group>
+                        <group>
+                            <field name="config_id"/>
+                            <field name="payment_method_id"/>
+                            <field name="sale_order_id"/>
+                            <field name="clabe" invisible="not clabe"/>
+                            <field name="clabe_last4"/>
+                            <field name="bank"/>
+                            <field name="beneficiary"/>
+                            <field name="concept"/>
+                            <field name="expires_at"/>
+                            <field name="paid_at"/>
+                            <field name="operation_code"/>
+                            <field name="bank_account_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="pos_xpago_transfer_view_search" model="ir.ui.view">
+        <field name="name">pos.xpago.transfer.search</field>
+        <field name="model">pos.xpago.transfer</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="external_id"/>
+                <field name="customer_name"/>
+                <field name="clabe_last4"/>
+                <field name="operation_code"/>
+                <filter name="without_sale" string="Paid without a sale" domain="[('without_sale', '=', True)]"/>
+                <filter name="paid" string="Paid" domain="[('state', '=', 'paid')]"/>
+                <filter name="awaiting" string="Waiting" domain="[('state', 'in', ('awaiting', 'expired'))]"/>
+                <separator/>
+                <filter name="create_date" string="Date" date="create_date"/>
+                <group>
+                    <filter name="group_config" string="Point of sale" context="{'group_by': 'config_id'}"/>
+                    <filter name="group_day" string="Day" context="{'group_by': 'create_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_pos_xpago_transfer" model="ir.actions.act_window">
+        <field name="name">XPago transfers</field>
+        <field name="res_model">pos.xpago.transfer</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No sales paid by XPago transfer yet</p>
+            <p>Each sale the point of sale charges with a one-time CLABE shows here, with who paid and when the money
+               arrived. Use the "Paid without a sale" filter to find transfers that arrived but have no order.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_pos_xpago_transfer" action="action_pos_xpago_transfer" parent="point_of_sale.menu_point_of_sale"
+              sequence="41" groups="point_of_sale.group_pos_manager"/>
+</odoo>

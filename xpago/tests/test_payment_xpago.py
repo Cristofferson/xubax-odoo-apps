@@ -29,6 +29,19 @@ class TestPaymentXpago(XpagoCommon, PaymentHttpCommon):
         self.assertEqual(tx.provider_reference, self.checkout_id)
         self.assertEqual(values['url_params'], {'lang': 'es'})
 
+    def test_branch_sale_shows_the_branch_name(self):
+        """The connection belongs to the main company; a sale of a branch (e.g. Anello) carries the branch's name."""
+        branch = self.env['res.company'].create({'name': 'Sucursal Anello', 'parent_id': self.env.company.id})
+        tx = self._create_transaction('redirect', currency_id=self.currency.id)
+        self.assertEqual(tx._xpago_seller(), tx.company_id)
+        self.assertTrue(tx._xpago_prepare_checkout_payload()['description'].startswith(tx.company_id.name))
+        invoice = self.env['account.move'].with_company(branch).create({
+            'move_type': 'out_invoice', 'partner_id': self.partner.id, 'company_id': branch.id,
+        })
+        tx.invoice_ids = invoice
+        self.assertEqual(tx._xpago_seller(), branch)
+        self.assertEqual(tx._xpago_prepare_checkout_payload()['description'], f'Sucursal Anello – {tx.reference}')
+
     def test_refused_checkout_marks_the_transaction_in_error(self):
         tx = self._create_transaction('redirect', currency_id=self.currency.id)
         with patch(SEND, side_effect=ValidationError('nope')):

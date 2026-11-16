@@ -33,11 +33,16 @@ export function nextDelay(elapsed, expiresAt, now = Date.now()) {
 }
 
 /** Ask with `refresh(charge)` until the charge ends or `isActive()` turns false (the screen was left). Resolves with
- *  the last charge read; a lost connection is not an answer, so it keeps asking. */
-export async function waitForCharge(charge, refresh, isActive = () => true) {
+ *  the last charge read; a lost connection is not an answer, so it keeps asking. `deadline` (ms since the epoch):
+ *  one of the asks happens right then, for a register that gives up on the card at that time. */
+export async function waitForCharge(charge, refresh, isActive = () => true, deadline = 0) {
     const start = Date.now();
     while (!FINAL_STATES.includes(charge.state) && isActive()) {
-        await new Promise((resolve) => setTimeout(resolve, nextDelay(Date.now() - start, charge.expires_at)));
+        let delay = nextDelay(Date.now() - start, charge.expires_at);
+        if (deadline > Date.now() && deadline - Date.now() < delay) {
+            delay = deadline - Date.now() + 200;
+        }
+        await new Promise((resolve) => setTimeout(resolve, delay));
         if (!isActive()) {
             break;
         }

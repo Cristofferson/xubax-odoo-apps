@@ -16,5 +16,6 @@ class PosSession(models.Model):
 
     def _loader_params_pos_payment_method(self):
         result = super()._loader_params_pos_payment_method()
-        result['search_params']['fields'] += ['xpago_open_terminal_app', 'xpago_choose_account', 'xpago_bank_account_id']
+        result['search_params']['fields'] += ['xpago_open_terminal_app', 'xpago_choose_account', 'xpago_bank_account_id',
+                                               'xpago_card_timeout']
         return result

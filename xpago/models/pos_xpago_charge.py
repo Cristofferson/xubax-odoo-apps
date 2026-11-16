@@ -57,6 +57,8 @@ class PosXpagoCharge(models.Model):
     charged_amount = fields.Monetary(readonly=True, help="What the card was charged in total, the sale plus any tip.")
     tip_amount = fields.Monetary(string="Tip", readonly=True)
     terms = fields.Integer(string="Months without interest", readonly=True)
+    timed_out = fields.Boolean(string="Cancelled for lack of a card", readonly=True,
+                               help="Nobody presented the card in the time the payment method allows.")
     notified = fields.Boolean(readonly=True, copy=False)
     pos_payment_id = fields.Many2one('pos.payment', string="Point of sale payment", compute='_compute_pos_payment')
     sale_order_id = fields.Many2one('pos.order', string="Sale", compute='_compute_pos_payment')
@@ -171,6 +173,26 @@ class PosXpagoCharge(models.Model):
             return
         if self._xpago_apply(remote):
             self._xpago_on_state_changed()
+
+    def _xpago_late(self, now=None):
+        """Still waiting for the card past the time its payment method allows."""
+        self.ensure_one()
+        timeout = self.payment_method_id.xpago_card_timeout
+        now = now or fields.Datetime.now()
+        return self.state == 'pending' and timeout > 0 and (now - self.create_date).total_seconds() >= timeout
+
+    def _xpago_cancel_if_late(self, force=False):
+        """Cancel the charges nobody paid in time. XPago is asked first: a card presented right at the end is paid,
+        not cancelled. ``force``: the point of sale counted the time itself (its clock may run a little ahead)."""
+        for charge in self.filtered(lambda c: c.state == 'pending'):
+            charge._xpago_refresh()
+            if charge.state != 'pending' or not (force or charge._xpago_late()):
+                continue
+            charge._xpago_cancel()
+            if charge.state == 'cancelled':
+                charge.timed_out = True
+                _logger.info("XPago: charge %s cancelled, no card in %s s", charge.external_id,
+                             charge.payment_method_id.xpago_card_timeout)
 
     def _xpago_apply(self, remote):
         """Map XPago's answer onto the charge; True when its state changed."""
@@ -316,6 +338,7 @@ class PosXpagoCharge(models.Model):
             'payment': self._xpago_payment_values() if self.state == 'confirmed' else {},
             'tip_amount': self.tip_amount or 0.0,
             'charged_amount': self.charged_amount or 0.0,
+            'timed_out': self.timed_out,
         }
 
     @api.model
@@ -323,6 +346,8 @@ class PosXpagoCharge(models.Model):
         """Read back the charges left open (a closed browser, a lost connection), and expire the old ones."""
         open_charges = self.search([('state', '=', 'pending'), ('create_date', '>', fields.Datetime.now() - timedelta(days=2))])
         open_charges._xpago_refresh()
+        # A self-order kiosk's charge (it has its order) keeps the kiosk's own time limit.
+        open_charges.filtered(lambda c: not c.pos_order_id and c._xpago_late())._xpago_cancel_if_late()
         # The paid ones of the last day too: a refund made on the terminal app shows up here.
         for charge in self.sudo().search([('state', '=', 'confirmed'), ('create_date', '>', fields.Datetime.now() - timedelta(days=1))]):
             charge._xpago_read_refunded()
