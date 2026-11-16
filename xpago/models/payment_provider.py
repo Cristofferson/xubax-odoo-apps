@@ -35,6 +35,12 @@ class PaymentProvider(models.Model):
         string="Always offer a single payment", default=True,
         help="Offer paying in one go besides the months without interest of the amount.",
     )
+    xpago_offer_bank_transfer = fields.Boolean(
+        string="Offer bank transfer (one-time CLABE)",
+        help="The XPago payment page of the online store, payment links and invoices also offers paying by SPEI "
+             "transfer to a CLABE made for that payment alone. The payment is confirmed by itself when the money "
+             "arrives. Your XPago account must have transfers turned on; small amounts may only be paid by card.",
+    )
     xpago_bank_account_ids = fields.One2many(
         'payment.xpago.bank.account', 'provider_id', string="Deposit accounts", context={'active_test': False},
     )

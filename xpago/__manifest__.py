@@ -1,6 +1,6 @@
 {
     'name': 'XPago: Card Payments and Terminals',
-    'version': '19.0.2.2.0',
+    'version': '19.0.2.8.1',
     'category': 'Accounting/Payment Providers',
     'sequence': 350,
     'summary': 'Accept Visa, Mastercard and American Express in Mexico: online store, invoices, payment links and '
@@ -21,6 +21,7 @@
         'data/ir_cron.xml',
         'views/pos_payment_method_views.xml',
         'views/pos_xpago_charge_views.xml',
+        'views/pos_xpago_transfer_views.xml',
         'wizard/pos_xpago_reconcile_views.xml',
         'wizard/pos_xpago_terminal_setup_views.xml',
         'views/pos_payment_xpago_rule_views.xml',
@@ -32,6 +33,9 @@
         'point_of_sale._assets_pos': [
             'xpago/static/src/pos/**/*',
         ],
+        'web.assets_backend': [
+            'xpago/static/src/backend/**/*',
+        ],
         'web.assets_unit_tests': [
             'xpago/static/tests/pos/unit/**/*',
         ],
@@ -40,6 +44,11 @@
             'xpago/static/src/pos/app/order_receipt_voucher.xml',
             'xpago/static/src/pos/app/charge_wait.js',
             'xpago/static/src/self_order/**/*',
+            'xpago/static/src/kiosk/**/*',
+        ],
+        'hr_attendance.assets_public_attendance': [
+            'xpago/static/src/kiosk/**/*',
+            'xpago/static/src/kiosk_attendance/**/*',
         ],
     },
     'pre_init_hook': 'pre_init_hook',

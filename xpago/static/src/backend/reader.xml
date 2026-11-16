@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="xpago.BackendReaderDialog">
+        <Dialog title.translate="Pair XPago reader" size="'md'">
+            <div class="d-flex flex-column align-items-center text-center gap-2">
+                <label class="w-100 text-start" for="xpago_reader_name">Name of this screen on the terminal</label>
+                <input id="xpago_reader_name" class="form-control" t-att-value="state.name" t-on-change="onName"
+                       placeholder="Inventory 001" maxlength="40"/>
+                <p class="mb-0 mt-2">
+                    On the terminal, open the Odoo app, choose <b>Reader for the computer</b>
+                    and scan this code with the terminal's reader.
+                </p>
+                <img t-att-src="qrSrc" alt="Pairing code" class="img-fluid" style="max-width: 320px"/>
+                <p class="text-muted small mb-0">
+                    From then on, every code scanned on the terminal reaches the Odoo screen open in this browser
+                    (Barcode, Inventory, Manufacturing…), as if it was scanned on this computer. For the Point of Sale,
+                    pair it from the register's menu.
+                </p>
+            </div>
+            <t t-set-slot="footer">
+                <button class="btn btn-primary" t-on-click="props.close">Close</button>
+            </t>
+        </Dialog>
+    </t>
+
+</templates>
