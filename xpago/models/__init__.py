@@ -8,6 +8,8 @@ from . import payment_xpago_connection
 from . import pos_payment_provider
 from . import pos_payment_method
 from . import pos_xpago_charge
+from . import pos_xpago_transfer
+from . import pos_payment_method_transfer
 from . import pos_payment_xpago_bank_account
 from . import pos_session
 from . import pos_payment_xpago_rule

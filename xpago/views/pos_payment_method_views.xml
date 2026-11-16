@@ -6,13 +6,21 @@
         <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='use_payment_terminal']" position="after">
-                <field name="xpago_provider_id" invisible="use_payment_terminal != 'xpago'" required="use_payment_terminal == 'xpago'"
+                <field name="xpago_provider_id" invisible="use_payment_terminal not in ('xpago', 'xpago_spei')"
+                       required="use_payment_terminal in ('xpago', 'xpago_spei')"
                        options="{'no_create': True}"/>
                 <field name="xpago_terminal_serial" placeholder="N950-123456789" invisible="use_payment_terminal != 'xpago'"
                        required="use_payment_terminal == 'xpago'"/>
-                <field name="xpago_bank_account_id" invisible="use_payment_terminal != 'xpago'" options="{'no_create': True, 'no_open': True}"/>
+                <field name="xpago_bank_account_id" invisible="use_payment_terminal not in ('xpago', 'xpago_spei')" options="{'no_create': True, 'no_open': True}"/>
                 <field name="xpago_choose_account" invisible="use_payment_terminal != 'xpago'"/>
                 <field name="xpago_open_terminal_app" invisible="use_payment_terminal != 'xpago'"/>
+                <field name="xpago_wake_terminal" invisible="use_payment_terminal != 'xpago'"/>
+                <field name="xpago_card_timeout" invisible="use_payment_terminal != 'xpago'"/>
+                <div colspan="2" class="text-muted" invisible="use_payment_terminal != 'xpago_spei'">
+                    The cashier shows the customer a CLABE made for this sale alone. The customer transfers from any
+                    bank (SPEI) and the sale is paid by itself when the money arrives. The CLABE lasts 60 minutes; if
+                    it expires, the register makes a new one for the same sale.
+                </div>
             </xpath>
         </field>
     </record>

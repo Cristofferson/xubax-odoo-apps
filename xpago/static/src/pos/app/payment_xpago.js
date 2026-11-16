@@ -96,7 +96,14 @@ export class PaymentXpago extends PaymentInterface {
             }
             return true;
         }
-        if (result.state === "expired") {
+        if (result.timed_out) {
+            this._showError(
+                _t(
+                    "The card was not presented in %s seconds, so the charge was cancelled on the terminal. When the customer is ready, press Send again.",
+                    this.payment_method_id.xpago_card_timeout
+                )
+            );
+        } else if (result.state === "expired") {
             this._showError(_t("The charge expired on the terminal before it was paid."));
         }
         return false;
@@ -213,9 +220,21 @@ export class PaymentXpago extends PaymentInterface {
 
     async _waitForResult(uuid, charge, order) {
         // Stop asking once the payment line is gone (removed, or the order was left) or the point of sale closes.
-        const active = () =>
-            Boolean(this.charges[uuid] && !this.charges[uuid].stopped && order.get_paymentline_by_uuid(uuid));
-        return waitForCharge(charge, (current) => this._call("xpago_charge_status", [current.id]), active);
+        const active = () => Boolean(this.charges[uuid] && !this.charges[uuid].stopped && order.get_paymentline_by_uuid(uuid));
+        // «Force done» may hand over the approved charge it already read (force_done.js).
+        // Past the payment method's time without a card, Odoo cancels the charge (unless XPago says it was paid).
+        const timeout = (this.payment_method_id.xpago_card_timeout || 0) * 1000;
+        const deadline = timeout > 0 ? Date.now() + timeout : 0;
+        const refresh = (current) => {
+            if (this.charges[uuid]?.forced) {
+                return this.charges[uuid].forced;
+            }
+            if (deadline && Date.now() >= deadline) {
+                return this._call("xpago_timeout_charge", [current.id]);
+            }
+            return this._call("xpago_charge_status", [current.id]);
+        };
+        return waitForCharge(charge, refresh, active, deadline);
     }
 
     close() {

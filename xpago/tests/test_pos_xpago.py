@@ -353,7 +353,7 @@ class TestPosXpago(TestPoSCommon):
         charge = self.paid_charge()
         order = self.refund_order(charge)
         with patch(SEND, return_value={**self.approved(), 'status': 'refunded'}):
-            self.env['pos.xpago.charge']._xpago_cron_refresh()
+            self.env['pos.xpago.charge'].sudo()._xpago_cron_refresh()
         self.assertEqual(charge.state, 'refunded', 'the scheduled action reads the paid charges of the day')
         with patch(SEND) as send:
             result = self.method.xpago_refund_charge({'amount': -150.5, 'refunded_order_ids': order.ids})
@@ -396,3 +396,76 @@ class TestPosXpago(TestPoSCommon):
         settings = self.env['res.config.settings'].create({'pos_config_id': self.basic_config.id})
         self.assertTrue(settings.xpago_needs_connect, 'the terminal uses it even if it is disabled online')
         self.assertEqual(settings.action_xpago_connect()['type'], 'ir.actions.act_url')
+
+    # «Force done» asks XPago first: a charge cancelled on the terminal never closes a sale as paid.
+
+    def force_check(self, status_answer, amount=150.5, uuid='abcdef12-3456'):
+        self.create_charge()
+        with patch(SEND, return_value=status_answer):
+            return self.method.xpago_force_check({'order_uuid': uuid, 'amount': amount})
+
+    def test_force_done_cancelled_on_the_terminal_is_not_paid(self):
+        self.assertEqual(self.force_check(self.intent('canceled'))['state'], 'cancelled')
+
+    def test_force_done_still_waiting(self):
+        self.assertEqual(self.force_check(self.intent())['state'], 'pending')
+
+    def test_force_done_without_a_charge_of_this_sale(self):
+        self.assertEqual(self.force_check(self.approved(), uuid='other-uuid')['state'], 'none')
+
+    def test_force_done_approved_gives_the_card(self):
+        view = self.force_check(self.approved())
+        self.assertEqual(view['state'], 'confirmed')
+        self.assertEqual((view['payment']['transaction_id'], view['payment']['card_no']), ('pay-1', '4242'))
+
+    def test_force_done_approved_charge_of_another_amount(self):
+        self.assertEqual(self.force_check(self.approved(), amount=999.0)['state'], 'unmatched')
+
+    # Without a card in the time of the payment method, the charge is cancelled; a card paid at the end is not.
+
+    def _age(self, seconds):
+        charge = self.env['pos.xpago.charge'].search([('payment_method_id', '=', self.method.id)], order='id desc', limit=1)
+        self.env.cr.execute("UPDATE pos_xpago_charge SET create_date = now() at time zone 'UTC' - interval '%s seconds' WHERE id = %s",
+                            [seconds, charge.id])
+        charge.invalidate_recordset()
+        return charge
+
+    def test_timeout_default_and_loaded_in_the_register(self):
+        self.assertEqual(self.method.xpago_card_timeout, 120)
+        self.assertIn('xpago_card_timeout', self.env['pos.payment.method']._load_pos_data_fields(self.basic_config.id))
+
+    def test_timeout_cancels_the_charge(self):
+        view, _send = self.create_charge()
+        with patch(SEND, side_effect=[self.intent(), self.intent('canceled')]) as send:
+            result = self.method.xpago_timeout_charge(view['id'])
+        self.assertEqual(send.call_args_list[-1].args, ('POST', '/v1/terminal-charges/pi-1/cancel'))
+        self.assertEqual((result['state'], result['timed_out']), ('cancelled', True))
+
+    def test_timeout_never_cancels_a_card_paid_at_the_last_second(self):
+        view, _send = self.create_charge()
+        with patch(SEND, return_value=self.approved()) as send:
+            result = self.method.xpago_timeout_charge(view['id'])
+        self.assertNotIn(('POST', '/v1/terminal-charges/pi-1/cancel'), [c.args for c in send.call_args_list])
+        self.assertEqual(result['state'], 'confirmed')
+        self.assertFalse(result['timed_out'])
+
+    def test_scheduled_action_cancels_only_late_charges(self):
+        self.create_charge()
+        charge = self._age(30)
+        with patch(SEND, return_value=self.intent()) as send:
+            self.env['pos.xpago.charge'].sudo()._xpago_cron_refresh()
+        self.assertNotIn(('POST', '/v1/terminal-charges/pi-1/cancel'), [c.args for c in send.call_args_list])
+        self.assertEqual(charge.state, 'pending')
+        self._age(200)
+        with patch(SEND, side_effect=lambda method, endpoint, **kw: self.intent('canceled') if endpoint.endswith('/cancel') else self.intent()):
+            self.env['pos.xpago.charge'].sudo()._xpago_cron_refresh()
+        self.assertEqual((charge.state, charge.timed_out), ('cancelled', True))
+
+    def test_timeout_zero_waits_for_the_terminal(self):
+        self.method.xpago_card_timeout = 0
+        self.create_charge()
+        charge = self._age(5000)
+        with patch(SEND, return_value=self.intent()) as send:
+            self.env['pos.xpago.charge'].sudo()._xpago_cron_refresh()
+        self.assertNotIn(('POST', '/v1/terminal-charges/pi-1/cancel'), [c.args for c in send.call_args_list])
+        self.assertEqual(charge.state, 'pending')

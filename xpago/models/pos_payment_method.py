@@ -18,6 +18,16 @@ class PosPaymentMethod(models.Model):
         string="Odoo runs on this terminal",
         help="Bring the charge app to the front when the point of sale runs on the terminal itself.",
     )
+    xpago_wake_terminal = fields.Boolean(
+        string="Open the charge app on the terminal",
+        help="When the point of sale sends an amount, the terminal opens its charge app by itself, whatever it is "
+             "showing. Needs the XPago app on the terminal, with «Open the charge app by itself» turned on in its menu.",
+    )
+    xpago_card_timeout = fields.Integer(
+        string="Cancel the charge after (seconds)", default=120,
+        help="When the customer does not present the card in this time, the charge is cancelled on the terminal and "
+             "the cashier is told. 0: wait until the terminal gives up.",
+    )
 
     xpago_bank_account_id = fields.Many2one(
         'payment.xpago.bank.account', string="Deposit account", domain="[('provider_id', '=', xpago_provider_id)]",
@@ -34,7 +44,7 @@ class PosPaymentMethod(models.Model):
     @api.model
     def _load_pos_data_fields(self, config_id):
         return super()._load_pos_data_fields(config_id) + [
-            'xpago_open_terminal_app', 'xpago_choose_account', 'xpago_bank_account_id']
+            'xpago_open_terminal_app', 'xpago_choose_account', 'xpago_bank_account_id', 'xpago_card_timeout']
 
     @api.constrains('use_payment_terminal', 'xpago_provider_id', 'xpago_terminal_serial')
     def _check_xpago_terminal(self):
@@ -92,6 +102,43 @@ class PosPaymentMethod(models.Model):
         self._xpago_check_access()
         charge = self._xpago_charge(charge_id)
         charge._xpago_refresh()
+        return charge._xpago_public_view()
+
+    def xpago_force_check(self, data):
+        """«Force done» on an XPago line: Odoo asks XPago first. Returns the charge of this sale for this amount when
+        XPago approved it and no payment of Odoo uses it yet; else only its state (``pending``, ``cancelled``…,
+        ``unmatched`` for an approved charge of another amount or already used, ``none`` without a charge)."""
+        self._xpago_check_access()
+        uuid = data.get('order_uuid') or ''
+        if not uuid:
+            return {'state': 'none'}
+        charges = self.env['pos.xpago.charge'].sudo().search(
+            [('payment_method_id', '=', self.id), ('order_uuid', '=', uuid)], order='id desc', limit=10)
+        if not charges:
+            return {'state': 'none'}
+        charges._xpago_refresh()
+        used = set(self.env['pos.payment'].sudo().search([
+            ('payment_method_id', '=', self.id),
+            ('transaction_id', 'in', [c.payment_id for c in charges if c.payment_id]),
+        ]).mapped('transaction_id'))
+        currency = self.company_id.currency_id or self.env.company.currency_id
+        amount = data.get('amount') or 0.0
+
+        def same_amount(charge):
+            return any(not currency.compare_amounts(value, amount) for value in
+                       (charge.amount, charge.amount + (charge.tip_amount or 0.0), charge.charged_amount or 0.0))
+
+        for charge in charges:
+            if charge.state == 'confirmed' and charge.payment_id not in used and same_amount(charge):
+                return charge._xpago_public_view()
+        state = charges[0].state
+        return {'state': 'unmatched' if state == 'confirmed' else state}
+
+    def xpago_timeout_charge(self, charge_id):
+        """The customer did not present the card in time: cancel the charge, unless XPago says it was just paid."""
+        self._xpago_check_access()
+        charge = self._xpago_charge(charge_id)
+        charge._xpago_cancel_if_late(force=True)
         return charge._xpago_public_view()
 
     def xpago_cancel_charge(self, charge_id):
