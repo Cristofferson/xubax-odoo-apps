@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Showroom Wall — Self-service Kiosk',
-    'version': '19.0.1.1.1',
+    'version': '19.0.1.1.2',
     'category': 'Sales/Point of Sale',
     'summary': 'Customers send a piece from the self-service kiosk to the '
                'showroom wall.',

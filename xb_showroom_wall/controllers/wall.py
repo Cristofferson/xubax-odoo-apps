@@ -170,8 +170,9 @@ _HAND_WORDS = ('mano', 'dedo', 'hand', 'finger')
 _SIDE_WORDS = ('lado', 'perfil', 'side', 'profile')
 
 
-def _extra_shots(product, photo):
-    """``{'case': url, 'hand': url}`` from the product's extra images."""
+def _extra_shots(product, photo, hand_motion=None):
+    """``{'case': url, 'hand': url}`` from the product's extra images, plus
+    ``hand_motion`` when the hand photo has its video (see ``_hand_video``)."""
     images = product.product_tmpl_id.sudo().product_template_image_ids
     shots = {}
     leftovers = []
@@ -181,6 +182,10 @@ def _extra_shots(product, photo):
         if any(word in label for word in _CASE_WORDS):
             shots.setdefault('case', url)
         elif any(word in label for word in _HAND_WORDS):
+            if 'hand' not in shots and hand_motion:
+                motion = hand_motion(image)
+                if motion:
+                    shots['hand_motion'] = motion
             shots.setdefault('hand', url)
         elif any(word in label for word in _SIDE_WORDS):
             shots.setdefault('side', url)
@@ -677,6 +682,58 @@ def _stone_clip(env, source):
                 data = handle.read()
     except Exception as e:  # noqa: BLE001 - the photo stands in for the video
         _logger.warning("[SHOWROOM] clip of attachment %s failed: %s", source.id, e)
+        return attachments.browse()
+    return attachments.create({
+        'name': name, 'raw': data, 'mimetype': 'image/webp',
+        'res_model': 'xb.showroom.screen', 'res_id': 0,
+    })
+
+
+HAND_PREFIX = 'xb_wall_hand1_'
+
+
+def _hand_video(image):
+    """The video made from a hand photo: a public mp4 attached to that
+    ``product.image`` (never to the product, whose newest mp4 is the piece's
+    own video in the centre of the wall)."""
+    return request.env['ir.attachment'].sudo().search([
+        ('res_model', '=', 'product.image'), ('res_id', '=', image.id),
+        ('mimetype', '=', 'video/mp4'), ('public', '=', True),
+    ], order='id desc', limit=1)
+
+
+def _hand_clip(env, source):
+    """The hand video ``source`` as an animated WebP, made once and kept.
+    Same reason as the stone: the player decodes the piece's video in the
+    centre and does not play a second one, while an image always animates.
+    Square frames like the photo, so the panel crops them the same way."""
+    attachments = env['ir.attachment'].sudo()
+    name = '%s%s.webp' % (HAND_PREFIX, source.checksum or source.id)
+    found = attachments.search([('res_model', '=', 'xb.showroom.screen'), ('name', '=', name)], limit=1)
+    if found:
+        return found
+    try:
+        from PIL import Image
+        from PIL import WebPImagePlugin  # noqa: F401
+        with tempfile.TemporaryDirectory() as tmp:
+            src, out = os.path.join(tmp, 'source'), os.path.join(tmp, 'motion.webp')
+            with open(src, 'wb') as handle:
+                handle.write(source.raw)
+            subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', src, '-an', '-t', '12',
+                            '-vf', 'fps=20,scale=960:960:flags=lanczos,unsharp=5:5:0.5',
+                            '-q:v', '2', os.path.join(tmp, 'frame_%03d.jpg')],
+                           capture_output=True, timeout=120, check=True)
+            names = sorted(n for n in os.listdir(tmp) if n.startswith('frame_'))
+            frames = []
+            for n in names:
+                with Image.open(os.path.join(tmp, n)) as image:
+                    frames.append(image.convert('RGB'))
+            frames[0].save(out, 'WEBP', save_all=True, append_images=frames[1:], duration=50,
+                           loop=0, quality=75, method=4)
+            with open(out, 'rb') as handle:
+                data = handle.read()
+    except Exception as e:  # noqa: BLE001 - the photo stands in for the video
+        _logger.warning("[SHOWROOM] hand clip of attachment %s failed: %s", source.id, e)
         return attachments.browse()
     return attachments.create({
         'name': name, 'raw': data, 'mimetype': 'image/webp',
@@ -1302,6 +1359,12 @@ class ShowroomWall(http.Controller):
         def photo(kind, record):
             return '/showroom/wall/%s/photo/%s/%s.jpg?v=%s%s' % (
                 screen.access_token, kind, record.id, _photo_version(record), _PHOTO_LOOK.get(kind, ''))
+
+        def hand_motion(image):
+            video = _hand_video(image)
+            # The cut rides on the address: players keep it a year.
+            return '/showroom/wall/%s/hand/%s/motion.webp?v=%s%s' % (
+                screen.access_token, image.id, (video.checksum or '')[:10], HAND_PREFIX[-2:-1]) if video else ''
         # A commercial name carries its own second line, so the metal moves
         # down to the data line instead of being dropped.
         name, description = _split_name(_headline(screen, product))
@@ -1365,7 +1428,7 @@ class ShowroomWall(http.Controller):
             'image': photo('p', product),
             'ring': photo('r', product),
             'videos': _video_sources(product),
-            'shots': _extra_shots(product, photo),
+            'shots': _extra_shots(product, photo, hand_motion),
             'bg': _studio_background(product)
                   if (screen.theme == 'light' or screen.wall_style == 'mosaic') else '',
             # With a combination chosen the QR carries the slot, so the phone
@@ -1586,6 +1649,23 @@ class ShowroomWall(http.Controller):
             ('Content-Type', mimetype),
             ('Cache-Control', 'public, max-age=31536000, immutable'),
         ])
+
+    @http.route('/showroom/wall/<string:token>/hand/<int:image_id>/motion.webp',
+                type='http', auth='public', methods=['GET'], csrf=False,
+                save_session=False, sitemap=False)
+    def wall_hand_motion(self, token, image_id, **kw):
+        """The hand photo's video, animated, for pieces this shop publishes."""
+        screen = _screen(token)
+        image = request.env['product.image'].sudo().browse(image_id).exists()
+        template = image.product_tmpl_id or image.product_variant_id.product_tmpl_id
+        if not screen or not image or not _may_show(screen, template):
+            return Response(status=404)
+        video = _hand_video(image)
+        clip = _hand_clip(request.env, video) if video else None
+        if not clip:
+            return Response(status=404)
+        return request.env['ir.binary']._get_stream_from(clip, 'raw').get_response(
+            max_age=31536000, immutable=True)
 
     @http.route('/showroom/wall/<string:token>/qr.png',
                 type='http', auth='public', methods=['GET'], csrf=False,

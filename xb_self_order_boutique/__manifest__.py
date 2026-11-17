@@ -24,7 +24,7 @@ per kiosk in Point of Sale > Settings > Mobile self-order & Kiosk:
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",
     "category": "Point of Sale",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.3",
     "license": "OPL-1",
     "depends": ["pos_self_order"],
     "data": [

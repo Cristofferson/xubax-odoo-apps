@@ -556,3 +556,21 @@ msgstr "Tu número de pedido"
 #: model_terms:ir.ui.view,arch_db:xb_self_order_boutique.res_config_settings_view_form_kiosk_boutique
 msgid "Your selection"
 msgstr "Tu selección"
+
+#. module: xb_self_order_boutique
+#. odoo-javascript
+#: code:addons/xb_self_order_boutique/static/src/app/boutique.xml:0
+msgid "Close"
+msgstr "Cerrar"
+
+#. module: xb_self_order_boutique
+#. odoo-javascript
+#: code:addons/xb_self_order_boutique/static/src/app/boutique.xml:0
+msgid "Tap again to see the whole photo"
+msgstr "Toca otra vez para ver la foto completa"
+
+#. module: xb_self_order_boutique
+#. odoo-javascript
+#: code:addons/xb_self_order_boutique/static/src/app/boutique.xml:0
+msgid "Tap the photo to zoom in"
+msgstr "Toca la foto para acercarla"

@@ -21,9 +21,15 @@ class ProductTemplate(models.Model):
             [("product_tmpl_id", "in", ids)], order="sequence, id"
         ) if "product.image" in self.env else []
         for img in images:
-            photos.setdefault(img.product_tmpl_id.id, []).append(
-                "/web/image/product.image/%s/image_1024" % img.id
-            )
+            photos.setdefault(img.product_tmpl_id.id, []).append(img)
+        # A photo may carry its own video (the ring on the hand, moving): it plays in its place.
+        clips = {}
+        if images:
+            for att in self.env["ir.attachment"].sudo().search([
+                ("res_model", "=", "product.image"), ("res_id", "in", images.ids),
+                ("mimetype", "in", VIDEO_ORDER), ("public", "=", True), ("res_field", "=", False),
+            ], order="id desc"):
+                clips.setdefault(att.res_id, {}).setdefault(att.mimetype, "/web/content/%s" % att.id)
         videos = {}
         for att in self.env["ir.attachment"].sudo().search([
             ("res_model", "=", "product.template"), ("res_id", "in", ids),
@@ -34,7 +40,11 @@ class ProductTemplate(models.Model):
         for r in res:
             v = videos.get(r["id"], {})
             r["_xb_bq_media"] = {
-                "photos": photos.get(r["id"], []),
+                "photos": ["/web/image/product.image/%s/image_1024" % img.id for img in photos.get(r["id"], [])],
+                "photo_videos": [
+                    [{"url": c[m], "type": m} for m in VIDEO_ORDER if m in c]
+                    for c in (clips.get(img.id, {}) for img in photos.get(r["id"], []))
+                ],
                 "video": [{"url": v[m], "type": m} for m in VIDEO_ORDER if m in v],
             }
         return res

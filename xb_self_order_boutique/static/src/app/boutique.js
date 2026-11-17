@@ -4,7 +4,7 @@
  */
 import { patch } from "@web/core/utils/patch";
 import { _t } from "@web/core/l10n/translation";
-import { onMounted, onPatched, useState } from "@odoo/owl";
+import { onMounted, onPatched, useRef, useState } from "@odoo/owl";
 import { selfOrderIndex } from "@pos_self_order/app/self_order_index";
 import { insertKioskStyle } from "@pos_self_order/app/kiosk_style";
 import { OrderWidget } from "@pos_self_order/app/components/order_widget/order_widget";
@@ -180,15 +180,31 @@ function playVideos() {
 patch(ProductPage.prototype, {
     setup() {
         super.setup(...arguments);
-        this.xbBq = useState({ slide: 0 });
+        // viewer: the slide open full screen (-1 = closed) and whether its photo is enlarged
+        this.xbBq = useState({ slide: 0, viewer: -1, view: 0, big: false });
+        this.xbBqViewer = useRef("xbBqViewer");
         onMounted(playVideos);
-        onPatched(playVideos);
+        onPatched(() => {
+            playVideos();
+            const track = this.xbBqViewer.el;
+            if (track && this.xbBqJump !== undefined) {
+                track.scrollLeft = this.xbBqJump * track.clientWidth;
+                this.xbBqJump = undefined;
+            }
+            const box = track && this.xbBqFocus && track.querySelector(".xb_bq_big");
+            if (box) {
+                const [x, y] = this.xbBqFocus;
+                box.scrollLeft = x * box.scrollWidth - box.clientWidth / 2;
+                box.scrollTop = y * box.scrollHeight - box.clientHeight / 2;
+            }
+            this.xbBqFocus = undefined;
+        });
     },
     get xbBqGallery() {
         const bq = boutique(this.selfOrder);
         return bq ? bq.gallery : "single";
     },
-    /** Video first (if any), then the main photo and the extra photos. */
+    /** Video first (if any), then the main photo and the extra photos (a photo with its own video plays it). */
     get xbBqSlides() {
         const product = this.props.productTemplate;
         const media = product._xb_bq_media || {};
@@ -199,9 +215,37 @@ patch(ProductPage.prototype, {
         }
         slides.push({ key: "main", src: main });
         for (const [index, src] of (media.photos || []).entries()) {
-            slides.push({ key: `photo${index}`, src });
+            const clip = (media.photo_videos || [])[index] || [];
+            slides.push({ key: `photo${index}`, src, video: clip.length ? clip : null, poster: src });
         }
         return slides;
+    },
+    xbBqOpen(index) {
+        this.xbBqJump = index;
+        Object.assign(this.xbBq, { viewer: index, view: index, big: false });
+    },
+    xbBqClose() {
+        this.xbBq.viewer = -1;
+    },
+    /** The full-size photo for the viewer. */
+    xbBqLarge(src) {
+        return src.replace("/image_1024", "/image_1920");
+    },
+    xbBqOnViewerScroll(ev) {
+        const el = ev.currentTarget;
+        const view = Math.round(el.scrollLeft / Math.max(el.clientWidth, 1));
+        if (view !== this.xbBq.view) {
+            Object.assign(this.xbBq, { view, big: false });
+        }
+    },
+    /** A tap enlarges the photo around the tapped spot (then a finger moves it); another tap restores it. */
+    xbBqToggleBig(ev) {
+        const rect = ev.currentTarget.getBoundingClientRect();
+        this.xbBqFocus = [
+            (ev.clientX - rect.left) / Math.max(rect.width, 1),
+            (ev.clientY - rect.top) / Math.max(rect.height, 1),
+        ];
+        this.xbBq.big = !this.xbBq.big;
     },
     xbBqOnScroll(ev) {
         const el = ev.currentTarget;

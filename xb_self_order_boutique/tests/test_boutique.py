@@ -64,6 +64,16 @@ class TestKioskBoutique(SelfOrderCommonTest):
         row = next(r for r in self._kiosk_data()["product.template"] if r["id"] == self.product.id)
         self.assertEqual(len(row["_xb_bq_media"]["photos"]), 1 if shop else 0)
         self.assertEqual(row["_xb_bq_media"]["video"][0]["type"], "video/webm")
+        if shop:
+            self.assertEqual(row["_xb_bq_media"]["photo_videos"], [[]])
+            back = self.env["product.image"].search([("product_tmpl_id", "=", self.product.id)])
+            att = self.env["ir.attachment"].create({
+                "name": "hand.mp4", "res_model": "product.image", "res_id": back.id,
+                "mimetype": "video/mp4", "public": True, "raw": b"\x00\x00\x00 ftypmp42"})
+            row = next(r for r in self._kiosk_data()["product.template"] if r["id"] == self.product.id)
+            self.assertEqual(row["_xb_bq_media"]["photo_videos"],
+                             [[{"url": "/web/content/%s" % att.id, "type": "video/mp4"}]])
+            self.assertEqual(len(row["_xb_bq_media"]["video"]), 1, "The photo's video is not the product's.")
         self.pos_config.xb_bq_gallery = "single"
         row = next(r for r in self._kiosk_data()["product.template"] if r["id"] == self.product.id)
         self.assertNotIn("_xb_bq_media", row)

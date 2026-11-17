@@ -106,6 +106,7 @@ patch(ProductPage.prototype, {
             combination: seleccion
                 ? seleccion.getAllSelectedAttributeValuesIds().map((id) => Number(id))
                 : [],
+            stone_id: this.wallStoneId || null,
             mode: "compare",
         });
     },

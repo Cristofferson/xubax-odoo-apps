@@ -26,7 +26,7 @@
                 <div class="xb_bq_carousel w-100">
                     <div class="xb_bq_carousel_track" t-on-scroll="xbBqOnScroll">
                         <t t-foreach="xbBqItems" t-as="slide" t-key="slide.key">
-                            <div class="xb_bq_slide">
+                            <div class="xb_bq_slide" t-on-click="() => this.xbBqOpen(slide_index)">
                                 <video t-if="slide.video" class="xb_bq_video" autoplay="" muted="" loop="" playsinline="" t-att-poster="slide.poster">
                                     <t t-foreach="slide.video" t-as="source" t-key="source.url">
                                         <source t-att-src="source.url" t-att-type="source.type"/>
@@ -48,7 +48,7 @@
                 <t t-set="xbBqBig" t-value="xbBqItems[0]"/>
                 <t t-set="xbBqRest" t-value="xbBqItems.slice(1)"/>
                 <div class="xb_bq_mosaic w-100">
-                    <div class="xb_bq_mosaic_big">
+                    <div class="xb_bq_mosaic_big" t-on-click="() => this.xbBqOpen(0)">
                         <video t-if="xbBqBig.video" class="xb_bq_video" autoplay="" muted="" loop="" playsinline="" t-att-poster="xbBqBig.poster">
                             <t t-foreach="xbBqBig.video" t-as="source" t-key="source.url">
                                 <source t-att-src="source.url" t-att-type="source.type"/>
@@ -57,12 +57,47 @@
                         <img t-else="" t-att-src="xbBqBig.src" loading="lazy" t-att-alt="product.name"/>
                     </div>
                     <t t-foreach="xbBqRest" t-as="slide" t-key="slide.key">
-                        <div class="xb_bq_mosaic_cell" t-att-class="{'xb_bq_mosaic_wide': slide_last and xbBqRest.length % 2 === 1}">
-                            <img t-att-src="slide.src" loading="lazy" t-att-alt="product.name"/>
+                        <div class="xb_bq_mosaic_cell" t-att-class="{'xb_bq_mosaic_wide': slide_last and xbBqRest.length % 2 === 1}" t-on-click="() => this.xbBqOpen(slide_index + 1)">
+                            <video t-if="slide.video" class="xb_bq_video" autoplay="" muted="" loop="" playsinline="" t-att-poster="slide.poster">
+                                <t t-foreach="slide.video" t-as="source" t-key="source.url">
+                                    <source t-att-src="source.url" t-att-type="source.type"/>
+                                </t>
+                            </video>
+                            <img t-else="" t-att-src="slide.src" loading="lazy" t-att-alt="product.name"/>
                         </div>
                     </t>
                 </div>
             </t>
+            <!-- Full screen viewer: swipe between photos, tap a photo to enlarge it. -->
+            <div t-if="xbBqGallery !== 'single' and xbBq.viewer >= 0" class="xb_bq_viewer">
+                <t t-set="xbBqAll" t-value="xbBqSlides"/>
+                <button type="button" class="xb_bq_viewer_close" t-on-click="xbBqClose" aria-label="Close">
+                    <i class="fa fa-times"/>
+                </button>
+                <div class="xb_bq_viewer_track" t-ref="xbBqViewer" t-on-scroll="xbBqOnViewerScroll">
+                    <t t-foreach="xbBqAll" t-as="slide" t-key="slide.key">
+                        <div class="xb_bq_viewer_slide" t-att-class="{'xb_bq_big': xbBq.big and slide_index === xbBq.view}">
+                            <video t-if="slide.video" class="xb_bq_video" autoplay="" muted="" loop="" playsinline="" t-att-poster="slide.poster">
+                                <t t-foreach="slide.video" t-as="source" t-key="source.url">
+                                    <source t-att-src="source.url" t-att-type="source.type"/>
+                                </t>
+                            </video>
+                            <img t-else="" t-att-src="xbBqLarge(slide.src)" t-att-alt="product.name" t-on-click="xbBqToggleBig"/>
+                        </div>
+                    </t>
+                </div>
+                <div class="xb_bq_viewer_foot">
+                    <div t-if="xbBqAll.length > 1" class="xb_bq_dots">
+                        <t t-foreach="xbBqAll" t-as="slide" t-key="slide.key">
+                            <span t-att-class="{'active': slide_index === xbBq.view}"/>
+                        </t>
+                    </div>
+                    <div class="xb_bq_viewer_hint" t-if="!(xbBqAll[xbBq.view] or {}).video">
+                        <t t-if="xbBq.big">Tap again to see the whole photo</t>
+                        <t t-else="">Tap the photo to zoom in</t>
+                    </div>
+                </div>
+            </div>
         </xpath>
     </t>
 

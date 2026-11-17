@@ -210,6 +210,8 @@ html.xb-bq {
                 mix-blend-mode: multiply;
             }
             video { mix-blend-mode: normal; object-fit: cover; }
+            // a photo's own video keeps the photo's framing
+            .xb_bq_mosaic_cell video { object-fit: contain; }
         }
 
         // Options: label in spaced capitals, values as compact chips.
@@ -370,6 +372,82 @@ html.xb-bq {
         border-radius: var(--xb-bq-radius);
         overflow: hidden;
     }
+    .xb_bq_mosaic > div, .xb_bq_slide { cursor: zoom-in; }
+
+    // ---------------------------------------------------------------- Full screen viewer
+    .xb_bq_viewer {
+        position: fixed;
+        inset: 0;
+        z-index: 1100; // above the docked seller too
+        display: flex;
+        flex-direction: column;
+        background: var(--xb-bq-photo, #fff);
+        .xb_bq_viewer_close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 2;
+            width: 3.5rem;
+            height: 3.5rem;
+            border: 1px solid var(--xb-bq-line);
+            border-radius: 50%;
+            background: #fff;
+            color: var(--xb-bq-ink);
+            font-size: 1.5rem;
+        }
+        .xb_bq_viewer_track {
+            flex: 1;
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            &::-webkit-scrollbar { display: none; }
+        }
+        .xb_bq_viewer_slide {
+            flex: 0 0 100%;
+            scroll-snap-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            img, video {
+                display: block;
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+            video { width: 100%; height: auto; }
+            img { mix-blend-mode: multiply; cursor: zoom-in; }
+            &.xb_bq_big {
+                display: block;
+                overflow: auto;
+                overscroll-behavior: contain;
+                img { max-width: none; max-height: none; width: 250%; cursor: zoom-out; }
+            }
+        }
+        .xb_bq_viewer_foot {
+            padding: 0.8rem 1rem 1.6rem;
+            text-align: center;
+            .xb_bq_dots {
+                display: flex;
+                justify-content: center;
+                gap: 0.5rem;
+                span {
+                    width: 0.55rem;
+                    height: 0.55rem;
+                    border-radius: 50%;
+                    background: var(--xb-bq-line);
+                    &.active { background: var(--xb-bq-primary); }
+                }
+            }
+            .xb_bq_viewer_hint {
+                @include bq-caps(0.75rem);
+                padding-top: 0.6rem;
+                color: var(--xb-bq-ink);
+                opacity: 0.6;
+            }
+        }
+    }
 
     // ---------------------------------------------------------------- Confirmation
     .confirmation-page {
@@ -392,3 +470,14 @@ html.xb-bq {
         }
     }
 }
+
+// Odoo's round "i" beside each product name looks like a stray label in the boutique look;
+// the product page already shows the description.
+html.xb-bq .product_info_icon {
+    display: none !important;
+}
+
+// Icon buttons (back arrow "oi oi-chevron-left", "fa fa-*") must keep their icon font:
+// the theme's font on buttons replaced it and the icon showed as an empty square.
+html.xb-bq .oi { font-family: "odoo_ui_icons" !important; }
+html.xb-bq .fa { font-family: "FontAwesome" !important; }

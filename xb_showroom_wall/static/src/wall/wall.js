@@ -305,7 +305,11 @@
         var band = el("section", "band band-photo");
         var shots = piece.shots || {};
         var picture = shots.hand || shots.case || piece.image;
-        band.appendChild(shot(picture, "band-bleed"));
+        // La mano en movimiento (imagen animada, mismo encuadre que la foto);
+        // si no carga, queda la foto.
+        var bleed = shot(shots.hand_motion || picture, "band-bleed");
+        if (shots.hand_motion) { bleed.onerror = function () { bleed.onerror = null; bleed.src = picture; }; }
+        band.appendChild(bleed);
         band.appendChild(el("div", "band-scrim"));
         // El diamante tomó el lugar del estuche: el estuche queda en un
         // recuadro abajo a la izquierda, donde la mano sólo tiene fondo.

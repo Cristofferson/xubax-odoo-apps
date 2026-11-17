@@ -32,6 +32,9 @@ patch(ProductPage.prototype, {
                 access_token: this.selfOrder.access_token,
                 template_id: template.id,
                 combination,
+                // A stone the customer chose for the setting (set by the module
+                // that offers the choice), so the wall shows its price and data.
+                stone_id: this.wallStoneId || null,
             });
             if (result?.ok) {
                 this.selfOrder.notification.add(result.message, { type: "success" });

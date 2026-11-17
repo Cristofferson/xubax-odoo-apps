@@ -42,6 +42,13 @@ class ShowroomKiosk(http.Controller):
         except Exception:  # noqa: BLE001 - a price must never stop the push
             return None
 
+    def _kiosk_stone(self, config, template, options, stone_id):
+        """``(stone, price)``: the loose stone the customer chose on the kiosk
+        (``stone_id``) for ``template`` with ``options``, priced like the
+        kiosk. None here: a module that lets the customer pick the stone
+        checks it and prices it."""
+        return request.env['product.product'].sudo(), 0.0
+
     def _kiosk_pieces(self, screen):
         """The pieces the kiosk is comparing on the wall, for its bar."""
         if not screen or screen.mode != 'compare':
@@ -59,7 +66,8 @@ class ShowroomKiosk(http.Controller):
                     limit=screen.sudo()._compare_limit() if screen else 0)
 
     @http.route('/xb_showroom/kiosk/push', type='jsonrpc', auth='public', website=True)
-    def kiosk_push(self, access_token=None, template_id=None, combination=None, mode='single', **kw):
+    def kiosk_push(self, access_token=None, template_id=None, combination=None, mode='single',
+                   stone_id=None, **kw):
         """A customer asks for a piece on the wall from the kiosk, alone or
         joining the comparison (the same rules as the shop's «Compare»)."""
         not_now = {'error': _("The wall is not available from this kiosk right now.")}
@@ -90,9 +98,13 @@ class ShowroomKiosk(http.Controller):
         if not product:
             return {'error': _("This piece cannot be shown on the wall.")}
         amount = self._kiosk_amount(screen, template, options)
+        stone, stone_price = self._kiosk_stone(config, template, options, stone_id)
+        if stone and amount is not None:
+            amount += stone_price
         currency = request.website.currency_id if request.website else product.currency_id
         entry = {'product': product, 'options': options, 'price': amount,
-                 'currency': currency if amount is not None else None}
+                 'currency': currency if amount is not None else None,
+                 'stone': stone, 'stone_price': stone_price}
         entries = [entry]
         repeated = False
         if mode == 'compare':
@@ -101,14 +113,16 @@ class ShowroomKiosk(http.Controller):
             # kiosk's own pieces are kept: a sales person's push gave way.
             own = screen.slot_ids.filtered(lambda s: s.source == 'kiosk') \
                 if screen.mode == 'compare' else screen.slot_ids.browse()
+            # The same ring with another chosen stone is another piece.
             already = own.filtered(
-                lambda s: s.product_id.product_tmpl_id == template and (
+                lambda s: s.product_id.product_tmpl_id == template and s.stone_id == stone and (
                     not options or not s.option_ids
                     or set(s.option_ids.ids) == set(options.ids)))
             repeated = bool(already)
             entries = [
                 {'product': slot.product_id, 'options': slot.option_ids,
-                 'price': slot.price, 'currency': slot.currency_id}
+                 'price': slot.price, 'currency': slot.currency_id,
+                 'stone': slot.stone_id, 'stone_price': slot.stone_price}
                 for slot in own - already
             ] + [entry]
         result = screen.sudo().with_context(xb_showroom_source='kiosk')._push_entries(entries, mode=mode)
