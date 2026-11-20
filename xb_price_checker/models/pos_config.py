@@ -1,4 +1,5 @@
 import secrets
+from urllib.parse import urlencode
 
 from odoo import _, api, fields, models
 
@@ -38,6 +39,19 @@ class PosConfig(models.Model):
         if not self.sudo().price_checker_token:
             self.action_price_checker_new_link()
         return {'type': 'ir.actions.act_url', 'url': self.price_checker_url, 'target': 'new'}
+
+    def action_price_checker_install(self):
+        """«Install as an app»: Odoo's own install page for this register's price checker. A phone, tablet or
+        computer installs it as a web app; an XPago terminal makes it its locked «Verificador de precios»."""
+        self.ensure_one()
+        if not self.sudo().price_checker_token:
+            self.action_price_checker_new_link()
+        query = urlencode({
+            'app_id': 'xb_price_checker',
+            'path': f"price-checker/{self.id}/{self.sudo().price_checker_token}",
+            'app_name': _("Price checker"),
+        })
+        return {'type': 'ir.actions.act_url', 'url': f'/scoped_app?{query}', 'target': 'self'}
 
     # What the screen shows
 

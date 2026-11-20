@@ -91,3 +91,13 @@ class TestPriceChecker(HttpCase):
         self.assertIn('12', self.lookup('7500000000017')['months_text'])
         self.config.price_checker_show_months = False
         self.assertFalse(self.lookup('7500000000017')['months_text'])
+
+    def test_install_as_app(self):
+        """«Install as an app» opens Odoo's install page for this register's link, with the app's own name."""
+        action = self.config.action_price_checker_install()
+        settings = self.env['res.config.settings'].create({'pos_config_id': self.config.id})
+        self.assertEqual(settings.action_price_checker_install()['url'], action['url'])
+        self.assertTrue(action['url'].startswith('/scoped_app?app_id=xb_price_checker'))
+        self.assertIn(f'price-checker%2F{self.config.id}%2F{self.token}', action['url'])
+        manifest = self.url_open('/web/manifest.scoped_app_manifest?app_id=xb_price_checker&path=x').json()
+        self.assertEqual(manifest['name'], 'Verificador de precios')

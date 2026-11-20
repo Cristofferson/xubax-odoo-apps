@@ -11,6 +11,7 @@
                              help="A screen where customers scan a product and see its price, with the prices, taxes and stock of this Point of Sale. Open the link on a tablet with a barcode scanner and leave it there: no user is needed.">
                         <div class="mt8">
                             <button name="action_price_checker_open" type="object" string="Open the price checker" class="btn-primary" icon="fa-external-link"/>
+                            <button name="action_price_checker_install" type="object" string="Install as an app" class="btn-secondary ms-2" icon="fa-download"/><!-- scoped_app: Odoo 18+ -->
                             <button name="action_price_checker_new_link" type="object" string="New link" class="btn-link"
                                     confirm="The screens that have the current link stop working. Continue?"/>
                         </div>
