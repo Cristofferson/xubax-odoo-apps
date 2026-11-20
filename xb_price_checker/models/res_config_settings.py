@@ -14,3 +14,6 @@ class ResConfigSettings(models.TransientModel):
 
     def action_price_checker_new_link(self):
         self.pos_config_id.action_price_checker_new_link()
+
+    def action_price_checker_install(self):
+        return self.pos_config_id.action_price_checker_install()

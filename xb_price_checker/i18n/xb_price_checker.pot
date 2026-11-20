@@ -6,14 +6,105 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-15 05:09+0000\n"
-"PO-Revision-Date: 2026-11-15 05:09+0000\n"
+"POT-Creation-Date: 2026-11-15 18:57+0000\n"
+"PO-Revision-Date: 2026-11-15 18:57+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "\"No connection, try again\""
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "\"We could not find this product\""
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"%(key)s Anyone who has it sees the prices of that register. If it is shared "
+"by mistake, tap %(new)s: the screens with the previous link stop working and"
+" the new one has to be opened on each of them."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"%(remove)s in the Odoo app of the terminal, tap %(item)s. The icon "
+"disappears."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "%(what)s of the product, with its reference."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "%(what)s with a barcode scanner, by opening a link."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "%(what)s, as one more app."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"%(what)s, for example \"Up to 12 months without interest of $1,250.00\". It "
+"only appears if you have the XPago app with payment rules."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "%(what)s, only when the product has a discount."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "%(what)s, with the pricelist and taxes of the register you chose."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"%(what)s: \"Available in this store\" or \"Out of stock in this store\". It "
+"never says how many pieces there are."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "17, 18, 19 or 20, Community or Enterprise"
+msgstr ""
+
+#. module: xb_price_checker
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.page
+msgid ""
+"<span data-key=\"searching\">Searching…</span>\n"
+"                    <span data-key=\"notFound\">We could not find this product</span>\n"
+"                    <span data-key=\"offline\">No connection, try again</span>\n"
+"                    <span data-key=\"prompt\">Type the code of the product</span>\n"
+"                    <span data-key=\"hint\">Scan the barcode of the product</span>"
+msgstr ""
 
 #. module: xb_price_checker
 #: model_terms:ir.ui.view,arch_db:xb_price_checker.page
@@ -32,8 +123,36 @@ msgid ""
 msgstr ""
 
 #. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "After 5 wrong PINs you have to wait one minute."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"After a few seconds the screen goes back to \"Check the price\" by itself, "
+"ready for the next customer."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Apps"
+msgstr ""
+
+#. module: xb_price_checker
 #: model_terms:ir.ui.view,arch_db:xb_price_checker.page
 msgid "Ask a sales associate"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"At the top, choose the %(register)s whose prices you want to show. The "
+"checker uses the pricelist, the taxes and the warehouse of that register."
 msgstr ""
 
 #. module: xb_price_checker
@@ -48,6 +167,8 @@ msgid "Available or out of stock in this store, without the number of pieces."
 msgstr ""
 
 #. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
 #: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
 msgid "Back to the start"
 msgstr ""
@@ -64,13 +185,58 @@ msgid "Barcode"
 msgstr ""
 
 #. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"Check that the product has that barcode or that internal reference in Odoo "
+"and that it is marked \"Can be Sold\"."
+msgstr ""
+
+#. module: xb_price_checker
 #: model_terms:ir.ui.view,arch_db:xb_price_checker.page
 msgid "Check the price"
 msgstr ""
 
 #. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Choose the register: \"¿Los precios de qué caja muestra?\"."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Common problems"
+msgstr ""
+
+#. module: xb_price_checker
 #: model:ir.model,name:xb_price_checker.model_res_config_settings
 msgid "Config Settings"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Create a register in Point of Sale. The checker uses its prices."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Customer scanning a bag with the XPago terminal in a boutique"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"Customer scanning a ring box in front of a wall screen in a jewelry store"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Device"
 msgstr ""
 
 #. module: xb_price_checker
@@ -80,14 +246,139 @@ msgid "Display Name"
 msgstr ""
 
 #. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"Each product stays on screen for 15 seconds and then goes back to the start."
+" On the terminal this time is fixed; the \"Back to the start\" setting only "
+"changes the link version."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"Each register has its own price checker. If you have two stores with "
+"different prices, set up each register separately."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"Everything comes from Odoo at the moment of the scan. If you change a price "
+"in Odoo, the checker shows it on the next scan."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Figure"
+msgstr ""
+
+#. module: xb_price_checker
 #: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
 msgid "From the payment rules, when the XPago app is installed."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Go to %(menu)s."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "How it looks"
 msgstr ""
 
 #. module: xb_price_checker
 #: model:ir.model.fields,field_description:xb_price_checker.field_pos_config__id
 #: model:ir.model.fields,field_description:xb_price_checker.field_res_config_settings__id
 msgid "ID"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"If the product has no barcode, the customer can tap \"Type the code\" and "
+"write the internal reference. This option is only in the link version "
+"(tablet or screen)."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"In %(menu)s, with the register chosen, tap %(open)s. The first time, the "
+"register's link is created and shows under the button, with a button to copy"
+" it."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "In Odoo go to %(apps)s, search for \"Price checker\" and install it."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Install and set up"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Install the app in your Odoo (Install and set up section)."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Internet"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "It can be used in two ways:"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"It looks first by barcode and then by internal reference (upper or lower "
+"case alike). Only products marked \"Can be Sold\" and of your company."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Language"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"Leave it open. If the browser has a full screen or kiosk mode, use it so the"
+" customer cannot leave the page."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Leaving it:"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Months without interest"
 msgstr ""
 
 #. module: xb_price_checker
@@ -99,11 +390,71 @@ msgid ""
 msgstr ""
 
 #. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
 #: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
 msgid "New link"
 msgstr ""
 
 #. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "No"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Odoo"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Odoo apps"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Odoo user on the device"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "On any tablet, phone or screen"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "On the XPago terminal"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "One that types the code and presses Enter (USB, Bluetooth or built in)"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"Open that link on the store's tablet or screen. No user or password is "
+"needed."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Open the Odoo app of the terminal, logged in."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
 #: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
 msgid "Open the price checker"
 msgstr ""
@@ -115,11 +466,74 @@ msgid "Out of stock in this store"
 msgstr ""
 
 #. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "PIN of a manager"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Photo and name"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Plug in the scanner. The screen shows \"Check the price\" and it is ready."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Point of Sale > Configuration > Settings"
+msgstr ""
+
+#. module: xb_price_checker
 #: model:ir.model,name:xb_price_checker.model_pos_config
 msgid "Point of Sale Configuration"
 msgstr ""
 
 #. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Point of Sale and Price checker"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Point of Sale, Price checker and XPago"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Press and hold the top left corner for 5 seconds."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Price"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Price before and discount"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Price before and discount percentage"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+#: code:addons/xb_price_checker/models/pos_config.py:0
 #: model_terms:ir.ui.view,arch_db:xb_price_checker.page
 #: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
 msgid "Price checker"
@@ -137,6 +551,36 @@ msgid "Price checker link"
 msgstr ""
 
 #. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Price checker: manual"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Product"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Removing it:"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Salir"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Save."
+msgstr ""
+
+#. module: xb_price_checker
 #: model_terms:ir.ui.view,arch_db:xb_price_checker.page
 msgid "Scan another product whenever you like"
 msgstr ""
@@ -144,6 +588,22 @@ msgstr ""
 #. module: xb_price_checker
 #: model_terms:ir.ui.view,arch_db:xb_price_checker.page
 msgid "Scan the barcode of the product"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Scanner"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"Scroll down to the %(block)s block and adjust what you need: %(stock)s says "
+"whether that store has it (on by default); %(months)s is on by default and "
+"only shows if you have the XPago app; %(back)s is the seconds a product "
+"stays on screen (15 by default)."
 msgstr ""
 
 #. module: xb_price_checker
@@ -166,6 +626,8 @@ msgid ""
 msgstr ""
 
 #. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
 #: model:ir.model.fields,field_description:xb_price_checker.field_pos_config__price_checker_show_months
 #: model:ir.model.fields,field_description:xb_price_checker.field_res_config_settings__pos_price_checker_show_months
 #: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
@@ -173,10 +635,58 @@ msgid "Show months without interest"
 msgstr ""
 
 #. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
 #: model:ir.model.fields,field_description:xb_price_checker.field_pos_config__price_checker_show_stock
 #: model:ir.model.fields,field_description:xb_price_checker.field_res_config_settings__pos_price_checker_show_stock
 #: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
 msgid "Show stock"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Someone tapped New link. Open the new link from Settings."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Stock"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Support: %(mail)s"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Tablet, phone or computer with a browser"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"Tap the %(icon)s icon. The terminal stays on \"Check the price\", full "
+"screen and locked: the customer cannot leave it or open other apps."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Tap the %(menu)s button and choose %(item)s."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"Tap the screen once. Check that the scanner types into a notepad and presses"
+" Enter at the end."
 msgstr ""
 
 #. module: xb_price_checker
@@ -188,8 +698,202 @@ msgid ""
 msgstr ""
 
 #. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Terminal: \"Falta instalar «Verificador de precios» en tu Odoo\""
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Terminal: \"NIP incorrecto\""
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Terminal: \"No pude traer las cajas de tu Odoo\""
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Terminal: \"Tu Odoo no tiene cajas de Punto de venta\""
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"The \"Listo\" notice appears and a new icon is left among the terminal's "
+"apps: %(icon)s."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"The Price checker is a screen for your customers: they scan a product and "
+"see what it costs, without asking anyone. It is an Odoo app and it works "
+"even if you do not have XPago."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"The customer holds the barcode to the scanner. The device asks your Odoo and"
+" the product shows up within a second. There is no need to touch the screen."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "The customer scans with the terminal's scanner."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"The device lost internet or Odoo did not answer. Check the internet and scan"
+" again."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "The language of your company in Odoo."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "The link is the key."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "The link says the page does not exist"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "The months without interest do not show"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"The most months the XPago payment rules allow for that product and that "
+"price. If the rules give a single payment, it does not appear."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"The pieces available and not reserved in the register's warehouse. It only "
+"says whether there are any or not."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"The pricelist of the register, for one piece. With or without taxes, the "
+"same way the register shows prices."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"The sales price of the product. It only shows if the pricelist gives at "
+"least 0.5% less."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "The same"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "The scanner does nothing on the tablet"
+msgstr ""
+
+#. module: xb_price_checker
 #: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
 msgid "The screens that have the current link stop working. Continue?"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "The stock line does not show"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"The terminal does not use the link: it uses the Odoo session it is already "
+"logged in with."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"The terminal is not logged in to Odoo. Log in with your user and try again."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "The terminal's scanner"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"To show %(stock)s you need the Inventory app and the product must track "
+"inventory. Otherwise that line does not appear."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"Turn on Show months without interest, check that you have the XPago app and "
+"that a payment rule gives months to that product and price."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Turn on Show stock and check that the product tracks inventory."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Turning it on (only once):"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"Type the %(pin)s and tap %(exit)s. The PIN of an employee whose user is a "
+"Point of Sale administrator works, or that of a manager of that register."
 msgstr ""
 
 #. module: xb_price_checker
@@ -203,18 +907,161 @@ msgstr ""
 msgid "Up to %(months)s months without interest of %(amount)s"
 msgstr ""
 
-#: model_terms:ir.ui.view,arch_db:xb_price_checker.page
-msgid "Searching…"
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Use the PIN of a manager. After 5 failed tries, wait one minute."
 msgstr ""
 
-#: model_terms:ir.ui.view,arch_db:xb_price_checker.page
-msgid "We could not find this product"
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Using it on a tablet or screen"
 msgstr ""
 
-#: model_terms:ir.ui.view,arch_db:xb_price_checker.page
-msgid "No connection, try again"
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Using it on the XPago terminal"
 msgstr ""
 
-#: model_terms:ir.ui.view,arch_db:xb_price_checker.page
-msgid "Type the code of the product"
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Using it:"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Verificador de precios"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Verificador de precios (para clientes)"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "What"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "What happens"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "What it is"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "What to do"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "What you need"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "When a product is scanned, the screen shows:"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"When you leave, the chosen register stays saved: the icon opens the price "
+"checker again."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Where each figure comes from"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Where it comes from"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "With a wall screen and a fixed scanner, using the link."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "With the XPago terminal"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid ""
+"With the XPago terminal: the customer scans the tag and sees photo, price, "
+"discount, months and stock."
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "With the link (tablet or screen)"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "XPago terminal with app 0.9.0 or newer"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Yes"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "Yes: the terminal must be logged in"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "register"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "stock"
+msgstr ""
+
+#. module: xb_price_checker
+#. odoo-python
+#: code:addons/xb_price_checker/manual.py:0
+msgid "☰ > Quitar el verificador de precios"
+msgstr ""
+
+#. module: xb_price_checker
+#: model_terms:ir.ui.view,arch_db:xb_price_checker.res_config_settings_view_form_price_checker
+msgid "Install as an app"
 msgstr ""

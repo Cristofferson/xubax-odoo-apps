@@ -23,7 +23,7 @@ without interest it can be paid in.
     "website": "https://www.xubax.com",
     "support": "soporte@xubax.com",
     "category": "Point of Sale",
-    "version": "20.0.1.0.0",
+    "version": "20.0.1.1.0",
     "license": "OPL-1",
     "price": 28.00,
     "currency": "USD",
@@ -45,4 +45,5 @@ without interest it can be paid in.
     "application": False,
     "installable": True,
     "auto_install": False,
+    "post_init_hook": "post_init_hook",
 }
