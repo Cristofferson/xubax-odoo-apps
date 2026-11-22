@@ -35,6 +35,9 @@ patch(PosOrder.prototype, {
                 deliveryDate: stash.commitment_date
                     ? DateTime.fromISO(stash.commitment_date)
                     : null,
+                layawayDeadline: stash.layaway_deadline
+                    ? DateTime.fromISO(stash.layaway_deadline)
+                    : null,
             };
         } else {
             const so = this.lines?.find((l) => l.sale_order_origin_id)
@@ -64,6 +67,10 @@ patch(PosOrder.prototype, {
                     state: so.state || null,
                     partnerRef: null,
                     deliveryDate: this.xbAsDateTime(so.commitment_date),
+                    layawayDeadline:
+                        typeof so.xb_layaway_deadline === "string"
+                            ? DateTime.fromISO(so.xb_layaway_deadline)
+                            : so.xb_layaway_deadline || null,
                 };
             }
         }
@@ -76,7 +83,11 @@ patch(PosOrder.prototype, {
         }
         const deliveryDate =
             data.deliveryDate && data.deliveryDate.isValid ? formatDate(data.deliveryDate) : null;
-        return { ...data, deliveryDate, paid: data.total - data.balance };
+        const layawayDeadline =
+            data.layawayDeadline && data.layawayDeadline.isValid && data.balance > 0
+                ? formatDate(data.layawayDeadline)
+                : null;
+        return { ...data, deliveryDate, layawayDeadline, paid: data.total - data.balance };
     },
     // commitment_date of a loaded SO: a luxon DateTime, or the server's UTC string.
     xbAsDateTime(value) {

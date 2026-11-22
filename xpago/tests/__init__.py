@@ -13,3 +13,7 @@ from . import test_kiosk_assets
 from . import test_kiosk_timeout
 from . import test_reader
 from . import test_pos_transfer
+from . import test_notify
+from . import test_domiciliation
+from . import test_subscription_renewal
+from . import test_calculator

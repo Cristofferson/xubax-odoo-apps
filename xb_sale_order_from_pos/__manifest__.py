@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Sales, Quotations & Layaway from POS",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.4.0",
     "category": "Point of Sale",
     "summary": "Create quotations, sale orders and layaways (apartados) directly "
                "from the Point of Sale, with detailed receipt and balance.",
@@ -26,11 +26,18 @@ All features are optional and configured per Point of Sale.
         "pos_sale",
         "sale",
         "sale_management",
+        "portal",
+        "base_automation",
     ],
     "data": [
+        "security/ir.model.access.csv",
         "data/mail_template_data.xml",
+        "data/mail_template_layaway.xml",
+        "data/base_automation_layaway.xml",
+        "data/ir_cron_data.xml",
         "views/res_config_settings_views.xml",
         "views/sale_order_views.xml",
+        "views/sale_portal_templates.xml",
     ],
     "assets": {
         "point_of_sale._assets_pos": [
@@ -45,6 +52,7 @@ All features are optional and configured per Point of Sale.
             "xb_sale_order_from_pos/static/src/app/models/pos_order_line.js",
             "xb_sale_order_from_pos/static/src/app/services/pos_store_settle.js",
             "xb_sale_order_from_pos/static/src/app/utils/order_payment_validation.js",
+            "xb_sale_order_from_pos/static/src/app/layaway/layaway_hold_warning.js",
             "xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.js",
             "xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.xml",
             "xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.css",

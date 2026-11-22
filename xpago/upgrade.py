@@ -6,7 +6,8 @@ import logging
 _logger = logging.getLogger(__name__)
 
 FOLDED_MODULES = {
-    'xpago': ('payment_xpago', 'pos_xpago', 'pos_self_order_xpago', 'xpago_pos', 'xpago_self_order'),
+    'xpago': ('payment_xpago', 'pos_xpago', 'pos_self_order_xpago', 'xpago_pos', 'xpago_self_order',
+              'xpago_domiciled', 'xpago_calculator', 'xpago_subscription', 'xpago_l10n_mx'),
 }
 
 # Records whose name was used by more than one of the former apps.
@@ -15,6 +16,9 @@ RENAMED = {
     ('pos_xpago', 'payment_xpago_rule_view_form'): 'pos_payment_xpago_rule_view_form',
     ('pos_self_order_xpago', 'res_config_settings_view_form'): 'self_order_res_config_settings_view_form',
     ('xpago_self_order', 'res_config_settings_view_form'): 'self_order_res_config_settings_view_form',
+    ('xpago_calculator', 'res_config_settings_view_form'): 'calculator_res_config_settings_view_form',
+    ('xpago_subscription', 'payment_xpago_domiciliation_view_form'): 'subscription_payment_xpago_domiciliation_view_form',
+    ('xpago_l10n_mx', 'payment_provider_form'): 'l10n_mx_payment_provider_form',
 }
 
 

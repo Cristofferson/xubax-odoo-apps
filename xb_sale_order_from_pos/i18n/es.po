@@ -205,6 +205,7 @@ msgstr "Saldo (PdV)"
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
 #: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.xml:0
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
 msgid "Balance due"
 msgstr "Saldo"
 
@@ -222,6 +223,8 @@ msgstr "RFC del emisor del CFDI (ticket)"
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
 #: code:addons/xb_sale_order_from_pos/static/src/app/components/xb_quotation_delivery_popup/xb_quotation_delivery_popup.xml:0
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.xb_layaway_autocharge_view_form
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.xb_layaway_extend_view_form
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -373,11 +376,12 @@ msgstr "Diferenciar Pedido y Apartado"
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_pos_config__display_name
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_pos_order__display_name
-#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_pos_payment_method__display_name
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_company__display_name
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__display_name
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order_line__display_name
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_autocharge__display_name
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_extend__display_name
 msgid "Display Name"
 msgstr "Nombre para mostrar"
 
@@ -470,11 +474,12 @@ msgstr "¿Cómo quiere el cliente su cotización?"
 #. module: xb_sale_order_from_pos
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_pos_config__id
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_pos_order__id
-#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_pos_payment_method__id
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_company__id
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_config_settings__id
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__id
 #: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order_line__id
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_autocharge__id
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_extend__id
 msgid "ID"
 msgstr "ID"
 
@@ -537,6 +542,7 @@ msgstr "APARTADO"
 #: code:addons/xb_sale_order_from_pos/models/sale_order.py:0
 #: code:addons/xb_sale_order_from_pos/static/src/app/control_buttons/control_buttons.js:0
 #: model:ir.model.fields.selection,name:xb_sale_order_from_pos.selection__sale_order__xb_so_kind__layaway
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.view_order_form_xb_layaway
 msgid "Layaway"
 msgstr "Apartado"
 
@@ -627,6 +633,8 @@ msgstr "Solo esta vez: la ficha del cliente conserva %s."
 #. odoo-python
 #: code:addons/xb_sale_order_from_pos/models/sale_order.py:0
 #: code:addons/xb_sale_order_from_pos/static/src/app/control_buttons/control_buttons.js:0
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_autocharge__order_id
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_extend__order_id
 #: model:ir.model.fields.selection,name:xb_sale_order_from_pos.selection__sale_order__xb_so_kind__order
 msgid "Order"
 msgstr "Pedido"
@@ -728,11 +736,6 @@ msgstr "Configuración del TPV"
 #: model:ir.model,name:xb_sale_order_from_pos.model_pos_order
 msgid "Point of Sale Orders"
 msgstr "Pedidos de TPV"
-
-#. module: xb_sale_order_from_pos
-#: model:ir.model,name:xb_sale_order_from_pos.model_pos_payment_method
-msgid "Point of Sale Payment Methods"
-msgstr "Métodos de pago en el punto de venta"
 
 #. module: xb_sale_order_from_pos
 #. odoo-python
@@ -1022,15 +1025,6 @@ msgid "Tax ID: %(vatId)s"
 msgstr "ID fiscal: %(vatId)s"
 
 #. module: xb_sale_order_from_pos
-#: model:ir.model.fields,help:xb_sale_order_from_pos.field_pos_payment_method__xb_company_country_code
-msgid ""
-"The ISO country code in two chars. \n"
-"You can use this field for quick search."
-msgstr ""
-"EL código ISO del país en dos caracteres.\n"
-"Puede utilizar este campo para la búsqueda rápida."
-
-#. module: xb_sale_order_from_pos
 #. odoo-python
 #: code:addons/xb_sale_order_from_pos/models/sale_order.py:0
 msgid "The Point of Sale configuration was not found."
@@ -1264,6 +1258,7 @@ msgstr "{{ object.company_id.name }} - Cotización {{ object.name }}"
 #. module: xb_sale_order_from_pos
 #. odoo-javascript
 #: code:addons/xb_sale_order_from_pos/static/src/app/components/xb_delivery_date_popup/xb_delivery_date_popup.js:0
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.view_order_form_xb_layaway
 msgid "Delivery date"
 msgstr "Fecha de entrega"
 
@@ -1288,3 +1283,1302 @@ msgid ""
 msgstr ""
 "Fecha probable, según los días de fabricación de los productos. Cámbiala si "
 "acordaron otra."
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "% of what you paid and returns the rest."
+msgstr "% de lo que pagaste y te devuelve el resto."
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/layaway/layaway_hold_warning.js:0
+msgid "%(name)s, %(partner)s"
+msgstr "%(name)s, %(partner)s"
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/layaway/layaway_hold_warning.js:0
+msgid "%(name)s, %(partner)s (until %(deadline)s)"
+msgstr "%(name)s, %(partner)s (hasta el %(deadline)s)"
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/layaway/layaway_hold_warning.js:0
+msgid ""
+"%(product)s is laid away for:\n"
+"%(holds)s\n"
+"\n"
+"Sell it anyway?"
+msgstr ""
+"%(product)s está apartada para:\n"
+"%(holds)s\n"
+"\n"
+"¿Venderla de todos modos?"
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_layaway.py:0
+msgid "%s is not a layaway."
+msgstr "%s no es un apartado."
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid ""
+",\n"
+"                                    up to the balance."
+msgstr ""
+",\n"
+"                                    hasta el saldo."
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid ". Contact the shop to extend it or to get your money back."
+msgstr ""
+". Comunícate con la tienda para ampliarlo o para que te devuelvan tu dinero."
+
+#. module: xb_sale_order_from_pos
+#: model:mail.template,body_html:xb_sale_order_from_pos.mail_template_layaway_reminder
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 14px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px;\">\n"
+"        Hello <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t>,\n"
+"        <br/><br/>\n"
+"        Your layaway <strong t-out=\"object.name or ''\">S00052</strong> at <t t-out=\"object.company_id.name or ''\">YourCompany</t> is due on <strong t-out=\"format_date(object.xb_layaway_deadline) or ''\">05/05/2021</strong>.\n"
+"        You have paid <t t-out=\"format_amount(object.xb_layaway_paid, object.currency_id) or ''\">$ 100.00</t> and the balance is <strong t-out=\"format_amount(object.amount_unpaid, object.currency_id) or ''\">$ 900.00</strong>.\n"
+"        <br/><br/>\n"
+"        You can pay it at the shop or online, in one or more payments:\n"
+"    </p>\n"
+"    <p style=\"margin: 16px 0px;\">\n"
+"        <a t-att-href=\"object._xb_layaway_portal_url()\" style=\"background-color: #1f7a4d; padding: 10px 16px; text-decoration: none; color: #fff; border-radius: 6px;\">Pay my layaway</a>\n"
+"    </p>\n"
+"    <p style=\"margin: 0px; padding: 0px;\" t-if=\"object.xb_layaway_cancel_fee_percent\">\n"
+"        If it is not paid by then, the shop keeps <t t-out=\"'%g' % object.xb_layaway_cancel_fee_percent\">10</t>% of what you paid and returns the rest.\n"
+"    </p>\n"
+"</div>\n"
+"        "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 14px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px;\">\n"
+"        Hola <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t>,\n"
+"        <br/><br/>\n"
+"        Tu apartado <strong t-out=\"object.name or ''\">S00052</strong> en <t t-out=\"object.company_id.name or ''\">YourCompany</t> vence el <strong t-out=\"format_date(object.xb_layaway_deadline) or ''\">05/05/2021</strong>.\n"
+"        Llevas pagado <t t-out=\"format_amount(object.xb_layaway_paid, object.currency_id) or ''\">$ 100.00</t> y el saldo es de <strong t-out=\"format_amount(object.amount_unpaid, object.currency_id) or ''\">$ 900.00</strong>.\n"
+"        <br/><br/>\n"
+"        Puedes pagarlo en la tienda o en línea, en uno o varios abonos:\n"
+"    </p>\n"
+"    <p style=\"margin: 16px 0px;\">\n"
+"        <a t-att-href=\"object._xb_layaway_portal_url()\" style=\"background-color: #1f7a4d; padding: 10px 16px; text-decoration: none; color: #fff; border-radius: 6px;\">Pagar mi apartado</a>\n"
+"    </p>\n"
+"    <p style=\"margin: 0px; padding: 0px;\" t-if=\"object.xb_layaway_cancel_fee_percent\">\n"
+"        Si no se liquida para entonces, la tienda se queda con el <t t-out=\"'%g' % object.xb_layaway_cancel_fee_percent\">10</t>% de lo que pagaste y te devuelve el resto.\n"
+"    </p>\n"
+"</div>\n"
+"        "
+
+#. module: xb_sale_order_from_pos
+#: model:mail.template,body_html:xb_sale_order_from_pos.mail_template_layaway_expired
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 14px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px;\">\n"
+"        Hello <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t>,\n"
+"        <br/><br/>\n"
+"        Your layaway <strong t-out=\"object.name or ''\">S00052</strong> at <t t-out=\"object.company_id.name or ''\">YourCompany</t> was due on <t t-out=\"format_date(object.xb_layaway_deadline) or ''\">05/05/2021</t> and it was not paid in full.\n"
+"        Contact us to extend it or to get back <strong t-out=\"format_amount(object.xb_layaway_refund_amount, object.currency_id) or ''\">$ 90.00</strong> of the <t t-out=\"format_amount(object.xb_layaway_paid, object.currency_id) or ''\">$ 100.00</t> you paid.\n"
+"        <br/><br/>\n"
+"        Any questions? Just reply to this email.\n"
+"    </p>\n"
+"</div>\n"
+"        "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 14px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px;\">\n"
+"        Hola <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t>,\n"
+"        <br/><br/>\n"
+"        Tu apartado <strong t-out=\"object.name or ''\">S00052</strong> en <t t-out=\"object.company_id.name or ''\">YourCompany</t> vencía el <t t-out=\"format_date(object.xb_layaway_deadline) or ''\">05/05/2021</t> y no se liquidó.\n"
+"        Comunícate con nosotros para ampliarlo o para que te devolvamos <strong t-out=\"format_amount(object.xb_layaway_refund_amount, object.currency_id) or ''\">$ 90.00</strong> de los <t t-out=\"format_amount(object.xb_layaway_paid, object.currency_id) or ''\">$ 100.00</t> que pagaste.\n"
+"        <br/><br/>\n"
+"        ¿Dudas? Solo responde este correo.\n"
+"    </p>\n"
+"</div>\n"
+"        "
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields.selection,name:xb_sale_order_from_pos.selection__sale_order__xb_layaway_state__active
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "Active"
+msgstr "Activo"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.view_sales_order_filter_xb_layaway
+msgid "Active layaways"
+msgstr "Apartados activos"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "Awaiting down payment"
+msgstr "Falta el enganche"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_autocharge__balance
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.view_order_form_xb_layaway
+msgid "Balance"
+msgstr "Saldo"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
+msgid ""
+"Before selling a piece that is laid away for another customer, the Point of "
+"Sale shows whose layaway it is and asks the cashier to confirm."
+msgstr ""
+"Antes de vender una pieza apartada para otro cliente, el Punto de Venta "
+"muestra de quién es el apartado y pide a la cajera que confirme."
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_layaway_fee_amount
+msgid "Cancellation fee"
+msgstr "Cargo por cancelación"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_layaway_cancel_fee_percent
+msgid "Cancellation fee (%)"
+msgstr "Cargo por cancelación (%)"
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_layaway.py:0
+msgid "Cancellation fee (%s%%):"
+msgstr "Cargo por cancelación (%s%%):"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields.selection,name:xb_sale_order_from_pos.selection__sale_order__xb_layaway_state__cancelled
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_autocharge__create_uid
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_extend__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_autocharge__create_date
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_extend__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
+msgid "Customer reminders"
+msgstr "Recordatorios al cliente"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_layaway_days_left
+msgid "Days left"
+msgstr "Días restantes"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_res_company__xb_layaway_days
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_res_config_settings__xb_layaway_days
+msgid ""
+"Days the customer has to pay a layaway in full, counted from the day it is "
+"created. 0 = no deadline."
+msgstr ""
+"Días que tiene el cliente para liquidar un apartado, contados desde el día "
+"en que se hace. 0 = sin fecha límite."
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
+msgid ""
+"Days to pay in full, counted from the day the layaway is made, and the share"
+" of the price paid to lay the goods away. Company-wide; each layaway keeps "
+"the terms it was made with."
+msgstr ""
+"Días para liquidar, contados desde el día del apartado, y la parte del "
+"precio que se paga para apartar. Para toda la empresa; cada apartado "
+"conserva las condiciones con que se hizo."
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/layaway/layaway_hold_warning.js:0
+msgid "Don't sell"
+msgstr "No vender"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields.selection,name:xb_sale_order_from_pos.selection__sale_order__xb_layaway_state__expired
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "Expired"
+msgstr "Vencido"
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_layaway.py:0
+msgid "Expired layaway: return %s"
+msgstr "Apartado vencido: devolver %s"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.view_sales_order_filter_xb_layaway
+msgid "Expired layaways"
+msgstr "Apartados vencidos"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_layaway_expired_on
+msgid "Expired on"
+msgstr "Venció el"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.xb_layaway_extend_view_form
+msgid "Extend"
+msgstr "Ampliar"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model,name:xb_sale_order_from_pos.model_xb_layaway_extend
+msgid "Extend a layaway"
+msgstr "Ampliar un apartado"
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_layaway.py:0
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.view_order_form_xb_layaway
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.xb_layaway_extend_view_form
+msgid "Extend layaway"
+msgstr "Ampliar plazo"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "How much do you want to pay now?"
+msgstr "¿Cuánto quieres abonar ahora?"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "If it is not paid in time, the shop keeps"
+msgstr "Si no se liquida a tiempo, la tienda se queda con el"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_autocharge__write_uid
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_extend__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_autocharge__write_date
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_extend__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_sale_order__xb_layaway_deadline
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_xb_layaway_autocharge__deadline
+msgid ""
+"Last day to pay the layaway in full. The day after, an unpaid layaway "
+"expires."
+msgstr ""
+"Último día para liquidar el apartado. Al día siguiente, un apartado sin "
+"liquidar vence."
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_layaway.py:0
+msgid ""
+"Layaway %(name)s expired on %(date)s. Extend its deadline from Sales before "
+"taking more payments."
+msgstr ""
+"El apartado %(name)s venció el %(date)s. Amplía su plazo desde Ventas antes "
+"de recibir más abonos."
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/utils/order_payment_validation.js:0
+msgid ""
+"Layaway %s expired. Extend its deadline from Sales before taking more "
+"payments."
+msgstr ""
+"El apartado %s venció. Amplía su plazo desde Ventas antes de recibir más "
+"abonos."
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_layaway.py:0
+msgid "Layaway %s takes no more payments."
+msgstr "El apartado %s ya no recibe abonos."
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_company__xb_layaway_cancel_fee_percent
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_config_settings__xb_layaway_cancel_fee_percent
+msgid "Layaway cancellation fee (%)"
+msgstr "Cargo por cancelación del apartado (%)"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_layaway_deadline
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_autocharge__deadline
+msgid "Layaway deadline"
+msgstr "Fecha límite del apartado"
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_layaway.py:0
+msgid "Layaway deadline set to %s."
+msgstr "Nueva fecha límite del apartado: %s."
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_layaway.py:0
+msgid "Layaway expired unpaid"
+msgstr "El apartado venció sin liquidarse"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_company__xb_layaway_down_percent
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_config_settings__xb_layaway_down_percent
+msgid "Layaway minimum down payment (%)"
+msgstr "Enganche mínimo del apartado (%)"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_company__xb_layaway_min_payment
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_config_settings__xb_layaway_min_payment
+msgid "Layaway minimum payment"
+msgstr "Abono mínimo del apartado"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_layaway_state
+msgid "Layaway status"
+msgstr "Estado del apartado"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_company__xb_layaway_days
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_config_settings__xb_layaway_days
+msgid "Layaway term (days)"
+msgstr "Plazo del apartado (días)"
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/utils/order_payment_validation.js:0
+msgid "Layaway terms"
+msgstr "Condiciones del apartado"
+
+#. module: xb_sale_order_from_pos
+#: model:mail.template,name:xb_sale_order_from_pos.mail_template_layaway_expired
+msgid "Layaway: expired"
+msgstr "Apartado: vencido"
+
+#. module: xb_sale_order_from_pos
+#: model:mail.template,name:xb_sale_order_from_pos.mail_template_layaway_reminder
+msgid "Layaway: reminder before the deadline"
+msgstr "Apartado: recordatorio antes de la fecha límite"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.actions.act_window,name:xb_sale_order_from_pos.action_xb_layaways
+#: model:ir.ui.menu,name:xb_sale_order_from_pos.menu_xb_layaways
+msgid "Layaways"
+msgstr "Apartados"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.actions.act_window,help:xb_sale_order_from_pos.action_xb_layaways
+msgid ""
+"Layaways are made from the Point of Sale: the customer pays a down payment, "
+"then pays the rest within the term."
+msgstr ""
+"Los apartados se hacen desde el Punto de Venta: el cliente paga un enganche "
+"y liquida el resto dentro del plazo."
+
+#. module: xb_sale_order_from_pos
+#: model:ir.actions.server,name:xb_sale_order_from_pos.ir_cron_xb_layaways_ir_actions_server
+msgid "Layaways: reminders and expiry"
+msgstr "Apartados: recordatorios y vencimientos"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "Minimum"
+msgstr "Mínimo"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_layaway_down_percent
+msgid "Minimum down payment (%)"
+msgstr "Enganche mínimo (%)"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_layaway_min_payment
+msgid "Minimum payment"
+msgstr "Abono mínimo"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "My layaway"
+msgstr "Mi apartado"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_extend__deadline
+msgid "New deadline"
+msgstr "Nueva fecha límite"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.actions.act_window,help:xb_sale_order_from_pos.action_xb_layaways
+msgid "No layaways yet"
+msgstr "Todavía no hay apartados"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "One day left to pay the balance."
+msgstr "Te queda un día para liquidar el saldo."
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "Paid"
+msgstr "Pagado"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_layaway_progress
+msgid "Paid (%)"
+msgstr "Pagado (%)"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields.selection,name:xb_sale_order_from_pos.selection__sale_order__xb_layaway_state__paid
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "Paid in full"
+msgstr "Liquidado"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_layaway_paid
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.view_order_form_xb_layaway
+msgid "Paid so far"
+msgstr "Pagado hasta hoy"
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_layaway.py:0
+msgid "Paid:"
+msgstr "Pagado:"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "Pay"
+msgstr "Abonar"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "Pay by"
+msgstr "Fecha límite"
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/screens/receipt_screen/receipt/order_receipt.xml:0
+msgid "Pay the balance by:"
+msgstr "Liquidar a más tardar el:"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
+msgid "Payments and cancellation"
+msgstr "Abonos y cancelación"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
+msgid "Protect laid-away goods"
+msgstr "Proteger las piezas apartadas"
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/layaway/layaway_hold_warning.js:0
+msgid "Sell anyway"
+msgstr "Vender de todos modos"
+
+#. module: xb_sale_order_from_pos
+#: model:mail.template,description:xb_sale_order_from_pos.mail_template_layaway_reminder
+msgid "Sent a few days before a layaway's deadline"
+msgstr "Se envía unos días antes de la fecha límite del apartado"
+
+#. module: xb_sale_order_from_pos
+#: model:mail.template,description:xb_sale_order_from_pos.mail_template_layaway_expired
+msgid "Sent when a layaway expires unpaid"
+msgstr "Se envía cuando un apartado vence sin liquidarse"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_res_company__xb_layaway_down_percent
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_res_config_settings__xb_layaway_down_percent
+msgid "Share of the price the customer pays to lay the goods away."
+msgstr "Parte del precio que el cliente paga para apartar."
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_res_company__xb_layaway_cancel_fee_percent
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_res_config_settings__xb_layaway_cancel_fee_percent
+msgid ""
+"Share of what the customer paid that the shop keeps when the layaway expires"
+" unpaid. The rest is to be returned to the customer."
+msgstr ""
+"Parte de lo que pagó el cliente que la tienda conserva cuando el apartado "
+"vence sin liquidarse. El resto se le devuelve."
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_res_company__xb_layaway_min_payment
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_res_config_settings__xb_layaway_min_payment
+msgid ""
+"Smallest payment accepted on a layaway after the down payment, unless it "
+"pays the whole balance."
+msgstr ""
+"Abono más pequeño que se acepta después del enganche, salvo que liquide todo"
+" el saldo."
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
+msgid ""
+"Smallest payment after the down payment (a payment that settles the balance "
+"is always accepted) and what the shop keeps of the payments when the layaway"
+" expires unpaid."
+msgstr ""
+"Abono más pequeño después del enganche (un pago que liquida el saldo siempre"
+" se acepta) y lo que la tienda conserva de los abonos si el apartado vence "
+"sin liquidarse."
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.view_order_form_xb_layaway
+msgid "Status"
+msgstr "Estado"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
+msgid "Term and down payment"
+msgstr "Plazo y enganche"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.view_order_form_xb_layaway
+msgid "Terms"
+msgstr "Condiciones"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_res_company__xb_layaway_warn_reserved
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_res_config_settings__xb_layaway_warn_reserved
+msgid ""
+"The Point of Sale warns the cashier before selling a piece that is laid away"
+" for another customer."
+msgstr ""
+"El Punto de Venta avisa a la cajera antes de vender una pieza apartada para "
+"otro cliente."
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/utils/order_payment_validation.js:0
+msgid ""
+"The down payment of %(name)s is at least %(minimum)s (%(percent)s% of the "
+"price)."
+msgstr ""
+"El enganche de %(name)s es de al menos %(minimum)s (%(percent)s% del "
+"precio)."
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_layaway.py:0
+msgid ""
+"The down payment of %(name)s is at least %(minimum)s (%(percent)s%% of the "
+"price)."
+msgstr ""
+"El enganche de %(name)s es de al menos %(minimum)s (%(percent)s%% del "
+"precio)."
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_layaway.py:0
+msgid ""
+"The layaway expired with %(balance)s unpaid. Return %(refund)s to the "
+"customer (or extend the deadline if they still want it) and cancel the "
+"order. The shop keeps %(fee)s."
+msgstr ""
+"El apartado venció con %(balance)s sin pagar. Devuelve %(refund)s al cliente"
+" (o amplía el plazo si todavía lo quiere) y cancela el pedido. La tienda "
+"conserva %(fee)s."
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.xb_layaway_extend_view_form
+msgid ""
+"The layaway goes back to active until the new deadline, and the customer "
+"will be reminded again before it."
+msgstr ""
+"El apartado vuelve a estar activo hasta la nueva fecha límite, y al cliente "
+"se le volverá a recordar antes."
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_layaway.py:0
+#: code:addons/xb_sale_order_from_pos/static/src/app/utils/order_payment_validation.js:0
+msgid ""
+"The minimum payment on %(name)s is %(minimum)s, unless it pays the whole "
+"balance (%(balance)s)."
+msgstr ""
+"El abono mínimo de %(name)s es de %(minimum)s, salvo que liquide todo el "
+"saldo (%(balance)s)."
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_layaway.py:0
+msgid "The new deadline cannot be in the past."
+msgstr "La nueva fecha límite no puede ser anterior a hoy."
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_layaway.py:0
+msgid ""
+"The payment (%(amount)s) is higher than the balance of %(name)s "
+"(%(balance)s)."
+msgstr ""
+"El abono (%(amount)s) es mayor que el saldo de %(name)s (%(balance)s)."
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_layaway.py:0
+msgid "The payment must be greater than zero."
+msgstr "El abono debe ser mayor que cero."
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "This layaway expired on"
+msgstr "Este apartado venció el"
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/layaway/layaway_hold_warning.js:0
+msgid "This piece is laid away"
+msgstr "Esta pieza está apartada"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_layaway_refund_amount
+msgid "To return to the customer"
+msgstr "A devolver al cliente"
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_layaway.py:0
+msgid "To return to the customer:"
+msgstr "A devolver al cliente:"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "Today is the last day to pay the balance."
+msgstr "Hoy es el último día para liquidar el saldo."
+
+#. module: xb_sale_order_from_pos
+#. odoo-javascript
+#: code:addons/xb_sale_order_from_pos/static/src/app/control_buttons/control_buttons.xml:0
+msgid "View Orders/Layaways"
+msgstr "Ver Pedidos/Apartados"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_company__xb_layaway_warn_reserved
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_config_settings__xb_layaway_warn_reserved
+msgid "Warn when selling goods laid away"
+msgstr "Avisar al vender piezas apartadas"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_sale_order__xb_layaway_paid
+msgid "What the customer has paid towards this layaway."
+msgstr "Lo que el cliente lleva pagado de este apartado."
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_sale_order__xb_layaway_fee_amount
+msgid "What the shop keeps of the payments if the layaway expires unpaid."
+msgstr ""
+"Lo que la tienda conserva de los abonos si el apartado vence sin liquidarse."
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields.selection,name:xb_sale_order_from_pos.selection__sale_order__xb_layaway_state__draft
+msgid "Without down payment"
+msgstr "Sin enganche"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "Your layaway is paid. Pick up your purchase at the shop."
+msgstr "Tu apartado está liquidado. Recoge tu compra en la tienda."
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "days left to pay the balance."
+msgstr "días restantes para liquidar el saldo."
+
+#. module: xb_sale_order_from_pos
+#: model:mail.template,subject:xb_sale_order_from_pos.mail_template_layaway_expired
+msgid "{{ object.company_id.name }} - Your layaway {{ object.name }} expired"
+msgstr "{{ object.company_id.name }} - Tu apartado {{ object.name }} venció"
+
+#. module: xb_sale_order_from_pos
+#: model:mail.template,subject:xb_sale_order_from_pos.mail_template_layaway_reminder
+msgid ""
+"{{ object.company_id.name }} - Your layaway {{ object.name }} is due on {{ "
+"format_date(object.xb_layaway_deadline) }}"
+msgstr ""
+"{{ object.company_id.name }} - Tu apartado {{ object.name }} vence el {{ "
+"format_date(object.xb_layaway_deadline) }}"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
+msgid ""
+"Before the deadline the customer gets an email with the balance and the link"
+" to pay it online. It is an Odoo automation rule: change the days or the "
+"email there. A notice is also emailed when the layaway expires."
+msgstr ""
+"Antes de la fecha límite el cliente recibe un correo con su saldo y la liga "
+"para pagar en línea. Es una regla de automatización de Odoo: ahí cambias los"
+" días o el correo. También se le avisa por correo cuando el apartado vence."
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_company__xb_layaway_notify_customer
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_config_settings__xb_layaway_notify_customer
+msgid "Email the customer when a layaway expires"
+msgstr ""
+"Enviar al cliente por correo los recordatorios y el aviso de vencimiento"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.actions.server,name:xb_sale_order_from_pos.automation_layaway_reminder_action
+msgid "Email the layaway reminder"
+msgstr "Enviar el recordatorio del apartado"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_layaway_activity_id
+msgid "Expiry to-do"
+msgstr "Tarea de vencimiento"
+
+#. module: xb_sale_order_from_pos
+#: model:base.automation,name:xb_sale_order_from_pos.automation_layaway_reminder
+msgid "Layaways: reminder before the deadline"
+msgstr "Apartados: recordatorio antes de la fecha límite"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
+msgid "Reminder rule"
+msgstr "Regla del recordatorio"
+
+#. module: xb_sale_order_from_pos
+#: model:mail.template,body_html:xb_sale_order_from_pos.mail_template_order_reminder
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 14px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px;\">\n"
+"        Hello <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t>,\n"
+"        <br/><br/>\n"
+"        Your order <strong t-out=\"object.name or ''\">S00052</strong> at <t t-out=\"object.company_id.name or ''\">YourCompany</t> is due for delivery on <strong t-out=\"format_date(object.commitment_date) or ''\">05/05/2021</strong>.\n"
+"        You have paid <t t-out=\"format_amount(object.xb_layaway_paid, object.currency_id) or ''\">$ 300.00</t> and the balance is <strong t-out=\"format_amount(object.amount_unpaid, object.currency_id) or ''\">$ 700.00</strong>.\n"
+"        <br/><br/>\n"
+"        You can pay it at the shop when you pick it up, or online now, in one or more payments:\n"
+"    </p>\n"
+"    <p style=\"margin: 16px 0px;\">\n"
+"        <a t-att-href=\"object._xb_portal_order_url()\" style=\"background-color: #1f7a4d; padding: 10px 16px; text-decoration: none; color: #fff; border-radius: 6px;\">Pay my order</a>\n"
+"    </p>\n"
+"</div>\n"
+"        "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 14px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px;\">\n"
+"        Hola <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t>,\n"
+"        <br/><br/>\n"
+"        Tu pedido <strong t-out=\"object.name or ''\">S00052</strong> en <t t-out=\"object.company_id.name or ''\">YourCompany</t> se entrega el <strong t-out=\"format_date(object.commitment_date) or ''\">05/05/2021</strong>.\n"
+"        Llevas pagado <t t-out=\"format_amount(object.xb_layaway_paid, object.currency_id) or ''\">$ 300.00</t> y el saldo es de <strong t-out=\"format_amount(object.amount_unpaid, object.currency_id) or ''\">$ 700.00</strong>.\n"
+"        <br/><br/>\n"
+"        Puedes pagarlo en la tienda al recogerlo, o en línea desde ahora, en uno o varios abonos:\n"
+"    </p>\n"
+"    <p style=\"margin: 16px 0px;\">\n"
+"        <a t-att-href=\"object._xb_portal_order_url()\" style=\"background-color: #1f7a4d; padding: 10px 16px; text-decoration: none; color: #fff; border-radius: 6px;\">Pagar mi pedido</a>\n"
+"    </p>\n"
+"</div>\n"
+"        "
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "Any amount up to the balance."
+msgstr "Cualquier monto hasta el saldo."
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "Delivery"
+msgstr "Entrega"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.actions.server,name:xb_sale_order_from_pos.automation_order_reminder_action
+msgid "Email the order balance reminder"
+msgstr "Enviar el recordatorio de saldo del pedido"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
+msgid "Layaway and order terms"
+msgstr "Condiciones de apartados y pedidos"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "My order"
+msgstr "Mi pedido"
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_layaway.py:0
+msgid "Order %s is cancelled."
+msgstr "El pedido %s está cancelado."
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_company__xb_order_down_percent
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_res_config_settings__xb_order_down_percent
+msgid "Order minimum down payment (%)"
+msgstr "Anticipo mínimo de pedidos (%)"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
+msgid "Order reminder rule"
+msgstr "Regla del recordatorio de pedidos"
+
+#. module: xb_sale_order_from_pos
+#: model:mail.template,name:xb_sale_order_from_pos.mail_template_order_reminder
+msgid "Order: balance reminder before delivery"
+msgstr "Pedido: recordatorio de saldo antes de la entrega"
+
+#. module: xb_sale_order_from_pos
+#: model:base.automation,name:xb_sale_order_from_pos.automation_order_reminder
+msgid "Orders: balance reminder before delivery"
+msgstr "Pedidos: recordatorio de saldo antes de la entrega"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
+msgid "Orders: minimum down payment"
+msgstr "Pedidos: anticipo mínimo"
+
+#. module: xb_sale_order_from_pos
+#: model:mail.template,description:xb_sale_order_from_pos.mail_template_order_reminder
+msgid "Sent a few days before the delivery date of an order with a balance"
+msgstr ""
+"Se envía unos días antes de la fecha de entrega de un pedido con saldo"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.res_config_settings_view_form_xb
+msgid ""
+"Share of the price an order made at the register (a special order) needs as "
+"its first payment; a payment of the whole order is always accepted. 0 = any "
+"down payment. Before the delivery date the customer gets an email with the "
+"balance and the link to pay it online (an Odoo automation rule)."
+msgstr ""
+"Parte del precio que necesita como primer pago un pedido hecho en la caja "
+"(un encargo); un pago del pedido completo siempre se acepta. 0 = cualquier "
+"anticipo. Antes de la fecha de entrega el cliente recibe un correo con su "
+"saldo y la liga para pagar en línea (una regla de automatización de Odoo)."
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_res_company__xb_order_down_percent
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_res_config_settings__xb_order_down_percent
+msgid ""
+"Share of the price paid as the first payment of an order made at the Point "
+"of Sale (special orders). 0 = any down payment."
+msgstr ""
+"Parte del precio que se paga como primer pago de un pedido hecho en el Punto"
+" de Venta (encargos). 0 = cualquier anticipo."
+
+#. module: xb_sale_order_from_pos
+#: model:mail.template,subject:xb_sale_order_from_pos.mail_template_order_reminder
+msgid ""
+"{{ object.company_id.name }} - Your order {{ object.name }} is almost ready"
+msgstr ""
+"{{ object.company_id.name }} - Tu pedido {{ object.name }} ya casi está "
+"listo"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid ""
+".\n"
+"                            Next payment:"
+msgstr ""
+".\n"
+"                            Próximo cobro:"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid ""
+".\n"
+"                            You can still pay more whenever you like."
+msgstr ""
+".\n"
+"                            Puedes abonar más cuando quieras."
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "<b>Automatic payments:</b>"
+msgstr "<b>Abonos automáticos:</b>"
+
+#. module: xb_sale_order_from_pos
+#: model:mail.template,body_html:xb_sale_order_from_pos.mail_template_layaway_autocharge
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 14px;\">\n"
+"    <t t-set=\"tx\" t-value=\"object.transaction_ids.filtered(lambda t: t.state == 'done' and t.token_id).sorted('id')[-1:]\"/>\n"
+"    <p style=\"margin: 0px; padding: 0px;\">\n"
+"        Hello <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t>,\n"
+"        <br/><br/>\n"
+"        As agreed, we charged <strong t-out=\"format_amount(tx.amount, object.currency_id) or ''\">$ 200.00</strong> to your card <t t-out=\"tx.token_id.payment_details or ''\">1234</t> for your layaway <strong t-out=\"object.name or ''\">S00052</strong> at <t t-out=\"object.company_id.name or ''\">YourCompany</t>.\n"
+"        <br/><br/>\n"
+"        You have paid <t t-out=\"format_amount(object.xb_layaway_paid, object.currency_id) or ''\">$ 300.00</t>.\n"
+"        <t t-if=\"object.currency_id.compare_amounts(object.amount_unpaid, 0.0) &gt; 0\">\n"
+"            The balance is <strong t-out=\"format_amount(object.amount_unpaid, object.currency_id) or ''\">$ 700.00</strong><t t-if=\"object.xb_auto_next_date\"> and the next payment is on <t t-out=\"format_date(object.xb_auto_next_date) or ''\">05/05/2021</t></t>.\n"
+"        </t>\n"
+"        <t t-else=\"\">\n"
+"            <strong>Your layaway is paid in full.</strong> Pick up your purchase at the shop.\n"
+"        </t>\n"
+"    </p>\n"
+"    <p style=\"margin: 16px 0px;\">\n"
+"        <a t-att-href=\"object._xb_layaway_portal_url()\" style=\"background-color: #1f7a4d; padding: 10px 16px; text-decoration: none; color: #fff; border-radius: 6px;\">See my layaway</a>\n"
+"    </p>\n"
+"    <p style=\"margin: 0px; padding: 0px;\">To stop the automatic payments or change the card, just reply to this email.</p>\n"
+"</div>\n"
+"        "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 14px;\">\n"
+"    <t t-set=\"tx\" t-value=\"object.transaction_ids.filtered(lambda t: t.state == 'done' and t.token_id).sorted('id')[-1:]\"/>\n"
+"    <p style=\"margin: 0px; padding: 0px;\">\n"
+"        Hola <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t>,\n"
+"        <br/><br/>\n"
+"        Como acordamos, cobramos <strong t-out=\"format_amount(tx.amount, object.currency_id) or ''\">$ 200.00</strong> a tu tarjeta <t t-out=\"tx.token_id.payment_details or ''\">1234</t> por tu apartado <strong t-out=\"object.name or ''\">S00052</strong> en <t t-out=\"object.company_id.name or ''\">YourCompany</t>.\n"
+"        <br/><br/>\n"
+"        Llevas pagado <t t-out=\"format_amount(object.xb_layaway_paid, object.currency_id) or ''\">$ 300.00</t>.\n"
+"        <t t-if=\"object.currency_id.compare_amounts(object.amount_unpaid, 0.0) &gt; 0\">\n"
+"            El saldo es de <strong t-out=\"format_amount(object.amount_unpaid, object.currency_id) or ''\">$ 700.00</strong><t t-if=\"object.xb_auto_next_date\"> y el próximo abono es el <t t-out=\"format_date(object.xb_auto_next_date) or ''\">05/05/2021</t></t>.\n"
+"        </t>\n"
+"        <t t-else=\"\">\n"
+"            <strong>Tu apartado quedó liquidado.</strong> Pasa por tu compra a la tienda.\n"
+"        </t>\n"
+"    </p>\n"
+"    <p style=\"margin: 16px 0px;\">\n"
+"        <a t-att-href=\"object._xb_layaway_portal_url()\" style=\"background-color: #1f7a4d; padding: 10px 16px; text-decoration: none; color: #fff; border-radius: 6px;\">Ver mi apartado</a>\n"
+"    </p>\n"
+"    <p style=\"margin: 0px; padding: 0px;\">Para detener los abonos automáticos o cambiar la tarjeta, responde a este correo.</p>\n"
+"</div>\n"
+"        "
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_xb_layaway_autocharge__balance
+msgid "Amount left to pay in POS to avoid double payment or double invoicing."
+msgstr ""
+"Saldo por pagar en el punto de venta, para no cobrar ni facturar dos veces."
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_auto_amount
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_autocharge__amount
+msgid "Amount per payment"
+msgstr "Monto de cada abono"
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid "Ask the customer for another card or to pay at the shop or online."
+msgstr "Pídele al cliente otra tarjeta, o que pague en la tienda o en línea."
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model,name:xb_sale_order_from_pos.model_xb_layaway_autocharge
+msgid "Automatic layaway payments"
+msgstr "Abonos automáticos del apartado"
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid "Automatic payment of %(amount)s charged to %(card)s."
+msgstr "Abono automático de %(amount)s cobrado a %(card)s."
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.view_order_form_xb_layaway
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.xb_layaway_autocharge_view_form
+msgid "Automatic payments"
+msgstr "Abonos automáticos"
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid "Automatic payments are for active layaways (with their down payment)."
+msgstr ""
+"Los abonos automáticos son para apartados activos (con su enganche pagado)."
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid "Automatic payments stopped by %s."
+msgstr "%s detuvo los abonos automáticos."
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid "Automatic payments stopped: card declined"
+msgstr "Abonos automáticos detenidos: tarjeta rechazada"
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid "Automatic payments: %(amount)s %(every)s to %(card)s, from %(date)s."
+msgstr ""
+"Abonos automáticos: %(amount)s %(every)s a %(card)s, desde el %(date)s."
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid "By the deadline %(left)s would still be owed."
+msgstr "Al vencer todavía faltarían %(left)s."
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid ""
+"Card declined %(times)s times in a row: automatic payments stopped "
+"(%(reason)s)."
+msgstr ""
+"Tarjeta rechazada %(times)s veces seguidas: se detuvieron los abonos "
+"automáticos (%(reason)s)."
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid "Card declined on the layaway's automatic payment"
+msgstr "Tarjeta rechazada en el abono automático del apartado"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_auto_token_id
+msgid "Card for automatic payments"
+msgstr "Tarjeta de los abonos automáticos"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.view_order_form_xb_layaway
+msgid "Change"
+msgstr "Cambiar"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_autocharge__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_auto_failures
+msgid "Declined in a row"
+msgstr "Rechazos seguidos"
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid "Each payment must be at least the layaway's minimum payment (%s)."
+msgstr "Cada abono debe ser al menos el abono mínimo del apartado (%s)."
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields.selection,name:xb_sale_order_from_pos.selection__sale_order__xb_auto_every__fortnight
+#: model:ir.model.fields.selection,name:xb_sale_order_from_pos.selection__xb_layaway_autocharge__every__fortnight
+msgid "Every 15 days"
+msgstr "Cada 15 días"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields.selection,name:xb_sale_order_from_pos.selection__sale_order__xb_auto_every__month
+#: model:ir.model.fields.selection,name:xb_sale_order_from_pos.selection__xb_layaway_autocharge__every__month
+msgid "Every month"
+msgstr "Cada mes"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields.selection,name:xb_sale_order_from_pos.selection__sale_order__xb_auto_every__week
+#: model:ir.model.fields.selection,name:xb_sale_order_from_pos.selection__xb_layaway_autocharge__every__week
+msgid "Every week"
+msgstr "Cada semana"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_autocharge__first_date
+msgid "First payment"
+msgstr "Primer abono"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_sale_order__xb_auto_authorization
+msgid "For example: signed layaway form, WhatsApp of the 3rd, email…"
+msgstr "Por ejemplo: hoja de apartado firmada, WhatsApp del día 3, correo…"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_auto_every
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_autocharge__every
+msgid "How often"
+msgstr "Cada cuándo"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_auto_authorization
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_autocharge__authorization
+msgid "How the customer authorized it"
+msgstr "Cómo lo autorizó el cliente"
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid "Layaway expired: automatic payments stopped."
+msgstr "Apartado vencido: se detuvieron los abonos automáticos."
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid "Layaway paid: automatic payments finished."
+msgstr "Apartado liquidado: terminaron los abonos automáticos."
+
+#. module: xb_sale_order_from_pos
+#: model:mail.template,name:xb_sale_order_from_pos.mail_template_layaway_autocharge
+msgid "Layaway: automatic payment charged"
+msgstr "Apartado: abono automático cobrado"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_sale_order__xb_auto_next_date
+msgid "Next automatic payment"
+msgstr "Próximo abono automático"
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid "Order cancelled: automatic payments stopped."
+msgstr "Pedido cancelado: se detuvieron los abonos automáticos."
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.xb_layaway_autocharge_view_form
+msgid "Save"
+msgstr "Guardar"
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_autocharge__token_id
+msgid "Saved card"
+msgstr "Tarjeta guardada"
+
+#. module: xb_sale_order_from_pos
+#: model:mail.template,description:xb_sale_order_from_pos.mail_template_layaway_autocharge
+msgid "Sent each time the saved card pays a layaway on its own"
+msgstr ""
+"Se envía cada vez que la tarjeta guardada paga sola un abono del apartado"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.xb_layaway_autocharge_view_form
+msgid "Signed layaway form, WhatsApp of the 3rd, email…"
+msgstr "Hoja de apartado firmada, WhatsApp del día 3, correo…"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.view_order_form_xb_layaway
+msgid "Stop"
+msgstr "Detener"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.view_order_form_xb_layaway
+msgid "Stop the automatic payments of this layaway? The card stays saved."
+msgstr ""
+"¿Detener los abonos automáticos de este apartado? La tarjeta sigue guardada."
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_autocharge__summary
+msgid "Summary"
+msgstr "Resumen"
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid "That card is not the customer's."
+msgstr "Esa tarjeta no es del cliente."
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid "The balance is paid by the deadline."
+msgstr "El saldo queda pagado antes de la fecha límite."
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid ""
+"The card was declined for %(amount)s: %(reason)s. It will be tried again on "
+"%(date)s."
+msgstr ""
+"La tarjeta fue rechazada por %(amount)s: %(reason)s. Se volverá a intentar "
+"el %(date)s."
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.xb_layaway_autocharge_view_form
+msgid ""
+"The customer has no saved card yet. Send them the link to their layaway: when they pay online,\n"
+"                    they tick «Save my payment details», and the card shows up here."
+msgstr ""
+"El cliente todavía no tiene tarjeta guardada. Mándale la liga de su apartado: al pagar en línea,\n"
+"                    que marque «Guardar mis datos de pago» y la tarjeta aparecerá aquí."
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid ""
+"The customer has no saved card yet. Send them the link to their layaway: "
+"when they pay online, they tick «Save my payment details»."
+msgstr ""
+"El cliente todavía no tiene tarjeta guardada. Mándale la liga de su "
+"apartado: al pagar en línea, que marque «Guardar mis datos de pago»."
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.xb_layaway_autocharge_view_form
+msgid ""
+"The customer's saved card pays this amount on its own until the layaway is paid. Each payment\n"
+"                    is emailed to the customer. If the card is declined it is tried again 2 days later; after 3\n"
+"                    declines in a row it stops and the salesperson gets a to-do."
+msgstr ""
+"La tarjeta guardada del cliente paga sola este monto hasta liquidar el apartado. Cada abono\n"
+"                    le llega al cliente por correo. Si la tarjeta es rechazada se intenta de nuevo 2 días después; con 3\n"
+"                    rechazos seguidos se detiene y el vendedor recibe una tarea."
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_sale_order__xb_auto_token_id
+msgid ""
+"The customer's saved card that pays this layaway on its own. Empty = no "
+"automatic payments."
+msgstr ""
+"La tarjeta guardada del cliente que paga sola este apartado. Vacío = sin "
+"abonos automáticos."
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid "The first payment cannot be in the past."
+msgstr "El primer abono no puede ser en una fecha pasada."
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,help:xb_sale_order_from_pos.field_xb_layaway_autocharge__first_date
+msgid ""
+"Today = charged as soon as you confirm. Later dates are charged that "
+"morning."
+msgstr ""
+"Hoy = se cobra al guardar. Las fechas posteriores se cobran esa mañana."
+
+#. module: xb_sale_order_from_pos
+#: model:ir.model.fields,field_description:xb_sale_order_from_pos.field_xb_layaway_autocharge__token_ids
+msgid "Token"
+msgstr "Tarjeta"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.view_sales_order_filter_xb_layaway
+msgid "With automatic payments"
+msgstr "Con abonos automáticos"
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid "Write the amount of each payment."
+msgstr "Escribe el monto de cada abono."
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "every 15 days"
+msgstr "cada 15 días"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "every month"
+msgstr "cada mes"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "every week"
+msgstr "cada semana"
+
+#. module: xb_sale_order_from_pos
+#. odoo-python
+#: code:addons/xb_sale_order_from_pos/models/sale_order_autocharge.py:0
+msgid "no reason given"
+msgstr "sin motivo"
+
+#. module: xb_sale_order_from_pos
+#: model_terms:ir.ui.view,arch_db:xb_sale_order_from_pos.sale_order_portal_content_xb_layaway
+msgid "to your card ending in"
+msgstr "a tu tarjeta con terminación"
+
+#. module: xb_sale_order_from_pos
+#: model:mail.template,subject:xb_sale_order_from_pos.mail_template_layaway_autocharge
+msgid ""
+"{{ object.company_id.name }} - We charged a payment of your layaway {{ "
+"object.name }}"
+msgstr ""
+"{{ object.company_id.name }} - Cobramos un abono de tu apartado {{ "
+"object.name }}"

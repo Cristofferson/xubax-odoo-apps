@@ -145,7 +145,6 @@ class SaleOrder(models.Model):
             sale_order.amount_unpaid = max(sale_order.amount_total - total_invoices_paid - total_pos_orders_paid - sale_order.amount_paid, 0.0)
 
     @api.model
-    @api.model
     def xb_pos_expected_delivery_date(self, product_ids):
         """Probable delivery day ("YYYY-MM-DD") for a POS cart: today plus the
         longest customer lead time (product "Customer Lead Time", sale_delay) of
@@ -292,6 +291,12 @@ class SaleOrder(models.Model):
         kind = payload.get("type")
         if kind:
             order_vals["xb_so_kind"] = kind
+        # 1.3.0: a layaway takes its company's terms (deadline, down payment, minimum
+        # payment, cancellation fee) and keeps them even if the settings change later.
+        if kind == "layaway":
+            order_vals.update(self._xb_layaway_terms(config.company_id))
+        elif kind in ("order", "order_layaway"):
+            order_vals["xb_layaway_down_percent"] = config.company_id.xb_order_down_percent
         # Document template per kind (configured per COMPANY): apply the company's
         # Quotation / Order / Layaway template so its validity (validity_date from
         # number_of_days), terms (note), and signature/payment requirements flow in
@@ -411,6 +416,8 @@ class SaleOrder(models.Model):
             "partner_ref": partner.ref or "",
             "commitment_date": fields.Date.to_string(delivery_day) if delivery_day else False,
             "down_payment_product_id": down_payment_product.id or False,
+            "layaway_deadline": fields.Date.to_string(order.xb_layaway_deadline) if order.xb_layaway_deadline else False,
+            "layaway_down_payment": order._xb_layaway_required_down_payment() if kind == "layaway" else 0.0,
         }
 
     # ------------------------------------------------------------------

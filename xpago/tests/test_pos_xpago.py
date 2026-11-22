@@ -1,3 +1,4 @@
+from datetime import timedelta
 from unittest.mock import patch
 
 from odoo.exceptions import UserError, ValidationError
@@ -157,14 +158,12 @@ class TestPosXpago(TestPoSCommon):
         with self.assertRaises(UserError):
             self.method.xpago_create_charge({'amount': 10})
 
-    def test_deposit_account_of_the_terminal_or_the_cashier(self):
+    def test_deposit_account_chosen_by_the_cashier(self):
         Account = self.env['payment.xpago.bank.account']
-        oper = Account.create({'provider_id': self.provider.id, 'xpago_id': 'acc-oper', 'name': 'Operación'})
         fiscal = Account.create({'provider_id': self.provider.id, 'xpago_id': 'acc-fiscal', 'name': 'Fiscal'})
-        self.method.xpago_bank_account_id = oper
         with patch(SEND, return_value=self.intent()) as send:
             self.method.xpago_create_charge({'amount': 10, 'bank_account_id': fiscal.id})
-        self.assertEqual(send.call_args.kwargs['json']['deposit_account_id'], 'acc-oper', 'the cashier may not choose')
+        self.assertNotIn('deposit_account_id', send.call_args.kwargs['json'], 'the cashier may not choose')
         self.method.xpago_choose_account = True
         with patch(SEND, return_value=self.intent()) as send:
             view = self.method.xpago_create_charge({'amount': 10, 'bank_account_id': fiscal.id})
@@ -396,6 +395,24 @@ class TestPosXpago(TestPoSCommon):
         self.assertTrue(settings.xpago_needs_connect, 'the terminal uses it even if it is disabled online')
         self.assertEqual(settings.action_xpago_connect()['type'], 'ir.actions.act_url')
 
+    def test_cashier_chooses_the_months(self):
+        """«The cashier chooses the months»: set per register in the settings, with the months of the account; the
+        one plan the cashier picks goes alone to the terminal, so it offers the customer nothing to choose."""
+        settings = self.env['res.config.settings'].create({'pos_config_id': self.basic_config.id})
+        self.assertFalse(settings.pos_xpago_cashier_terms)
+        self.assertEqual(settings.pos_xpago_terms_offered, '3, 6, 9, 12')
+        settings.write({'pos_xpago_cashier_terms': True, 'pos_xpago_terms_offered': '3, 6'})
+        settings.execute()
+        self.assertTrue(self.basic_config.xpago_cashier_terms)
+        with self.assertRaises(ValidationError):
+            self.basic_config.xpago_terms_offered = '3, seis'
+        with patch(SEND, return_value=self.intent()) as send:
+            self.method.xpago_create_charge({'amount': 600.0, 'order_uuid': 'abcdef12-3456', 'terms': [6]})
+        self.assertEqual(send.call_args.kwargs['json']['installments'], [6])
+        charge = self.env['pos.xpago.charge'].sudo().search([], order='id desc', limit=1)
+        charge.terms = 6
+        self.assertEqual(charge._xpago_payment_values()['xpago_terms'], 6, 'the months go to the payment and its voucher')
+
     # «Force done» asks XPago first: a charge cancelled on the terminal never closes a sale as paid.
 
     def force_check(self, status_answer, amount=150.5, uuid='abcdef12-3456'):
@@ -420,6 +437,18 @@ class TestPosXpago(TestPoSCommon):
     def test_force_done_approved_charge_of_another_amount(self):
         self.assertEqual(self.force_check(self.approved(), amount=999.0)['state'], 'unmatched')
 
+    def test_retry_takes_the_approved_charge_of_the_sale(self):
+        """«Retry» after the register gave up on a card approved after all (LAMUR 20-nov, $990): the approved charge pays
+        the sale and nothing goes to the terminal again; once a payment uses it, «Retry» charges anew."""
+        self.force_check(self.approved())
+        with patch(SEND) as send:
+            view = self.method.xpago_create_charge({'amount': 150.5, 'order_uuid': 'abcdef12-3456'})
+        send.assert_not_called()
+        self.assertEqual((view['state'], view['payment']['transaction_id']), ('confirmed', 'pay-1'))
+        with patch(SEND, return_value=self.intent()) as send:
+            self.method.xpago_create_charge({'amount': 99.0, 'order_uuid': 'abcdef12-3456'})
+        send.assert_called_once()
+
     # Without a card in the time of the payment method, the charge is cancelled; a card paid at the end is not.
 
     def _age(self, seconds):
@@ -435,7 +464,7 @@ class TestPosXpago(TestPoSCommon):
 
     def test_timeout_cancels_the_charge(self):
         view, _send = self.create_charge()
-        with patch(SEND, side_effect=[self.intent(), self.intent('canceled')]) as send:
+        with patch(SEND, side_effect=[self.intent(), {'data': []}, self.intent('canceled')]) as send:
             result = self.method.xpago_timeout_charge(view['id'])
         self.assertEqual(send.call_args_list[-1].args, ('POST', '/v1/terminal-charges/pi-1/cancel'))
         self.assertEqual((result['state'], result['timed_out']), ('cancelled', True))
@@ -468,3 +497,74 @@ class TestPosXpago(TestPoSCommon):
             self.env['pos.xpago.charge'].sudo()._xpago_cron_refresh()
         self.assertNotIn(('POST', '/v1/terminal-charges/pi-1/cancel'), [c.args for c in send.call_args_list])
         self.assertEqual(charge.state, 'pending')
+
+    # A foreign card goes through another acquirer and the processor does not tie its payment to the charge (LAMUR
+    # 20-nov, $990): the terminal the payment names says which charge it paid.
+
+    def loose(self, amount=150.5, serial='N950-0001', **extra):
+        charge = self.env['pos.xpago.charge'].search([('payment_method_id', '=', self.method.id)], order='id desc', limit=1)
+        return {'id': 'pay-loose', 'operation_code': '75971794205', 'status': 'paid', 'channel': 'other',
+                'card_present': True, 'amount': amount, 'charged_amount': amount, 'tip_amount': 0, 'installments': 1,
+                'created_at': (charge.create_date + timedelta(seconds=40)).isoformat() + 'Z', 'terminal_serial': serial,
+                'authorization_code': '06523D', 'card': {'last4': '1065', 'brand': 'UNKNOWN', 'funding': 'CREDIT'},
+                **extra}
+
+    def test_notice_of_a_loose_payment_pays_the_charge_of_its_terminal(self):
+        self.create_charge()
+        charge = self._age(60)
+        with patch(SEND, return_value=self.loose()) as send:
+            self.provider._xpago_handle_notice({'object': {'kind': 'payment', 'id': 'pay-loose'}})
+        self.assertEqual(send.call_args.args, ('GET', '/v1/payments/pay-loose'))
+        self.assertEqual((charge.state, charge.payment_id, charge.authorization_code, charge.card_no),
+                         ('confirmed', 'pay-loose', '06523D', '1065'))
+
+    def test_a_loose_payment_pays_even_a_charge_cancelled_for_lack_of_card(self):
+        view, _send = self.create_charge()
+        charge = self._age(60)
+        charge.sudo().write({'state': 'cancelled', 'timed_out': True})
+        with patch(SEND, return_value=self.loose()):
+            self.provider._xpago_handle_notice({'object': {'kind': 'payment', 'id': 'pay-loose'}})
+        self.assertEqual((charge.state, charge.timed_out), ('confirmed', False))
+        with patch(SEND) as send:
+            again = self.method.xpago_create_charge({'amount': 150.5, 'order_uuid': 'abcdef12-3456'})
+        send.assert_not_called()
+        self.assertEqual(again['id'], view['id'], '«Retry» closes the sale with it')
+
+    def test_a_loose_payment_of_another_terminal_amount_or_tied_elsewhere_pays_nothing(self):
+        self.create_charge()
+        charge = self._age(60)
+        for payment in (self.loose(serial='OTRA-0002'), self.loose(amount=99.0),
+                        self.loose(terminal_charge_id='pi-9'), self.loose(status='refunded'), self.loose(card_present=False)):
+            with patch(SEND, return_value=payment):
+                self.provider._xpago_handle_notice({'object': {'kind': 'payment', 'id': 'pay-loose'}})
+            self.assertEqual(charge.state, 'pending')
+
+    def test_a_loose_payment_belongs_to_the_charge_sent_last_to_the_terminal(self):
+        self.create_charge()
+        first = self._age(120)
+        self.create_charge()
+        second = self._age(60)
+        with patch(SEND, return_value=self.loose()):
+            self.provider._xpago_handle_notice({'object': {'kind': 'payment', 'id': 'pay-loose'}})
+        self.assertEqual((first.state, second.state), ('pending', 'confirmed'))
+
+    def test_timeout_finds_the_loose_payment_instead_of_cancelling(self):
+        view, _send = self.create_charge()
+        charge = self._age(60)
+        with patch(SEND, side_effect=[self.intent(), {'data': [self.loose()]}]) as send:
+            result = self.method.xpago_timeout_charge(view['id'])
+        self.assertEqual(send.call_args.args, ('GET', '/v1/payments'))
+        self.assertEqual(send.call_args.kwargs['params']['status'], ['paid'])
+        self.assertEqual((result['state'], result['timed_out'], charge.payment_id), ('confirmed', False, 'pay-loose'))
+
+    def test_instant_notice_settles_the_terminal_charge(self):
+        view, _send = self.create_charge()
+        with patch(SEND, return_value=self.approved()) as send:
+            self.provider._xpago_handle_notice({'object': {'kind': 'terminal_charge', 'id': 'pi-1', 'payment_id': 'pay-1'}})
+        self.assertEqual(send.call_args.args, ('GET', '/v1/terminal-charges/pi-1'))
+        charge = self.env['pos.xpago.charge'].browse(view['id'])
+        self.assertEqual((charge.state, charge.card_no), ('confirmed', '4242'))
+        # A refund made on the terminal app: the notice names the payment, Odoo reads the charge again.
+        with patch(SEND, return_value={**self.approved(), 'status': 'refunded'}):
+            self.provider._xpago_handle_notice({'object': {'kind': 'payment', 'id': 'pay-1'}})
+        self.assertEqual(charge.state, 'refunded')

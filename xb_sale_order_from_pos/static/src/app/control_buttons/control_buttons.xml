@@ -20,4 +20,16 @@
             </button>
         </xpath>
     </t>
+
+    <!-- The native pos_sale loader lists the orders and layaways to recover, so it always reads «View
+         Orders/Layaways». Matched by its click, so another module that restyles this button still works. -->
+    <t t-name="xb_sale_order_from_pos.ControlButtonsLoaderLabel"
+       t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <xpath expr="//button[@t-on-click='() => this.onClickQuotation()']" position="replace">
+            <button t-if="this.pos.cashier._role != 'minimal'" t-att-class="buttonClass" t-on-click="() => this.onClickQuotation()">
+                <i class="fa fa-link me-1" role="img" aria-label="View Orders/Layaways" title="View Orders/Layaways"/>
+                View Orders/Layaways
+            </button>
+        </xpath>
+    </t>
 </templates>

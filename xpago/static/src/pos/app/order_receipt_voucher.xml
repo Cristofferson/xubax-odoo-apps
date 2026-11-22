@@ -2,13 +2,15 @@
 <templates xml:space="preserve">
     <t t-name="xpago.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
         <xpath expr="//div[hasclass('after-footer')]" position="inside">
-            <t t-foreach="xpagoVoucherLines" t-as="line" t-key="line.uuid">
+            <!-- The card voucher goes on the full receipt only: the basic one is a gift ticket, without prices. -->
+            <t t-foreach="props.basic_receipt ? [] : xpagoVoucherLines" t-as="line" t-key="line.uuid">
                 <div class="xpago-voucher text-start mt-3 pt-2" style="border-top: 1px dashed currentColor; font-size: 85%;">
                     <div class="text-center fw-bolder">CARD SALE</div>
                     <div class="d-flex justify-content-between">
                         <span><t t-esc="line.card_brand"/> **** <t t-esc="line.card_no"/></span>
                         <span t-esc="xpagoFunding(line)"/>
                     </div>
+                    <div t-if="line.xpago_terms > 1" class="fw-bolder"><t t-esc="line.xpago_terms"/> months without interest</div>
                     <div t-if="line.payment_method_issuer_bank">Bank: <t t-esc="line.payment_method_issuer_bank"/></div>
                     <div t-if="line.payment_method_authcode">Authorization: <t t-esc="line.payment_method_authcode"/></div>
                     <div t-if="line.payment_ref_no">Operation: <t t-esc="line.payment_ref_no"/></div>
@@ -26,6 +28,21 @@
                     </div>
                 </div>
             </t>
+        </xpath>
+    </t>
+
+    <!-- The two print buttons say what they print: the full ticket, and the gift ticket (Odoo's «basic receipt»,
+         without prices). -->
+    <t t-name="xpago.ReceiptScreenGiftTicket" t-inherit="point_of_sale.ReceiptScreen" t-inherit-mode="extension">
+        <xpath expr="//button[@t-on-click='() => doFullPrint.call()']" position="replace">
+            <button class="button print btn btn-lg btn-secondary w-100 py-3" t-on-click="() => doFullPrint.call()">
+                <i t-attf-class="fa {{doFullPrint.status === 'loading' ? 'fa-fw fa-spin fa-circle-o-notch' : 'fa-print'}} me-1"/>Print Full Ticket
+            </button>
+        </xpath>
+        <xpath expr="//button[@t-on-click='() => doBasicPrint.call()']" position="replace">
+            <button t-if="pos.config.basic_receipt" class="button print btn btn-lg btn-secondary w-100 py-3" t-on-click="() => doBasicPrint.call()">
+                <i t-attf-class="fa {{doBasicPrint.status === 'loading' ? 'fa-fw fa-spin fa-circle-o-notch' : 'fa-gift'}} me-1"/>Print Gift Ticket
+            </button>
         </xpath>
     </t>
 </templates>

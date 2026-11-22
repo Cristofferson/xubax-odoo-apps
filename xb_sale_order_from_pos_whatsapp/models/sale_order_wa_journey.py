@@ -31,10 +31,12 @@ XB_WA_AUTO_KINDS = [
     ("pickup", "Reminder: waiting to be picked up"),
     ("delivered", "Delivered"),
     ("followup", "Follow-up after delivery"),
+    ("layaway_due", "Reminder: layaway deadline coming"),
+    ("order_due", "Reminder: balance before delivery"),
 ]
 # Reminders (pick-up, follow-up) keep quiet if the customer got something from us in
 # the last few days; the rest answer something the customer just did, and go right away.
-XB_WA_DEFAULT_DELAY = {"pickup": 7, "followup": 5}
+XB_WA_DEFAULT_DELAY = {"pickup": 7, "followup": 5, "layaway_due": 3, "order_due": 3}
 
 
 class XbSaleOrderWaAutomation(models.Model):
@@ -66,7 +68,8 @@ class XbSaleOrderWaAutomation(models.Model):
     delay_days = fields.Integer(
         string="After (days)",
         help="Pick-up reminder: days after the ready notice. Follow-up: days after "
-             "delivery.",
+             "delivery. Layaway and balance reminders: days BEFORE the layaway deadline / "
+             "the delivery date.",
     )
     quiet_days = fields.Integer(
         string="Quiet days",
@@ -380,7 +383,31 @@ class SaleOrder(models.Model):
         ):
             return self._xb_wa_auto_send(auto)
 
-        # 5. Follow-up: some days after delivery, once.
+        # 5. Layaway deadline coming: some days before it, once per deadline (extending
+        #    the layaway reminds again before the new one).
+        auto = due("layaway_due")
+        if auto and self.xb_so_kind == "layaway" and getattr(self, "xb_layaway_state", False) == "active":
+            reminder = self._xb_wa_due_reminder(auto, self.xb_layaway_deadline)
+            if reminder:
+                return reminder
+
+        # 6. Balance before delivery: an order with a balance, some days before its
+        #    delivery date, once per date.
+        auto = due("order_due")
+        if (
+            auto and self.xb_so_kind in ("order", "order_layaway") and self.state == "sale"
+            and not delivered_at and self.currency_id.compare_amounts(self.amount_unpaid, 0.0) > 0
+            and self.commitment_date
+        ):
+            day = fields.Datetime.context_timestamp(
+                self.with_context(tz=self.company_id.partner_id.tz or "America/Mexico_City"),
+                self.commitment_date,
+            ).date()
+            reminder = self._xb_wa_due_reminder(auto, day)
+            if reminder:
+                return reminder
+
+        # 7. Follow-up: some days after delivery, once.
         auto = due("followup")
         if (
             auto and delivered_at and delivered_at >= auto.since
@@ -390,6 +417,21 @@ class SaleOrder(models.Model):
         ):
             return self._xb_wa_auto_send(auto)
         return False
+
+    def _xb_wa_due_reminder(self, automation, day):
+        """Send ``automation`` when ``day`` (a deadline or a delivery date) is at most its
+        days ahead and nobody reminded this customer of it yet."""
+        self.ensure_one()
+        if not day:
+            return False
+        tz = pytz.timezone(self.company_id.partner_id.tz or "America/Mexico_City")
+        today = fields.Datetime.now().replace(tzinfo=pytz.utc).astimezone(tz).date()
+        if not (0 <= (day - today).days <= (automation.delay_days or 0)):
+            return False
+        window = fields.Datetime.to_datetime(day - timedelta(days=(automation.delay_days or 0) + 1))
+        if self._xb_wa_logged(automation.kind, since=window, sent_only=False):
+            return False
+        return self._xb_wa_auto_send(automation)
 
     def _xb_wa_recent_contact(self, days):
         self.ensure_one()

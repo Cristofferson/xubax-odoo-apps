@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Once a day: remind customers before the deadline and expire unpaid layaways. -->
+    <record id="ir_cron_xb_layaways" model="ir.cron">
+        <field name="name">Layaways: reminders and expiry</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">model._xb_cron_layaways()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="nextcall" eval="(DateTime.now().replace(hour=14, minute=0, second=0) + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

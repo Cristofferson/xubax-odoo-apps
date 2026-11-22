@@ -1,4 +1,7 @@
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
+
+from odoo.addons.xpago.models.payment_xpago_rule import parse_terms
 
 
 class PosConfig(models.Model):
@@ -14,6 +17,29 @@ class PosConfig(models.Model):
         help="When the products of a sale go to different accounts or allow different months without interest "
              "(XPago payment rules), the charge is split: one charge per account, each with its months.",
     )
+
+    # The cashier picks the months on the register: the terminal gets one plan and asks the customer nothing.
+    xpago_cashier_terms = fields.Boolean(
+        string="The cashier chooses the months",
+        help="On every card charge the register asks the cashier: single payment or months without interest, only "
+             "among those the XPago payment rules allow for the sale. The terminal gets that one plan and shows the "
+             "customer no months to choose.",
+    )
+    xpago_terms_offered = fields.Char(
+        string="Months of your XPago account", default="3, 6, 9, 12",
+        help="The months the cashier may offer when no XPago payment rule decides the months of the sale. They must "
+             "be months your XPago account has.",
+    )
+
+    @api.constrains('xpago_terms_offered')
+    def _check_xpago_terms_offered(self):
+        for config in self:
+            try:
+                parse_terms(config.xpago_terms_offered or '')
+            except ValueError:
+                raise ValidationError(_(
+                    "Write the months as whole numbers separated by commas, for example \"3, 6, 12\"."
+                )) from None
 
     # Odoo open on the terminal itself, printing on the terminal's printer (the processor's POS app answers as an Epson
     # ePOS printer on 127.0.0.1:8008). The terminal then prints its certified card voucher right under Odoo's receipt.

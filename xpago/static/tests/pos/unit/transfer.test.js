@@ -5,10 +5,13 @@ import { setupPosEnv, getFilledOrder } from "@point_of_sale/../tests/unit/utils"
 import { definePosModels } from "@point_of_sale/../tests/unit/data/generate_model_definitions";
 import { OrderReceipt } from "@point_of_sale/app/screens/receipt_screen/receipt/order_receipt";
 import {
-    customerDefaults,
     formatClabe,
     minutesLeft,
+    missingCustomerData,
     transferDelay,
+    whatsappPhone,
+    whatsappText,
+    whatsappUrl,
 } from "@xpago/pos/app/transfer/transfer_utils";
 
 definePosModels();
@@ -26,6 +29,24 @@ describe("XPago transfer: helpers", () => {
         expect(transferDelay(15 * 60000)).toBe(10000);
     });
 
+    test("WhatsApp: phone with the country code, and the details in the message", () => {
+        expect(whatsappPhone("443 123 4567")).toBe("524431234567");
+        expect(whatsappPhone("+52 1 443 123 4567")).toBe("5214431234567");
+        expect(whatsappPhone("12345")).toBe("");
+        const view = {
+            business: "Anello", clabe: "738180000000012345", bank: "STP", beneficiary: "XPago",
+            concept: "", checkout_url: "https://pay.example/x",
+        };
+        const text = whatsappText(view, { amountText: "$ 10.00", clabeText: "738 180 00000001234 5", minutes: 30 });
+        expect(text).toInclude("738180000000012345");
+        expect(text).toInclude("$ 10.00");
+        expect(text).toInclude("30 min");
+        expect(text).not.toInclude("https://pay.example/x");
+        expect(text).not.toInclude("Concept");
+        expect(whatsappUrl("4431234567", "a b")).toBe("https://wa.me/524431234567?text=a%20b");
+        expect(whatsappUrl("", "a")).toBe("https://wa.me/?text=a");
+    });
+
     test("minutes left of the CLABE", () => {
         const now = Date.parse("2026-11-15T20:00:00Z");
         expect(minutesLeft("2026-11-15 20:59:30", now)).toBe(60);
@@ -33,16 +54,10 @@ describe("XPago transfer: helpers", () => {
         expect(minutesLeft(false, now)).toBe(null);
     });
 
-    test("who pays: the customer, else the business", () => {
-        const company = { email: "tienda@anello.mx", phone: "4431234567" };
-        expect(customerDefaults({ name: "Ana Ruiz", email: "ana@x.mx", phone: "5512345678" }, company)).toEqual({
-            name: "Ana Ruiz", email: "ana@x.mx", phone: "5512345678", isBusiness: false,
-        });
-        expect(customerDefaults(null, company)).toEqual({
-            name: "", email: "tienda@anello.mx", phone: "4431234567", isBusiness: true,
-        });
-        // A customer without email nor phone keeps the name; the business's contact fills the rest.
-        expect(customerDefaults({ name: "Ana" }, company).name).toBe("Ana");
+    test("what the customer lacks for the CLABE", () => {
+        expect(missingCustomerData({ name: "Ana Ruiz", email: "ana@x.mx", phone: "443 123 4567" })).toEqual([]);
+        expect(missingCustomerData({ name: "Ana", email: "", phone: "123" }).length).toBe(2);
+        expect(missingCustomerData(null).length).toBe(3);
     });
 });
 

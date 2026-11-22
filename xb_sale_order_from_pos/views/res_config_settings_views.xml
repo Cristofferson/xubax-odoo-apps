@@ -130,6 +130,52 @@
                         <field name="xb_layaway_template_id" options="{'no_create': True}"/>
                     </setting>
                 </block>
+                <block title="Layaway and order terms" id="xb_layaway_terms_block"
+                       invisible="not pos_xb_enable_sale_order">
+                    <setting id="xb_layaway_term_setting" string="Term and down payment"
+                             help="Days to pay in full, counted from the day the layaway is made, and the share of the price paid to lay the goods away. Company-wide; each layaway keeps the terms it was made with.">
+                        <div class="row mt-2">
+                            <label for="xb_layaway_days" class="col-lg-5 o_light_label"/>
+                            <field name="xb_layaway_days" class="col-lg-3"/>
+                        </div>
+                        <div class="row">
+                            <label for="xb_layaway_down_percent" class="col-lg-5 o_light_label"/>
+                            <field name="xb_layaway_down_percent" class="col-lg-3"/>
+                        </div>
+                    </setting>
+                    <setting id="xb_layaway_payment_setting" string="Payments and cancellation"
+                             help="Smallest payment after the down payment (a payment that settles the balance is always accepted) and what the shop keeps of the payments when the layaway expires unpaid.">
+                        <div class="row mt-2">
+                            <label for="xb_layaway_min_payment" class="col-lg-5 o_light_label"/>
+                            <field name="xb_layaway_min_payment" class="col-lg-3"/>
+                        </div>
+                        <div class="row">
+                            <label for="xb_layaway_cancel_fee_percent" class="col-lg-5 o_light_label"/>
+                            <field name="xb_layaway_cancel_fee_percent" class="col-lg-3"/>
+                        </div>
+                    </setting>
+                    <setting id="xb_layaway_notify_setting" string="Customer reminders"
+                             help="Before the deadline the customer gets an email with the balance and the link to pay it online. It is an Odoo automation rule: change the days or the email there. A notice is also emailed when the layaway expires.">
+                        <field name="xb_layaway_notify_customer"/>
+                        <div class="mt-2">
+                            <button name="action_xb_layaway_reminder_rule" type="object" string="Reminder rule" icon="oi-arrow-right" class="btn-link"/>
+                        </div>
+                    </setting>
+                    <setting id="xb_order_terms_setting" string="Orders: minimum down payment"
+                             help="Share of the price an order made at the register (a special order) needs as its first payment; a payment of the whole order is always accepted. 0 = any down payment. Before the delivery date the customer gets an email with the balance and the link to pay it online (an Odoo automation rule).">
+                        <div class="row mt-2">
+                            <label for="xb_order_down_percent" class="col-lg-5 o_light_label"/>
+                            <field name="xb_order_down_percent" class="col-lg-3"/>
+                        </div>
+                        <div class="mt-2">
+                            <button name="action_xb_order_reminder_rule" type="object" string="Order reminder rule" icon="oi-arrow-right" class="btn-link"/>
+                        </div>
+                    </setting>
+                    <setting id="xb_layaway_warn_setting" string="Protect laid-away goods"
+                             help="Before selling a piece that is laid away for another customer, the Point of Sale shows whose layaway it is and asks the cashier to confirm.">
+                        <field name="xb_layaway_warn_reserved"/>
+                    </setting>
+                </block>
             </xpath>
         </field>
     </record>

@@ -18,6 +18,14 @@
                          help="Which XPago terminal each point of sale charges with; warns when one terminal is on two points of sale.">
                     <button name="%(xpago.action_pos_xpago_terminal_setup)d" type="action" class="btn-link" icon="oi-arrow-right" string="Assign the terminals"/>
                 </setting>
+                <setting id="xpago_calculator_charge" string="XPago calculator"
+                         help="The Calculator app can also charge its result on an XPago terminal. Turned off, it only calculates.">
+                    <field name="xpago_calculator_charge"/>
+                </setting>
+                <setting id="xpago_invoice_pay_qr" string="Pay link and QR on invoices"
+                         help="The PDF of an invoice not yet paid carries a QR and a link to pay it online, by card or by SPEI transfer to a CLABE made for that payment. The invoice is marked paid by itself when the money arrives.">
+                    <field name="xpago_invoice_pay_qr"/>
+                </setting>
                 <setting id="xpago_payment_rules" string="XPago payment rules"
                          help="Months without interest and deposit accounts by what is sold, on the XPago terminals of this point of sale.">
                     <div>
@@ -27,6 +35,18 @@
                     <div class="mt-2">
                         <field name="pos_xpago_split" class="me-2"/>
                         <label for="pos_xpago_split" string="Split the charge when the products go to different accounts or months"/>
+                    </div>
+                    <div class="mt-2">
+                        <field name="pos_xpago_cashier_terms" class="me-2"/>
+                        <label for="pos_xpago_cashier_terms" string="The cashier chooses the months on the register"/>
+                        <div class="text-muted small">The terminal gets that one plan and shows the customer no months to choose.</div>
+                    </div>
+                    <div class="content-group mt-1" invisible="not pos_xpago_cashier_terms">
+                        <div class="row">
+                            <label string="Months of your XPago account" for="pos_xpago_terms_offered" class="col-lg-5 o_light_label"/>
+                            <field name="pos_xpago_terms_offered" placeholder="3, 6, 9, 12"/>
+                        </div>
+                        <div class="text-muted small">Offered when no payment rule decides the months of the sale.</div>
                     </div>
                     <div class="mt-1">
                         <button name="%(xpago.action_payment_xpago_rule)d" type="action" class="btn-link" icon="oi-arrow-right" string="XPago payment rules"/>

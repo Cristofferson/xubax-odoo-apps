@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_xb_layaway_extend_salesman,xb.layaway.extend salesman,model_xb_layaway_extend,sales_team.group_sale_salesman,1,1,1,1
+access_xb_layaway_autocharge_salesman,xb.layaway.autocharge salesman,model_xb_layaway_autocharge,sales_team.group_sale_salesman,1,1,1,1

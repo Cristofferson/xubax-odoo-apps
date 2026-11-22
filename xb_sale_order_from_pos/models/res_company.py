@@ -40,6 +40,41 @@ class ResCompany(models.Model):
         help="Quotation Template applied to LAYAWAYS created from the POS.",
     )
 
+    # --- Layaway terms (1.3.0). Copied onto each layaway when it is created, so a
+    # later change here never rewrites the terms a customer already accepted.
+    xb_layaway_days = fields.Integer(
+        string="Layaway term (days)", default=30,
+        help="Days the customer has to pay a layaway in full, counted from the day it "
+        "is created. 0 = no deadline.",
+    )
+    xb_layaway_down_percent = fields.Float(
+        string="Layaway minimum down payment (%)", default=10.0,
+        help="Share of the price the customer pays to lay the goods away.",
+    )
+    xb_layaway_min_payment = fields.Monetary(
+        string="Layaway minimum payment", currency_field="currency_id", default=50.0,
+        help="Smallest payment accepted on a layaway after the down payment, unless it "
+        "pays the whole balance.",
+    )
+    xb_layaway_cancel_fee_percent = fields.Float(
+        string="Layaway cancellation fee (%)", default=10.0,
+        help="Share of what the customer paid that the shop keeps when the layaway "
+        "expires unpaid. The rest is to be returned to the customer.",
+    )
+    xb_order_down_percent = fields.Float(
+        string="Order minimum down payment (%)", default=0.0,
+        help="Share of the price paid as the first payment of an order made at the Point of "
+        "Sale (special orders). 0 = any down payment.",
+    )
+    xb_layaway_notify_customer = fields.Boolean(
+        string="Email the customer when a layaway expires", default=True,
+    )
+    xb_layaway_warn_reserved = fields.Boolean(
+        string="Warn when selling goods laid away", default=True,
+        help="The Point of Sale warns the cashier before selling a piece that is laid "
+        "away for another customer.",
+    )
+
     def _compute_xb_cfdi_emisor_rfc(self):
         for company in self:
             # DORMANT outside Mexico: keyed on the fiscal country (like l10n_mx_edi).
@@ -60,4 +95,6 @@ class ResCompany(models.Model):
     def _load_pos_data_fields(self, config):
         # Expose the resolved issuer RFC so the receipt footer shows the fiscal
         # entity's RFC (the parent's, for a branch) instead of an empty value.
-        return super()._load_pos_data_fields(config) + ["xb_cfdi_emisor_rfc"]
+        return super()._load_pos_data_fields(config) + [
+            "xb_cfdi_emisor_rfc", "xb_layaway_down_percent", "xb_order_down_percent", "xb_layaway_min_payment",
+            "xb_layaway_warn_reserved"]

@@ -24,6 +24,19 @@ patch(OrderPaymentValidation.prototype, {
             return false;
         }
 
+        // Guard 1b (1.3.0) — layaway terms on a payment (down payment line only, a
+        // settle is checked by Guard 2): an expired layaway takes no payment, the
+        // first payment reaches the minimum down payment and the next ones the
+        // minimum payment, unless the payment settles the whole balance.
+        const layawayError = this.xbLayawayPaymentError();
+        if (layawayError) {
+            this.pos.dialog.add(AlertDialog, {
+                title: _t("Layaway terms"),
+                body: layawayError,
+            });
+            return false;
+        }
+
         // Guard 2 — when SETTLING one of our SOs (the order carries its product
         // lines, not just an advance), the amount being collected for that SO must
         // equal its real balance (sale.order.amount_unpaid, the source of truth from
@@ -66,5 +79,67 @@ patch(OrderPaymentValidation.prototype, {
         }
 
         return super.askBeforeValidation();
+    },
+
+    xbLayawayPaymentError() {
+        const dpId = this.pos.config.raw?.down_payment_product_id;
+        const fmt = (v) => this.pos.env.utils.formatCurrency(v);
+        const round = (v) => this.pos.currency.round(v);
+        const bySo = new Map();
+        for (const l of this.order.getOrderlines()) {
+            const so = l.sale_order_origin_id;
+            if (!["layaway", "order", "order_layaway"].includes(so?.xb_so_kind)) {
+                continue;
+            }
+            (bySo.get(so) || bySo.set(so, []).get(so)).push(l);
+        }
+        for (const [so, lines] of bySo) {
+            if (lines.some((l) => l.product_id.id !== dpId)) {
+                continue; // a settle: Guard 2 checks it equals the balance
+            }
+            const amount = round(lines.reduce((s, l) => s + (l.priceIncl || 0), 0));
+            if (amount <= 0) {
+                continue; // a refund of a down payment is not a payment
+            }
+            if (so.xb_so_kind !== "layaway") {
+                // An order: only its first payment has a minimum (the down payment).
+                const balanceO = round(so.amount_unpaid || 0);
+                const paidO = round((so.amount_total || 0) - balanceO);
+                const minO = round(((so.amount_total || 0) * (so.xb_layaway_down_percent || 0)) / 100);
+                if (paidO <= 0 && amount < balanceO && amount < minO) {
+                    return _t(
+                        "The down payment of %(name)s is at least %(minimum)s (%(percent)s% of the price).",
+                        { name: so.name, minimum: fmt(minO), percent: so.xb_layaway_down_percent }
+                    );
+                }
+                continue;
+            }
+            if (so.xb_layaway_state === "expired") {
+                return _t(
+                    "Layaway %s expired. Extend its deadline from Sales before taking more payments.",
+                    so.name
+                );
+            }
+            const balance = round(so.amount_unpaid || 0);
+            if (amount >= balance) {
+                continue;
+            }
+            const paid = round((so.amount_total || 0) - balance);
+            if (paid <= 0) {
+                const minimum = round(((so.amount_total || 0) * (so.xb_layaway_down_percent || 0)) / 100);
+                if (amount < minimum) {
+                    return _t(
+                        "The down payment of %(name)s is at least %(minimum)s (%(percent)s% of the price).",
+                        { name: so.name, minimum: fmt(minimum), percent: so.xb_layaway_down_percent }
+                    );
+                }
+            } else if (so.xb_layaway_min_payment && amount < round(so.xb_layaway_min_payment)) {
+                return _t(
+                    "The minimum payment on %(name)s is %(minimum)s, unless it pays the whole balance (%(balance)s).",
+                    { name: so.name, minimum: fmt(so.xb_layaway_min_payment), balance: fmt(balance) }
+                );
+            }
+        }
+        return false;
     },
 });

@@ -25,7 +25,8 @@ patch(ControlButtons.prototype, {
      * were handed over and could not be delivered from the POS. Orders created here
      * now stay listed while their goods are pending delivery (xb_pending_delivery),
      * paid or not, and leave the list once delivered, unless they still owe money.
-     * Orders created in Sales keep Odoo's rule: warehouse deliveries are not the POS's.
+     * Orders created in Sales keep Odoo's rule (warehouse deliveries are not the POS's), unless the customer
+     * paid them online (website or payment link): those wait at the store, paid, to be handed over.
      * Per POS (xb_list_until_delivered); off, the list is Odoo's own.
      */
     onClickQuotation() {
@@ -43,9 +44,13 @@ patch(ControlButtons.prototype, {
             "&",
             ["invoice_status", "!=", "invoiced"],
             ["amount_unpaid", ">", 0],
+            // Not handed over yet: made at a register, or paid online (website or payment link; its balance
+            // shows 0, so settling it only delivers).
             "&",
-            ["xb_so_kind", "!=", false],
             ["xb_pending_delivery", "=", true],
+            "|",
+            ["xb_so_kind", "!=", false],
+            ["transaction_ids.state", "in", ["done", "authorized"]],
         ];
         const partner = this.pos.getOrder()?.getPartner();
         if (partner) {
@@ -342,6 +347,7 @@ patch(PosStore.prototype, {
                     portal_url: result.portal_url,
                     partner_ref: result.partner_ref,
                     commitment_date: result.commitment_date || false,
+                    layaway_deadline: result.layaway_deadline || false,
                     type: payload.type,
                 };
                 // Reuse the native receipt printer. Gated by the per-POS toggle

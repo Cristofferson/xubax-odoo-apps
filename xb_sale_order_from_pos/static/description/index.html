@@ -1,257 +1,70 @@
-<!--
-  apps.odoo.com store listing for xb_sale_order_from_pos.
-  Source content mirrors README.md. Screenshot blocks are placeholders
-  (replace the dashed boxes with real <img src="screenshot_N.png"/> captures
-  under static/description/ before publishing).
--->
+<section class="oe_container" style="font-family:Inter,Arial,sans-serif;color:#24201C">
+  <div style="max-width:1080px;margin:0 auto;padding:24px 16px">
+    <h2 style="font-size:34px;margin:0 0 8px;text-align:center">Sales, Quotations &amp; Layaway from POS</h2>
+    <p style="text-align:center;font-size:18px;color:#776E64;margin:0 0 12px">Quotations, special orders and layaways made at the Odoo register: down payments, a balance the customer pays at the shop or online, and the rules that keep each layaway in order.</p>
+    <p style="text-align:center;color:#776E64;margin:0 0 28px"><i>Cotizaciones, pedidos y apartados desde la caja de Odoo, con enganche, abonos en tienda o en l&#237;nea, y abonos autom&#225;ticos a la tarjeta guardada.</i></p>
 
-<!-- ============================ HERO ============================ -->
-<section class="oe_container">
-  <div class="oe_row oe_spaced">
-    <h2 class="oe_slogan">Sales, Quotations &amp; Layaway from POS</h2>
-    <h3 class="oe_slogan" style="color:#875A7B;">
-      Create quotations, orders and layaways at the till &#8212; collect advances,
-      settle the balance, print an enriched receipt with an online-payment QR.
-    </h3>
-    <div class="oe_span12" style="text-align:center; margin-top:24px;">
-      <div style="border:2px dashed #c9c9c9; background:#f6f6f6; padding:90px 20px;
-                  color:#9b9b9b; font-size:16px; border-radius:6px;">
-        [ Banner / hero screenshot &#8212; POS with the &#8220;Order / Layaway&#8221; action ]
-      </div>
-    </div>
-    <p class="oe_mt32" style="text-align:center; font-size:15px;">
-      Built clean-room on native Odoo (<code>point_of_sale</code>,
-      <code>pos_sale</code>, <code>sale</code>).
-      It <strong>coexists</strong> with &#8212; does not replace &#8212; the native
-      Quotation/Order loader. Every feature is optional and configured per Point of Sale.
-    </p>
-    <div class="oe_span12" style="text-align:center; margin-top:8px;">
-      <p style="display:inline-block; background:#f3eef5; border:1px solid #d7c7df;
-                border-radius:6px; padding:12px 18px; font-size:14px; color:#5a3d52;">
-        &#127758; <strong>Works with any localization.</strong> First-class support for
-        <strong>Mexican CFDI&nbsp;4.0</strong> (advances / settlement invoicing, SAT payment
-        forms, branch RFC). It does <strong>not</strong> require the Mexican localization:
-        the SAT payment forms come with a small free bridge that installs itself when
-        <em>l10n_mx_edi</em> is present &#8212; non-MX companies get pure native invoicing.
-      </p>
-    </div>
-  </div>
-</section>
+    <h3 style="font-size:26px;margin:32px 0 14px">What it adds to Odoo</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:15px">
+      <thead><tr style="background:#F1E8DB"><th style="text-align:left;padding:10px">At the register</th><th style="text-align:left;padding:10px">For the customer</th><th style="text-align:left;padding:10px">Behind the scenes</th></tr></thead>
+      <tbody><tr>
+        <td style="padding:10px;vertical-align:top">Quotation, Order or Layaway from the cart, with one or more down payments and a detailed receipt.</td>
+        <td style="padding:10px;vertical-align:top">&#171;My layaway&#187; / &#171;My order&#187; page with paid, balance and deadline, paying any amount online.</td>
+        <td style="padding:10px;vertical-align:top">Deadline, minimum payments, cancellation fee, reminders, expiry and automatic payments on the saved card.</td>
+      </tr></tbody>
+    </table>
 
-<!-- ========================== FEATURES ========================== -->
-<section class="oe_container oe_dark">
-  <h2 class="oe_slogan">What it does</h2>
-  <div class="oe_row">
-    <div class="oe_span6">
-      <h3 class="oe_slogan" style="text-align:left;">&#128221; Quotations, Orders &amp; Layaways</h3>
-      <p class="oe_mt16">
-        Create the three document types straight from the POS. None is confirmed on
-        creation &#8212; confirmation happens <strong>natively</strong> when the payment is
-        validated.
-      </p>
-    </div>
-    <div class="oe_span6">
-      <h3 class="oe_slogan" style="text-align:left;">&#128181; Multiple advances</h3>
-      <p class="oe_mt16">
-        Collect one or more partial advances (down payments) through the native
-        down-payment product. The balance is <strong>payment-based</strong> and always
-        up to date.
-      </p>
-    </div>
-  </div>
-  <div class="oe_row">
-    <div class="oe_span6">
-      <h3 class="oe_slogan" style="text-align:left;">&#129534; Enriched receipt</h3>
-      <p class="oe_mt16">
-        State-aware title, payment summary (Total / Advance / Balance), product detail
-        on advance tickets, and a consistent cash-rounding line.
-      </p>
-    </div>
-    <div class="oe_span6">
-      <h3 class="oe_slogan" style="text-align:left;">&#128279; Online payment QR</h3>
-      <p class="oe_mt16">
-        While a balance remains, the receipt prints a portal QR so the customer can
-        review and pay online. A configurable self-invoice QR is also supported.
-      </p>
-    </div>
-  </div>
-</section>
+    <h3 style="font-size:26px;margin:40px 0 10px">Quotations, orders and layaways at the register</h3>
+    <ul style="font-size:16px;line-height:1.8">
+      <li>Create the three document types from the Point of Sale cart. Nothing is confirmed on creation: Odoo confirms it natively when the payment is validated.</li>
+      <li>Collect one or more down payments with Odoo&#8217;s own down-payment product; the balance always comes from what was really paid.</li>
+      <li>Detailed receipt: title by document type, Total / Paid / Balance, the products, the delivery date and, while there is a balance, a QR to pay online. Optional duplicate copy for the shop.</li>
+      <li>Orders and layaways stay in the register&#8217;s list until delivered; closing one asks whether the customer takes the goods now.</li>
+      <li>Optional delivery choices for quotations: print, WhatsApp, email or any mix.</li>
+    </ul>
 
-<!-- ===================== DOCUMENT TYPES ===================== -->
-<section class="oe_container">
-  <h2 class="oe_slogan">Three document types</h2>
-  <div class="oe_row oe_spaced">
-    <table style="width:100%; border-collapse:collapse; font-size:14px;">
-      <thead>
-        <tr style="background:#875A7B; color:#fff;">
-          <th style="padding:10px; text-align:left;">Type</th>
-          <th style="padding:10px; text-align:left;">Created as</th>
-          <th style="padding:10px; text-align:left;">Advance</th>
-          <th style="padding:10px; text-align:left;">Confirmed</th>
-        </tr>
-      </thead>
+    <h3 style="font-size:26px;margin:40px 0 10px">Layaway terms Odoo looks after</h3>
+    <p>Set them once per company (Point of Sale &#9656; Settings). Each layaway keeps the terms it was made with, even if you change them later.</p>
+    <table style="width:100%;border-collapse:collapse;font-size:15px">
+      <thead><tr style="background:#F1E8DB"><th style="text-align:left;padding:10px">Term</th><th style="text-align:left;padding:10px">Example</th><th style="text-align:left;padding:10px">What happens</th></tr></thead>
       <tbody>
-        <tr style="border-bottom:1px solid #eee;">
-          <td style="padding:10px;"><strong>Quotation</strong></td>
-          <td style="padding:10px;">sent quotation</td>
-          <td style="padding:10px;">optional</td>
-          <td style="padding:10px;">natively, on payment</td>
-        </tr>
-        <tr style="border-bottom:1px solid #eee; background:#fafafa;">
-          <td style="padding:10px;"><strong>Order</strong></td>
-          <td style="padding:10px;">sent quotation</td>
-          <td style="padding:10px;">optional</td>
-          <td style="padding:10px;">natively, on payment</td>
-        </tr>
-        <tr style="border-bottom:1px solid #eee;">
-          <td style="padding:10px;"><strong>Layaway (apartado)</strong></td>
-          <td style="padding:10px;">sent quotation</td>
-          <td style="padding:10px;"><strong>required ( &gt; 0 )</strong></td>
-          <td style="padding:10px;">natively, on payment</td>
-        </tr>
+        <tr><td style="padding:10px;border-bottom:1px solid #E7DDCF"><b>Days to pay</b></td><td style="padding:10px;border-bottom:1px solid #E7DDCF">30</td><td style="padding:10px;border-bottom:1px solid #E7DDCF">The deadline prints on the receipt and shows on &#171;My layaway&#187;.</td></tr>
+        <tr><td style="padding:10px;border-bottom:1px solid #E7DDCF"><b>Minimum down payment</b></td><td style="padding:10px;border-bottom:1px solid #E7DDCF">10 %</td><td style="padding:10px;border-bottom:1px solid #E7DDCF">The register refuses a smaller first payment (paying it all is always fine).</td></tr>
+        <tr><td style="padding:10px;border-bottom:1px solid #E7DDCF"><b>Minimum payment</b></td><td style="padding:10px;border-bottom:1px solid #E7DDCF">$50</td><td style="padding:10px;border-bottom:1px solid #E7DDCF">The register and the online page refuse smaller payments, unless they settle the balance.</td></tr>
+        <tr><td style="padding:10px"><b>Cancellation fee</b></td><td style="padding:10px">10 %</td><td style="padding:10px">What the shop keeps if the layaway expires unpaid; Odoo works out what to give back.</td></tr>
       </tbody>
     </table>
-  </div>
-  <div class="oe_row oe_spaced">
-    <div class="oe_span12" style="text-align:center;">
-      <div style="border:2px dashed #c9c9c9; background:#f6f6f6; padding:70px 20px;
-                  color:#9b9b9b; border-radius:6px;">
-        [ Screenshot &#8212; document-type selector at the POS ]
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== REQUIRED SETUP ===================== -->
-<section class="oe_container oe_dark">
-  <h2 class="oe_slogan">Required setup (per selling company)</h2>
-  <p class="oe_mt16" style="text-align:center;">
-    Configuration requirements learned in the field &#8212; the module attributes the invoice
-    to the right company automatically, but the fiscal/accounting master data must exist
-    on each selling company.
-  </p>
-  <div class="oe_row oe_spaced">
-    <ol style="font-size:14px; line-height:1.7; max-width:820px; margin:0 auto;">
-      <li><strong>Down-payment product (native POS)</strong> &#8212; set its <em>income account
-        for every selling company</em> (on the product or its category). A branch without
-        it fails the advance invoice with <em>&#8220;Falta la cuenta requerida.&#8221;</em></li>
-      <li><strong>Settle rounding product (optional)</strong> &#8212; a 0%-IVA service with
-        <strong><code>Available in POS</code> = OFF</strong> (mandatory; if left visible it
-        can break POS loading), an income account per company, and &#8212; in Mexico &#8212; a SAT
-        <em>ClaveProdServ</em> (placeholder <code>01010101</code> if none applies). If
-        unset, an all-16% settle simply tolerates a &#177;0.01 residual.</li>
-      <li><strong>POS payment method &#8594; SAT &#8220;Forma de pago&#8221;</strong> (Mexico only, with the
-        bridge <code>xb_sale_order_from_pos_l10n_mx</code>, installed automatically with
-        <code>l10n_mx_edi</code>) &#8212; map each method (Cash &#8594; 01, Transfer &#8594; 03,
-        Debit &#8594; 28, Credit &#8594; 04) so the CFDI reports the real payment form.</li>
-      <li><strong>Multi-company / branches</strong> &#8212; when branches share a sales journal,
-        the invoice is attributed to the order&#8217;s company; the CFDI is issued under the
-        branch RFC if it has one, otherwise under the nearest ancestor with a VAT (native
-        <code>l10n_mx_edi</code> behaviour).</li>
-      <li><strong>Cash rounding</strong> &#8212; &#8220;only on cash&#8221; rounding is excluded from the
-        CFDI automatically; the cash difference stays in the session. Intended behaviour.</li>
-    </ol>
-  </div>
-</section>
-
-<!-- ===================== CONFIGURATION ===================== -->
-<section class="oe_container">
-  <h2 class="oe_slogan">Configuration</h2>
-  <p class="oe_mt16" style="text-align:center;">
-    <em>Settings &#9656; Point of Sale &#9656; &#8220;XUBAX &#8211; Sale Order / Quotation&#8221;.</em>
-    English source with an <code>es_MX</code> translation. A single master switch enables
-    the feature; every sub-option below depends on it.
-  </p>
-  <div class="oe_row oe_spaced">
-    <ul style="font-size:14px; line-height:1.7; max-width:820px; margin:0 auto;">
-      <li><strong>Create Sale Order / Quotation</strong> &#8212; master switch.</li>
-      <li><strong>Default document state</strong> &#8212; which type is pre-selected by default
-        (does not confirm anything on creation).</li>
-      <li><strong>Allow quotations</strong> &#8212; let the cashier save a draft quotation.</li>
-      <li><strong>Differentiate Order and Layaway</strong> &#8212; separate actions vs. one combined.</li>
-      <li><strong>Show total &amp; pending balance</strong> &#8212; in the POS order panel.</li>
-      <li><strong>Detailed order receipt</strong> &#8212; product detail, total and balance.</li>
-      <li><strong>Show customer reference</strong> &#8212; before the customer name.</li>
-      <li><strong>Auto-print receipt on create</strong>.</li>
-      <li><strong>Show online portal link on receipt</strong> &#8212; the payment QR
-        (needs <em>Detailed order receipt</em>).</li>
-      <li><strong>Self-invoice QR only when settled</strong> &#8212; avoids a double QR on
-        advances (needs <em>Self-Invoicing</em>).</li>
-      <li><strong>Settle rounding product</strong> &#8212; absorbs the rounding cent.</li>
+    <ul style="font-size:16px;line-height:1.8;margin-top:14px">
+      <li><b>The piece is not sold twice:</b> before selling a piece laid away for someone else, the register says whose layaway it is and until when, and asks first.</li>
+      <li><b>Reminder before the deadline</b> by email, as a regular Odoo automation rule (change the days or the email there). With our WhatsApp bridge, also by WhatsApp.</li>
+      <li><b>Expiry:</b> the day after the deadline an unpaid layaway expires: a note with the fee and the refund, a to-do for the salesperson and an email to the customer. Nothing is refunded by itself; &#171;Extend layaway&#187; gives more time.</li>
+      <li><b>Orders</b> (special orders) can ask for a minimum down payment too (for example 30 %), show &#171;My order&#187; to the customer and remind them of the balance before the delivery date.</li>
     </ul>
-  </div>
-  <div class="oe_row oe_spaced">
-    <div class="oe_span12" style="text-align:center;">
-      <div style="border:2px dashed #c9c9c9; background:#f6f6f6; padding:70px 20px;
-                  color:#9b9b9b; border-radius:6px;">
-        [ Screenshot &#8212; POS settings section, two columns ]
-      </div>
-    </div>
-  </div>
-</section>
+    <img src="screenshots/layaway_warning.png" style="width:100%;max-width:900px;display:block;margin:14px auto;border-radius:10px;border:1px solid #E7DDCF"/>
 
-<!-- ===================== RECEIPT / BEHAVIOUR ===================== -->
-<section class="oe_container oe_dark">
-  <h2 class="oe_slogan">The receipt</h2>
-  <div class="oe_row">
-    <div class="oe_span6">
-      <div style="border:2px dashed #c9c9c9; background:#f6f6f6; padding:90px 20px;
-                  color:#9b9b9b; text-align:center; border-radius:6px;">
-        [ Screenshot &#8212; advance ticket with balance + payment QR ]
-      </div>
-    </div>
-    <div class="oe_span6">
-      <p class="oe_mt16" style="font-size:14px; line-height:1.7;">
-        Title by document state, a Total / Advance / Balance summary, the payment QR while
-        a balance remains, a configurable self-invoice QR, the advance&#8217;s product detail,
-        and a cash-rounding line that always reconciles
-        (Total + Rounding = To&nbsp;Pay; Cash &#8722; To&nbsp;Pay = Change).
-      </p>
-      <p class="oe_mt16" style="font-size:13px; color:#777;">
-        <strong>Note for implementers:</strong> installing over existing data recomputes
-        <code>amount_unpaid</code> on POS-linked sale orders (a native-compute correction),
-        which may surface a real pending balance on orders that previously looked paid.
-      </p>
-    </div>
-  </div>
-</section>
+    <h3 style="font-size:26px;margin:40px 0 10px">&#171;My layaway&#187;: the customer pays from home</h3>
+    <p>The receipt&#8217;s QR opens the order&#8217;s page: what was paid, the balance, the deadline and a box to pay any amount between the minimum payment and the balance, through Odoo&#8217;s own payment window with any payment provider you use.</p>
+    <img src="screenshots/my_layaway.png" style="width:100%;max-width:900px;display:block;margin:14px auto;border-radius:10px;border:1px solid #E7DDCF"/>
 
-<!-- ===================== REQUIREMENTS / LIMITS ===================== -->
-<section class="oe_container">
-  <div class="oe_row">
-    <div class="oe_span6">
-      <h3 class="oe_slogan" style="text-align:left;">Requirements</h3>
-      <ul style="font-size:14px; line-height:1.7;">
-        <li>Odoo <strong>19.0 Enterprise</strong>.</li>
-        <li>Depends: <code>point_of_sale</code>, <code>pos_sale</code>,
-          <code>sale</code>, <code>sale_management</code>. No localization required;
-          in Mexico the free bridge <code>xb_sale_order_from_pos_l10n_mx</code> installs
-          itself with <code>l10n_mx_edi</code>.</li>
-        <li>Soft dep: order-level internal note maps to
-          <code>sale.order.internal_note</code> only when <code>sale_subscription</code>
-          is present &#8212; guarded, no error otherwise.</li>
-      </ul>
-    </div>
-    <div class="oe_span6">
-      <h3 class="oe_slogan" style="text-align:left;">Known limitations</h3>
-      <ul style="font-size:14px; line-height:1.7;">
-        <li>Only a single rounding currency (MXN) tested.</li>
-        <li>SO header <code>delivery_status</code> stays empty &#8212; delivery is fulfilled
-          through the POS picking, not an SO picking (by design).</li>
-        <li>No in-POS customer signature yet (roadmap).</li>
-      </ul>
-    </div>
-  </div>
-</section>
+    <h3 style="font-size:26px;margin:40px 0 10px">New: automatic layaway payments</h3>
+    <p>When the customer pays online and ticks &#171;Save my payment details&#187;, their card is saved and their next online payments no longer ask for it. With their permission you go one step further: the saved card pays the layaway by itself.</p>
+    <ul style="font-size:16px;line-height:1.8">
+      <li>On the layaway, <b>Automatic payments</b>: the card, how often (every week, every 15 days or every month), the first date and the amount. Odoo suggests the amount that pays the balance by the deadline and tells you if yours would fall short.</li>
+      <li>Each payment emails the customer and is noted on the order; &#171;My layaway&#187; shows the plan and the next date. The last payment is only what is left, and it stops by itself once paid.</li>
+      <li>A declined card is tried again 2 days later and the salesperson gets a to-do; after 3 declines in a row it stops. It also stops if the layaway expires or is cancelled.</li>
+      <li>Built on Odoo&#8217;s own saved cards and payment transactions: it works with any payment provider that saves cards. In Mexico, <a href="https://apps.odoo.com/apps/modules/19.0/xpago" style="color:#B8322A">XPago</a> saves cards.</li>
+    </ul>
 
-<!-- ============================ FOOTER ============================ -->
-<section class="oe_container oe_dark">
-  <div class="oe_row oe_spaced" style="text-align:center;">
-    <h2 class="oe_slogan">XUBAX</h2>
-    <p class="oe_mt16">
-      Support: <a href="mailto:soporte@xubax.com">soporte@xubax.com</a> &#183;
-      <a href="https://www.xubax.com">www.xubax.com</a><br/>
-      License: OPL-1 &#183; Odoo 19.0 Enterprise
-    </p>
+    <h3 style="font-size:26px;margin:40px 0 10px">Mexico (optional)</h3>
+    <p>It works with any localization. In Mexico, the free bridge <code>xb_sale_order_from_pos_l10n_mx</code> installs itself with <code>l10n_mx_edi</code>: advance and settlement invoices with the real SAT payment form of each register payment method, and the branch RFC on the receipt.</p>
+
+    <h3 style="font-size:26px;margin:40px 0 10px">Before you start</h3>
+    <ul style="font-size:16px;line-height:1.8">
+      <li>Odoo 19 with Point of Sale, Sales and the POS&#8211;Sales link (<code>pos_sale</code>).</li>
+      <li>The down-payment product needs an income account in every company that sells.</li>
+      <li>Optional free bridges: WhatsApp (<code>xb_sale_order_from_pos_whatsapp</code>), Loyalty (<code>xb_sale_order_from_pos_loyalty</code>) and Mexico (<code>xb_sale_order_from_pos_l10n_mx</code>).</li>
+      <li>Every option is configured per Point of Sale in Settings &#9656; Point of Sale &#9656; &#8220;XUBAX &#8211; Sale Order / Quotation&#8221;. English and Spanish.</li>
+    </ul>
+    <p style="margin-top:24px">Support: <a href="mailto:soporte@xubax.com" style="color:#B8322A">soporte@xubax.com</a> &#183; <a href="https://www.xubax.com" style="color:#B8322A">www.xubax.com</a> &#183; <a href="https://xpago.mx/apartados-odoo" style="color:#B8322A">Apartados en Odoo (espa&#241;ol)</a></p>
   </div>
 </section>

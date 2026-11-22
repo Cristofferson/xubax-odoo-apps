@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Sales, Quotations & Layaway from POS - WhatsApp",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.4.0",
     "category": "Point of Sale",
     "summary": "Send the quotations created at the POS by WhatsApp (the same ticket "
                "that is printed) and notify customers about their orders by WhatsApp: "

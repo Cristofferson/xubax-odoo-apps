@@ -18,20 +18,18 @@ class TestKioskRules(PosXpagoRulesCommon):
         })
 
     def test_kiosk_charge_goes_to_the_account_of_the_rules(self):
-        self.method.xpago_bank_account_id = self.acc_terminal
         order = self.kiosk_order(self.used)
         with patch(SEND, return_value=self.intent()) as send:
             result = self.method._payment_request_from_kiosk(order)
         self.assertEqual(send.call_args.kwargs['json']['deposit_account_id'], 'a-escrow')
         self.assertEqual(self.env['pos.xpago.charge'].browse(result['xpago_charge_id']).pos_order_id, order)
 
-    def test_kiosk_without_rules_uses_the_terminal_account(self):
-        self.method.xpago_bank_account_id = self.acc_terminal
+    def test_kiosk_without_rules_uses_the_default_account(self):
         self.r_market.use_kiosk = False
         order = self.kiosk_order(self.used)
         with patch(SEND, return_value=self.intent()) as send:
             self.method._payment_request_from_kiosk(order)
-        self.assertEqual(send.call_args.kwargs['json']['deposit_account_id'], 'a-terminal')
+        self.assertNotIn('deposit_account_id', send.call_args.kwargs['json'])
 
     def test_kiosk_receipt_gets_the_card(self):
         self.config.payment_method_ids |= self.method

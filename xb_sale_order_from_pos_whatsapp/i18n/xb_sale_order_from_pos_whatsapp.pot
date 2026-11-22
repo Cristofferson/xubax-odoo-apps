@@ -1082,3 +1082,23 @@ msgstr ""
 #: code:addons/xb_sale_order_from_pos_whatsapp/models/sale_order.py:0
 msgid "order / layaway"
 msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model:ir.model.fields,help:xb_sale_order_from_pos_whatsapp.field_xb_sale_order_wa_automation__delay_days
+msgid ""
+"Pick-up reminder: days after the ready notice. Follow-up: days after "
+"delivery. Layaway and balance reminders: days BEFORE the layaway deadline / "
+"the delivery date."
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model:ir.model.fields.selection,name:xb_sale_order_from_pos_whatsapp.selection__xb_sale_order_wa_automation__kind__order_due
+#: model:ir.model.fields.selection,name:xb_sale_order_from_pos_whatsapp.selection__xb_sale_order_wa_log__kind__order_due
+msgid "Reminder: balance before delivery"
+msgstr ""
+
+#. module: xb_sale_order_from_pos_whatsapp
+#: model:ir.model.fields.selection,name:xb_sale_order_from_pos_whatsapp.selection__xb_sale_order_wa_automation__kind__layaway_due
+#: model:ir.model.fields.selection,name:xb_sale_order_from_pos_whatsapp.selection__xb_sale_order_wa_log__kind__layaway_due
+msgid "Reminder: layaway deadline coming"
+msgstr ""

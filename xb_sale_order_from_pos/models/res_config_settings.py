@@ -62,3 +62,35 @@ class ResConfigSettings(models.TransientModel):
     xb_layaway_template_id = fields.Many2one(
         related="company_id.xb_layaway_template_id", readonly=False
     )
+    # Layaway terms, per company.
+    xb_layaway_days = fields.Integer(related="company_id.xb_layaway_days", readonly=False)
+    xb_layaway_down_percent = fields.Float(
+        related="company_id.xb_layaway_down_percent", readonly=False)
+    xb_layaway_min_payment = fields.Monetary(
+        related="company_id.xb_layaway_min_payment", readonly=False)
+    xb_layaway_cancel_fee_percent = fields.Float(
+        related="company_id.xb_layaway_cancel_fee_percent", readonly=False)
+    xb_layaway_notify_customer = fields.Boolean(
+        related="company_id.xb_layaway_notify_customer", readonly=False)
+    xb_order_down_percent = fields.Float(related="company_id.xb_order_down_percent", readonly=False)
+    xb_layaway_warn_reserved = fields.Boolean(
+        related="company_id.xb_layaway_warn_reserved", readonly=False)
+
+    def action_xb_order_reminder_rule(self):
+        return self._xb_open_rule("xb_sale_order_from_pos.automation_order_reminder")
+
+    def action_xb_layaway_reminder_rule(self):
+        return self._xb_open_rule("xb_sale_order_from_pos.automation_layaway_reminder")
+
+    def _xb_open_rule(self, xmlid):
+        """Open an automation rule of this module (the reminders before a date)."""
+        rule = self.env.ref(xmlid, raise_if_not_found=False)
+        if not rule:
+            return False
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "base.automation",
+            "res_id": rule.id,
+            "view_mode": "form",
+            "target": "current",
+        }

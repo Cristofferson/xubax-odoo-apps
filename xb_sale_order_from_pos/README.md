@@ -219,3 +219,58 @@ selected). English-source strings with an `es_MX` translation (`i18n/es_MX.po`).
 
 *This README is the base content reused for the apps.odoo.com store listing
 (`static/description/index.html`).*
+
+---
+
+## Layaway terms (1.3.0)
+
+Configured per company in `Point of Sale ▸ Settings ▸ Layaway terms`; each layaway keeps the
+terms it was made with.
+
+| Setting | Default | What it does |
+|---|---|---|
+| Term (days) | 30 | Deadline = creation day + term. 0 = no deadline. |
+| Minimum down payment (%) | 10 | The POS refuses a first payment below it (unless it settles the order). |
+| Minimum payment | 50 | The POS and «My layaway» refuse a later payment below it (unless it settles the balance). |
+| Cancellation fee (%) | 10 | What the shop keeps of the payments when the layaway expires. |
+| Protect laid-away goods | on | The POS warns before selling a piece held by another customer's layaway. |
+
+- **My layaway**: the order's portal page shows paid / balance / deadline and lets the customer
+  pay any amount between the minimum payment and the balance (Odoo's own payment window).
+- **Reminder** = Odoo automation rule «Layaways: reminder before the deadline» (3 days before
+  the deadline, email template «Layaway: reminder before the deadline»): change days or email in
+  Settings › Technical › Automation rules, or from the «Reminder rule» button in the settings.
+- **Daily cron** «Layaways: reminders and expiry» expires an unpaid layaway the day after its
+  deadline: chatter note with fee and refund, to-do for the salesperson, email
+  to the customer. Nothing is refunded automatically. «Extend layaway» on the order reactivates it.
+- Layaways from the POS create no delivery, so the piece stays in stock: the warning is what
+  protects it (the cashier can still sell it after confirming).
+
+## Automatic layaway payments (1.4.0)
+
+With the customer's permission, the card they saved when paying online pays the layaway on its own.
+
+- The customer saves the card the first time they pay from «My layaway» (Odoo's own
+  «Save my payment details»; any provider that saves cards, e.g. XPago). The card then shows up
+  for their next online payments too, without typing it again.
+- On the layaway: **Automatic payments** button → card, how often (week / 15 days / month), first
+  date and amount. The amount suggested pays the balance by the deadline; it must reach the
+  layaway's minimum payment. A first date of today charges at once.
+- The daily cron «Layaways: reminders and expiry» charges what is due before checking expiry.
+  Each charge is a `payment.transaction` on the order (the same as an online payment), so the
+  balance and the reconciliation are native. The last charge is only the balance.
+- Each charge emails the customer (template «Layaway: automatic payment charged») and is noted in
+  the chatter; «My layaway» shows the plan and the next date.
+- Declined: tried again 2 days later and the salesperson gets a to-do; after 3 declines in a row
+  it stops. Also stops when the layaway is paid, expires or is cancelled; «Stop» on the order.
+- Filter «With automatic payments» in Sales › Layaways.
+
+## Orders made at the POS (1.3.0)
+
+- **Minimum down payment** per company (`Order minimum down payment (%)`, default 0 = any): the
+  first payment of an Order must reach it unless it pays the whole order. Copied to the order.
+- **My order** on the order's portal page (confirmed orders): paid / balance / delivery date and a
+  payment of any amount up to the balance (native `?payment_amount=`).
+- **Reminder** = automation rule «Orders: balance reminder before delivery» (3 days before
+  `commitment_date`, only with a balance).
+- «Balance» tab on the order form.

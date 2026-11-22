@@ -42,9 +42,13 @@ export class PaymentXpago extends PaymentInterface {
         if (accountId === false) {
             return false;
         }
+        const terms = await this._chooseTerms(part, line);
+        if (terms === null) {
+            return false;
+        }
         if (!accountId && this.pos.config.xpago_show_account && part.account_name) {
             this.env.services.notification.add(
-                [_t("Deposit: %s", part.account_name), this._termsText(part.terms)].filter(Boolean).join(" · "),
+                [_t("Deposit: %s", part.account_name), this._termsText(terms)].filter(Boolean).join(" · "),
                 { type: "info" }
             );
         }
@@ -59,7 +63,7 @@ export class PaymentXpago extends PaymentInterface {
                     amount: line.amount - tillTip,
                     tip_amount: tillTip,
                     ask_tip: !line.xpagoNoTipScreen,
-                    terms: part.terms || false,
+                    terms: terms || false,
                     session_id: this.pos.config.current_session_id?.id,
                     order_uuid: order.uuid,
                     bank_account_id: accountId,
@@ -135,6 +139,7 @@ export class PaymentXpago extends PaymentInterface {
                     session_id: this.pos.config.current_session_id?.id,
                     total: order.totalDue,
                     amount: line.amount,
+                    to_invoice: Boolean(order.isToInvoice?.()),
                     lines: order.lines.map((l) => ({
                         product_id: l.product_id?.id,
                         qty: l.qty,
@@ -196,15 +201,54 @@ export class PaymentXpago extends PaymentInterface {
         return parts;
     }
 
+    /** «The cashier chooses the months»: the cashier picks single payment or one plan among those the payment rules
+     *  allow (or the months of the account, when no rule decides), and the terminal gets only that plan. Otherwise
+     *  the months of the rules go as they are and the terminal lets the customer choose among them.
+     *  Returns the months to send, false for no limit, or null when the cashier closes the list. */
+    async _chooseTerms(part = {}, line = null) {
+        if (!this.pos.config.xpago_cashier_terms) {
+            return part.terms || false;
+        }
+        let options = part.terms && part.terms.length ? part.terms : null;
+        if (!options) {
+            const offered = String(this.pos.config.xpago_terms_offered || "")
+                .split(/[,;\s]+/)
+                .map((t) => parseInt(t, 10))
+                .filter((t) => t > 1);
+            options = [1, ...offered];
+        }
+        options = [...new Set(options)].sort((a, b) => a - b);
+        if (options.length <= 1) {
+            return options.length ? options : [1];
+        }
+        const amount = this.env.utils.formatCurrency(line ? line.amount : 0);
+        const picked = await makeAwaitable(this.env.services.dialog, SelectionPopup, {
+            title: _t("How does the customer pay %s?", amount),
+            list: options.map((months) => ({
+                id: months,
+                label:
+                    months === 1
+                        ? _t("Single payment")
+                        : _t("%(months)s months without interest (%(each)s per month)", {
+                              months,
+                              each: this.env.utils.formatCurrency((line ? line.amount : 0) / months),
+                          }),
+                isSelected: months === 1,
+                item: months,
+            })),
+        });
+        return picked ? [picked] : null;
+    }
+
     async _chooseAccount(part = {}) {
         // When this terminal lets the cashier choose, ask for the deposit account before charging; the account of
-        // the payment rules, else the terminal's, comes selected.
+        // the payment rules comes selected.
         const method = this.payment_method_id;
         const accounts = this.pos.models["payment.xpago.bank.account"]?.getAll() || [];
         if (!method.xpago_choose_account || accounts.length < 2) {
             return null;
         }
-        const preset = part.account_id || method.xpago_bank_account_id?.id;
+        const preset = part.account_id;
         const picked = await makeAwaitable(this.env.services.dialog, SelectionPopup, {
             title: _t("Deposit account"),
             list: accounts.map((account) => ({
