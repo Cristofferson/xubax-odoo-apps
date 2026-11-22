@@ -10,10 +10,10 @@ class PosPaymentMethod(models.Model):
         if self.payment_provider != 'xpago':
             return super()._payment_request_from_kiosk(order)
         provider = self.sudo().xpago_provider_id
-        # The account of the XPago payment rules of what the customer ordered, else the terminal's account.
+        # The account of the XPago payment rules of what the customer ordered.
         Rule = self.env['payment.xpago.rule'].sudo()
         plan = Rule._xpago_plan(order.company_id, 'kiosk', Rule._xpago_lines_from_records(order.sudo().lines),
-                                order.amount_total, config=order.config_id)
+                                order.amount_total, config=order.config_id, invoiced=bool(order.to_invoice))
         account = plan[0]['account'] if provider._xpago_bank_account_id(plan[0]['account']) else \
             self.sudo()._xpago_charge_account(provider)
         charge = self.env['pos.xpago.charge'].sudo()._xpago_create(

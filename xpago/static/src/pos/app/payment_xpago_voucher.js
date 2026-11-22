@@ -20,6 +20,7 @@ patch(GeneratePrinterData.prototype, {
                     line.payment_method_id?.payment_provider === "xpago_spei" &&
                     line.amount > 0 &&
                     Boolean(line.card_no || line.transaction_id),
+                xpago_terms: line.xpago_terms > 1 ? line.xpago_terms : 0,
                 xpago_debit: cardType.includes("DEBIT"),
                 xpago_credit: cardType.includes("CREDIT") && !cardType.includes("DEBIT"),
                 xpago_signature:

@@ -28,6 +28,7 @@
                 <group invisible="code != 'xpago'" name="xpago_credentials">
                     <field name="xpago_api_key" password="True" required="code == 'xpago' and is_live"/>
                     <field name="xpago_offer_bank_transfer"/>
+                    <field name="xpago_business_name" placeholder="Your XPago account name"/>
                 </group>
             </group>
             <notebook position="inside">
@@ -58,12 +59,17 @@
                 <page string="Deposit accounts" name="xpago_accounts" invisible="code != 'xpago'">
                     <div class="text-muted mb-2">
                         XPago can deposit each payment in a different account of yours. Odoo reads your accounts from
-                        XPago every hour; they are added and removed in XPago only. At the point of sale, each terminal
-                        can have its own account or let the cashier choose it on each charge.
+                        XPago every hour; they are added and removed in XPago only. Which account each sale goes to is
+                        decided in one place, the XPago payment rules (by product, amount, invoice or point of sale); a
+                        sale no rule gives an account to goes to your default account.
                     </div>
+                    <div class="alert alert-warning" role="alert" invisible="not xpago_deposit_warning">
+                        <field name="xpago_deposit_warning" readonly="1" nolabel="1"/>
+                    </div>
+                    <button name="%(xpago.action_payment_xpago_rule)d" type="action" class="btn-link ps-0 mb-2"
+                            icon="oi-arrow-right" string="XPago payment rules"/>
                     <group>
-                        <field name="xpago_invoice_bank_account_id" options="{'no_create': True, 'no_open': True}"/>
-                        <field name="xpago_other_bank_account_id" options="{'no_create': True, 'no_open': True}"/>
+                        <field name="xpago_saved_card_deposit_account"/>
                     </group>
                     <field name="xpago_bank_account_ids" readonly="1">
                         <list>
@@ -96,6 +102,22 @@
                     <div class="text-muted">
                         Odoo writes down how its calls to XPago go: when one worked last and the last error. «Test
                         connection» asks XPago for the account of this key right now.
+                    </div>
+                    <div class="d-flex align-items-center gap-3 mt-4 mb-2">
+                        <span class="badge text-bg-success fs-6" invisible="not xpago_notify_url">Instant notices on</span>
+                        <span class="badge text-bg-secondary fs-6" invisible="xpago_notify_url">Instant notices off</span>
+                        <button name="action_xpago_register_notify" type="object" class="btn btn-secondary"
+                                string="Turn on instant notices" groups="base.group_system"
+                                invisible="not xpago_api_key or not active or xpago_needs_connect"/>
+                    </div>
+                    <group>
+                        <field name="xpago_notify_url" invisible="not xpago_notify_url"/>
+                    </group>
+                    <div class="text-muted">
+                        With instant notices, XPago tells this Odoo the moment a payment is made, cancelled or
+                        refunded, and Odoo confirms it right away instead of waiting for its check every few minutes
+                        (which keeps running in case a notice is lost). They turn on by themselves when the key is
+                        saved; the button turns them on again, for example after this Odoo changed its address.
                     </div>
                 </page>
                 <page string="Payment notifications" name="xpago_notify" invisible="code != 'xpago'">

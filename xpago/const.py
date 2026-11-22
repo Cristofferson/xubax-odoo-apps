@@ -24,6 +24,14 @@ STATUS_WRITE_SECONDS = 60
 PAYMENT_RETURN_ROUTE = '/payment/xpago/return'
 CARD_RETURN_ROUTE = '/payment/xpago/card/return'
 
+# Instant notices: XPago pings this route the moment a payment changes, signed with the secret it gave when Odoo
+# registered the route (X-XPago-Signature: v1=<hex HMAC-SHA256 of "timestamp." + body>). The ping only says what to
+# read again; the scheduled actions keep reading back what is pending, so a lost ping costs only time.
+NOTIFY_ROUTE = '/payment/xpago/notify'
+NOTIFY_SIGNATURE_HEADER = 'X-XPago-Signature'
+NOTIFY_TIMESTAMP_HEADER = 'X-XPago-Timestamp'
+NOTIFY_TOLERANCE_SECONDS = 5 * 60
+
 # How long the customer has to save a card or pay in the card-saving checkout.
 CARD_CHECKOUT_TTL_MINUTES = 60
 

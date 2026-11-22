@@ -17,6 +17,7 @@ class PosOrderReceipt(models.AbstractModel):
             data['xpago_voucher'] = bool(
                 voucher and payment and payment.payment_method_id.payment_provider == 'xpago' and payment.amount > 0
                 and (payment.card_no or payment.transaction_id))
+            data['xpago_terms'] = payment.xpago_terms if payment and payment.xpago_terms > 1 else 0
             data['xpago_debit'] = 'DEBIT' in card_type
             data['xpago_credit'] = 'CREDIT' in card_type and 'DEBIT' not in card_type
             data['xpago_transfer'] = bool(

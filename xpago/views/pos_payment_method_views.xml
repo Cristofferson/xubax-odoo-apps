@@ -11,7 +11,6 @@
                        options="{'no_create': True}"/>
                 <field name="xpago_terminal_serial" placeholder="N950-123456789" invisible="payment_provider != 'xpago'"
                        required="payment_provider == 'xpago'"/>
-                <field name="xpago_bank_account_id" invisible="payment_provider not in ('xpago', 'xpago_spei')" options="{'no_create': True, 'no_open': True}"/>
                 <field name="xpago_choose_account" invisible="payment_provider != 'xpago'"/>
                 <field name="xpago_open_terminal_app" invisible="payment_provider != 'xpago'"/>
                 <field name="xpago_wake_terminal" invisible="payment_provider != 'xpago'"/>

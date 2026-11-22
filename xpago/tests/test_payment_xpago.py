@@ -176,13 +176,14 @@ class TestDepositAccounts(XpagoCommon):
 
     def test_payment_goes_to_its_account(self):
         accounts = self.sync()
-        self.provider.xpago_other_bank_account_id = accounts['acc-oper']
+        self.env['payment.xpago.rule'].create({'name': 'Todo', 'bank_account_id': accounts['acc-oper'].id})
         tx = self._create_transaction('redirect', currency_id=self.currency.id)
         self.assertEqual(tx._xpago_prepare_checkout_payload()['deposit_account_id'], 'acc-oper')
 
     def test_archived_account_is_not_sent(self):
         accounts = self.sync()
-        self.provider.xpago_other_bank_account_id = accounts['acc-fiscal']
+        self.env['payment.xpago.rule'].create({'name': 'Todo', 'bank_account_id': accounts['acc-fiscal'].id})
         self.sync({'data': [{'id': 'acc-oper', 'name': 'Banorte', 'is_default': True}]})
+        self.assertIn('Fiscal', self.provider.xpago_deposit_warning or '', 'the rule\'s account is gone: warned')
         tx = self._create_transaction('redirect', currency_id=self.currency.id)
         self.assertNotIn('deposit_account_id', tx._xpago_prepare_checkout_payload())

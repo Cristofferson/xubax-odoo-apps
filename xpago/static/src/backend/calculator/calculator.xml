@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="xpago.Calculator">
+        <div class="o_action o_xpago_calc d-flex flex-column h-100">
+            <div class="o_xpago_calc_screen">
+                <div class="o_xpago_calc_expr text-truncate" t-out="this.expression or ' '"/>
+                <div class="o_xpago_calc_value text-nowrap" t-att-class="{'text-danger fs-2': this.state.error}" t-out="this.display"/>
+            </div>
+            <div class="o_xpago_calc_keys flex-grow-1">
+                <t t-foreach="this.keys" t-as="row" t-key="row_index">
+                    <t t-foreach="row" t-as="key" t-key="key">
+                        <button type="button" class="o_xpago_calc_key btn" t-att-class="this.keyClass(key)"
+                                t-att-name="key" t-on-click="() => this.press(key)" t-out="this.keyLabel(key)"/>
+                    </t>
+                </t>
+            </div>
+            <div t-if="this.state.info.charge" class="o_xpago_calc_charge">
+                <t t-if="this.state.askDevice">
+                    <label class="form-label fw-bold mb-1" for="o_xpago_calc_device">Which terminal is this?</label>
+                    <select id="o_xpago_calc_device" class="form-select mb-2 o_xpago_calc_device" t-on-change="(ev) => this.chooseThisTerminal(ev)">
+                        <option value="">Choose it once (serial number on the back)</option>
+                        <option t-foreach="this.state.info.terminals" t-as="t" t-key="t.id" t-att-value="t.id" t-out="t.name"/>
+                    </select>
+                </t>
+                <div t-elif="this.state.onDevice" class="text-muted small text-center mb-2 o_xpago_calc_here">
+                    <i class="fa fa-mobile me-1"/>Charges on this terminal
+                </div>
+                <select t-elif="this.state.info.terminals.length > 1" class="form-select mb-2 o_xpago_calc_terminals" t-on-change="(ev) => this.chooseTerminal(ev)">
+                    <option t-foreach="this.state.info.terminals" t-as="t" t-key="t.id" t-att-value="t.id"
+                            t-att-selected="t.id === this.state.terminalId" t-out="t.name"/>
+                </select>
+                <button type="button" class="btn btn-success btn-lg w-100 o_xpago_calc_charge_btn"
+                        t-att-disabled="!this.amount or this.state.askDevice" t-on-click="() => this.charge()">
+                    <i class="fa fa-credit-card me-2"/>
+                    <t t-if="this.amount">Collect <t t-out="this.money(this.amount)"/></t>
+                    <t t-else="">Collect</t>
+                </button>
+            </div>
+            <a t-if="!this.standalone" class="o_xpago_calc_install btn btn-link btn-sm mt-2 align-self-center" t-att-href="this.installUrl" target="_blank">
+                <i class="fa fa-download me-1"/>Install as an app
+            </a>
+            <div t-if="this.state.charge" class="o_xpago_calc_overlay d-flex align-items-center justify-content-center">
+                <div class="o_xpago_calc_card text-center">
+                    <div class="fs-1 fw-bold mb-2" t-out="this.money(this.state.charge.amount)"/>
+                    <t t-if="this.state.charge.phase === 'waiting'">
+                        <div class="mb-1"><i class="fa fa-circle-o-notch fa-spin me-2"/>Waiting for the card</div>
+                        <div class="text-muted small mb-3">on <t t-out="this.state.charge.terminal"/></div>
+                        <button type="button" class="btn btn-outline-danger btn-lg w-100 o_xpago_calc_cancel"
+                                t-att-disabled="!this.state.charge.id or this.state.charge.cancelling" t-on-click="() => this.cancelCharge()">
+                            Cancel the charge
+                        </button>
+                    </t>
+                    <t t-elif="this.state.charge.phase === 'paid'">
+                        <div class="text-success fs-3 mb-1"><i class="fa fa-check-circle me-2"/>Paid</div>
+                        <div class="text-muted mb-1" t-if="this.state.charge.card" t-out="this.state.charge.card"/>
+                        <div class="text-muted small mb-3" t-if="this.state.charge.auth">Authorization <t t-out="this.state.charge.auth"/></div>
+                        <button type="button" class="btn btn-primary btn-lg w-100 o_xpago_calc_new" t-on-click="() => this.closeCharge()">New calculation</button>
+                    </t>
+                    <t t-else="">
+                        <div class="text-danger fs-4 mb-2"><i class="fa fa-times-circle me-2"/>Not charged</div>
+                        <div class="mb-3" t-out="this.state.charge.message"/>
+                        <button type="button" class="btn btn-secondary btn-lg w-100 o_xpago_calc_back" t-on-click="() => this.closeCharge()">Back</button>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

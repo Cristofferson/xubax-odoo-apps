@@ -2,50 +2,7 @@ import { _t } from "@web/core/l10n/translation";
 import { Component, onWillUnmount, proxy, t, useProps } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
 import { usePos } from "@point_of_sale/app/hooks/pos_hook";
-import { formatClabe, minutesLeft } from "@xpago/pos/app/transfer/transfer_utils";
-
-/** Who pays: XPago makes the CLABE out to them and emails them the transfer details. */
-export class XpagoTransferCustomerDialog extends Component {
-    static template = "xpago.TransferCustomerDialog";
-    static components = { Dialog };
-    props = useProps({
-        defaults: t.object(),
-        amount: t.number(),
-        getPayload: t.function(),
-        close: t.function(),
-    });
-
-    setup() {
-        this.state = proxy({ ...this.props.defaults, tried: false });
-    }
-
-    get errors() {
-        const errors = {};
-        if (!this.state.name.trim()) {
-            errors.name = true;
-        }
-        if (!/^\S+@\S+\.\S+$/.test(this.state.email.trim())) {
-            errors.email = true;
-        }
-        if (this.state.phone.replace(/\D/g, "").length < 10) {
-            errors.phone = true;
-        }
-        return errors;
-    }
-
-    confirm() {
-        this.state.tried = true;
-        if (Object.keys(this.errors).length) {
-            return;
-        }
-        this.props.getPayload({
-            name: this.state.name.trim(),
-            email: this.state.email.trim(),
-            phone: this.state.phone.trim(),
-        });
-        this.props.close();
-    }
-}
+import { formatClabe, minutesLeft, whatsappPhone, whatsappText, whatsappUrl } from "@xpago/pos/app/transfer/transfer_utils";
 
 /** The CLABE of the sale, big, while the customer transfers. The register keeps asking behind it. */
 export class XpagoTransferDialog extends Component {
@@ -58,6 +15,7 @@ export class XpagoTransferDialog extends Component {
         hide: t.function(),
         print: t.function(),
         close: t.function(),
+        companyPhone: t.string().optional(),
     });
 
     setup() {
@@ -91,6 +49,18 @@ export class XpagoTransferDialog extends Component {
 
     money(value) {
         return this.pos.formatCurrency(value || 0);
+    }
+
+    /** Send the transfer details by WhatsApp: to the customer's phone, unless it is the business's own phone. */
+    whatsapp() {
+        const own = whatsappPhone(this.props.companyPhone);
+        const phone = whatsappPhone(this.view.customer_phone);
+        const text = whatsappText(this.view, {
+            amountText: this.money(this.partly ? this.view.amount_due : this.view.amount),
+            clabeText: this.clabeText,
+            minutes: this.minutes,
+        });
+        window.open(whatsappUrl(phone && phone !== own ? phone : "", text), "_blank");
     }
 
     async copy() {

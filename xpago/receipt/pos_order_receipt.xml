@@ -5,7 +5,8 @@
     <template id="pos_order_receipt" inherit_id="point_of_sale.pos_order_receipt">
         <xpath expr="//t[@t-call='point_of_sale.pos_order_receipt_footer']" position="after">
             <t t-foreach="payments" t-as="payment">
-                <div t-if="payment.get('xpago_voucher')" class="xpago-voucher w-100 text-start mt-3 pt-2 text-small" style="border-top: 1px dashed black;">
+                <!-- The card voucher goes on the full receipt only: the basic one is a gift ticket, without prices. -->
+                <div t-if="payment.get('xpago_voucher') and not conditions.get('basic_receipt')" class="xpago-voucher w-100 text-start mt-3 pt-2 text-small" style="border-top: 1px dashed black;">
                     <div class="w-100 text-center text-bold">CARD SALE</div>
                     <table class="w-100">
                         <tbody>
@@ -18,6 +19,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div t-if="payment.get('xpago_terms')" class="text-bold"><t t-out="payment['xpago_terms']"/> months without interest</div>
                     <div t-if="payment['payment_method_issuer_bank']">Bank: <t t-out="payment['payment_method_issuer_bank']"/></div>
                     <div t-if="payment['payment_method_authcode']">Authorization: <t t-out="payment['payment_method_authcode']"/></div>
                     <div t-if="payment['payment_ref_no']">Operation: <t t-out="payment['payment_ref_no']"/></div>

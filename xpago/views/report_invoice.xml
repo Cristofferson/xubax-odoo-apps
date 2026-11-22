@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Odoo's «pay online» QR of the invoice, in XPago's words: card or transfer, with XPago's mark. -->
+    <template id="report_invoice_document_pay_qr" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@id='payment_link_qrcode']//img[@id='qrcode_odoo_logo']" position="attributes">
+            <attribute name="t-att-src">'/xpago/static/description/icon.png' if o._xpago_pays_online() else '/account/static/src/img/Odoo_logo_O.svg'</attribute>
+        </xpath>
+        <!-- Smaller than Odoo's (128 px): a phone still reads it, and it takes less of the page. -->
+        <xpath expr="//div[@id='payment_link_qrcode']//img[@t-att-src='portal_qr_code']" position="attributes">
+            <attribute name="t-att-style">'width: 88px; height: 88px;' if o._xpago_pays_online() else None</attribute>
+        </xpath>
+        <xpath expr="//div[@id='payment_link_qrcode']/div[@id='qrcode_info']" position="attributes">
+            <attribute name="t-if">portal_qr_code and not o._xpago_pays_online()</attribute>
+        </xpath>
+        <xpath expr="//div[@id='payment_link_qrcode']/div[@id='qrcode_info']" position="after">
+            <div class="d-inline lh-sm" id="xpago_qrcode_info" t-if="portal_qr_code and o._xpago_pays_online()">
+                <p class="fw-bold mb-1">PAY THIS INVOICE ONLINE</p>
+                <p class="mb-1">By card, or by SPEI transfer from any bank.</p>
+                <p class="text-muted fst-italic mb-0">Scan the code with your phone<br/>or click it to pay.</p>
+            </div>
+        </xpath>
+    </template>
+</odoo>

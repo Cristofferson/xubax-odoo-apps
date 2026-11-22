@@ -10,10 +10,9 @@
             </head>
             <body>
                 <div class="pos-receipt">
-                    <div class="w-100 text-center mb-3" name="logo">
-                        <img t-if="image.get('logo')" t-att-src="image['logo']" style="max-height: 75px"/>
-                    </div>
-                    <div class="text-center text-bold">PAYMENT BY TRANSFER (SPEI)</div>
+                    <!-- The business name customers know, never the company's legal name (often the owner's). -->
+                    <div class="w-100 text-center text-bold text-large" t-out="extra_data.get('xpago_business') or ''"/>
+                    <div class="text-center text-bold mt-2">PAYMENT BY TRANSFER (SPEI)</div>
                     <table class="w-100 mt-2">
                         <tbody>
                             <tr class="text-bold">

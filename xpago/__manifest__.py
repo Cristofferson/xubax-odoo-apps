@@ -1,6 +1,6 @@
 {
     'name': 'XPago: Card Payments and Terminals',
-    'version': '20.0.2.8.1',
+    'version': '20.0.3.2.4',
     'category': 'Accounting/Payment Providers',
     'sequence': 350,
     'summary': 'Accept Visa, Mastercard and American Express in Mexico: online store, invoices, payment links and '
@@ -11,7 +11,7 @@
     'website': 'https://xpago.mx',
     'support': 'hola@xubax.com',
     'license': 'OPL-1',
-    'depends': ['payment', 'product', 'point_of_sale', 'pos_self_order'],
+    'depends': ['payment', 'account_payment', 'product', 'point_of_sale', 'pos_self_order'],
     'data': [
         'security/ir.access.csv',
         'views/payment_xpago_templates.xml',
@@ -31,6 +31,12 @@
         'receipt/pos_clabe_receipt.xml',
         'data/pos_ir_cron.xml',
         'views/self_order_res_config_settings_views.xml',
+        'data/domiciliation_ir_cron.xml',
+        'data/domiciliation_mail_template.xml',
+        'views/payment_xpago_domiciliation_views.xml',
+        'views/res_partner_views.xml',
+        'views/xpago_calculator_views.xml',
+        'views/report_invoice.xml',
     ],
     'assets': {
         'point_of_sale._assets_pos': [

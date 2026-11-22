@@ -3,11 +3,11 @@ import { proxy } from "@odoo/owl";
 import { PaymentInterface } from "@point_of_sale/app/utils/payment/payment_interface";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { registry } from "@web/core/registry";
-import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
-import { XpagoTransferCustomerDialog, XpagoTransferDialog } from "@xpago/pos/app/transfer/transfer_dialogs";
+import { ask } from "@point_of_sale/app/utils/make_awaitable_dialog";
+import { XpagoTransferDialog } from "@xpago/pos/app/transfer/transfer_dialogs";
 import {
     TRANSFER_FINAL_STATES,
-    customerDefaults,
+    missingCustomerData,
     formatClabe,
     transferDelay,
 } from "@xpago/pos/app/transfer/transfer_utils";
@@ -28,16 +28,13 @@ export class PaymentXpagoTransfer extends PaymentInterface {
         await super.sendPaymentRequest(...arguments);
         const order = line.pos_order_id;
         const uuid = line.uuid;
-        if (line.amount <= 0) {
-            this._showError(
-                _t("A transfer only pays positive amounts. Give refunds back another way (cash or a bank transfer from the business).")
-            );
+        if (line.amount < 0) {
+            return this._refund(order, line);
+        }
+        if (line.amount === 0) {
             return false;
         }
-        const customer = await makeAwaitable(this.env.services.dialog, XpagoTransferCustomerDialog, {
-            defaults: customerDefaults(order.getPartner?.() || order.partner_id, this.pos.company),
-            amount: line.amount,
-        });
+        const customer = await this._customer(order);
         if (!customer) {
             return false;
         }
@@ -50,6 +47,7 @@ export class PaymentXpagoTransfer extends PaymentInterface {
                     session_id: order.session_id?.id || this.pos.config.current_session_id?.id,
                     order_uuid: order.uuid,
                     customer,
+                    rule_account_id: await this._ruleAccount(order, line),
                 },
             ]);
         } catch (error) {
@@ -70,6 +68,88 @@ export class PaymentXpagoTransfer extends PaymentInterface {
             return true;
         }
         return false;
+    }
+
+    /** A refund order paid back with «Transfer»: XPago gives the whole transfer of the original sale back to who
+     *  paid, the same day only. Otherwise the register says to pay it back in cash. */
+    async _refund(order, line) {
+        const refundedOrderIds = [
+            ...new Set(order.lines.map((l) => l.refunded_orderline_id?.order_id?.id).filter(Boolean)),
+        ];
+        line.setPaymentStatus("waitingCard");
+        try {
+            const result = await this._call("xpago_transfer_refund", [
+                { amount: line.amount, refunded_order_ids: refundedOrderIds },
+            ]);
+            Object.assign(line, result.payment || {});
+            this.env.services.notification.add(_t("XPago gave the transfer back: %s", this._money(-line.amount)), {
+                type: "success",
+            });
+            return true;
+        } catch (error) {
+            this._showError(error.data?.message || error.message || String(error));
+            return false;
+        }
+    }
+
+    /** Who pays, the native way: the customer of the sale (Odoo's «Customer required» and customer list when
+     *  there is none), with their own card opened when the name, email or phone XPago needs is missing. */
+    async _customer(order) {
+        let partner = order.getPartner();
+        if (!partner) {
+            const confirmed = await ask(this.env.services.dialog, {
+                title: _t("Customer Required"),
+                body: _t("Customer is required for %s payment method.", this.payment_method_id.name),
+            });
+            if (!confirmed) {
+                return false;
+            }
+            partner = await this.pos.selectPartner(order);
+            if (!partner) {
+                return false;
+            }
+        }
+        let missing = missingCustomerData(partner);
+        if (missing.length) {
+            const notice = this.env.services.notification.add(
+                _t("To make the CLABE, write the customer's %s and save.", missing.join(_t(" and "))),
+                { title: _t("Data missing"), type: "warning", sticky: true }
+            );
+            try {
+                partner = (await this.pos.editPartner(partner)) || partner;
+            } catch {
+                // The card was closed without saving.
+            } finally {
+                notice();
+            }
+            missing = missingCustomerData(partner);
+            if (missing.length) {
+                this._showError(_t("The CLABE was not made: the customer has no %s.", missing.join(_t(" and "))));
+                return false;
+            }
+            if (order.getPartner()?.id === partner.id) {
+                order.setPartner(partner);
+            }
+        }
+        return { name: partner.name.trim(), email: partner.email.trim(), phone: partner.phone || partner.mobile };
+    }
+
+    /** The deposit account the XPago payment rules give this sale (by its products, amount and invoice). */
+    async _ruleAccount(order, line) {
+        try {
+            const plan = await this._call("xpago_plan", [
+                {
+                    session_id: order.session_id?.id || this.pos.config.current_session_id?.id,
+                    total: order.totalDue,
+                    amount: line.amount,
+                    to_invoice: Boolean(order.isToInvoice?.()),
+                    lines: order.lines.map((l) => ({ product_id: l.product_id?.id, qty: l.qty, amount: l.priceIncl })),
+                },
+            ]);
+            return plan.parts?.[0]?.account_id || false;
+        } catch {
+            return false; // the rules must never stop a payment
+        }
     }
 
     /** Ask Odoo until the money arrives, the transfer ends, or the line is gone. A lost connection is not an answer. */
@@ -105,6 +185,7 @@ export class PaymentXpagoTransfer extends PaymentInterface {
                 cancel: () => this._cancelFromScreen(uuid, order),
                 hide: () => entry.closeDialog?.(),
                 print: () => this._print(entry, order),
+                companyPhone: this.pos.company.phone || "",
             },
             {
                 // Closing the screen only hides it: the register keeps waiting, and a notice brings it back.
