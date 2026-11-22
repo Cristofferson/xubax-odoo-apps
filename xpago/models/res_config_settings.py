@@ -6,6 +6,8 @@ class ResConfigSettings(models.TransientModel):
 
     pos_xpago_show_account = fields.Boolean(related='pos_config_id.xpago_show_account', readonly=False)
     pos_xpago_split = fields.Boolean(related='pos_config_id.xpago_split', readonly=False)
+    pos_xpago_cashier_terms = fields.Boolean(related='pos_config_id.xpago_cashier_terms', readonly=False)
+    pos_xpago_terms_offered = fields.Char(related='pos_config_id.xpago_terms_offered', readonly=False)
     pos_xpago_tip_mode = fields.Selection(related='pos_config_id.xpago_tip_mode', readonly=False, required=True)
     pos_xpago_print_on_terminal = fields.Boolean(related='pos_config_id.xpago_print_on_terminal', readonly=False)
     pos_xpago_voucher_on_receipt = fields.Boolean(related='pos_config_id.xpago_voucher_on_receipt', readonly=False)
@@ -15,6 +17,7 @@ class ResConfigSettings(models.TransientModel):
     pos_xpago_voucher_signature = fields.Boolean(related='pos_config_id.xpago_voucher_signature', readonly=False)
 
     xpago_needs_connect = fields.Boolean(compute='_compute_xpago_needs_connect')
+    xpago_calculator_charge = fields.Boolean(related='company_id.xpago_calculator_charge', readonly=False)
 
     @api.depends('company_id')
     def _compute_xpago_needs_connect(self):

@@ -33,6 +33,7 @@ patch(PosOrder.prototype, {
                     card_brand: line.card_brand || "",
                     card_no: line.card_no || "",
                     funding: debit ? _t("Debit") : type.includes("CREDIT") ? _t("Credit") : "",
+                    terms: line.xpago_terms || 0,
                     bank: line.payment_method_issuer_bank || "",
                     authorization: line.payment_method_authcode || "",
                     // The operation the processor gave; its internal id (transaction_id) stays out of the ticket.

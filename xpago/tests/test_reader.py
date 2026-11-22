@@ -217,11 +217,15 @@ class TestTerminalWake(HttpCase):
         mine = [t for t in answer['terminals'] if t['serial'] == 'NDC400038415']
         self.assertEqual(len(mine), 1)
         self.assertIn('Tarjeta XPago', mine[0]['names'])
-        self.assertFalse(mine[0]['wake'])
+        self.assertTrue(mine[0]['wake'], 'on by default')
+        self.method.xpago_wake_terminal = False
+        answer = self.make_jsonrpc_request('/xpago/reader/terminals', {})
+        self.assertFalse([t for t in answer['terminals'] if t['serial'] == 'NDC400038415'][0]['wake'])
 
     def test_only_when_the_payment_method_asks(self):
         self.authenticate('xp_wake_cashier', 'xp_wake_cashier')
         self._charge('W-1')
+        self.method.xpago_wake_terminal = False
         self.assertEqual(self.make_jsonrpc_request('/xpago/reader/wake', {'serial': 'NDC400038415'}), {'enabled': False})
         self.method.xpago_wake_terminal = True
         seen = self.make_jsonrpc_request('/xpago/reader/wake', {'serial': 'ndc400038415'})
