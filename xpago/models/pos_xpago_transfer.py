@@ -35,7 +35,9 @@ class PosXpagoTransfer(models.Model):
         ('expired', "CLABE expired"),
         ('cancelled', "Cancelled"),
         ('returned', "Returned"),
+        ('refunded', "Refunded"),
     ], default='awaiting', required=True, readonly=True, index=True)
+    refunded_at = fields.Datetime(readonly=True, copy=False)
     amount = fields.Monetary(required=True, readonly=True)
     amount_received = fields.Monetary(string="Received", readonly=True,
                                       help="What has arrived so far: the customer may pay in several transfers.")
@@ -107,6 +109,9 @@ class PosXpagoTransfer(models.Model):
         ``customer``: email, first_name, last_name, phone (the CLABE is made out to whoever pays)."""
         if amount <= 0:
             raise UserError(_("A transfer only pays positive amounts."))
+        customer = dict(customer)
+        name = customer.pop('display_name', None) or ' '.join(
+            dict.fromkeys(p for p in (customer.get('first_name'), customer.get('last_name')) if p))
         missing = [label for key, label in (('first_name', _("name")), ('email', _("email")), ('phone', _("phone")))
                    if not customer.get(key)]
         if missing:
@@ -127,7 +132,7 @@ class PosXpagoTransfer(models.Model):
             'config_id': config.id,
             'order_uuid': order_uuid,
             'bank_account_id': account.id if account else False,
-            'customer_name': ' '.join(p for p in (customer.get('first_name'), customer.get('last_name')) if p),
+            'customer_name': name,
             'customer_email': customer.get('email'),
             'customer_phone': customer.get('phone'),
         })
@@ -142,7 +147,10 @@ class PosXpagoTransfer(models.Model):
             'expires_in_minutes': CHECKOUT_TTL_MINUTES,
             'customer': customer,
             'methods': ['bank_transfer'],
-            'bank_transfer_at': 'create',
+            # Not 'create': the processor then makes a SECOND CLABE ~11 s later on its own and reports only that one, so a
+            # customer who copied the first pays a CLABE Odoo no longer sees (LAMUR 20-nov, $531). The CLABE is asked
+            # for right below instead: one per sale, it does not change (tried live 20-nov).
+            'bank_transfer_at': 'checkout',
         }
         if account:
             body['deposit_account_id'] = account.xpago_id
@@ -153,7 +161,7 @@ class PosXpagoTransfer(models.Model):
         transfer.xpago_id = created.get('id')
         clabe = created.get('bank_transfer')
         if not clabe:
-            # The bank did not answer in time when the page was made: the page exists, ask for its CLABE.
+            # The page is made without its CLABE (see above): ask for it now, once.
             clabe = transfer._xpago_request_clabe()
         transfer._xpago_apply(clabe or {})
         return transfer
@@ -182,6 +190,8 @@ class PosXpagoTransfer(models.Model):
         for transfer in self.filtered(lambda t: t.state not in FINAL_STATES and t.xpago_id):
             try:
                 remote = transfer.provider_id._xpago_make_request('GET', f'/v1/checkouts/{transfer.xpago_id}/bank-transfer')
+                if remote.get('status') != 'paid':
+                    remote = transfer._xpago_paid_checkout(remote)
             except ValidationError as error:
                 _logger.warning("XPago: could not read the transfer %s: %s", transfer.external_id, error)
                 continue
@@ -189,6 +199,20 @@ class PosXpagoTransfer(models.Model):
                 changed |= transfer
         changed._xpago_on_state_changed()
         return changed
+
+    def _xpago_paid_checkout(self, remote):
+        """The processor can mark the payment page paid while its CLABE still reads «awaiting» (or «canceled», with
+        nothing received): the page is what says the money arrived. Returns the CLABE as paid in that case."""
+        self.ensure_one()
+        checkout = self.provider_id._xpago_make_request('GET', f'/v1/checkouts/{self.xpago_id}')
+        if checkout.get('status') != 'paid':
+            return remote
+        _logger.info("XPago: the payment page of %s is paid while its CLABE reads %s", self.external_id,
+                     remote.get('status'))
+        payment = checkout.get('payment') or {}
+        return dict(remote, status='paid', amount_received=self.amount, amount_due=0.0,
+                    payment_id=remote.get('payment_id') or payment.get('id'),
+                    paid_at=remote.get('paid_at') or payment.get('created_at') or payment.get('paid_at'))
 
     def _xpago_cancel(self):
         """Stop taking money for this sale. What already arrived is sent back by XPago."""
@@ -287,12 +311,29 @@ class PosXpagoTransfer(models.Model):
             'clabe_last4': self.clabe_last4 or '',
             'bank': self.bank or '',
             'beneficiary': self.beneficiary or '',
-            'business': self.company_id.name,
+            'business': self.provider_id._xpago_business_name(),
             'concept': self.concept or '',
+            'customer_phone': self.customer_phone or '',
+            # The WhatsApp button shows only where the business uses WhatsApp (Odoo's WhatsApp app installed).
+            'whatsapp': 'whatsapp.account' in self.env,
             'checkout_url': self.checkout_url or '',
             'expires_at': fields.Datetime.to_string(self.expires_at) if self.expires_at else False,
             'payment': self._xpago_payment_values() if self.state == 'paid' else {},
         }
+
+    def _xpago_refund(self):
+        """Give the whole transfer back to who paid. XPago refunds it the same day only (before 10:30 PM), in full;
+        the processor keeps its fee from the sales pending to settle."""
+        self.ensure_one()
+        if self.state != 'paid':
+            raise UserError(_("Only a paid transfer can be refunded."))
+        try:
+            answer = self.provider_id._xpago_make_request('POST', f'/v1/checkouts/{self.xpago_id}/refund',
+                                                          idempotency_key=f'refund-{self.external_id}')
+        except ValidationError as error:
+            raise UserError(_("XPago did not refund the transfer.\n%s", error)) from error
+        self.write({'state': 'refunded', 'refunded_at': fields.Datetime.now()})
+        return answer
 
     @api.model
     def _xpago_cron_refresh(self):

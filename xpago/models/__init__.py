@@ -22,3 +22,9 @@ from . import self_order_pos_payment_method
 from . import self_order_pos_xpago_charge
 from . import self_order_pos_order
 from . import self_order_res_config_settings
+from . import payment_xpago_domiciliation
+from . import payment_transaction_domiciliation
+from . import res_partner
+from . import account_move_send
+from . import res_company
+from . import pos_payment_method_calculator

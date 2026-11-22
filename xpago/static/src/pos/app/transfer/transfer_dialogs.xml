@@ -1,37 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 
-    <t t-name="xpago.TransferCustomerDialog">
-        <Dialog title="title" size="'md'">
-            <p class="text-muted mb-3">
-                XPago makes a CLABE for this sale alone, in the name of who pays, and emails them the transfer details.
-            </p>
-            <div t-if="state.isBusiness" class="alert alert-info py-2">
-                The sale has no customer with email or phone: the business's details come filled in. Write the
-                customer's if they want the transfer details by email.
-            </div>
-            <div class="mb-3">
-                <label class="form-label fw-bold" for="xpago_transfer_name">Name</label>
-                <input id="xpago_transfer_name" class="form-control form-control-lg" t-model="state.name"
-                       t-att-class="{'is-invalid': state.tried and errors.name}"/>
-            </div>
-            <div class="mb-3">
-                <label class="form-label fw-bold" for="xpago_transfer_email">Email</label>
-                <input id="xpago_transfer_email" type="email" class="form-control form-control-lg" t-model="state.email"
-                       t-att-class="{'is-invalid': state.tried and errors.email}"/>
-            </div>
-            <div class="mb-1">
-                <label class="form-label fw-bold" for="xpago_transfer_phone">Phone (10 digits)</label>
-                <input id="xpago_transfer_phone" type="tel" class="form-control form-control-lg" t-model="state.phone"
-                       t-att-class="{'is-invalid': state.tried and errors.phone}"/>
-            </div>
-            <t t-set-slot="footer">
-                <button class="btn btn-primary btn-lg xpago-transfer-make" t-on-click="confirm">Make the CLABE</button>
-                <button class="btn btn-secondary btn-lg" t-on-click="props.close">Cancel</button>
-            </t>
-        </Dialog>
-    </t>
-
     <t t-name="xpago.TransferDialog">
         <Dialog title="title" size="'md'">
             <div class="xpago-transfer text-center">
@@ -52,7 +21,7 @@
                         the customer can send the rest to the same CLABE.
                     </div>
                     <div class="text-muted">to the CLABE</div>
-                    <div class="xpago-clabe font-monospace fw-bolder my-1" style="font-size: 2.1rem; letter-spacing: .04em;"
+                    <div class="xpago-clabe font-monospace fw-bolder my-1 text-nowrap" style="font-size: min(2.1rem, 6vw); letter-spacing: .04em;"
                          t-out="clabeText"/>
                     <button class="btn btn-link xpago-transfer-copy" t-on-click="copy">Copy the CLABE</button>
                     <table class="table table-sm text-start mt-2 mb-2">
@@ -77,16 +46,30 @@
                 </t>
             </div>
             <t t-set-slot="footer">
-                <button class="btn btn-secondary btn-lg xpago-transfer-print" t-if="view.state !== 'expired'" t-on-click="props.print">Print</button>
-                <button class="btn btn-secondary btn-lg xpago-transfer-hide" t-on-click="props.hide">Keep waiting and close</button>
-                <button class="btn btn-danger btn-lg xpago-transfer-cancel" t-on-click="props.cancel">Cancel the transfer</button>
+                <!-- One row of equal buttons, icon over a short word, so they fit even on a small terminal. -->
+                <div class="d-flex flex-nowrap gap-2 w-100 xpago-transfer-actions">
+                    <button style="flex: 1 1 0;" class="btn btn-secondary px-1 py-2 lh-sm xpago-transfer-print" t-if="view.state !== 'expired'" t-on-click="props.print">
+                        <i class="fa fa-print fa-lg d-block mb-1"/>Print
+                    </button>
+                    <button style="flex: 1 1 0;" class="btn btn-success px-1 py-2 lh-sm xpago-transfer-whatsapp" t-if="view.whatsapp and view.state !== 'expired'" t-on-click="whatsapp">
+                        <i class="fa fa-whatsapp fa-lg d-block mb-1"/>WhatsApp
+                    </button>
+                    <button style="flex: 1 1 0;" class="btn btn-secondary px-1 py-2 lh-sm xpago-transfer-hide" t-on-click="props.hide"
+                            title="Keep waiting and close">
+                        <i class="fa fa-eye-slash fa-lg d-block mb-1"/>Close
+                    </button>
+                    <button style="flex: 1 1 0;" class="btn btn-danger px-1 py-2 lh-sm xpago-transfer-cancel" t-on-click="props.cancel"
+                            title="Cancel the transfer">
+                        <i class="fa fa-times fa-lg d-block mb-1"/>Cancel
+                    </button>
+                </div>
             </t>
         </Dialog>
     </t>
 
     <t t-name="xpago.ClabeReceipt">
         <div class="pos-receipt">
-            <ReceiptHeader data="props.headerData"/>
+            <div class="pos-receipt-center-align fw-bolder" style="font-size: 120%;" t-esc="props.view.business"/>
             <div class="pos-receipt-center-align fw-bolder mt-2">PAYMENT BY TRANSFER (SPEI)</div>
             <div class="mt-2">Transfer exactly <span class="pos-receipt-right-align fw-bolder" t-esc="props.amountText"/></div>
             <div class="mt-2">CLABE</div>

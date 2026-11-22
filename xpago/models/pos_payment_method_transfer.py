@@ -42,6 +42,7 @@ class PosPaymentMethod(models.Model):
         if digits and not raw.startswith('+'):
             digits = '52' + digits[-10:] if len(digits) >= 10 else ''
         return {
+            'display_name': name,  # as the customer is called; XPago needs a last name, so a single name is sent twice
             'first_name': first,
             'last_name': last or first,
             'email': (data.get('email') or '').strip(),
@@ -52,14 +53,44 @@ class PosPaymentMethod(models.Model):
 
     def xpago_transfer_create(self, data):
         """Make the CLABE of this payment. ``data``: ``amount``, ``session_id``, ``order_uuid``, ``customer``
-        (``name``, ``email``, ``phone``). Returns the transfer as the point of sale sees it."""
+        (``name``, ``email``, ``phone``) and ``rule_account_id`` (the account of the payment rules). Returns the transfer
+        as the point of sale sees it."""
         provider = self._xpago_transfer_check_access()
         session = self.env['pos.session'].browse(data.get('session_id')).exists()
-        account = self._xpago_charge_account(provider)
+        paid = self._xpago_transfer_paid_unused(data.get('order_uuid') or '', data.get('amount') or 0.0)
+        if paid:
+            # «Retry» after the register gave up on a transfer that arrived after all: that one pays the sale.
+            return paid._xpago_public_view()
+        account = self._xpago_charge_account(provider, rule_account_id=data.get('rule_account_id'))
         transfer = self.env['pos.xpago.transfer'].sudo()._xpago_create(
             self.sudo(), provider, data.get('amount') or 0.0, session, data.get('order_uuid') or '',
             self._xpago_transfer_customer(data.get('customer') or {}), account=account)
         return transfer._xpago_public_view()
+
+    def xpago_transfer_refund(self, data):
+        """A refund order paid back with «Transfer»: the paid transfer of the original sale for that amount goes back
+        to who paid. XPago refunds a transfer in full and the same day only."""
+        self._xpago_transfer_check_access()
+        amount = -(data.get('amount') or 0.0)
+        if amount <= 0:
+            raise UserError(_("A refund is paid back with a negative amount."))
+        orders = self.env['pos.order'].browse(data.get('refunded_order_ids') or []).exists()
+        payments = orders.sudo().payment_ids.filtered(lambda p: p.payment_method_id == self and p.transaction_id)
+        # Odoo 17: the register knows a sale by its uid, kept in the order's reference («Order 00001-001-0001»).
+        uids = [ref.split(' ', 1)[-1] for ref in orders.mapped('pos_reference') if ref]
+        transfers = self.env['pos.xpago.transfer'].sudo().search([
+            ('payment_method_id', '=', self.id), ('state', '=', 'paid'), '|',
+            ('payment_id', 'in', payments.mapped('transaction_id')), ('order_uuid', 'in', uids)])
+        currency = self.company_id.currency_id or self.env.company.currency_id
+        transfer = transfers.filtered(lambda t: not currency.compare_amounts(t.amount, amount))[:1]
+        if not transfer:
+            if transfers:
+                raise UserError(_(
+                    "XPago gives back a transfer in full only. Refund %(amounts)s, or pay this refund in cash.",
+                    amounts=", ".join(currency.format(t.amount) for t in transfers)))
+            raise UserError(_("No transfer of this method was found in the original sale. Pay this refund in cash."))
+        transfer._xpago_refund()
+        return {'state': transfer.state, 'payment': transfer._xpago_payment_values()}
 
     def xpago_transfer_status(self, transfer_id):
         self._xpago_transfer_check_access()
@@ -80,6 +111,25 @@ class PosPaymentMethod(models.Model):
         transfer._xpago_cancel()
         return transfer._xpago_public_view()
 
+    def _xpago_transfer_paid_unused(self, uuid, amount, transfers=None):
+        """The paid transfer of this sale for this amount that no payment of Odoo uses yet."""
+        if transfers is None:
+            transfers = self.env['pos.xpago.transfer'].sudo().search(
+                [('payment_method_id', '=', self.id), ('order_uuid', '=', uuid), ('state', '=', 'paid')],
+                order='id desc', limit=10) if uuid else self.env['pos.xpago.transfer']
+        if not transfers:
+            return transfers
+        used = set(self.env['pos.payment'].sudo().search([
+            ('payment_method_id', '=', self.id),
+            ('transaction_id', 'in', [t.payment_id for t in transfers if t.payment_id]),
+        ]).mapped('transaction_id'))
+        currency = self.company_id.currency_id or self.env.company.currency_id
+        for transfer in transfers:
+            if transfer.state == 'paid' and (not transfer.payment_id or transfer.payment_id not in used) \
+                    and not currency.compare_amounts(transfer.amount, amount):
+                return transfer
+        return transfers.browse()
+
     def xpago_transfer_force_check(self, data):
         """«Force done» on a transfer line: Odoo asks XPago first. The paid transfer of this sale for this amount
         that no payment of Odoo uses yet, else only its state (``none`` without a transfer)."""
@@ -90,14 +140,8 @@ class PosPaymentMethod(models.Model):
         if not transfers:
             return {'state': 'none'}
         transfers._xpago_refresh()
-        used = set(self.env['pos.payment'].sudo().search([
-            ('payment_method_id', '=', self.id),
-            ('transaction_id', 'in', [t.payment_id for t in transfers if t.payment_id]),
-        ]).mapped('transaction_id'))
-        currency = self.company_id.currency_id or self.env.company.currency_id
-        for transfer in transfers:
-            if transfer.state == 'paid' and transfer.payment_id not in used \
-                    and not currency.compare_amounts(transfer.amount, data.get('amount') or 0.0):
-                return transfer._xpago_public_view()
+        paid = self._xpago_transfer_paid_unused(uuid, data.get('amount') or 0.0, transfers)
+        if paid:
+            return paid._xpago_public_view()
         state = transfers[0].state
         return {'state': 'unmatched' if state == 'paid' else state}

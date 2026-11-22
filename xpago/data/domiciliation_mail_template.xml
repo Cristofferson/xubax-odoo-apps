@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mail_template_domiciled_charge" model="mail.template">
+        <field name="name">XPago: card on file charge done</field>
+        <field name="model_id" ref="payment.model_payment_transaction"/>
+        <field name="subject">{{ object.company_id.name }}: we charged {{ format_amount(object.amount, object.currency_id) }} to your card</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.partner_id.id }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p>Hello <t t-out="object.partner_id.name or ''">customer</t>,</p>
+    <p>As you authorized, we charged <strong t-out="format_amount(object.amount, object.currency_id) or ''">$100.00</strong>
+        to your card <strong t-out="object.token_id.display_name or ''">•••• 4242</strong>.</p>
+    <p t-if="object.invoice_ids">It pays: <t t-out="', '.join(object.invoice_ids.mapped('name')) or ''">INV/2026/0001</t>.</p>
+    <p>Reference: <t t-out="object.reference or ''">INV/2026/0001</t></p>
+    <p>If you have any question, just answer this email.</p>
+    <p><t t-out="object.company_id.name or ''">Company</t></p>
+</div>
+        </field>
+    </record>
+</odoo>

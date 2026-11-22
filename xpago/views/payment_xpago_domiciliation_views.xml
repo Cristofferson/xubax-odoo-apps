@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="payment_xpago_domiciliation_view_list" model="ir.ui.view">
+        <field name="name">payment.xpago.domiciliation.list</field>
+        <field name="model">payment.xpago.domiciliation</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="partner_id"/>
+                <field name="token_id"/>
+                <field name="source"/>
+                <field name="schedule" invisible="source != 'invoices'"/>
+                <field name="next_date"/>
+                <field name="pending_amount" invisible="source != 'invoices'"/>
+                <field name="max_amount" optional="hide"/>
+                <field name="user_id" widget="many2one_avatar_user" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="state" widget="badge" decoration-success="state == 'active'" decoration-warning="state == 'paused'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="payment_xpago_domiciliation_view_form" model="ir.ui.view">
+        <field name="name">payment.xpago.domiciliation.form</field>
+        <field name="model">payment.xpago.domiciliation</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_charge_now" type="object" string="Charge now" class="btn-primary"
+                            invisible="state != 'active' or source != 'invoices' or not id"
+                            confirm="The saved card is charged now for everything the customer owes. Go on?"/>
+                    <button name="action_pause" type="object" string="Pause" invisible="state != 'active' or not id"/>
+                    <button name="action_resume" type="object" string="Resume" invisible="state != 'paused'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoices" type="object" class="oe_stat_button" icon="fa-file-text-o"
+                                invisible="source != 'invoices'">
+                            <field name="pending_amount" widget="statinfo" string="Owed now"/>
+                        </button>
+                        <button name="action_view_transactions" type="object" class="oe_stat_button" icon="fa-credit-card">
+                            <field name="transaction_count" widget="statinfo" string="Charges"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <field name="has_subscriptions" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                    <group>
+                        <group string="Customer">
+                            <field name="partner_id"/>
+                            <field name="token_id" options="{'no_create': True}"/>
+                            <field name="authorized_on"/>
+                            <field name="authorization_note" placeholder="Signed form, email, call…"/>
+                        </group>
+                        <group string="What and when">
+                            <field name="source" widget="radio"/>
+                            <field name="schedule" widget="radio" invisible="source != 'invoices'"/>
+                            <field name="month_day" invisible="source != 'invoices' or schedule != 'monthly'"/>
+                            <field name="next_date" invisible="schedule == 'manual' and source == 'invoices'"/>
+                            <field name="max_amount" invisible="source != 'invoices'"/>
+                            <field name="notify_customer" invisible="source != 'invoices'"/>
+                            <field name="user_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="status" invisible="source != 'invoices' or schedule != 'manual'">
+                        Nothing is charged by itself. Press «Charge now», or use «Register payment» on an invoice and
+                        choose the saved card.
+                    </div>
+                    <div class="alert alert-info" role="status" invisible="source != 'invoices' or schedule == 'manual'">
+                        By itself it charges what was invoiced from the authorization day on. What the customer owed
+                        before is charged with «Charge now». A declined invoice is tried again two days later, three
+                        times at most.
+                    </div>
+                    <div class="alert alert-warning" role="alert" invisible="source != 'subscription' or has_subscriptions">
+                        The Subscriptions app is not installed.
+                    </div>
+                    <div name="subscriptions" invisible="source != 'subscription' or not has_subscriptions">
+                        <div class="alert alert-info" role="status">
+                            Each subscription renews on its own (each month, year… as its plan says) and is paid
+                            with this card, for the amount of its lines at that moment.
+                        </div>
+                    </div>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="payment_xpago_domiciliation_view_search" model="ir.ui.view">
+        <field name="name">payment.xpago.domiciliation.search</field>
+        <field name="model">payment.xpago.domiciliation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id"/>
+                <filter name="active_ones" string="Active" domain="[('state', '=', 'active')]"/>
+                <filter name="paused" string="Paused" domain="[('state', '=', 'paused')]"/>
+                <separator/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="by_source" string="What is charged" context="{'group_by': 'source'}"/>
+                    <filter name="by_schedule" string="When" context="{'group_by': 'schedule'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_payment_xpago_domiciliation" model="ir.actions.act_window">
+        <field name="name">Card on file charges</field>
+        <field name="res_model">payment.xpago.domiciliation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Charge a saved card what the customer owes</p>
+            <p>The customer saves their card once, and authorizes you to charge it. Then you charge their pending
+                invoices by hand, when each one is due or on a day of the month, or their subscription when it renews.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_payment_xpago_domiciliation" action="action_payment_xpago_domiciliation"
+              parent="account.menu_finance_receivables" sequence="16"/>
+</odoo>

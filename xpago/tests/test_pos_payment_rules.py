@@ -111,7 +111,6 @@ class TestPosPaymentRules(PosXpagoRulesCommon):
         self.assertEqual(plan['parts'][0]['account_id'], self.acc_escrow.id)
 
     def test_charge_goes_to_the_account_of_the_rules(self):
-        self.method.xpago_bank_account_id = self.acc_terminal
         with patch(SEND, return_value=self.intent()) as send:
             view = self.method.xpago_create_charge({'amount': 25000, 'rule_account_id': self.acc_escrow.id})
         self.assertEqual(send.call_args.kwargs['json']['deposit_account_id'], 'a-escrow')
@@ -120,7 +119,7 @@ class TestPosPaymentRules(PosXpagoRulesCommon):
         self.r_cheap.bank_account_id = False
         with patch(SEND, return_value=self.intent()) as send:
             self.method.xpago_create_charge({'amount': 200, 'rule_account_id': self.acc_main.id})
-        self.assertEqual(send.call_args.kwargs['json']['deposit_account_id'], 'a-terminal')
+        self.assertNotIn('deposit_account_id', send.call_args.kwargs['json'], 'no rule account: XPago default')
         # The cashier's choice, when the terminal lets her choose, goes first.
         self.method.xpago_choose_account = True
         with patch(SEND, return_value=self.intent()) as send:
@@ -142,3 +141,13 @@ class TestPosPaymentRules(PosXpagoRulesCommon):
         self.assertIn('Escrow', wizard.result)
         self.assertIn('Operación', wizard.result)
         self.assertIn('Marketplace al escrow', wizard.result)
+
+    def test_rules_by_invoice(self):
+        """A rule can look at whether the sale carries a stamped invoice: the cashier pressed «Invoice»."""
+        Rule = self.env['payment.xpago.rule']
+        Rule.search([]).active = False
+        Rule.create({'name': 'Con factura', 'sequence': 1, 'invoice_mode': 'invoiced', 'bank_account_id': self.acc_escrow.id})
+        Rule.create({'name': 'Sin factura', 'sequence': 2, 'invoice_mode': 'public', 'bank_account_id': self.acc_main.id})
+        data = {'total': 200, 'amount': 200, 'lines': []}
+        self.assertEqual(self.method.xpago_plan(dict(data, to_invoice=True))['parts'][0]['account_id'], self.acc_escrow.id)
+        self.assertEqual(self.method.xpago_plan(dict(data, to_invoice=False))['parts'][0]['account_id'], self.acc_main.id)

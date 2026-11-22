@@ -10,6 +10,7 @@
                 <field name="msi_mode"/>
                 <field name="terms" invisible="msi_mode != 'terms'"/>
                 <field name="bank_account_id"/>
+                <field name="invoice_mode" optional="show"/>
                 <field name="use_online" optional="show"/>
                 <field name="date_from" optional="hide"/>
                 <field name="date_to" optional="hide"/>
@@ -71,6 +72,7 @@
                                 <span>–</span>
                                 <field name="amount_max" placeholder="Any"/>
                             </div>
+                            <field name="invoice_mode"/>
                         </group>
                         <group string="The products" name="products">
                             <field name="product_tmpl_ids" widget="many2many_tags" placeholder="Any product"/>

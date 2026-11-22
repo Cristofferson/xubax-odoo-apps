@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_xpago_calculator" model="ir.actions.client">
+        <field name="name">Calculator</field>
+        <field name="tag">xpago_calculator</field>
+    </record>
+
+    <menuitem id="menu_xpago_calculator_root" name="Calculator" action="action_xpago_calculator"
+              web_icon="xpago,static/src/img/calculator_icon.png" sequence="95"/>
+</odoo>

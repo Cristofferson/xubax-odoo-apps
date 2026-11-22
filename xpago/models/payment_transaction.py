@@ -69,14 +69,26 @@ class PaymentTransaction(models.Model):
         elif 'invoice_ids' in tx and tx.invoice_ids:
             records = tx.invoice_ids.invoice_line_ids
         lines = Rule._xpago_lines_from_records(records) if records else []
-        return Rule._xpago_plan(tx.company_id, 'online', lines, tx.amount)[0]
+        return Rule._xpago_plan(tx.company_id, 'online', lines, tx.amount, invoiced=tx._xpago_wants_invoice())[0]
+
+    def _xpago_wants_invoice(self):
+        """Whether this sale carries a stamped invoice for the customer: an invoice already stamped (in Mexico, its
+        CFDI sent; elsewhere, posted) is being paid, or the customer asked for an invoice in the order (Mexico: not to
+        the general public). For the payment rules that look at the invoice."""
+        tx = self.sudo()
+        invoices = tx.invoice_ids.filtered(lambda move: move.move_type == 'out_invoice') if 'invoice_ids' in tx else []
+        if invoices:
+            if 'l10n_mx_edi_cfdi_state' in invoices._fields:
+                return any(invoice.l10n_mx_edi_cfdi_state == 'sent' for invoice in invoices)
+            return any(invoice.state == 'posted' for invoice in invoices)
+        orders = tx.sale_order_ids if 'sale_order_ids' in tx else []
+        if orders and 'l10n_mx_edi_cfdi_to_public' in orders._fields:
+            return any(not order.l10n_mx_edi_cfdi_to_public for order in orders)
+        return False
 
     def _xpago_deposit_account(self):
-        """Invoice payments go to the invoice account, the rest to the other account."""
-        provider = self.provider_id
-        has_invoice = 'invoice_ids' in self and bool(self.invoice_ids)
-        account = provider.xpago_invoice_bank_account_id if has_invoice else provider.xpago_other_bank_account_id
-        return provider._xpago_bank_account_id(account)
+        """The account the XPago payment rules give this payment; empty: the XPago default account."""
+        return self.provider_id._xpago_bank_account_id(self._xpago_rule_plan()['account'])
 
     def _xpago_uses_card_checkout(self):
         """Saving the card, holding the amount or validating a card go through the card-saving checkout; a plain
@@ -144,10 +156,10 @@ class PaymentTransaction(models.Model):
         # XPago takes the customer whole or not at all; a partial one is filled in at checkout.
         if all(customer.values()):
             payload['customer'] = customer
-        # The payment rules of the products choose the account before the invoice / other payments accounts, and
-        # narrow the months the amount allows.
+        # The payment rules choose the account (by product, amount and invoice) and narrow the months the amount
+        # allows.
         plan = self._xpago_rule_plan()
-        account = self.provider_id._xpago_bank_account_id(plan['account']) or self._xpago_deposit_account()
+        account = self.provider_id._xpago_bank_account_id(plan['account'])
         if account:
             payload['deposit_account_id'] = account
         terms = self.provider_id._xpago_allowed_terms(self.amount)
@@ -352,6 +364,10 @@ class PaymentTransaction(models.Model):
             'reference': self.reference,
             'hold': bool(self.provider_id.capture_manually),
         }
+        if self.provider_id.sudo().xpago_saved_card_deposit_account:
+            account = self._xpago_deposit_account()
+            if account:
+                body['deposit_account_id'] = account
         self.xpago_card_id = card_id
         try:
             payment = self.provider_id._xpago_make_request('POST', f'/v1/saved-cards/{card_id}/payments', json=body,

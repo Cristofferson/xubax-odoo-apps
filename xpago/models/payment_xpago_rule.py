@@ -56,6 +56,14 @@ class PaymentXpagoRule(models.Model):
     price_max = fields.Monetary(string="Product price up to")
     product_count = fields.Integer(compute='_compute_product_count', string="Products that fit")
 
+    invoice_mode = fields.Selection([
+        ('any', "Any sale"),
+        ('invoiced', "With stamped invoice"),
+        ('public', "Without invoice (general public)"),
+    ], string="Invoice", default='any', required=True,
+        help="With stamped invoice: online, an invoice already stamped is being paid or the customer asked for one in "
+             "the order; at the register and kiosk, the sale is marked «Invoice». Without invoice: everything else.")
+
     # What it decides
     msi_mode = fields.Selection([
         ('keep', "Does not change the months"),
@@ -66,7 +74,8 @@ class PaymentXpagoRule(models.Model):
     bank_account_id = fields.Many2one(
         'payment.xpago.bank.account', string="Deposit account",
         domain="[('provider_id.company_id', 'parent_of', company_id)]",
-        help="Where the money of these products is deposited. Empty: does not change the account.")
+        help="Where the money of the sales this rule fits is deposited. Empty: does not change the account. A sale no "
+             "rule gives an account to goes to your XPago default account.")
 
     @api.constrains('terms', 'msi_mode')
     def _check_terms(self):
@@ -118,11 +127,12 @@ class PaymentXpagoRule(models.Model):
     # === THE PLAN OF A SALE === #
 
     @api.model
-    def _xpago_plan(self, company, channel, lines, total, config=None, date=None, split=False):
+    def _xpago_plan(self, company, channel, lines, total, config=None, date=None, split=False, invoiced=False):
         """How a sale is charged: one part, or one per account and months when ``split``.
 
         ``channel``: 'online', or 'pos' / 'kiosk' with the point of sale app. ``lines``: dicts with ``product``
-        (product.product), ``unit_price`` and ``amount`` (taxes included). Returns a list of dicts: ``amount``,
+        (product.product), ``unit_price`` and ``amount`` (taxes included). ``invoiced``: the sale carries a stamped
+        invoice (for the rules that look at it). Returns a list of dicts: ``amount``,
         ``account`` (payment.xpago.bank.account, may be empty), ``terms`` (None = the rules do not limit the months,
         [1] = single payment) and ``rules`` (the rules applied).
         """
@@ -132,7 +142,7 @@ class PaymentXpagoRule(models.Model):
         # and take the months of the whole sale away. Its amount still counts in the total.
         lines = [line for line in lines if not self._xpago_skip_line(line, config)]
         rules = self.sudo().search([('company_id', 'parent_of', company.id)]).filtered(
-            lambda r: r._xpago_fits_sale(channel, config, total, date))
+            lambda r: r._xpago_fits_sale(channel, config, total, date, invoiced))
         candidates = {}
         if rules and lines:
             ids = [line['product'].id for line in lines if line.get('product')]
@@ -152,7 +162,13 @@ class PaymentXpagoRule(models.Model):
                 'terms_rule': terms_rule,
             })
         if not decided:
-            return [{'amount': total, 'account': Account, 'terms': None, 'rules': self.browse()}]
+            # Nothing sold to look at (a payment link, an amount typed at the register): the rules that do not ask
+            # for products still decide, by the amount, the invoice and where it is paid.
+            fitting = rules.filtered(lambda r: not r._has_product_filter() and not r.price_min and not r.price_max)
+            account_rule = fitting.filtered('bank_account_id')[:1]
+            terms_rule = fitting.filtered(lambda r: r.msi_mode != 'keep')[:1]
+            return [{'amount': total, 'account': account_rule.bank_account_id,
+                     'terms': terms_rule._terms() if terms_rule else None, 'rules': account_rule | terms_rule}]
 
         def merge(items, amount):
             terms = None
@@ -198,9 +214,11 @@ class PaymentXpagoRule(models.Model):
         self.ensure_one()
         return channel == 'online' and self.use_online
 
-    def _xpago_fits_sale(self, channel, config, total, date):
+    def _xpago_fits_sale(self, channel, config, total, date, invoiced=False):
         self.ensure_one()
         if not self._xpago_fits_channel(channel, config):
+            return False
+        if (self.invoice_mode == 'invoiced' and not invoiced) or (self.invoice_mode == 'public' and invoiced):
             return False
         if (self.date_from and date < self.date_from) or (self.date_to and date > self.date_to):
             return False

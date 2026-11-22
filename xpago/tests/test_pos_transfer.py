@@ -55,14 +55,16 @@ class TestPosXpagoTransfer(TestPoSCommon):
         body = send.call_args.kwargs['json']
         self.assertEqual((method, endpoint), ('POST', '/v1/checkouts'))
         self.assertEqual(body['methods'], ['bank_transfer'], 'a register transfer offers only the transfer')
-        self.assertEqual(body['bank_transfer_at'], 'create', 'the CLABE comes back right away for the register')
+        self.assertEqual(body['bank_transfer_at'], 'checkout',
+                         "never 'create': the processor makes a second CLABE 11 s later and reports only that one")
         self.assertEqual(body['customer'], {'first_name': 'Ana', 'last_name': 'Ruiz López', 'email': 'ana@example.com',
                                             'phone': '+525512345678'})
         self.assertEqual(body['amount'], 1200.0)
         self.assertEqual(send.call_args.kwargs['idempotency_key'], body['reference'])
         self.assertEqual(view['state'], 'awaiting')
         self.assertEqual((view['clabe'], view['bank'], view['beneficiary']), ('738180000000012345', 'FINTOC', 'Sharepay SA de CV'))
-        self.assertEqual(view['business'], self.method.company_id.name, 'the business is shown beside the beneficiary')
+        self.assertEqual(view['business'], self.provider._xpago_business_name(), 'the business is shown beside the beneficiary')
+        self.assertEqual(view['whatsapp'], 'whatsapp.account' in self.env, 'the WhatsApp button only where WhatsApp is installed')
         self.assertTrue(view['expires_at'])
         self.assertEqual(self.transfer(view).xpago_id, 'chk-1')
 
@@ -149,6 +151,30 @@ class TestPosXpagoTransfer(TestPoSCommon):
         self.assertEqual(answer['state'], 'unmatched')
         self.assertEqual(self.method.xpago_transfer_force_check({'order_uuid': 'other'})['state'], 'none')
 
+    def test_a_paid_page_pays_the_transfer_even_when_its_clabe_reads_cancelled(self):
+        """LAMUR 20-nov: the processor marked the page paid and the CLABE «canceled» with 0 received."""
+        view, _send = self.create_transfer()
+        transfer = self.transfer(view)
+        page = {'id': 'chk-1', 'status': 'paid', 'payment': {'id': 'pay-9', 'operation_code': '777001'}}
+        late = clabe('canceled', clabe=None, amount_received=0, amount_due=0)
+        with patch(SEND, side_effect=[late, page, page]):
+            transfer._xpago_refresh()
+        self.assertEqual((transfer.state, transfer.amount_received, transfer.amount_due, transfer.payment_id),
+                         ('paid', 1200.0, 0.0, 'pay-9'))
+        self.assertEqual(transfer.operation_code, '777001')
+        # «Retry» on the register then takes that transfer instead of making a new CLABE.
+        with patch(SEND) as send:
+            again = self.method.xpago_transfer_create({'amount': 1200.0, 'order_uuid': 'abcdef12-3456', 'customer': ANA})
+        send.assert_not_called()
+        self.assertEqual((again['id'], again['state'], again['payment']['transaction_id']), (transfer.id, 'paid', 'pay-9'))
+
+    def test_an_unpaid_page_keeps_the_clabe_state(self):
+        view, _send = self.create_transfer()
+        transfer = self.transfer(view)
+        with patch(SEND, side_effect=[clabe('canceled', clabe=None), {'id': 'chk-1', 'status': 'canceled'}]):
+            transfer._xpago_refresh()
+        self.assertEqual(transfer.state, 'cancelled')
+
     def test_paid_transfer_without_order_is_found(self):
         view, _send = self.create_transfer()
         transfer = self.transfer(view)
@@ -177,6 +203,62 @@ class TestPosXpagoTransfer(TestPoSCommon):
         with patch(SEND, side_effect=[paid(), checkout]):
             self.env['pos.xpago.transfer']._xpago_cron_refresh()
         self.assertEqual(self.transfer(view).state, 'paid')
+
+    def test_instant_notice_settles_the_transfer(self):
+        view, _send = self.create_transfer()
+        checkout = {'id': 'chk-1', 'status': 'paid', 'payment': {'id': 'pay-9', 'operation_code': '777001'}}
+        with patch(SEND, side_effect=[paid(), checkout]) as send:
+            done = self.provider._xpago_handle_notice(
+                {'event_id': 'evt_1', 'type': 'one_time_payment.paid', 'object': {'kind': 'checkout', 'id': 'chk-1'}})
+        self.assertEqual(send.call_args_list[0].args, ('GET', '/v1/checkouts/chk-1/bank-transfer'))
+        transfer = self.transfer(view)
+        self.assertEqual(done, [transfer])
+        self.assertEqual((transfer.state, transfer.operation_code), ('paid', '777001'))
+        with patch(SEND) as send:
+            self.provider._xpago_handle_notice({'object': {'kind': 'checkout', 'id': 'chk-1'}})
+        send.assert_not_called()  # a paid transfer is final: a repeated notice reads nothing
+
+    def paid_transfer(self):
+        view, _send = self.create_transfer()
+        checkout = {'id': 'chk-1', 'status': 'paid', 'payment': {'id': 'pay-9', 'operation_code': '777001', 'method': 'bank_transfer'}}
+        with patch(SEND, side_effect=[paid(), checkout]):
+            self.method.xpago_transfer_status(view['id'])
+        return self.transfer(view)
+
+    def test_a_paid_transfer_is_refunded_in_full(self):
+        transfer = self.paid_transfer()
+        self.assertEqual(transfer.state, 'paid')
+        with patch(SEND, return_value={'id': 'ref-1', 'status': 'refunded'}) as send:
+            transfer._xpago_refund()
+        self.assertEqual(send.call_args.args, ('POST', '/v1/checkouts/chk-1/refund'))
+        self.assertEqual(transfer.state, 'refunded')
+        with self.assertRaises(UserError):
+            transfer._xpago_refund()
+
+    def test_refund_without_the_original_transfer_says_cash(self):
+        with self.assertRaises(UserError):
+            self.method.xpago_transfer_refund({'amount': -1200.0, 'refunded_order_ids': []})
+        with self.assertRaises(UserError):
+            self.method.xpago_transfer_refund({'amount': 50.0})
+
+    def test_a_single_name_is_not_written_twice(self):
+        """XPago needs a last name, so «Maraby» goes as name and last name; the ticket says «Maraby», once."""
+        view, send = self.create_transfer(customer=dict(ANA, name='Maraby'))
+        self.assertEqual((send.call_args.kwargs['json']['customer']['first_name'],
+                          send.call_args.kwargs['json']['customer']['last_name']), ('Maraby', 'Maraby'))
+        self.assertNotIn('display_name', send.call_args.kwargs['json']['customer'])
+        self.assertEqual(self.transfer(view).customer_name, 'Maraby')
+        self.assertEqual(self.transfer(view)._xpago_payment_values()['cardholder_name'], 'Maraby')
+
+    def test_customers_see_the_business_name_not_the_owners(self):
+        """The legal name of the company is often the owner's name: the transfer shows the business name."""
+        self.provider.xpago_business_name = 'LAMUR'
+        self.method.company_id.name = 'JOSE PEREZ LOPEZ'
+        self.assertEqual(self.provider._xpago_business_name(), 'LAMUR')
+        self.provider.xpago_business_name = False
+        self.env['payment.provider'].browse(self.provider.id)._xpago_store_status(True, account_name='LAMUR', throttle=False)
+        self.provider.invalidate_recordset()
+        self.assertEqual(self.provider._xpago_business_name(), 'LAMUR')
 
 
 @tagged('post_install', '-at_install')

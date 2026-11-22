@@ -3,56 +3,19 @@
 import { _t } from "@web/core/l10n/translation";
 import { Component, onWillUnmount, useState } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
-import { ReceiptHeader } from "@point_of_sale/app/screens/receipt_screen/receipt/receipt_header/receipt_header";
-import { formatClabe, minutesLeft } from "@xpago/pos/app/transfer/transfer_utils";
-
-/** Who pays: XPago makes the CLABE out to them and emails them the transfer details. */
-export class XpagoTransferCustomerDialog extends Component {
-    static template = "xpago.TransferCustomerDialog";
-    static components = { Dialog };
-    static props = ["defaults", "amount", "getPayload", "close"];
-
-    setup() {
-        this.state = useState({ ...this.props.defaults, tried: false });
-    }
-
-    get title() {
-        return _t("Pay by transfer: who pays?");
-    }
-
-    get errors() {
-        const errors = {};
-        if (!this.state.name.trim()) {
-            errors.name = true;
-        }
-        if (!/^\S+@\S+\.\S+$/.test(this.state.email.trim())) {
-            errors.email = true;
-        }
-        if (this.state.phone.replace(/\D/g, "").length < 10) {
-            errors.phone = true;
-        }
-        return errors;
-    }
-
-    confirm() {
-        this.state.tried = true;
-        if (Object.keys(this.errors).length) {
-            return;
-        }
-        this.props.getPayload({
-            name: this.state.name.trim(),
-            email: this.state.email.trim(),
-            phone: this.state.phone.trim(),
-        });
-        this.props.close();
-    }
-}
+import {
+    formatClabe,
+    minutesLeft,
+    whatsappPhone,
+    whatsappText,
+    whatsappUrl,
+} from "@xpago/pos/app/transfer/transfer_utils";
 
 /** The CLABE of the sale, big, while the customer transfers. The register keeps asking behind it. */
 export class XpagoTransferDialog extends Component {
     static template = "xpago.TransferDialog";
     static components = { Dialog };
-    static props = ["entry", "renew", "cancel", "hide", "print", "close"];
+    static props = ["entry", "renew", "cancel", "hide", "print", "close", "companyPhone?"];
 
     setup() {
         this.view = useState(this.props.entry.view);
@@ -89,6 +52,18 @@ export class XpagoTransferDialog extends Component {
         return this.env.utils.formatCurrency(value || 0);
     }
 
+    /** Send the transfer details by WhatsApp: to the customer's phone, unless it is the business's own phone. */
+    whatsapp() {
+        const own = whatsappPhone(this.props.companyPhone);
+        const phone = whatsappPhone(this.view.customer_phone);
+        const text = whatsappText(this.view, {
+            amountText: this.money(this.partly ? this.view.amount_due : this.view.amount),
+            clabeText: this.clabeText,
+            minutes: this.minutes,
+        });
+        window.open(whatsappUrl(phone && phone !== own ? phone : "", text), "_blank");
+    }
+
     async copy() {
         try {
             await navigator.clipboard.writeText(this.view.clabe);
@@ -99,10 +74,9 @@ export class XpagoTransferDialog extends Component {
     }
 }
 
-/** A slip with the CLABE, for a customer who would rather take it on paper. Odoo 17: the receipt header takes the
- *  header data of the order. */
+/** A slip with the CLABE, for a customer who would rather take it on paper. It is headed by the business name, never
+ *  the owner's legal name. */
 export class XpagoClabeReceipt extends Component {
     static template = "xpago.ClabeReceipt";
-    static components = { ReceiptHeader };
-    static props = ["headerData", "view", "amountText", "clabeText", "expiresText"];
+    static props = ["view", "amountText", "clabeText", "expiresText"];
 }

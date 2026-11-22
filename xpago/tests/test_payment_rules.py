@@ -124,11 +124,13 @@ class TestPaymentRulesOnline(XpagoRulesCommon):
         self.assertEqual(payload['installments'], [1, 3, 6])
         self.assertEqual(payload['deposit_account_id'], 'a-escrow')
 
-    def test_rule_account_goes_before_the_invoice_account(self):
-        self.provider.xpago_invoice_bank_account_id = self.acc_main
+    def test_invoice_rule_gives_the_account_when_the_product_rules_do_not(self):
+        self.env['payment.xpago.rule'].create({'name': 'Con factura', 'sequence': 1000, 'invoice_mode': 'invoiced',
+                                               'bank_account_id': self.acc_main.id})
         tx = self.invoice_tx([self.ring])
+        tx.invoice_ids.action_post()
         payload = tx._xpago_prepare_checkout_payload()
-        self.assertEqual(payload['deposit_account_id'], 'a-main', 'the ring rule names no account: the invoice account')
+        self.assertEqual(payload['deposit_account_id'], 'a-main', 'the ring rule names no account: the invoice rule')
         self.assertEqual(payload['installments'], [1, 3, 6, 12])
         tx = self.invoice_tx([self.used])
         self.assertEqual(tx._xpago_prepare_checkout_payload()['deposit_account_id'], 'a-escrow')
