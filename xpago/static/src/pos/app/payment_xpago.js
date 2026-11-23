@@ -21,8 +21,11 @@ export class PaymentXpago extends PaymentInterface {
 
     async sendPaymentRequest(uuid) {
         await super.sendPaymentRequest(...arguments);
-        const order = this.pos.getOrder();
-        const line = order.getPaymentlineByUuid(uuid);
+        // The payment screen may show another sale than the current one (a register reloaded or switched sales):
+        // the payment line knows its own sale.
+        const line =
+            this.pos.models["pos.payment"].find((p) => p.uuid === uuid) || this.pos.getOrder().getPaymentlineByUuid(uuid);
+        const order = line.pos_order_id || this.pos.getOrder();
         if (line.amount < 0) {
             return this._refund(order, line);
         }
