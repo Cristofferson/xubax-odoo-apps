@@ -450,6 +450,34 @@ class TestPosXpago(TestPoSCommon):
             self.method.xpago_create_charge({'amount': 99.0, 'order_uuid': 'abcdef12-3456'})
         send.assert_called_once()
 
+    def test_retry_after_reload_never_charges_twice(self):
+        """The register reloaded while waiting and the card was approved after (E2E 22-nov): Odoo still has the charge
+        as waiting. «Retry» asks XPago first and takes the approved charge; nothing new goes to the terminal."""
+        self.create_charge()
+        with patch(SEND, return_value=self.approved()) as send:
+            view = self.method.xpago_create_charge({'amount': 150.5, 'order_uuid': 'abcdef12-3456'})
+        self.assertNotIn('/v1/terminal-charges', [c.args[1] for c in send.call_args_list if c.args[0] == 'POST'])
+        self.assertEqual((view['state'], view['payment']['transaction_id']), ('confirmed', 'pay-1'))
+
+    def test_retry_cancels_the_charge_still_waiting(self):
+        """A charge of the sale still waiting on the terminal is cancelled before the new one: never two alive."""
+        first, _send = self.create_charge()
+        answers = [self.intent(), {'data': []}, self.intent('canceled'), dict(self.intent(), id='pi-2')]
+        with patch(SEND, side_effect=answers) as send:
+            view = self.method.xpago_create_charge({'amount': 150.5, 'order_uuid': 'abcdef12-3456'})
+        posts = [c.args[1] for c in send.call_args_list if c.args[0] == 'POST']
+        self.assertEqual(posts, ['/v1/terminal-charges/pi-1/cancel', '/v1/terminal-charges'])
+        self.assertEqual(self.env['pos.xpago.charge'].browse(first['id']).state, 'cancelled')
+        self.assertNotEqual(view['id'], first['id'])
+
+    def test_cancel_after_reload_cancels_on_the_terminal(self):
+        """«Cancel» on a line the reloaded register no longer follows still cancels the charge on the terminal."""
+        first, _send = self.create_charge()
+        with patch(SEND, side_effect=[self.intent(), {'data': []}, self.intent('canceled')]):
+            result = self.method.xpago_cancel_order_charges({'order_uuid': 'abcdef12-3456', 'amount': 150.5})
+        self.assertEqual(result['state'], 'cancelled')
+        self.assertEqual(self.env['pos.xpago.charge'].browse(first['id']).state, 'cancelled')
+
     # Without a card in the time of the payment method, the charge is cancelled; a card paid at the end is not.
 
     def _age(self, seconds):

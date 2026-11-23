@@ -85,8 +85,12 @@ class PosPaymentMethod(models.Model):
     def xpago_create_charge(self, data):
         """Send the amount to the terminal. Returns the charge as the point of sale sees it."""
         provider = self._xpago_check_access()
-        paid = self._xpago_charge_paid_unused(data.get('order_uuid') or '',
-                                              (data.get('amount') or 0.0) + (data.get('tip_amount') or 0.0))
+        uuid = data.get('order_uuid') or ''
+        # A sale never has two charges alive on the terminal: the ones of this sale still open (the register reloaded
+        # or gave up while waiting) are asked to XPago and cancelled first. A card approved in the meantime shows up
+        # as paid here instead of being charged again.
+        self._xpago_close_open_charges(uuid)
+        paid = self._xpago_charge_paid_unused(uuid, (data.get('amount') or 0.0) + (data.get('tip_amount') or 0.0))
         if paid:
             # «Retry» after the register gave up on a card that was approved after all: that charge pays the sale,
             # and nothing goes to the terminal again.
@@ -99,6 +103,28 @@ class PosPaymentMethod(models.Model):
             tip_amount=data.get('tip_amount') or 0.0, terms=terms,
             collect_tip=session.config_id.xpago_tip_mode == 'terminal' and data.get('ask_tip', True) is not False)
         return charge._xpago_public_view()
+
+    def _xpago_close_open_charges(self, uuid):
+        """Ask XPago for the charges of this sale still waiting for the card and cancel them. Returns them."""
+        if not uuid:
+            return self.env['pos.xpago.charge']
+        open_charges = self.env['pos.xpago.charge'].sudo().search(
+            [('payment_method_id', '=', self.id), ('order_uuid', '=', uuid), ('state', '=', 'pending')])
+        open_charges._xpago_refresh()
+        for charge in open_charges.filtered(lambda c: c.state == 'pending'):
+            charge._xpago_find_loose_payment()
+            if charge.state == 'pending':
+                charge._xpago_cancel()
+        return open_charges
+
+    def xpago_cancel_order_charges(self, data):
+        """«Cancel» on a line the register no longer follows (it reloaded while waiting): cancel the charges of this
+        sale still waiting on the terminal. Returns the approved one nobody uses yet, if the card was paid after all."""
+        self._xpago_check_access()
+        uuid = data.get('order_uuid') or ''
+        self._xpago_close_open_charges(uuid)
+        paid = self._xpago_charge_paid_unused(uuid, data.get('amount') or 0.0)
+        return paid._xpago_public_view() if paid else {'state': 'cancelled'}
 
     def xpago_charge_status(self, charge_id):
         self._xpago_check_access()

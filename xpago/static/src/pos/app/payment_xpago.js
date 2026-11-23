@@ -292,6 +292,14 @@ export class PaymentXpago extends PaymentInterface {
         await super.send_payment_cancel(...arguments);
         const pending = this.charges[uuid];
         if (!pending) {
+            // The register reloaded while waiting: it no longer follows the charge, so Odoo cancels what is still
+            // waiting on the terminal for this sale. A card approved meanwhile stays paid: «Retry» takes it.
+            const line = order?.get_paymentline_by_uuid?.(uuid);
+            try {
+                await this._call("xpago_cancel_order_charges", [{ order_uuid: order?.uuid, amount: line?.amount || 0 }]);
+            } catch {
+                // nothing to cancel, or offline: «Retry» asks XPago again before charging
+            }
             return true;
         }
         if (pending.refundWait) {

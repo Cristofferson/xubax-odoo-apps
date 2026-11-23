@@ -222,6 +222,7 @@ class PaymentXpagoDomiciliation(models.Model):
     # === CHARGING === #
 
     def action_charge_now(self):
+        declined = []
         for record in self:
             if record.state != 'active':
                 raise UserError(_("The card on file charge of %s is paused.", record.partner_id.display_name))
@@ -232,7 +233,21 @@ class PaymentXpagoDomiciliation(models.Model):
                 raise UserError(_("%s owes nothing right now.", record.partner_id.display_name))
             tx = record._charge(invoices)
             if tx and tx.state == 'error':
-                raise UserError(_("The card was declined: %s", tx.state_message or _("no reason given")))
+                declined.append(_("The card was declined: %s", tx.state_message or _("no reason given")))
+        if declined:
+            # A notice, not an error: an error would undo the failed transaction, the note and the task for the
+            # responsible that tell what happened.
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': _("Not charged"),
+                    'message': "\n".join(declined),
+                    'type': 'danger',
+                    'sticky': True,
+                    'next': {'type': 'ir.actions.client', 'tag': 'soft_reload'},
+                },
+            }
         return True
 
     def _charge(self, invoices):
