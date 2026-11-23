@@ -88,8 +88,12 @@ class TestDomiciliation(AccountPaymentCommon):
     def test_declined_card_tells_the_responsible(self):
         self.make_invoice(100)
         record = self.domiciliation(schedule='manual')
-        with patch(SEND, side_effect=ValidationError('declined')), self.assertRaises(UserError):
-            record.action_charge_now()
+        with patch(SEND, side_effect=ValidationError('declined')):
+            action = record.action_charge_now()
+        # A notice, not an error: the failed transaction, the note and the task for the responsible stay.
+        self.assertEqual(action['params']['type'], 'danger')
+        self.assertTrue(record.activity_ids)
+        self.assertTrue(record.transaction_ids.filtered(lambda t: t.state == 'error'))
 
     def test_paused_is_not_charged(self):
         self.make_invoice(100)

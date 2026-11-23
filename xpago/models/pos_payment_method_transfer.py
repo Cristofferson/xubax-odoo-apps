@@ -57,10 +57,24 @@ class PosPaymentMethod(models.Model):
         as the point of sale sees it."""
         provider = self._xpago_transfer_check_access()
         session = self.env['pos.session'].browse(data.get('session_id')).exists()
-        paid = self._xpago_transfer_paid_unused(data.get('order_uuid') or '', data.get('amount') or 0.0)
+        uuid = data.get('order_uuid') or ''
+        amount = data.get('amount') or 0.0
+        # The transfers of this sale still open are asked to XPago first: money that arrived while nobody looked pays
+        # the sale, and a CLABE still waiting for this amount is shown again instead of a second one (the customer
+        # may be paying it right now).
+        open_transfers = self.env['pos.xpago.transfer'].sudo().search(
+            [('payment_method_id', '=', self.id), ('order_uuid', '=', uuid), ('state', '=', 'awaiting')],
+            order='id desc', limit=10) if uuid else self.env['pos.xpago.transfer']
+        open_transfers._xpago_refresh()
+        paid = self._xpago_transfer_paid_unused(uuid, amount)
         if paid:
             # «Retry» after the register gave up on a transfer that arrived after all: that one pays the sale.
             return paid._xpago_public_view()
+        currency = self.company_id.currency_id or self.env.company.currency_id
+        waiting = open_transfers.filtered(
+            lambda t: t.state == 'awaiting' and not currency.compare_amounts(t.amount, amount))[:1]
+        if waiting:
+            return waiting._xpago_public_view()
         account = self._xpago_charge_account(provider, rule_account_id=data.get('rule_account_id'))
         transfer = self.env['pos.xpago.transfer'].sudo()._xpago_create(
             self.sudo(), provider, data.get('amount') or 0.0, session, data.get('order_uuid') or '',

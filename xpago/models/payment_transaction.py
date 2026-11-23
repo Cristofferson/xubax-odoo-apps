@@ -330,8 +330,19 @@ class PaymentTransaction(models.Model):
                                          idempotency_key=f'charge-{self.reference}')
         self._record({'reference': self.reference, 'xpago_card_id': card_id, 'xpago_payment': payment})
 
+    def _xpago_card_transaction(self):
+        """The transaction holding the saved card of this payment: itself, or the hold it was captured from (Odoo
+        makes a child transaction for a partial capture, without the card)."""
+        tx = self
+        while tx and not tx.xpago_card_id and tx.source_transaction_id and tx.operation != 'refund':
+            tx = tx.source_transaction_id
+        return tx
+
     def _xpago_held_payment_path(self):
         source = self.source_transaction_id
+        card = source._xpago_card_transaction()
+        if card.xpago_card_id and source.provider_reference:
+            return f'/v1/saved-cards/{card.xpago_card_id}/payments/{source.provider_reference}'
         if not source.xpago_card_id or not source.provider_reference:
             raise ValidationError(_("This payment was not made on a saved card."))
         return f'/v1/saved-cards/{source.xpago_card_id}/payments/{source.provider_reference}'
@@ -361,7 +372,7 @@ class PaymentTransaction(models.Model):
         if self.provider_code != 'xpago':
             return super()._send_refund_request()
         source = self.source_transaction_id
-        if not source.xpago_card_id and source.provider_reference:
+        if not source._xpago_card_transaction().xpago_card_id and source.provider_reference:
             # A checkout (online store, link, invoice) is refunded in full, the same day.
             refunded = self._send_api_request('POST', f'/v1/checkouts/{source.provider_reference}/refund',
                                               idempotency_key=f'refund-{self.reference}')
@@ -378,6 +389,9 @@ class PaymentTransaction(models.Model):
             self._set_canceled()
             return
         self.provider_reference = (answer or {}).get('id') or source.provider_reference
+        if operation == 'capture':
+            # The captured payment is refunded through the saved card of the hold.
+            self.xpago_card_id = source._xpago_card_transaction().xpago_card_id
         self._set_done()
         if operation == 'capture' and self._xpago_is_partial():
             # XPago captures a hold only once: the rest of the hold is freed by the bank on its own.
