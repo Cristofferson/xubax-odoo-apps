@@ -271,6 +271,9 @@ class PosPaymentMethod(models.Model):
         if len(parts) == 1:
             parts[0]['amount'] = amount
         provider = self.sudo().xpago_provider_id
+        for part in parts:
+            # The months the provider allows for this amount («Months without interest by amount»), as online.
+            part['terms'] = provider._xpago_terms_within(part['amount'], part['terms'] or None) or part['terms']
         return {
             'show_account': bool(config.xpago_show_account),
             'parts': [{'amount': part['amount'],

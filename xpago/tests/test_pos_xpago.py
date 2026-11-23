@@ -432,6 +432,17 @@ class TestPosXpago(TestPoSCommon):
             self.method.xpago_create_charge({'amount': 99.0, 'order_uuid': 'abcdef12-3456'})
         send.assert_called_once()
 
+    def test_months_by_amount_bound_the_terminal(self):
+        """«Months without interest by amount» of the provider bound the terminal as they bound the online checkout
+        (E2E 23-nov: a $150 charge went out with every plan of the account)."""
+        self.provider.xpago_installment_rule_ids = [(0, 0, {'min_amount': 1000, 'terms': '3, 6'})]
+        with patch(SEND, return_value=self.intent()) as send:
+            self.method.xpago_create_charge({'amount': 150.5, 'order_uuid': 'months-1'})
+        self.assertEqual(send.call_args.kwargs['json']['installments'], [1])
+        with patch(SEND, return_value=dict(self.intent(), id='pi-2')) as send:
+            self.method.xpago_create_charge({'amount': 2000.0, 'order_uuid': 'months-2', 'terms': [6]})
+        self.assertEqual(send.call_args.kwargs['json']['installments'], [6])
+
     def test_retry_after_reload_never_charges_twice(self):
         """The register reloaded while waiting and the card was approved after (E2E 22-nov): Odoo still has the charge
         as waiting. «Retry» asks XPago first and takes the approved charge; nothing new goes to the terminal."""
