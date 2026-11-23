@@ -141,8 +141,11 @@ class PosXpagoCharge(models.Model):
             body['tip_amount'] = currency.round(tip_amount)
         elif collect_tip:
             body['collect_tip'] = True
+        # The months the provider allows for this amount («Months without interest by amount») bound every terminal
+        # charge, as they bound the online checkout.
+        terms = provider._xpago_terms_within(amount, terms or None)
         if terms:
-            body['installments'] = sorted(set(terms))
+            body['installments'] = terms
         try:
             remote = provider._xpago_make_request('POST', '/v1/terminal-charges', json=body, idempotency_key=external_id)
         except ValidationError as error:

@@ -177,6 +177,17 @@ class PaymentProvider(models.Model):
         terms = rule._parse_terms() if rule else []
         return sorted({1, *terms} if self.xpago_single_payment or not terms else set(terms))
 
+    def _xpago_terms_within(self, amount, terms=None):
+        """``terms`` (the months the payment rules allow, None for no limit) narrowed to what the provider allows for
+        ``amount``; single payment when nothing is left. None: no limit at all."""
+        self.ensure_one()
+        allowed = self._xpago_allowed_terms(amount)
+        if allowed is None:
+            return sorted(set(terms)) if terms else None
+        if not terms:
+            return allowed
+        return [t for t in allowed if t in terms] or [1]
+
     @api.model
     def _xpago_connect_url(self):
         return self.env['ir.config_parameter'].sudo().get_param(const.CONNECT_URL_PARAM) or const.CONNECT_URL
