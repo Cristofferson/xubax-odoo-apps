@@ -168,6 +168,25 @@ class TestPosXpagoTransfer(TestPoSCommon):
         send.assert_not_called()
         self.assertEqual((again['id'], again['state'], again['payment']['transaction_id']), (transfer.id, 'paid', 'pay-9'))
 
+    def test_retry_shows_the_same_clabe_while_waiting(self):
+        """«Retry» on a transfer still waiting for this amount shows its CLABE again instead of making a second one."""
+        view, _send = self.create_transfer()
+        with patch(SEND, side_effect=[clabe(), {'id': 'chk-1', 'status': 'open'}]) as send:
+            again = self.method.xpago_transfer_create({'amount': 1200.0, 'order_uuid': 'abcdef12-3456', 'customer': ANA})
+        self.assertNotIn(('POST', '/v1/checkouts'), [c.args for c in send.call_args_list])
+        self.assertEqual((again['id'], again['state']), (view['id'], 'awaiting'))
+
+    def test_retry_after_the_money_arrived_unseen(self):
+        """The money arrived while the register was not looking (E2E 22-nov): «Retry» reads it back and that
+        transfer pays the sale; no second CLABE."""
+        view, _send = self.create_transfer()
+        checkout = {'id': 'chk-1', 'status': 'paid', 'payment': {'id': 'pay-9', 'operation_code': '777001'}}
+        with patch(SEND, side_effect=[paid(), checkout, checkout]) as send:
+            again = self.method.xpago_transfer_create({'amount': 1200.0, 'order_uuid': 'abcdef12-3456', 'customer': ANA})
+        self.assertNotIn(('POST', '/v1/checkouts'), [c.args for c in send.call_args_list])
+        self.assertEqual((again['id'], again['state']), (view['id'], 'paid'))
+        self.assertEqual(self.env['pos.xpago.transfer'].search_count([('order_uuid', '=', 'abcdef12-3456')]), 1)
+
     def test_an_unpaid_page_keeps_the_clabe_state(self):
         view, _send = self.create_transfer()
         transfer = self.transfer(view)

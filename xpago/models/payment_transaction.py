@@ -377,9 +377,20 @@ class PaymentTransaction(models.Model):
             return
         self._handle_notification_data('xpago', {'reference': self.reference, 'xpago_payment': payment})
 
+    def _xpago_card_transaction(self):
+        """The transaction holding the saved card of this payment: itself, or the hold it was captured from (Odoo
+        makes a child transaction for a partial capture, without the card)."""
+        tx = self
+        while tx and not tx.xpago_card_id and tx.source_transaction_id and tx.operation != 'refund':
+            tx = tx.source_transaction_id
+        return tx
+
     def _xpago_held_payment_path(self):
         """The XPago path of the payment made on a saved card that this transaction (or its source) holds."""
         source = self.source_transaction_id or self
+        card = source._xpago_card_transaction()
+        if card.xpago_card_id and source.provider_reference:
+            return f'/v1/saved-cards/{card.xpago_card_id}/payments/{source.provider_reference}'
         if not source.xpago_card_id or not source.provider_reference:
             raise ValidationError(_("This payment was not made on a saved card."))
         return f'/v1/saved-cards/{source.xpago_card_id}/payments/{source.provider_reference}'
@@ -397,6 +408,8 @@ class PaymentTransaction(models.Model):
         )
         if partial:
             capture_child_tx.provider_reference = payment.get('id') or self.provider_reference
+            # The captured payment is refunded through the saved card of the hold.
+            capture_child_tx.xpago_card_id = self.xpago_card_id
             capture_child_tx._set_done()
             remainder = self._create_child_transaction(self.amount - capture_child_tx.amount)
             remainder._set_canceled(state_message=_("XPago captures a hold once; the bank frees the rest on its own."))
@@ -427,7 +440,7 @@ class PaymentTransaction(models.Model):
             return super()._send_refund_request(amount_to_refund=amount_to_refund)
         source = self
         refund_tx = super()._send_refund_request(amount_to_refund=amount_to_refund)
-        if not source.xpago_card_id and source.provider_reference:
+        if not source._xpago_card_transaction().xpago_card_id and source.provider_reference:
             # A checkout (online store, link, invoice) is refunded in full, the same day.
             refunded = self.provider_id._xpago_make_request(
                 'POST', f'/v1/checkouts/{source.provider_reference}/refund', idempotency_key=f'refund-{refund_tx.reference}')
@@ -435,7 +448,7 @@ class PaymentTransaction(models.Model):
             refund_tx._set_done()
             return refund_tx
         refunded = self.provider_id._xpago_make_request(
-            'POST', self._xpago_held_payment_path() + '/refund', json={'reason': refund_tx.reference},
+            'POST', refund_tx._xpago_held_payment_path() + '/refund', json={'reason': refund_tx.reference},
             idempotency_key=f'refund-{refund_tx.reference}')
         refund_tx.provider_reference = refunded.get('id') or self.provider_reference
         refund_tx._set_done()
