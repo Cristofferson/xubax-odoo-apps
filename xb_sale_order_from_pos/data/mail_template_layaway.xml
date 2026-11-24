@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Reminder a few days before the deadline, with the balance and the link to pay
+         it online («My layaway»). -->
+    <record id="mail_template_layaway_reminder" model="mail.template">
+        <field name="name">Layaway: reminder before the deadline</field>
+        <field name="description">Sent a few days before a layaway's deadline</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">{{ object.company_id.name }} - Your layaway {{ object.name }} is due on {{ format_date(object.xb_layaway_deadline) }}</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or object.user_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.partner_id.id }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px; font-size: 14px;">
+    <p style="margin: 0px; padding: 0px;">
+        Hello <t t-out="object.partner_id.name or ''">Brandon Freeman</t>,
+        <br/><br/>
+        Your layaway <strong t-out="object.name or ''">S00052</strong> at <t t-out="object.company_id.name or ''">YourCompany</t> is due on <strong t-out="format_date(object.xb_layaway_deadline) or ''">05/05/2021</strong>.
+        You have paid <t t-out="format_amount(object.xb_layaway_paid, object.currency_id) or ''">$ 100.00</t> and the balance is <strong t-out="format_amount(object.amount_unpaid, object.currency_id) or ''">$ 900.00</strong>.
+        <br/><br/>
+        You can pay it at the shop or online, in one or more payments:
+    </p>
+    <p style="margin: 16px 0px;">
+        <a t-att-href="object._xb_layaway_portal_url()" style="background-color: #1f7a4d; padding: 10px 16px; text-decoration: none; color: #fff; border-radius: 6px;">Pay my layaway</a>
+    </p>
+    <p style="margin: 0px; padding: 0px;" t-if="object.xb_layaway_cancel_fee_percent">
+        If it is not paid by then, the shop keeps <t t-out="'%g' % object.xb_layaway_cancel_fee_percent">10</t>% of what you paid and returns the rest.
+    </p>
+</div>
+        </field>
+    </record>
+
+    <!-- Receipt of each automatic layaway payment charged to the saved card (1.4.0). -->
+    <record id="mail_template_layaway_autocharge" model="mail.template">
+        <field name="name">Layaway: automatic payment charged</field>
+        <field name="description">Sent each time the saved card pays a layaway on its own</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">{{ object.company_id.name }} - We charged a payment of your layaway {{ object.name }}</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or object.user_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.partner_id.id }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px; font-size: 14px;">
+    <t t-set="tx" t-value="object.transaction_ids.filtered(lambda t: t.state == 'done' and t.token_id).sorted('id')[-1:]"/>
+    <p style="margin: 0px; padding: 0px;">
+        Hello <t t-out="object.partner_id.name or ''">Brandon Freeman</t>,
+        <br/><br/>
+        As agreed, we charged <strong t-out="format_amount(tx.amount, object.currency_id) or ''">$ 200.00</strong> to your card <t t-out="tx.token_id.payment_details or ''">1234</t> for your layaway <strong t-out="object.name or ''">S00052</strong> at <t t-out="object.company_id.name or ''">YourCompany</t>.
+        <br/><br/>
+        You have paid <t t-out="format_amount(object.xb_layaway_paid, object.currency_id) or ''">$ 300.00</t>.
+        <t t-if="object.currency_id.compare_amounts(object.amount_unpaid, 0.0) &gt; 0">
+            The balance is <strong t-out="format_amount(object.amount_unpaid, object.currency_id) or ''">$ 700.00</strong><t t-if="object.xb_auto_next_date"> and the next payment is on <t t-out="format_date(object.xb_auto_next_date) or ''">05/05/2021</t></t>.
+        </t>
+        <t t-else="">
+            <strong>Your layaway is paid in full.</strong> Pick up your purchase at the shop.
+        </t>
+    </p>
+    <p style="margin: 16px 0px;">
+        <a t-att-href="object._xb_layaway_portal_url()" style="background-color: #1f7a4d; padding: 10px 16px; text-decoration: none; color: #fff; border-radius: 6px;">See my layaway</a>
+    </p>
+    <p style="margin: 0px; padding: 0px;">To stop the automatic payments or change the card, just reply to this email.</p>
+</div>
+        </field>
+    </record>
+
+    <!-- Notice the day after the deadline, when the layaway expired unpaid. -->
+    <record id="mail_template_layaway_expired" model="mail.template">
+        <field name="name">Layaway: expired</field>
+        <field name="description">Sent when a layaway expires unpaid</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">{{ object.company_id.name }} - Your layaway {{ object.name }} expired</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or object.user_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.partner_id.id }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px; font-size: 14px;">
+    <p style="margin: 0px; padding: 0px;">
+        Hello <t t-out="object.partner_id.name or ''">Brandon Freeman</t>,
+        <br/><br/>
+        Your layaway <strong t-out="object.name or ''">S00052</strong> at <t t-out="object.company_id.name or ''">YourCompany</t> was due on <t t-out="format_date(object.xb_layaway_deadline) or ''">05/05/2021</t> and it was not paid in full.
+        Contact us to extend it or to get back <strong t-out="format_amount(object.xb_layaway_refund_amount, object.currency_id) or ''">$ 90.00</strong> of the <t t-out="format_amount(object.xb_layaway_paid, object.currency_id) or ''">$ 100.00</t> you paid.
+        <br/><br/>
+        Any questions? Just reply to this email.
+    </p>
+</div>
+        </field>
+    </record>
+    <!-- Orders made at the register: balance reminder a few days before the delivery date. -->
+    <record id="mail_template_order_reminder" model="mail.template">
+        <field name="name">Order: balance reminder before delivery</field>
+        <field name="description">Sent a few days before the delivery date of an order with a balance</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">{{ object.company_id.name }} - Your order {{ object.name }} is almost ready</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or object.user_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.partner_id.id }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px; font-size: 14px;">
+    <p style="margin: 0px; padding: 0px;">
+        Hello <t t-out="object.partner_id.name or ''">Brandon Freeman</t>,
+        <br/><br/>
+        Your order <strong t-out="object.name or ''">S00052</strong> at <t t-out="object.company_id.name or ''">YourCompany</t> is due for delivery on <strong t-out="format_date(object.commitment_date) or ''">05/05/2021</strong>.
+        You have paid <t t-out="format_amount(object.xb_layaway_paid, object.currency_id) or ''">$ 300.00</t> and the balance is <strong t-out="format_amount(object.amount_unpaid, object.currency_id) or ''">$ 700.00</strong>.
+        <br/><br/>
+        You can pay it at the shop when you pick it up, or online now, in one or more payments:
+    </p>
+    <p style="margin: 16px 0px;">
+        <a t-att-href="object._xb_portal_order_url()" style="background-color: #1f7a4d; padding: 10px 16px; text-decoration: none; color: #fff; border-radius: 6px;">Pay my order</a>
+    </p>
+</div>
+        </field>
+    </record>
+</odoo>

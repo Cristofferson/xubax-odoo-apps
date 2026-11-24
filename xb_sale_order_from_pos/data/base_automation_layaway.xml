@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- The reminder before a layaway's deadline is an Odoo automation rule, so the shop changes
+         how many days before, or the email itself, from Settings › Technical › Automation rules
+         without code. Runs once per deadline: extending a layaway reminds again before the new one. -->
+    <record id="automation_layaway_reminder" model="base.automation">
+        <field name="name">Layaways: reminder before the deadline</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="trigger">on_time</field>
+        <field name="trg_date_id" ref="xb_sale_order_from_pos.field_sale_order__xb_layaway_deadline"/>
+        <field name="trg_date_range">3</field>
+        <field name="trg_date_range_mode">before</field>
+        <field name="trg_date_range_type">day</field>
+        <!-- Counts from the install: dates that already passed never get a reminder. -->
+        <field name="last_run" eval="DateTime.now().strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="filter_domain">[("xb_layaway_state", "=", "active"), ("partner_id.email", "!=", False)]</field>
+    </record>
+    <record id="automation_layaway_reminder_action" model="ir.actions.server">
+        <field name="name">Email the layaway reminder</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="base_automation_id" ref="automation_layaway_reminder"/>
+        <!-- Odoo 20's «Send Message» writes to every follower of the order; this email goes to the
+             customer only (the shop changes its text in the email template). -->
+        <field name="state">code</field>
+        <field name="template_id" ref="mail_template_layaway_reminder"/>
+        <field name="code">for record in records:
+    record._xb_layaway_send("xb_sale_order_from_pos.mail_template_layaway_reminder")</field>
+    </record>
+    <!-- Orders made at the register (special orders): the customer is reminded of the balance a few
+         days before the delivery date, with the link to pay it online. Also an automation rule. -->
+    <record id="automation_order_reminder" model="base.automation">
+        <field name="name">Orders: balance reminder before delivery</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="trigger">on_time</field>
+        <field name="trg_date_id" ref="sale.field_sale_order__commitment_date"/>
+        <field name="trg_date_range">3</field>
+        <field name="trg_date_range_mode">before</field>
+        <field name="trg_date_range_type">day</field>
+        <!-- Counts from the install: dates that already passed never get a reminder. -->
+        <field name="last_run" eval="DateTime.now().strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="filter_domain">[("xb_so_kind", "in", ["order", "order_layaway"]), ("state", "=", "sale"), ("amount_unpaid", "&gt;", 0), ("partner_id.email", "!=", False)]</field>
+    </record>
+    <record id="automation_order_reminder_action" model="ir.actions.server">
+        <field name="name">Email the order balance reminder</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="base_automation_id" ref="automation_order_reminder"/>
+        <!-- Odoo 20's «Send Message» writes to every follower of the order; this email goes to the
+             customer only (the shop changes its text in the email template). -->
+        <field name="state">code</field>
+        <field name="template_id" ref="mail_template_order_reminder"/>
+        <field name="code">for record in records:
+    record._xb_layaway_send("xb_sale_order_from_pos.mail_template_order_reminder")</field>
+    </record>
+</odoo>

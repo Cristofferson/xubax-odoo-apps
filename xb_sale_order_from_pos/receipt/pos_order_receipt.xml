@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--
+      XUBAX - Sales, Quotations & Layaway from POS: the receipt of an order linked to a
+      Sale Order. Odoo 20 draws the receipt from these QWeb templates both in the
+      register (GeneratePrinterData) and on the server (pos.order.receipt), so the
+      expressions stay simple (.get, and/or/not) to work on both sides. Every block only
+      shows when the data carries a Sale Order (extra_data xb_so), so ordinary receipts
+      are untouched.
+    -->
+    <template id="pos_order_receipt_header_xb" inherit_id="point_of_sale.pos_order_receipt_header">
+        <!-- Type header "<TYPE> <SO number>", the delivery date and the layaway deadline,
+             between the logo and the ticket number. Title by STATE: a confirmed quotation
+             prints ORDER. -->
+        <div name="logo" position="after">
+            <t t-set="xb_so" t-value="extra_data.get('xb_so')"/>
+            <div t-if="xb_so and xb_so.get('kind')" class="w-100 text-center mb-2 xb-so-type">
+                <strong class="text-huge">
+                    <t t-if="xb_so.get('kind') == 'quotation'">QUOTATION</t>
+                    <t t-elif="xb_so.get('kind') == 'order'">ORDER</t>
+                    <t t-elif="xb_so.get('kind') == 'layaway'">LAYAWAY</t>
+                    <t t-else="">ORDER / LAYAWAY</t>
+                </strong>
+                <span class="text-large" t-out="xb_so.get('name')"/>
+            </div>
+            <div t-if="xb_so and xb_so.get('delivery_date')" class="w-100 text-center text-bold xb-so-delivery-date">
+                Delivery date: <t t-out="xb_so.get('delivery_date')"/>
+            </div>
+            <div t-if="xb_so and xb_so.get('layaway_deadline')" class="w-100 text-center text-bold xb-so-layaway-deadline">
+                Pay the balance by: <t t-out="xb_so.get('layaway_deadline')"/>
+            </div>
+        </div>
+        <!-- The customer, highlighted on a Sale Order ticket, with their reference first. -->
+        <xpath expr="(//span[@t-out=&quot;partner.get('name')&quot;])[1]" position="replace">
+            <t t-set="xb_so" t-value="extra_data.get('xb_so')"/>
+            <strong t-if="xb_so"><t t-if="xb_so.get('partner_ref')"><t t-out="xb_so.get('partner_ref')"/> — </t><t t-out="partner.get('name')"/></strong>
+            <t t-else="" t-out="partner.get('name')"/>
+        </xpath>
+        <xpath expr="(//span[@t-out=&quot;partner.get('name')&quot;])[1]" position="replace">
+            <t t-set="xb_so" t-value="extra_data.get('xb_so')"/>
+            <strong t-if="xb_so"><t t-if="xb_so.get('partner_ref')"><t t-out="xb_so.get('partner_ref')"/> — </t><t t-out="partner.get('name')"/></strong>
+            <t t-else="" t-out="partner.get('name')"/>
+        </xpath>
+        <!-- The ticket printed when the document is created from the cart is the document
+             itself, not a "pro forma" of a sale. -->
+        <div name="pro_forma_receipt" position="attributes">
+            <attribute name="t-if">order['state'] == 'draft' and not extra_data.get('xb_created')</attribute>
+        </div>
+    </template>
+
+    <template id="pos_order_receipt_xb" inherit_id="point_of_sale.pos_order_receipt">
+        <!-- Sale Order summary AFTER the payment lines and the change, so the payments stay
+             right under the total and the summary reads as its own final section. -->
+        <div name="prices" position="after">
+            <t t-set="xb_so" t-value="extra_data.get('xb_so')"/>
+            <div t-if="xb_so and xb_so.get('show_summary')" class="w-100 mb-3 xb-so-summary">
+                <hr style="border: none; border-top: 1px dashed black;"/>
+                <div class="text-small">
+                    <t t-if="xb_so.get('settled')">Settlement payment</t>
+                    <t t-else="">Order summary</t>
+                </div>
+                <table class="w-100 text-large">
+                    <tbody>
+                        <tr>
+                            <td class="text-start w-70">Total <t t-out="xb_so.get('name')"/></td>
+                            <td class="text-end w-30 font-monospace" t-out="xb_so.get('total')"/>
+                        </tr>
+                    </tbody>
+                </table>
+                <table t-if="xb_so.get('details')" class="w-100 text-small xb-so-details">
+                    <tbody>
+                        <tr t-foreach="xb_so.get('details')" t-as="xb_det">
+                            <td class="text-start w-10 top"><t t-out="xb_det.get('qty')"/>x</td>
+                            <td class="text-start w-60 top" t-out="xb_det.get('name')"/>
+                            <td class="text-end w-30 top font-monospace" t-out="xb_det.get('total')"/>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="w-100 text-large">
+                    <tbody>
+                        <tr>
+                            <td class="text-start w-70">Down payment / Paid</td>
+                            <td class="text-end w-30 font-monospace" t-out="xb_so.get('paid')"/>
+                        </tr>
+                        <tr class="text-bold">
+                            <td class="text-start w-70">Balance due</td>
+                            <td class="text-end w-30 font-monospace" t-out="xb_so.get('balance')"/>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Payment QR: only while there is still a balance to pay. -->
+            <div t-if="xb_so and xb_so.get('portal_qr')" class="w-100 text-center mt-3 mb-3 xb-so-portal">
+                <div>Pay or review your order online:</div>
+                <img class="w-50" t-att-src="xb_so.get('portal_qr')" alt="Order portal QR"/>
+            </div>
+        </div>
+        <!-- Odoo's self-invoice QR waits until the order is paid when the shop asks so
+             (xb_autofactura_qr_paid_only): no double QR on an advance ticket. -->
+        <xpath expr="//div[contains(@t-if, 'use_self_invoicing')]" position="attributes">
+            <attribute name="t-if">conditions['use_self_invoicing'] and order['state'] != 'draft' and not conditions['basic_receipt'] and not extra_data.get('xb_hide_self_invoice_qr')</attribute>
+        </xpath>
+    </template>
+
+    <!-- Footer RFC: the fiscal ENTITY's RFC the CFDI issues under, also for a branch
+         without its own (then the parent's). Outside Mexico it stays Odoo's own VAT. -->
+    <template id="company_info_receipt_xb" inherit_id="point_of_sale.company_info_receipt">
+        <td name="company_info_vat" position="replace">
+            <td colspan="2" class="text-start" t-if="(company.get('xb_cfdi_emisor_rfc') or company.get('vat')) and extra_data.get('vat_label')" name="company_info_vat">
+                <t t-out="extra_data['vat_label']" />: <t t-if="company.get('xb_cfdi_emisor_rfc')" t-out="company.get('xb_cfdi_emisor_rfc')"/><t t-else="" t-out="company['vat']"/>
+            </td>
+        </td>
+    </template>
+</odoo>

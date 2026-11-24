@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <!--
+      XUBAX - add a "Create Quotation / Order / Layaway" control button.
+      Gated by the per-POS main toggle (xb_enable_sale_order). It is a SEPARATE
+      button from the native pos_sale "Quotation / Order" loader, which keeps its own
+      job (listing the orders to recover). Anchored before the native pricelist
+      button, inside the "more actions" block, like the native pos_sale button.
+    -->
+    <t t-name="xb_sale_order_from_pos.ControlButtons"
+       t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <xpath expr="//t[@t-if='this.props.showRemainingButtons']/div/t[@name='o_pricelist_button']" position="before">
+            <t t-call="point_of_sale.controlButton"
+                t-if="this.pos.config.xb_enable_sale_order and this.pos.accessRight.canAccessQuotation"
+                icon="'description'"
+                btnText.translate="Create Order"
+                btnClasses="'o_xb_create_sale_order_button btn-secondary '"
+                onClick="() => this.xbClickCreateSaleOrder()"
+                disabled="this.pos.disableForSelfOrder">
+            </t>
+        </xpath>
+    </t>
+
+    <!-- The native pos_sale loader lists the orders and layaways to recover, so it reads «View
+         Orders/Layaways». Matched by its click, so another module that restyles this button still works. -->
+    <t t-name="xb_sale_order_from_pos.ControlButtonsLoaderLabel"
+       t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <xpath expr="//t[contains(@onClick, 'onClickQuotation')]" position="replace">
+            <t t-call="point_of_sale.controlButton"
+                t-if="this.pos.accessRight.canAccessQuotation"
+                icon="'link'"
+                btnText.translate="View Orders/Layaways"
+                btnClasses="'btn-secondary '"
+                onClick="() => this.onClickQuotation()"
+                disabled="this.pos.disableForSelfOrder">
+            </t>
+        </xpath>
+    </t>
+</templates>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="xb_sale_order_from_pos.XbDeliveryDatePopup">
+        <Dialog title="this.props.title" size="'sm'">
+            <p t-if="this.props.defaultDate" class="text-center text-muted">Probable date, from the manufacturing days of the products. Change it if you agreed on another one.</p>
+            <div class="mb-3 w-100 xb-delivery-date-selector">
+                <DateTimeInput
+                    type="'date'"
+                    value="this.state.date"
+                    onChange.bind="this.onDateChange"
+                    minDate="'today'"
+                />
+            </div>
+            <t t-set-slot="footer">
+                <button class="btn btn-lg btn-primary xb-delivery-date-confirm" t-on-click="this.confirm">Confirm</button>
+                <button class="btn btn-lg btn-secondary xb-delivery-date-none" t-on-click="this.noDate">No date</button>
+            </t>
+        </Dialog>
+    </t>
+</templates>
