@@ -5,11 +5,13 @@ import { patch } from "@web/core/utils/patch";
 import { floatIsZero } from "@web/core/utils/numbers";
 import { ErrorPopup } from "@point_of_sale/app/errors/popups/error_popup";
 import { PaymentScreen } from "@point_of_sale/app/screens/payment_screen/payment_screen";
+import { OrderReceipt } from "@point_of_sale/app/screens/receipt_screen/receipt/order_receipt";
 
 /** «Force done» on an XPago transfer line asks XPago first: the sale is only marked paid when the money arrived. */
 patch(PaymentScreen.prototype, {
-    /** A transfer waits up to an hour for the money: the cashier may go on with other sales meanwhile, so only the
-     *  sale of this line is validated when the money arrives, and only while it is still on the payment screen. */
+    /** A transfer waits up to an hour for the money: the cashier may go on with other sales meanwhile. When the
+     *  money arrives the sale of this line ends by itself: on the payment screen if it is on display, otherwise in
+     *  the background (saved, receipt printed), without taking the register away from what the cashier is doing. */
     async sendPaymentRequest(line) {
         if (line.payment_method?.use_payment_terminal !== "xpago_spei") {
             return super.sendPaymentRequest(...arguments);
@@ -17,17 +19,88 @@ patch(PaymentScreen.prototype, {
         this.numberBuffer.capture();
         this.paymentLines.forEach((paymentLine) => (paymentLine.can_be_reversed = false));
         const order = line.order;
-        const paid = await line.pay();
-        if (
-            paid &&
-            order.is_paid() &&
-            floatIsZero(order.get_due(), this.pos.currency.decimal_places) &&
-            this.pos.config.auto_validate_terminal_payment &&
-            this.pos.get_order() === order &&
-            this.pos.mainScreen.component === PaymentScreen
-        ) {
-            this.validateOrder(false);
+        // line.pay() by hand: a wait replaced by a newer one («Retry» after «Cancel») answers null and leaves the
+        // line to the newer wait.
+        line.set_payment_status("waiting");
+        const paid = await line.payment_method.payment_terminal.send_payment_request(line.cid);
+        if (paid === null) {
+            return;
         }
+        line.handle_payment_response(paid);
+        if (
+            !paid ||
+            !order.is_paid() ||
+            !floatIsZero(order.get_due(), this.pos.currency.decimal_places) ||
+            !this.pos.config.auto_validate_terminal_payment
+        ) {
+            return;
+        }
+        if (this.pos.get_order() === order && this.pos.mainScreen.component === PaymentScreen) {
+            this.validateOrder(false);
+            return;
+        }
+        await this._xpagoValidateInBackground(order, line.amount);
+    },
+
+    /** The payment screen's own validation, on that sale instead of the one on display, and without changing the
+     *  screen: the receipt is printed and the cashier stays where they are. */
+    async _xpagoValidateInBackground(order, amount) {
+        const money = this.env.utils.formatCurrency(amount);
+        const sale = order.name || "";
+        const screen = this;
+        const background = Object.create(this, {
+            currentOrder: { get: () => order },
+            paymentLines: { get: () => order.get_paymentlines() },
+            afterOrderValidation: {
+                value: async () => {
+                    const pos = screen.pos;
+                    pos.db.remove_unpaid_order(order);
+                    if (!order._printed && pos.config.iface_print_auto && (!order.is_to_invoice() || order.finalized)) {
+                        await screen.printer.print(
+                            OrderReceipt,
+                            { data: order.export_for_printing(), formatCurrency: screen.env.utils.formatCurrency },
+                            { webPrintFallback: true }
+                        );
+                    }
+                    if (pos.get_order() !== order) {
+                        pos.removeOrder(order, false); // already saved: only out of the open sales
+                    }
+                },
+            },
+        });
+        let ok = false;
+        try {
+            if (await background._isOrderValid(false)) {
+                for (const payment of [...order.get_paymentlines()]) {
+                    if (!payment.is_done()) {
+                        order.remove_paymentline(payment);
+                    }
+                }
+                const result = await background._finalizeValidation();
+                ok = !(result instanceof Error) && order.finalized;
+            }
+        } catch {
+            ok = false;
+        }
+        if (ok) {
+            this.notification.add(
+                _t("The transfer of %(amount)s arrived: sale %(sale)s was validated by itself.", {
+                    amount: money,
+                    sale,
+                }),
+                { type: "success" }
+            );
+            return;
+        }
+        // Something asks the cashier (a missing customer, an invoice…): the sale waits for them on the payment
+        // screen, where the money already shows as received.
+        this.notification.add(
+            _t("The transfer of %(amount)s arrived, but sale %(sale)s could not be validated by itself.", {
+                amount: money,
+                sale,
+            }),
+            { type: "warning", sticky: true }
+        );
     },
 
     async sendPaymentCancel(line) {

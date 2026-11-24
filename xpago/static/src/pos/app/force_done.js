@@ -4,6 +4,7 @@ import { _t } from "@web/core/l10n/translation";
 import { patch } from "@web/core/utils/patch";
 import { ErrorPopup } from "@point_of_sale/app/errors/popups/error_popup";
 import { PaymentScreen } from "@point_of_sale/app/screens/payment_screen/payment_screen";
+import { takenPaymentIds } from "@xpago/pos/app/payment_xpago";
 
 /** «Force done» on an XPago line asks XPago first: the sale is only marked paid when XPago approved its card charge,
  *  so a charge cancelled on the terminal never closes a sale as paid. */
@@ -21,7 +22,7 @@ patch(PaymentScreen.prototype, {
         let charge;
         try {
             charge = await terminal._call("xpago_force_check", [
-                { order_uuid: line.order.uid, amount: line.amount },
+                { order_uuid: line.order.uid, amount: line.amount, taken_payment_ids: takenPaymentIds(line.order, line) },
             ]);
         } catch {
             tell(_t("Could not ask XPago whether this card was paid. Check the connection and try again."));

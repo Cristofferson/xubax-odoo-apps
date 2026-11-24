@@ -36,7 +36,8 @@ patch(Payment.prototype, {
         return result;
     },
     /** The card voucher this payment prints in the receipt (terminals that print with the point of sale), or
-     *  false: only positive card payments of XPago terminals. */
+     *  false: card payments of XPago terminals, and refunds paid back to the card (the customer keeps which card
+     *  gets the money back). */
     xpagoVoucher() {
         const config = this.pos.config;
         // On the terminal's own printer the terminal adds its certified voucher under this receipt.
@@ -44,7 +45,7 @@ patch(Payment.prototype, {
             !config.xpago_voucher_on_receipt ||
             config.xpago_print_on_terminal ||
             this.payment_method?.use_payment_terminal !== "xpago" ||
-            !(this.amount > 0) ||
+            !this.amount ||
             !(this.xpago_card_no || this.xpago_authorization)
         ) {
             return false;
@@ -52,7 +53,10 @@ patch(Payment.prototype, {
         // Odoo 17 keeps the brand and the funding of the card together in its type ("VISA CREDIT").
         const type = (this.card_type || "").toUpperCase();
         const debit = type.includes("DEBIT");
+        const refund = this.amount < 0;
         return {
+            refund,
+            amount: Math.abs(this.amount),
             brand: this.xpago_card_brand || "",
             card_no: this.xpago_card_no || "",
             funding: debit ? _t("Debit") : type.includes("CREDIT") ? _t("Credit") : "",
@@ -64,9 +68,10 @@ patch(Payment.prototype, {
             merchant: config.xpago_voucher_merchant || "",
             terms: this.xpago_terms > 1 ? this.xpago_terms : false,
             tip: this.xpago_tip || 0,
-            legend: (debit ? config.xpago_voucher_debit_text : config.xpago_voucher_credit_text) || "",
+            legend: refund ? "" : (debit ? config.xpago_voucher_debit_text : config.xpago_voucher_credit_text) || "",
             // Chip and contactless are verified by PIN or need nothing: only a swiped or keyed card is signed.
             signature:
+                !refund &&
                 Boolean(config.xpago_voucher_signature) &&
                 !["CHIP", "CONTACTLESS"].includes((this.xpago_entry_mode || "").toUpperCase()),
         };

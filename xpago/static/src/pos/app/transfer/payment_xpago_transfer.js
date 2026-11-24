@@ -2,6 +2,7 @@
 
 import { _t } from "@web/core/l10n/translation";
 import { reactive } from "@odoo/owl";
+import { takenPaymentIds } from "@xpago/pos/app/payment_xpago";
 import { PaymentInterface } from "@point_of_sale/app/payment/payment_interface";
 import { ErrorPopup } from "@point_of_sale/app/errors/popups/error_popup";
 import { register_payment_method } from "@point_of_sale/app/store/pos_store";
@@ -54,6 +55,10 @@ export class PaymentXpagoTransfer extends PaymentInterface {
                     order_uuid: order.uid,
                     customer,
                     rule_account_id: await this._ruleAccount(order, line),
+                    taken_payment_ids: takenPaymentIds(order, line),
+                    followed_transfer_ids: Object.entries(this.transfers)
+                        .filter(([key]) => key !== String(cid))
+                        .map(([, other]) => other.view.id),
                 },
             ]);
         } catch (error) {
@@ -61,11 +66,24 @@ export class PaymentXpagoTransfer extends PaymentInterface {
             return false;
         }
         const entry = { view: reactive({ ...transfer }), stopped: false };
+        // «Retry» right after «Cancel»: the wait of the cancelled CLABE may still be sleeping. It is stopped and must
+        // not touch the line any more (it used to clear the new wait and put the line back to «Retry»).
+        const previous = this.transfers[cid];
+        if (previous && previous !== entry) {
+            previous.stopped = true;
+            previous.superseded = true;
+            this._closeScreens(previous);
+        }
         this.transfers[cid] = entry;
         this._showClabe(cid, order);
         await this._waitForMoney(cid, order);
+        if (this.transfers[cid] === entry) {
+            delete this.transfers[cid];
+        }
+        if (entry.superseded) {
+            return null; // another wait follows this line now
+        }
         this._closeScreens(entry);
-        delete this.transfers[cid];
         if (entry.view.state === "paid") {
             Object.assign(line, entry.view.payment);
             this.env.services.notification.add(_t("The transfer arrived: %s", this._money(entry.view.amount)), {
