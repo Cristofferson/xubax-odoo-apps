@@ -2285,11 +2285,13 @@ msgid ""
 "{{ object.company_id.name }} - Your order {{ object.name }} is almost ready"
 msgstr ""
 
+#. module: xb_sale_order_from_pos
 #. odoo-javascript
 #: code:addons/xb_sale_order_from_pos/static/src/app/control_buttons/control_buttons.xml:0
 msgid "Create Order"
 msgstr ""
 
+#. module: xb_sale_order_from_pos
 #. odoo-javascript
 #: code:addons/xb_sale_order_from_pos/static/src/app/control_buttons/control_buttons.xml:0
 msgid "View Orders/Layaways"

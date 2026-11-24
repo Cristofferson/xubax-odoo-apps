@@ -2552,11 +2552,13 @@ msgstr ""
 "{{ object.company_id.name }} - Tu pedido {{ object.name }} ya casi está "
 "listo"
 
+#. module: xb_sale_order_from_pos
 #. odoo-javascript
 #: code:addons/xb_sale_order_from_pos/static/src/app/control_buttons/control_buttons.xml:0
 msgid "Create Order"
 msgstr "Crear pedido"
 
+#. module: xb_sale_order_from_pos
 #. odoo-javascript
 #: code:addons/xb_sale_order_from_pos/static/src/app/control_buttons/control_buttons.xml:0
 msgid "View Orders/Layaways"
