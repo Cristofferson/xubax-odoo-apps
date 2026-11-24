@@ -18,6 +18,7 @@ class ResConfigSettings(models.TransientModel):
 
     xpago_needs_connect = fields.Boolean(compute='_compute_xpago_needs_connect')
     xpago_calculator_charge = fields.Boolean(related='company_id.xpago_calculator_charge', readonly=False)
+    xpago_invoice_pay_qr = fields.Boolean(related='company_id.xpago_invoice_pay_qr', readonly=False)
 
     @api.depends('company_id')
     def _compute_xpago_needs_connect(self):

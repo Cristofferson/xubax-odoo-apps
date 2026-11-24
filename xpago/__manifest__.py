@@ -26,6 +26,7 @@
         'wizard/pos_xpago_terminal_setup_views.xml',
         'views/pos_payment_xpago_rule_views.xml',
         'views/res_config_settings_views.xml',
+        'views/report_invoice.xml',
         'data/pos_ir_cron.xml',
         'views/self_order_res_config_settings_views.xml',
         'data/domiciliation_ir_cron.xml',

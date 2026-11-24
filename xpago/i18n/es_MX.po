@@ -3868,3 +3868,51 @@ msgstr ""
 #: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml
 msgid "· for"
 msgstr "· para"
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+msgid "· for"
+msgstr "· para"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_res_company__xpago_invoice_pay_qr
+#: model:ir.model.fields,field_description:xpago.field_res_config_settings__xpago_invoice_pay_qr
+#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
+msgid "Pay link and QR on invoices"
+msgstr "Liga y QR de pago en las facturas"
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_res_company__xpago_invoice_pay_qr
+#: model:ir.model.fields,help:xpago.field_res_config_settings__xpago_invoice_pay_qr
+msgid ""
+"The PDF of an invoice not yet paid carries a QR and a link to pay it online "
+"with XPago."
+msgstr ""
+"El PDF de una factura sin pagar lleva un QR y una liga para pagarla en línea"
+" con XPago."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
+msgid ""
+"The PDF of an invoice not yet paid carries a QR and a link to pay it online,"
+" by card or by SPEI transfer to a CLABE made for that payment. The invoice "
+"is marked paid by itself when the money arrives."
+msgstr ""
+"El PDF de una factura sin pagar lleva un QR y una liga para pagarla en "
+"línea, con tarjeta o por transferencia SPEI a una CLABE hecha solo para ese "
+"pago. La factura se marca pagada sola cuando llega el dinero."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.report_invoice_document_pay_qr
+msgid "PAY THIS INVOICE ONLINE"
+msgstr "PAGA ESTA FACTURA EN LÍNEA"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.report_invoice_document_pay_qr
+msgid "By card, or by SPEI transfer from any bank."
+msgstr "Con tarjeta, o por transferencia SPEI desde cualquier banco."
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.report_invoice_document_pay_qr
+msgid "Scan the code with your phone<br/>or click it to pay."
+msgstr "Escanea el código con tu celular<br/>o dale clic para pagar."
