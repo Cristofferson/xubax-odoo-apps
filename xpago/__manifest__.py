@@ -1,11 +1,11 @@
 {
-    'name': 'XPago: Card Payments and Terminals',
+    'name': 'XPago: terminal de pago, pasarela y meses sin intereses para Odoo México',
     'version': '19.0.3.2.5',
     'category': 'Accounting/Payment Providers',
     'sequence': 350,
-    'summary': 'Accept Visa, Mastercard and American Express in Mexico: online store, invoices, payment links and '
-               'subscriptions, and card terminals in the Point of Sale and the kiosk, with months without interest and '
-               'deposit accounts by product.',
+    'summary': 'Cobra con tarjeta (Visa, Mastercard y American Express) y transferencia SPEI en Odoo: terminal en el '
+               'punto de venta, kiosco de autoservicio, pasarela para la tienda en línea, links de pago, facturas con QR, '
+               'meses sin intereses y cobro domiciliado. Card payments for Odoo in Mexico.',
     'description': ' ',
     'author': 'XUBAX',
     'website': 'https://xpago.mx',
