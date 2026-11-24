@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="xb_sale_order_from_pos.XbDeliveryDatePopup" t-inherit="point_of_sale.DatePickerPopup" t-inherit-mode="primary">
+        <xpath expr="//input" position="before">
+            <p t-if="props.defaultDate" class="text-center text-muted">Probable date, from the manufacturing days of the products. Change it if you agreed on another one.</p>
+        </xpath>
+        <xpath expr="//t[@t-set-slot='footer']" position="inside">
+            <button class="btn btn-lg btn-secondary" t-on-click="noDate">No date</button>
+        </xpath>
+    </t>
+</templates>

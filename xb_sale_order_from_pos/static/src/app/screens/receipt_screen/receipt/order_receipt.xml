@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <!--
+      XUBAX - Phase 3 receipt polish (Odoo 18). All Sale-Order blocks only render when
+      the receipt data carries SO data (export_for_printing -> xbSaleOrder) and
+      xb_enrich_receipt is on, so regular POS receipts are untouched. Sizing lives in
+      order_receipt.css. Strings are translated to es_MX via i18n/es_MX.po.
+    -->
+
+    <t t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+        <!-- (e) Sale-Order block AFTER the payment lines + change. -->
+        <xpath expr="//div[hasclass('receipt-change')]" position="after">
+            <t t-set="xbSo" t-value="props.data.xbSaleOrder"/>
+            <t t-if="props.data.xbEnrich and xbSo">
+                <!-- (b) Summary only when an advance/settlement was collected. -->
+                <t t-if="xbSo.paid &gt; 0">
+                    <div style="border-top:1px dashed #000;margin:6px 0 2px 0;"/>
+                    <div class="xb-so-summary-title" style="font-size:11px;opacity:.8;">
+                        <t t-if="xbSo.balance &lt;= 0">Settlement payment</t>
+                        <t t-else="">Order summary</t>
+                    </div>
+                    <div class="xb-so-summary">
+                        <div class="pos-receipt-amount">
+                            <span>Total <t t-esc="xbSo.name"/></span>
+                            <span t-esc="props.formatCurrency(xbSo.total)" class="pos-receipt-right-align"/>
+                        </div>
+                        <table t-if="props.data.xbSaleDetails and xbSo.balance &gt; 0" class="xb-so-details">
+                            <tr t-foreach="props.data.xbSaleDetails" t-as="xbDet" t-key="xbDet_index">
+                                <td class="text-truncate"><t t-esc="xbDet.product_uom_qty"/>x</td>
+                                <td class="text-truncate product-name"><t t-esc="xbDet.product_name"/></td>
+                                <td class="text-truncate">: </td>
+                                <td class="text-truncate"><t t-esc="props.formatCurrency(xbDet.total)"/></td>
+                            </tr>
+                        </table>
+                        <div class="pos-receipt-amount">
+                            <span>Down payment / Paid</span>
+                            <span t-esc="props.formatCurrency(xbSo.paid)" class="pos-receipt-right-align"/>
+                        </div>
+                        <div class="pos-receipt-amount fw-bolder">
+                            <span>Balance due</span>
+                            <span t-esc="props.formatCurrency(xbSo.balance)" class="pos-receipt-right-align"/>
+                        </div>
+                    </div>
+                </t>
+
+                <!-- (c) Payment QR: only while there is still a balance to pay. -->
+                <div t-if="props.data.xbPortalQr" class="xb-so-portal pt-3 text-center">
+                    <div>Pay or review your order online:</div>
+                    <img t-att-src="props.data.xbPortalQr" class="xb-so-portal-qr" alt="Order portal QR"/>
+                </div>
+            </t>
+        </xpath>
+
+        <!-- Tax breakdown connector: our OWN translatable term instead of the bare "on". -->
+        <xpath expr="//t[@t-if='!taxTotals.same_tax_base']" position="replace">
+            <t t-if="!taxTotals.same_tax_base">
+                on the base of
+                <span t-esc="props.formatCurrency(tax_group.base_amount_currency)"/>
+            </t>
+        </xpath>
+
+        <!-- (PRIORITY) Cash-rounding consistency: the native block only shows when the
+             payment differs from the total. Ours derives the amounts from the TOTAL. -->
+        <xpath expr="//t[@t-if='props.data.show_rounding']" position="replace">
+            <t t-if="props.data.xbRounding and props.data.xbRounding.show">
+                <div class="pos-receipt-amount receipt-rounding">
+                    <span class="label-rounding" t-out="props.data.label_rounding"/>
+                    <span t-esc="props.formatCurrency(props.data.xbRounding.amount)" class="pos-receipt-right-align"/>
+                </div>
+                <div class="pos-receipt-amount receipt-to-pay">
+                    To Pay
+                    <span t-esc="props.formatCurrency(props.data.xbRounding.total)" class="pos-receipt-right-align"/>
+                </div>
+            </t>
+        </xpath>
+    </t>
+
+    <!-- ReceiptHeader: type header "<TYPE> <SO number>", delivery date, layaway deadline
+         and the highlighted customer (ref before name, bold) on Sale Order tickets. -->
+    <t t-inherit="point_of_sale.ReceiptHeader" t-inherit-mode="extension">
+        <xpath expr="//img[hasclass('pos-receipt-logo')]" position="after">
+            <t t-set="xbSoHdr" t-value="props.data.xbSo"/>
+            <div t-if="xbSoHdr" class="xb-so-type text-center">
+                <span class="xb-so-type-word">
+                    <t t-if="xbSoHdr.kind === 'quotation'">QUOTATION</t>
+                    <t t-elif="xbSoHdr.kind === 'order'">ORDER</t>
+                    <t t-elif="xbSoHdr.kind === 'layaway'">LAYAWAY</t>
+                    <t t-else="">ORDER / LAYAWAY</t>
+                </span>
+                <t t-esc="' ' + xbSoHdr.name"/>
+            </div>
+            <div t-if="xbSoHdr and xbSoHdr.deliveryDate" class="xb-so-delivery-date text-center fw-bolder">
+                Delivery date: <t t-esc="xbSoHdr.deliveryDate"/>
+            </div>
+            <div t-if="xbSoHdr and xbSoHdr.layawayDeadline" class="xb-so-layaway-deadline text-center fw-bolder">
+                Pay the balance by: <t t-esc="xbSoHdr.layawayDeadline"/>
+            </div>
+            <div t-if="xbSoHdr and xbSoHdr.partnerName" class="xb-so-partner text-center fw-bolder">
+                <t t-if="xbSoHdr.partnerRef"><t t-esc="xbSoHdr.partnerRef"/> — </t>
+                <t t-esc="xbSoHdr.partnerName"/>
+            </div>
+        </xpath>
+
+        <!-- (i) Show the fiscal entity's RFC even for a branch whose own VAT is empty. -->
+        <xpath expr="//t[@t-if='props.data.company.vat']" position="attributes">
+            <attribute name="t-if">props.data.company.vat or props.data.company.xb_cfdi_emisor_rfc</attribute>
+        </xpath>
+    </t>
+</templates>

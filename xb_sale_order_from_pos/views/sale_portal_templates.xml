@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+      «My layaway»: on the online page of a layaway the customer sees what they paid,
+      what is left and until when, and pays what they want (at least the minimum
+      payment, at most the balance). Paying shows Odoo's own payment form for that
+      amount (Odoo 18: rendered here, see controllers/portal.py).
+    -->
+    <template id="sale_order_portal_content_xb_layaway" name="My layaway"
+              inherit_id="sale.sale_order_portal_content">
+        <xpath expr="//div[@id='introduction']" position="after">
+            <t t-if="sale_order.xb_so_kind == 'layaway' and sale_order.xb_layaway_state and report_type == 'html'">
+                <t t-set="xb_cur" t-value="sale_order.currency_id"/>
+                <t t-set="xb_state" t-value="sale_order.xb_layaway_state"/>
+                <div id="xb_layaway" class="card mb-4 border-0 shadow-sm o_xb_layaway">
+                    <div class="card-body">
+                        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+                            <h4 class="mb-0">My layaway</h4>
+                            <span t-if="xb_state == 'active'" class="badge rounded-pill text-bg-primary">Active</span>
+                            <span t-elif="xb_state == 'paid'" class="badge rounded-pill text-bg-success">Paid in full</span>
+                            <span t-elif="xb_state == 'expired'" class="badge rounded-pill text-bg-danger">Expired</span>
+                            <span t-elif="xb_state == 'cancelled'" class="badge rounded-pill text-bg-secondary">Cancelled</span>
+                            <span t-else="" class="badge rounded-pill text-bg-warning">Awaiting down payment</span>
+                        </div>
+                        <div class="progress mb-2" style="height: 12px;" role="progressbar"
+                             t-att-aria-valuenow="int(sale_order.xb_layaway_progress)" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar bg-success" t-attf-style="width: #{sale_order.xb_layaway_progress}%"/>
+                        </div>
+                        <div class="row text-center g-2 mb-3">
+                            <div class="col-4">
+                                <div class="small text-muted">Paid</div>
+                                <div class="fw-bold" t-out="sale_order.xb_layaway_paid" t-options="{'widget': 'monetary', 'display_currency': xb_cur}"/>
+                            </div>
+                            <div class="col-4">
+                                <div class="small text-muted">Balance</div>
+                                <div class="fw-bold" t-out="sale_order.amount_unpaid" t-options="{'widget': 'monetary', 'display_currency': xb_cur}"/>
+                            </div>
+                            <div class="col-4">
+                                <div class="small text-muted">Pay by</div>
+                                <div class="fw-bold">
+                                    <t t-if="sale_order.xb_layaway_deadline" t-out="sale_order.xb_layaway_deadline" t-options="{'widget': 'date'}"/>
+                                    <t t-else="">—</t>
+                                </div>
+                            </div>
+                        </div>
+                        <p t-if="xb_state == 'active' and sale_order.xb_layaway_deadline" class="small mb-3">
+                            <t t-if="sale_order.xb_layaway_days_left &gt; 1"><t t-out="sale_order.xb_layaway_days_left"/> days left to pay the balance.</t>
+                            <t t-elif="sale_order.xb_layaway_days_left == 1">One day left to pay the balance.</t>
+                            <t t-else="">Today is the last day to pay the balance.</t>
+                            <t t-if="sale_order.xb_layaway_cancel_fee_percent">
+                                If it is not paid in time, the shop keeps <t t-out="sale_order.xb_layaway_cancel_fee_percent" t-options="{'widget': 'float', 'precision': 0}"/>% of what you paid and returns the rest.
+                            </t>
+                        </p>
+                        <div t-if="xb_state == 'active' and sale_order.xb_auto_token_id and sale_order.xb_auto_next_date"
+                             class="alert alert-info py-2 small" role="status">
+                            <b>Automatic payments:</b>
+                            <t t-out="sale_order.xb_auto_amount" t-options="{'widget': 'monetary', 'display_currency': xb_cur}"/>
+                            <t t-if="sale_order.xb_auto_every == 'week'">every week</t>
+                            <t t-elif="sale_order.xb_auto_every == 'fortnight'">every 15 days</t>
+                            <t t-else="">every month</t>
+                            to your card ending in <t t-out="sale_order.sudo().xb_auto_token_id.payment_details or ''"/>.
+                            Next payment: <t t-out="sale_order.xb_auto_next_date" t-options="{'widget': 'date'}"/>.
+                            You can still pay more whenever you like.
+                        </div>
+                        <p t-if="xb_state == 'paid'" class="mb-0">Your layaway is paid. Pick up your purchase at the shop.</p>
+                        <p t-if="xb_state == 'expired'" class="mb-0">
+                            This layaway expired on <t t-out="sale_order.xb_layaway_expired_on" t-options="{'widget': 'date'}"/>. Contact the shop to extend it or to get your money back.
+                        </p>
+                        <div t-if="xb_layaway_error" class="alert alert-warning py-2" role="alert" t-out="xb_layaway_error"/>
+                        <form t-if="xb_state == 'active'" method="GET" t-attf-action="/my/orders/#{sale_order.id}"
+                              class="row g-2 align-items-end">
+                            <input type="hidden" name="access_token" t-att-value="sale_order.access_token"/>
+                            <t t-set="xb_min" t-value="min(sale_order.xb_layaway_min_payment or 0.0, sale_order.amount_unpaid) or xb_cur.rounding"/>
+                            <div class="col-12 col-sm-7">
+                                <label for="xb_layaway_amount" class="form-label small mb-1">How much do you want to pay now?</label>
+                                <div class="input-group">
+                                    <span class="input-group-text" t-out="xb_cur.symbol"/>
+                                    <input id="xb_layaway_amount" type="number" name="payment_amount" class="form-control"
+                                           required="required" inputmode="decimal"
+                                           t-att-step="xb_cur.rounding" t-att-min="xb_min" t-att-max="sale_order.amount_unpaid"
+                                           t-att-value="xb_layaway_amount or sale_order.amount_unpaid"/>
+                                </div>
+                                <div class="form-text">
+                                    Minimum <t t-out="xb_min" t-options="{'widget': 'monetary', 'display_currency': xb_cur}"/>,
+                                    up to the balance.
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-5 d-grid">
+                                <button type="submit" class="btn btn-primary">Pay</button>
+                            </div>
+                        </form>
+                        <div t-if="xb_pay_amount" class="mt-3 o_xb_layaway_payment">
+                            <p class="mb-2">
+                                Paying <b t-out="xb_pay_amount" t-options="{'widget': 'monetary', 'display_currency': xb_cur}"/> now.
+                            </p>
+                            <div t-if="company_mismatch">
+                                <t t-call="payment.company_mismatch_warning"/>
+                            </div>
+                            <div t-else="" id="payment_method" class="text-start">
+                                <t t-call="payment.form">
+                                    <t t-set="sale_order_id" t-value="sale_order.id"/>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <!-- «My order»: an order made at the register (a special order) once confirmed: what was
+                 paid, what is left, the delivery date, and a payment of any amount up to the balance. -->
+            <t t-if="sale_order.xb_so_kind in ('order', 'order_layaway') and sale_order.state == 'sale' and report_type == 'html'">
+                <t t-set="xb_cur" t-value="sale_order.currency_id"/>
+                <t t-set="xb_due" t-value="xb_cur.compare_amounts(sale_order.amount_unpaid, 0.0) &gt; 0"/>
+                <div id="xb_order" class="card mb-4 border-0 shadow-sm o_xb_layaway">
+                    <div class="card-body">
+                        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+                            <h4 class="mb-0">My order</h4>
+                            <span t-if="xb_due" class="badge rounded-pill text-bg-primary">Balance due</span>
+                            <span t-else="" class="badge rounded-pill text-bg-success">Paid in full</span>
+                        </div>
+                        <div class="progress mb-2" style="height: 12px;" role="progressbar"
+                             t-att-aria-valuenow="int(sale_order.xb_layaway_progress)" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar bg-success" t-attf-style="width: #{sale_order.xb_layaway_progress}%"/>
+                        </div>
+                        <div class="row text-center g-2 mb-3">
+                            <div class="col-4">
+                                <div class="small text-muted">Paid</div>
+                                <div class="fw-bold" t-out="sale_order.xb_layaway_paid" t-options="{'widget': 'monetary', 'display_currency': xb_cur}"/>
+                            </div>
+                            <div class="col-4">
+                                <div class="small text-muted">Balance</div>
+                                <div class="fw-bold" t-out="sale_order.amount_unpaid" t-options="{'widget': 'monetary', 'display_currency': xb_cur}"/>
+                            </div>
+                            <div class="col-4">
+                                <div class="small text-muted">Delivery</div>
+                                <div class="fw-bold">
+                                    <t t-if="sale_order.commitment_date" t-out="sale_order.commitment_date" t-options="{'widget': 'date'}"/>
+                                    <t t-else="">—</t>
+                                </div>
+                            </div>
+                        </div>
+                        <div t-if="xb_layaway_error" class="alert alert-warning py-2" role="alert" t-out="xb_layaway_error"/>
+                        <form t-if="xb_due" method="GET" t-attf-action="/my/orders/#{sale_order.id}" class="row g-2 align-items-end">
+                            <input type="hidden" name="access_token" t-att-value="sale_order.access_token"/>
+                            <div class="col-12 col-sm-7">
+                                <label for="xb_order_amount" class="form-label small mb-1">How much do you want to pay now?</label>
+                                <div class="input-group">
+                                    <span class="input-group-text" t-out="xb_cur.symbol"/>
+                                    <input id="xb_order_amount" type="number" name="payment_amount" class="form-control"
+                                           required="required" inputmode="decimal"
+                                           t-att-step="xb_cur.rounding" t-att-min="xb_cur.rounding" t-att-max="sale_order.amount_unpaid"
+                                           t-att-value="xb_layaway_amount or sale_order.amount_unpaid"/>
+                                </div>
+                                <div class="form-text">Any amount up to the balance.</div>
+                            </div>
+                            <div class="col-12 col-sm-5 d-grid">
+                                <button type="submit" class="btn btn-primary">Pay</button>
+                            </div>
+                        </form>
+                        <div t-if="xb_pay_amount" class="mt-3 o_xb_layaway_payment">
+                            <p class="mb-2">
+                                Paying <b t-out="xb_pay_amount" t-options="{'widget': 'monetary', 'display_currency': xb_cur}"/> now.
+                            </p>
+                            <div t-if="company_mismatch">
+                                <t t-call="payment.company_mismatch_warning"/>
+                            </div>
+                            <div t-else="" id="payment_method" class="text-start">
+                                <t t-call="payment.form">
+                                    <t t-set="sale_order_id" t-value="sale_order.id"/>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

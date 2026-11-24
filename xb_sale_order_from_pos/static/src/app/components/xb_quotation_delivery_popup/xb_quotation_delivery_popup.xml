@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <!--
+      XUBAX - "How does the customer want the quotation?" One card per channel, big
+      enough to tap on a POS screen. WhatsApp only shows when this POS has a
+      quotation template (optional add-on xb_sale_order_from_pos_whatsapp).
+    -->
+    <t t-name="xb_sale_order_from_pos.XbQuotationDeliveryPopup">
+        <Dialog title.translate="How does the customer want the quotation?" size="'md'">
+            <div class="xb-quotation-delivery d-flex flex-column gap-2">
+                <div class="mb-1">
+                    <div t-if="props.partnerName" class="fw-bold" t-esc="props.partnerName"/>
+                    <div class="text-muted">Choose one or more. The customer gets the same ticket that is printed.</div>
+                </div>
+
+                <label class="xb-delivery-option d-flex align-items-center gap-3 border rounded-3 p-3 m-0"
+                       t-att-class="{ 'xb-delivery-option-on': state.print }">
+                    <input type="checkbox" class="form-check-input m-0" t-model="state.print"/>
+                    <i class="fa fa-print fa-fw fa-lg" aria-hidden="true"/>
+                    <span class="fs-5">Printed</span>
+                </label>
+
+                <div t-if="props.allowWhatsapp"
+                     class="xb-delivery-option border rounded-3 p-3"
+                     t-att-class="{ 'xb-delivery-option-on': state.whatsapp }">
+                    <label class="d-flex align-items-center gap-3 m-0">
+                        <input type="checkbox" class="form-check-input m-0" t-model="state.whatsapp"/>
+                        <i class="fa fa-whatsapp fa-fw fa-lg" aria-hidden="true"/>
+                        <span class="fs-5">WhatsApp</span>
+                    </label>
+                    <div t-if="state.whatsapp" class="mt-2">
+                        <input type="tel" class="form-control form-control-lg"
+                               t-att-class="{ 'is-invalid': phoneError }"
+                               t-model="state.phoneValue" placeholder="WhatsApp number"/>
+                        <div t-if="phoneError" class="invalid-feedback d-block">Enter a valid phone number.</div>
+                        <small t-elif="phoneHint" class="text-muted" t-esc="phoneHint"/>
+                    </div>
+                </div>
+
+                <div class="xb-delivery-option border rounded-3 p-3"
+                     t-att-class="{ 'xb-delivery-option-on': state.email }">
+                    <label class="d-flex align-items-center gap-3 m-0">
+                        <input type="checkbox" class="form-check-input m-0" t-model="state.email"/>
+                        <i class="fa fa-envelope-o fa-fw fa-lg" aria-hidden="true"/>
+                        <span class="fs-5">Email</span>
+                    </label>
+                    <div t-if="state.email" class="mt-2">
+                        <input type="email" class="form-control form-control-lg"
+                               t-att-class="{ 'is-invalid': emailError }"
+                               t-model="state.emailValue" placeholder="Customer email"/>
+                        <div t-if="emailError" class="invalid-feedback d-block">Enter a valid email address.</div>
+                        <small t-elif="emailHint" class="text-muted" t-esc="emailHint"/>
+                    </div>
+                </div>
+
+                <div t-if="nothingChosen" class="text-warning small">
+                    Nothing will be printed or sent: the quotation is only saved.
+                </div>
+            </div>
+            <t t-set-slot="footer">
+                <button class="btn btn-primary btn-lg lh-lg" t-att-disabled="!canConfirm"
+                        t-on-click="confirm">Create quotation</button>
+                <button class="btn btn-secondary btn-lg lh-lg"
+                        t-on-click="() => this.props.close()">Cancel</button>
+            </t>
+        </Dialog>
+    </t>
+</templates>
