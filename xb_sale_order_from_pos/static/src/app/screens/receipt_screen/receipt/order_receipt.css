@@ -1,0 +1,41 @@
+/*
+  XUBAX - Phase 3 printed receipt polish. Cosmetic only, all rules scoped to
+  .pos-receipt so the live order/cart screen is never affected. Clean-room.
+*/
+
+/* Type header (<TYPE> <SO number>) — small, between logo and ticket no. */
+.pos-receipt .xb-so-type {
+    font-size: 0.95em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+/* Payment summary: centered title, and the three lines read as a smaller sub-block. */
+.pos-receipt .xb-so-summary-title {
+    text-align: center;
+}
+.pos-receipt .xb-so-summary .pos-receipt-amount {
+    font-size: 0.85em;
+}
+
+/* (c) Payment QR: enlarged so it scans easily from the printed ticket. */
+.pos-receipt .xb-so-portal-qr {
+    width: 160px;
+    height: 160px;
+    display: inline-block;
+    margin-top: 6px;
+}
+
+/* (h) Advance product breakdown in the order summary: small, same family as the
+   summary amounts, slightly dimmed. Full width, tight rows. */
+.pos-receipt .xb-so-details {
+    width: 100%;
+    font-size: 0.78em;
+    opacity: 0.85;
+    margin: 1px 0 2px 0;
+}
+.pos-receipt .xb-so-details td {
+    padding: 0 0.15rem 0 0;
+    vertical-align: top;
+}

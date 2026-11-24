@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <!--
+      XUBAX - "Create Quotation / Order / Layaway" control button. Shown only when the
+      per-POS main toggle (xb_enable_sale_order) is on. It is a SEPARATE button from
+      the native pos_sale "Quotation/Order" loader.
+    -->
+    <t t-name="xb_sale_order_from_pos.XbCreateSaleOrderButton">
+        <div class="control-button o_xb_create_sale_order_button btn btn-light rounded-0 fw-bolder"
+             t-on-click="() => this.click()">
+            <i class="fa fa-file-text-o me-1" role="img"
+               aria-label="Create Sale Order" title="Create Sale Order"/>
+            Create Order
+        </div>
+    </t>
+
+    <!-- The native pos_sale loader lists the orders and layaways to recover, so it reads
+         «View Orders/Layaways». The native class is kept, so anything that finds the
+         button by it still works. -->
+    <t t-name="xb_sale_order_from_pos.SetSaleOrderButtonLabel"
+       t-inherit="pos_sale.SetSaleOrderButton" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_sale_order_button')]" position="replace">
+            <div class="control-button o_sale_order_button btn btn-light rounded-0 fw-bolder" t-on-click="() => this.click()">
+                <i class="fa fa-link me-1" role="img" aria-label="View Orders/Layaways" title="View Orders/Layaways"/>
+                View Orders/Layaways
+            </div>
+        </xpath>
+    </t>
+</templates>

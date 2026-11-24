@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--
+      XUBAX - show the per-line POS notes on the EXPANDED Sale Order line form
+      (the inline <form> of the order_line field), not as tree columns, to avoid
+      cluttering the order lines list. Anchored after the line Description.
+    -->
+    <record id="view_order_form_xb_line_notes" model="ir.ui.view">
+        <field name="name">sale.order.form.xb.line.notes</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/form/field[@name='name']" position="after">
+                <group invisible="display_type" name="xb_line_notes" string="POS Notes">
+                    <field name="xb_customer_note"/>
+                    <field name="xb_internal_note"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!--
+      XUBAX - show the POS pending balance (sale.order.amount_unpaid) as an optional
+      column in the Sale Order list. Inherits the base list (sale.sale_order_tree)
+      so it also appears in the quotations list used by the native POS "Quotation /
+      Order" recovery dialog (SelectCreateDialog), where each SO row then shows its
+      balance.
+    -->
+    <record id="view_order_tree_xb_balance" model="ir.ui.view">
+        <field name="name">sale.order.list.xb.balance</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="amount_unpaid" optional="show" string="Balance (POS)"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- 1.3.0 Layaway: terms, progress and «Extend» on the order form. -->
+    <record id="view_order_form_xb_layaway" model="ir.ui.view">
+        <field name="name">sale.order.form.xb.layaway</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='action_cancel']" position="before">
+                <button name="action_xb_layaway_extend" type="object" string="Extend layaway"
+                        class="btn-secondary"
+                        invisible="xb_so_kind != 'layaway' or xb_layaway_state not in ('active', 'expired')"/>
+                <button name="action_xb_auto_setup" type="object" string="Automatic payments"
+                        class="btn-secondary"
+                        invisible="xb_so_kind != 'layaway' or xb_layaway_state != 'active' or xb_auto_token_id"/>
+            </xpath>
+            <xpath expr="//page[@name='order_lines']" position="before">
+                <page string="Balance" name="xb_order_balance" invisible="xb_so_kind not in ('order', 'order_layaway')">
+                    <group>
+                        <group>
+                            <field name="xb_layaway_paid" string="Paid so far"/>
+                            <field name="amount_unpaid" string="Balance"/>
+                            <field name="xb_layaway_progress" widget="progressbar"/>
+                        </group>
+                        <group>
+                            <field name="xb_layaway_down_percent"/>
+                            <field name="commitment_date" string="Delivery date"/>
+                        </group>
+                    </group>
+                </page>
+                <page string="Layaway" name="xb_layaway" invisible="xb_so_kind != 'layaway'">
+                    <field name="xb_so_kind" invisible="1"/>
+                    <group>
+                        <group string="Status">
+                            <field name="xb_layaway_state" widget="badge"
+                                   decoration-info="xb_layaway_state == 'active'"
+                                   decoration-success="xb_layaway_state == 'paid'"
+                                   decoration-danger="xb_layaway_state == 'expired'"
+                                   decoration-warning="xb_layaway_state == 'draft'"/>
+                            <field name="xb_layaway_paid"/>
+                            <field name="amount_unpaid" string="Balance"/>
+                            <field name="xb_layaway_progress" widget="progressbar"/>
+                            <field name="xb_layaway_deadline"/>
+                            <field name="xb_layaway_days_left" invisible="xb_layaway_state != 'active' or not xb_layaway_deadline"/>
+                            <field name="xb_layaway_expired_on" invisible="not xb_layaway_expired_on"/>
+                        </group>
+                        <group string="Terms">
+                            <field name="xb_layaway_down_percent"/>
+                            <field name="xb_layaway_min_payment"/>
+                            <field name="xb_layaway_cancel_fee_percent"/>
+                            <field name="xb_layaway_fee_amount" invisible="xb_layaway_state != 'expired'"/>
+                            <field name="xb_layaway_refund_amount" invisible="xb_layaway_state != 'expired'"/>
+                        </group>
+                    </group>
+                    <group string="Automatic payments" invisible="not xb_auto_token_id">
+                        <group>
+                            <field name="xb_auto_token_id" readonly="1"/>
+                            <field name="xb_auto_amount" readonly="1"/>
+                            <field name="xb_auto_every" readonly="1"/>
+                            <field name="xb_auto_next_date" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="xb_auto_failures" invisible="not xb_auto_failures"/>
+                            <field name="xb_auto_authorization" readonly="1"/>
+                            <div colspan="2" class="d-flex gap-2">
+                                <button name="action_xb_auto_setup" type="object" string="Change" class="btn-link" icon="fa-pencil"/>
+                                <button name="action_xb_auto_stop" type="object" string="Stop" class="btn-link text-danger" icon="fa-stop"
+                                        confirm="Stop the automatic payments of this layaway? The card stays saved."/>
+                            </div>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_tree_xb_layaway" model="ir.ui.view">
+        <field name="name">sale.order.list.xb.layaway</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="xb_layaway_deadline" optional="hide"/>
+                <field name="xb_layaway_state" optional="hide" widget="badge"
+                       decoration-info="xb_layaway_state == 'active'"
+                       decoration-success="xb_layaway_state == 'paid'"
+                       decoration-danger="xb_layaway_state == 'expired'"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_sales_order_filter_xb_layaway" model="ir.ui.view">
+        <field name="name">sale.order.search.xb.layaway</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='my_sale_orders_filter']" position="after">
+                <separator/>
+                <filter name="xb_layaway_active" string="Active layaways" domain="[('xb_layaway_state', '=', 'active')]"/>
+                <filter name="xb_layaway_expired" string="Expired layaways" domain="[('xb_layaway_state', '=', 'expired')]"/>
+                <filter name="xb_layaway_auto" string="With automatic payments" domain="[('xb_auto_token_id', '!=', False)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="xb_layaway_extend_view_form" model="ir.ui.view">
+        <field name="name">xb.layaway.extend.form</field>
+        <field name="model">xb.layaway.extend</field>
+        <field name="arch" type="xml">
+            <form string="Extend layaway">
+                <p>The layaway goes back to active until the new deadline, and the customer will be reminded again before it.</p>
+                <group>
+                    <field name="order_id"/>
+                    <field name="deadline"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="Extend" class="btn-primary" data-hotkey="q"/>
+                    <button special="cancel" string="Cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="xb_layaway_autocharge_view_form" model="ir.ui.view">
+        <field name="name">xb.layaway.autocharge.form</field>
+        <field name="model">xb.layaway.autocharge</field>
+        <field name="arch" type="xml">
+            <form string="Automatic payments">
+                <field name="token_ids" invisible="1"/>
+                <div class="alert alert-warning" role="alert" invisible="token_ids">
+                    The customer has no saved card yet. Send them the link to their layaway: when they pay online,
+                    they tick «Save my payment details», and the card shows up here.
+                </div>
+                <p invisible="not token_ids">
+                    The customer's saved card pays this amount on its own until the layaway is paid. Each payment
+                    is emailed to the customer. If the card is declined it is tried again 2 days later; after 3
+                    declines in a row it stops and the salesperson gets a to-do.
+                </p>
+                <group invisible="not token_ids">
+                    <group>
+                        <field name="order_id"/>
+                        <field name="balance"/>
+                        <field name="deadline"/>
+                        <field name="token_id" options="{'no_create': True, 'no_open': True}" required="token_ids"/>
+                    </group>
+                    <group>
+                        <field name="every"/>
+                        <field name="first_date"/>
+                        <field name="amount"/>
+                        <field name="summary" nolabel="1" colspan="2" class="text-muted" invisible="not summary"/>
+                    </group>
+                </group>
+                <group invisible="not token_ids">
+                    <field name="authorization" placeholder="Signed layaway form, WhatsApp of the 3rd, email…"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="Save" class="btn-primary" data-hotkey="q"
+                            invisible="not token_ids"/>
+                    <button special="cancel" string="Cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_xb_layaways" model="ir.actions.act_window">
+        <field name="name">Layaways</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('xb_so_kind', '=', 'layaway')]</field>
+        <field name="context">{'search_default_xb_layaway_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No layaways yet</p>
+            <p>Layaways are made from the Point of Sale: the customer pays a down payment, then pays the rest within the term.</p>
+        </field>
+    </record>
+    <menuitem id="menu_xb_layaways" name="Layaways" action="action_xb_layaways"
+              parent="sale.sale_order_menu" sequence="25"/>
+</odoo>
