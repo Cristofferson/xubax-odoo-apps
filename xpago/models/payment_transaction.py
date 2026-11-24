@@ -328,6 +328,10 @@ class PaymentTransaction(models.Model):
         # A refused charge raises: `_charge_with_token` puts the transaction in error.
         payment = self._send_api_request('POST', f'/v1/saved-cards/{card_id}/payments', json=body,
                                          idempotency_key=f'charge-{self.reference}')
+        if (payment or {}).get('status') in const.CARD_PAYMENT_STATUS['error']:
+            # Declined: say it now, so the transaction is in error right away (Odoo applies the rest a moment later)
+            # and whoever charged sees it, with the note and the task for the responsible.
+            raise ValidationError(_("The bank declined the card."))
         self._record({'reference': self.reference, 'xpago_card_id': card_id, 'xpago_payment': payment})
 
     def _xpago_card_transaction(self):

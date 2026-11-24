@@ -95,6 +95,18 @@ class TestDomiciliation(AccountPaymentCommon):
         self.assertTrue(record.activity_ids)
         self.assertTrue(record.transaction_ids.filtered(lambda t: t.state == 'error'))
 
+    def test_declined_answer_is_an_error_right_away(self):
+        """XPago answers a declined card with the payment «failed» (not an HTTP error): Odoo 20 would apply it a
+        moment later, after the chatter already said «Charged». It is an error at once, with the notice and task."""
+        self.make_invoice(100)
+        record = self.domiciliation(schedule='manual')
+        with self.fake_send(status='failed'):
+            action = record.action_charge_now()
+        self.assertEqual(action['params']['type'], 'danger')
+        self.assertTrue(record.activity_ids)
+        self.assertTrue(record.transaction_ids.filtered(lambda t: t.state == 'error'))
+        self.assertFalse(any('Charged' in (m.body or '') or 'Se cobr' in (m.body or '') for m in record.message_ids))
+
     def test_paused_is_not_charged(self):
         self.make_invoice(100)
         record = self.domiciliation(schedule='manual')
