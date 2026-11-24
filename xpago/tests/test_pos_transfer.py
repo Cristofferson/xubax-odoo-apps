@@ -186,6 +186,23 @@ class TestPosXpagoTransfer(TestPoSCommon):
         self.assertEqual((again['id'], again['state']), (view['id'], 'paid'))
         self.assertEqual(self.env['pos.xpago.transfer'].search_count([('order_uuid', '=', 'abcdef12-3456')]), 1)
 
+    def test_second_transfer_of_the_same_amount_gets_its_own_clabe(self):
+        """Two transfers of the same amount in one sale: the CLABE another line waits on is that line's; the second
+        line gets a CLABE of its own."""
+        view, _send = self.create_transfer()
+        def answer(method, endpoint, **_kw):
+            if method == 'POST' and endpoint == '/v1/checkouts':
+                return {'id': 'chk-2', 'checkout_url': 'https://pay.example.com/otp/chk-2', 'bank_transfer': clabe(id='bt2')}
+            if endpoint.endswith('/bank-transfer'):
+                return clabe(id='bt2' if 'chk-2' in endpoint else 'bt1')
+            return {'id': endpoint.rsplit('/', 1)[-1], 'status': 'open'}
+
+        with patch(SEND, side_effect=answer) as send:
+            second = self.method.xpago_transfer_create({'amount': 1200.0, 'order_uuid': 'abcdef12-3456', 'customer': ANA,
+                                                        'followed_transfer_ids': [view['id']]})
+        self.assertIn(('POST', '/v1/checkouts'), [c.args[:2] for c in send.call_args_list])
+        self.assertNotEqual(second['id'], view['id'])
+
     def test_an_unpaid_page_keeps_the_clabe_state(self):
         view, _send = self.create_transfer()
         transfer = self.transfer(view)

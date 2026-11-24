@@ -3,7 +3,8 @@ import { patch } from "@web/core/utils/patch";
 import { OrderReceipt } from "@point_of_sale/app/screens/receipt_screen/receipt/order_receipt";
 
 patch(OrderReceipt.prototype, {
-    /** Card payments of XPago terminals, whose voucher goes in this receipt. */
+    /** Card payments of XPago terminals, whose voucher goes in this receipt: sales, and refunds paid back to the
+     *  card (the customer keeps the proof of which card gets the money back). */
     get xpagoVoucherLines() {
         // On the terminal's own printer the terminal adds its certified voucher under this receipt.
         if (!this.order.config.xpago_voucher_on_receipt || this.order.config.xpago_print_on_terminal) {
@@ -12,7 +13,7 @@ patch(OrderReceipt.prototype, {
         return this.paymentLines.filter(
             (line) =>
                 line.payment_method_id?.use_payment_terminal === "xpago" &&
-                line.amount > 0 &&
+                line.amount !== 0 &&
                 (line.card_no || line.transaction_id)
         );
     },
@@ -28,6 +29,9 @@ patch(OrderReceipt.prototype, {
     },
     /** Chip and contactless cards are verified by PIN or need nothing: only a swiped or keyed card is signed. */
     xpagoNeedsSignature(line) {
+        if (line.amount < 0) {
+            return false; // the money goes back to the customer: nothing for them to sign
+        }
         const mode = (line.payment_method_payment_mode || "").toUpperCase();
         return this.order.config.xpago_voucher_signature && !["CHIP", "CONTACTLESS"].includes(mode);
     },

@@ -5,7 +5,8 @@
             <!-- The card voucher goes on the full receipt only: the basic one is a gift ticket, without prices. -->
             <t t-foreach="props.basic_receipt ? [] : xpagoVoucherLines" t-as="line" t-key="line.uuid">
                 <div class="xpago-voucher text-start mt-3 pt-2" style="border-top: 1px dashed currentColor; font-size: 85%;">
-                    <div class="text-center fw-bolder">CARD SALE</div>
+                    <div t-if="line.amount &lt; 0" class="text-center fw-bolder">REFUND TO CARD</div>
+                    <div t-else="" class="text-center fw-bolder">CARD SALE</div>
                     <div class="d-flex justify-content-between">
                         <span><t t-esc="line.card_brand"/> **** <t t-esc="line.card_no"/></span>
                         <span t-esc="xpagoFunding(line)"/>
@@ -19,9 +20,9 @@
                     <div t-if="order.date_order">Date: <t t-esc="order.formatDateOrTime('date_order')"/></div>
                     <div class="d-flex justify-content-between fw-bolder">
                         <span>Amount</span>
-                        <span t-out="formatCurrency(line.getAmount())" class="font-monospace"/>
+                        <span t-out="formatCurrency(Math.abs(line.getAmount()))" class="font-monospace"/>
                     </div>
-                    <div class="mt-2" style="white-space: pre-line; font-size: 90%;" t-esc="xpagoLegend(line)"/>
+                    <div t-if="line.amount &gt; 0" class="mt-2" style="white-space: pre-line; font-size: 90%;" t-esc="xpagoLegend(line)"/>
                     <div t-if="xpagoNeedsSignature(line)" class="text-center mt-4">
                         <div style="border-top: 1px solid currentColor; margin: 0 10%;"/>
                         <div>Customer's signature</div>
