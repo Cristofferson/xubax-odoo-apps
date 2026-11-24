@@ -22,6 +22,10 @@
                          help="The Calculator app can also charge its result on an XPago terminal. Turned off, it only calculates.">
                     <field name="xpago_calculator_charge"/>
                 </setting>
+                <setting id="xpago_invoice_pay_qr" string="Pay link and QR on invoices"
+                         help="The PDF of an invoice not yet paid carries a QR and a link to pay it online, by card or by SPEI transfer to a CLABE made for that payment. The invoice is marked paid by itself when the money arrives.">
+                    <field name="xpago_invoice_pay_qr"/>
+                </setting>
                 <setting id="xpago_payment_rules" string="XPago payment rules"
                          help="Months without interest and deposit accounts by what is sold, on the XPago terminals of this point of sale.">
                     <div>

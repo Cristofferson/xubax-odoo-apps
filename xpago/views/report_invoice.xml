@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- The pay link and QR of an invoice not yet paid (Odoo 19 has its own; 17 and 18 do not): card or transfer,
+         with XPago's mark. -->
+    <template id="report_invoice_document_pay_qr" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@id='payment_term']" position="after">
+            <t t-if="o._xpago_show_pay_qr()">
+                <t t-set="xpago_pay_link" t-value="o._xpago_pay_link()"/>
+                <div id="xpago_payment_link_qrcode" class="d-flex mt-3 mb-3 avoid-page-break-inside">
+                    <div class="me-3 position-relative" id="xpago_qrcode_image">
+                        <a t-att-href="xpago_pay_link" target="_blank" class="top-0 start-0 position-absolute w-100 h-100"/>
+                        <p class="position-relative mb-0">
+                            <img t-att-src="o._xpago_pay_qr(xpago_pay_link)" style="width: 88px; height: 88px;"/>
+                            <img src="/xpago/static/description/icon.png"
+                                 class="top-50 start-50 position-absolute bg-white border border-3 rounded-circle"
+                                 style="width: 24px; height: 24px; transform: translate(-50%, -50%);"/>
+                        </p>
+                    </div>
+                    <div class="d-inline lh-sm" id="xpago_qrcode_info">
+                        <p class="fw-bold mb-1">PAY THIS INVOICE ONLINE</p>
+                        <p class="mb-1">By card, or by SPEI transfer from any bank.</p>
+                        <p class="text-muted fst-italic mb-0">Scan the code with your phone<br/>or click it to pay.</p>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

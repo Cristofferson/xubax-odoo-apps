@@ -26,3 +26,5 @@ from . import res_partner
 from . import account_move_send
 from . import res_company
 from . import pos_payment_method_calculator
+from . import account_move
+from . import payment_link_wizard
