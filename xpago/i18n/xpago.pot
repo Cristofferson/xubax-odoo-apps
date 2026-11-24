@@ -4403,3 +4403,41 @@ msgstr ""
 #, python-format
 msgid "· for"
 msgstr ""
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_res_company__xpago_invoice_pay_qr
+#: model:ir.model.fields,field_description:xpago.field_res_config_settings__xpago_invoice_pay_qr
+#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
+msgid "Pay link and QR on invoices"
+msgstr ""
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_res_company__xpago_invoice_pay_qr
+#: model:ir.model.fields,help:xpago.field_res_config_settings__xpago_invoice_pay_qr
+msgid ""
+"The PDF of an invoice not yet paid carries a QR and a link to pay it online "
+"with XPago."
+msgstr ""
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
+msgid ""
+"The PDF of an invoice not yet paid carries a QR and a link to pay it online,"
+" by card or by SPEI transfer to a CLABE made for that payment. The invoice "
+"is marked paid by itself when the money arrives."
+msgstr ""
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.report_invoice_document_pay_qr
+msgid "PAY THIS INVOICE ONLINE"
+msgstr ""
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.report_invoice_document_pay_qr
+msgid "By card, or by SPEI transfer from any bank."
+msgstr ""
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.report_invoice_document_pay_qr
+msgid "Scan the code with your phone<br/>or click it to pay."
+msgstr ""
