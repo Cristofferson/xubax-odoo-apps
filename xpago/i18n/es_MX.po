@@ -153,18 +153,6 @@ msgid "A transfer only pays positive amounts."
 msgstr "Una transferencia solo paga montos positivos."
 
 #. module: xpago
-#: model:ir.module.module,summary:base.module_xpago
-msgid ""
-"Accept Visa, Mastercard and American Express in Mexico: online store, "
-"invoices, payment links and subscriptions, and card terminals in the Point "
-"of Sale and the kiosk, with months without interest and deposit accounts by "
-"product."
-msgstr ""
-"Cobra con Visa, Mastercard y American Express en México: tienda en línea, "
-"facturas, ligas de pago y suscripciones, y terminales en el Punto de Venta y"
-" el kiosco, con meses sin intereses y cuentas de depósito por producto."
-
-#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_payment_xpago_domiciliation__message_needaction
 msgid "Action Needed"
 msgstr "Acción requerida"
@@ -4330,11 +4318,6 @@ msgid ""
 msgstr ""
 "La tarifa de XPago antes de promociones: una promoción puede bajar la "
 "comisión real."
-
-#. module: xpago
-#: model:ir.module.module,shortdesc:base.module_xpago
-msgid "XPago: Card Payments and Terminals"
-msgstr "XPago: cobros con tarjeta y terminales"
 
 #. module: xpago
 #. odoo-python

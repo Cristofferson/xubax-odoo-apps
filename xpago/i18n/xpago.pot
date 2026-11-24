@@ -129,15 +129,6 @@ msgid "A transfer only pays positive amounts."
 msgstr ""
 
 #. module: xpago
-#: model:ir.module.module,summary:base.module_xpago
-msgid ""
-"Accept Visa, Mastercard and American Express in Mexico: online store, "
-"invoices, payment links and subscriptions, and card terminals in the Point "
-"of Sale and the kiosk, with months without interest and deposit accounts by "
-"product."
-msgstr ""
-
-#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_payment_xpago_domiciliation__message_needaction
 msgid "Action Needed"
 msgstr ""
@@ -3994,11 +3985,6 @@ msgstr ""
 #: model:ir.model.fields,help:xpago.field_pos_xpago_reconcile_line__fee_percent
 msgid ""
 "XPago's rate before promotions: a promotion can make the real fee lower."
-msgstr ""
-
-#. module: xpago
-#: model:ir.module.module,shortdesc:base.module_xpago
-msgid "XPago: Card Payments and Terminals"
 msgstr ""
 
 #. module: xpago
