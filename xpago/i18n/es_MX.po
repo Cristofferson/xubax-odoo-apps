@@ -3868,11 +3868,6 @@ msgstr ""
 #: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml
 msgid "· for"
 msgstr "· para"
-#. module: xpago
-#. odoo-javascript
-#: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
-msgid "· for"
-msgstr "· para"
 
 #. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_res_company__xpago_invoice_pay_qr
