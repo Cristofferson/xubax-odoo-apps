@@ -432,6 +432,23 @@ class TestPosXpago(TestPoSCommon):
             self.method.xpago_create_charge({'amount': 99.0, 'order_uuid': 'abcdef12-3456'})
         send.assert_called_once()
 
+    def test_second_card_of_the_same_amount_is_a_new_charge(self):
+        """Two cards of the same amount in one sale (LAMUR 24-nov: $1 + $1): the sale is not saved yet, so Odoo sees no
+        payment using the first card. The register says which payments its other lines hold; the second card goes to
+        the terminal as a charge of its own instead of getting the first card's approved charge back (one voucher
+        printed twice, the second card never charged)."""
+        self.force_check(self.approved())
+        with patch(SEND, return_value=dict(self.intent(), id='pi-2')) as send:
+            view = self.method.xpago_create_charge({'amount': 150.5, 'order_uuid': 'abcdef12-3456',
+                                                    'taken_payment_ids': ['pay-1']})
+        self.assertIn(('POST', '/v1/terminal-charges'), [c.args for c in send.call_args_list])
+        self.assertEqual((view['state'], view['xpago_id']), ('pending', 'pi-2'))
+        with patch(SEND, return_value=self.approved()):
+            forced = self.method.xpago_force_check({'order_uuid': 'abcdef12-3456', 'amount': 150.5,
+                                                    'taken_payment_ids': ['pay-1']})
+        self.assertNotEqual(forced.get('payment', {}).get('transaction_id'), 'pay-1',
+                            '«Force done» on the second card never hands over the first card')
+
     def test_months_by_amount_bound_the_terminal(self):
         """«Months without interest by amount» of the provider bound the terminal as they bound the online checkout
         (E2E 23-nov: a $150 charge went out with every plan of the account)."""

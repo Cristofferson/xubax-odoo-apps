@@ -4182,3 +4182,31 @@ msgstr ""
 #: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
 msgid "· for"
 msgstr ""
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.pos_order_receipt
+msgid "REFUND TO CARD"
+msgstr ""
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.pos_order_receipt
+msgid "TRANSFER GIVEN BACK (SPEI)"
+msgstr ""
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/force_done_transfer.js:0
+msgid "The transfer of %(amount)s arrived: sale %(sale)s was validated by itself."
+msgstr ""
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/force_done_transfer.js:0
+msgid "Open the sale"
+msgstr ""
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/force_done_transfer.js:0
+msgid "The transfer of %(amount)s arrived, but sale %(sale)s could not be validated by itself."
+msgstr ""

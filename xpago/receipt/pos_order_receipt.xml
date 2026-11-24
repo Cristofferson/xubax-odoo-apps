@@ -7,7 +7,8 @@
             <t t-foreach="payments" t-as="payment">
                 <!-- The card voucher goes on the full receipt only: the basic one is a gift ticket, without prices. -->
                 <div t-if="payment.get('xpago_voucher') and not conditions.get('basic_receipt')" class="xpago-voucher w-100 text-start mt-3 pt-2 text-small" style="border-top: 1px dashed black;">
-                    <div class="w-100 text-center text-bold">CARD SALE</div>
+                    <div t-if="payment.get('xpago_refund')" class="w-100 text-center text-bold">REFUND TO CARD</div>
+                    <div t-else="" class="w-100 text-center text-bold">CARD SALE</div>
                     <table class="w-100">
                         <tbody>
                             <tr>
@@ -30,12 +31,14 @@
                         <tbody>
                             <tr class="text-bold">
                                 <td class="text-start w-70">Amount</td>
-                                <td class="text-end w-30 font-monospace" t-out="payment['amount']"/>
+                                <td class="text-end w-30 font-monospace" t-out="payment.get('xpago_amount') or payment['amount']"/>
                             </tr>
                         </tbody>
                     </table>
+                    <t t-if="not payment.get('xpago_refund')">
                     <div t-if="payment.get('xpago_debit')" class="mt-2" style="white-space: pre-line;" t-out="config.get('xpago_voucher_debit_text') or ''"/>
                     <div t-else="" class="mt-2" style="white-space: pre-line;" t-out="config.get('xpago_voucher_credit_text') or ''"/>
+                    </t>
                     <div t-if="payment.get('xpago_signature')" class="w-100 text-center mt-4">
                         <div style="border-top: 1px solid black; margin: 0 10%;"/>
                         <div>Customer's signature</div>
@@ -43,7 +46,8 @@
                 </div>
                 <!-- A sale paid by XPago transfer: which CLABE and operation it was. -->
                 <div t-if="payment.get('xpago_transfer')" class="xpago-transfer-receipt w-100 text-start mt-3 pt-2 text-small" style="border-top: 1px dashed black;">
-                    <div class="w-100 text-center text-bold">PAID BY TRANSFER (SPEI)</div>
+                    <div t-if="payment.get('xpago_refund')" class="w-100 text-center text-bold">TRANSFER GIVEN BACK (SPEI)</div>
+                    <div t-else="" class="w-100 text-center text-bold">PAID BY TRANSFER (SPEI)</div>
                     <div t-if="payment['card_no']">CLABE: **** <t t-out="payment['card_no']"/></div>
                     <div t-if="payment['payment_ref_no']">Operation: <t t-out="payment['payment_ref_no']"/></div>
                     <div t-if="payment['cardholder_name']">Paid by: <t t-out="payment['cardholder_name']"/></div>
@@ -51,7 +55,7 @@
                         <tbody>
                             <tr class="text-bold">
                                 <td class="text-start w-70">Amount</td>
-                                <td class="text-end w-30 font-monospace" t-out="payment['amount']"/>
+                                <td class="text-end w-30 font-monospace" t-out="payment.get('xpago_amount') or payment['amount']"/>
                             </tr>
                         </tbody>
                     </table>
