@@ -7,6 +7,15 @@ import { SelectionPopup } from "@point_of_sale/app/utils/input_popups/selection_
 
 import { waitForCharge } from "@xpago/pos/app/charge_wait";
 
+/** The card or transfer payments the other lines of this sale already hold. The sale is not saved until it is
+ *  validated, so Odoo cannot see them: without them, a second card of the same amount would get the first card's
+ *  approved charge back instead of a charge of its own (one voucher printed twice, the second card never charged). */
+export function takenPaymentIds(order, line) {
+    return (order?.payment_ids || [])
+        .filter((p) => p !== line && p.uuid !== line?.uuid && p.transaction_id)
+        .map((p) => p.transaction_id);
+}
+
 export class PaymentXpago extends PaymentInterface {
     setup() {
         super.setup(...arguments);
@@ -72,6 +81,7 @@ export class PaymentXpago extends PaymentInterface {
                     order_uuid: order.uuid,
                     bank_account_id: accountId,
                     rule_account_id: part.account_id || false,
+                    taken_payment_ids: takenPaymentIds(order, line),
                 },
             ]);
         } catch (error) {
@@ -299,7 +309,9 @@ export class PaymentXpago extends PaymentInterface {
             // waiting on the terminal for this sale. A card approved meanwhile stays paid: «Retry» takes it.
             const line = order?.get_paymentline_by_uuid?.(uuid);
             try {
-                await this._call("xpago_cancel_order_charges", [{ order_uuid: order?.uuid, amount: line?.amount || 0 }]);
+                await this._call("xpago_cancel_order_charges", [
+                    { order_uuid: order?.uuid, amount: line?.amount || 0, taken_payment_ids: takenPaymentIds(order, line) },
+                ]);
             } catch {
                 // nothing to cancel, or offline: «Retry» asks XPago again before charging
             }

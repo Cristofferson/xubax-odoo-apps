@@ -11,7 +11,7 @@ patch(PosOrder.prototype, {
                 (line) =>
                     !line.is_change &&
                     line.payment_method_id?.use_payment_terminal === "xpago_spei" &&
-                    line.get_amount() > 0 &&
+                    line.get_amount() !== 0 &&
                     (line.card_no || line.transaction_id)
             )
             .map((line) => ({
@@ -19,7 +19,9 @@ patch(PosOrder.prototype, {
                 card_no: line.card_no || "",
                 operation: line.payment_ref_no || "",
                 payer: line.cardholder_name || "",
-                amount: line.get_amount(),
+                // A transfer given back with a refund says so.
+                refund: line.get_amount() < 0,
+                amount: Math.abs(line.get_amount()),
             }));
         return result;
     },

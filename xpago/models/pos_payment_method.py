@@ -90,7 +90,8 @@ class PosPaymentMethod(models.Model):
         # or gave up while waiting) are asked to XPago and cancelled first. A card approved in the meantime shows up
         # as paid here instead of being charged again.
         self._xpago_close_open_charges(uuid)
-        paid = self._xpago_charge_paid_unused(uuid, (data.get('amount') or 0.0) + (data.get('tip_amount') or 0.0))
+        paid = self._xpago_charge_paid_unused(uuid, (data.get('amount') or 0.0) + (data.get('tip_amount') or 0.0),
+                                              taken=data.get('taken_payment_ids'))
         if paid:
             # «Retry» after the register gave up on a card that was approved after all: that charge pays the sale,
             # and nothing goes to the terminal again.
@@ -123,7 +124,7 @@ class PosPaymentMethod(models.Model):
         self._xpago_check_access()
         uuid = data.get('order_uuid') or ''
         self._xpago_close_open_charges(uuid)
-        paid = self._xpago_charge_paid_unused(uuid, data.get('amount') or 0.0)
+        paid = self._xpago_charge_paid_unused(uuid, data.get('amount') or 0.0, taken=data.get('taken_payment_ids'))
         return paid._xpago_public_view() if paid else {'state': 'cancelled'}
 
     def xpago_charge_status(self, charge_id):
@@ -145,15 +146,17 @@ class PosPaymentMethod(models.Model):
         if not charges:
             return {'state': 'none'}
         charges._xpago_refresh()
-        paid = self._xpago_charge_paid_unused(uuid, data.get('amount') or 0.0, charges)
+        paid = self._xpago_charge_paid_unused(uuid, data.get('amount') or 0.0, charges,
+                                              taken=data.get('taken_payment_ids'))
         if paid:
             return paid._xpago_public_view()
         state = charges[0].state
         return {'state': 'unmatched' if state == 'confirmed' else state}
 
-    def _xpago_charge_paid_unused(self, uuid, amount, charges=None):
+    def _xpago_charge_paid_unused(self, uuid, amount, charges=None, taken=None):
         """The approved charge of this sale for this amount (with or without its tip) that no payment of Odoo uses
-        yet."""
+        yet. ``taken``: the payment ids the other lines of the sale on the register already hold (that sale is not
+        saved yet): a second card of the same amount is a new charge, never the first card again (LAMUR 24-nov)."""
         if charges is None:
             charges = self.env['pos.xpago.charge'].sudo().search(
                 [('payment_method_id', '=', self.id), ('order_uuid', '=', uuid), ('state', '=', 'confirmed')],
@@ -163,7 +166,7 @@ class PosPaymentMethod(models.Model):
         used = set(self.env['pos.payment'].sudo().search([
             ('payment_method_id', '=', self.id),
             ('transaction_id', 'in', [c.payment_id for c in charges if c.payment_id]),
-        ]).mapped('transaction_id'))
+        ]).mapped('transaction_id')) | {t for t in taken or [] if isinstance(t, str) and t}
         currency = self.company_id.currency_id or self.env.company.currency_id
 
         def same_amount(charge):

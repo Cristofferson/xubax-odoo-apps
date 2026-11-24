@@ -4,7 +4,8 @@
         <xpath expr="//div[hasclass('after-footer')]" position="inside">
             <t t-foreach="props.data.xpago_transfers or []" t-as="transfer" t-key="transfer.uuid">
                 <div class="xpago-transfer-receipt text-start mt-3 pt-2" style="border-top: 1px dashed currentColor; font-size: 85%;">
-                    <div class="text-center fw-bolder">PAID BY TRANSFER (SPEI)</div>
+                    <div t-if="transfer.refund" class="text-center fw-bolder">TRANSFER GIVEN BACK (SPEI)</div>
+                    <div t-else="" class="text-center fw-bolder">PAID BY TRANSFER (SPEI)</div>
                     <div t-if="transfer.card_no">CLABE: **** <t t-esc="transfer.card_no"/></div>
                     <div t-if="transfer.operation">Operation: <t t-esc="transfer.operation"/></div>
                     <div t-if="transfer.payer">Paid by: <t t-esc="transfer.payer"/></div>

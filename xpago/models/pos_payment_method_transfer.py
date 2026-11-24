@@ -66,13 +66,18 @@ class PosPaymentMethod(models.Model):
             [('payment_method_id', '=', self.id), ('order_uuid', '=', uuid), ('state', '=', 'awaiting')],
             order='id desc', limit=10) if uuid else self.env['pos.xpago.transfer']
         open_transfers._xpago_refresh()
-        paid = self._xpago_transfer_paid_unused(uuid, amount)
+        taken = data.get('taken_payment_ids')
+        paid = self._xpago_transfer_paid_unused(uuid, amount, taken=taken)
         if paid:
             # «Retry» after the register gave up on a transfer that arrived after all: that one pays the sale.
             return paid._xpago_public_view()
         currency = self.company_id.currency_id or self.env.company.currency_id
+        # A CLABE another payment line of this sale is waiting on belongs to that line (two transfers of the same
+        # amount are two CLABEs).
+        followed = {int(i) for i in data.get('followed_transfer_ids') or [] if isinstance(i, int)}
         waiting = open_transfers.filtered(
-            lambda t: t.state == 'awaiting' and not currency.compare_amounts(t.amount, amount))[:1]
+            lambda t: t.state == 'awaiting' and t.id not in followed
+            and not currency.compare_amounts(t.amount, amount))[:1]
         if waiting:
             return waiting._xpago_public_view()
         account = self._xpago_charge_account(provider, rule_account_id=data.get('rule_account_id'))
@@ -123,8 +128,9 @@ class PosPaymentMethod(models.Model):
         transfer._xpago_cancel()
         return transfer._xpago_public_view()
 
-    def _xpago_transfer_paid_unused(self, uuid, amount, transfers=None):
-        """The paid transfer of this sale for this amount that no payment of Odoo uses yet."""
+    def _xpago_transfer_paid_unused(self, uuid, amount, transfers=None, taken=None):
+        """The paid transfer of this sale for this amount that no payment of Odoo uses yet. ``taken``: the payment ids
+        the other lines of the sale on the register already hold."""
         if transfers is None:
             transfers = self.env['pos.xpago.transfer'].sudo().search(
                 [('payment_method_id', '=', self.id), ('order_uuid', '=', uuid), ('state', '=', 'paid')],
@@ -134,7 +140,7 @@ class PosPaymentMethod(models.Model):
         used = set(self.env['pos.payment'].sudo().search([
             ('payment_method_id', '=', self.id),
             ('transaction_id', 'in', [t.payment_id for t in transfers if t.payment_id]),
-        ]).mapped('transaction_id'))
+        ]).mapped('transaction_id')) | {t for t in taken or [] if isinstance(t, str) and t}
         currency = self.company_id.currency_id or self.env.company.currency_id
         for transfer in transfers:
             if transfer.state == 'paid' and (not transfer.payment_id or transfer.payment_id not in used) \
@@ -152,7 +158,8 @@ class PosPaymentMethod(models.Model):
         if not transfers:
             return {'state': 'none'}
         transfers._xpago_refresh()
-        paid = self._xpago_transfer_paid_unused(uuid, data.get('amount') or 0.0, transfers)
+        paid = self._xpago_transfer_paid_unused(uuid, data.get('amount') or 0.0, transfers,
+                                                taken=data.get('taken_payment_ids'))
         if paid:
             return paid._xpago_public_view()
         state = transfers[0].state

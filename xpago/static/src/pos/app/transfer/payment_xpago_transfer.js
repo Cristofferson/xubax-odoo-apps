@@ -5,6 +5,7 @@ import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { register_payment_method } from "@point_of_sale/app/store/pos_store";
 import { ask } from "@point_of_sale/app/store/make_awaitable_dialog";
 import { XpagoClabeReceipt, XpagoTransferDialog } from "@xpago/pos/app/transfer/transfer_dialogs";
+import { takenPaymentIds } from "@xpago/pos/app/payment_xpago";
 import {
     TRANSFER_FINAL_STATES,
     missingCustomerData,
@@ -51,6 +52,10 @@ export class PaymentXpagoTransfer extends PaymentInterface {
                     order_uuid: order.uuid,
                     customer,
                     rule_account_id: await this._ruleAccount(order, line),
+                    taken_payment_ids: takenPaymentIds(order, line),
+                    followed_transfer_ids: Object.entries(this.transfers)
+                        .filter(([key]) => key !== uuid)
+                        .map(([, other]) => other.view.id),
                 },
             ]);
         } catch (error) {
@@ -58,11 +63,24 @@ export class PaymentXpagoTransfer extends PaymentInterface {
             return false;
         }
         const entry = { view: reactive({ ...transfer }), stopped: false };
+        // «Retry» right after «Cancel»: the wait of the cancelled CLABE may still be sleeping. It is stopped and must
+        // not touch the line any more (it used to clear the new wait and put the line back to «Retry»).
+        const previous = this.transfers[uuid];
+        if (previous && previous !== entry) {
+            previous.stopped = true;
+            previous.superseded = true;
+            this._closeScreens(previous);
+        }
         this.transfers[uuid] = entry;
         this._showClabe(uuid, order);
         await this._waitForMoney(uuid, order);
+        if (this.transfers[uuid] === entry) {
+            delete this.transfers[uuid];
+        }
+        if (entry.superseded) {
+            return null; // another wait follows this line now
+        }
         this._closeScreens(entry);
-        delete this.transfers[uuid];
         if (entry.view.state === "paid") {
             Object.assign(line, entry.view.payment);
             this.env.services.notification.add(_t("The transfer arrived: %s", this._money(entry.view.amount)), {

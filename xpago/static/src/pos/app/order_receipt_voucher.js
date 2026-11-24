@@ -22,12 +22,14 @@ patch(PosOrder.prototype, {
                 (line) =>
                     !line.is_change &&
                     line.payment_method_id?.use_payment_terminal === "xpago" &&
-                    line.get_amount() > 0 &&
+                    line.get_amount() !== 0 &&
                     (line.card_no || line.transaction_id)
             )
             .map((line) => {
                 const type = (line.card_type || "").toUpperCase();
                 const debit = type.includes("DEBIT");
+                // A refund paid back to the card: the customer keeps which card gets the money back.
+                const refund = line.get_amount() < 0;
                 return {
                     uuid: line.uuid,
                     card_brand: line.card_brand || "",
@@ -40,10 +42,12 @@ patch(PosOrder.prototype, {
                     operation: line.payment_ref_no || "",
                     entry_mode: line.payment_method_payment_mode || "",
                     merchant: config.xpago_voucher_merchant || "",
-                    amount: line.get_amount(),
-                    legend: (debit ? config.xpago_voucher_debit_text : config.xpago_voucher_credit_text) || "",
+                    refund,
+                    amount: Math.abs(line.get_amount()),
+                    legend: refund ? "" : (debit ? config.xpago_voucher_debit_text : config.xpago_voucher_credit_text) || "",
                     // Chip and contactless are verified by PIN or need nothing: only a swiped or keyed card is signed.
                     signature:
+                        !refund &&
                         Boolean(config.xpago_voucher_signature) &&
                         !["CHIP", "CONTACTLESS"].includes((line.payment_method_payment_mode || "").toUpperCase()),
                 };
