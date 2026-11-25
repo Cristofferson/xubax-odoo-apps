@@ -18,3 +18,5 @@ from . import test_domiciliation
 from . import test_subscription_renewal
 from . import test_calculator
 from . import test_invoice_pay_qr
+from . import test_kiosk_assets
+from . import test_kiosk_transfer

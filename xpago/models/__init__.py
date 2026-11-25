@@ -1,3 +1,4 @@
+from . import ir_http
 from . import payment_provider
 from . import payment_transaction
 from . import payment_xpago_installment_rule
@@ -19,6 +20,7 @@ from . import res_config_settings
 from . import self_order_pos_config
 from . import self_order_pos_payment_method
 from . import self_order_pos_xpago_charge
+from . import self_order_pos_xpago_transfer
 from . import self_order_res_config_settings
 from . import payment_xpago_domiciliation
 from . import payment_transaction_domiciliation
