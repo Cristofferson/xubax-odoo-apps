@@ -3941,3 +3941,184 @@ msgstr "Abrir la venta"
 #: code:addons/xpago/static/src/pos/app/transfer/force_done_transfer.js:0
 msgid "The transfer of %(amount)s arrived, but sale %(sale)s could not be validated by itself."
 msgstr "Llegó la transferencia de %(amount)s, pero la venta %(sale)s no se pudo validar sola."
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/self_order_pos_payment_method.py:0
+#, python-format
+msgid "A transfer at the kiosk needs who pays: name, phone and email."
+msgstr ""
+"Una transferencia en el kiosco necesita los datos de quien paga: nombre, "
+"celular y correo."
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_config__xpago_kiosk_transfer_timeout
+#: model:ir.model.fields,field_description:xpago.field_res_config_settings__pos_xpago_kiosk_transfer_timeout
+msgid "Cancel an unpaid kiosk transfer after (seconds)"
+msgstr "Cancelar una transferencia del kiosco sin pagar después de (segundos)"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid "Email"
+msgstr "Correo"
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__pos_order_id
+msgid "Kiosk order"
+msgstr "Pedido del kiosco"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.self_order_res_config_settings_view_form
+msgid "Kiosk: time to pay by transfer"
+msgstr "Kiosco: tiempo para pagar por transferencia"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.js:0
+#, python-format
+msgid "Missing: %s."
+msgstr "Falta: %s."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid "Mobile phone"
+msgstr "Celular"
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_xpago_transfer__pos_order_id
+msgid ""
+"Orders paid at a self-order kiosk, which the transfer itself completes."
+msgstr ""
+"Pedidos pagados en un kiosco de autoservicio, que la propia transferencia "
+"completa."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid "Pay by transfer"
+msgstr "Paga por transferencia"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.js:0
+#, python-format
+msgid "Payment by transfer is for purchases of %s or more."
+msgstr "El pago por transferencia es para compras desde %s."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid "Scan it to copy the CLABE on your phone"
+msgstr "Escanéalo para copiar la CLABE en tu celular"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.js:0
+#, python-format
+msgid "The CLABE is no longer valid. Do not send money to it."
+msgstr "La CLABE ya no es válida. No envíes dinero a ella."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.js:0
+#, python-format
+msgid ""
+"The transfer did not arrive in time and the CLABE was cancelled. Do not send"
+" money to it."
+msgstr ""
+"La transferencia no llegó a tiempo y la CLABE se canceló. No envíes dinero a"
+" ella."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid "Time left"
+msgstr "Tiempo restante"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid "Transfer received"
+msgstr "Transferencia recibida"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid "Waiting for your transfer…"
+msgstr "Esperando tu transferencia…"
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.self_order_res_config_settings_view_form
+msgid ""
+"When the money of a transfer does not arrive in time, the kiosk cancels the "
+"CLABE and goes back to the start."
+msgstr ""
+"Si el dinero de una transferencia no llega a tiempo, el kiosco cancela la "
+"CLABE y vuelve al inicio."
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_config__xpago_kiosk_transfer_timeout
+#: model:ir.model.fields,help:xpago.field_res_config_settings__pos_xpago_kiosk_transfer_timeout
+msgid ""
+"When the money of an XPago transfer does not arrive within this time, the "
+"kiosk cancels the CLABE and goes back to the start. 0 never cancels it."
+msgstr ""
+"Si el dinero de una transferencia XPago no llega en este tiempo, el kiosco "
+"cancela la CLABE y vuelve al inicio. 0 nunca la cancela."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid ""
+"Your bank asks for them to make the CLABE. They are only used for this "
+"payment."
+msgstr "Tu banco los pide para hacer la CLABE. Solo se usan para este pago."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid ""
+"Your bank shows the beneficiary when it checks the CLABE: it is XPago's bank, on behalf of this business.\n"
+"                        Your order is confirmed by itself as soon as the money arrives."
+msgstr ""
+"Tu banco muestra el beneficiario al revisar la CLABE: es el banco de XPago, a nombre de este negocio.\n"
+"                        Tu pedido se confirma solo en cuanto llega el dinero."
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.js:0
+#, python-format
+msgid "a phone of 10 digits"
+msgstr "un celular de 10 dígitos"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.js:0
+#, python-format
+msgid "a valid email"
+msgstr "un correo válido"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.js:0
+#, python-format
+msgid "your name"
+msgstr "tu nombre"
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid "· We make a CLABE for this purchase only."
+msgstr "· Hacemos una CLABE solo para esta compra."

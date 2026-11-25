@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-22 16:34+0000\n"
-"PO-Revision-Date: 2026-11-22 16:34+0000\n"
+"POT-Creation-Date: 2026-11-25 15:55+0000\n"
+"PO-Revision-Date: 2026-11-25 15:55+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -121,6 +121,13 @@ msgstr ""
 #: code:addons/xpago/models/pos_payment_method_transfer.py:0
 #, python-format
 msgid "A refund is paid back with a negative amount."
+msgstr ""
+
+#. module: xpago
+#. odoo-python
+#: code:addons/xpago/models/self_order_pos_payment_method.py:0
+#, python-format
+msgid "A transfer at the kiosk needs who pays: name, phone and email."
 msgstr ""
 
 #. module: xpago
@@ -317,6 +324,7 @@ msgstr ""
 #. module: xpago
 #. odoo-javascript
 #: code:addons/xpago/static/src/backend/calculator/calculator.xml:0
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
 #, python-format
 msgid "Back"
 msgstr ""
@@ -324,6 +332,7 @@ msgstr ""
 #. module: xpago
 #. odoo-javascript
 #: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
 #: model:ir.model.fields,field_description:xpago.field_pos_payment__xpago_issuer_bank
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__bank
 #, python-format
@@ -363,6 +372,7 @@ msgstr ""
 #. module: xpago
 #. odoo-javascript
 #: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__beneficiary
 #, python-format
 msgid "Beneficiary"
@@ -387,6 +397,11 @@ msgstr ""
 msgid ""
 "Bring the charge app to the front when the point of sale runs on the "
 "terminal itself."
+msgstr ""
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.report_invoice_document_pay_qr
+msgid "By card, or by SPEI transfer from any bank."
 msgstr ""
 
 #. module: xpago
@@ -500,6 +515,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/xpago/static/src/pos/app/payment_xpago.js:0
 #: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
 #: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_reconcile_view_form
 #: model_terms:ir.ui.view,arch_db:xpago.pos_xpago_terminal_setup_view_form
 #, python-format
@@ -510,6 +526,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:xpago.field_pos_config__xpago_kiosk_timeout
 #: model:ir.model.fields,field_description:xpago.field_res_config_settings__pos_xpago_kiosk_timeout
 msgid "Cancel an unpaid card charge after (seconds)"
+msgstr ""
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_config__xpago_kiosk_transfer_timeout
+#: model:ir.model.fields,field_description:xpago.field_res_config_settings__pos_xpago_kiosk_transfer_timeout
+msgid "Cancel an unpaid kiosk transfer after (seconds)"
 msgstr ""
 
 #. module: xpago
@@ -785,6 +807,7 @@ msgstr ""
 #. module: xpago
 #. odoo-javascript
 #: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
 #, python-format
 msgid "Concept (optional)"
 msgstr ""
@@ -1166,6 +1189,13 @@ msgid ""
 msgstr ""
 
 #. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid "Email"
+msgstr ""
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_payment_xpago_domiciliation__notify_customer
 msgid "Email the customer each charge"
 msgstr ""
@@ -1291,9 +1321,19 @@ msgid ""
 msgstr ""
 
 #. module: xpago
+#: model:ir.model,name:xpago.model_payment_link_wizard
+msgid "Generate Payment Link"
+msgstr ""
+
+#. module: xpago
 #: model:ir.model.fields,help:xpago.field_payment_xpago_domiciliation__user_id
 msgid ""
 "Gets a task when a charge is declined or goes over the most per charge."
+msgstr ""
+
+#. module: xpago
+#: model:ir.model,name:xpago.model_ir_http
+msgid "HTTP Routing"
 msgstr ""
 
 #. module: xpago
@@ -1421,6 +1461,11 @@ msgid ""
 msgstr ""
 
 #. module: xpago
+#: model:ir.model,name:xpago.model_account_move
+msgid "Journal Entry"
+msgstr ""
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup__journal_id
 msgid "Journal for new terminals"
 msgstr ""
@@ -1439,8 +1484,18 @@ msgid "Kiosk"
 msgstr ""
 
 #. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__pos_order_id
+msgid "Kiosk order"
+msgstr ""
+
+#. module: xpago
 #: model_terms:ir.ui.view,arch_db:xpago.self_order_res_config_settings_view_form
 msgid "Kiosk: free the terminal"
+msgstr ""
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.self_order_res_config_settings_view_form
+msgid "Kiosk: time to pay by transfer"
 msgstr ""
 
 #. module: xpago
@@ -1551,6 +1606,20 @@ msgid "Missing"
 msgstr ""
 
 #. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.js:0
+#, python-format
+msgid "Missing: %s."
+msgstr ""
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid "Mobile phone"
+msgstr ""
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_reconcile_line__terms
 msgid "Months"
 msgstr ""
@@ -1625,9 +1694,12 @@ msgid "N950-123456789"
 msgstr ""
 
 #. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
 #: model:ir.model.fields,field_description:xpago.field_payment_xpago_bank_account__name
 #: model:ir.model.fields,field_description:xpago.field_payment_xpago_domiciliation__name
 #: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__name
+#, python-format
 msgid "Name"
 msgstr ""
 
@@ -1753,6 +1825,8 @@ msgstr ""
 
 #. module: xpago
 #. odoo-javascript
+#. odoo-python
+#: code:addons/xpago/models/payment_xpago_domiciliation.py:0
 #: code:addons/xpago/static/src/backend/calculator/calculator.xml:0
 #, python-format
 msgid "Not charged"
@@ -2048,6 +2122,12 @@ msgid "Orders paid at a self-order kiosk, which the charge itself completes."
 msgstr ""
 
 #. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_xpago_transfer__pos_order_id
+msgid ""
+"Orders paid at a self-order kiosk, which the transfer itself completes."
+msgstr ""
+
+#. module: xpago
 #: model:ir.model.fields.selection,name:xpago.selection__pos_xpago_reconcile_line__source__other
 msgid "Other (dashboard, links)"
 msgstr ""
@@ -2066,6 +2146,11 @@ msgstr ""
 #: code:addons/xpago/static/src/pos/app/transfer/transfer_receipt.xml:0
 #, python-format
 msgid "PAID BY TRANSFER (SPEI)"
+msgstr ""
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.report_invoice_document_pay_qr
+msgid "PAY THIS INVOICE ONLINE"
 msgstr ""
 
 #. module: xpago
@@ -2146,6 +2231,20 @@ msgid "Paused"
 msgstr ""
 
 #. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid "Pay by transfer"
+msgstr ""
+
+#. module: xpago
+#: model:ir.model.fields,field_description:xpago.field_res_company__xpago_invoice_pay_qr
+#: model:ir.model.fields,field_description:xpago.field_res_config_settings__xpago_invoice_pay_qr
+#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
+msgid "Pay link and QR on invoices"
+msgstr ""
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_charge__payment_method_id
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_transfer__payment_method_id
 msgid "Payment Method"
@@ -2171,6 +2270,13 @@ msgstr ""
 #: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.js:0
 #, python-format
 msgid "Payment by transfer (SPEI)"
+msgstr ""
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.js:0
+#, python-format
+msgid "Payment by transfer is for purchases of %s or more."
 msgstr ""
 
 #. module: xpago
@@ -2347,8 +2453,16 @@ msgstr ""
 #. module: xpago
 #. odoo-javascript
 #: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
 #, python-format
 msgid "QR"
+msgstr ""
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/order_receipt_voucher.xml:0
+#, python-format
+msgid "REFUND TO CARD"
 msgstr ""
 
 #. module: xpago
@@ -2519,7 +2633,20 @@ msgstr ""
 
 #. module: xpago
 #. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid "Scan it to copy the CLABE on your phone"
+msgstr ""
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.report_invoice_document_pay_qr
+msgid "Scan the code with your phone<br/>or click it to pay."
+msgstr ""
+
+#. module: xpago
+#. odoo-javascript
 #: code:addons/xpago/static/src/pos/app/transfer/payment_xpago_transfer.js:0
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
 #, python-format
 msgid "See the CLABE"
 msgstr ""
@@ -2641,6 +2768,13 @@ msgid "Subscription"
 msgstr ""
 
 #. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/transfer_receipt.xml:0
+#, python-format
+msgid "TRANSFER GIVEN BACK (SPEI)"
+msgstr ""
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_payment_xpago_rule__tag_ids
 msgid "Tags"
 msgstr ""
@@ -2713,6 +2847,13 @@ msgstr ""
 
 #. module: xpago
 #. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.js:0
+#, python-format
+msgid "The CLABE is no longer valid. Do not send money to it."
+msgstr ""
+
+#. module: xpago
+#. odoo-javascript
 #: code:addons/xpago/static/src/pos/app/transfer/payment_xpago_transfer.js:0
 #, python-format
 msgid "The CLABE was not made: the customer has no %s."
@@ -2723,6 +2864,22 @@ msgstr ""
 msgid ""
 "The Calculator app can also charge its result on an XPago terminal. Turned "
 "off, it only calculates."
+msgstr ""
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_res_company__xpago_invoice_pay_qr
+#: model:ir.model.fields,help:xpago.field_res_config_settings__xpago_invoice_pay_qr
+msgid ""
+"The PDF of an invoice not yet paid carries a QR and a link to pay it online "
+"with XPago."
+msgstr ""
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
+msgid ""
+"The PDF of an invoice not yet paid carries a QR and a link to pay it online,"
+" by card or by SPEI transfer to a CLABE made for that payment. The invoice "
+"is marked paid by itself when the money arrives."
 msgstr ""
 
 #. module: xpago
@@ -3226,9 +3383,35 @@ msgstr ""
 
 #. module: xpago
 #. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.js:0
+#, python-format
+msgid ""
+"The transfer did not arrive in time and the CLABE was cancelled. Do not send"
+" money to it."
+msgstr ""
+
+#. module: xpago
+#. odoo-javascript
 #: code:addons/xpago/static/src/pos/app/transfer/force_done_transfer.js:0
 #, python-format
 msgid "The transfer has not arrived yet. Wait for it, or press Cancel."
+msgstr ""
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/force_done_transfer.js:0
+#, python-format
+msgid ""
+"The transfer of %(amount)s arrived, but sale %(sale)s could not be validated"
+" by itself."
+msgstr ""
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/pos/app/transfer/force_done_transfer.js:0
+#, python-format
+msgid ""
+"The transfer of %(amount)s arrived: sale %(sale)s was validated by itself."
 msgstr ""
 
 #. module: xpago
@@ -3349,6 +3532,7 @@ msgstr ""
 #. module: xpago
 #. odoo-python
 #: code:addons/xpago/models/pos_payment_method_transfer.py:0
+#: code:addons/xpago/models/self_order_pos_payment_method.py:0
 #, python-format
 msgid "This payment method does not take XPago transfers."
 msgstr ""
@@ -3391,6 +3575,13 @@ msgstr ""
 #: code:addons/xpago/static/src/pos/app/payment_xpago.js:0
 #, python-format
 msgid "This sale is charged in %s parts"
+msgstr ""
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid "Time left"
 msgstr ""
 
 #. module: xpago
@@ -3494,8 +3685,16 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
 #: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
 #, python-format
 msgid "Transfer exactly"
+msgstr ""
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid "Transfer received"
 msgstr ""
 
 #. module: xpago
@@ -3632,6 +3831,13 @@ msgid "Waiting for the transfer…"
 msgstr ""
 
 #. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid "Waiting for your transfer…"
+msgstr ""
+
+#. module: xpago
 #: model:ir.model.fields,field_description:xpago.field_pos_xpago_terminal_setup__warning_html
 msgid "Warning Html"
 msgstr ""
@@ -3734,6 +3940,21 @@ msgid ""
 "When the customer does not present the card in this time, the charge is "
 "cancelled on the terminal and the cashier is told. 0: wait until the "
 "terminal gives up."
+msgstr ""
+
+#. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.self_order_res_config_settings_view_form
+msgid ""
+"When the money of a transfer does not arrive in time, the kiosk cancels the "
+"CLABE and goes back to the start."
+msgstr ""
+
+#. module: xpago
+#: model:ir.model.fields,help:xpago.field_pos_config__xpago_kiosk_transfer_timeout
+#: model:ir.model.fields,help:xpago.field_res_config_settings__pos_xpago_kiosk_transfer_timeout
+msgid ""
+"When the money of an XPago transfer does not arrive within this time, the "
+"kiosk cancels the CLABE and goes back to the start. 0 never cancels it."
 msgstr ""
 
 #. module: xpago
@@ -4080,6 +4301,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/xpago/models/pos_payment_method.py:0
 #: code:addons/xpago/models/pos_payment_method_transfer.py:0
+#: code:addons/xpago/models/self_order_pos_payment_method.py:0
 #, python-format
 msgid ""
 "XPago is disabled. An administrator can enable it in the XPago payment "
@@ -4286,6 +4508,24 @@ msgid "Your XPago account name"
 msgstr ""
 
 #. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid ""
+"Your bank asks for them to make the CLABE. They are only used for this "
+"payment."
+msgstr ""
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid ""
+"Your bank shows the beneficiary when it checks the CLABE: it is XPago's bank, on behalf of this business.\n"
+"                        Your order is confirmed by itself as soon as the money arrives."
+msgstr ""
+
+#. module: xpago
 #: model_terms:payment.provider,auth_msg:xpago.payment_provider_xpago
 msgid "Your payment has been authorized."
 msgstr ""
@@ -4304,6 +4544,20 @@ msgstr ""
 #. module: xpago
 #: model_terms:payment.provider,done_msg:xpago.payment_provider_xpago
 msgid "Your payment has been successfully processed."
+msgstr ""
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.js:0
+#, python-format
+msgid "a phone of 10 digits"
+msgstr ""
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.js:0
+#, python-format
+msgid "a valid email"
 msgstr ""
 
 #. module: xpago
@@ -4337,6 +4591,7 @@ msgstr ""
 #. module: xpago
 #. odoo-javascript
 #: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
 #, python-format
 msgid "min"
 msgstr ""
@@ -4386,8 +4641,16 @@ msgstr ""
 #. module: xpago
 #. odoo-javascript
 #: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
 #, python-format
 msgid "to the CLABE"
+msgstr ""
+
+#. module: xpago
+#. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.js:0
+#, python-format
+msgid "your name"
 msgstr ""
 
 #. module: xpago
@@ -4399,75 +4662,15 @@ msgstr ""
 
 #. module: xpago
 #. odoo-javascript
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
+#, python-format
+msgid "· We make a CLABE for this purchase only."
+msgstr ""
+
+#. module: xpago
+#. odoo-javascript
 #: code:addons/xpago/static/src/pos/app/transfer/transfer_dialogs.xml:0
+#: code:addons/xpago/static/src/self_order/app/payment_page.xml:0
 #, python-format
 msgid "· for"
-msgstr ""
-
-#. module: xpago
-#: model:ir.model.fields,field_description:xpago.field_res_company__xpago_invoice_pay_qr
-#: model:ir.model.fields,field_description:xpago.field_res_config_settings__xpago_invoice_pay_qr
-#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
-msgid "Pay link and QR on invoices"
-msgstr ""
-
-#. module: xpago
-#: model:ir.model.fields,help:xpago.field_res_company__xpago_invoice_pay_qr
-#: model:ir.model.fields,help:xpago.field_res_config_settings__xpago_invoice_pay_qr
-msgid ""
-"The PDF of an invoice not yet paid carries a QR and a link to pay it online "
-"with XPago."
-msgstr ""
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.res_config_settings_view_form
-msgid ""
-"The PDF of an invoice not yet paid carries a QR and a link to pay it online,"
-" by card or by SPEI transfer to a CLABE made for that payment. The invoice "
-"is marked paid by itself when the money arrives."
-msgstr ""
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.report_invoice_document_pay_qr
-msgid "PAY THIS INVOICE ONLINE"
-msgstr ""
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.report_invoice_document_pay_qr
-msgid "By card, or by SPEI transfer from any bank."
-msgstr ""
-
-#. module: xpago
-#: model_terms:ir.ui.view,arch_db:xpago.report_invoice_document_pay_qr
-msgid "Scan the code with your phone<br/>or click it to pay."
-msgstr ""
-
-#. module: xpago
-#. odoo-javascript
-#: code:addons/xpago/static/src/pos/app/order_receipt_voucher.xml:0
-msgid "REFUND TO CARD"
-msgstr ""
-
-#. module: xpago
-#. odoo-javascript
-#: code:addons/xpago/static/src/pos/app/transfer/transfer_receipt.xml:0
-msgid "TRANSFER GIVEN BACK (SPEI)"
-msgstr ""
-
-#. module: xpago
-#. odoo-javascript
-#: code:addons/xpago/static/src/pos/app/transfer/force_done_transfer.js:0
-msgid "The transfer of %(amount)s arrived: sale %(sale)s was validated by itself."
-msgstr ""
-
-#. module: xpago
-#. odoo-javascript
-#: code:addons/xpago/static/src/pos/app/transfer/force_done_transfer.js:0
-msgid "Open the sale"
-msgstr ""
-
-#. module: xpago
-#. odoo-javascript
-#: code:addons/xpago/static/src/pos/app/transfer/force_done_transfer.js:0
-msgid "The transfer of %(amount)s arrived, but sale %(sale)s could not be validated by itself."
 msgstr ""

@@ -11,15 +11,23 @@ class PosConfig(models.Model):
              "terminal is free for the next customer. 0 never cancels it.",
     )
 
+    # A transfer takes longer than a card: the customer opens the bank's app, copies the CLABE and sends the money.
+    xpago_kiosk_transfer_timeout = fields.Integer(
+        string="Cancel an unpaid kiosk transfer after (seconds)", default=600,
+        help="When the money of an XPago transfer does not arrive within this time, the kiosk cancels the CLABE and "
+             "goes back to the start. 0 never cancels it.",
+    )
+
     def _get_allowed_payment_methods(self):
-        """The kiosk also offers the XPago terminals of this point of sale."""
+        """The kiosk also offers the XPago terminals and the XPago transfer of this point of sale."""
         methods = super()._get_allowed_payment_methods()
         if self.self_ordering_mode == 'kiosk':
-            methods |= self.payment_method_ids.filtered(lambda m: m.use_payment_terminal == 'xpago')
+            methods |= self.payment_method_ids.filtered(lambda m: m.use_payment_terminal in ('xpago', 'xpago_spei'))
         return methods
 
     def _get_self_ordering_data(self):
-        """The kiosk frees the XPago terminal after its own timeout."""
+        """The kiosk frees the XPago terminal and cancels the unpaid CLABE after its own timeouts."""
         data = super()._get_self_ordering_data()
         data['config']['xpago_kiosk_timeout'] = self.xpago_kiosk_timeout
+        data['config']['xpago_kiosk_transfer_timeout'] = self.xpago_kiosk_transfer_timeout
         return data

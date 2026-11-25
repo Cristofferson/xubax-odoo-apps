@@ -27,13 +27,7 @@ class PosXpagoCharge(models.Model):
 
     def _xpago_notify_kiosk(self, order, payment_result):
         """Tell the kiosk how the payment ended, on the channel it listens to while the customer pays."""
-        config = order.config_id
-        if config.self_ordering_mode != 'kiosk':
-            return
-        self.env['bus.bus']._sendone(f'pos_config-{config.access_token}', 'PAYMENT_STATUS', {
-            'payment_result': payment_result,
-            'order': order._export_for_self_order(),
-        })
+        order._xpago_send_payment_result(payment_result)
 
     @api.model
     def _xpago_cron_refresh(self):
