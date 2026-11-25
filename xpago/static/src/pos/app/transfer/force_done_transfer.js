@@ -35,7 +35,9 @@ patch(PaymentScreen.prototype, {
         ) {
             return;
         }
-        if (this.pos.get_order() === order && this.pos.mainScreen.component === PaymentScreen) {
+        // The same sale may come wrapped differently (reactive proxies): compare its id, not the object.
+        const current = this.pos.get_order();
+        if (current && current.uid === order.uid && this.pos.mainScreen.component === PaymentScreen) {
             this.validateOrder(false);
             return;
         }
@@ -62,7 +64,7 @@ patch(PaymentScreen.prototype, {
                             { webPrintFallback: true }
                         );
                     }
-                    if (pos.get_order() !== order) {
+                    if (pos.get_order()?.uid !== order.uid) {
                         pos.removeOrder(order, false); // already saved: only out of the open sales
                     }
                 },

@@ -38,6 +38,8 @@ class PosPayment(models.Model):
         card_type = (self.card_type or '').upper()
         debit = 'DEBIT' in card_type
         return {
+            'refund': False,
+            'amount': abs(self.amount),
             'brand': self.xpago_card_brand or '',
             'card_no': self.xpago_card_no or '',
             'funding': _("Debit") if debit else _("Credit") if 'CREDIT' in card_type else '',
