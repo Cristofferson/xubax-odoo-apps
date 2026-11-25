@@ -68,6 +68,22 @@ class TestPosXpagoVoucher(TestPoSCommon):
         self.assertNotIn('pay-1', html)
         self.assertNotIn('Reference:', html)
 
+    def test_refund_receipt_carries_the_card(self):
+        """A refund paid back to the card: the customer keeps which card gets the money back, with nothing to sign
+        and without the sale's legend."""
+        order = self.paid_order()
+        order.payment_ids.write({'amount': -150.5, 'payment_method_payment_mode': 'SWIPE'})
+        payment = order.order_receipt_generate_data()['payments'][0]
+        self.assertTrue(payment['xpago_voucher'])
+        self.assertTrue(payment['xpago_refund'])
+        self.assertFalse(payment['xpago_signature'])
+        html = str(order.order_receipt_generate_html())
+        for text in ('REFUND TO CARD', '**** 4242', 'A1B2C3', '150.50'):
+            self.assertIn(text, html)
+        self.assertNotIn('-150.50', html.replace('-\xa0', '-').replace('- ', '-'))
+        for text in ('CARD SALE', "Customer's signature", 'pagaré'):
+            self.assertNotIn(text, html)
+
     def test_debit_legend(self):
         order = self.paid_order('DEBIT')
         html = str(order.order_receipt_generate_html())

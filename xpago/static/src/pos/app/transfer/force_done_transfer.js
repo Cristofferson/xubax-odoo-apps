@@ -63,7 +63,7 @@ patch(PaymentScreen.prototype, {
     },
 
     async _xpagoValidateInBackground(order, amount) {
-        const money = this.env.utils.formatCurrency(amount);
+        const money = this.pos.formatCurrency(amount);
         const sale = order.pos_reference || order.name || "";
         const validation = new OrderPaymentValidation(this.pos.getValidationOrderOptions({ order }));
         let ok = false;
