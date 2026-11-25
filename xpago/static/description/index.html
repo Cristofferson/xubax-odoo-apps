@@ -13,7 +13,7 @@
         <tr><td style="padding:10px;border-bottom:1px solid #E7DDCF"><b>Cobro domiciliado:</b> con la autorizaci&#243;n del cliente, cobrar a su tarjeta guardada sus facturas pendientes, aunque el monto cambie cada vez</td><td style="text-align:center">No</td><td style="text-align:center">No</td><td style="text-align:center;color:#1E8E4E"><b>S&#237;</b></td></tr>
         <tr><td style="padding:10px;border-bottom:1px solid #E7DDCF"><b>Retener un pago</b> (dep&#243;sito en garant&#237;a) y cobrarlo completo, <b>en parte</b>, o liberarlo</td><td style="text-align:center">Pocas</td><td style="text-align:center">No</td><td style="text-align:center;color:#1E8E4E"><b>S&#237;</b></td></tr>
         <tr><td style="padding:10px;border-bottom:1px solid #E7DDCF"><b>Elegir a qu&#233; cuenta se deposita cada cobro</b> (hasta 10): por producto, caja, sucursal, raz&#243;n social o si lleva factura</td><td style="text-align:center">No</td><td style="text-align:center">No</td><td style="text-align:center;color:#1E8E4E"><b>S&#237;</b></td></tr>
-        <tr><td style="padding:10px;border-bottom:1px solid #E7DDCF"><b>Transferencia SPEI con CLABE de un solo uso</b> en la caja, las ligas de pago y la tienda en l&#237;nea: la venta se paga sola cuando llega el dinero</td><td style="text-align:center">Algunas</td><td style="text-align:center">No</td><td style="text-align:center;color:#1E8E4E"><b>S&#237;</b></td></tr>
+        <tr><td style="padding:10px;border-bottom:1px solid #E7DDCF"><b>Transferencia SPEI con CLABE de un solo uso</b> en la caja, el kiosco, las ligas de pago y la tienda en l&#237;nea: la venta se paga sola cuando llega el dinero</td><td style="text-align:center">Algunas</td><td style="text-align:center">No</td><td style="text-align:center;color:#1E8E4E"><b>S&#237;</b></td></tr>
         <tr><td style="padding:10px;border-bottom:1px solid #E7DDCF"><b>Meses sin intereses por monto o por producto</b>, decididos desde Odoo; en la caja, la cajera elige el plazo y la terminal cobra solo ese</td><td style="text-align:center">No</td><td style="text-align:center">No</td><td style="text-align:center;color:#1E8E4E"><b>S&#237;</b></td></tr>
         <tr><td style="padding:10px;border-bottom:1px solid #E7DDCF"><b>Kiosco de autoservicio</b> de Odoo con terminal, para negocios en M&#233;xico</td><td style="text-align:center">No</td><td style="text-align:center">Muy pocos</td><td style="text-align:center;color:#1E8E4E"><b>S&#237;</b></td></tr>
         <tr><td style="padding:10px;border-bottom:1px solid #E7DDCF"><b>Conciliaci&#243;n en Odoo</b> con comisi&#243;n, IVA de la comisi&#243;n y cuenta, y detecci&#243;n de <b>cobros sin venta</b></td><td style="text-align:center">No</td><td style="text-align:center">No</td><td style="text-align:center;color:#1E8E4E"><b>S&#237;</b></td></tr>
@@ -64,12 +64,14 @@
     <p>Adem&#225;s de tarjeta, tu cliente puede pagar con una transferencia desde cualquier banco. XPago crea una <b>CLABE de un solo uso</b> para esa venta y, cuando llega el dinero, Odoo marca la venta como pagada solo: sin revisar el estado de cuenta ni pedir comprobantes. <i>One-time CLABE (SPEI bank transfer) per sale: Odoo marks it paid by itself when the money arrives.</i></p>
     <ul style="font-size:16px;line-height:1.8">
       <li><b>En la caja:</b> m&#233;todo de pago &#171;Transferencia&#187;. La cajera ve la CLABE en pantalla y la puede imprimir; mientras llega el dinero, la caja sigue cobrando otras ventas con tarjeta.</li>
+      <li><b>En el kiosco de autoservicio:</b> el cliente escribe su nombre, celular y correo y ve la CLABE en la pantalla, con un QR para copiarla en su celular. Cuando llega el dinero su pedido entra pagado; si no paga en el tiempo que elijas (10 minutos de inicio), la CLABE se cancela.</li>
       <li><b>En ligas de pago y tienda en l&#237;nea:</b> el cliente elige tarjeta o transferencia en la misma p&#225;gina de pago.</li>
       <li><b>Sin pagos a medias:</b> &#171;Forzar terminaci&#243;n&#187; primero pregunta a XPago; solo marca pagado lo que de verdad lleg&#243;.</li>
       <li><b>Por WhatsApp:</b> con un bot&#243;n, la caja le manda al cliente los datos de la transferencia (si usas WhatsApp en Odoo).</li>
       <li><b>Devoluci&#243;n el mismo d&#237;a</b> desde la caja.</li>
       <li>Montos desde $200 MXN.</li>
     </ul>
+    <p style="text-align:center;margin-top:18px"><img src="screenshots/kiosk_transfer.png" style="width:60%;border-radius:12px;border:6px solid #1d1d1d"/></p>
 
     <h3 style="font-size:26px;margin:40px 0 10px">En la caja: la terminal XPago</h3>
     <p>La caja manda el monto a la terminal y la tarjeta aprobada regresa al pedido. <i>Card payment terminal for the Odoo Point of Sale: the POS sends the amount to the Newland terminal and the approved card comes back to the order.</i></p>
@@ -98,7 +100,7 @@
     <p style="text-align:center;margin-top:18px"><img src="screenshots/terminal.png" style="width:300px;border-radius:24px;border:8px solid #1a1a1a"/></p>
 
     <h3 style="font-size:26px;margin:40px 0 10px">Kiosco de autoservicio</h3>
-    <p>Tu cliente pide en el kiosco de Odoo y paga en la terminal XPago de al lado; el pedido entra ya pagado, a la cuenta de las reglas de cobro de lo que pidi&#243;. El comprobante de la tarjeta sale en el mismo ticket del pedido. <i>Self-order kiosk for Odoo with card payment on the XPago terminal.</i></p>
+    <p>Tu cliente pide en el kiosco de Odoo y paga en la terminal XPago de al lado; el pedido entra ya pagado, a la cuenta de las reglas de cobro de lo que pidi&#243;. El comprobante de la tarjeta sale en el mismo ticket del pedido. Tambi&#233;n puede pagar por transferencia: el kiosco le muestra una CLABE solo para su pedido. <i>Self-order kiosk for Odoo with card payment on the XPago terminal or SPEI bank transfer.</i></p>
     <p style="text-align:center">
       <img src="screenshots/carrito.png" style="width:30%;border-radius:12px;border:6px solid #1d1d1d"/>
       <img src="screenshots/pago.png" style="width:30%;border-radius:12px;border:6px solid #1d1d1d"/>
@@ -117,7 +119,7 @@
       <li>&#191;Ya ten&#237;as las apps XPago anteriores? Al instalar esta, tus ajustes, cuentas de dep&#243;sito, reglas y cobros pasan solos.</li>
     </ul>
     <h3 style="font-size:22px;margin:40px 0 10px">Odoo payment provider for Mexico</h3>
-    <p>XPago is a card payment provider for Odoo 17, 18, 19 and 20 for businesses registered in Mexico. One app: card terminals in the Point of Sale and the self-order kiosk, online card payments, payment links, saved cards for Odoo Subscriptions, card on file charges for pending invoices, authorize and capture (full or partial), same-day refunds and interest-free installments with rules by product or order total (the cashier can pick the plan) and a calculator to charge on the terminal without opening the register. Deposits in pesos to your Mexican bank account the next business day. <a href="https://xpago.mx/odoo-payments-mexico" style="color:#B8322A">XPago in English</a>.</p>
+    <p>XPago is a card payment provider for Odoo 17, 18, 19 and 20 for businesses registered in Mexico. One app: card terminals in the Point of Sale and the self-order kiosk, SPEI bank transfers to a one-time CLABE (register, kiosk and online), online card payments, payment links, saved cards for Odoo Subscriptions, card on file charges for pending invoices, authorize and capture (full or partial), same-day refunds and interest-free installments with rules by product or order total (the cashier can pick the plan) and a calculator to charge on the terminal without opening the register. Deposits in pesos to your Mexican bank account the next business day. <a href="https://xpago.mx/odoo-payments-mexico" style="color:#B8322A">XPago in English</a>.</p>
     <p style="margin-top:24px">&#191;Necesitas una cuenta XPago o terminales? <a href="https://xpago.mx/alta" style="color:#B8322A">Abre tu cuenta XPago</a> &#183; <a href="https://xpago.mx">xpago.mx</a> &#183; WhatsApp 443 688 7346 &#183; hola@xubax.com</p>
   </div>
 </section>
