@@ -11,6 +11,13 @@ class PosConfig(models.Model):
              "terminal is free for the next customer. 0 never cancels it.",
     )
 
+    # A transfer takes longer than a card: the customer opens the bank's app, copies the CLABE and sends the money.
+    xpago_kiosk_transfer_timeout = fields.Integer(
+        string="Cancel an unpaid kiosk transfer after (seconds)", default=600,
+        help="When the money of an XPago transfer does not arrive within this time, the kiosk cancels the CLABE and "
+             "goes back to the start. 0 never cancels it.",
+    )
+
     def _notify(self, *notifications, private=True):
         """The kiosk prints the card voucher of an XPago payment in its receipt: the card goes with the payment status
         of the order it paid."""
