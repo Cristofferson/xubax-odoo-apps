@@ -1,6 +1,6 @@
 {
     'name': 'XPago: terminal de pago, pasarela y meses sin intereses para Odoo México',
-    'version': '20.0.3.2.6',
+    'version': '20.0.3.3.0',
     'category': 'Accounting/Payment Providers',
     'sequence': 350,
     'summary': 'Cobra con tarjeta (Visa, Mastercard y American Express) y transferencia SPEI en Odoo: terminal en el '
@@ -48,6 +48,7 @@
         'pos_self_order.assets': [
             'xpago/static/src/pos/app/payment_xpago_voucher.js',
             'xpago/static/src/pos/app/charge_wait.js',
+            'xpago/static/src/pos/app/transfer/transfer_utils.js',
             'xpago/static/src/self_order/**/*',
             'xpago/static/src/kiosk/**/*',
         ],
