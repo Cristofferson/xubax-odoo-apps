@@ -1,5 +1,8 @@
+import hashlib
+import hmac
 import logging
 import pprint
+import re
 import threading
 import time
 
@@ -14,6 +17,9 @@ from odoo.tools import SQL
 from odoo.addons.xpago import const, failover
 
 _logger = logging.getLogger(__name__)
+
+# The charges that can name the account their money is deposited in.
+ROUTABLE = re.compile(r'^/v1/(checkouts|terminal-charges|saved-cards/[^/]+/payments)$')
 
 # When each provider's connection status was last written by this worker, and whether that call worked.
 _status_written = {}
@@ -36,22 +42,43 @@ class PaymentProvider(models.Model):
         string="Always offer a single payment", default=True,
         help="Offer paying in one go besides the months without interest of the amount.",
     )
+    xpago_business_name = fields.Char(
+        string="Name your customers see",
+        help="The business name shown on the transfer screen, its printed slip and the WhatsApp message, instead of "
+             "the company's legal name. Empty: the name of your XPago account.")
+    xpago_offer_bank_transfer = fields.Boolean(
+        string="Offer bank transfer (one-time CLABE)",
+        help="The XPago payment page of the online store, payment links and invoices also offers paying by SPEI "
+             "transfer to a CLABE made for that payment alone. The payment is confirmed by itself when the money "
+             "arrives. Your XPago account must have transfers turned on; small amounts may only be paid by card.",
+    )
     xpago_bank_account_ids = fields.One2many(
         'payment.xpago.bank.account', 'provider_id', string="Deposit accounts", context={'active_test': False},
     )
-    xpago_invoice_bank_account_id = fields.Many2one(
-        'payment.xpago.bank.account', string="Account for invoice payments", domain="[('provider_id', '=', id)]",
-        help="Where XPago deposits the payments of invoices. Empty: your XPago account decides.",
+    xpago_saved_card_deposit_account = fields.Boolean(
+        string="Saved-card charges name the account", groups='base.group_system',
+        help="Turn it on once XPago confirms that a charge on a saved card (subscriptions, card on file charges) can "
+             "name its deposit account. Until then those charges go to the XPago default account, whatever the "
+             "payment rules say.",
     )
-    xpago_other_bank_account_id = fields.Many2one(
-        'payment.xpago.bank.account', string="Account for other online payments", domain="[('provider_id', '=', id)]",
-        help="Where XPago deposits the online store, payment link and subscription payments. Empty: your XPago account decides.",
+    xpago_deposit_warning = fields.Char(
+        string="Deposit account warning", compute='_compute_xpago_deposit_warning',
+        help="Set when a payment rule names a deposit account that no longer exists in XPago.",
     )
+    xpago_deposit_warning_sent = fields.Boolean(readonly=True, copy=False)
     xpago_notify_user_ids = fields.Many2many(
         'res.users', 'payment_xpago_notify_user_rel', 'provider_id', 'user_id', string="Notify payments to",
         domain=[('share', '=', False)],
         help="These users get an Odoo notification (inbox and pop-up) for each payment received with XPago.",
     )
+
+    xpago_notify_url = fields.Char(
+        string="Instant notices", readonly=True, copy=False,
+        help="The address of this Odoo where XPago sends a notice the moment a payment changes, so it is confirmed "
+             "right away. Empty: not turned on yet; payments are still confirmed by the scheduled check.",
+    )
+    xpago_notify_secret = fields.Char(string="Instant notices secret", readonly=True, copy=False,
+                                      groups='base.group_system')
 
     xpago_neutralized = fields.Boolean(
         string="Neutralized copy", readonly=True, copy=False,
@@ -150,6 +177,17 @@ class PaymentProvider(models.Model):
         terms = rule._parse_terms() if rule else []
         return sorted({1, *terms} if self.xpago_single_payment or not terms else set(terms))
 
+    def _xpago_terms_within(self, amount, terms=None):
+        """``terms`` (the months the payment rules allow, None for no limit) narrowed to what the provider allows for
+        ``amount``; single payment when nothing is left. None: no limit at all."""
+        self.ensure_one()
+        allowed = self._xpago_allowed_terms(amount)
+        if allowed is None:
+            return sorted(set(terms)) if terms else None
+        if not terms:
+            return allowed
+        return [t for t in allowed if t in terms] or [1]
+
     @api.model
     def _xpago_connect_url(self):
         return self.env['ir.config_parameter'].sudo().get_param(const.CONNECT_URL_PARAM) or const.CONNECT_URL
@@ -183,10 +221,15 @@ class PaymentProvider(models.Model):
             for xpago_id, account in existing.items():
                 if xpago_id not in seen and account.active:
                     account.active = False
+            provider.invalidate_recordset(['xpago_deposit_warning'])
+            provider._xpago_notify_deposit_warning()
 
     def write(self, vals):
         if vals.get('xpago_api_key'):
             vals = {**vals, 'xpago_neutralized': False}
+        if 'xpago_api_key' in vals:
+            # Another key may be another XPago account: its notices are turned on again for it.
+            vals = {**vals, 'xpago_notify_url': False, 'xpago_notify_secret': False}
         res = super().write(vals)
         if {'xpago_api_key', 'state'} & set(vals) and any(p.code == 'xpago' for p in self):
             # Read the accounts a moment later, outside this request: a network call here could hold the record.
@@ -201,6 +244,125 @@ class PaymentProvider(models.Model):
                     provider._xpago_sync_bank_accounts()
             except Exception as error:  # noqa: BLE001 - one account failing must not stop the others
                 _logger.warning("XPago: could not read the deposit accounts of %s: %s", provider.name, error)
+            if provider._xpago_notify_needs_registration():
+                try:
+                    with self.env.cr.savepoint():
+                        provider._xpago_register_notify()
+                except Exception as error:  # noqa: BLE001 - the scheduled check still confirms the payments
+                    _logger.warning("XPago: could not turn on the instant notices of %s: %s", provider.name, error)
+
+    # === INSTANT NOTICES === #
+
+    def _xpago_notify_endpoint(self):
+        self.ensure_one()
+        return self.get_base_url().rstrip('/') + const.NOTIFY_ROUTE
+
+    def _xpago_notify_needs_registration(self):
+        """Enabled with an XPago key, and its notices not registered at this Odoo's current address."""
+        self.ensure_one()
+        provider = self.sudo()
+        return (provider.code == 'xpago' and provider.state != 'disabled' and not provider.xpago_needs_connect
+                and (not provider.xpago_notify_secret or provider.xpago_notify_url != provider._xpago_notify_endpoint()))
+
+    def _xpago_register_notify(self):
+        """Tell XPago where to send the notices of this key's account, and keep the secret they come signed with."""
+        self.ensure_one()
+        url = self._xpago_notify_endpoint()
+        answer = self._xpago_make_request('PUT', '/v1/notify', json={'url': url})
+        if not answer.get('secret'):
+            raise ValidationError(_("XPago did not turn on the instant notices."))
+        self.sudo().write({'xpago_notify_url': url, 'xpago_notify_secret': answer['secret']})
+
+    def action_xpago_register_notify(self):
+        self.ensure_one()
+        try:
+            self._xpago_register_notify()
+        except ValidationError as error:
+            return self._xpago_notification(_("Instant notices not turned on"), str(error), 'danger')
+        return self._xpago_notification(
+            _("Instant notices turned on"),
+            _("Payments are confirmed the moment XPago receives them."), 'success')
+
+    @api.model
+    def _xpago_verify_notice(self, body, timestamp, signature, now=None):
+        """The XPago provider whose secret signed this notice, or an empty recordset. A notice signed more than
+        five minutes away from now is refused, so a captured one cannot be sent again later."""
+        try:
+            sent_at = int(timestamp or '')
+        except ValueError:
+            return self.browse()
+        now = time.time() if now is None else now
+        if abs(now - sent_at) > const.NOTIFY_TOLERANCE_SECONDS or not (signature or '').startswith('v1='):
+            return self.browse()
+        signed = f'{sent_at}.'.encode() + body
+        for provider in self.sudo().search([('code', '=', 'xpago'), ('xpago_notify_secret', '!=', False)]):
+            expected = hmac.new(provider.xpago_notify_secret.encode(), signed, hashlib.sha256).hexdigest()
+            if hmac.compare_digest(signature[3:].encode(), expected.encode()):
+                return provider
+        return self.browse()
+
+    def _xpago_handle_notice(self, notice):
+        """Read again what the notice names and apply what XPago answers, the same way the scheduled actions do. The
+        notice's content decides nothing: it only says what to read. Returns the records read again."""
+        self.ensure_one()
+        obj = notice.get('object') if isinstance(notice, dict) else None
+        if not isinstance(obj, dict) or not obj.get('id'):
+            return []
+        kind, object_id = obj.get('kind'), str(obj['id'])
+        payment_id, reference = str(obj.get('payment_id') or ''), str(obj.get('reference') or '')
+        env = self.sudo().env
+        Tx, Charge, Transfer = env['payment.transaction'], env['pos.xpago.charge'], env['pos.xpago.transfer']
+        open_tx = [('provider_id', '=', self.id), ('state', 'in', ('draft', 'pending'))]
+        txs, charges, transfers = Tx, Charge, Transfer
+        if kind == 'checkout':
+            txs = Tx.search(open_tx + [('xpago_card_id', '=', False), ('provider_reference', '=', object_id)])
+            transfers = Transfer.search([('provider_id', '=', self.id), ('xpago_id', '=', object_id)])
+        elif kind == 'saved_card':
+            txs = Tx.search(open_tx + [('xpago_card_id', '=', object_id)])
+            if payment_id:
+                txs = txs.filtered(lambda tx: tx.provider_reference in (False, payment_id))
+        elif kind == 'terminal_charge':
+            domain = [('provider_id', '=', self.id), ('xpago_id', '=', object_id)]
+            if reference:
+                domain = ['|', ('external_id', '=', reference)] + domain
+            charges = Charge.search(domain)
+        elif kind == 'payment':
+            txs = Tx.search(open_tx + [('provider_reference', '=', object_id)])
+            charges = Charge.search([('provider_id', '=', self.id), ('payment_id', '=', object_id)])
+            transfers = Transfer.search([('provider_id', '=', self.id), ('payment_id', '=', object_id)])
+        done = []
+        for tx in txs:
+            if self._xpago_notice_step(tx, lambda tx=tx: tx._handle_notification_data('xpago', tx._xpago_fetch_payment_data())):
+                done.append(tx)
+        for charge in charges:
+            if charge.state == 'pending':
+                step = charge._xpago_refresh
+            elif charge.state == 'confirmed':
+                step = charge._xpago_read_refunded  # a refund made outside Odoo
+            else:
+                continue
+            if self._xpago_notice_step(charge, step):
+                done.append(charge)
+        for transfer in transfers:
+            if self._xpago_notice_step(transfer, transfer._xpago_refresh):
+                done.append(transfer)
+        if kind == 'payment' and not (txs or charges or transfers):
+            # A card payment the processor did not tie to its charge (a foreign card): the terminal it names says
+            # which charge it paid.
+            found = []
+            self._xpago_notice_step(self, lambda: found.extend(Charge._xpago_take_loose_payment(
+                self, self._xpago_make_request('GET', f'/v1/payments/{object_id}'))))
+            done.extend(found)
+        return done
+
+    def _xpago_notice_step(self, record, step):
+        try:
+            with self.env.cr.savepoint():
+                step()
+            return True
+        except Exception as error:  # noqa: BLE001 - one record failing must not stop the others; polling retries
+            _logger.warning("XPago: could not read back %s after a notice: %s", record.display_name, error)
+            return False
 
     def _xpago_bank_account_id(self, account):
         """The XPago id of a deposit account, when it is still active and belongs to this provider."""
@@ -297,6 +459,52 @@ class PaymentProvider(models.Model):
         self.ensure_one()
         return self._xpago_api_urls()[0] + endpoint
 
+    @api.depends('xpago_bank_account_ids.active')
+    def _compute_xpago_deposit_warning(self):
+        Rule = self.env['payment.xpago.rule'].sudo().with_context(active_test=False)
+        for provider in self:
+            gone = Rule.search([('active', '=', True), ('bank_account_id.provider_id', '=', provider.id),
+                                ('bank_account_id.active', '=', False)]).bank_account_id if provider.id else []
+            provider.xpago_deposit_warning = _(
+                "The account %s was removed in XPago: the sales of its payment rules go to the XPago default account "
+                "until you choose another one in the rule.", ", ".join(gone.mapped('name'))) if gone else False
+
+    def _xpago_notify_deposit_warning(self):
+        """Tell, once, the users notified of payments (or the administrator) that an account of a rule is gone."""
+        self.ensure_one()
+        provider = self.sudo()
+        if not provider.xpago_deposit_warning:
+            provider.xpago_deposit_warning_sent = False
+            return
+        if provider.xpago_deposit_warning_sent:
+            return
+        partners = provider.xpago_notify_user_ids.filtered('active').partner_id or self.env.ref('base.user_admin').partner_id
+        self.env['mail.thread'].sudo().message_notify(
+            partner_ids=partners.ids,
+            subject=_("XPago: a deposit account was removed"),
+            body=Markup('<p>%s</p><p>%s</p>') % (
+                provider.xpago_deposit_warning, _("Choose another account in the XPago payment rules.")),
+        )
+        provider.xpago_deposit_warning_sent = True
+
+    def _xpago_make_request(self, method, endpoint, json=None, **kwargs):
+        """A charge whose deposit account XPago refuses (removed, or being verified again) is taken in the XPago
+        default account rather than leaving the customer unable to pay."""
+        try:
+            return self._xpago_make_request_once(method, endpoint, json=json, **kwargs)
+        except ValidationError as error:
+            from odoo.addons.xpago.models.payment_transaction import _xpago_error_body
+            if not (method == 'POST' and isinstance(json, dict)
+                    and json.get('deposit_account_id') and ROUTABLE.match(endpoint)
+                    and _xpago_error_body(error).get('code') == 'deposit_account_unavailable'):
+                raise
+            _logger.warning("XPago: account %s refused for %s; charging in the default account",
+                            json['deposit_account_id'], endpoint)
+            json = {key: value for key, value in json.items() if key != 'deposit_account_id'}
+            if kwargs.get('idempotency_key'):
+                kwargs = {**kwargs, 'idempotency_key': kwargs['idempotency_key'] + '-default-account'}
+            return self._xpago_make_request_once(method, endpoint, json=json, **kwargs)
+
     def _xpago_request_headers(self, idempotency_key=None):
         self.ensure_one()
         headers = {
@@ -309,7 +517,7 @@ class PaymentProvider(models.Model):
             headers['Idempotency-Key'] = idempotency_key
         return headers
 
-    def _xpago_make_request(self, method, endpoint, json=None, params=None, idempotency_key=None):
+    def _xpago_make_request_once(self, method, endpoint, json=None, params=None, idempotency_key=None):
         """Call the XPago API and return the JSON answer.
 
         :raise ValidationError: When XPago cannot be reached or refuses the request."""
@@ -367,8 +575,8 @@ class PaymentProvider(models.Model):
         return error.get('code') if isinstance(error, dict) else None
 
     def _xpago_known_refusal(self, response):
-        """The words for a refusal the cashier can act on, or None. Refunds: Compago keeps its fee and takes it from
-        what the business has pending to settle; the terminal follows the same rule."""
+        """The words for a refusal the cashier can act on, or None. Refunds: the processor keeps its fee and takes it
+        from what the business has pending to settle; its terminal follows the same rule."""
         try:
             error = (response.json() or {}).get('error') or {}
         except (ValueError, AttributeError):
@@ -394,6 +602,11 @@ class PaymentProvider(models.Model):
                      "10:30 PM (10:00 PM with American Express).")
         if code == 'already_refunded':
             return _("This charge was already refunded.")
+        if code == 'tips_disabled':
+            return _("The terminal cannot ask for a tip: the processor has not turned tips on for this business. Ask "
+                     "XPago to turn them on, or set this point of sale's tip to «The cashier enters it».")
+        if code == 'tip_too_high':
+            return _("The tip is too high: it can be at most 30% of the sale.")
         if code == 'refund_declined':
             return _("The customer's bank did not accept the refund. Nothing was charged back.")
         return None
@@ -432,3 +645,7 @@ class PaymentProvider(models.Model):
         except Exception:
             _logger.exception("XPago: could not notify the payment %s", title)
 
+    def _xpago_business_name(self):
+        """The name customers see for this business: never the owner's legal name unless nothing else exists."""
+        self.ensure_one()
+        return (self.xpago_business_name or '').strip() or self.sudo().xpago_account_name or self.company_id.name

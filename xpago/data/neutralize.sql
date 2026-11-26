@@ -2,7 +2,8 @@
 -- back or finish anything that was waiting on it: no key, provider off, the copy says so on the provider, and what
 -- was waiting is cancelled here, locally, without calling XPago.
 UPDATE payment_provider
-   SET xpago_api_key = NULL, state = 'disabled', xpago_neutralized = TRUE
+   SET xpago_api_key = NULL, state = 'disabled', xpago_neutralized = TRUE,
+       xpago_notify_url = NULL, xpago_notify_secret = NULL
  WHERE code = 'xpago';
 UPDATE payment_transaction
    SET state = 'cancel', state_message = 'Copia neutralizada: cancelada sin llamar a XPago.'

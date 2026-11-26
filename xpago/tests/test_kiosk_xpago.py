@@ -75,8 +75,8 @@ class TestKioskXpago(TestPoSCommon):
         self.assertEqual(notify.call_args.args[1]['payment_result'], 'fail')
 
     def test_kiosk_loads_the_xpago_terminal(self):
-        data = {'pos.config': {'data': [{'id': self.config.id, 'self_ordering_mode': 'kiosk',
-                                         'payment_method_ids': self.config.payment_method_ids.ids}]}}
+        data = {'pos.config': [{'id': self.config.id, 'self_ordering_mode': 'kiosk',
+                                         'payment_method_ids': self.config.payment_method_ids.ids}]}
         domain = self.env['pos.payment.method']._load_pos_self_data_domain(data)
         self.assertIn(self.method, self.env['pos.payment.method'].search(domain))
 

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+
+    <t t-name="xpago.TransferDialog">
+        <Dialog title.translate="Payment by transfer (SPEI)" size="'md'">
+            <div class="xpago-transfer text-center">
+                <t t-if="view.state === 'expired'">
+                    <div class="alert alert-warning">
+                        <div class="fw-bold">The CLABE expired before the money arrived.</div>
+                        <div t-if="view.amount_received">
+                            Anything that arrived goes back to who sent it. Make a new CLABE for the same sale.
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-lg xpago-transfer-renew" t-on-click="props.renew">Make a new CLABE</button>
+                </t>
+                <t t-else="">
+                    <div class="text-muted">Transfer exactly</div>
+                    <div class="display-6 fw-bold mb-2" t-out="money(partly ? view.amount_due : view.amount)"/>
+                    <div t-if="partly" class="alert alert-info py-2">
+                        <t t-out="money(view.amount_received)"/> arrived, <t t-out="money(view.amount_due)"/> missing:
+                        the customer can send the rest to the same CLABE.
+                    </div>
+                    <div class="text-muted">to the CLABE</div>
+                    <div class="xpago-clabe font-monospace fw-bolder my-1 text-nowrap" style="font-size: min(2.1rem, 6vw); letter-spacing: .04em;"
+                         t-out="clabeText"/>
+                    <button class="btn btn-link xpago-transfer-copy" t-on-click="copy">Copy the CLABE</button>
+                    <table class="table table-sm text-start mt-2 mb-2">
+                        <tbody>
+                            <tr><td class="text-muted">Bank</td><td class="fw-bold" t-out="view.bank"/></tr>
+                            <tr><td class="text-muted">Beneficiary</td>
+                                <td><span class="fw-bold" t-out="view.beneficiary"/> <span class="text-muted">· for</span> <t t-out="view.business"/></td></tr>
+                            <tr t-if="view.concept"><td class="text-muted">Concept (optional)</td><td t-out="view.concept"/></tr>
+                            <tr t-if="minutes !== null"><td class="text-muted">Valid for</td>
+                                <td><t t-out="minutes"/> min</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="small text-muted mb-2">
+                        The customer's bank shows the beneficiary when it checks the CLABE: it is XPago's bank, on behalf of
+                        this business. The sale is paid by itself as soon as the money arrives.
+                    </div>
+                    <div t-if="qrUrl" class="d-flex flex-column align-items-center">
+                        <img t-att-src="qrUrl" alt="QR" width="160" height="160"/>
+                        <div class="small text-muted">To see these details on the phone</div>
+                    </div>
+                    <div class="mt-2 text-primary"><i class="fa fa-circle-o-notch fa-spin me-1"/>Waiting for the transfer…</div>
+                </t>
+            </div>
+            <t t-set-slot="footer">
+                <!-- One row of equal buttons, icon over a short word, so they fit even on a small terminal. -->
+                <div class="d-flex flex-nowrap gap-2 w-100 xpago-transfer-actions">
+                    <button style="flex: 1 1 0;" class="btn btn-secondary px-1 py-2 lh-sm xpago-transfer-print" t-if="view.state !== 'expired'" t-on-click="props.print">
+                        <i class="fa fa-print fa-lg d-block mb-1"/>Print
+                    </button>
+                    <button style="flex: 1 1 0;" class="btn btn-success px-1 py-2 lh-sm xpago-transfer-whatsapp" t-if="view.whatsapp and view.state !== 'expired'" t-on-click="whatsapp">
+                        <i class="fa fa-whatsapp fa-lg d-block mb-1"/>WhatsApp
+                    </button>
+                    <button style="flex: 1 1 0;" class="btn btn-secondary px-1 py-2 lh-sm xpago-transfer-hide" t-on-click="props.hide"
+                            title="Keep waiting and close">
+                        <i class="fa fa-eye-slash fa-lg d-block mb-1"/>Close
+                    </button>
+                    <button style="flex: 1 1 0;" class="btn btn-danger px-1 py-2 lh-sm xpago-transfer-cancel" t-on-click="props.cancel"
+                            title="Cancel the transfer">
+                        <i class="fa fa-times fa-lg d-block mb-1"/>Cancel
+                    </button>
+                </div>
+            </t>
+        </Dialog>
+    </t>
+
+    <t t-name="xpago.ClabeReceipt">
+        <div class="pos-receipt">
+            <div class="pos-receipt-center-align fw-bolder" style="font-size: 120%;" t-esc="props.view.business"/>
+            <div class="pos-receipt-center-align fw-bolder mt-2">PAYMENT BY TRANSFER (SPEI)</div>
+            <div class="mt-2">Transfer exactly <span class="pos-receipt-right-align fw-bolder" t-esc="props.amountText"/></div>
+            <div class="mt-2">CLABE</div>
+            <div class="pos-receipt-center-align fw-bolder" style="font-size: 130%;" t-esc="props.clabeText"/>
+            <div>Bank: <t t-esc="props.view.bank"/></div>
+            <div>Beneficiary: <t t-esc="props.view.beneficiary"/></div>
+            <div>For: <t t-esc="props.view.business"/></div>
+            <div t-if="props.view.concept">Concept: <t t-esc="props.view.concept"/></div>
+            <div t-if="props.expiresText">Valid until: <t t-esc="props.expiresText"/></div>
+            <div class="mt-2" style="font-size: 85%;">
+                This CLABE is for this purchase only. Once the CLABE expires it no longer takes money.
+            </div>
+        </div>
+    </t>
+</templates>

@@ -68,14 +68,26 @@ class PaymentTransaction(models.Model):
         elif 'invoice_ids' in tx and tx.invoice_ids:
             records = tx.invoice_ids.invoice_line_ids
         lines = Rule._xpago_lines_from_records(records) if records else []
-        return Rule._xpago_plan(tx.company_id, 'online', lines, tx.amount)[0]
+        return Rule._xpago_plan(tx.company_id, 'online', lines, tx.amount, invoiced=tx._xpago_wants_invoice())[0]
+
+    def _xpago_wants_invoice(self):
+        """Whether this sale carries a stamped invoice for the customer: an invoice already stamped (in Mexico, its
+        CFDI sent; elsewhere, posted) is being paid, or the customer asked for an invoice in the order (Mexico: not to
+        the general public). For the payment rules that look at the invoice."""
+        tx = self.sudo()
+        invoices = tx.invoice_ids.filtered(lambda move: move.move_type == 'out_invoice') if 'invoice_ids' in tx else []
+        if invoices:
+            if 'l10n_mx_edi_cfdi_state' in invoices._fields:
+                return any(invoice.l10n_mx_edi_cfdi_state == 'sent' for invoice in invoices)
+            return any(invoice.state == 'posted' for invoice in invoices)
+        orders = tx.sale_order_ids if 'sale_order_ids' in tx else []
+        if orders and 'l10n_mx_edi_cfdi_to_public' in orders._fields:
+            return any(not order.l10n_mx_edi_cfdi_to_public for order in orders)
+        return False
 
     def _xpago_deposit_account(self):
-        """Invoice payments go to the invoice account, the rest to the other account."""
-        provider = self.provider_id
-        has_invoice = 'invoice_ids' in self and bool(self.invoice_ids)
-        account = provider.xpago_invoice_bank_account_id if has_invoice else provider.xpago_other_bank_account_id
-        return provider._xpago_bank_account_id(account)
+        """The account the XPago payment rules give this payment; empty: the XPago default account."""
+        return self.provider_id._xpago_bank_account_id(self._xpago_rule_plan()['account'])
 
     def _xpago_uses_card_checkout(self):
         """Saving the card, holding the amount or validating a card go through the card-saving checkout; a plain
@@ -107,6 +119,16 @@ class PaymentTransaction(models.Model):
         url = created['checkout_url']
         return {'api_url': url, 'url_params': dict(parse_qsl(urlparse(url).query))}
 
+    def _xpago_seller(self):
+        """The business the customer pays: the company of the order or invoice (a branch, e.g. Anello), not the
+        main company that owns the XPago connection."""
+        tx = self.sudo()
+        if 'sale_order_ids' in tx and tx.sale_order_ids:
+            return tx.sale_order_ids[:1].company_id
+        if 'invoice_ids' in tx and tx.invoice_ids:
+            return tx.invoice_ids[:1].company_id
+        return tx.company_id
+
     def _xpago_customer(self):
         first, _space, last = (self.partner_name or '').strip().partition(' ')
         phone = ''.join(char for char in self.partner_phone or '' if char.isdigit())
@@ -125,7 +147,7 @@ class PaymentTransaction(models.Model):
             'amount': self.currency_id.round(self.amount),
             'currency': self.currency_id.name,
             'reference': self.reference,
-            'description': f'{self.company_id.name} – {self.reference}'[:255],
+            'description': f'{self._xpago_seller().name} – {self.reference}'[:255],
             'home_url': base_url,
             'return_url': base_url + const.PAYMENT_RETURN_ROUTE,
         }
@@ -133,10 +155,10 @@ class PaymentTransaction(models.Model):
         # XPago takes the customer whole or not at all; a partial one is filled in at checkout.
         if all(customer.values()):
             payload['customer'] = customer
-        # The payment rules of the products choose the account before the invoice / other payments accounts, and
-        # narrow the months the amount allows.
+        # The payment rules choose the account (by product, amount and invoice) and narrow the months the amount
+        # allows.
         plan = self._xpago_rule_plan()
-        account = self.provider_id._xpago_bank_account_id(plan['account']) or self._xpago_deposit_account()
+        account = self.provider_id._xpago_bank_account_id(plan['account'])
         if account:
             payload['deposit_account_id'] = account
         terms = self.provider_id._xpago_allowed_terms(self.amount)
@@ -144,6 +166,11 @@ class PaymentTransaction(models.Model):
             terms = plan['terms'] if terms is None else [t for t in terms if t in plan['terms']] or [1]
         if terms:
             payload['installments'] = terms
+        if self.provider_id.xpago_offer_bank_transfer:
+            # The CLABE is made when the customer picks transfer on the page, so a link sent ahead does not hold one
+            # that expires before it is opened.
+            payload['methods'] = ['card', 'bank_transfer']
+            payload['default_method'] = 'card'
         return payload
 
     # === READING BACK === #
@@ -258,7 +285,14 @@ class PaymentTransaction(models.Model):
         elif status in const.STATUS_MAPPING['canceled']:
             self._set_canceled()
         elif status in const.STATUS_MAPPING['pending']:
-            self._set_pending()
+            clabe = notification_data.get('bank_transfer') or {}
+            if clabe.get('status') == 'awaiting':
+                # The customer chose to pay by transfer: the order waits for the money, which confirms it by itself.
+                self._set_pending(state_message=_(
+                    "We are waiting for your transfer to the CLABE ending in %s. Your order is confirmed by itself "
+                    "as soon as the money arrives.", clabe.get('clabe_last4') or '····'))
+            else:
+                self._set_pending()
         else:
             _logger.warning("XPago: unknown status %s for %s", status, self.reference)
             self._set_error(_("XPago answered an unknown status: %s", status))
@@ -329,6 +363,10 @@ class PaymentTransaction(models.Model):
             'reference': self.reference,
             'hold': bool(self.provider_id.capture_manually),
         }
+        if self.provider_id.sudo().xpago_saved_card_deposit_account:
+            account = self._xpago_deposit_account()
+            if account:
+                body['deposit_account_id'] = account
         self.xpago_card_id = card_id
         try:
             payment = self.provider_id._xpago_make_request('POST', f'/v1/saved-cards/{card_id}/payments', json=body,
@@ -338,9 +376,20 @@ class PaymentTransaction(models.Model):
             return
         self._handle_notification_data('xpago', {'reference': self.reference, 'xpago_payment': payment})
 
+    def _xpago_card_transaction(self):
+        """The transaction holding the saved card of this payment: itself, or the hold it was captured from (Odoo
+        makes a child transaction for a partial capture, without the card)."""
+        tx = self
+        while tx and not tx.xpago_card_id and tx.source_transaction_id and tx.operation != 'refund':
+            tx = tx.source_transaction_id
+        return tx
+
     def _xpago_held_payment_path(self):
         """The XPago path of the payment made on a saved card that this transaction (or its source) holds."""
         source = self.source_transaction_id or self
+        card = source._xpago_card_transaction()
+        if card.xpago_card_id and source.provider_reference:
+            return f'/v1/saved-cards/{card.xpago_card_id}/payments/{source.provider_reference}'
         if not source.xpago_card_id or not source.provider_reference:
             raise ValidationError(_("This payment was not made on a saved card."))
         return f'/v1/saved-cards/{source.xpago_card_id}/payments/{source.provider_reference}'
@@ -358,6 +407,8 @@ class PaymentTransaction(models.Model):
         )
         if partial:
             capture_child_tx.provider_reference = payment.get('id') or self.provider_reference
+            # The captured payment is refunded through the saved card of the hold.
+            capture_child_tx.xpago_card_id = self.xpago_card_id
             capture_child_tx._set_done()
             remainder = self._create_child_transaction(self.amount - capture_child_tx.amount)
             remainder._set_canceled(state_message=_("XPago captures a hold once; the bank frees the rest on its own."))
@@ -388,7 +439,7 @@ class PaymentTransaction(models.Model):
             return super()._send_refund_request(amount_to_refund=amount_to_refund)
         source = self
         refund_tx = super()._send_refund_request(amount_to_refund=amount_to_refund)
-        if not source.xpago_card_id and source.provider_reference:
+        if not source._xpago_card_transaction().xpago_card_id and source.provider_reference:
             # A checkout (online store, link, invoice) is refunded in full, the same day.
             refunded = self.provider_id._xpago_make_request(
                 'POST', f'/v1/checkouts/{source.provider_reference}/refund', idempotency_key=f'refund-{refund_tx.reference}')
@@ -396,7 +447,7 @@ class PaymentTransaction(models.Model):
             refund_tx._set_done()
             return refund_tx
         refunded = self.provider_id._xpago_make_request(
-            'POST', self._xpago_held_payment_path() + '/refund', json={'reason': refund_tx.reference},
+            'POST', refund_tx._xpago_held_payment_path() + '/refund', json={'reason': refund_tx.reference},
             idempotency_key=f'refund-{refund_tx.reference}')
         refund_tx.provider_reference = refunded.get('id') or self.provider_reference
         refund_tx._set_done()

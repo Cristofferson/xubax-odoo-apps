@@ -12,6 +12,9 @@ _logger = logging.getLogger(__name__)
 FINAL_STATES = ('confirmed', 'cancelled', 'expired', 'refunded')
 # A paid charge gets its sale a moment later, when the cashier validates the order.
 ORPHAN_GRACE = timedelta(minutes=10)
+# A card payment the processor did not tie to its charge belongs to the charge sent last to that terminal before it,
+# when that charge is this recent.
+LOOSE_WINDOW = timedelta(minutes=30)
 
 
 class PosXpagoCharge(models.Model):
@@ -55,6 +58,8 @@ class PosXpagoCharge(models.Model):
     charged_amount = fields.Monetary(readonly=True, help="What the card was charged in total, the sale plus any tip.")
     tip_amount = fields.Monetary(string="Tip", readonly=True)
     terms = fields.Integer(string="Months without interest", readonly=True)
+    timed_out = fields.Boolean(string="Cancelled for lack of a card", readonly=True,
+                               help="Nobody presented the card in the time the payment method allows.")
     notified = fields.Boolean(readonly=True, copy=False)
     pos_payment_id = fields.Many2one('pos.payment', string="Point of sale payment", compute='_compute_pos_payment')
     sale_order_id = fields.Many2one('pos.order', string="Sale", compute='_compute_pos_payment')
@@ -97,7 +102,10 @@ class PosXpagoCharge(models.Model):
     # === CREATE AND READ BACK === #
 
     @api.model
-    def _xpago_create(self, method, provider, amount, session, order_uuid, order=None, account=None):
+    def _xpago_create(self, method, provider, amount, session, order_uuid, order=None, account=None, tip_amount=0.0,
+                      terms=None, collect_tip=False):
+        """amount is the sale; tip_amount a tip the till already took (charged on top, no tip screen); collect_tip
+        has the terminal ask the customer instead. terms: the months the terminal may offer (1 = single payment)."""
         if amount <= 0:
             raise UserError(_("XPago terminals only charge positive amounts."))
         config = session.config_id
@@ -125,6 +133,17 @@ class PosXpagoCharge(models.Model):
         }
         if account:
             body['deposit_account_id'] = account.xpago_id
+        if config.xpago_print_on_terminal:
+            body['print_voucher'] = False
+        if tip_amount and tip_amount > 0:
+            body['tip_amount'] = currency.round(tip_amount)
+        elif collect_tip:
+            body['collect_tip'] = True
+        # The months the provider allows for this amount («Months without interest by amount») bound every terminal
+        # charge, as they bound the online checkout.
+        terms = provider._xpago_terms_within(amount, terms or None)
+        if terms:
+            body['installments'] = terms
         try:
             remote = provider._xpago_make_request('POST', '/v1/terminal-charges', json=body, idempotency_key=external_id)
         except ValidationError as error:
@@ -158,6 +177,85 @@ class PosXpagoCharge(models.Model):
             return
         if self._xpago_apply(remote):
             self._xpago_on_state_changed()
+
+    def _xpago_late(self, now=None):
+        """Still waiting for the card past the time its payment method allows."""
+        self.ensure_one()
+        timeout = self.payment_method_id.xpago_card_timeout
+        now = now or fields.Datetime.now()
+        return self.state == 'pending' and timeout > 0 and (now - self.create_date).total_seconds() >= timeout
+
+    def _xpago_cancel_if_late(self, force=False):
+        """Cancel the charges nobody paid in time. XPago is asked first: a card presented right at the end is paid,
+        not cancelled. ``force``: the point of sale counted the time itself (its clock may run a little ahead)."""
+        for charge in self.filtered(lambda c: c.state == 'pending'):
+            charge._xpago_refresh()
+            if charge.state != 'pending' or not (force or charge._xpago_late()):
+                continue
+            charge._xpago_find_loose_payment()
+            if charge.state != 'pending':
+                continue
+            charge._xpago_cancel()
+            if charge.state == 'cancelled':
+                charge.timed_out = True
+                _logger.info("XPago: charge %s cancelled, no card in %s s", charge.external_id,
+                             charge.payment_method_id.xpago_card_timeout)
+
+    def _xpago_find_loose_payment(self):
+        """Look among the card payments made since this charge for one the processor did not tie to any charge, taken
+        by this charge's terminal (a foreign card goes through another acquirer and loses its charge: LAMUR 20-nov,
+        $990). Never raises: without an answer the charge stays as it is."""
+        self.ensure_one()
+        if not self.terminal_serial or not self.create_date:
+            return
+        since = (self.create_date - timedelta(minutes=1)).strftime('%Y-%m-%dT%H:%M:%S.000Z')
+        try:
+            answer = self.provider_id._xpago_make_request(
+                'GET', '/v1/payments', params={'created_from': since, 'status': ['paid'], 'limit': 100})
+        except ValidationError as error:
+            _logger.warning("XPago: could not list the payments for the charge %s: %s", self.external_id, error)
+            return
+        for payment in (answer or {}).get('data') or []:
+            if self._xpago_take_loose_payment(self.provider_id, payment) == self:
+                return
+
+    @api.model
+    def _xpago_take_loose_payment(self, provider, payment):
+        """A card payment the processor did not tie to any charge, but that says which terminal took it: it pays the
+        charge sent last to that terminal before it, when that charge is recent, has no payment yet and is of the
+        same amount. Returns that charge, or nothing."""
+        none = self.browse()
+        if not isinstance(payment, dict) or not payment.get('id') or payment.get('status') != 'paid' \
+                or not payment.get('card_present') or not payment.get('terminal_serial'):
+            return none
+        if any(payment.get(field) for field in ('terminal_charge_id', 'checkout_id', 'saved_card_id', 'payment_link_id',
+                                                'subscription_id')):
+            return none
+        paid_at = _parse_datetime(payment.get('created_at'))
+        if not paid_at or self.search_count([('provider_id', '=', provider.id), ('payment_id', '=', payment['id'])]):
+            return none
+        charge = self.search([
+            ('provider_id', '=', provider.id),
+            ('terminal_serial', '=', payment['terminal_serial']),
+            ('create_date', '<=', paid_at),
+            ('create_date', '>=', paid_at - LOOSE_WINDOW),
+        ], order='create_date desc, id desc', limit=1)
+        if not charge or charge.payment_id or charge.state not in ('pending', 'cancelled', 'expired'):
+            return none
+        currency = charge.currency_id
+        amount, charged = payment.get('amount'), payment.get('charged_amount')
+        if not ((isinstance(amount, (int, float)) and not currency.compare_amounts(amount, charge.amount))
+                or (isinstance(charged, (int, float))
+                    and not currency.compare_amounts(charged, charge.amount + (charge.tip_amount or 0.0)))):
+            return none
+        charge._xpago_apply({'status': 'paid', 'payment': {
+            field: payment.get(field) for field in
+            ('id', 'operation_code', 'authorization_code', 'card', 'charged_amount', 'tip_amount', 'installments')}})
+        charge.timed_out = False
+        _logger.info("XPago: payment %s, not tied to a charge by the processor, pays the charge %s of terminal %s",
+                     payment['id'], charge.external_id, charge.terminal_serial)
+        charge._xpago_on_state_changed()
+        return charge
 
     def _xpago_apply(self, remote):
         """Map XPago's answer onto the charge; True when its state changed."""
@@ -271,6 +369,7 @@ class PosXpagoCharge(models.Model):
             'card_no': self.card_no or '',
             'payment_method_issuer_bank': self.issuer_bank or '',
             'payment_method_payment_mode': self.entry_mode or '',
+            'xpago_terms': self.terms if self.terms > 1 else 0,
         }
 
     def _xpago_public_view(self):
@@ -283,6 +382,9 @@ class PosXpagoCharge(models.Model):
             'terminal_app_url': self.terminal_app_url or False,
             'expires_at': fields.Datetime.to_string(self.expires_at) if self.expires_at else False,
             'payment': self._xpago_payment_values() if self.state == 'confirmed' else {},
+            'tip_amount': self.tip_amount or 0.0,
+            'charged_amount': self.charged_amount or 0.0,
+            'timed_out': self.timed_out,
         }
 
     @api.model
@@ -290,7 +392,9 @@ class PosXpagoCharge(models.Model):
         """Read back the charges left open (a closed browser, a lost connection), and expire the old ones."""
         open_charges = self.search([('state', '=', 'pending'), ('create_date', '>', fields.Datetime.now() - timedelta(days=2))])
         open_charges._xpago_refresh()
-        # The paid ones of the last day too: a refund made on the terminal shows up here.
+        # A self-order kiosk's charge (it has its order) keeps the kiosk's own time limit.
+        open_charges.filtered(lambda c: not c.pos_order_id and c._xpago_late())._xpago_cancel_if_late()
+        # The paid ones of the last day too: a refund made on the terminal app shows up here.
         for charge in self.sudo().search([('state', '=', 'confirmed'), ('create_date', '>', fields.Datetime.now() - timedelta(days=1))]):
             charge._xpago_read_refunded()
         self.search([('state', '=', 'pending'), ('create_date', '<=', fields.Datetime.now() - timedelta(days=2))]).write(

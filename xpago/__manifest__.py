@@ -1,17 +1,17 @@
 {
-    'name': 'XPago: Card Payments and Terminals',
-    'version': '2.1.0',
+    'name': 'XPago: terminal de pago, pasarela y meses sin intereses para Odoo México',
+    'version': '3.3.1',
     'category': 'Accounting/Payment Providers',
     'sequence': 350,
-    'summary': 'Accept Visa, Mastercard and American Express in Mexico: online store, invoices, payment links and '
-               'subscriptions, and card terminals in the Point of Sale and the kiosk, with months without interest and '
-               'deposit accounts by product.',
+    'summary': 'Cobra con tarjeta (Visa, Mastercard y American Express) y transferencia SPEI en Odoo: terminal en el '
+               'punto de venta, kiosco de autoservicio, pasarela para la tienda en línea, links de pago, facturas con QR, '
+               'meses sin intereses y cobro domiciliado. Card payments for Odoo in Mexico.',
     'description': ' ',
     'author': 'XUBAX',
     'website': 'https://xpago.mx',
     'support': 'hola@xubax.com',
     'license': 'OPL-1',
-    'depends': ['payment', 'product', 'point_of_sale', 'pos_self_order'],
+    'depends': ['payment', 'account_payment', 'product', 'point_of_sale', 'pos_self_order'],
     'data': [
         'security/ir.model.access.csv',
         'views/payment_xpago_templates.xml',
@@ -21,22 +21,38 @@
         'data/ir_cron.xml',
         'views/pos_payment_method_views.xml',
         'views/pos_xpago_charge_views.xml',
+        'views/pos_xpago_transfer_views.xml',
         'wizard/pos_xpago_reconcile_views.xml',
         'wizard/pos_xpago_terminal_setup_views.xml',
         'views/pos_payment_xpago_rule_views.xml',
         'views/res_config_settings_views.xml',
+        'views/report_invoice.xml',
         'data/pos_ir_cron.xml',
         'views/self_order_res_config_settings_views.xml',
+        'data/domiciliation_ir_cron.xml',
+        'data/domiciliation_mail_template.xml',
+        'views/payment_xpago_domiciliation_views.xml',
+        'views/res_partner_views.xml',
+        'views/xpago_calculator_views.xml',
     ],
     'assets': {
         'point_of_sale._assets_pos': [
             'xpago/static/src/pos/**/*',
         ],
+        'web.assets_backend': [
+            'xpago/static/src/backend/**/*',
+        ],
         'pos_self_order.assets': [
             'xpago/static/src/pos/app/charge_wait.js',
+            'xpago/static/src/pos/app/transfer/transfer_utils.js',
             'xpago/static/src/self_order/**/*',
             'xpago/static/src/pos/app/order_receipt_voucher.js',
             'xpago/static/src/pos/app/order_receipt_voucher.xml',
+            'xpago/static/src/kiosk/**/*',
+        ],
+        'hr_attendance.assets_public_attendance': [
+            'xpago/static/src/kiosk/**/*',
+            'xpago/static/src/kiosk_attendance/**/*',
         ],
     },
     'pre_init_hook': 'pre_init_hook',

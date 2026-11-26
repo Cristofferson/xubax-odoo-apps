@@ -6,6 +6,15 @@ import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
 import { SelectionPopup } from "@point_of_sale/app/components/popups/selection_popup/selection_popup";
 import { waitForCharge } from "@xpago/pos/app/charge_wait";
 
+/** The card or transfer payments the other lines of this sale already hold. The sale is not saved until it is
+ *  validated, so Odoo cannot see them: without them, a second card of the same amount would get the first card's
+ *  approved charge back instead of a charge of its own (one voucher printed twice, the second card never charged). */
+export function takenPaymentIds(order, line) {
+    return (order?.payment_ids || [])
+        .filter((p) => p !== line && p.uuid !== line?.uuid && p.transaction_id)
+        .map((p) => p.transaction_id);
+}
+
 export class PaymentXpago extends PaymentInterface {
     setup() {
         super.setup(...arguments);
@@ -21,8 +30,11 @@ export class PaymentXpago extends PaymentInterface {
 
     async sendPaymentRequest(uuid) {
         await super.sendPaymentRequest(...arguments);
-        const order = this.pos.getOrder();
-        const line = order.getPaymentlineByUuid(uuid);
+        // The payment screen may show another sale than the current one (a register reloaded or switched sales):
+        // the payment line knows its own sale.
+        const line =
+            this.pos.models["pos.payment"].find((p) => p.uuid === uuid) || this.pos.getOrder().getPaymentlineByUuid(uuid);
+        const order = line.pos_order_id || this.pos.getOrder();
         if (line.amount < 0) {
             return this._refund(order, line);
         }
@@ -30,8 +42,7 @@ export class PaymentXpago extends PaymentInterface {
             this._showError(_t("XPago terminals only charge positive amounts."));
             return false;
         }
-        // The XPago payment rules decide the account (and the months, only shown here: the terminal does not take
-        // them) of this charge, or split it in parts.
+        // The XPago payment rules decide the account and the months of this charge, or split it in parts.
         if (!line.xpagoPart) {
             const parts = await this._plan(order, line);
             if (!parts) {
@@ -43,22 +54,33 @@ export class PaymentXpago extends PaymentInterface {
         if (accountId === false) {
             return false;
         }
+        const terms = await this._chooseTerms(part, line);
+        if (terms === null) {
+            return false;
+        }
         if (!accountId && this.pos.config.xpago_show_account && part.account_name) {
             this.env.services.notification.add(
-                [_t("Deposit: %s", part.account_name), this._termsText(part.terms)].filter(Boolean).join(" · "),
+                [_t("Deposit: %s", part.account_name), this._termsText(terms)].filter(Boolean).join(" · "),
                 { type: "info" }
             );
         }
+        // A tip the cashier already added goes as a tip (the terminal shows it apart and does not ask), when this card
+        // pays the whole order; otherwise the tip mode of the point of sale decides whether the terminal asks.
+        const tillTip = this._tillTip(order, line);
         line.setPaymentStatus("waitingCapture");
         let charge;
         try {
             charge = await this._call("xpago_create_charge", [
                 {
-                    amount: line.amount,
+                    amount: line.amount - tillTip,
+                    tip_amount: tillTip,
+                    ask_tip: !line.xpagoNoTipScreen,
+                    terms: terms || false,
                     session_id: this.pos.config.current_session_id?.id,
                     order_uuid: order.uuid,
                     bank_account_id: accountId,
                     rule_account_id: part.account_id || false,
+                    taken_payment_ids: takenPaymentIds(order, line),
                 },
             ]);
         } catch (error) {
@@ -74,6 +96,13 @@ export class PaymentXpago extends PaymentInterface {
         delete this.charges[uuid];
         if (result.state === "confirmed") {
             Object.assign(line, result.payment);
+            // The customer chose a tip on the terminal: it becomes the order's tip line, and this payment the amount
+            // the card was really charged, so the closing matches the terminal.
+            const tip = result.tip_amount || 0;
+            if (!tillTip && tip > 0 && this.pos.config.tip_product_id) {
+                await this.pos.setTip(tip);
+                line.setAmount(result.charged_amount || line.amount + tip);
+            }
             // Next part of a split sale: selected, so the cashier only presses Send.
             const next = order.payment_ids.find(
                 (p) => p.xpagoPart && p !== line && p.getPaymentStatus() === "pending"
@@ -83,10 +112,26 @@ export class PaymentXpago extends PaymentInterface {
             }
             return true;
         }
-        if (result.state === "expired") {
+        if (result.timed_out) {
+            this._showError(
+                _t(
+                    "The card was not presented in %s seconds, so the charge was cancelled on the terminal. When the customer is ready, press Send again.",
+                    this.payment_method_id.xpago_card_timeout
+                )
+            );
+        } else if (result.state === "expired") {
             this._showError(_t("The charge expired on the terminal before it was paid."));
         }
         return false;
+    }
+
+    /** The tip line of the order, when this payment line pays the whole order (no other payment, no split). */
+    _tillTip(order, line) {
+        const tip = order.getTip?.() || 0;
+        if (tip <= 0 || order.payment_ids.some((p) => p !== line)) {
+            return 0;
+        }
+        return line.amount > tip ? tip : 0;
     }
 
     _termsText(terms) {
@@ -107,6 +152,7 @@ export class PaymentXpago extends PaymentInterface {
                     session_id: this.pos.config.current_session_id?.id,
                     total: order.totalDue,
                     amount: line.amount,
+                    to_invoice: Boolean(order.isToInvoice?.()),
                     lines: order.lines.map((l) => ({
                         product_id: l.product_id?.id,
                         qty: l.qty,
@@ -163,19 +209,59 @@ export class PaymentXpago extends PaymentInterface {
             extra.setAmount(part.amount);
             extra.setPaymentStatus("pending");
             extra.xpagoPart = part;
+            extra.xpagoNoTipScreen = true; // the terminal asks for the tip on the first part only
         }
         return parts;
     }
 
+    /** «The cashier chooses the months»: the cashier picks single payment or one plan among those the payment rules
+     *  allow (or the months of the account, when no rule decides), and the terminal gets only that plan. Otherwise
+     *  the months of the rules go as they are and the terminal lets the customer choose among them.
+     *  Returns the months to send, false for no limit, or null when the cashier closes the list. */
+    async _chooseTerms(part = {}, line = null) {
+        if (!this.pos.config.xpago_cashier_terms) {
+            return part.terms || false;
+        }
+        let options = part.terms && part.terms.length ? part.terms : null;
+        if (!options) {
+            const offered = String(this.pos.config.xpago_terms_offered || "")
+                .split(/[,;\s]+/)
+                .map((t) => parseInt(t, 10))
+                .filter((t) => t > 1);
+            options = [1, ...offered];
+        }
+        options = [...new Set(options)].sort((a, b) => a - b);
+        if (options.length <= 1) {
+            return options.length ? options : [1];
+        }
+        const amount = this.env.utils.formatCurrency(line ? line.amount : 0);
+        const picked = await makeAwaitable(this.env.services.dialog, SelectionPopup, {
+            title: _t("How does the customer pay %s?", amount),
+            list: options.map((months) => ({
+                id: months,
+                label:
+                    months === 1
+                        ? _t("Single payment")
+                        : _t("%(months)s months without interest (%(each)s per month)", {
+                              months,
+                              each: this.env.utils.formatCurrency((line ? line.amount : 0) / months),
+                          }),
+                isSelected: months === 1,
+                item: months,
+            })),
+        });
+        return picked ? [picked] : null;
+    }
+
     async _chooseAccount(part = {}) {
         // When this terminal lets the cashier choose, ask for the deposit account before charging; the account of
-        // the payment rules, else the terminal's, comes selected.
+        // the payment rules comes selected.
         const method = this.payment_method_id;
         const accounts = this.pos.models["payment.xpago.bank.account"]?.getAll() || [];
         if (!method.xpago_choose_account || accounts.length < 2) {
             return null;
         }
-        const preset = part.account_id || method.xpago_bank_account_id?.id;
+        const preset = part.account_id;
         const picked = await makeAwaitable(this.env.services.dialog, SelectionPopup, {
             title: _t("Deposit account"),
             list: accounts.map((account) => ({
@@ -191,7 +277,20 @@ export class PaymentXpago extends PaymentInterface {
     async _waitForResult(uuid, charge, order) {
         // Stop asking once the payment line is gone (removed, or the order was left) or the point of sale closes.
         const active = () => Boolean(this.charges[uuid] && !this.charges[uuid].stopped && order.getPaymentlineByUuid(uuid));
-        return waitForCharge(charge, (current) => this._call("xpago_charge_status", [current.id]), active);
+        // «Force done» may hand over the approved charge it already read (force_done.js).
+        // Past the payment method's time without a card, Odoo cancels the charge (unless XPago says it was paid).
+        const timeout = (this.payment_method_id.xpago_card_timeout || 0) * 1000;
+        const deadline = timeout > 0 ? Date.now() + timeout : 0;
+        const refresh = (current) => {
+            if (this.charges[uuid]?.forced) {
+                return this.charges[uuid].forced;
+            }
+            if (deadline && Date.now() >= deadline) {
+                return this._call("xpago_timeout_charge", [current.id]);
+            }
+            return this._call("xpago_charge_status", [current.id]);
+        };
+        return waitForCharge(charge, refresh, active, deadline);
     }
 
     close() {
@@ -205,6 +304,16 @@ export class PaymentXpago extends PaymentInterface {
         await super.sendPaymentCancel(...arguments);
         const pending = this.charges[uuid];
         if (!pending) {
+            // The register reloaded while waiting: it no longer follows the charge, so Odoo cancels what is still
+            // waiting on the terminal for this sale. A card approved meanwhile stays paid: «Retry» takes it.
+            const line = order?.getPaymentlineByUuid?.(uuid);
+            try {
+                await this._call("xpago_cancel_order_charges", [
+                    { order_uuid: order?.uuid, amount: line?.amount || 0, taken_payment_ids: takenPaymentIds(order, line) },
+                ]);
+            } catch {
+                // nothing to cancel, or offline: «Retry» asks XPago again before charging
+            }
             return true;
         }
         if (pending.refundWait) {
@@ -244,14 +353,14 @@ export class PaymentXpago extends PaymentInterface {
     }
 
     /** The processor refused the refund for its fee: the cashier refunds on the terminal, and the register asks
-     *  until that refund shows, then completes the line. «Cancel» on the line (or leaving it) stops asking. */
+     *  until that refund shows, then completes the line. A refund line shows no Cancel while it waits, so the notice
+     *  carries the way out, and the wait has a limit. */
     async _waitForTerminalRefund(order, line, result) {
-        const uuid = line.uuid;
-        this.charges[uuid] = { id: result.charge_id, refundWait: true };
-        // A refund line shows no Cancel while it waits: the notice carries the way out, and the wait has a limit.
+        const key = line.uuid;
+        this.charges[key] = { id: result.charge_id, refundWait: true };
         const stop = () => {
-            if (this.charges[uuid]) {
-                this.charges[uuid].stopped = true;
+            if (this.charges[key]) {
+                this.charges[key].stopped = true;
             }
         };
         const closeNotice = this.env.services.notification.add(result.message, {
@@ -261,8 +370,7 @@ export class PaymentXpago extends PaymentInterface {
         });
         const deadline = Date.now() + 15 * 60 * 1000;
         const active = () =>
-            Boolean(this.charges[uuid] && !this.charges[uuid].stopped && order.getPaymentlineByUuid(uuid)) &&
-            Date.now() < deadline;
+            Boolean(this.charges[key] && !this.charges[key].stopped && order.getPaymentlineByUuid(key)) && Date.now() < deadline;
         let done = false;
         try {
             while (active()) {
@@ -287,7 +395,7 @@ export class PaymentXpago extends PaymentInterface {
                 }
             }
         } finally {
-            delete this.charges[uuid];
+            delete this.charges[key];
             closeNotice();
         }
         return done;

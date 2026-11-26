@@ -29,6 +29,19 @@ class TestPaymentXpago(XpagoCommon, PaymentHttpCommon):
         self.assertEqual(tx.provider_reference, self.checkout_id)
         self.assertEqual(values['url_params'], {'lang': 'es'})
 
+    def test_branch_sale_shows_the_branch_name(self):
+        """The connection belongs to the main company; a sale of a branch (e.g. Anello) carries the branch's name."""
+        branch = self.env['res.company'].create({'name': 'Sucursal Anello', 'parent_id': self.env.company.id})
+        tx = self._create_transaction('redirect', currency_id=self.currency.id)
+        self.assertEqual(tx._xpago_seller(), tx.company_id)
+        self.assertTrue(tx._xpago_prepare_checkout_payload()['description'].startswith(tx.company_id.name))
+        invoice = self.env['account.move'].with_company(branch).create({
+            'move_type': 'out_invoice', 'partner_id': self.partner.id, 'company_id': branch.id,
+        })
+        tx.invoice_ids = invoice
+        self.assertEqual(tx._xpago_seller(), branch)
+        self.assertEqual(tx._xpago_prepare_checkout_payload()['description'], f'Sucursal Anello – {tx.reference}')
+
     def test_refused_checkout_marks_the_transaction_in_error(self):
         tx = self._create_transaction('redirect', currency_id=self.currency.id)
         with patch(SEND, side_effect=ValidationError('nope')):
@@ -83,7 +96,7 @@ class TestPaymentXpago(XpagoCommon, PaymentHttpCommon):
         self.assertEqual(tx.state, 'done')
 
     def test_paid_payment_notifies_the_chosen_users_once(self):
-        boss = self.env['res.users'].create({'name': 'Dueña', 'login': 'duena-xp', 'groups_id': [(4, self.env.ref('base.group_user').id)]})
+        boss = self.env['res.users'].create({'name': 'Dueña', 'login': 'duena-xp', 'group_ids': [(4, self.env.ref('base.group_user').id)]})
         self.provider.xpago_notify_user_ids = boss
         tx = self._create_transaction('redirect', currency_id=self.currency.id, provider_reference=self.checkout_id)
         tx._handle_notification_data('xpago', self.payment_data())
@@ -174,13 +187,14 @@ class TestDepositAccounts(XpagoCommon):
 
     def test_payment_goes_to_its_account(self):
         accounts = self.sync()
-        self.provider.xpago_other_bank_account_id = accounts['acc-oper']
+        self.env['payment.xpago.rule'].create({'name': 'Todo', 'bank_account_id': accounts['acc-oper'].id})
         tx = self._create_transaction('redirect', currency_id=self.currency.id)
         self.assertEqual(tx._xpago_prepare_checkout_payload()['deposit_account_id'], 'acc-oper')
 
     def test_archived_account_is_not_sent(self):
         accounts = self.sync()
-        self.provider.xpago_other_bank_account_id = accounts['acc-fiscal']
+        self.env['payment.xpago.rule'].create({'name': 'Todo', 'bank_account_id': accounts['acc-fiscal'].id})
         self.sync({'data': [{'id': 'acc-oper', 'name': 'Banorte', 'is_default': True}]})
+        self.assertIn('Fiscal', self.provider.xpago_deposit_warning or '', 'the rule\'s account is gone: warned')
         tx = self._create_transaction('redirect', currency_id=self.currency.id)
         self.assertNotIn('deposit_account_id', tx._xpago_prepare_checkout_payload())

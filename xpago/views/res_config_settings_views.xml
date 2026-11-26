@@ -18,6 +18,14 @@
                          help="Which XPago terminal each point of sale charges with; warns when one terminal is on two points of sale.">
                     <button name="%(xpago.action_pos_xpago_terminal_setup)d" type="action" class="btn-link" icon="oi-arrow-right" string="Assign the terminals"/>
                 </setting>
+                <setting id="xpago_calculator_charge" string="XPago calculator"
+                         help="The Calculator app can also charge its result on an XPago terminal. Turned off, it only calculates.">
+                    <field name="xpago_calculator_charge"/>
+                </setting>
+                <setting id="xpago_invoice_pay_qr" string="Pay link and QR on invoices"
+                         help="The PDF of an invoice not yet paid carries a QR and a link to pay it online, by card or by SPEI transfer to a CLABE made for that payment. The invoice is marked paid by itself when the money arrives.">
+                    <field name="xpago_invoice_pay_qr"/>
+                </setting>
                 <setting id="xpago_payment_rules" string="XPago payment rules"
                          help="Months without interest and deposit accounts by what is sold, on the XPago terminals of this point of sale.">
                     <div>
@@ -28,13 +36,33 @@
                         <field name="pos_xpago_split" class="me-2"/>
                         <label for="pos_xpago_split" string="Split the charge when the products go to different accounts or months"/>
                     </div>
+                    <div class="mt-2">
+                        <field name="pos_xpago_cashier_terms" class="me-2"/>
+                        <label for="pos_xpago_cashier_terms" string="The cashier chooses the months on the register"/>
+                        <div class="text-muted small">The terminal gets that one plan and shows the customer no months to choose.</div>
+                    </div>
+                    <div class="content-group mt-1" invisible="not pos_xpago_cashier_terms">
+                        <div class="row">
+                            <label string="Months of your XPago account" for="pos_xpago_terms_offered" class="col-lg-5 o_light_label"/>
+                            <field name="pos_xpago_terms_offered" placeholder="3, 6, 9, 12"/>
+                        </div>
+                        <div class="text-muted small">Offered when no payment rule decides the months of the sale.</div>
+                    </div>
                     <div class="mt-1">
                         <button name="%(xpago.action_payment_xpago_rule)d" type="action" class="btn-link" icon="oi-arrow-right" string="XPago payment rules"/>
                     </div>
                 </setting>
             </xpath>
             <xpath expr="//block[@id='pos_bills_and_receipts_section']" position="inside">
-                <setting id="xpago_voucher_on_receipt" string="Card voucher in the receipt"
+                <setting id="xpago_tip_mode" string="Tip with the XPago terminal"
+                         help="Who asks for the tip. The terminal asks: the customer chooses on the terminal (the processor must turn tips on for your business). The cashier enters it: Odoo's «Tip» button on the payment screen, for card and cash. The tip goes on its own line of the order.">
+                    <field name="pos_xpago_tip_mode" widget="radio"/>
+                </setting>
+                <setting id="xpago_print_on_terminal" string="Odoo prints on the XPago terminal"
+                         help="This point of sale runs on the XPago terminal and prints on its printer: add an Epson printer with the IP 127.0.0.1:8008 and turn on «Impresora para Odoo» in the terminal's payment app. The card voucher comes out right under Odoo's receipt, on the same paper.">
+                    <field name="pos_xpago_print_on_terminal"/>
+                </setting>
+                <setting id="xpago_voucher_on_receipt" string="Card voucher in the receipt" invisible="pos_xpago_print_on_terminal"
                          help="Paid with a card on an XPago terminal: the receipt (printed, emailed or by WhatsApp) carries the card details and the voucher legend. For terminals that print with the point of sale, as the N950 or the N750P.">
                     <field name="pos_xpago_voucher_on_receipt"/>
                     <div class="content-group mt-2" invisible="not pos_xpago_voucher_on_receipt">

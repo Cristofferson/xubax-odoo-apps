@@ -18,11 +18,17 @@ class PosPaymentMethod(models.Model):
         string="Odoo runs on this terminal",
         help="Bring the charge app to the front when the point of sale runs on the terminal itself.",
     )
-
-    xpago_bank_account_id = fields.Many2one(
-        'payment.xpago.bank.account', string="Deposit account", domain="[('provider_id', '=', xpago_provider_id)]",
-        help="Where XPago deposits what this terminal charges. Empty: your XPago account decides.",
+    xpago_wake_terminal = fields.Boolean(
+        string="Open the charge app on the terminal", default=True,
+        help="When the point of sale sends an amount, the terminal opens its charge app by itself, whatever it is "
+             "showing. Needs the Odoo app on the terminal (it is on by default there).",
     )
+    xpago_card_timeout = fields.Integer(
+        string="Cancel the charge after (seconds)", default=120,
+        help="When the customer does not present the card in this time, the charge is cancelled on the terminal and "
+             "the cashier is told. 0: wait until the terminal gives up.",
+    )
+
     xpago_choose_account = fields.Boolean(
         string="The cashier chooses the account",
         help="Before sending the amount to the terminal, the cashier picks the deposit account; this terminal's account comes selected.",
@@ -34,7 +40,7 @@ class PosPaymentMethod(models.Model):
     @api.model
     def _load_pos_data_fields(self, config_id):
         return super()._load_pos_data_fields(config_id) + [
-            'xpago_open_terminal_app', 'xpago_choose_account', 'xpago_bank_account_id']
+            'xpago_open_terminal_app', 'xpago_choose_account', 'xpago_card_timeout']
 
     @api.constrains('use_payment_terminal', 'xpago_provider_id', 'xpago_terminal_serial')
     def _check_xpago_terminal(self):
@@ -54,8 +60,8 @@ class PosPaymentMethod(models.Model):
         return provider
 
     def _xpago_charge_account(self, provider, chosen_id=None, rule_account_id=None):
-        """The cashier's choice when this terminal lets her choose, then the account of the payment rules of the
-        sale, then the terminal's account."""
+        """The cashier's choice when this terminal lets her choose, else the account of the payment rules of the sale
+        (empty: the XPago default account)."""
         Account = self.env['payment.xpago.bank.account'].sudo()
         chosen = Account.browse(int(chosen_id)).exists() if chosen_id and self.xpago_choose_account else Account
         rule_account = Account.browse(int(rule_account_id)).exists() if rule_account_id else Account
@@ -63,7 +69,7 @@ class PosPaymentMethod(models.Model):
         if rule_account and not self.env['payment.xpago.rule'].sudo().search_count(
                 [('bank_account_id', '=', rule_account.id)], limit=1):
             rule_account = Account
-        for account in (chosen, rule_account, self.sudo().xpago_bank_account_id):
+        for account in (chosen, rule_account):
             if provider._xpago_bank_account_id(account):
                 return account
         return Account
@@ -79,16 +85,104 @@ class PosPaymentMethod(models.Model):
     def xpago_create_charge(self, data):
         """Send the amount to the terminal. Returns the charge as the point of sale sees it."""
         provider = self._xpago_check_access()
+        uuid = data.get('order_uuid') or ''
+        # A sale never has two charges alive on the terminal: the ones of this sale still open (the register reloaded
+        # or gave up while waiting) are asked to XPago and cancelled first. A card approved in the meantime shows up
+        # as paid here instead of being charged again.
+        self._xpago_close_open_charges(uuid)
+        paid = self._xpago_charge_paid_unused(uuid, (data.get('amount') or 0.0) + (data.get('tip_amount') or 0.0),
+                                              taken=data.get('taken_payment_ids'))
+        if paid:
+            # «Retry» after the register gave up on a card that was approved after all: that charge pays the sale,
+            # and nothing goes to the terminal again.
+            return paid._xpago_public_view()
         session = self.env['pos.session'].browse(data.get('session_id')).exists()
         account = self._xpago_charge_account(provider, data.get('bank_account_id'), data.get('rule_account_id'))
+        terms = [int(t) for t in data.get('terms') or [] if isinstance(t, (int, float)) and int(t) >= 1]
         charge = self.env['pos.xpago.charge'].sudo()._xpago_create(
-            self.sudo(), provider, data.get('amount') or 0.0, session, data.get('order_uuid') or '', account=account)
+            self.sudo(), provider, data.get('amount') or 0.0, session, data.get('order_uuid') or '', account=account,
+            tip_amount=data.get('tip_amount') or 0.0, terms=terms,
+            collect_tip=session.config_id.xpago_tip_mode == 'terminal' and data.get('ask_tip', True) is not False)
         return charge._xpago_public_view()
+
+    def _xpago_close_open_charges(self, uuid):
+        """Ask XPago for the charges of this sale still waiting for the card and cancel them. Returns them."""
+        if not uuid:
+            return self.env['pos.xpago.charge']
+        open_charges = self.env['pos.xpago.charge'].sudo().search(
+            [('payment_method_id', '=', self.id), ('order_uuid', '=', uuid), ('state', '=', 'pending')])
+        open_charges._xpago_refresh()
+        for charge in open_charges.filtered(lambda c: c.state == 'pending'):
+            charge._xpago_find_loose_payment()
+            if charge.state == 'pending':
+                charge._xpago_cancel()
+        return open_charges
+
+    def xpago_cancel_order_charges(self, data):
+        """«Cancel» on a line the register no longer follows (it reloaded while waiting): cancel the charges of this
+        sale still waiting on the terminal. Returns the approved one nobody uses yet, if the card was paid after all."""
+        self._xpago_check_access()
+        uuid = data.get('order_uuid') or ''
+        self._xpago_close_open_charges(uuid)
+        paid = self._xpago_charge_paid_unused(uuid, data.get('amount') or 0.0, taken=data.get('taken_payment_ids'))
+        return paid._xpago_public_view() if paid else {'state': 'cancelled'}
 
     def xpago_charge_status(self, charge_id):
         self._xpago_check_access()
         charge = self._xpago_charge(charge_id)
         charge._xpago_refresh()
+        return charge._xpago_public_view()
+
+    def xpago_force_check(self, data):
+        """«Force done» on an XPago line: Odoo asks XPago first. Returns the charge of this sale for this amount when
+        XPago approved it and no payment of Odoo uses it yet; else only its state (``pending``, ``cancelled``…,
+        ``unmatched`` for an approved charge of another amount or already used, ``none`` without a charge)."""
+        self._xpago_check_access()
+        uuid = data.get('order_uuid') or ''
+        if not uuid:
+            return {'state': 'none'}
+        charges = self.env['pos.xpago.charge'].sudo().search(
+            [('payment_method_id', '=', self.id), ('order_uuid', '=', uuid)], order='id desc', limit=10)
+        if not charges:
+            return {'state': 'none'}
+        charges._xpago_refresh()
+        paid = self._xpago_charge_paid_unused(uuid, data.get('amount') or 0.0, charges,
+                                              taken=data.get('taken_payment_ids'))
+        if paid:
+            return paid._xpago_public_view()
+        state = charges[0].state
+        return {'state': 'unmatched' if state == 'confirmed' else state}
+
+    def _xpago_charge_paid_unused(self, uuid, amount, charges=None, taken=None):
+        """The approved charge of this sale for this amount (with or without its tip) that no payment of Odoo uses
+        yet. ``taken``: the payment ids the other lines of the sale on the register already hold (that sale is not
+        saved yet): a second card of the same amount is a new charge, never the first card again (LAMUR 24-nov)."""
+        if charges is None:
+            charges = self.env['pos.xpago.charge'].sudo().search(
+                [('payment_method_id', '=', self.id), ('order_uuid', '=', uuid), ('state', '=', 'confirmed')],
+                order='id desc', limit=10) if uuid else self.env['pos.xpago.charge']
+        if not charges:
+            return charges
+        used = set(self.env['pos.payment'].sudo().search([
+            ('payment_method_id', '=', self.id),
+            ('transaction_id', 'in', [c.payment_id for c in charges if c.payment_id]),
+        ]).mapped('transaction_id')) | {t for t in taken or [] if isinstance(t, str) and t}
+        currency = self.company_id.currency_id or self.env.company.currency_id
+
+        def same_amount(charge):
+            return any(not currency.compare_amounts(value, amount) for value in
+                       (charge.amount, charge.amount + (charge.tip_amount or 0.0), charge.charged_amount or 0.0))
+
+        for charge in charges:
+            if charge.state == 'confirmed' and charge.payment_id not in used and same_amount(charge):
+                return charge
+        return charges.browse()
+
+    def xpago_timeout_charge(self, charge_id):
+        """The customer did not present the card in time: cancel the charge, unless XPago says it was just paid."""
+        self._xpago_check_access()
+        charge = self._xpago_charge(charge_id)
+        charge._xpago_cancel_if_late(force=True)
         return charge._xpago_public_view()
 
     def xpago_cancel_charge(self, charge_id):
@@ -157,10 +251,14 @@ class PosPaymentMethod(models.Model):
     def xpago_plan(self, data):
         """How the register charges this sale, by the XPago payment rules: one part, or one per account and months
         when the point of sale splits the charge. ``data``: ``session_id``, ``lines`` (``product_id``, ``qty``,
-        ``amount`` with taxes), ``total`` (the sale) and ``amount`` (this payment).
+        ``amount`` with taxes), ``total`` (the sale), ``amount`` (this payment) and ``to_invoice`` (the cashier
+        pressed «Invoice»).
 
-        The terminal does not take the months: at the register they are only shown to the cashier."""
-        self._xpago_check_access()
+        The months go to the terminal with the charge: it only offers those (one fixes the plan)."""
+        if self.use_payment_terminal == 'xpago_spei':
+            self._xpago_transfer_check_access()  # a transfer asks the same rules for its account
+        else:
+            self._xpago_check_access()
         session = self.env['pos.session'].browse(data.get('session_id')).exists()
         config = session.config_id
         Product = self.env['product.product'].with_context(active_test=False)
@@ -171,10 +269,14 @@ class PosPaymentMethod(models.Model):
         company = self.company_id or self.env.company
         # Splitting only makes sense when this payment is the whole sale.
         split = bool(config.xpago_split) and not company.currency_id.compare_amounts(total, amount)
-        parts = self.env['payment.xpago.rule']._xpago_plan(company, 'pos', lines, total, config=config, split=split)
+        parts = self.env['payment.xpago.rule']._xpago_plan(company, 'pos', lines, total, config=config, split=split,
+                                                           invoiced=bool(data.get('to_invoice')))
         if len(parts) == 1:
             parts[0]['amount'] = amount
         provider = self.sudo().xpago_provider_id
+        for part in parts:
+            # The months the provider allows for this amount («Months without interest by amount»), as online.
+            part['terms'] = provider._xpago_terms_within(part['amount'], part['terms'] or None) or part['terms']
         return {
             'show_account': bool(config.xpago_show_account),
             'parts': [{'amount': part['amount'],

@@ -43,6 +43,7 @@
                             <field name="charged_amount"/>
                             <field name="tip_amount"/>
                             <field name="terms"/>
+                            <field name="timed_out" invisible="not timed_out"/>
                         </group>
                         <group>
                             <field name="config_id"/>
