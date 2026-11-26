@@ -23,7 +23,7 @@
                     </select>
                 </t>
                 <div t-elif="this.state.onDevice" class="text-muted small text-center mb-2 o_xpago_calc_here">
-                    <i class="oi me-1" data-icon="smartphone"/>Charges on this terminal
+                    <i class="oi me-1" data-icon="smartphone" aria-hidden="true"/>Charges on this terminal
                 </div>
                 <select t-elif="this.state.info.terminals.length > 1" class="form-select mb-2 o_xpago_calc_terminals" t-on-change="(ev) => this.chooseTerminal(ev)">
                     <option t-foreach="this.state.info.terminals" t-as="t" t-key="t.id" t-att-value="t.id"
@@ -31,19 +31,19 @@
                 </select>
                 <button type="button" class="btn btn-success btn-lg w-100 o_xpago_calc_charge_btn"
                         t-att-disabled="!this.amount or this.state.askDevice" t-on-click="() => this.charge()">
-                    <i class="oi me-2" data-icon="credit_card"/>
+                    <i class="oi me-2" data-icon="credit_card" aria-hidden="true"/>
                     <t t-if="this.amount">Collect <t t-out="this.money(this.amount)"/></t>
                     <t t-else="">Collect</t>
                 </button>
             </div>
             <a t-if="!this.standalone" class="o_xpago_calc_install btn btn-link btn-sm mt-2 align-self-center" t-att-href="this.installUrl" target="_blank">
-                <i class="oi me-1" data-icon="download"/>Install as an app
+                <i class="oi me-1" data-icon="download" aria-hidden="true"/>Install as an app
             </a>
             <div t-if="this.state.charge" class="o_xpago_calc_overlay d-flex align-items-center justify-content-center">
                 <div class="o_xpago_calc_card text-center">
                     <div class="fs-1 fw-bold mb-2" t-out="this.money(this.state.charge.amount)"/>
                     <t t-if="this.state.charge.phase === 'waiting'">
-                        <div class="mb-1"><i class="oi oi-spin me-2" data-icon="progress_activity"/>Waiting for the card</div>
+                        <div class="mb-1"><i class="oi oi-spin me-2" data-icon="progress_activity" aria-hidden="true"/>Waiting for the card</div>
                         <div class="text-muted small mb-3">on <t t-out="this.state.charge.terminal"/></div>
                         <button type="button" class="btn btn-outline-danger btn-lg w-100 o_xpago_calc_cancel"
                                 t-att-disabled="!this.state.charge.id or this.state.charge.cancelling" t-on-click="() => this.cancelCharge()">
@@ -51,13 +51,13 @@
                         </button>
                     </t>
                     <t t-elif="this.state.charge.phase === 'paid'">
-                        <div class="text-success fs-3 mb-1"><i class="oi me-2" data-icon="check_circle"/>Paid</div>
+                        <div class="text-success fs-3 mb-1"><i class="oi me-2" data-icon="check_circle" aria-hidden="true"/>Paid</div>
                         <div class="text-muted mb-1" t-if="this.state.charge.card" t-out="this.state.charge.card"/>
                         <div class="text-muted small mb-3" t-if="this.state.charge.auth">Authorization <t t-out="this.state.charge.auth"/></div>
                         <button type="button" class="btn btn-primary btn-lg w-100 o_xpago_calc_new" t-on-click="() => this.closeCharge()">New calculation</button>
                     </t>
                     <t t-else="">
-                        <div class="text-danger fs-4 mb-2"><i class="oi me-2" data-icon="cancel"/>Not charged</div>
+                        <div class="text-danger fs-4 mb-2"><i class="oi me-2" data-icon="cancel" aria-hidden="true"/>Not charged</div>
                         <div class="mb-3" t-out="this.state.charge.message"/>
                         <button type="button" class="btn btn-secondary btn-lg w-100 o_xpago_calc_back" t-on-click="() => this.closeCharge()">Back</button>
                     </t>

@@ -34,7 +34,7 @@
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                        <button name="action_view_invoices" type="object" class="oe_stat_button" icon="description"
+                        <button name="action_view_invoices" type="object" class="oe_stat_button" icon="article"
                                 invisible="source != 'invoices'">
                             <field name="pending_amount" widget="statinfo" string="Owed now"/>
                         </button>

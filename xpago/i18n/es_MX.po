@@ -406,6 +406,11 @@ msgid "By card, or by SPEI transfer from any bank."
 msgstr "Con tarjeta, o por transferencia SPEI desde cualquier banco."
 
 #. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.report_invoice_document_pay_qr
+msgid "By credit or debit card."
+msgstr "Con tarjeta de crédito o débito."
+
+#. module: xpago
 #: model:ir.model.fields.selection,name:xpago.selection__payment_xpago_domiciliation__schedule__manual
 msgid "By hand"
 msgstr "A mano"

@@ -380,6 +380,11 @@ msgid "By card, or by SPEI transfer from any bank."
 msgstr ""
 
 #. module: xpago
+#: model_terms:ir.ui.view,arch_db:xpago.report_invoice_document_pay_qr
+msgid "By credit or debit card."
+msgstr ""
+
+#. module: xpago
 #: model:ir.model.fields.selection,name:xpago.selection__payment_xpago_domiciliation__schedule__manual
 msgid "By hand"
 msgstr ""
