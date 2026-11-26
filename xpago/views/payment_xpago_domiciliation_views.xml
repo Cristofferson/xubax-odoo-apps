@@ -34,11 +34,11 @@
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                        <button name="action_view_invoices" type="object" class="oe_stat_button" icon="fa-file-text-o"
+                        <button name="action_view_invoices" type="object" class="oe_stat_button" icon="description"
                                 invisible="source != 'invoices'">
                             <field name="pending_amount" widget="statinfo" string="Owed now"/>
                         </button>
-                        <button name="action_view_transactions" type="object" class="oe_stat_button" icon="fa-credit-card">
+                        <button name="action_view_transactions" type="object" class="oe_stat_button" icon="credit_card">
                             <field name="transaction_count" widget="statinfo" string="Charges"/>
                         </button>
                     </div>

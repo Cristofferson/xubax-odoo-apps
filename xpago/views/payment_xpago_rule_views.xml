@@ -27,7 +27,7 @@
             <form string="XPago payment rule">
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                        <button name="action_open_products" type="object" class="oe_stat_button" icon="fa-cubes"
+                        <button name="action_open_products" type="object" class="oe_stat_button" icon="inventory_2"
                                 invisible="not product_count">
                             <field name="product_count" widget="statinfo" string="Products"/>
                         </button>

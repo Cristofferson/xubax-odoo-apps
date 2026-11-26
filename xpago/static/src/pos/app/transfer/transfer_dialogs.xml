@@ -42,25 +42,25 @@
                         <img t-att-src="this.qrUrl" alt="QR" width="160" height="160"/>
                         <div class="small text-muted">To see these details on the phone</div>
                     </div>
-                    <div class="mt-2 text-primary"><i class="fa fa-circle-o-notch fa-spin me-1"/>Waiting for the transfer…</div>
+                    <div class="mt-2 text-primary"><i class="oi oi-spin me-1" data-icon="progress_activity"/>Waiting for the transfer…</div>
                 </t>
             </div>
             <t t-set-slot="footer">
                 <!-- One row of equal buttons, icon over a short word, so they fit even on a small terminal. -->
                 <div class="d-flex flex-nowrap gap-2 w-100 xpago-transfer-actions">
                     <button style="flex: 1 1 0;" class="btn btn-secondary px-1 py-2 lh-sm xpago-transfer-print" t-if="this.view.state !== 'expired'" t-on-click="() => this.props.print()">
-                        <i class="fa fa-print fa-lg d-block mb-1"/>Print
+                        <i class="oi oi-lg d-block mb-1" data-icon="print"/>Print
                     </button>
                     <button style="flex: 1 1 0;" class="btn btn-success px-1 py-2 lh-sm xpago-transfer-whatsapp" t-if="this.view.whatsapp and this.view.state !== 'expired'" t-on-click="() => this.whatsapp()">
-                        <i class="fa fa-whatsapp fa-lg d-block mb-1"/>WhatsApp
+                        <i class="oi oi-lg d-block mb-1" data-icon="oi_whatsapp"/>WhatsApp
                     </button>
                     <button style="flex: 1 1 0;" class="btn btn-secondary px-1 py-2 lh-sm xpago-transfer-hide" t-on-click="() => this.props.hide()"
                             title="Keep waiting and close">
-                        <i class="fa fa-eye-slash fa-lg d-block mb-1"/>Close
+                        <i class="oi oi-lg d-block mb-1" data-icon="visibility_off"/>Close
                     </button>
                     <button style="flex: 1 1 0;" class="btn btn-danger px-1 py-2 lh-sm xpago-transfer-cancel" t-on-click="() => this.props.cancel()"
                             title="Cancel the transfer">
-                        <i class="fa fa-times fa-lg d-block mb-1"/>Cancel
+                        <i class="oi oi-lg d-block mb-1" data-icon="close"/>Cancel
                     </button>
                 </div>
             </t>
