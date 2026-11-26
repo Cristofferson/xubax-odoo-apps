@@ -18,7 +18,8 @@
                     </div>
                     <div class="d-inline lh-sm" id="xpago_qrcode_info">
                         <p class="fw-bold mb-1">PAY THIS INVOICE ONLINE</p>
-                        <p class="mb-1">By card, or by SPEI transfer from any bank.</p>
+                        <p class="mb-1" t-if="o._xpago_invoice_offers_transfer()">By card, or by SPEI transfer from any bank.</p>
+                        <p class="mb-1" t-else="">By credit or debit card.</p>
                         <p class="text-muted fst-italic mb-0">Scan the code with your phone<br/>or click it to pay.</p>
                     </div>
                 </div>
